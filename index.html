@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alloy — Agentic Orchestrator | SZL Holdings</title>
+<meta name="description" content="Alloy is the orchestration backbone of the SZL governed estate — agents that sign their work, label every claim honestly, and refuse to lie." />
+<meta property="og:title" content="Alloy — Agentic Orchestrator" />
+<meta property="og:description" content="The orchestration backbone of the governed estate. AI that signs its work and refuses to lie." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://a11oy.net" />
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23080c14"/><path d="M9 23 16 8l7 15" fill="none" stroke="%233af4c8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="18.5" x2="20" y2="18.5" stroke="%235b8dee" stroke-width="2" stroke-linecap="round"/></svg>' />
+<style>
+:root{
+  --void:#080c14; --deep:#0a1019; --surface:#0e1626; --border:#1c2942;
+  --proof:#3af4c8; --proof-soft:rgba(58,244,200,.12); --proof-dim:rgba(58,244,200,.06);
+  --lattice:#5b8dee; --lattice-soft:rgba(91,141,238,.12);
+  --gold:#d7b96b; --ink:#eef4fb; --sub:#aebccf; --ghost:#65788f; --down:#e8746e;
+  --r:16px; --maxw:1180px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --mono:"SF Mono",SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+::selection{background:var(--proof-soft);color:var(--proof)}
+
+/* ---- conductor lattice backdrop ---- */
+.lattice-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.lattice-bg::before{content:"";position:absolute;inset:-2px;
+  background:
+    radial-gradient(60% 42% at 50% -6%, rgba(91,141,238,.10), transparent 62%),
+    radial-gradient(38% 30% at 82% 8%, rgba(58,244,200,.05), transparent 60%),
+    linear-gradient(rgba(28,41,66,.32) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28,41,66,.32) 1px, transparent 1px);
+  background-size:100% 100%,100% 100%,72px 72px,72px 72px;
+  mask-image:linear-gradient(#000 0%,#000 46%,transparent 92%)}
+.baton{position:absolute;width:1px;height:38vh;top:-40vh;
+  background:linear-gradient(transparent, var(--proof), transparent);opacity:.35;
+  animation:fall 7.5s linear infinite}
+.baton:nth-child(2){left:18%;animation-delay:0s}
+.baton:nth-child(3){left:39%;animation-delay:2.4s;background:linear-gradient(transparent,var(--lattice),transparent)}
+.baton:nth-child(4){left:63%;animation-delay:4.6s}
+.baton:nth-child(5){left:84%;animation-delay:1.3s;background:linear-gradient(transparent,var(--gold),transparent);opacity:.22}
+@keyframes fall{to{transform:translateY(180vh)}}
+@media (prefers-reduced-motion:reduce){.baton{display:none}}
+
+main{position:relative;z-index:1}
+
+/* ---- nav ---- */
+nav{position:sticky;top:0;z-index:10;background:rgba(8,12,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.wordmark{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.06em}
+.wordmark .glyph{width:26px;height:26px;border-radius:7px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--proof);font-family:var(--mono);font-size:14px}
+.nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--sub)}
+.nav-links a:hover{color:var(--proof)}
+@media(max-width:720px){.nav-links{display:none}}
+
+/* ---- hero ---- */
+.hero{padding:112px 0 72px;text-align:left;position:relative}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;color:var(--proof);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--proof)}
+h1{font-size:clamp(38px,6.4vw,68px);line-height:1.04;letter-spacing:-.022em;font-weight:800;max-width:900px}
+h1 .g{background:linear-gradient(92deg,var(--ink) 30%,var(--proof) 78%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{margin-top:22px;font-size:clamp(16px,2vw,19px);color:var(--sub);max-width:660px}
+.lede b{color:var(--ink);font-weight:600}
+.cta-row{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-size:14.5px;font-weight:600;border:1px solid var(--border);transition:.18s}
+.btn-primary{background:var(--proof);color:#04120d;border-color:transparent}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(58,244,200,.25)}
+.btn-ghost{color:var(--sub)}
+.btn-ghost:hover{border-color:var(--proof);color:var(--proof)}
+.hero-canon{margin-top:44px;font-family:var(--mono);font-size:12px;color:var(--ghost);display:flex;gap:18px;flex-wrap:wrap}
+.hero-canon span b{color:var(--gold);font-weight:600}
+
+/* ---- doctrine strip ---- */
+.strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--deep)}
+.strip-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0}
+.strip .cell{padding:22px 20px;border-left:1px solid var(--border);font-family:var(--mono);font-size:12.5px;color:var(--sub)}
+.strip .cell:first-child{border-left:none}
+.strip .cell b{display:block;color:var(--ink);font-size:15px;margin-bottom:3px;font-weight:600}
+.strip .cell .lab{color:var(--proof);font-size:10.5px;letter-spacing:.14em}
+
+/* ---- sections ---- */
+section{padding:88px 0}
+.sec-head{margin-bottom:44px;max-width:720px}
+h2{font-size:clamp(26px,3.6vw,36px);letter-spacing:-.018em;line-height:1.15}
+.sec-head p{margin-top:12px;color:var(--sub)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px;position:relative;overflow:hidden;transition:.2s}
+.card:hover{border-color:rgba(58,244,200,.4);transform:translateY(-2px)}
+.card .ic{width:38px;height:38px;border-radius:10px;background:var(--proof-dim);border:1px solid rgba(58,244,200,.25);display:grid;place-items:center;color:var(--proof);font-family:var(--mono);font-size:15px;margin-bottom:16px}
+.card h3{font-size:17.5px;margin-bottom:8px}
+.card p{font-size:14px;color:var(--sub)}
+.card .tag{position:absolute;top:20px;right:20px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ghost)}
+.card.lat .ic{background:var(--lattice-soft);border-color:rgba(91,141,238,.3);color:var(--lattice)}
+.card.gld .ic{background:rgba(215,185,107,.08);border-color:rgba(215,185,107,.3);color:var(--gold)}
+
+/* ---- how it governs ---- */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.step{padding:26px 22px;background:var(--deep);border-left:1px solid var(--border);position:relative}
+.step:first-child{border-left:none}
+.step .n{font-family:var(--mono);color:var(--proof);font-size:12px;margin-bottom:10px}
+.step b{display:block;font-size:15px;margin-bottom:6px}
+.step p{font-size:13px;color:var(--sub)}
+.step::after{content:"→";position:absolute;right:-9px;top:26px;color:var(--ghost);z-index:2;font-size:14px}
+.step:last-child::after{content:""}
+
+/* ---- live surfaces ---- */
+.live-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.live{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;transition:.18s}
+.live:hover{border-color:rgba(58,244,200,.4)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--ghost);flex:none;box-shadow:0 0 0 3px rgba(101,120,143,.15)}
+.dot.ok{background:var(--proof);box-shadow:0 0 0 3px var(--proof-soft);animation:pulse 2.4s infinite}
+.dot.down{background:var(--down);box-shadow:0 0 0 3px rgba(232,116,110,.15)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.live .meta{min-width:0}
+.live b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live .u{font-family:var(--mono);font-size:11.5px;color:var(--ghost);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.live .st{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ghost);flex:none}
+.probe-note{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ghost)}
+
+/* ---- estate ---- */
+.estate{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.epill{background:var(--deep);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:.18s}
+.epill:hover{border-color:rgba(91,141,238,.45)}
+.epill b{font-size:14.5px;display:block}
+.epill span{font-size:12.5px;color:var(--ghost)}
+
+/* ---- footer ---- */
+footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--deep)}
+.foot-canon{font-family:var(--mono);font-size:11.5px;color:var(--ghost);line-height:1.9;max-width:900px}
+.foot-canon b{color:var(--sub);font-weight:600}
+.foot-links{display:flex;gap:20px;margin:26px 0 18px;font-size:13px;color:var(--sub);flex-wrap:wrap}
+.foot-links a:hover{color:var(--proof)}
+.copyright{font-size:12px;color:var(--ghost)}
+</style>
+</head>
+<body>
+<div class="lattice-bg" aria-hidden="true"><i class="baton"></i><i class="baton"></i><i class="baton"></i><i class="baton"></i></div>
+<nav><div class="wrap nav-in">
+  <a class="wordmark" href="/"><span class="glyph">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></a>
+  <div class="nav-links">
+    <a href="#orchestrator">Orchestrator</a><a href="#governance">Governance</a><a href="#live">Live surfaces</a><a href="#estate">Estate</a>
+    <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">a-11-oy.com ↗</a>
+  </div>
+</div></nav>
+<main>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">SZL Holdings · Governed AI</div>
+  <h1>Alloy — the <span class="g">agentic orchestrator</span> of a governed estate.</h1>
+  <p class="lede">An orchestration backbone across frontier AI providers where <b>every claim carries an honest label</b>, every artifact can carry a <b>signed receipt</b>, and agents are governed by doctrine — <b>built to refuse to lie</b>.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://a-11-oy.com" target="_blank" rel="noopener">See the proof wall →</a>
+    <a class="btn btn-ghost" href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">Open the estate on Hugging Face</a>
+  </div>
+  <div class="hero-canon">
+    <span>trust ceiling <b>0.97</b> — never 100%</span>
+    <span>locked-proven = <b>exactly 8</b> formulas</span>
+    <span>Λ = <b>Conjecture 1</b> · advisory, never a theorem</span>
+  </div>
+</div></header>
+
+<div class="strip"><div class="wrap strip-in">
+  <div class="cell"><span class="lab">LABELS</span><b>Honest by default</b>MEASURED · REPORTED · MODELED · HEURISTIC · UNKNOWN · UNAVAILABLE</div>
+  <div class="cell"><span class="lab">RECEIPTS</span><b>DSSE-wrapped</b>Signed governance receipts; verify before reliance</div>
+  <div class="cell"><span class="lab">SUPPLY CHAIN</span><b>SLSA</b>L1 honest · L2 attested · L3 roadmap</div>
+  <div class="cell"><span class="lab">DOCTRINE</span><b>Overclaim guards</b>CI gates ban invented stats and banned tokens</div>
+</div></div>
+
+<section id="orchestrator"><div class="wrap">
+  <div class="sec-head"><h2>One backbone. Every claim accountable.</h2>
+  <p>Alloy conducts agents across providers the way a signals officer runs a net — nothing transmits without a callsign, a label, and a log.</p></div>
+  <div class="grid3">
+    <div class="card"><span class="tag">GOVERN</span><div class="ic">Λ</div><h3>Doctrine-gated inference</h3><p>Agent outputs pass doctrine gates before they ship: honest labels enforced, overclaims blocked, exceptions fail closed without leaking internals.</p></div>
+    <div class="card lat"><span class="tag">SIGN</span><div class="ic">✓</div><h3>Receipts, not vibes</h3><p>Work products can carry DSSE-signed receipts with provenance you can verify offline — the claim chain is the product.</p></div>
+    <div class="card gld"><span class="tag">CONDUCT</span><div class="ic">◇</div><h3>Estate control plane</h3><p>Models, kernels, datasets, and live consoles across the SZL estate are orchestrated as one governed surface with a single honesty canon.</p></div>
+  </div>
+</div></section>
+
+<section id="governance" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>How a claim earns its label</h2>
+  <p>The pipeline is deliberately boring — and deliberately auditable.</p></div>
+  <div class="flow">
+    <div class="step"><div class="n">01</div><b>Emit</b><p>An agent produces a claim, artifact, or action proposal.</p></div>
+    <div class="step"><div class="n">02</div><b>Gate</b><p>Doctrine guards check labels, banned tokens, and overclaim patterns.</p></div>
+    <div class="step"><div class="n">03</div><b>Sign</b><p>Qualifying artifacts get DSSE receipts with subject digests.</p></div>
+    <div class="step"><div class="n">04</div><b>Publish</b><p>Surfaces ship with the label visible — UNKNOWN stays UNKNOWN.</p></div>
+    <div class="step"><div class="n">05</div><b>Verify</b><p>Anyone can re-check the receipt chain — trust ceiling 0.97, never blind.</p></div>
+  </div>
+</div></section>
+
+<section id="live"><div class="wrap">
+  <div class="sec-head"><h2>Live surfaces</h2><p>Real endpoints, probed from your browser right now — reachability is labeled, not assumed.</p></div>
+  <div class="live-list">
+    <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Proof wall — flagship</b><span class="u">a-11-oy.com</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://szlholdings-killinchu.hf.space/" href="https://szlholdings-killinchu.hf.space/elite" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Killinchu — maritime OSINT console</b><span class="u">szlholdings-killinchu.hf.space/elite</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://szlholdings-szl-estate-live.static.hf.space/" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://szlholdings-receipt-chain-live.static.hf.space/" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
+  </div>
+  <p class="probe-note">Probe = opaque fetch reachability from your browser. REACHABLE / UNREACHABLE only — no uptime claims are made or stored.</p>
+</div></section>
+
+<section id="estate" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>The governed estate</h2><p>Alloy is the conductor; these are the sections of the orchestra.</p></div>
+  <div class="estate">
+    <a class="epill" href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener"><b>Hugging Face org</b><span>models · kernels · datasets · 25 live spaces</span></a>
+    <a class="epill" href="https://github.com/szl-holdings" target="_blank" rel="noopener"><b>GitHub — szl-holdings</b><span>source, CI doctrine gates, provenance</span></a>
+    <a class="epill" href="https://huggingface.co/SZLHOLDINGS/SZL-Khipu-1.5B" target="_blank" rel="noopener"><b>SZL-Khipu-1.5B</b><span>flagship model line + GGUF quantizations</span></a>
+    <a class="epill" href="https://doi.org/10.5281/zenodo.19944926" target="_blank" rel="noopener"><b>Thesis & formal work</b><span>DOI 10.5281/zenodo.19944926</span></a>
+  </div>
+</div></section>
+
+</main>
+<footer><div class="wrap">
+  <div class="wordmark" style="margin-bottom:22px"><span class="glyph">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></div>
+  <p class="foot-canon">
+    <b>Canon.</b> Labels honest by default: MEASURED / REPORTED / MODELED / HEURISTIC / UNKNOWN / UNAVAILABLE.
+    locked-proven = exactly 8 formulas {F1, F4, F7, F11, F12, F18, F19, F22}. Λ = Conjecture 1 — advisory, never a theorem.
+    Trust ceiling 0.97 — never 100%. SLSA: L1 honest · L2 attested · L3 roadmap.
+    Canonical flagship site: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>.
+  </p>
+  <div class="foot-links">
+    <a href="https://a-11-oy.com" target="_blank" rel="noopener">Proof wall</a>
+    <a href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">Hugging Face</a>
+    <a href="https://github.com/szl-holdings" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://doi.org/10.5281/zenodo.19944926" target="_blank" rel="noopener">DOI</a>
+  </div>
+  <p class="copyright">© 2026 SZL Holdings. Governed AI you can prove.</p>
+</div></footer>
+<script>
+document.querySelectorAll(".live[data-probe]").forEach(function(el){
+  var dot=el.querySelector(".dot"), st=el.querySelector(".st");
+  var done=false, t=setTimeout(function(){ if(done)return; done=true; dot.className="dot down"; st.textContent="UNREACHABLE"; st.style.color="var(--down)"; },6000);
+  fetch(el.dataset.probe,{mode:"no-cors",cache:"no-store"}).then(function(){ if(done)return; done=true; clearTimeout(t);
+    dot.className="dot ok"; st.textContent="REACHABLE"; st.style.color="var(--proof)";
+  }).catch(function(){ if(done)return; done=true; clearTimeout(t); dot.className="dot down"; st.textContent="UNREACHABLE"; st.style.color="var(--down)"; });
+});
+</script>
+</body>
+</html>
