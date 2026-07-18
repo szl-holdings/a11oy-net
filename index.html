@@ -146,7 +146,7 @@ h2{font-size:clamp(26px,3.6vw,36px);letter-spacing:-.018em;line-height:1.15}
 
 /* ---- live estate atlas ---- */
 .atlas-shell{background:linear-gradient(180deg,rgba(14,22,38,.92),rgba(10,16,25,.96));border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
-.atlas-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.atlas-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px}
 .atlas-stat{background:rgba(8,12,20,.72);border:1px solid var(--border);border-radius:12px;padding:14px}
 .atlas-stat b{display:block;font-family:var(--mono);font-size:23px;color:var(--ink)}
 .atlas-stat span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ghost)}
@@ -257,13 +257,15 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 </div></section>
 
 <section id="atlas" style="padding-top:0"><div class="wrap">
-  <div class="sec-head"><div class="kicker">Measured in your browser</div><h2>The live public estate, consolidated.</h2><p>Search models, datasets, and Spaces without leaving the flagship. Counts and Space stages come from Hugging Face public APIs at page load; failures stay visible.</p></div>
+  <div class="sec-head"><div class="kicker">Measured in your browser</div><h2>The live public estate, consolidated.</h2><p>Search models, datasets, Spaces, collections, and buckets without leaving the flagship. Counts and Space stages come from Hugging Face public APIs at page load; failures stay visible.</p></div>
   <div class="atlas-shell">
     <div class="atlas-bar">
       <div class="atlas-stat"><b id="atlasTotal">—</b><span>PUBLIC RESOURCES</span></div>
       <div class="atlas-stat"><b id="atlasModels">—</b><span>MODELS</span></div>
       <div class="atlas-stat"><b id="atlasDatasets">—</b><span>DATASETS</span></div>
       <div class="atlas-stat"><b id="atlasSpaces">—</b><span>SPACES</span></div>
+      <div class="atlas-stat"><b id="atlasCollections">—</b><span>COLLECTIONS</span></div>
+      <div class="atlas-stat"><b id="atlasBuckets">—</b><span>BUCKETS</span></div>
     </div>
     <div class="atlas-controls" aria-label="Estate resource filters">
       <label for="atlasSearch" style="position:absolute;left:-10000px">Search public estate</label>
@@ -272,6 +274,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       <button class="filter-btn" type="button" data-filter="MODEL" aria-pressed="false">MODELS</button>
       <button class="filter-btn" type="button" data-filter="DATASET" aria-pressed="false">DATASETS</button>
       <button class="filter-btn" type="button" data-filter="SPACE" aria-pressed="false">SPACES</button>
+      <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
+      <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </div>
     <div class="resource-grid" id="atlasResources" aria-live="polite"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
     <p class="atlas-note" id="atlasNote">Runtime stage and counts are point-in-time public metadata. RUNNING proves transport state only; it does not prove model quality, provider readiness, data rights, or deployed equivalence.</p>
@@ -334,7 +338,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   var specs=[
     {type:"MODEL",url:"https://huggingface.co/api/models?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/"},
     {type:"DATASET",url:"https://huggingface.co/api/datasets?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/datasets/"},
-    {type:"SPACE",url:"https://huggingface.co/api/spaces?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/spaces/"}
+    {type:"SPACE",url:"https://huggingface.co/api/spaces?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/spaces/"},
+    {type:"SPACE",url:"https://huggingface.co/api/spaces/SZLHOLDINGS/README",base:"https://huggingface.co/spaces/",singleton:true},
+    {type:"COLLECTION",url:"https://huggingface.co/api/collections?owner=SZLHOLDINGS&limit=100",base:"https://huggingface.co/collections/"},
+    {type:"BUCKET",url:"https://huggingface.co/api/buckets/SZLHOLDINGS",base:"https://huggingface.co/buckets/"}
   ];
 
   function resourceState(item,type){
@@ -345,6 +352,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   function resourceDetail(item,type){
     if(type==="SPACE")return "HF Space · "+resourceState(item,type);
     if(type==="MODEL")return item.pipeline_tag ? "Model · "+item.pipeline_tag : "Model repository";
+    if(type==="COLLECTION")return "Collection · "+((item.items&&item.items.length)||0)+" linked items";
+    if(type==="BUCKET")return "Bucket · "+(item.totalFiles||0)+" public files";
     var license=item.cardData&&item.cardData.license;
     return license ? "Dataset · license "+license : "Dataset repository";
   }
@@ -366,7 +375,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var top=document.createElement("div");top.className="resource-top";
       var type=document.createElement("span");type.className="resource-type";type.textContent=item.type;
       var state=document.createElement("span");state.className="resource-state"+(item.type==="SPACE"&&item.state!=="RUNNING"?" bad":"");state.textContent=item.state;
-      var title=document.createElement("b");title.textContent=item.name.replace(/^SZLHOLDINGS\//,"");
+      var title=document.createElement("b");title.textContent=item.label;
       var detail=document.createElement("small");detail.textContent=item.detail;
       top.append(type,state);card.append(top,title,detail);grid.append(card);
     });
@@ -374,26 +383,32 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 
   Promise.allSettled(specs.map(function(spec){
     return fetch(spec.url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(spec.type+" HTTP "+r.status);return r.json();})
-      .then(function(items){return {spec:spec,items:items};});
+      .then(function(items){return {spec:spec,items:spec.singleton?[items]:items};});
   })).then(function(results){
     var failures=[];
     results.forEach(function(result){
       if(result.status!=="fulfilled"){failures.push(String(result.reason));return;}
       var spec=result.value.spec;
       result.value.items.forEach(function(item){
-        var id=String(item.id||"");
+        var id=String(item.id||item.slug||"");
         if(id.indexOf("SZLHOLDINGS/")!==0)return;
-        resources.push({type:spec.type,name:id,state:resourceState(item,spec.type),detail:resourceDetail(item,spec.type),href:spec.base+id});
+        if(resources.some(function(existing){return existing.type===spec.type&&existing.name===id;}))return;
+        var label=spec.type==="COLLECTION"&&item.title ? item.title : id.replace(/^SZLHOLDINGS\//,"");
+        resources.push({type:spec.type,name:id,label:label,state:resourceState(item,spec.type),detail:resourceDetail(item,spec.type),href:spec.base+id});
       });
     });
     resources.sort(function(a,b){if(a.type!==b.type)return a.type.localeCompare(b.type);if(a.type==="SPACE"&&a.state!==b.state)return a.state==="RUNNING"?-1:1;return a.name.localeCompare(b.name);});
     var models=resources.filter(function(x){return x.type==="MODEL";}).length;
     var datasets=resources.filter(function(x){return x.type==="DATASET";}).length;
     var spaces=resources.filter(function(x){return x.type==="SPACE";}).length;
+    var collections=resources.filter(function(x){return x.type==="COLLECTION";}).length;
+    var buckets=resources.filter(function(x){return x.type==="BUCKET";}).length;
     document.getElementById("atlasTotal").textContent=resources.length;
     document.getElementById("atlasModels").textContent=models;
     document.getElementById("atlasDatasets").textContent=datasets;
     document.getElementById("atlasSpaces").textContent=spaces;
+    document.getElementById("atlasCollections").textContent=collections;
+    document.getElementById("atlasBuckets").textContent=buckets;
     if(failures.length)note.textContent="PARTIAL: "+failures.join(" · ")+". Public links remain available; unavailable metadata is not inferred.";
     render();
   });
