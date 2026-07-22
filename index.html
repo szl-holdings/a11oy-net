@@ -166,7 +166,7 @@ h2{font-size:clamp(26px,3.6vw,36px);letter-spacing:-.018em;line-height:1.15}
 .resource b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .resource small{display:block;margin-top:5px;color:var(--ghost);font:10.5px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .atlas-note{margin-top:14px;color:var(--ghost);font:10.5px/1.6 var(--mono)}
-@media(max-width:720px){.atlas-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.atlas-shell{padding:14px}.filter-btn{flex:1}.stack-card{min-height:188px}}
+@media(max-width:720px){.atlas-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.atlas-shell{padding:14px}.filter-btn{flex:1}.stack-card{min-height:188px}.live-list,.resource-grid{grid-template-columns:minmax(0,1fr)}.live{align-items:flex-start;padding:14px}.live .st{font-size:9.5px}}
 
 /* ---- footer ---- */
 footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--deep)}
@@ -358,6 +358,31 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     return license ? "Dataset · license "+license : "Dataset repository";
   }
 
+  function fetchJson(url){
+    var controller=new AbortController();
+    var timer=setTimeout(function(){controller.abort();},8000);
+    return fetch(url,{cache:"no-store",signal:controller.signal})
+      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status+" for "+url);return r.json();})
+      .finally(function(){clearTimeout(timer);});
+  }
+
+  function normalizeItems(payload,spec){
+    if(spec.singleton)return [payload];
+    if(Array.isArray(payload))return payload;
+    if(payload&&Array.isArray(payload.items))return payload.items;
+    throw new Error(spec.type+" API returned an unsupported shape");
+  }
+
+  function hydrateSpaceRuntime(items){
+    return Promise.all(items.map(function(item){
+      var id=String(item.id||"");
+      if(!id)return Promise.resolve(item);
+      return fetchJson("https://huggingface.co/api/spaces/"+encodeURIComponent(id).replace("%2F","/"))
+        .then(function(detail){return detail;})
+        .catch(function(){item._runtimeUnavailable=true;return item;});
+    }));
+  }
+
   function render(){
     var query=search.value.trim().toLowerCase();
     var shown=resources.filter(function(item){return (activeFilter==="ALL"||item.type===activeFilter)&&(!query||item.name.toLowerCase().indexOf(query)!==-1);});
@@ -382,8 +407,14 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   }
 
   Promise.allSettled(specs.map(function(spec){
-    return fetch(spec.url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(spec.type+" HTTP "+r.status);return r.json();})
-      .then(function(items){return {spec:spec,items:spec.singleton?[items]:items};});
+    return fetchJson(spec.url)
+      .then(function(payload){
+        var items=normalizeItems(payload,spec);
+        if(spec.type==="SPACE"&&!spec.singleton){
+          return hydrateSpaceRuntime(items).then(function(hydrated){return {spec:spec,items:hydrated};});
+        }
+        return {spec:spec,items:items};
+      });
   })).then(function(results){
     var failures=[];
     results.forEach(function(result){
@@ -409,6 +440,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     document.getElementById("atlasSpaces").textContent=spaces;
     document.getElementById("atlasCollections").textContent=collections;
     document.getElementById("atlasBuckets").textContent=buckets;
+    var unknownSpaces=resources.filter(function(x){return x.type==="SPACE"&&x.state==="UNKNOWN";}).length;
+    if(unknownSpaces)failures.push(unknownSpaces+" Space runtime state"+(unknownSpaces===1?" is":"s are")+" unavailable");
     if(failures.length)note.textContent="PARTIAL: "+failures.join(" · ")+". Public links remain available; unavailable metadata is not inferred.";
     render();
   });
