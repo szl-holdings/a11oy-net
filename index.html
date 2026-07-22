@@ -130,6 +130,44 @@ h2{font-size:clamp(26px,3.6vw,36px);letter-spacing:-.018em;line-height:1.15}
 .epill b{font-size:14.5px;display:block}
 .epill span{font-size:12.5px;color:var(--ghost)}
 
+/* ---- frontier stack ---- */
+.frontier{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.stack-card{min-height:210px;background:linear-gradient(145deg,rgba(14,22,38,.97),rgba(8,12,20,.92));border:1px solid var(--border);border-radius:var(--r);padding:24px;position:relative;overflow:hidden;transition:.2s}
+.stack-card::before{content:"";position:absolute;inset:-1px;pointer-events:none;background:radial-gradient(320px 150px at 0 0,rgba(58,244,200,.11),transparent 65%),radial-gradient(280px 130px at 100% 100%,rgba(91,141,238,.12),transparent 66%);opacity:.72}
+.stack-card:hover{transform:translateY(-3px);border-color:rgba(58,244,200,.46);box-shadow:0 18px 46px rgba(0,0,0,.2)}
+.stack-card>*{position:relative;z-index:1}
+.stack-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.stack-kind,.stack-truth{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.stack-kind{color:var(--proof)}
+.stack-truth{color:var(--ghost);padding:4px 7px;border:1px solid var(--border);border-radius:999px}
+.stack-card h3{font-size:19px;margin-bottom:8px}
+.stack-card p{font-size:13.5px;color:var(--sub);max-width:38ch}
+.stack-link{display:inline-block;margin-top:18px;color:var(--proof);font-family:var(--mono);font-size:11.5px}
+
+/* ---- live estate atlas ---- */
+.atlas-shell{background:linear-gradient(180deg,rgba(14,22,38,.92),rgba(10,16,25,.96));border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
+.atlas-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+.atlas-stat{background:rgba(8,12,20,.72);border:1px solid var(--border);border-radius:12px;padding:14px}
+.atlas-stat b{display:block;font-family:var(--mono);font-size:23px;color:var(--ink)}
+.atlas-stat span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ghost)}
+.atlas-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+.atlas-search{min-height:44px;min-width:min(320px,100%);flex:1;background:var(--void);color:var(--ink);border:1px solid var(--border);border-radius:11px;padding:0 14px;font:13px var(--mono);outline:none}
+.atlas-search:focus{border-color:var(--proof);box-shadow:0 0 0 3px var(--proof-soft)}
+.filter-btn{min-height:44px;background:var(--deep);color:var(--sub);border:1px solid var(--border);border-radius:11px;padding:0 14px;font:11px var(--mono);letter-spacing:.08em;cursor:pointer}
+.filter-btn[aria-pressed="true"]{color:#04120d;background:var(--proof);border-color:var(--proof)}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.resource{min-height:112px;background:rgba(8,12,20,.72);border:1px solid var(--border);border-radius:12px;padding:15px;transition:.18s}
+.resource:hover{border-color:rgba(91,141,238,.48);transform:translateY(-1px)}
+.resource-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.resource-type,.resource-state{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em}
+.resource-type{color:var(--lattice)}
+.resource-state{color:var(--proof)}
+.resource-state.bad{color:var(--down)}
+.resource b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resource small{display:block;margin-top:5px;color:var(--ghost);font:10.5px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atlas-note{margin-top:14px;color:var(--ghost);font:10.5px/1.6 var(--mono)}
+@media(max-width:720px){.atlas-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.atlas-shell{padding:14px}.filter-btn{flex:1}.stack-card{min-height:188px}.live-list,.resource-grid{grid-template-columns:minmax(0,1fr)}.live{align-items:flex-start;padding:14px}.live .st{font-size:9.5px}}
+
 /* ---- footer ---- */
 footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--deep)}
 .foot-canon{font-family:var(--mono);font-size:11.5px;color:var(--ghost);line-height:1.9;max-width:900px}
@@ -144,7 +182,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 <nav><div class="wrap nav-in">
   <a class="wordmark" href="/"><span class="glyph">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></a>
   <div class="nav-links">
-    <a href="#orchestrator">Orchestrator</a><a href="#governance">Governance</a><a href="#live">Live surfaces</a><a href="#estate">Estate</a>
+    <a href="#orchestrator">Orchestrator</a><a href="#stack">Stack</a><a href="#live">Live surfaces</a><a href="#atlas">Live atlas</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">a-11-oy.com ↗</a>
   </div>
 </div></nav>
@@ -182,6 +220,19 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   </div>
 </div></section>
 
+<section id="stack" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="kicker">The frontier stack</div><h2>Brain, body, proof, and control — one navigable surface.</h2>
+  <p>The estate stays modular at the source and unified at the interface. Each card opens the real public artifact; runtime truth is measured again in the live atlas below.</p></div>
+  <div class="frontier">
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/SZL-Khipu-1.5B" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">MODEL · BRAIN</span><span class="stack-truth">REPORTED</span></div><h3>SZL-Khipu-1.5B</h3><p>The flagship governed retrieval navigator, with public weights, adapter, schema, receipts, and GGUF path.</p><span class="stack-link">Open model line →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ROUTER · BRAIN</span><span class="stack-truth">MEASURED NOW</span></div><h3>Sovereign router</h3><p>The live routing surface for provider status, bounded inference paths, and visible availability labels.</p><span class="stack-link">Open router →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/anatomy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ANATOMY V5</span><span class="stack-truth">LIVE STATE BELOW</span></div><h3>Living anatomy</h3><p>The body map for organs, contracts, trust boundaries, and the controller outside model weights.</p><span class="stack-link">Open anatomy →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/holographic" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC</span><span class="stack-truth">MEASURED NOW</span></div><h3>Holographic estate</h3><p>A spatial front door into the wider public estate, built as a distinct interface over shared evidence.</p><span class="stack-link">Open holographic →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/szl-kernels" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">KERNELS · PROOF</span><span class="stack-truth">PUBLIC ARTIFACT</span></div><h3>Governed kernels</h3><p>Reusable verifier and policy components with explicit source, license, and provenance boundaries.</p><span class="stack-link">Open kernel suite →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CONTROL PLANE</span><span class="stack-truth">MEASURED NOW</span></div><h3>A11oy command surface</h3><p>The flagship control plane joining formulas, estate inventory, governance status, and public routes.</p><span class="stack-link">Open control plane →</span></a>
+  </div>
+</div></section>
+
 <section id="governance" style="padding-top:0"><div class="wrap">
   <div class="sec-head"><h2>How a claim earns its label</h2>
   <p>The pipeline is deliberately boring — and deliberately auditable.</p></div>
@@ -198,11 +249,37 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   <div class="sec-head"><h2>Live surfaces</h2><p>Real endpoints, probed from your browser right now — reachability is labeled, not assumed.</p></div>
   <div class="live-list">
     <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Proof wall — flagship</b><span class="u">a-11-oy.com</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-probe="https://szlholdings-killinchu.hf.space/" href="https://szlholdings-killinchu.hf.space/elite" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Killinchu — maritime OSINT console</b><span class="u">szlholdings-killinchu.hf.space/elite</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-probe="https://szlholdings-szl-estate-live.static.hf.space/" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-probe="https://szlholdings-receipt-chain-live.static.hf.space/" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-space="SZLHOLDINGS/killinchu" href="https://szlholdings-killinchu.hf.space/elite" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Killinchu — maritime OSINT console</b><span class="u">szlholdings-killinchu.hf.space/elite</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-space="SZLHOLDINGS/szl-estate-live" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-space="SZLHOLDINGS/receipt-chain-live" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
   </div>
   <p class="probe-note">Probe = opaque fetch reachability from your browser. REACHABLE / UNREACHABLE only — no uptime claims are made or stored.</p>
+</div></section>
+
+<section id="atlas" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="kicker">Measured in your browser</div><h2>The live public estate, consolidated.</h2><p>Search models, datasets, Spaces, collections, and buckets without leaving the flagship. Counts and Space stages come from Hugging Face public APIs at page load; failures stay visible.</p></div>
+  <div class="atlas-shell">
+    <div class="atlas-bar">
+      <div class="atlas-stat"><b id="atlasTotal">—</b><span>PUBLIC RESOURCES</span></div>
+      <div class="atlas-stat"><b id="atlasModels">—</b><span>MODELS</span></div>
+      <div class="atlas-stat"><b id="atlasDatasets">—</b><span>DATASETS</span></div>
+      <div class="atlas-stat"><b id="atlasSpaces">—</b><span>SPACES</span></div>
+      <div class="atlas-stat"><b id="atlasCollections">—</b><span>COLLECTIONS</span></div>
+      <div class="atlas-stat"><b id="atlasBuckets">—</b><span>BUCKETS</span></div>
+    </div>
+    <div class="atlas-controls" aria-label="Estate resource filters">
+      <label for="atlasSearch" style="position:absolute;left:-10000px">Search public estate</label>
+      <input class="atlas-search" id="atlasSearch" type="search" placeholder="Search models, datasets, Spaces…" autocomplete="off" />
+      <button class="filter-btn" type="button" data-filter="ALL" aria-pressed="true">ALL</button>
+      <button class="filter-btn" type="button" data-filter="MODEL" aria-pressed="false">MODELS</button>
+      <button class="filter-btn" type="button" data-filter="DATASET" aria-pressed="false">DATASETS</button>
+      <button class="filter-btn" type="button" data-filter="SPACE" aria-pressed="false">SPACES</button>
+      <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
+      <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
+    </div>
+    <div class="resource-grid" id="atlasResources" aria-live="polite"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
+    <p class="atlas-note" id="atlasNote">Runtime stage and counts are point-in-time public metadata. RUNNING proves transport state only; it does not prove model quality, provider readiness, data rights, or deployed equivalence.</p>
+  </div>
 </div></section>
 
 <section id="estate" style="padding-top:0"><div class="wrap">
@@ -233,13 +310,151 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   <p class="copyright">© 2026 SZL Holdings. Governed AI you can prove.</p>
 </div></footer>
 <script>
-document.querySelectorAll(".live[data-probe]").forEach(function(el){
-  var dot=el.querySelector(".dot"), st=el.querySelector(".st");
-  var done=false, t=setTimeout(function(){ if(done)return; done=true; dot.className="dot down"; st.textContent="UNREACHABLE"; st.style.color="var(--down)"; },6000);
-  fetch(el.dataset.probe,{mode:"no-cors",cache:"no-store"}).then(function(){ if(done)return; done=true; clearTimeout(t);
-    dot.className="dot ok"; st.textContent="REACHABLE"; st.style.color="var(--proof)";
-  }).catch(function(){ if(done)return; done=true; clearTimeout(t); dot.className="dot down"; st.textContent="UNREACHABLE"; st.style.color="var(--down)"; });
-});
+(function(){
+  "use strict";
+
+  function setLive(el, ok, label){
+    var dot=el.querySelector(".dot"), st=el.querySelector(".st");
+    dot.className=ok ? "dot ok" : "dot down";
+    st.textContent=label;
+    st.style.color=ok ? "var(--proof)" : "var(--down)";
+  }
+
+  document.querySelectorAll(".live[data-space]").forEach(function(el){
+    fetch("https://huggingface.co/api/spaces/"+encodeURIComponent(el.dataset.space).replace("%2F","/"),{cache:"no-store"})
+      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+      .then(function(data){var stage=String((data.runtime&&data.runtime.stage)||"UNKNOWN").toUpperCase();setLive(el,stage==="RUNNING",stage);})
+      .catch(function(){setLive(el,false,"UNAVAILABLE");});
+  });
+
+  document.querySelectorAll(".live[data-probe]").forEach(function(el){
+    var done=false, timer=setTimeout(function(){if(done)return;done=true;setLive(el,false,"UNREACHABLE");},6000);
+    fetch(el.dataset.probe,{mode:"no-cors",cache:"no-store"}).then(function(){if(done)return;done=true;clearTimeout(timer);setLive(el,true,"REACHABLE");})
+      .catch(function(){if(done)return;done=true;clearTimeout(timer);setLive(el,false,"UNREACHABLE");});
+  });
+
+  var resources=[], activeFilter="ALL";
+  var grid=document.getElementById("atlasResources"), search=document.getElementById("atlasSearch"), note=document.getElementById("atlasNote");
+  var specs=[
+    {type:"MODEL",url:"https://huggingface.co/api/models?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/"},
+    {type:"DATASET",url:"https://huggingface.co/api/datasets?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/datasets/"},
+    {type:"SPACE",url:"https://huggingface.co/api/spaces?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/spaces/"},
+    {type:"SPACE",url:"https://huggingface.co/api/spaces/SZLHOLDINGS/README",base:"https://huggingface.co/spaces/",singleton:true},
+    {type:"COLLECTION",url:"https://huggingface.co/api/collections?owner=SZLHOLDINGS&limit=100",base:"https://huggingface.co/collections/"},
+    {type:"BUCKET",url:"https://huggingface.co/api/buckets/SZLHOLDINGS",base:"https://huggingface.co/buckets/"}
+  ];
+
+  function resourceState(item,type){
+    if(type==="SPACE")return String((item.runtime&&item.runtime.stage)||"UNKNOWN").toUpperCase();
+    return "PUBLIC";
+  }
+
+  function resourceDetail(item,type){
+    if(type==="SPACE")return "HF Space · "+resourceState(item,type);
+    if(type==="MODEL")return item.pipeline_tag ? "Model · "+item.pipeline_tag : "Model repository";
+    if(type==="COLLECTION")return "Collection · "+((item.items&&item.items.length)||0)+" linked items";
+    if(type==="BUCKET")return "Bucket · "+(item.totalFiles||0)+" public files";
+    var license=item.cardData&&item.cardData.license;
+    return license ? "Dataset · license "+license : "Dataset repository";
+  }
+
+  function fetchJson(url){
+    var controller=new AbortController();
+    var timer=setTimeout(function(){controller.abort();},8000);
+    return fetch(url,{cache:"no-store",signal:controller.signal})
+      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status+" for "+url);return r.json();})
+      .finally(function(){clearTimeout(timer);});
+  }
+
+  function normalizeItems(payload,spec){
+    if(spec.singleton)return [payload];
+    if(Array.isArray(payload))return payload;
+    if(payload&&Array.isArray(payload.items))return payload.items;
+    throw new Error(spec.type+" API returned an unsupported shape");
+  }
+
+  function hydrateSpaceRuntime(items){
+    return Promise.all(items.map(function(item){
+      var id=String(item.id||"");
+      if(!id)return Promise.resolve(item);
+      return fetchJson("https://huggingface.co/api/spaces/"+encodeURIComponent(id).replace("%2F","/"))
+        .then(function(detail){return detail;})
+        .catch(function(){item._runtimeUnavailable=true;return item;});
+    }));
+  }
+
+  function render(){
+    var query=search.value.trim().toLowerCase();
+    var shown=resources.filter(function(item){return (activeFilter==="ALL"||item.type===activeFilter)&&(!query||item.name.toLowerCase().indexOf(query)!==-1);});
+    grid.replaceChildren();
+    if(!shown.length){
+      var empty=document.createElement("div");empty.className="resource";
+      var top=document.createElement("div");top.className="resource-top";
+      var kind=document.createElement("span");kind.className="resource-type";kind.textContent="ATLAS";
+      var state=document.createElement("span");state.className="resource-state";state.textContent="NO MATCH";
+      var title=document.createElement("b");title.textContent="No public resource matches this view.";
+      top.append(kind,state);empty.append(top,title);grid.append(empty);return;
+    }
+    shown.forEach(function(item){
+      var card=document.createElement("a");card.className="resource";card.href=item.href;card.target="_blank";card.rel="noopener";
+      var top=document.createElement("div");top.className="resource-top";
+      var type=document.createElement("span");type.className="resource-type";type.textContent=item.type;
+      var state=document.createElement("span");state.className="resource-state"+(item.type==="SPACE"&&item.state!=="RUNNING"?" bad":"");state.textContent=item.state;
+      var title=document.createElement("b");title.textContent=item.label;
+      var detail=document.createElement("small");detail.textContent=item.detail;
+      top.append(type,state);card.append(top,title,detail);grid.append(card);
+    });
+  }
+
+  Promise.allSettled(specs.map(function(spec){
+    return fetchJson(spec.url)
+      .then(function(payload){
+        var items=normalizeItems(payload,spec);
+        if(spec.type==="SPACE"&&!spec.singleton){
+          return hydrateSpaceRuntime(items).then(function(hydrated){return {spec:spec,items:hydrated};});
+        }
+        return {spec:spec,items:items};
+      });
+  })).then(function(results){
+    var failures=[];
+    results.forEach(function(result){
+      if(result.status!=="fulfilled"){failures.push(String(result.reason));return;}
+      var spec=result.value.spec;
+      result.value.items.forEach(function(item){
+        var id=String(item.id||item.slug||"");
+        if(id.indexOf("SZLHOLDINGS/")!==0)return;
+        if(resources.some(function(existing){return existing.type===spec.type&&existing.name===id;}))return;
+        var label=spec.type==="COLLECTION"&&item.title ? item.title : id.replace(/^SZLHOLDINGS\//,"");
+        resources.push({type:spec.type,name:id,label:label,state:resourceState(item,spec.type),detail:resourceDetail(item,spec.type),href:spec.base+id});
+      });
+    });
+    resources.sort(function(a,b){if(a.type!==b.type)return a.type.localeCompare(b.type);if(a.type==="SPACE"&&a.state!==b.state)return a.state==="RUNNING"?-1:1;return a.name.localeCompare(b.name);});
+    var models=resources.filter(function(x){return x.type==="MODEL";}).length;
+    var datasets=resources.filter(function(x){return x.type==="DATASET";}).length;
+    var spaces=resources.filter(function(x){return x.type==="SPACE";}).length;
+    var collections=resources.filter(function(x){return x.type==="COLLECTION";}).length;
+    var buckets=resources.filter(function(x){return x.type==="BUCKET";}).length;
+    document.getElementById("atlasTotal").textContent=resources.length;
+    document.getElementById("atlasModels").textContent=models;
+    document.getElementById("atlasDatasets").textContent=datasets;
+    document.getElementById("atlasSpaces").textContent=spaces;
+    document.getElementById("atlasCollections").textContent=collections;
+    document.getElementById("atlasBuckets").textContent=buckets;
+    var unknownSpaces=resources.filter(function(x){return x.type==="SPACE"&&x.state==="UNKNOWN";}).length;
+    if(unknownSpaces)failures.push(unknownSpaces+" Space runtime state"+(unknownSpaces===1?" is":"s are")+" unavailable");
+    if(failures.length)note.textContent="PARTIAL: "+failures.join(" · ")+". Public links remain available; unavailable metadata is not inferred.";
+    render();
+  });
+
+  search.addEventListener("input",render);
+  document.querySelectorAll(".filter-btn").forEach(function(button){
+    button.addEventListener("click",function(){
+      activeFilter=button.dataset.filter;
+      document.querySelectorAll(".filter-btn").forEach(function(b){b.setAttribute("aria-pressed",String(b===button));});
+      render();
+    });
+  });
+})();
 </script>
 </body>
 </html>
