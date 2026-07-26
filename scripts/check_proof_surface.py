@@ -96,6 +96,12 @@ def check() -> None:
             assert parsed.scheme == "https", f"external evidence link is not HTTPS: {href}"
 
     assert "MEASURED NOW" not in source
+    assert "RUNTIME CHECK BELOW" not in source
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 6
+    assert (
+        "REPORTED identifies listing metadata only; runtime state, capability, "
+        "and availability are not checked in this section." in source
+    ), "curated Hub cards need bounded non-runtime evidence labels"
     assert 'data-probe="https://a-11-oy.com/verify"' in source
     assert 'data-probe="https://a-11-oy.com/api/a11oy/v1/honest"' in source
     assert 'event.key==="Escape"' in source
