@@ -345,6 +345,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   </div>
   <p class="copyright">© 2026 SZL Holdings. Governed AI you can prove.</p>
 </div></footer>
+<script src="scripts/atlas_policy.js"></script>
 <script>
 (function(){
   "use strict";
@@ -384,6 +385,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   });
 
   var resources=[], activeFilter="ALL";
+  var atlasPolicy=window.A11oyAtlasPolicy;
   var grid=document.getElementById("atlasResources"), search=document.getElementById("atlasSearch"), note=document.getElementById("atlasNote");
   var specs=[
     {type:"MODEL",url:"https://huggingface.co/api/models?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/"},
@@ -456,6 +458,19 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     });
   }
 
+  if(!atlasPolicy||typeof atlasPolicy.allows!=="function"){
+    grid.replaceChildren();
+    var unavailable=document.createElement("div");unavailable.className="resource";
+    var unavailableTop=document.createElement("div");unavailableTop.className="resource-top";
+    var unavailableType=document.createElement("span");unavailableType.className="resource-type";unavailableType.textContent="ATLAS";
+    var unavailableState=document.createElement("span");unavailableState.className="resource-state bad";unavailableState.textContent="UNAVAILABLE";
+    var unavailableTitle=document.createElement("b");unavailableTitle.textContent="Public registry policy did not load.";
+    var unavailableDetail=document.createElement("small");unavailableDetail.textContent="No resource links were generated.";
+    unavailableTop.append(unavailableType,unavailableState);unavailable.append(unavailableTop,unavailableTitle,unavailableDetail);grid.append(unavailable);
+    note.textContent="UNAVAILABLE: the public-atlas admission policy is missing. The registry fails closed.";
+    return;
+  }
+
   Promise.allSettled(specs.map(function(spec){
     return fetchJson(spec.url)
       .then(function(payload){
@@ -472,7 +487,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var spec=result.value.spec;
       result.value.items.forEach(function(item){
         var id=String(item.id||item.slug||"");
-        if(id.indexOf("SZLHOLDINGS/")!==0)return;
+        if(!atlasPolicy.allows(spec.type,id))return;
         if(resources.some(function(existing){return existing.type===spec.type&&existing.name===id;}))return;
         var label=spec.type==="COLLECTION"&&item.title ? item.title : id.replace(/^SZLHOLDINGS\//,"");
         resources.push({type:spec.type,name:id,label:label,state:resourceState(item,spec.type),detail:resourceDetail(item,spec.type),href:spec.base+id});

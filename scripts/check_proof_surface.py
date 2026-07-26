@@ -28,6 +28,7 @@ class Surface(HTMLParser):
         self.buttons: list[dict[str, str | None]] = []
         self.ids: set[str] = set()
         self.links: list[dict[str, str | None]] = []
+        self.scripts: list[dict[str, str | None]] = []
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
@@ -41,6 +42,8 @@ class Surface(HTMLParser):
             self.buttons.append(item)
         elif tag == "link":
             self.links.append(item)
+        elif tag == "script":
+            self.scripts.append(item)
 
 
 def check() -> None:
@@ -96,6 +99,13 @@ def check() -> None:
     assert 'data-probe="https://a-11-oy.com/verify"' in source
     assert 'data-probe="https://a-11-oy.com/api/a11oy/v1/honest"' in source
     assert 'event.key==="Escape"' in source
+    assert any(
+        script.get("src") == "scripts/atlas_policy.js"
+        for script in surface.scripts
+    ), "the runtime atlas must load its shared admission policy"
+    assert "atlasPolicy.allows(spec.type,id)" in source, (
+        "runtime-generated resources must pass through the atlas admission policy"
+    )
 
 
 if __name__ == "__main__":
