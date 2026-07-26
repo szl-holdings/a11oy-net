@@ -465,7 +465,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var spec=result.value.spec;
       result.value.items.forEach(function(item){
         var id=String(item.id||item.slug||"");
-        var admission=atlasPolicy.classify(spec.type,id);
+        var admission=atlasPolicy.classify(spec.type,id,item.title);
         if(!admission.allowed)return;
         if(resources.some(function(existing){return existing.type===spec.type&&existing.name===id;}))return;
         var label=spec.type==="COLLECTION"&&item.title ? item.title : id.replace(/^SZLHOLDINGS\//,"");

@@ -106,7 +106,7 @@ def check() -> None:
     assert "atlasPolicy.select(spec.type,normalizeItems(payload,spec))" in source, (
         "fetched resources must be filtered before generated-card ingestion"
     )
-    assert "atlasPolicy.classify(spec.type,id)" in source, (
+    assert "atlasPolicy.classify(spec.type,id,item.title)" in source, (
         "runtime-generated cards must carry the admission policy's evidence label"
     )
     assert (

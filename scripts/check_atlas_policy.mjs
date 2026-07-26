@@ -31,6 +31,18 @@ assert.deepEqual(policy.classify("MODEL", "SZLHOLDINGS/szl-governed-norm"), {
   label: "REPORTED",
   reason: "PUBLIC_HUB_LISTING",
 });
+assert.deepEqual(
+  policy.classify(
+    "COLLECTION",
+    "SZLHOLDINGS/evidence-collection",
+    "Killinchu renamed collection",
+  ),
+  {
+    allowed: false,
+    label: "EXCLUDED",
+    reason: "EXCLUDED_PRODUCT_FAMILY",
+  },
+);
 
 const generatedFixture = [
   {
@@ -49,6 +61,19 @@ const generatedFixture = [
     ],
   },
   {
+    type: "COLLECTION",
+    items: [
+      {
+        id: "SZLHOLDINGS/evidence-collection",
+        title: "Killinchu renamed collection",
+      },
+      {
+        id: "SZLHOLDINGS/governed-artifacts",
+        title: "Governed artifacts",
+      },
+    ],
+  },
+  {
     type: "MODEL",
     items: [{ id: "SZLHOLDINGS/szl-governed-norm" }],
   },
@@ -56,7 +81,7 @@ const generatedFixture = [
 
 const generatedCards = generatedFixture.flatMap(({ type, items }) =>
   policy.select(type, items).map((item) => {
-    const decision = policy.classify(type, item.id);
+    const decision = policy.classify(type, item.id, item.title);
     return { type, id: item.id, label: decision.label };
   }),
 );
@@ -65,6 +90,11 @@ assert.deepEqual(generatedCards, [
   {
     type: "DATASET",
     id: "SZLHOLDINGS/uds-spans-receipts",
+    label: "REPORTED",
+  },
+  {
+    type: "COLLECTION",
+    id: "SZLHOLDINGS/governed-artifacts",
     label: "REPORTED",
   },
   {

@@ -4,11 +4,11 @@ Independent proof-registry site for a11oy.net (GitHub Pages behind Cloudflare DN
 
 The page is an evidence index: runtime truth, receipt verification, assurance,
 benchmarks, source, and public-estate metadata link directly to governed sources.
-Its live atlas reads only public Hub
-metadata for models, datasets, Spaces, collections, and buckets in the visitor's
-browser, resolves each Space's public runtime record with an eight-second timeout,
-labels runtime stages without inferring capability health, and remains usable when
-an upstream API is unavailable.
+Its live atlas reads only public Hub metadata for model, dataset, collection, and
+bucket listings in the visitor's browser. Executable Spaces and Killinchu-named
+resources are excluded from generated cards. Admitted listings are labeled
+`REPORTED` without inferring capability health, and the registry remains usable
+when an upstream API is unavailable.
 
 No private resources, tokens, model weights, or dataset payloads are requested.
 

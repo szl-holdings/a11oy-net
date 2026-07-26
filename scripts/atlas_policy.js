@@ -46,14 +46,18 @@
     })
   });
 
-  function classify(type, id) {
+  function hasExcludedName(value) {
+    return String(value || "").toLowerCase().indexOf("killinchu") !== -1;
+  }
+
+  function classify(type, id, displayName) {
     var normalizedType = String(type || "").toUpperCase();
     var normalizedId = String(id || "");
     var ownerMatches = normalizedId.toUpperCase().indexOf(OWNER_PREFIX) === 0;
     if (!ownerMatches) return DECISIONS.OUT_OF_SCOPE;
 
     var resourceName = normalizedId.slice(OWNER_PREFIX.length).toLowerCase();
-    if (resourceName.indexOf("killinchu") !== -1) {
+    if (hasExcludedName(resourceName) || hasExcludedName(displayName)) {
       return DECISIONS.EXCLUDED_FAMILY;
     }
     if (normalizedType === "SPACE") return DECISIONS.INTERACTIVE_RUNTIME;
@@ -61,15 +65,16 @@
     return DECISIONS.REPORTED;
   }
 
-  function allows(type, id) {
-    return classify(type, id).allowed;
+  function allows(type, id, displayName) {
+    return classify(type, id, displayName).allowed;
   }
 
   function select(type, items) {
     if (!Array.isArray(items)) return [];
     return items.filter(function (item) {
       var id = String((item && (item.id || item.slug)) || "");
-      return allows(type, id);
+      var displayName = String((item && item.title) || "");
+      return allows(type, id, displayName);
     });
   }
 
