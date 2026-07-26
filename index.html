@@ -293,28 +293,26 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 </div></section>
 
 <section id="atlas" style="padding-top:0"><div class="wrap">
-  <div class="sec-head"><div class="kicker">Measured in your browser</div><h2>The live public estate, consolidated.</h2><p>Search models, datasets, Spaces, collections, and buckets without leaving the flagship. Counts and Space stages come from Hugging Face public APIs at page load; failures stay visible.</p></div>
+  <div class="sec-head"><div class="kicker">Public Hub metadata</div><h2>The public artifact registry, consolidated.</h2><p>Search reported model, dataset, collection, and bucket listings without leaving the flagship. Executable Spaces and Killinchu-named resources are outside this evidence inventory.</p></div>
   <div class="atlas-shell">
     <div class="atlas-bar">
-      <div class="atlas-stat"><b id="atlasTotal">—</b><span>PUBLIC RESOURCES</span></div>
+      <div class="atlas-stat"><b id="atlasTotal">—</b><span>LISTED ARTIFACTS</span></div>
       <div class="atlas-stat"><b id="atlasModels">—</b><span>MODELS</span></div>
       <div class="atlas-stat"><b id="atlasDatasets">—</b><span>DATASETS</span></div>
-      <div class="atlas-stat"><b id="atlasSpaces">—</b><span>SPACES</span></div>
       <div class="atlas-stat"><b id="atlasCollections">—</b><span>COLLECTIONS</span></div>
       <div class="atlas-stat"><b id="atlasBuckets">—</b><span>BUCKETS</span></div>
     </div>
     <div class="atlas-controls" aria-label="Estate resource filters">
       <label for="atlasSearch" style="position:absolute;left:-10000px">Search public estate</label>
-      <input class="atlas-search" id="atlasSearch" type="search" placeholder="Search models, datasets, Spaces…" autocomplete="off" />
+      <input class="atlas-search" id="atlasSearch" type="search" placeholder="Search public artifact listings…" autocomplete="off" />
       <button class="filter-btn" type="button" data-filter="ALL" aria-pressed="true">ALL</button>
       <button class="filter-btn" type="button" data-filter="MODEL" aria-pressed="false">MODELS</button>
       <button class="filter-btn" type="button" data-filter="DATASET" aria-pressed="false">DATASETS</button>
-      <button class="filter-btn" type="button" data-filter="SPACE" aria-pressed="false">SPACES</button>
       <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
       <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </div>
     <div class="resource-grid" id="atlasResources" aria-live="polite"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
-    <p class="atlas-note" id="atlasNote">Runtime stage and counts are point-in-time public metadata. RUNNING proves transport state only; it does not prove model quality, provider readiness, data rights, or deployed equivalence.</p>
+    <p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p>
   </div>
 </div></section>
 
@@ -387,22 +385,15 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   var resources=[], activeFilter="ALL";
   var atlasPolicy=window.A11oyAtlasPolicy;
   var grid=document.getElementById("atlasResources"), search=document.getElementById("atlasSearch"), note=document.getElementById("atlasNote");
+  var evidenceBoundary="REPORTED means point-in-time public Hub listing metadata only. Interactive Spaces and Killinchu-named resources are excluded; no capability or safety claim is inferred.";
   var specs=[
     {type:"MODEL",url:"https://huggingface.co/api/models?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/"},
     {type:"DATASET",url:"https://huggingface.co/api/datasets?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/datasets/"},
-    {type:"SPACE",url:"https://huggingface.co/api/spaces?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/spaces/"},
-    {type:"SPACE",url:"https://huggingface.co/api/spaces/SZLHOLDINGS/README",base:"https://huggingface.co/spaces/",singleton:true},
     {type:"COLLECTION",url:"https://huggingface.co/api/collections?owner=SZLHOLDINGS&limit=100",base:"https://huggingface.co/collections/"},
     {type:"BUCKET",url:"https://huggingface.co/api/buckets/SZLHOLDINGS",base:"https://huggingface.co/buckets/"}
   ];
 
-  function resourceState(item,type){
-    if(type==="SPACE")return String((item.runtime&&item.runtime.stage)||"UNKNOWN").toUpperCase();
-    return "PUBLIC";
-  }
-
   function resourceDetail(item,type){
-    if(type==="SPACE")return "HF Space · "+resourceState(item,type);
     if(type==="MODEL")return item.pipeline_tag ? "Model · "+item.pipeline_tag : "Model repository";
     if(type==="COLLECTION")return "Collection · "+((item.items&&item.items.length)||0)+" linked items";
     if(type==="BUCKET")return "Bucket · "+(item.totalFiles||0)+" public files";
@@ -425,16 +416,6 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     throw new Error(spec.type+" API returned an unsupported shape");
   }
 
-  function hydrateSpaceRuntime(items){
-    return Promise.all(items.map(function(item){
-      var id=String(item.id||"");
-      if(!id)return Promise.resolve(item);
-      return fetchJson("https://huggingface.co/api/spaces/"+encodeURIComponent(id).replace("%2F","/"))
-        .then(function(detail){return detail;})
-        .catch(function(){item._runtimeUnavailable=true;return item;});
-    }));
-  }
-
   function render(){
     var query=search.value.trim().toLowerCase();
     var shown=resources.filter(function(item){return (activeFilter==="ALL"||item.type===activeFilter)&&(!query||item.name.toLowerCase().indexOf(query)!==-1);});
@@ -451,14 +432,14 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var card=document.createElement("a");card.className="resource";card.href=item.href;card.target="_blank";card.rel="noopener";
       var top=document.createElement("div");top.className="resource-top";
       var type=document.createElement("span");type.className="resource-type";type.textContent=item.type;
-      var state=document.createElement("span");state.className="resource-state"+(item.type==="SPACE"&&item.state!=="RUNNING"?" bad":"");state.textContent=item.state;
+      var state=document.createElement("span");state.className="resource-state";state.textContent=item.state;
       var title=document.createElement("b");title.textContent=item.label;
       var detail=document.createElement("small");detail.textContent=item.detail;
       top.append(type,state);card.append(top,title,detail);grid.append(card);
     });
   }
 
-  if(!atlasPolicy||typeof atlasPolicy.allows!=="function"){
+  if(!atlasPolicy||typeof atlasPolicy.classify!=="function"||typeof atlasPolicy.select!=="function"){
     grid.replaceChildren();
     var unavailable=document.createElement("div");unavailable.className="resource";
     var unavailableTop=document.createElement("div");unavailableTop.className="resource-top";
@@ -474,10 +455,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   Promise.allSettled(specs.map(function(spec){
     return fetchJson(spec.url)
       .then(function(payload){
-        var items=normalizeItems(payload,spec);
-        if(spec.type==="SPACE"&&!spec.singleton){
-          return hydrateSpaceRuntime(items).then(function(hydrated){return {spec:spec,items:hydrated};});
-        }
+        var items=atlasPolicy.select(spec.type,normalizeItems(payload,spec));
         return {spec:spec,items:items};
       });
   })).then(function(results){
@@ -487,27 +465,26 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var spec=result.value.spec;
       result.value.items.forEach(function(item){
         var id=String(item.id||item.slug||"");
-        if(!atlasPolicy.allows(spec.type,id))return;
+        var admission=atlasPolicy.classify(spec.type,id);
+        if(!admission.allowed)return;
         if(resources.some(function(existing){return existing.type===spec.type&&existing.name===id;}))return;
         var label=spec.type==="COLLECTION"&&item.title ? item.title : id.replace(/^SZLHOLDINGS\//,"");
-        resources.push({type:spec.type,name:id,label:label,state:resourceState(item,spec.type),detail:resourceDetail(item,spec.type),href:spec.base+id});
+        resources.push({type:spec.type,name:id,label:label,state:admission.label,detail:resourceDetail(item,spec.type),href:spec.base+id});
       });
     });
-    resources.sort(function(a,b){if(a.type!==b.type)return a.type.localeCompare(b.type);if(a.type==="SPACE"&&a.state!==b.state)return a.state==="RUNNING"?-1:1;return a.name.localeCompare(b.name);});
+    resources.sort(function(a,b){if(a.type!==b.type)return a.type.localeCompare(b.type);return a.name.localeCompare(b.name);});
     var models=resources.filter(function(x){return x.type==="MODEL";}).length;
     var datasets=resources.filter(function(x){return x.type==="DATASET";}).length;
-    var spaces=resources.filter(function(x){return x.type==="SPACE";}).length;
     var collections=resources.filter(function(x){return x.type==="COLLECTION";}).length;
     var buckets=resources.filter(function(x){return x.type==="BUCKET";}).length;
     document.getElementById("atlasTotal").textContent=resources.length;
     document.getElementById("atlasModels").textContent=models;
     document.getElementById("atlasDatasets").textContent=datasets;
-    document.getElementById("atlasSpaces").textContent=spaces;
     document.getElementById("atlasCollections").textContent=collections;
     document.getElementById("atlasBuckets").textContent=buckets;
-    var unknownSpaces=resources.filter(function(x){return x.type==="SPACE"&&x.state==="UNKNOWN";}).length;
-    if(unknownSpaces)failures.push(unknownSpaces+" Space runtime state"+(unknownSpaces===1?" is":"s are")+" unavailable");
-    if(failures.length)note.textContent="PARTIAL: "+failures.join(" · ")+". Public links remain available; unavailable metadata is not inferred.";
+    note.textContent=failures.length
+      ? "PARTIAL: "+failures.join(" · ")+". "+evidenceBoundary
+      : evidenceBoundary;
     render();
   });
 

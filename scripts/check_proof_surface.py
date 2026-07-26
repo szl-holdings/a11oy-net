@@ -103,8 +103,22 @@ def check() -> None:
         script.get("src") == "scripts/atlas_policy.js"
         for script in surface.scripts
     ), "the runtime atlas must load its shared admission policy"
-    assert "atlasPolicy.allows(spec.type,id)" in source, (
-        "runtime-generated resources must pass through the atlas admission policy"
+    assert "atlasPolicy.select(spec.type,normalizeItems(payload,spec))" in source, (
+        "fetched resources must be filtered before generated-card ingestion"
+    )
+    assert "atlasPolicy.classify(spec.type,id)" in source, (
+        "runtime-generated cards must carry the admission policy's evidence label"
+    )
+    assert (
+        '{type:"SPACE",url:"https://huggingface.co/api/spaces' not in source
+    ), "interactive Space listings must not be fetched for the generated atlas"
+    assert "data-filter=\"SPACE\"" not in source
+    assert 'id="atlasSpaces"' not in source
+    assert (
+        "REPORTED means point-in-time public Hub listing metadata only" in source
+    ), "artifact cards need an honest, bounded evidence label"
+    assert "Executable Spaces and Killinchu-named resources are outside" in source, (
+        "the generated atlas boundary must be visible to visitors"
     )
 
 
