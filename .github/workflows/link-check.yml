@@ -95,3 +95,6 @@ jobs:
               sys.exit(1)
           print("OK: HTML parses and all local links/assets resolve.")
           PY
+
+      - name: Validate proof registry surface
+        run: python3 scripts/check_proof_surface.py

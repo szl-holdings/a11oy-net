@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Alloy — Agentic Orchestrator | SZL Holdings</title>
-<meta name="description" content="Alloy is the orchestration backbone of the SZL governed estate — agents that sign their work, label every claim honestly, and refuse to lie." />
-<meta property="og:title" content="Alloy — Agentic Orchestrator" />
-<meta property="og:description" content="The orchestration backbone of the governed estate. AI that signs its work and refuses to lie." />
+<title>A11oy Proof Registry | SZL Holdings</title>
+<meta name="description" content="The independent evidence index for A11oy: runtime truth, receipt verification, assurance, benchmarks, source, and public-estate metadata." />
+<meta property="og:title" content="A11oy Proof Registry" />
+<meta property="og:description" content="Inspect the evidence behind A11oy without relying on the product interface." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://a11oy.net" />
+<meta property="og:url" content="https://a11oy.net/" />
+<link rel="canonical" href="https://a11oy.net/" />
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23080c14"/><path d="M9 23 16 8l7 15" fill="none" stroke="%233af4c8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="18.5" x2="20" y2="18.5" stroke="%235b8dee" stroke-width="2" stroke-linecap="round"/></svg>' />
 <style>
 :root{
@@ -24,6 +25,9 @@
 html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
+.skip-link{position:fixed;left:12px;top:8px;z-index:100;transform:translateY(-160%);background:var(--proof);color:#04120d;padding:10px 14px;border-radius:9px;font-weight:700}
+.skip-link:focus{transform:translateY(0)}
+:focus-visible{outline:2px solid var(--proof);outline-offset:3px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .mono{font-family:var(--mono)}
 ::selection{background:var(--proof-soft);color:var(--proof)}
@@ -57,7 +61,14 @@ nav{position:sticky;top:0;z-index:10;background:rgba(8,12,20,.82);backdrop-filte
 .wordmark .glyph{width:26px;height:26px;border-radius:7px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--proof);font-family:var(--mono);font-size:14px}
 .nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--sub)}
 .nav-links a:hover{color:var(--proof)}
-@media(max-width:720px){.nav-links{display:none}}
+.menu-toggle{display:none;min-width:44px;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);font:600 13px var(--mono);cursor:pointer}
+@media(max-width:720px){
+  .nav-in{position:relative}
+  .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:60px;flex-direction:column;gap:0;padding:8px 24px 14px;background:rgba(8,12,20,.98);border-bottom:1px solid var(--border)}
+  .nav-links[data-open="true"]{display:flex}
+  .nav-links a{min-height:44px;display:flex;align-items:center;border-bottom:1px solid rgba(28,41,66,.65)}
+}
 
 /* ---- hero ---- */
 .hero{padding:112px 0 72px;text-align:left;position:relative}
@@ -83,6 +94,15 @@ h1 .g{background:linear-gradient(92deg,var(--ink) 30%,var(--proof) 78%);-webkit-
 .strip .cell:first-child{border-left:none}
 .strip .cell b{display:block;color:var(--ink);font-size:15px;margin-bottom:3px;font-weight:600}
 .strip .cell .lab{color:var(--proof);font-size:10.5px;letter-spacing:.14em}
+
+/* ---- proof registry ---- */
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.proof-link{display:flex;flex-direction:column;min-height:170px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:.18s}
+.proof-link:hover{border-color:rgba(58,244,200,.45);transform:translateY(-2px)}
+.proof-link .kind{font:10px var(--mono);letter-spacing:.13em;color:var(--proof);text-transform:uppercase}
+.proof-link b{font-size:17px;margin:13px 0 8px}
+.proof-link p{color:var(--sub);font-size:13.5px}
+.proof-link .path{margin-top:auto;padding-top:15px;color:var(--ghost);font:10.5px var(--mono);overflow-wrap:anywhere}
 
 /* ---- sections ---- */
 section{padding:88px 0}
@@ -178,23 +198,25 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to evidence</a>
 <div class="lattice-bg" aria-hidden="true"><i class="baton"></i><i class="baton"></i><i class="baton"></i><i class="baton"></i></div>
-<nav><div class="wrap nav-in">
+<nav aria-label="Primary"><div class="wrap nav-in">
   <a class="wordmark" href="/"><span class="glyph">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></a>
-  <div class="nav-links">
-    <a href="#orchestrator">Orchestrator</a><a href="#stack">Stack</a><a href="#live">Live surfaces</a><a href="#atlas">Live atlas</a>
-    <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">a-11-oy.com ↗</a>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
+  <div class="nav-links" id="primaryLinks" data-open="false">
+    <a href="#proof">Evidence index</a><a href="#stack">Artifacts</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
+    <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">Product ↗</a>
   </div>
 </div></nav>
-<main>
+<main id="main-content">
 
 <header class="hero"><div class="wrap">
-  <div class="kicker">SZL Holdings · Governed AI</div>
-  <h1>Alloy — the <span class="g">agentic orchestrator</span> of a governed estate.</h1>
-  <p class="lede">An orchestration backbone across frontier AI providers where <b>every claim carries an honest label</b>, every artifact can carry a <b>signed receipt</b>, and agents are governed by doctrine — <b>built to refuse to lie</b>.</p>
+  <div class="kicker">Independent evidence surface</div>
+  <h1>A11oy <span class="g">proof registry</span>.</h1>
+  <p class="lede">Inspect runtime truth, receipt verification, assurance evidence, benchmarks, source, and public-estate metadata <b>without relying on the product interface</b>. A link proves location and a probe proves reachability only; neither proves capability.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="https://a-11-oy.com" target="_blank" rel="noopener">See the proof wall →</a>
-    <a class="btn btn-ghost" href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">Open the estate on Hugging Face</a>
+    <a class="btn btn-primary" href="#proof">Inspect the evidence →</a>
+    <a class="btn btn-ghost" href="https://a-11-oy.com" target="_blank" rel="noopener">Open the product</a>
   </div>
   <div class="hero-canon">
     <span>trust ceiling <b>0.97</b> — never 100%</span>
@@ -209,6 +231,19 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   <div class="cell"><span class="lab">SUPPLY CHAIN</span><b>SLSA</b>L1 honest · L2 attested · L3 roadmap</div>
   <div class="cell"><span class="lab">DOCTRINE</span><b>Overclaim guards</b>CI gates ban invented stats and banned tokens</div>
 </div></div>
+
+<section id="proof"><div class="wrap">
+  <div class="sec-head"><div class="kicker">Evidence index</div><h2>Six independent ways to inspect the estate.</h2>
+  <p>These links expose public evidence directly. Dynamic state remains labeled at the source; an HTTP response alone is never promoted to proof of quality or readiness.</p></div>
+  <div class="proof-grid">
+    <a class="proof-link" data-proof="runtime-truth" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="kind">Live read</span><b>Runtime truth</b><p>Read the deployed revision and honesty posture from the product runtime.</p><span class="path">/api/a11oy/v1/honest</span></a>
+    <a class="proof-link" data-proof="receipt-verifier" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="kind">Verifier</span><b>Receipt verification</b><p>Open the public verifier before relying on a receipt or subject digest.</p><span class="path">a-11-oy.com/verify</span></a>
+    <a class="proof-link" data-proof="assurance" href="https://a-11-oy.com/assurance" target="_blank" rel="noopener"><span class="kind">Assurance</span><b>Controls and evidence</b><p>Inspect the assurance surface and its linked evidence rather than a marketing summary.</p><span class="path">a-11-oy.com/assurance</span></a>
+    <a class="proof-link" data-proof="benchmarks" href="https://github.com/szl-holdings/a11oy/tree/main/benchmarks/governed-agent-bench" target="_blank" rel="noopener"><span class="kind">Public source</span><b>Governed-agent benchmark</b><p>Review the benchmark schema, cases, and implementation in versioned source.</p><span class="path">benchmarks/governed-agent-bench</span></a>
+    <a class="proof-link" data-proof="source" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><span class="kind">Public source</span><b>Source and CI</b><p>Inspect implementation history, checks, releases, and open review state.</p><span class="path">github.com/szl-holdings/a11oy</span></a>
+    <a class="proof-link" data-proof="estate" href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener"><span class="kind">Public registry</span><b>Models, datasets, and Spaces</b><p>Inspect the current public Hub inventory; runtime stage is transport evidence only.</p><span class="path">huggingface.co/SZLHOLDINGS</span></a>
+  </div>
+</div></section>
 
 <section id="orchestrator"><div class="wrap">
   <div class="sec-head"><h2>One backbone. Every claim accountable.</h2>
@@ -225,11 +260,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   <p>The estate stays modular at the source and unified at the interface. Each card opens the real public artifact; runtime truth is measured again in the live atlas below.</p></div>
   <div class="frontier">
     <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/SZL-Khipu-1.5B" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">MODEL · BRAIN</span><span class="stack-truth">REPORTED</span></div><h3>SZL-Khipu-1.5B</h3><p>The flagship governed retrieval navigator, with public weights, adapter, schema, receipts, and GGUF path.</p><span class="stack-link">Open model line →</span></a>
-    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ROUTER · BRAIN</span><span class="stack-truth">MEASURED NOW</span></div><h3>Sovereign router</h3><p>The live routing surface for provider status, bounded inference paths, and visible availability labels.</p><span class="stack-link">Open router →</span></a>
-    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/anatomy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ANATOMY V5</span><span class="stack-truth">LIVE STATE BELOW</span></div><h3>Living anatomy</h3><p>The body map for organs, contracts, trust boundaries, and the controller outside model weights.</p><span class="stack-link">Open anatomy →</span></a>
-    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/holographic" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC</span><span class="stack-truth">MEASURED NOW</span></div><h3>Holographic estate</h3><p>A spatial front door into the wider public estate, built as a distinct interface over shared evidence.</p><span class="stack-link">Open holographic →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ROUTER · BRAIN</span><span class="stack-truth">RUNTIME CHECK BELOW</span></div><h3>Sovereign router</h3><p>The live routing surface for provider status, bounded inference paths, and visible availability labels.</p><span class="stack-link">Open router →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/anatomy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ANATOMY V5</span><span class="stack-truth">RUNTIME CHECK BELOW</span></div><h3>Living anatomy</h3><p>The body map for organs, contracts, trust boundaries, and the controller outside model weights.</p><span class="stack-link">Open anatomy →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/holographic" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC</span><span class="stack-truth">RUNTIME CHECK BELOW</span></div><h3>Holographic estate</h3><p>A spatial front door into the wider public estate, built as a distinct interface over shared evidence.</p><span class="stack-link">Open holographic →</span></a>
     <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/szl-kernels" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">KERNELS · PROOF</span><span class="stack-truth">PUBLIC ARTIFACT</span></div><h3>Governed kernels</h3><p>Reusable verifier and policy components with explicit source, license, and provenance boundaries.</p><span class="stack-link">Open kernel suite →</span></a>
-    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CONTROL PLANE</span><span class="stack-truth">MEASURED NOW</span></div><h3>A11oy command surface</h3><p>The flagship control plane joining formulas, estate inventory, governance status, and public routes.</p><span class="stack-link">Open control plane →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CONTROL PLANE</span><span class="stack-truth">RUNTIME CHECK BELOW</span></div><h3>A11oy command surface</h3><p>The flagship control plane joining formulas, estate inventory, governance status, and public routes.</p><span class="stack-link">Open control plane →</span></a>
   </div>
 </div></section>
 
@@ -248,8 +283,9 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 <section id="live"><div class="wrap">
   <div class="sec-head"><h2>Live surfaces</h2><p>Real endpoints, probed from your browser right now — reachability is labeled, not assumed.</p></div>
   <div class="live-list">
-    <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Proof wall — flagship</b><span class="u">a-11-oy.com</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-space="SZLHOLDINGS/killinchu" href="https://szlholdings-killinchu.hf.space/elite" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Killinchu — maritime OSINT console</b><span class="u">szlholdings-killinchu.hf.space/elite</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Product domain</b><span class="u">a-11-oy.com</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/verify" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Public receipt verifier</b><span class="u">a-11-oy.com/verify</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/api/a11oy/v1/honest" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Runtime honesty manifest</b><span class="u">/api/a11oy/v1/honest</span></span><span class="st">CHECKING</span></a>
     <a class="live" data-space="SZLHOLDINGS/szl-estate-live" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
     <a class="live" data-space="SZLHOLDINGS/receipt-chain-live" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
   </div>
@@ -299,10 +335,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     <b>Canon.</b> Labels honest by default: MEASURED / REPORTED / MODELED / HEURISTIC / UNKNOWN / UNAVAILABLE.
     locked-proven = exactly 8 formulas {F1, F4, F7, F11, F12, F18, F19, F22}. Λ = Conjecture 1 — advisory, never a theorem.
     Trust ceiling 0.97 — never 100%. SLSA: L1 honest · L2 attested · L3 roadmap.
-    Canonical flagship site: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>.
+    Product domain: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>. Independent proof domain: <b>a11oy.net</b>.
   </p>
   <div class="foot-links">
-    <a href="https://a-11-oy.com" target="_blank" rel="noopener">Proof wall</a>
+    <a href="https://a-11-oy.com" target="_blank" rel="noopener">Product</a>
     <a href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">Hugging Face</a>
     <a href="https://github.com/szl-holdings" target="_blank" rel="noopener">GitHub</a>
     <a href="https://doi.org/10.5281/zenodo.19944926" target="_blank" rel="noopener">DOI</a>
@@ -312,6 +348,20 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 <script>
 (function(){
   "use strict";
+
+  var menuToggle=document.getElementById("menuToggle");
+  var primaryLinks=document.getElementById("primaryLinks");
+  function setMenu(open){
+    if(!menuToggle||!primaryLinks)return;
+    menuToggle.setAttribute("aria-expanded",String(open));
+    primaryLinks.dataset.open=String(open);
+  }
+  if(menuToggle&&primaryLinks){
+    menuToggle.addEventListener("click",function(){setMenu(menuToggle.getAttribute("aria-expanded")!=="true");});
+    primaryLinks.querySelectorAll("a").forEach(function(link){link.addEventListener("click",function(){setMenu(false);});});
+    document.addEventListener("keydown",function(event){if(event.key==="Escape"&&menuToggle.getAttribute("aria-expanded")==="true"){setMenu(false);menuToggle.focus();}});
+    window.addEventListener("resize",function(){if(window.innerWidth>720)setMenu(false);});
+  }
 
   function setLive(el, ok, label){
     var dot=el.querySelector(".dot"), st=el.querySelector(".st");
