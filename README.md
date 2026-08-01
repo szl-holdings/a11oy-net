@@ -91,6 +91,7 @@ The checks validate:
 | `scripts/atlas_policy.js` | Shared browser/Node artifact-admission policy. |
 | `scripts/check_atlas_policy.mjs` | Executable policy regression contract. |
 | `scripts/check_proof_surface.py` | Metadata, accessibility, and truth-surface guard. |
+| `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. |
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
 
@@ -99,6 +100,14 @@ The checks validate:
 Changes ship through a protected pull request. The exact reviewed head must
 pass the link, asset, proof-surface, admission-policy, and doctrine guards
 before normal merge.
+
+`_headers` is the versioned edge-security contract. CI recomputes every inline
+script hash and rejects a weakened or incomplete policy. GitHub Pages does not
+apply this file, so its presence is not deployment evidence: the domain must be
+cut over to a compatible edge host or proxy before the response headers are
+live. After cutover, run **Edge Security Readback**; it compares the root and
+web-manifest responses with the exact committed contract and fails closed on
+missing or changed headers.
 
 Report vulnerabilities through the organization
 [security policy](https://github.com/szl-holdings/.github/security/policy).
