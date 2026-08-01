@@ -3,20 +3,57 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#080c14" />
+<meta name="color-scheme" content="dark" />
+<meta name="robots" content="index,follow,max-image-preview:large" />
 <title>A11oy Proof Registry | SZL Holdings</title>
 <meta name="description" content="The independent evidence index for A11oy: runtime truth, receipt verification, assurance, benchmarks, source, and public-estate metadata." />
 <meta property="og:title" content="A11oy Proof Registry" />
 <meta property="og:description" content="Inspect the evidence behind A11oy without relying on the product interface." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://a11oy.net/" />
+<meta property="og:site_name" content="A11oy Proof Registry" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
+<meta property="og:image:alt" content="A11oy.net — independent proof registry by SZL Holdings" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@szlholdings" />
+<meta name="twitter:title" content="A11oy Proof Registry" />
+<meta name="twitter:description" content="Inspect A11oy evidence without relying on the product interface." />
+<meta name="twitter:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
 <link rel="canonical" href="https://a11oy.net/" />
+<link rel="manifest" href="site.webmanifest" />
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23080c14"/><path d="M9 23 16 8l7 15" fill="none" stroke="%233af4c8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="18.5" x2="20" y2="18.5" stroke="%235b8dee" stroke-width="2" stroke-linecap="round"/></svg>' />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://a11oy.net/#website",
+  "url": "https://a11oy.net/",
+  "name": "A11oy Proof Registry",
+  "description": "The independent evidence index for A11oy.",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "publisher": {
+    "@type": "Organization",
+    "name": "SZL Holdings",
+    "url": "https://github.com/szl-holdings"
+  },
+  "isRelatedTo": {
+    "@type": "SoftwareApplication",
+    "name": "A11oy",
+    "url": "https://a-11-oy.com/",
+    "applicationCategory": "DeveloperApplication"
+  }
+}
+</script>
+<noscript><style>#atlasResources,.atlas-controls,.atlas-bar,.atlas-status-line,#atlasResultCount{display:none}</style></noscript>
 <style>
 :root{
   --void:#080c14; --deep:#0a1019; --surface:#0e1626; --border:#1c2942;
   --proof:#3af4c8; --proof-soft:rgba(58,244,200,.12); --proof-dim:rgba(58,244,200,.06);
   --lattice:#5b8dee; --lattice-soft:rgba(91,141,238,.12);
-  --gold:#d7b96b; --ink:#eef4fb; --sub:#aebccf; --ghost:#65788f; --down:#e8746e;
+  --gold:#d7b96b; --ink:#eef4fb; --sub:#aebccf; --ghost:#7f90a6; --down:#e8746e;
   --r:16px; --maxw:1180px;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
   --mono:"SF Mono",SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
@@ -195,6 +232,31 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 .foot-links{display:flex;gap:20px;margin:26px 0 18px;font-size:13px;color:var(--sub);flex-wrap:wrap}
 .foot-links a:hover{color:var(--proof)}
 .copyright{font-size:12px;color:var(--ghost)}
+
+/* ---- evidence dossier / Series A public experience ---- */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(340px,.82fr);gap:72px;align-items:center}
+.hero-copy{min-width:0}
+.dossier{position:relative;background:linear-gradient(160deg,rgba(14,22,38,.96),rgba(8,12,20,.92));border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:0 28px 90px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035);overflow:hidden}
+.dossier::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(440px 220px at 100% 0,rgba(58,244,200,.1),transparent 60%),linear-gradient(90deg,transparent 0 49.8%,rgba(91,141,238,.08) 50%,transparent 50.2%)}
+.dossier>*{position:relative;z-index:1}
+.dossier-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--border);font:10.5px var(--mono);letter-spacing:.15em;color:var(--ghost)}
+.dossier-head b{color:var(--proof);font-weight:600}
+.dossier-list{display:grid}
+.dossier-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:13px;padding:17px 0;border-bottom:1px solid rgba(28,41,66,.74);transition:.18s}
+.dossier-row:hover{padding-left:4px}
+.dossier-row:last-child{border-bottom:0}
+.dossier-index{width:30px;height:30px;border:1px solid var(--border);border-radius:9px;display:grid;place-items:center;color:var(--lattice);font:10px var(--mono)}
+.dossier-row b{display:block;font-size:13.5px}
+.dossier-row small{display:block;margin-top:2px;color:var(--ghost);font:10px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dossier-action{color:var(--proof);font:9.5px var(--mono);letter-spacing:.11em}
+.dossier-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);color:var(--ghost);font:10.5px/1.6 var(--mono)}
+.signal-rail{display:flex;align-items:center;gap:8px;margin-top:24px;color:var(--ghost);font:10.5px var(--mono)}
+.signal-rail::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--proof);box-shadow:0 0 0 4px var(--proof-soft)}
+.atlas-status-line{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;color:var(--ghost);font:10.5px/1.6 var(--mono)}
+.atlas-observed{color:var(--sub)}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr;gap:42px}.dossier{max-width:720px}.hero{padding-top:88px}}
+@media(max-width:560px){.hero{padding:76px 0 54px}.dossier{padding:16px;border-radius:16px}.dossier-row{grid-template-columns:30px minmax(0,1fr)}.dossier-action{grid-column:2}.hero-canon{display:grid;gap:10px}.cta-row .btn{justify-content:center;width:100%}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.card,.proof-link,.stack-card,.resource,.dossier-row{transition:none}.dot.ok{animation:none}}
 </style>
 </head>
 <body>
@@ -210,19 +272,32 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 </div></nav>
 <main id="main-content">
 
-<header class="hero"><div class="wrap">
-  <div class="kicker">Independent evidence surface</div>
-  <h1>A11oy <span class="g">proof registry</span>.</h1>
-  <p class="lede">Inspect runtime truth, receipt verification, assurance evidence, benchmarks, source, and public-estate metadata <b>without relying on the product interface</b>. A link proves location and a probe proves reachability only; neither proves capability.</p>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="#proof">Inspect the evidence →</a>
-    <a class="btn btn-ghost" href="https://a-11-oy.com" target="_blank" rel="noopener">Open the product</a>
+<header class="hero"><div class="wrap hero-grid">
+  <div class="hero-copy">
+    <div class="kicker">Independent evidence surface</div>
+    <h1>The evidence behind <span class="g">A11oy</span>.</h1>
+    <p class="lede">Inspect runtime truth, receipt verification, assurance evidence, benchmarks, source, and public-estate metadata <b>without relying on the product interface</b>. A link proves location and a probe proves reachability only; neither proves capability.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#proof">Start diligence →</a>
+      <a class="btn btn-ghost" href="https://a-11-oy.com" target="_blank" rel="noopener">Open the product</a>
+    </div>
+    <div class="hero-canon">
+      <span>trust ceiling <b>0.97</b> — never 100%</span>
+      <span>locked-proven = <b>exactly 8</b> formulas</span>
+      <span>Λ = <b>Conjecture 1</b> · advisory, never a theorem</span>
+    </div>
   </div>
-  <div class="hero-canon">
-    <span>trust ceiling <b>0.97</b> — never 100%</span>
-    <span>locked-proven = <b>exactly 8</b> formulas</span>
-    <span>Λ = <b>Conjecture 1</b> · advisory, never a theorem</span>
-  </div>
+  <aside class="dossier" aria-label="A11oy public evidence dossier">
+    <div class="dossier-head"><span>EVIDENCE DOSSIER</span><b>PUBLIC</b></div>
+    <div class="dossier-list">
+      <a class="dossier-row" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dossier-index">01</span><span><b>Runtime honesty manifest</b><small>/api/a11oy/v1/honest</small></span><span class="dossier-action">READ ↗</span></a>
+      <a class="dossier-row" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dossier-index">02</span><span><b>Receipt verifier</b><small>independent verification entry point</small></span><span class="dossier-action">VERIFY ↗</span></a>
+      <a class="dossier-row" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><span class="dossier-index">03</span><span><b>Implementation source</b><small>review history, checks, and architecture</small></span><span class="dossier-action">SOURCE ↗</span></a>
+      <a class="dossier-row" href="#atlas"><span class="dossier-index">04</span><span><b>Public artifact registry</b><small>browser-read Hugging Face metadata</small></span><span class="dossier-action">INSPECT ↓</span></a>
+    </div>
+    <p class="dossier-note">No account, token, model weight, dataset payload, or private resource is requested by this page.</p>
+    <p class="signal-rail">Product experience and evidence experience remain separate.</p>
+  </aside>
 </div></header>
 
 <div class="strip"><div class="wrap strip-in">
@@ -283,11 +358,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
 <section id="live"><div class="wrap">
   <div class="sec-head"><h2>Live surfaces</h2><p>Real endpoints, probed from your browser right now — reachability is labeled, not assumed.</p></div>
   <div class="live-list">
-    <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Product domain</b><span class="u">a-11-oy.com</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-probe="https://a-11-oy.com/verify" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Public receipt verifier</b><span class="u">a-11-oy.com/verify</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-probe="https://a-11-oy.com/api/a11oy/v1/honest" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Runtime honesty manifest</b><span class="u">/api/a11oy/v1/honest</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-space="SZLHOLDINGS/szl-estate-live" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
-    <a class="live" data-space="SZLHOLDINGS/receipt-chain-live" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Product domain</b><span class="u">a-11-oy.com</span></span><span class="st" aria-live="polite">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/verify" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Public receipt verifier</b><span class="u">a-11-oy.com/verify</span></span><span class="st" aria-live="polite">CHECKING</span></a>
+    <a class="live" data-probe="https://a-11-oy.com/api/a11oy/v1/honest" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Runtime honesty manifest</b><span class="u">/api/a11oy/v1/honest</span></span><span class="st" aria-live="polite">CHECKING</span></a>
+    <a class="live" data-space="SZLHOLDINGS/szl-estate-live" href="https://szlholdings-szl-estate-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Estate hub — live index</b><span class="u">szlholdings-szl-estate-live.static.hf.space</span></span><span class="st" aria-live="polite">CHECKING</span></a>
+    <a class="live" data-space="SZLHOLDINGS/receipt-chain-live" href="https://szlholdings-receipt-chain-live.static.hf.space" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Receipt chain — verifier surface</b><span class="u">szlholdings-receipt-chain-live.static.hf.space</span></span><span class="st" aria-live="polite">CHECKING</span></a>
   </div>
   <p class="probe-note">Probe = opaque fetch reachability from your browser. REACHABLE / UNREACHABLE only — no uptime claims are made or stored.</p>
 </div></section>
@@ -311,8 +386,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
       <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </div>
-    <div class="resource-grid" id="atlasResources" aria-live="polite"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
-    <p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p>
+    <div class="resource-grid" id="atlasResources" aria-live="polite" aria-busy="true"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
+    <noscript><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state bad">UNAVAILABLE</span></div><b>Browser registry reads require JavaScript.</b><small>The static evidence links above remain available.</small></div></noscript>
+    <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt" role="status">Not observed by this browser yet.</p></div>
+    <p class="atlas-note" id="atlasResultCount" aria-live="polite">Waiting for public artifact metadata.</p>
   </div>
 </div></section>
 
@@ -370,8 +447,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   }
 
   document.querySelectorAll(".live[data-space]").forEach(function(el){
-    fetch("https://huggingface.co/api/spaces/"+encodeURIComponent(el.dataset.space).replace("%2F","/"),{cache:"no-store"})
-      .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    fetchJson("https://huggingface.co/api/spaces/"+encodeURIComponent(el.dataset.space).replace("%2F","/"))
       .then(function(data){var stage=String((data.runtime&&data.runtime.stage)||"UNKNOWN").toUpperCase();setLive(el,stage==="RUNNING",stage);})
       .catch(function(){setLive(el,false,"UNAVAILABLE");});
   });
@@ -385,6 +461,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
   var resources=[], activeFilter="ALL";
   var atlasPolicy=window.A11oyAtlasPolicy;
   var grid=document.getElementById("atlasResources"), search=document.getElementById("atlasSearch"), note=document.getElementById("atlasNote");
+  var observedAt=document.getElementById("atlasObservedAt"), resultCount=document.getElementById("atlasResultCount");
   var evidenceBoundary="REPORTED means point-in-time public Hub listing metadata only. Interactive Spaces and Killinchu-named resources are excluded; no capability or safety claim is inferred.";
   var specs=[
     {type:"MODEL",url:"https://huggingface.co/api/models?author=SZLHOLDINGS&limit=100&full=true",base:"https://huggingface.co/"},
@@ -426,7 +503,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var kind=document.createElement("span");kind.className="resource-type";kind.textContent="ATLAS";
       var state=document.createElement("span");state.className="resource-state";state.textContent="NO MATCH";
       var title=document.createElement("b");title.textContent="No public resource matches this view.";
-      top.append(kind,state);empty.append(top,title);grid.append(empty);return;
+      top.append(kind,state);empty.append(top,title);grid.append(empty);resultCount.textContent="0 public artifacts shown in this view.";return;
     }
     shown.forEach(function(item){
       var card=document.createElement("a");card.className="resource";card.href=item.href;card.target="_blank";card.rel="noopener";
@@ -437,6 +514,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       var detail=document.createElement("small");detail.textContent=item.detail;
       top.append(type,state);card.append(top,title,detail);grid.append(card);
     });
+    resultCount.textContent=shown.length+" public artifact"+(shown.length===1 ? "" : "s")+" shown in this view.";
   }
 
   if(!atlasPolicy||typeof atlasPolicy.classify!=="function"||typeof atlasPolicy.select!=="function"){
@@ -448,7 +526,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     var unavailableTitle=document.createElement("b");unavailableTitle.textContent="Public registry policy did not load.";
     var unavailableDetail=document.createElement("small");unavailableDetail.textContent="No resource links were generated.";
     unavailableTop.append(unavailableType,unavailableState);unavailable.append(unavailableTop,unavailableTitle,unavailableDetail);grid.append(unavailable);
+    grid.setAttribute("aria-busy","false");
     note.textContent="UNAVAILABLE: the public-atlas admission policy is missing. The registry fails closed.";
+    observedAt.textContent="Observation stopped: admission policy unavailable.";
+    resultCount.textContent="0 public artifacts admitted.";
     return;
   }
 
@@ -460,6 +541,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
       });
   })).then(function(results){
     var failures=[];
+    var returned=results.filter(function(result){return result.status==="fulfilled";}).length;
     results.forEach(function(result){
       if(result.status!=="fulfilled"){failures.push(String(result.reason));return;}
       var spec=result.value.spec;
@@ -482,6 +564,22 @@ footer{border-top:1px solid var(--border);padding:52px 0 64px;background:var(--d
     document.getElementById("atlasDatasets").textContent=datasets;
     document.getElementById("atlasCollections").textContent=collections;
     document.getElementById("atlasBuckets").textContent=buckets;
+    grid.setAttribute("aria-busy","false");
+    observedAt.textContent="Browser read at "+new Date().toISOString()+" · "+returned+"/"+specs.length+" public sources returned.";
+    if(returned===0){
+      ["atlasTotal","atlasModels","atlasDatasets","atlasCollections","atlasBuckets"].forEach(function(id){document.getElementById(id).textContent="—";});
+      grid.replaceChildren();
+      var noSources=document.createElement("div");noSources.className="resource";
+      var noSourcesTop=document.createElement("div");noSourcesTop.className="resource-top";
+      var noSourcesType=document.createElement("span");noSourcesType.className="resource-type";noSourcesType.textContent="ATLAS";
+      var noSourcesState=document.createElement("span");noSourcesState.className="resource-state bad";noSourcesState.textContent="UNAVAILABLE";
+      var noSourcesTitle=document.createElement("b");noSourcesTitle.textContent="Public artifact metadata is unavailable.";
+      var noSourcesDetail=document.createElement("small");noSourcesDetail.textContent="No inventory count is asserted from a failed read.";
+      noSourcesTop.append(noSourcesType,noSourcesState);noSources.append(noSourcesTop,noSourcesTitle,noSourcesDetail);grid.append(noSources);
+      note.textContent="UNAVAILABLE: no public Hub metadata source returned. "+evidenceBoundary;
+      resultCount.textContent="Inventory unavailable; this is not an observed-empty result.";
+      return;
+    }
     note.textContent=failures.length
       ? "PARTIAL: "+failures.join(" · ")+". "+evidenceBoundary
       : evidenceBoundary;

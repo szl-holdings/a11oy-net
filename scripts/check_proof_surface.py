@@ -4,6 +4,10 @@
 
 from __future__ import annotations
 
+import json
+import re
+import struct
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
@@ -11,6 +15,13 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
+NOJEKYLL = ROOT / ".nojekyll"
+ROBOTS = ROOT / "robots.txt"
+SITEMAP = ROOT / "sitemap.xml"
+MANIFEST = ROOT / "site.webmanifest"
+SECURITY = ROOT / ".well-known" / "security.txt"
+SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
+LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
@@ -21,6 +32,28 @@ EXPECTED_PROOFS = {
 }
 
 
+def relative_luminance(hex_color: str) -> float:
+    channels = [
+        int(hex_color[index : index + 2], 16) / 255
+        for index in (1, 3, 5)
+    ]
+    linear = [
+        value / 12.92
+        if value <= 0.04045
+        else ((value + 0.055) / 1.055) ** 2.4
+        for value in channels
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast_ratio(first: str, second: str) -> float:
+    high, low = sorted(
+        (relative_luminance(first), relative_luminance(second)),
+        reverse=True,
+    )
+    return (high + 0.05) / (low + 0.05)
+
+
 class Surface(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -28,6 +61,7 @@ class Surface(HTMLParser):
         self.buttons: list[dict[str, str | None]] = []
         self.ids: set[str] = set()
         self.links: list[dict[str, str | None]] = []
+        self.metas: list[dict[str, str | None]] = []
         self.scripts: list[dict[str, str | None]] = []
 
     def handle_starttag(
@@ -42,11 +76,22 @@ class Surface(HTMLParser):
             self.buttons.append(item)
         elif tag == "link":
             self.links.append(item)
+        elif tag == "meta":
+            self.metas.append(item)
         elif tag == "script":
             self.scripts.append(item)
 
 
 def check() -> None:
+    assert NOJEKYLL.is_file(), (
+        ".nojekyll is required to publish .well-known/security.txt on GitHub Pages"
+    )
+    workflow = LINK_WORKFLOW.read_text(encoding="utf-8")
+    assert re.search(r"^    name: Link & Asset Check$", workflow, re.MULTILINE)
+    assert re.search(
+        r"^    name: pages build and deployment$", workflow, re.MULTILINE
+    )
+    assert '.well-known/security.txt' in workflow
     source = INDEX.read_text(encoding="utf-8")
     surface = Surface()
     surface.feed(source)
@@ -59,6 +104,57 @@ def check() -> None:
     assert canonical == [
         {"rel": "canonical", "href": "https://a11oy.net/"}
     ], "a11oy.net must remain its own canonical proof domain"
+    assert {"rel": "manifest", "href": "site.webmanifest"} in surface.links
+
+    def meta_value(kind: str, name: str) -> str | None:
+        return next(
+            (
+                str(meta.get("content"))
+                for meta in surface.metas
+                if meta.get(kind) == name and meta.get("content")
+            ),
+            None,
+        )
+
+    assert meta_value("property", "og:url") == "https://a11oy.net/"
+    assert meta_value("property", "og:image") == (
+        "https://a11oy.net/assets/a11oy-net-social.png"
+    )
+    assert meta_value("name", "twitter:card") == "summary_large_image"
+    assert meta_value("name", "twitter:image") == (
+        "https://a11oy.net/assets/a11oy-net-social.png"
+    )
+    assert SOCIAL_PREVIEW.is_file() and SOCIAL_PREVIEW.stat().st_size > 10_000
+    preview_bytes = SOCIAL_PREVIEW.read_bytes()
+    assert preview_bytes.startswith(b"\x89PNG\r\n\x1a\n")
+    preview_width, preview_height = struct.unpack(">II", preview_bytes[16:24])
+    assert preview_width >= 1200 and preview_height >= 630
+    assert 1.85 <= preview_width / preview_height <= 1.95
+
+    structured_blocks = re.findall(
+        r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+        source,
+        re.DOTALL,
+    )
+    assert len(structured_blocks) == 1, "one canonical JSON-LD graph is required"
+    structured = json.loads(structured_blocks[0])
+    assert structured["@type"] == "WebSite"
+    assert structured["url"] == "https://a11oy.net/"
+    assert structured["publisher"]["url"] == "https://github.com/szl-holdings"
+
+    robots = ROBOTS.read_text(encoding="utf-8")
+    assert "Sitemap: https://a11oy.net/sitemap.xml" in robots
+    sitemap = ET.parse(SITEMAP)
+    namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    assert [
+        element.text for element in sitemap.findall(".//sm:loc", namespace)
+    ] == ["https://a11oy.net/"]
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    assert manifest["start_url"] == "/"
+    assert manifest["theme_color"] == "#080c14"
+    security = SECURITY.read_text(encoding="utf-8")
+    assert "Canonical: https://a11oy.net/.well-known/security.txt" in security
+    assert "https://a11oy.com" not in source + robots + security
 
     assert "main-content" in surface.ids
     assert any(
@@ -104,6 +200,21 @@ def check() -> None:
     ), "curated Hub cards need bounded non-runtime evidence labels"
     assert 'data-probe="https://a-11-oy.com/verify"' in source
     assert 'data-probe="https://a-11-oy.com/api/a11oy/v1/honest"' in source
+    colors = dict(re.findall(r"--([a-z-]+):(#[0-9a-fA-F]{6})", source))
+    for background in ("void", "deep", "surface"):
+        assert contrast_ratio(colors["ghost"], colors[background]) >= 4.5
+    assert source.count('class="st" aria-live="polite"') == 5
+    assert 'aria-busy="true"' in source
+    assert 'id="atlasObservedAt" role="status"' in source
+    assert 'grid.setAttribute("aria-busy","false")' in source
+    assert 'new Date().toISOString()' in source
+    assert 'fetchJson("https://huggingface.co/api/spaces/"' in source
+    assert "var controller=new AbortController()" in source
+    assert "if(returned===0)" in source
+    assert '["atlasTotal","atlasModels","atlasDatasets","atlasCollections","atlasBuckets"]' in source
+    assert "Inventory unavailable; this is not an observed-empty result." in source
+    assert 'aria-label="A11oy public evidence dossier"' in source
+    assert "Browser registry reads require JavaScript." in source
     assert 'event.key==="Escape"' in source
     assert any(
         script.get("src") == "scripts/atlas_policy.js"
