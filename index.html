@@ -47,7 +47,7 @@
   }
 }
 </script>
-<noscript><style>#atlasResources,.atlas-controls,.atlas-bar,.atlas-status-line,#atlasResultCount{display:none}</style></noscript>
+<noscript><style>#atlasResources,.atlas-controls,.atlas-bar,.atlas-status-line,#atlasResultCount,#atlasState{display:none}</style></noscript>
 <style>
 :root{
   --void:#080c14; --deep:#0a1019; --surface:#0e1626; --border:#1c2942;
@@ -413,7 +413,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     <div class="status-key-item"><span class="status-key-label">EVIDENCE CLASS</span><b>Evidence labels remain source-bounded</b><p>REPORTED metadata is not promoted to measured capability or quality.</p></div>
     <div class="status-key-item"><span class="status-key-label">OPERATIONAL OBSERVATION</span><b>Browser session only</b><p>CHECKING, REACHABLE, UNREACHABLE, and UNAVAILABLE are transport observations, not uptime claims.</p></div>
   </div>
-  <div class="live-list" role="list" aria-label="Browser-observed public surfaces">
+  <div class="live-list" aria-label="Browser-observed public surfaces">
     <a class="live" data-probe="https://a-11-oy.com/" href="https://a-11-oy.com" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Product domain</b><span class="u">a-11-oy.com</span></span><span class="st" aria-live="polite">CHECKING</span></a>
     <a class="live" data-probe="https://a-11-oy.com/verify" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Public receipt verifier</b><span class="u">a-11-oy.com/verify</span></span><span class="st" aria-live="polite">CHECKING</span></a>
     <a class="live" data-probe="https://a-11-oy.com/api/a11oy/v1/honest" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dot"></span><span class="meta"><b>Runtime honesty manifest</b><span class="u">/api/a11oy/v1/honest</span></span><span class="st" aria-live="polite">CHECKING</span></a>
@@ -487,7 +487,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   function setMenu(open){
     if(!menuToggle||!primaryLinks)return;
     menuToggle.setAttribute("aria-expanded",String(open));
-    menuToggle.setAttribute("aria-label",open ? "Close evidence navigation" : "Open evidence navigation");
+    menuToggle.textContent=open ? "Close" : "Explore";
+    menuToggle.setAttribute("aria-label",open ? "Close evidence navigation" : "Explore evidence navigation");
     primaryLinks.dataset.open=String(open);
   }
   if(menuToggle&&primaryLinks){
@@ -498,7 +499,6 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   }
 
   document.querySelectorAll(".live").forEach(function(el){
-    el.setAttribute("role","listitem");
     el.setAttribute("aria-busy","true");
     el.querySelector(".dot").classList.add("checking");
     el.querySelector(".st").setAttribute("aria-label","Browser observation: CHECKING");
