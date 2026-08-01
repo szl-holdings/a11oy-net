@@ -172,6 +172,15 @@ def check() -> None:
     assert menu.get("aria-controls") == "primaryLinks"
     assert menu.get("aria-expanded") == "false"
     assert "primaryLinks" in surface.ids
+    assert 'menuToggle.textContent=open ? "Close" : "Explore"' in source
+    assert (
+        'open ? "Close evidence navigation" : "Explore evidence navigation"'
+        in source
+    )
+
+    assert 'class="live-list" role="list"' not in source
+    assert 'el.setAttribute("role","listitem")' not in source
+    assert "#atlasResultCount,#atlasState{display:none}" in source
 
     proof_ids = {
         str(anchor["data-proof"])
