@@ -21,6 +21,7 @@ SITEMAP = ROOT / "sitemap.xml"
 MANIFEST = ROOT / "site.webmanifest"
 SECURITY = ROOT / ".well-known" / "security.txt"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
+LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
@@ -85,6 +86,12 @@ def check() -> None:
     assert NOJEKYLL.is_file(), (
         ".nojekyll is required to publish .well-known/security.txt on GitHub Pages"
     )
+    workflow = LINK_WORKFLOW.read_text(encoding="utf-8")
+    assert re.search(r"^    name: Link & Asset Check$", workflow, re.MULTILINE)
+    assert re.search(
+        r"^    name: pages build and deployment$", workflow, re.MULTILINE
+    )
+    assert '.well-known/security.txt' in workflow
     source = INDEX.read_text(encoding="utf-8")
     surface = Surface()
     surface.feed(source)

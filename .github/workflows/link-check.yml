@@ -17,7 +17,8 @@ permissions:
 
 jobs:
   link-check:
-    name: Validate HTML + local links/assets
+    # This exact name is a required protected-branch context.
+    name: Link & Asset Check
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
@@ -101,3 +102,43 @@ jobs:
 
       - name: Validate generated atlas admission policy
         run: node scripts/check_atlas_policy.mjs
+
+  pages-pr-build:
+    # Legacy Pages emits this protected context only after main changes. This
+    # PR-side job builds and inspects the exact raw artifact so protection can
+    # evaluate the candidate before merge without pretending it was deployed.
+    name: pages build and deployment
+    if: github.event_name == 'pull_request'
+    needs: link-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Build and inspect raw Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/a11oy-net-pages.tar"
+          listing="${RUNNER_TEMP}/a11oy-net-pages-files.txt"
+          tar --exclude='./.git' --exclude='./.github' -cf "${archive}" .
+          tar -tf "${archive}" > "${listing}"
+          for required in \
+            .nojekyll \
+            .well-known/security.txt \
+            index.html \
+            assets/a11oy-net-social.png \
+            robots.txt \
+            site.webmanifest \
+            sitemap.xml; do
+            grep -Fxq "./${required}" "${listing}" || {
+              echo "Pages artifact is missing ${required}" >&2
+              exit 1
+            }
+          done
+          test -s "${archive}"
