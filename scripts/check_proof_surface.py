@@ -97,6 +97,7 @@ def check() -> None:
     assert canonical == [
         {"rel": "canonical", "href": "https://a11oy.net/"}
     ], "a11oy.net must remain its own canonical proof domain"
+    assert {"rel": "manifest", "href": "site.webmanifest"} in surface.links
 
     def meta_value(kind: str, name: str) -> str | None:
         return next(
