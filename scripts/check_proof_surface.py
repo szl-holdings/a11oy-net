@@ -19,9 +19,12 @@ NOJEKYLL = ROOT / ".nojekyll"
 ROBOTS = ROOT / "robots.txt"
 SITEMAP = ROOT / "sitemap.xml"
 MANIFEST = ROOT / "site.webmanifest"
+MANIFEST_ALIAS = ROOT / "manifest.webmanifest"
 SECURITY = ROOT / ".well-known" / "security.txt"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
+READYZ = ROOT / "readyz"
+BUILD_INFO = ROOT / "api" / "build-info"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
@@ -152,6 +155,20 @@ def check() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     assert manifest["start_url"] == "/"
     assert manifest["theme_color"] == "#080c14"
+    manifest_alias = json.loads(MANIFEST_ALIAS.read_text(encoding="utf-8"))
+    assert manifest_alias == manifest
+    readyz_index = READYZ / "index.html" if READYZ.is_dir() else READYZ
+    assert readyz_index.is_file(), "front-door readiness route must exist"
+    build_info_index = BUILD_INFO / "index.html" if BUILD_INFO.is_dir() else BUILD_INFO
+    assert build_info_index.is_file(), "front-door build-info route must exist"
+    readyz_html = readyz_index.read_text(encoding="utf-8")
+    build_info_html = build_info_index.read_text(encoding="utf-8")
+    assert (
+        "a-11-oy.com" in readyz_html.lower()
+    ), "readiness route must link to the runtime source explicitly"
+    assert (
+        "static build info surface" in build_info_html.lower()
+    ), "build-info route must stay scoped to evidence surface"
     security = SECURITY.read_text(encoding="utf-8")
     assert "Canonical: https://a11oy.net/.well-known/security.txt" in security
     assert "https://a11oy.com" not in source + robots + security
