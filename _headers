@@ -1,0 +1,9 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-RqY3vINUAAtpGaSgp/N5xyL6dtTDBcrZWMLqvcnnjkc=' 'sha256-t7CVbmwNEh4EPLCx1VfHFzbwij8GbSA1stwOvpLOJq4='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://a-11-oy.com https://huggingface.co https://*.hf.space; font-src 'self' data:; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin

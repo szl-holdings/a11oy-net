@@ -103,6 +103,9 @@ jobs:
       - name: Validate generated atlas admission policy
         run: node scripts/check_atlas_policy.mjs
 
+      - name: Validate edge security contract
+        run: python3 scripts/check_security_headers.py
+
   pages-pr-build:
     # Legacy Pages emits this protected context only after main changes. This
     # PR-side job builds and inspects the exact raw artifact so protection can
@@ -131,6 +134,7 @@ jobs:
           for required in \
             .nojekyll \
             .well-known/security.txt \
+            _headers \
             index.html \
             assets/a11oy-net-social.png \
             robots.txt \
