@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">A11oy proof mark</title>
+  <desc id="desc">A geometric lambda mark in mint and blue on a dark field.</desc>
+  <rect width="512" height="512" rx="112" fill="#080c14"/>
+  <path d="M144 368 256 112l112 256" fill="none" stroke="#3af4c8" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M190 292h132" fill="none" stroke="#5b8dee" stroke-width="32" stroke-linecap="round"/>
+</svg>

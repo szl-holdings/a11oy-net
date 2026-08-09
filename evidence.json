@@ -1,0 +1,52 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "A11oy Proof Registry",
+    "url": "https://a11oy.net/",
+    "publisher": "SZL Holdings",
+    "hosting_boundary": "separately hosted first-party evidence registry",
+    "implementation": "static GitHub Pages site"
+  },
+  "status": {
+    "state": "PARTIAL",
+    "evidence_class": "REPORTED",
+    "meaning": "The static evidence surface and its public links are described here; product-runtime readiness is not implied."
+  },
+  "boundaries": {
+    "product_runtime_is_separate": true,
+    "private_resources_requested": false,
+    "public_hub_metadata_is_authenticated_inventory": false,
+    "http_response_proves_capability": false,
+    "static_readyz_proves_product_readiness": false,
+    "live_edge_security_headers_deployment_proven": false
+  },
+  "observations": {
+    "edge_security_headers": {
+      "state": "UNKNOWN",
+      "evidence_class": "UNKNOWN",
+      "source_uri": null,
+      "observed_at_utc": null,
+      "source_revision": null,
+      "reason": "No source-bound live response-header readback is attached to this candidate. The committed _headers file is policy intent, not deployment evidence."
+    }
+  },
+  "entrypoints": [
+    {"name": "diligence_room", "url": "https://a11oy.net/diligence/", "evidence_class": "REPORTED"},
+    {"name": "static_build_info", "url": "https://a11oy.net/api/build-info/", "evidence_class": "REPORTED"},
+    {"name": "static_reachability", "url": "https://a11oy.net/readyz/", "evidence_class": "REPORTED", "scope": "route declares a reachability-only contract; a client must observe it"},
+    {"name": "product_honesty_manifest", "url": "https://a-11-oy.com/api/a11oy/v1/honest", "evidence_class": "UNKNOWN", "scope": "must be observed live"},
+    {"name": "receipt_verifier", "url": "https://a-11-oy.com/verify", "evidence_class": "UNKNOWN", "scope": "must be observed live"},
+    {"name": "implementation_source", "url": "https://github.com/szl-holdings/a11oy", "evidence_class": "REPORTED"},
+    {"name": "proof_registry_source", "url": "https://github.com/szl-holdings/a11oy-net", "evidence_class": "REPORTED"},
+    {"name": "public_hub_registry", "url": "https://huggingface.co/SZLHOLDINGS", "evidence_class": "REPORTED"},
+    {"name": "security_reporting", "url": "https://a11oy.net/.well-known/security.txt", "evidence_class": "REPORTED"}
+  ],
+  "labels": {
+    "MEASURED": "Direct observation with a disclosed source and context.",
+    "REPORTED": "Public upstream metadata; not independently measured here.",
+    "MODELED": "Simulated or analytically derived.",
+    "HEURISTIC": "A bounded rule or score, not a proof.",
+    "UNKNOWN": "Evidence is insufficient.",
+    "UNAVAILABLE": "The relevant source could not be inspected."
+  }
+}
