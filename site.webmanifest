@@ -1,10 +1,19 @@
 {
+  "id": "/",
   "name": "A11oy Proof Registry",
   "short_name": "A11oy.net",
-  "description": "The independent evidence index for A11oy.",
+  "description": "The separately hosted first-party evidence registry for A11oy.",
   "start_url": "/",
   "scope": "/",
   "display": "minimal-ui",
   "background_color": "#080c14",
-  "theme_color": "#080c14"
+  "theme_color": "#080c14",
+  "icons": [
+    {
+      "src": "/assets/a11oy-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }

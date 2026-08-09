@@ -1,18 +1,20 @@
 # A11oy Proof Registry
 
 <p align="center">
-  <img src="assets/a11oy-net-social.png" alt="A11oy.net — independent proof registry" width="960" />
+  <img src="assets/a11oy-net-social.png" alt="A11oy.net — separately hosted first-party proof registry" width="960" />
 </p>
 
-[`a11oy.net`](https://a11oy.net) is the independent public evidence surface for
+[`a11oy.net`](https://a11oy.net) is the separately hosted first-party public evidence surface for
 [A11oy](https://a-11-oy.com). It gives investors, operators, developers, and
 assurance reviewers a short path to runtime truth, receipt verification,
 source, benchmarks, formal evidence, and public artifact metadata without
 requiring the product interface.
 
 The product experience and the evidence experience are intentionally separate.
-A link proves location. A browser probe proves reachability only. Neither proves
-capability, safety, quality, or deployed equivalence.
+A product link proves location and remains `NOT PROBED · UNKNOWN` here. A
+schema-valid public Hub runtime stage is only a bounded, point-in-time
+`REPORTED` transport observation. Neither proves capability, safety, quality,
+uptime, or deployed equivalence.
 
 ## Start here
 
@@ -24,6 +26,22 @@ capability, safety, quality, or deployed equivalence.
 - **Browse public artifacts:** inspect
   [SZLHOLDINGS on Hugging Face](https://huggingface.co/SZLHOLDINGS).
 
+## Audience routes
+
+- **Evidence registry:** [`/`](https://a11oy.net/) is the broad public proof
+  index and browser-observed metadata surface.
+- **Investor diligence:** [`/diligence/#investors`](https://a11oy.net/diligence/#investors)
+  sequences the public thesis, controls, source, boundaries, and estate links.
+- **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
+  starts from executable validation and machine-readable contracts.
+- **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
+  the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
+  automated readers without extending any claim.
+- **Static route scope:** [`/readyz/`](https://a11oy.net/readyz/) proves only
+  that its static route responded, and
+  [`/api/build-info/`](https://a11oy.net/api/build-info/) does not publish or
+  claim an immutable source revision or product-runtime readiness.
+
 ## Architecture
 
 The registry is a dependency-light static site served by GitHub Pages behind
@@ -31,9 +49,9 @@ Cloudflare DNS.
 
 ```text
 visitor browser
-  ├─ static evidence and source links
-  ├─ opaque reachability probes → a-11-oy.com
+  ├─ static evidence and product links → NOT PROBED · UNKNOWN
   └─ public metadata reads → Hugging Face APIs
+       ├─ fail-closed Space-stage policy → bounded REPORTED transport state
        └─ shared admission policy → reported artifact cards
 ```
 
@@ -67,12 +85,15 @@ trust ceiling is `0.97`, never 100%.
 
 ## Local verification
 
-The repository has no build step. Run both dependency-free contracts from the
+The repository has no build step. Run the dependency-free contracts from the
 repository root:
 
 ```bash
 python scripts/check_proof_surface.py
+python scripts/check_diligence_surface.py
+python scripts/check_security_headers.py
 node scripts/check_atlas_policy.mjs
+node scripts/check_probe_policy.mjs
 ```
 
 The checks validate:
@@ -81,16 +102,29 @@ The checks validate:
 - local links and social-preview assets;
 - keyboard navigation, live-state announcements, and no-script behavior;
 - fail-closed atlas admission and honest evidence labels;
-- exclusion of interactive Spaces and Killinchu-named resources.
+- fail-closed Hugging Face runtime-stage classification while product links stay unprobed;
+- exclusion of interactive Spaces and Killinchu-named resources;
+- the investor/developer diligence room, static machine contract, `llms.txt`,
+  branded 404, SVG mark, and no-JavaScript route boundaries;
+- the committed edge-security contract without promoting it to deployed state.
 
 ## Repository map
 
 | Path | Responsibility |
 | --- | --- |
 | `index.html` | Accessible product narrative, live reads, and registry UI. |
+| `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths and print-safe presentation. |
+| `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
+| `readyz/index.html` | Static front-door reachability only; never product readiness. |
+| `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
+| `404.html`, `assets/a11oy-mark.svg` | Branded recovery route and shared SVG identity mark. |
+| `site.webmanifest`, `manifest.webmanifest` | Byte-identical application metadata aliases. |
 | `scripts/atlas_policy.js` | Shared browser/Node artifact-admission policy. |
 | `scripts/check_atlas_policy.mjs` | Executable policy regression contract. |
+| `scripts/probe_policy.js` | Shared browser/Node runtime-metadata observation policy. |
+| `scripts/check_probe_policy.mjs` | Malformed, transitional, terminal, and `RUNNING` stage regressions. |
 | `scripts/check_proof_surface.py` | Metadata, accessibility, and truth-surface guard. |
+| `scripts/check_diligence_surface.py` | Diligence, machine-contract, no-script, and recovery-route guard. |
 | `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. |
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
@@ -101,13 +135,19 @@ Changes ship through a protected pull request. The exact reviewed head must
 pass the link, asset, proof-surface, admission-policy, and doctrine guards
 before normal merge.
 
-`_headers` is the versioned edge-security contract. CI recomputes every inline
-script hash and rejects a weakened or incomplete policy. GitHub Pages does not
-apply this file, so its presence is not deployment evidence: the domain must be
-cut over to a compatible edge host or proxy before the response headers are
-live. After cutover, run **Edge Security Readback**; it compares the root and
-web-manifest responses with the exact committed contract and fails closed on
-missing or changed headers.
+`_headers` is a versioned edge-security contract, not a live-header receipt. Its
+live deployment state remains **UNKNOWN** on this candidate:
+`live_edge_security_headers_deployment_proven=false` records only that no proof
+has been attached; it is not an observation that deployment is absent. No
+source-bound readback URI, UTC
+observation time, or source revision is attached. CI recomputes every inline
+script hash and rejects a weakened or incomplete contract, but GitHub Pages does not
+apply this file. Its presence is therefore not deployment evidence. The domain
+must be cut over to a compatible edge host or proxy before those response
+headers are live. After cutover, run **Edge Security Readback**; it compares the
+root and web-manifest responses with the exact committed contract and fails
+closed on missing or changed headers. Update the deployment-state evidence only
+after that exact live readback succeeds.
 
 Report vulnerabilities through the organization
 [security policy](https://github.com/szl-holdings/.github/security/policy).

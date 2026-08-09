@@ -9,7 +9,9 @@ import hashlib
 import pathlib
 import re
 import sys
+import urllib.parse
 import urllib.request
+from html.parser import HTMLParser
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -47,6 +49,79 @@ EXPECTED_HEADER_VALUES = {
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-origin",
 }
+PAGE_META_CSP_CONTRACTS = {
+    "diligence/index.html": {
+        "default-src": {"'self'"},
+        "script-src": {"'none'"},
+        "style-src": {"'self'"},
+        "img-src": {"'self'", "data:"},
+        "font-src": {"'self'"},
+        "connect-src": {"'none'"},
+        "object-src": {"'none'"},
+        "base-uri": {"'self'"},
+        "form-action": {"'none'"},
+        "worker-src": {"'none'"},
+        "upgrade-insecure-requests": set(),
+    },
+    "404.html": {
+        "default-src": {"'none'"},
+        "script-src": {"'none'"},
+        "style-src": {"'self'"},
+        "img-src": {"'self'", "data:"},
+        "font-src": {"'self'"},
+        "connect-src": {"'none'"},
+        "manifest-src": {"'none'"},
+        "object-src": {"'none'"},
+        "base-uri": {"'none'"},
+        "form-action": {"'none'"},
+        "worker-src": {"'none'"},
+        "upgrade-insecure-requests": set(),
+    },
+    "api/build-info/index.html": {
+        "default-src": {"'none'"},
+        "style-src": {"'unsafe-inline'"},
+        "base-uri": {"'none'"},
+        "form-action": {"'none'"},
+    },
+    "readyz/index.html": {
+        "default-src": {"'none'"},
+        "style-src": {"'unsafe-inline'"},
+        "base-uri": {"'none'"},
+        "form-action": {"'none'"},
+    },
+}
+
+
+class HtmlSecuritySurface(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.meta_csps: list[str] = []
+        self.inline_style_blocks = 0
+        self.inline_style_attributes = 0
+        self.stylesheet_links = 0
+        self.external_scripts = 0
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        item = dict(attrs)
+        if (
+            tag.lower() == "meta"
+            and str(item.get("http-equiv") or "").lower()
+            == "content-security-policy"
+            and item.get("content") is not None
+        ):
+            self.meta_csps.append(str(item["content"]))
+        if tag.lower() == "style":
+            self.inline_style_blocks += 1
+        if item.get("style") is not None:
+            self.inline_style_attributes += 1
+        if tag.lower() == "link" and "stylesheet" in str(
+            item.get("rel") or ""
+        ).lower().split():
+            self.stylesheet_links += 1
+        if tag.lower() == "script" and item.get("src"):
+            self.external_scripts += 1
 
 
 def parse_headers(path: pathlib.Path) -> dict[str, str]:
@@ -78,6 +153,48 @@ def inline_script_hashes(html: str) -> set[str]:
     return hashes
 
 
+def parse_csp(value: str) -> dict[str, set[str]]:
+    parsed: dict[str, set[str]] = {}
+    for raw_part in value.split(";"):
+        part = raw_part.strip().split()
+        if not part:
+            continue
+        directive = part[0].lower()
+        if directive in parsed:
+            raise ValueError(f"duplicate CSP directive: {directive}")
+        parsed[directive] = set(part[1:])
+    return parsed
+
+
+def canonical_readback_url(value: str) -> str:
+    if value != value.strip():
+        raise ValueError("readback URL has surrounding whitespace")
+    try:
+        parsed = urllib.parse.urlsplit(value)
+        port = parsed.port
+    except ValueError as exc:
+        raise ValueError(f"invalid readback URL: {exc}") from exc
+    if parsed.scheme.lower() != "https":
+        raise ValueError("readback URL must use HTTPS")
+    if not parsed.hostname:
+        raise ValueError("readback URL must include a host")
+    if parsed.username is not None or parsed.password is not None:
+        raise ValueError("readback URL must not contain credentials")
+    if parsed.fragment:
+        raise ValueError("readback URL must not contain a fragment")
+    host = parsed.hostname.lower()
+    if ":" in host and not host.startswith("["):
+        host = f"[{host}]"
+    netloc = host if port in (None, 443) else f"{host}:{port}"
+    return urllib.parse.urlunsplit(
+        ("https", netloc, parsed.path or "/", parsed.query, "")
+    )
+
+
+def readback_target_matches(requested_url: str, final_url: str) -> bool:
+    return canonical_readback_url(requested_url) == canonical_readback_url(final_url)
+
+
 def validate_static() -> tuple[dict[str, str], list[str]]:
     errors: list[str] = []
     try:
@@ -85,18 +202,54 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
     except (OSError, ValueError) as exc:
         return {}, [str(exc)]
 
+    try:
+        parse_csp("default-src 'self'; default-src 'none'")
+    except ValueError:
+        pass
+    else:
+        errors.append("CSP parser accepted a duplicate directive")
+    try:
+        if not readback_target_matches(
+            "https://A11OY.net:443", "https://a11oy.net/"
+        ):
+            errors.append("equivalent HTTPS readback targets did not normalize")
+        for drifted in (
+            "https://attacker.example/",
+            "https://a11oy.net/other",
+            "https://a11oy.net/?unexpected=1",
+        ):
+            if readback_target_matches("https://a11oy.net/", drifted):
+                errors.append(f"readback target drift was accepted: {drifted}")
+        for invalid in (
+            "http://a11oy.net/",
+            "https://user@a11oy.net/",
+            "https://a11oy.net/#fragment",
+        ):
+            try:
+                canonical_readback_url(invalid)
+            except ValueError:
+                continue
+            errors.append(f"invalid readback URL was accepted: {invalid}")
+    except ValueError as exc:
+        errors.append(f"readback URL regression contract failed: {exc}")
+
     missing_headers = REQUIRED_HEADERS - set(headers)
     if missing_headers:
         errors.append("missing headers: " + ", ".join(sorted(missing_headers)))
 
     csp = headers.get("content-security-policy", "")
-    csp_parts = [part.strip().split() for part in csp.split(";") if part.strip()]
-    directives = {part[0] for part in csp_parts}
+    try:
+        observed_csp = parse_csp(csp)
+    except ValueError as exc:
+        observed_csp = {}
+        errors.append(str(exc))
+    directives = set(observed_csp)
     missing_directives = REQUIRED_CSP_DIRECTIVES - directives
     if missing_directives:
         errors.append("CSP missing directives: " + ", ".join(sorted(missing_directives)))
 
-    expected_hashes = inline_script_hashes((ROOT / "index.html").read_text(encoding="utf-8"))
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    expected_hashes = inline_script_hashes(html)
     expected_csp = {
         "default-src": {"'self'"},
         "script-src": {"'self'", *expected_hashes},
@@ -104,9 +257,7 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
         "img-src": {"'self'", "data:"},
         "connect-src": {
             "'self'",
-            "https://a-11-oy.com",
             "https://huggingface.co",
-            "https://*.hf.space",
         },
         "font-src": {"'self'", "data:"},
         "manifest-src": {"'self'"},
@@ -117,13 +268,83 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
         "worker-src": {"'none'"},
         "upgrade-insecure-requests": set(),
     }
-    observed_csp = {part[0]: set(part[1:]) for part in csp_parts}
     for directive, expected_tokens in expected_csp.items():
         if observed_csp.get(directive) != expected_tokens:
             errors.append(f"CSP {directive} does not match the fail-closed contract")
     unexpected_directives = directives - set(expected_csp)
     if unexpected_directives:
         errors.append("CSP has unreviewed directives: " + ", ".join(sorted(unexpected_directives)))
+
+    expected_root_meta_csp = {
+        directive: tokens
+        for directive, tokens in expected_csp.items()
+        if directive != "frame-ancestors"
+    }
+    page_contracts = {
+        "index.html": expected_root_meta_csp,
+        **PAGE_META_CSP_CONTRACTS,
+    }
+    for relative_path, expected_meta_csp in page_contracts.items():
+        path = ROOT / relative_path
+        try:
+            page_html = path.read_text(encoding="utf-8")
+        except OSError as exc:
+            errors.append(f"{relative_path}: cannot read page for CSP validation: {exc}")
+            continue
+        surface = HtmlSecuritySurface()
+        surface.feed(page_html)
+        if len(surface.meta_csps) != 1:
+            errors.append(
+                f"{relative_path}: expected exactly one fallback meta CSP, "
+                f"observed {len(surface.meta_csps)}"
+            )
+            continue
+        try:
+            observed_meta_csp = parse_csp(surface.meta_csps[0])
+        except ValueError as exc:
+            errors.append(f"{relative_path}: {exc}")
+            continue
+        if observed_meta_csp != expected_meta_csp:
+            errors.append(
+                f"{relative_path}: meta CSP does not exactly match its "
+                "reviewed fail-closed contract"
+            )
+        if "frame-ancestors" in observed_meta_csp:
+            errors.append(
+                f"{relative_path}: frame-ancestors must be enforced by headers, "
+                "not a meta CSP"
+            )
+        style_sources = observed_meta_csp.get(
+            "style-src", observed_meta_csp.get("default-src", set())
+        )
+        has_inline_styles = bool(
+            surface.inline_style_blocks or surface.inline_style_attributes
+        )
+        if has_inline_styles and "'unsafe-inline'" not in style_sources:
+            errors.append(
+                f"{relative_path}: inline styles are present but its exact meta "
+                "CSP does not admit them"
+            )
+        if not has_inline_styles and "'unsafe-inline'" in style_sources:
+            errors.append(
+                f"{relative_path}: meta CSP admits inline styles but the page has none"
+            )
+        if surface.stylesheet_links and "'self'" not in style_sources:
+            errors.append(
+                f"{relative_path}: local stylesheet is blocked by its exact meta CSP"
+            )
+        script_sources = observed_meta_csp.get(
+            "script-src", observed_meta_csp.get("default-src", set())
+        )
+        if surface.external_scripts and "'self'" not in script_sources:
+            errors.append(
+                f"{relative_path}: local script is blocked by its exact meta CSP"
+            )
+        page_inline_hashes = inline_script_hashes(page_html)
+        if not page_inline_hashes.issubset(script_sources):
+            errors.append(
+                f"{relative_path}: inline script hashes do not match its exact meta CSP"
+            )
     for key, expected_value in EXPECTED_HEADER_VALUES.items():
         if normalize(headers.get(key, "")) != normalize(expected_value):
             errors.append(f"{key} does not match the fail-closed contract")
@@ -136,6 +357,10 @@ def normalize(value: str) -> str:
 
 def validate_live(url: str, expected: dict[str, str]) -> list[str]:
     errors: list[str] = []
+    try:
+        requested_url = canonical_readback_url(url)
+    except ValueError as exc:
+        return [f"{url}: {exc}"]
     request = urllib.request.Request(
         url,
         headers={"User-Agent": "a11oy-edge-security-readback/1.0"},
@@ -149,8 +374,16 @@ def validate_live(url: str, expected: dict[str, str]) -> list[str]:
         return [f"{url}: live readback failed: {exc}"]
     if status != 200:
         errors.append(f"{url}: expected HTTP 200, observed {status}")
-    if not final_url.lower().startswith("https://"):
-        errors.append(f"{url}: final URL is not HTTPS: {final_url}")
+    try:
+        final_canonical_url = canonical_readback_url(final_url)
+    except ValueError as exc:
+        errors.append(f"{url}: invalid final URL {final_url!r}: {exc}")
+    else:
+        if final_canonical_url != requested_url:
+            errors.append(
+                f"{url}: unexpected redirect/final target {final_canonical_url}; "
+                f"expected {requested_url}"
+            )
     for key in sorted(REQUIRED_HEADERS):
         actual = observed.get(key)
         if actual is None:

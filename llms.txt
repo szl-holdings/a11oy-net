@@ -1,0 +1,21 @@
+# A11oy Proof Registry
+
+> A separately hosted first-party evidence registry for A11oy, published by SZL Holdings.
+
+Authoritative public paths:
+- Evidence homepage: https://a11oy.net/
+- Investor and developer diligence room: https://a11oy.net/diligence/
+- Machine-readable evidence contract: https://a11oy.net/evidence.json
+- Static-surface scope: https://a11oy.net/api/build-info/
+- Static reachability only: https://a11oy.net/readyz/
+- Source: https://github.com/szl-holdings/a11oy-net
+- Product source: https://github.com/szl-holdings/a11oy
+- Public artifact registry: https://huggingface.co/SZLHOLDINGS
+- Security reporting: https://a11oy.net/.well-known/security.txt
+
+Truth boundary:
+- This static site's availability does not establish A11oy product-runtime readiness.
+- A link or HTTP response does not prove capability, safety, quality, or uptime.
+- Public Hugging Face metadata is not an authenticated private inventory.
+- Preserve MEASURED, REPORTED, MODELED, HEURISTIC, UNKNOWN, and UNAVAILABLE labels.
+- Product runtime and receipt-verifier state must be observed at their own live sources.
