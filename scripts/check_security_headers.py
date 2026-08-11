@@ -49,7 +49,26 @@ EXPECTED_HEADER_VALUES = {
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-origin",
 }
+SCRIPTLESS_GATEWAY_META_CSP_CONTRACT = {
+    "default-src": {"'self'"},
+    "script-src": {"'none'"},
+    "style-src": {"'self'"},
+    "img-src": {"'self'", "data:"},
+    "font-src": {"'self'"},
+    "connect-src": {"'none'"},
+    "object-src": {"'none'"},
+    "base-uri": {"'self'"},
+    "form-action": {"'none'"},
+    "worker-src": {"'none'"},
+    "upgrade-insecure-requests": set(),
+}
+SCRIPTLESS_GATEWAY_PAGES = (
+    "chat/index.html",
+    "code/index.html",
+)
 PAGE_META_CSP_CONTRACTS = {
+    "chat/index.html": SCRIPTLESS_GATEWAY_META_CSP_CONTRACT,
+    "code/index.html": SCRIPTLESS_GATEWAY_META_CSP_CONTRACT,
     "diligence/index.html": {
         "default-src": {"'self'"},
         "script-src": {"'none'"},
@@ -166,6 +185,53 @@ def parse_csp(value: str) -> dict[str, set[str]]:
     return parsed
 
 
+def meta_csp_exactly_matches(
+    html: str, expected: dict[str, set[str]]
+) -> bool:
+    surface = HtmlSecuritySurface()
+    surface.feed(html)
+    if len(surface.meta_csps) != 1:
+        return False
+    try:
+        return parse_csp(surface.meta_csps[0]) == expected
+    except ValueError:
+        return False
+
+
+def validate_scriptless_gateway_csp_regressions() -> list[str]:
+    errors: list[str] = []
+    tamper_cases = (
+        ("connect-src", "connect-src 'none'", "connect-src 'self'"),
+        ("base-uri", "base-uri 'self'", "base-uri *"),
+        ("form-action", "form-action 'none'", "form-action 'self'"),
+    )
+    for relative_path in SCRIPTLESS_GATEWAY_PAGES:
+        expected = PAGE_META_CSP_CONTRACTS.get(relative_path)
+        if expected != SCRIPTLESS_GATEWAY_META_CSP_CONTRACT:
+            errors.append(
+                f"{relative_path}: missing the exact scriptless gateway meta CSP contract"
+            )
+            continue
+        try:
+            page_html = (ROOT / relative_path).read_text(encoding="utf-8")
+        except OSError as exc:
+            errors.append(
+                f"{relative_path}: cannot read gateway CSP regression fixture: {exc}"
+            )
+            continue
+        for label, original, replacement in tamper_cases:
+            tampered_html = page_html.replace(original, replacement, 1)
+            if tampered_html == page_html:
+                errors.append(
+                    f"{relative_path}: {label} regression fixture is missing"
+                )
+            elif meta_csp_exactly_matches(tampered_html, expected):
+                errors.append(
+                    f"{relative_path}: exact meta CSP validation accepted {label} drift"
+                )
+    return errors
+
+
 def canonical_readback_url(value: str) -> str:
     if value != value.strip():
         raise ValueError("readback URL has surrounding whitespace")
@@ -208,6 +274,7 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
         pass
     else:
         errors.append("CSP parser accepted a duplicate directive")
+    errors.extend(validate_scriptless_gateway_csp_regressions())
     try:
         if not readback_target_matches(
             "https://A11OY.net:443", "https://a11oy.net/"
