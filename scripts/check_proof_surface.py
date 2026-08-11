@@ -111,6 +111,8 @@ def check() -> None:
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
+        "chat/index.html",
+        "code/index.html",
         "diligence/index.html",
         "evidence.json",
         "llms.txt",
@@ -219,7 +221,12 @@ def check() -> None:
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     assert [
         element.text for element in sitemap.findall(".//sm:loc", namespace)
-    ] == ["https://a11oy.net/", "https://a11oy.net/diligence/"]
+    ] == [
+        "https://a11oy.net/",
+        "https://a11oy.net/diligence/",
+        "https://a11oy.net/chat/",
+        "https://a11oy.net/code/",
+    ]
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
@@ -231,6 +238,11 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
+    for gateway in ("chat", "code"):
+        assert (ROOT / gateway / "index.html").is_file()
+        assert any(
+            anchor.get("href") == f"/{gateway}/" for anchor in surface.anchors
+        ), f"the root proof registry must expose the {gateway} gateway"
     readyz_index = READYZ / "index.html" if READYZ.is_dir() else READYZ
     assert readyz_index.is_file(), "front-door readiness route must exist"
     build_info_index = BUILD_INFO / "index.html" if BUILD_INFO.is_dir() else BUILD_INFO
@@ -273,6 +285,18 @@ def check() -> None:
     )
     assert ".menu-toggle{display:none!important}" in source
     assert ".nav-links{display:flex!important;position:static!important" in source
+    noscript_styles = re.findall(
+        r"<noscript>\s*<style>(.*?)</style>\s*</noscript>",
+        source,
+        re.DOTALL | re.IGNORECASE,
+    )
+    assert len(noscript_styles) == 1, (
+        "the no-script navigation contract must have one scoped style block"
+    )
+    no_script_style = noscript_styles[0]
+    assert "html{scroll-padding-top:0!important}" in no_script_style
+    assert "nav{position:static!important}" in no_script_style
+    assert "[id]{scroll-margin-top:0!important}" in no_script_style
     assert (
         "JavaScript is disabled. Product links remain available" in source
     ), "no-script mode must retain navigation and disclose unavailable reads"

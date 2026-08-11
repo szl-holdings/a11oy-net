@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#080c14" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>A11oy Code Gateway | Governed Run-Loop</title>
+  <meta name="description" content="A source-bounded handoff from the A11oy proof registry to the separately deployed governed code run-loop." />
+  <link rel="canonical" href="https://a11oy.net/code/" />
+  <link rel="icon" href="/assets/a11oy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/diligence.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to code gateway</a>
+  <nav aria-label="Primary">
+    <div class="wrap nav">
+      <a class="brand" href="/" aria-label="A11oy.net home"><img src="/assets/a11oy-mark.svg" alt="" />A11OY.NET</a>
+      <div class="nav-links">
+        <a href="/diligence/">Diligence</a>
+        <a href="/chat/">Chat gateway</a>
+        <a href="/evidence.json">Machine evidence</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Developer gateway · separate runtime</p>
+        <h1>Inspect, run, and verify governed code.</h1>
+        <p class="lede">The governed code surface runs on the separate A11oy product domain. This proof-registry route supplies a stable developer handoff and keeps execution claims attached to their real runtime.</p>
+        <div class="actions">
+          <a class="button primary" href="https://a-11-oy.com/code">Open governed code</a>
+          <a class="button" href="https://a-11-oy.com/api/a11oy/v1/code/capabilities">Read capabilities JSON</a>
+          <a class="button" href="https://github.com/szl-holdings/a11oy">Inspect implementation</a>
+        </div>
+        <p class="boundary"><strong>Truth boundary:</strong> this page does not execute code and does not claim that the separate engine, signer, approval gate, or sandbox is available. Those properties must be observed on the product runtime for the exact session.</p>
+      </div>
+    </header>
+
+    <div class="wrap rail" aria-label="Gateway contract">
+      <article><span>This route</span><b>Developer handoff</b><p>Static navigation and verification context only.</p></article>
+      <article><span>Execution host</span><b>a-11-oy.com/code</b><p>Separately deployed governed run-loop.</p></article>
+      <article><span>Engine state</span><b>UNKNOWN here</b><p>Read the runtime health and capabilities endpoints.</p></article>
+      <article><span>Source</span><b>Public repository</b><p>Inspect implementation, checks, and release history.</p></article>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Developer path</span><h2>Follow the evidence chain.</h2><p>Each link answers a different question; none substitutes for the others.</p></div>
+        <div class="steps">
+          <article class="step"><h3>Capabilities</h3><p>Inspect the runtime's declared governed-code interfaces and current labels.</p><a href="https://a-11-oy.com/api/a11oy/v1/code/capabilities">Read capabilities</a></article>
+          <article class="step"><h3>Run-loop health</h3><p>Observe whether the execution engine is currently available.</p><a href="https://a-11-oy.com/api/a11oy/v1/code/runloop/health">Read health</a></article>
+          <article class="step"><h3>Implementation</h3><p>Review public source and protected checks before relying on behavior.</p><a href="https://github.com/szl-holdings/a11oy">Inspect repository</a></article>
+          <article class="step"><h3>Receipt verification</h3><p>Verify emitted chains and signatures through the product verifier.</p><a href="https://a-11-oy.com/verify">Open verifier</a></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer"><p>Published by SZL Holdings as a static, separately hosted gateway. Runtime capability is not implied.</p><div class="footer-links"><a href="/">Evidence</a><a href="/diligence/">Diligence</a><a href="/.well-known/security.txt">Security</a></div></div></footer>
+</body>
+</html>

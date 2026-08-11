@@ -14,6 +14,8 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DILIGENCE = ROOT / "diligence" / "index.html"
+CHAT = ROOT / "chat" / "index.html"
+CODE = ROOT / "code" / "index.html"
 EVIDENCE = ROOT / "evidence.json"
 LLMS = ROOT / "llms.txt"
 NOT_FOUND = ROOT / "404.html"
@@ -96,6 +98,8 @@ def embedded_json_contract(path: Path, aria_label: str) -> dict[str, object]:
 def check() -> None:
     for required in (
         DILIGENCE,
+        CHAT,
+        CODE,
         EVIDENCE,
         LLMS,
         NOT_FOUND,
@@ -121,8 +125,39 @@ def check() -> None:
         "/llms.txt",
         "/api/build-info/",
         "/readyz/",
+        "/chat/",
+        "/code/",
     } <= diligence_hrefs, "diligence must link every local machine contract"
     check_document(NOT_FOUND, canonical=None)
+
+    chat = check_document(CHAT, canonical="https://a11oy.net/chat/")
+    code = check_document(CODE, canonical="https://a11oy.net/code/")
+    for document, required_hrefs in (
+        (
+            chat,
+            {
+                "https://a-11-oy.com/console",
+                "https://a-11-oy.com/api/a11oy/v1/honest",
+                "https://a-11-oy.com/api/build-info",
+                "https://a-11-oy.com/verify",
+                "https://github.com/szl-holdings/a11oy",
+            },
+        ),
+        (
+            code,
+            {
+                "https://a-11-oy.com/code",
+                "https://a-11-oy.com/api/a11oy/v1/code/capabilities",
+                "https://a-11-oy.com/api/a11oy/v1/code/runloop/health",
+                "https://a-11-oy.com/verify",
+                "https://github.com/szl-holdings/a11oy",
+            },
+        ),
+    ):
+        hrefs = {anchor.get("href") for anchor in document.anchors}
+        assert required_hrefs <= hrefs
+    assert "does not authenticate a user" in CHAT.read_text(encoding="utf-8")
+    assert "does not execute code" in CODE.read_text(encoding="utf-8")
 
     build_info = embedded_json_contract(BUILD_INFO, "Static build-info contract")
     assert build_info == {
@@ -179,6 +214,8 @@ def check() -> None:
     names = {entry["name"] for entry in evidence["entrypoints"]}
     assert {
         "diligence_room",
+        "governed_console_gateway",
+        "governed_code_gateway",
         "static_build_info",
         "static_reachability",
         "product_honesty_manifest",

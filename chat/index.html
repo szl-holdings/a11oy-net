@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#080c14" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>A11oy Chat Gateway | Governed Product Console</title>
+  <meta name="description" content="A source-bounded handoff from the A11oy proof registry to the separately deployed governed product console." />
+  <link rel="canonical" href="https://a11oy.net/chat/" />
+  <link rel="icon" href="/assets/a11oy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/diligence.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to console gateway</a>
+  <nav aria-label="Primary">
+    <div class="wrap nav">
+      <a class="brand" href="/" aria-label="A11oy.net home"><img src="/assets/a11oy-mark.svg" alt="" />A11OY.NET</a>
+      <div class="nav-links">
+        <a href="/diligence/">Diligence</a>
+        <a href="/code/">Code gateway</a>
+        <a href="/evidence.json">Machine evidence</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Product gateway · separate runtime</p>
+        <h1>Enter the governed console.</h1>
+        <p class="lede">A11oy.net is the public proof registry. The interactive console is deployed separately at a-11-oy.com, where its runtime state must be observed directly.</p>
+        <div class="actions">
+          <a class="button primary" href="https://a-11-oy.com/console">Open product console</a>
+          <a class="button" href="https://a-11-oy.com/api/a11oy/v1/honest">Read runtime truth</a>
+          <a class="button" href="https://github.com/szl-holdings/a11oy">Inspect product source</a>
+        </div>
+        <p class="boundary"><strong>Truth boundary:</strong> this static gateway does not authenticate a user, execute a prompt, or prove that the separate product runtime is ready. Confirm the runtime identity and honesty manifest after crossing domains.</p>
+      </div>
+    </header>
+
+    <div class="wrap rail" aria-label="Gateway contract">
+      <article><span>This route</span><b>Static handoff</b><p>No prompt or account data is collected here.</p></article>
+      <article><span>Interactive host</span><b>a-11-oy.com</b><p>Separately deployed product and failure boundary.</p></article>
+      <article><span>Runtime state</span><b>UNKNOWN here</b><p>Observe the product truth endpoint directly.</p></article>
+      <article><span>Evidence</span><b>Source-bounded</b><p>Inspect source, checks, receipts, and build identity.</p></article>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Before relying</span><h2>Verify the boundary you are crossing.</h2><p>The product console can change independently of this static registry.</p></div>
+        <div class="steps">
+          <article class="step"><h3>Read runtime truth</h3><p>Check deployed revision, honesty posture, and current evidence labels.</p><a href="https://a-11-oy.com/api/a11oy/v1/honest">Open honesty manifest</a></article>
+          <article class="step"><h3>Confirm build identity</h3><p>Inspect the product runtime's own build-info response.</p><a href="https://a-11-oy.com/api/build-info">Open build info</a></article>
+          <article class="step"><h3>Use the console</h3><p>Continue only after the separate runtime reports the state you require.</p><a href="https://a-11-oy.com/console">Open console</a></article>
+          <article class="step"><h3>Verify receipts</h3><p>Re-check governed outcomes at the product verifier.</p><a href="https://a-11-oy.com/verify">Open verifier</a></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer"><p>Published by SZL Holdings as a static, separately hosted gateway. Product availability is not implied.</p><div class="footer-links"><a href="/">Evidence</a><a href="/diligence/">Diligence</a><a href="/.well-known/security.txt">Security</a></div></div></footer>
+</body>
+</html>

@@ -184,6 +184,8 @@ jobs:
             assets/a11oy-mark.svg \
             assets/a11oy-net-social.png \
             assets/diligence.css \
+            chat/index.html \
+            code/index.html \
             diligence/index.html \
             evidence.json \
             index.html \

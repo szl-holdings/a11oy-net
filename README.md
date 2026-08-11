@@ -34,6 +34,9 @@ uptime, or deployed equivalence.
   sequences the public thesis, controls, source, boundaries, and estate links.
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
   starts from executable validation and machine-readable contracts.
+- **Product gateways:** [`/chat/`](https://a11oy.net/chat/) and
+  [`/code/`](https://a11oy.net/code/) hand visitors to the separately deployed
+  governed console and code runtime without claiming those systems are ready.
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
@@ -117,6 +120,7 @@ The checks validate:
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
 | `readyz/index.html` | Static front-door reachability only; never product readiness. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
+| `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |
 | `404.html`, `assets/a11oy-mark.svg` | Branded recovery route and shared SVG identity mark. |
 | `site.webmanifest`, `manifest.webmanifest` | Byte-identical application metadata aliases. |
 | `scripts/atlas_policy.js` | Shared browser/Node artifact-admission policy. |

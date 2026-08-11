@@ -5,6 +5,8 @@
 Authoritative public paths:
 - Evidence homepage: https://a11oy.net/
 - Investor and developer diligence room: https://a11oy.net/diligence/
+- Governed product console gateway: https://a11oy.net/chat/
+- Governed code gateway: https://a11oy.net/code/
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
 - Static reachability only: https://a11oy.net/readyz/
@@ -19,3 +21,4 @@ Truth boundary:
 - Public Hugging Face metadata is not an authenticated private inventory.
 - Preserve MEASURED, REPORTED, MODELED, HEURISTIC, UNKNOWN, and UNAVAILABLE labels.
 - Product runtime and receipt-verifier state must be observed at their own live sources.
+- The /chat/ and /code/ pages are static cross-domain handoffs, not product-runtime execution surfaces.
