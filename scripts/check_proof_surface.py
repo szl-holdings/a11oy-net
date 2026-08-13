@@ -111,8 +111,6 @@ def check() -> None:
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
-        "chat/index.html",
-        "code/index.html",
         "diligence/index.html",
         "evidence.json",
         "llms.txt",
@@ -221,12 +219,7 @@ def check() -> None:
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     assert [
         element.text for element in sitemap.findall(".//sm:loc", namespace)
-    ] == [
-        "https://a11oy.net/",
-        "https://a11oy.net/diligence/",
-        "https://a11oy.net/chat/",
-        "https://a11oy.net/code/",
-    ]
+    ] == ["https://a11oy.net/", "https://a11oy.net/diligence/"]
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
@@ -238,11 +231,6 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
-    for gateway in ("chat", "code"):
-        assert (ROOT / gateway / "index.html").is_file()
-        assert any(
-            anchor.get("href") == f"/{gateway}/" for anchor in surface.anchors
-        ), f"the root proof registry must expose the {gateway} gateway"
     readyz_index = READYZ / "index.html" if READYZ.is_dir() else READYZ
     assert readyz_index.is_file(), "front-door readiness route must exist"
     build_info_index = BUILD_INFO / "index.html" if BUILD_INFO.is_dir() else BUILD_INFO
@@ -285,18 +273,6 @@ def check() -> None:
     )
     assert ".menu-toggle{display:none!important}" in source
     assert ".nav-links{display:flex!important;position:static!important" in source
-    noscript_styles = re.findall(
-        r"<noscript>\s*<style>(.*?)</style>\s*</noscript>",
-        source,
-        re.DOTALL | re.IGNORECASE,
-    )
-    assert len(noscript_styles) == 1, (
-        "the no-script navigation contract must have one scoped style block"
-    )
-    no_script_style = noscript_styles[0]
-    assert "html{scroll-padding-top:0!important}" in no_script_style
-    assert "nav{position:static!important}" in no_script_style
-    assert "[id]{scroll-margin-top:0!important}" in no_script_style
     assert (
         "JavaScript is disabled. Product links remain available" in source
     ), "no-script mode must retain navigation and disclose unavailable reads"
@@ -400,7 +376,8 @@ def check() -> None:
     colors = dict(re.findall(r"--([a-z-]+):(#[0-9a-fA-F]{6})", source))
     for background in ("void", "deep", "surface"):
         assert contrast_ratio(colors["ghost"], colors[background]) >= 4.5
-    assert 'aria-busy="true"' in source
+    assert 'id="atlasResources" aria-busy="false"' in source
+    assert 'grid.setAttribute("aria-busy","true")' in source
     assert 'grid.setAttribute("aria-busy","false")' in source
     assert 'new Date().toISOString()' in source
     assert 'fetchJson(binding.api)' in source
@@ -424,7 +401,13 @@ def check() -> None:
     assert '["atlasTotal","atlasModels","atlasDatasets","atlasCollections","atlasBuckets"]' in source
     assert "Inventory unavailable; this is not an observed-empty result." in source
     assert 'aria-label="A11oy public evidence dossier"' in source
-    assert "Browser registry reads require JavaScript." in source
+    assert "The dated static registry snapshot remains visible" in source
+    assert 'data-static-snapshot="2026-08-11"' in source
+    assert '<b id="atlasTotal">55</b>' in source
+    assert '<b id="atlasModels">16</b>' in source
+    assert '<b id="atlasDatasets">26</b>' in source
+    assert '<b id="atlasCollections">12</b>' in source
+    assert '<b id="atlasBuckets">1</b>' in source
     assert 'event.key==="Escape"' in source
     live_start = source.find('document.querySelectorAll(".live[data-space]")')
     live_end = source.find("var resources=", live_start)

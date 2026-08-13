@@ -59,12 +59,10 @@
 <noscript><style>
 #atlasResources,.atlas-controls,.atlas-bar,.atlas-status-line,#atlasResultCount,#atlasState{display:none}
 @media(max-width:720px){
-  html{scroll-padding-top:0!important}
   nav{position:static!important}
   .menu-toggle{display:none!important}
   .nav-in{height:auto!important;align-items:flex-start!important;flex-direction:column!important;padding-top:10px;padding-bottom:10px}
   .nav-links{display:flex!important;position:static!important;width:100%;max-height:none!important;overflow:visible!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
-  [id]{scroll-margin-top:0!important}
 }
 </style></noscript>
 <style>
@@ -342,7 +340,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <a class="wordmark" href="/" aria-label="A11oy.net home"><span class="glyph" aria-hidden="true">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></a>
   <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
   <div class="nav-links" id="primaryLinks" data-open="false">
-    <a href="/diligence/">Diligence room</a><a href="/chat/">Chat gateway</a><a href="/code/">Code gateway</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
+    <a href="/diligence/">Diligence room</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">Product ↗</a>
   </div>
 </div></nav>
@@ -461,13 +459,13 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 <section id="atlas" style="padding-top:0"><div class="wrap">
   <div class="sec-head"><div class="kicker">Public Hub metadata</div><h2>The public artifact registry, consolidated.</h2><p>Search reported model, dataset, collection, and bucket listings without leaving the flagship. Executable Spaces and Killinchu-named resources are outside this evidence inventory.</p></div>
   <div class="atlas-shell">
-    <div class="atlas-summary"><div><span class="atlas-summary-label">BROWSER REGISTRY READ</span><h3>Public metadata observation</h3></div><span class="status-badge" id="atlasState" data-state="checking">CHECKING</span></div>
+    <div class="atlas-summary"><div><span class="atlas-summary-label">STATIC SNAPSHOT + BROWSER REFRESH</span><h3>Public metadata observation</h3></div><span class="status-badge" id="atlasState" data-state="snapshot">SNAPSHOT - 2026-08-11</span></div>
     <div class="atlas-bar">
-      <div class="atlas-stat"><b id="atlasTotal">—</b><span>LISTED ARTIFACTS</span></div>
-      <div class="atlas-stat"><b id="atlasModels">—</b><span>MODELS</span></div>
-      <div class="atlas-stat"><b id="atlasDatasets">—</b><span>DATASETS</span></div>
-      <div class="atlas-stat"><b id="atlasCollections">—</b><span>COLLECTIONS</span></div>
-      <div class="atlas-stat"><b id="atlasBuckets">—</b><span>BUCKETS</span></div>
+      <div class="atlas-stat"><b id="atlasTotal">55</b><span>LISTED ARTIFACTS</span></div>
+      <div class="atlas-stat"><b id="atlasModels">16</b><span>MODELS</span></div>
+      <div class="atlas-stat"><b id="atlasDatasets">26</b><span>DATASETS</span></div>
+      <div class="atlas-stat"><b id="atlasCollections">12</b><span>COLLECTIONS</span></div>
+      <div class="atlas-stat"><b id="atlasBuckets">1</b><span>BUCKETS</span></div>
     </div>
     <fieldset class="atlas-controls">
       <legend class="sr-only">Filter public artifact listings</legend>
@@ -479,10 +477,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
       <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
       <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </fieldset>
-    <div class="resource-grid" id="atlasResources" aria-busy="true"><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state">LOADING</span></div><b>Reading the public Hub APIs…</b><small>No secrets or private resources requested.</small></div></div>
-    <noscript><div class="resource"><div class="resource-top"><span class="resource-type">ATLAS</span><span class="resource-state bad">UNAVAILABLE</span></div><b>Browser registry reads require JavaScript.</b><small>The static evidence links above remain available.</small></div></noscript>
-    <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Not observed by this browser yet.</p></div>
-    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">Waiting for public artifact metadata.</p>
+    <div class="resource-grid" id="atlasResources" aria-busy="false"><div class="resource" data-static-snapshot="2026-08-11"><div class="resource-top"><span class="resource-type">ATLAS SNAPSHOT</span><span class="resource-state">REPORTED</span></div><b>55 public artifacts observed on 2026-08-11.</b><small>16 models, 26 datasets, 12 collections, and 1 bucket. Browser refresh replaces this dated snapshot when public Hub metadata is available.</small></div></div>
+    <noscript><p class="atlas-note">JavaScript is disabled. The dated static registry snapshot remains visible; live public Hub refresh is not observed.</p></noscript>
+    <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Static snapshot observed 2026-08-11; live browser refresh pending.</p></div>
+    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">55 public artifacts in the dated static snapshot.</p>
   </div>
 </div></section>
 
@@ -507,8 +505,6 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   </p>
   <div class="foot-links">
     <a href="/diligence/">Diligence</a>
-    <a href="/chat/">Chat gateway</a>
-    <a href="/code/">Code gateway</a>
     <a href="/evidence.json">Machine contract</a>
     <a href="/.well-known/security.txt">Security</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener">Product</a>
@@ -675,6 +671,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     return;
   }
 
+  grid.setAttribute("aria-busy","true");
   Promise.allSettled(specs.map(function(spec){
     return fetchJson(spec.url)
       .then(function(payload){
