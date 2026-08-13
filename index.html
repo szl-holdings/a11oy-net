@@ -59,10 +59,12 @@
 <noscript><style>
 #atlasResources,.atlas-controls,.atlas-bar,.atlas-status-line,#atlasResultCount,#atlasState{display:none}
 @media(max-width:720px){
+  html{scroll-padding-top:0!important}
   nav{position:static!important}
   .menu-toggle{display:none!important}
   .nav-in{height:auto!important;align-items:flex-start!important;flex-direction:column!important;padding-top:10px;padding-bottom:10px}
   .nav-links{display:flex!important;position:static!important;width:100%;max-height:none!important;overflow:visible!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  [id]{scroll-margin-top:0!important}
 }
 </style></noscript>
 <style>
@@ -340,7 +342,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <a class="wordmark" href="/" aria-label="A11oy.net home"><span class="glyph" aria-hidden="true">Λ</span>A11OY<span style="color:var(--ghost);font-weight:400">.net</span></a>
   <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
   <div class="nav-links" id="primaryLinks" data-open="false">
-    <a href="/diligence/">Diligence room</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
+    <a href="/diligence/">Diligence room</a><a href="/chat/">Chat gateway</a><a href="/code/">Code gateway</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof)">Product ↗</a>
   </div>
 </div></nav>
@@ -505,6 +507,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   </p>
   <div class="foot-links">
     <a href="/diligence/">Diligence</a>
+    <a href="/chat/">Chat gateway</a>
+    <a href="/code/">Code gateway</a>
     <a href="/evidence.json">Machine contract</a>
     <a href="/.well-known/security.txt">Security</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener">Product</a>
