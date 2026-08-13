@@ -29,6 +29,8 @@ PROBE_POLICY_CHECK = ROOT / "scripts" / "check_probe_policy.mjs"
 READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
+CHAT = ROOT / "chat" / "index.html"
+CODE = ROOT / "code" / "index.html"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
@@ -59,6 +61,26 @@ def contrast_ratio(first: str, second: str) -> float:
         reverse=True,
     )
     return (high + 0.05) / (low + 0.05)
+
+
+def display_none_selectors(css: str) -> set[str]:
+    """Return every selector whose complete rule sets display:none."""
+    hidden: set[str] = set()
+    for selector_text, body in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        declarations: dict[str, str] = {}
+        for declaration in body.split(";"):
+            if ":" not in declaration:
+                continue
+            name, value = declaration.split(":", 1)
+            declarations[name.strip().lower()] = value.strip().lower()
+        display = declarations.get("display", "").replace("!important", "").strip()
+        if display == "none":
+            hidden.update(
+                selector.strip()
+                for selector in selector_text.split(",")
+                if selector.strip()
+            )
+    return hidden
 
 
 class Surface(HTMLParser):
@@ -111,6 +133,8 @@ def check() -> None:
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
+        "chat/index.html",
+        "code/index.html",
         "diligence/index.html",
         "evidence.json",
         "llms.txt",
@@ -219,7 +243,12 @@ def check() -> None:
     namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     assert [
         element.text for element in sitemap.findall(".//sm:loc", namespace)
-    ] == ["https://a11oy.net/", "https://a11oy.net/diligence/"]
+    ] == [
+        "https://a11oy.net/",
+        "https://a11oy.net/diligence/",
+        "https://a11oy.net/chat/",
+        "https://a11oy.net/code/",
+    ]
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
@@ -231,6 +260,26 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
+    for gateway, path in (("chat", CHAT), ("code", CODE)):
+        assert path.is_file(), f"the {gateway} gateway route must exist"
+        assert any(
+            anchor.get("href") == f"/{gateway}/" for anchor in surface.anchors
+        ), f"the root proof registry must expose the {gateway} gateway"
+    for label, pattern in (
+        (
+            "primary navigation",
+            r'<div class="nav-links" id="primaryLinks"[^>]*>(.*?)</div>',
+        ),
+        ("footer", r'<div class="foot-links">(.*?)</div>'),
+    ):
+        region_match = re.search(pattern, source, re.DOTALL)
+        assert region_match is not None, f"the {label} region must exist"
+        region = Surface()
+        region.feed(region_match.group(1))
+        region_hrefs = {str(anchor.get("href")) for anchor in region.anchors}
+        assert {"/chat/", "/code/"} <= region_hrefs, (
+            f"the {label} must expose both product gateways"
+        )
     readyz_index = READYZ / "index.html" if READYZ.is_dir() else READYZ
     assert readyz_index.is_file(), "front-door readiness route must exist"
     build_info_index = BUILD_INFO / "index.html" if BUILD_INFO.is_dir() else BUILD_INFO
@@ -276,6 +325,40 @@ def check() -> None:
     assert (
         "JavaScript is disabled. Product links remain available" in source
     ), "no-script mode must retain navigation and disclose unavailable reads"
+    no_script_styles = re.findall(
+        r"<noscript>\s*<style>(.*?)</style>\s*</noscript>",
+        source,
+        re.DOTALL | re.IGNORECASE,
+    )
+    assert len(no_script_styles) == 1, (
+        "the no-script presentation contract must have one scoped style block"
+    )
+    assert "@media(max-width:960px)" in no_script_styles[0], (
+        "the no-script navigation must expand at the same tablet breakpoint"
+    )
+    assert (
+        "@media(max-width:960px){\n  .nav-in{position:relative}" in source
+    ), "the interactive gateway navigation must collapse before it can overflow"
+    assert 'window.innerWidth>960' in source, (
+        "the menu resize behavior must use the same tablet breakpoint as CSS"
+    )
+    assert 'window.innerWidth>720' not in source
+    hidden_no_script_targets = display_none_selectors(no_script_styles[0])
+    assert "#atlasResources" not in hidden_no_script_targets, (
+        "the dated static registry snapshot must remain visible without JavaScript"
+    )
+    assert "#atlasResources" in display_none_selectors(
+        no_script_styles[0] + "\n#atlasResources{display:none}"
+    ), "the no-script visibility guard must detect a separate hiding rule"
+    assert {
+        ".atlas-controls",
+        ".atlas-bar",
+        ".atlas-status-line",
+        "#atlasResultCount",
+        "#atlasState",
+    } <= hidden_no_script_targets, (
+        "dynamic-only registry controls and status must stay hidden without JavaScript"
+    )
 
     assert 'class="live-list" role="list"' not in source
     assert 'el.setAttribute("role","listitem")' not in source
