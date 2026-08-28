@@ -266,6 +266,17 @@ def check() -> None:
         "Proof must remain the current origin on a11oy.net"
     )
     assert "RECORD" in nav_block
+    assert "Hub atlas and ROADMAP live here" in source, (
+        "Hub atlas + ROADMAP must be locked to a11oy.net, not the product domain"
+    )
+    assert "without leaving the flagship" not in source
+    assert not (ROOT / "investor").exists(), "do not invent /investor"
+    assert not (ROOT / "verify").exists(), "do not clone /verify onto .net"
+    assert 'href="/investor"' not in source
+    assert 'href="/verify"' not in source and 'href="/verify/"' not in source
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "Hub atlas and ROADMAP live here" in readme
+    assert "There is no `/investor` route" in readme or "no `/investor` route" in readme
     for gateway in ("chat", "code"):
         assert (ROOT / gateway / "index.html").is_file()
         assert f'href="/{gateway}/"' in footer_block, (

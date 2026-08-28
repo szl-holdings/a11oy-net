@@ -4,11 +4,14 @@
   <img src="assets/a11oy-net-social.png" alt="A11oy.net — separately hosted first-party proof registry" width="960" />
 </p>
 
-[`a11oy.net`](https://a11oy.net) is the separately hosted first-party public evidence surface for
-[A11oy](https://a-11-oy.com). It gives investors, operators, developers, and
-assurance reviewers a short path to runtime truth, receipt verification,
-source, benchmarks, formal evidence, and public artifact metadata without
-requiring the product interface.
+[`a11oy.net`](https://a11oy.net) is the separately hosted first-party **RECORD**
+for [A11oy](https://a-11-oy.com). Domain lock: this origin is the proof registry.
+Hub atlas and ROADMAP live here, not on `.com`. Interactive `/verify` stays on
+[a-11-oy.com/verify](https://a-11-oy.com/verify) and is not cloned. There is no `/investor` route;
+investor review is [`/diligence/#investors`](https://a11oy.net/diligence/#investors).
+
+Header on both origins: **Product | Proof**. Product ↗ → `https://a-11-oy.com`.
+Proof is the current surface here.
 
 The product experience and the evidence experience are intentionally separate.
 A product link proves location and remains `NOT PROBED · UNKNOWN` here. A
@@ -28,8 +31,8 @@ uptime, or deployed equivalence.
 
 ## Audience routes
 
-- **Evidence registry:** [`/`](https://a11oy.net/) is the broad public proof
-  index and browser-observed metadata surface.
+- **Evidence registry:** [`/`](https://a11oy.net/) is the RECORD: Hub atlas,
+  ROADMAP cards, and browser-observed metadata live here.
 - **Investor diligence:** [`/diligence/#investors`](https://a11oy.net/diligence/#investors)
   sequences the public thesis, controls, source, boundaries, and estate links.
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
