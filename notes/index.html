@@ -68,7 +68,8 @@
         <article class="panel">
           <ul>
             <li>Header <strong>Product | Proof</strong> links <code>https://a-11-oy.com</code> and <code>https://a11oy.net</code> with those exact words.</li>
-            <li>Canonical RECORD is static on this origin. It is an index of receipt stores, not a receipt database. Interactive /verify stays on the product origin and is not cloned. Empty receipt IDs are UNAVAILABLE, never invented.</li>
+            <li>Canonical RECORD is static on this origin. It is an index of pointers, not a receipt database. This repository has no receipt store. Live receipts stay on the product Space (Khipu + <code>/data SZLHOLDINGS/szl-evidence</code> + <code>/api/lake/v1/receipts</code>). Interactive /verify stays on the product origin and is not cloned. Empty receipt IDs are UNAVAILABLE, never invented.</li>
+            <li>CNAME is <code>a11oy.net</code>. Live DNS is GitHub Pages. This origin is not a product host. <code>_headers</code> is policy intent; GitHub Pages does not apply it.</li>
             <li><code>/health.json</code> is the only health document: a committed static JSON file (not runtime, not DSSE-LIVE, not uptime). <code>/readyz</code> is an HTML directory (Pages may 301 <code>/readyz</code> → <code>/readyz/</code>). <code>/healthz</code> is not published (404 HTML). Neither is a probe.</li>
             <li>Hub atlas and ROADMAP cuts remain first-class here, including a committed GitHub inventory.</li>
             <li>90-second diligence table states MEASURED, REPORTED, ROADMAP, and UNAVAILABLE without inventing evals.</li>

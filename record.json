@@ -4,10 +4,10 @@
     "name": "RECORD",
     "url": "https://a11oy.net/record/",
     "publisher": "SZL Holdings",
-    "meaning": "Canonical public receipt-record index on a11oy.net. Static and fetchable on this origin. Not an interactive verifier.",
+    "meaning": "Canonical public receipt-record index on a11oy.net. Pointers only. Not a receipt database. Not an interactive verifier.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "The signed RECORD index lives at https://a11oy.net/record/. The tool that checks a record is https://a-11-oy.com/verify. They are different hosts and must not be merged. This file lists store locations. receipt_ids is empty and UNAVAILABLE: that is not a measured zero, and no receipt identifiers are invented here. Never a11oy.com.",
+  "reader_guide": "The signed RECORD index lives at https://a11oy.net/record/. The tool that checks a record is https://a-11-oy.com/verify. They are different hosts and must not be merged. This repository has no receipt store. Live receipts are on the product Space (Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts). This file lists those locations. receipt_ids is empty and UNAVAILABLE: that is not a measured zero, and no receipt identifiers are invented here. Never a11oy.com.",
   "permalinks": {
     "record_html": "https://a11oy.net/record/",
     "record_json": "https://a11oy.net/record.json",
@@ -30,7 +30,7 @@
     "live_chain": "UNAVAILABLE",
     "receipt_ids": [],
     "receipt_ids_class": "UNAVAILABLE",
-    "meaning": "This index lists public receipt locations. It is not a receipt database. Hash-chain and signature checks are not executed by a11oy.net. Live chain state remains UNAVAILABLE here. An empty receipt-id listing is UNAVAILABLE, not a measured zero."
+    "meaning": "This index lists receipt locations. It is not a receipt database. Live receipts stay on the product Space. Hash-chain and signature checks are not executed by a11oy.net. Live chain state remains UNAVAILABLE here. An empty receipt-id listing is UNAVAILABLE, not a measured zero."
   },
   "boundaries": {
     "this_origin_does_not_run_verification": true,
@@ -38,7 +38,38 @@
     "product_runtime_required_for_first_paint": false,
     "http_response_proves_capability": false,
     "receipt_bodies_are_not_rehosted_here": true,
-    "receipt_database_hosted_here": false
+    "receipt_database_hosted_here": false,
+    "lake_api_hosted_here": false,
+    "this_origin_is_not_a_product_host": true
+  },
+  "live_store": {
+    "hosted_here": false,
+    "meaning": "This GitHub Pages repository has no receipt store and does not duplicate the product database. Live receipts stay on the product Space.",
+    "runtime": {
+      "url": "https://a-11-oy.com",
+      "space": "https://huggingface.co/spaces/SZLHOLDINGS/a11oy",
+      "evidence_class": "REPORTED",
+      "scope": "Product origin. a11oy.net is GitHub Pages, not a product host."
+    },
+    "khipu": {
+      "role": "product Space chain",
+      "evidence_class": "REPORTED",
+      "scope": "Khipu ledger paths live under the product Space /data mount. This origin does not run Khipu."
+    },
+    "persistence": {
+      "mount": "/data",
+      "resource": "SZLHOLDINGS/szl-evidence",
+      "kind": "HF Space storage bucket",
+      "public_listing": false,
+      "evidence_class": "REPORTED",
+      "scope": "Attached on the product Space. Not re-hosted here. Not treated as a public dataset listing on this page."
+    },
+    "query_api": {
+      "path": "/api/lake/v1/receipts",
+      "url": "https://a-11-oy.com/api/lake/v1/receipts",
+      "evidence_class": "UNKNOWN",
+      "scope": "Must be observed on the product origin. This origin does not host /api/lake."
+    }
   },
   "stores": [
     {

@@ -21,6 +21,7 @@ SITEMAP = ROOT / "sitemap.xml"
 MANIFEST = ROOT / "site.webmanifest"
 MANIFEST_ALIAS = ROOT / "manifest.webmanifest"
 HEADERS = ROOT / "_headers"
+CNAME = ROOT / "CNAME"
 SECURITY = ROOT / ".well-known" / "security.txt"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
@@ -99,6 +100,15 @@ def check() -> None:
     assert NOJEKYLL.is_file(), (
         ".nojekyll is required to publish .well-known/security.txt on GitHub Pages"
     )
+    assert CNAME.read_text(encoding="utf-8").strip() == "a11oy.net", (
+        "CNAME must remain a11oy.net; this origin is not a product host"
+    )
+    assert not (ROOT / "api" / "lake").exists(), (
+        "this origin must not host /api/lake; live receipts stay on the product Space"
+    )
+    assert not (ROOT / "receipts").exists()
+    assert not (ROOT / "record" / "receipts").exists()
+    assert not list(ROOT.glob("*.dsse.json"))
     workflow = LINK_WORKFLOW.read_text(encoding="utf-8")
     assert re.search(r"^    name: Link & Asset Check$", workflow, re.MULTILINE)
     assert re.search(
@@ -288,6 +298,10 @@ def check() -> None:
     assert "https://a11oy.net/record/" in source
     assert "The signed RECORD index lives at" in source
     assert "https://a-11-oy.com/verify" in source
+    assert "Receipt store on this origin" in source
+    assert "api/lake" not in source, (
+        "root first paint must not fetch or register the product lake API"
+    )
     assert "fetch(\"https://a-11-oy.com" not in source
     assert "huggingface.co/spaces" not in meta_value("property", "og:url")
     assert meta_value("property", "og:url") == "https://a11oy.net/"
@@ -387,6 +401,11 @@ def check() -> None:
     assert "https://a-11-oy.com/verify" in record_source
     assert "id=\"permalinks\"" in record_source
     assert "id=\"receipt-ids\"" in record_source
+    assert "id=\"live-store\"" in record_source
+    assert "no receipt store" in record_source.lower() or "not a receipt database" in record_source.lower()
+    assert "SZLHOLDINGS/szl-evidence" in record_source
+    assert "/api/lake/v1/receipts" in record_source
+    assert "not a product host" in record_source.lower()
     assert "empty is UNAVAILABLE" in record_source.lower() or "empty, labelled unavailable" in record_source.lower()
     assert "Two hosts. Two jobs." in record_source
 

@@ -47,8 +47,12 @@ equivalence.
   is the 90-second MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
   and boundaries. There is no `/investor` route.
 - **RECORD:** [`/record/`](https://a11oy.net/record/) is the canonical receipt
-  record on this origin. [`/record.json`](https://a11oy.net/record.json) is the
-  machine contract.
+  **index** on this origin — pointers, not a receipt database. This repository
+  has no receipt store. Live receipts stay on the product Space (Khipu +
+  `/data SZLHOLDINGS/szl-evidence` + `/api/lake/v1/receipts`).
+  [`/record.json`](https://a11oy.net/record.json) is the machine contract.
+  Interactive verify stays at
+  [https://a-11-oy.com/verify](https://a-11-oy.com/verify).
 - **Hub atlas:** [`/#atlas`](https://a11oy.net/#atlas) inventories public HF and
   GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is fetchable.
 - **Dated notes:** [`/notes/`](https://a11oy.net/notes/) and
@@ -76,7 +80,12 @@ equivalence.
 ## Architecture
 
 The registry is a dependency-light static site served by GitHub Pages behind
-Cloudflare DNS.
+Cloudflare DNS. The committed `CNAME` file is `a11oy.net`. Live DNS for
+a11oy.net currently resolves to GitHub Pages, so this proof registry is
+independently reachable. Product source (`a11oy_canonical_domain.py`) may
+SUNSET-301 `a11oy.net` → `a-11-oy.com` only when that Host header is routed
+into the product app. Do not assume this origin is a product host, and do
+not add product routes such as `/api/lake` here.
 
 ```text
 visitor browser
@@ -145,7 +154,8 @@ The checks validate:
 | --- | --- |
 | `index.html` | Accessible product narrative, 90-second table, RECORD, live reads, and registry UI. |
 | `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths, 90-second table, and print-safe presentation. |
-| `record/index.html`, `record.json` | Canonical receipt RECORD on this origin; links to `.com /verify`. |
+| `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
+| `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |

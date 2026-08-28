@@ -32,9 +32,13 @@
     Canonical RECORD (receipt-record index) lives on this origin: https://a11oy.net/record/
     Machine permalink: https://a11oy.net/record.json
     Interactive verification TOOL lives on the product origin: https://a-11-oy.com/verify
-    This origin does not store receipt bodies and does not invent receipt IDs.
+    This repository has no receipt store. Live receipts are on the product Space:
+    Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts.
+    This origin does not host /api/lake, does not store receipt bodies, and does not invent receipt IDs.
     An empty receipt listing is UNAVAILABLE, not zero.
-    a11oy.net is a GitHub Pages proof registry, not a product host.
+    a11oy.net is a GitHub Pages proof registry (CNAME a11oy.net), not a product host.
+    Product code may 301 a11oy.net → a-11-oy.com only if that Host is routed into the product app.
+    Live DNS for a11oy.net is GitHub Pages, so this registry is not that redirect.
   -->
   <a class="skip" href="#main">Skip to RECORD</a>
   <nav aria-label="Primary">
@@ -61,8 +65,8 @@
     <header class="hero">
       <div class="wrap">
         <p class="eyebrow">RECORD · canonical receipt record</p>
-        <h1>The receipt record lives here.</h1>
-        <p class="lede">This origin holds the public index of where a11oy receipts are published. It is static HTML and <a href="/record.json">record.json</a>. It is not a receipt database. First paint does not fetch a-11-oy.com or a Hugging Face Space.</p>
+        <h1>The receipt-record index lives here.</h1>
+        <p class="lede">This origin holds pointers to where a11oy receipts are published. It is static HTML and <a href="/record.json">record.json</a>. It is not a receipt database and does not copy the product store. First paint does not fetch a-11-oy.com or a Hugging Face Space.</p>
         <div class="actions">
           <a class="button primary" href="https://a-11-oy.com/verify" target="_blank" rel="noopener">Open interactive /verify</a>
           <a class="button" href="/record.json">Fetch record.json</a>
@@ -73,7 +77,7 @@
     </header>
 
     <div class="wrap rail" aria-label="RECORD contract">
-      <article><span>This origin</span><b>Canonical RECORD</b><p>Static index, fetchable if the product origin is down.</p></article>
+      <article><span>This origin</span><b>Canonical RECORD</b><p>Static index of pointers. No receipt store here.</p></article>
       <article><span>Interactive tool</span><b>/verify on .com</b><p>Link only. Not cloned. Not required for first paint.</p></article>
       <article><span>Live chain</span><b>UNAVAILABLE here</b><p>Observe verification on the product origin.</p></article>
       <article><span>Bodies</span><b>Not re-hosted</b><p>Receipt bytes stay in their published stores.</p></article>
@@ -88,7 +92,7 @@
               <tr><th>What</th><th>Permalink</th><th>Job</th></tr>
             </thead>
             <tbody>
-              <tr><td>Canonical RECORD</td><td><a href="https://a11oy.net/record/">https://a11oy.net/record/</a></td><td>Public receipt-record index on this origin.</td></tr>
+              <tr><td>Canonical RECORD</td><td><a href="https://a11oy.net/record/">https://a11oy.net/record/</a></td><td>Public index of pointers on this origin. Not a receipt database.</td></tr>
               <tr><td>Machine RECORD</td><td><a href="https://a11oy.net/record.json">https://a11oy.net/record.json</a></td><td>Fetchable contract. Empty receipt_ids is UNAVAILABLE.</td></tr>
               <tr><td>Interactive tool</td><td><a href="https://a-11-oy.com/verify">https://a-11-oy.com/verify</a></td><td>Checks a record. Not the record. Not cloned here.</td></tr>
             </tbody>
@@ -101,6 +105,18 @@
       <div class="wrap">
         <div class="section-head"><span class="section-label">Receipt IDs in this index</span><h2>Empty, labelled UNAVAILABLE.</h2><p>This origin does not enumerate receipt identifiers and does not invent them. An empty index is UNAVAILABLE, not a measured zero.</p></div>
         <article class="panel limit"><h3>receipt_ids</h3><p>None published in this index. Class: <strong>UNAVAILABLE</strong>. Live chain state is also UNAVAILABLE here. Pointers to public stores follow; they are locations, not verified envelopes.</p></article>
+      </div>
+    </section>
+
+    <section id="live-store">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Live store (not this origin)</span><h2>Receipts stay on the product Space.</h2><p>This GitHub Pages repository does not host receipt bytes. The live store is the product runtime. Observe it there. Do not treat these pointers as a copy of that database.</p></div>
+        <div class="steps">
+          <article class="step"><h3>Product runtime</h3><p>Command center and Space. a11oy.net is not a product host.</p><a href="https://a-11-oy.com" target="_blank" rel="noopener">Open a-11-oy.com</a></article>
+          <article class="step"><h3>Persistence</h3><p>Product Space mounts <code>SZLHOLDINGS/szl-evidence</code> at <code>/data</code>. That bucket is not a public listing on this page.</p><a href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener">Open product Space</a></article>
+          <article class="step"><h3>Khipu</h3><p>The product Space chain lives under that <code>/data</code> mount. This origin does not run Khipu.</p><a href="https://a-11-oy.com/verify" target="_blank" rel="noopener">Open /verify</a></article>
+          <article class="step"><h3>Lake query API</h3><p><code>/api/lake/v1/receipts</code> is on the product origin. This origin does not host <code>/api/lake</code>.</p><a href="https://a-11-oy.com/api/lake/v1/receipts" target="_blank" rel="noopener">Product lake path</a></article>
+        </div>
       </div>
     </section>
 

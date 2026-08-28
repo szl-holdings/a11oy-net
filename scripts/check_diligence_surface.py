@@ -132,6 +132,7 @@ def check() -> None:
     assert "Alloy by SZL Holdings" in diligence_source
     assert "Origin health document" in diligence_source
     assert "healthz is not published" in diligence_source.lower()
+    assert "Receipt store on this origin" in diligence_source
     diligence_hrefs = {anchor.get("href") for anchor in diligence.anchors}
     assert {
         "/evidence.json",
@@ -161,7 +162,7 @@ def check() -> None:
     assert "/chat/" in diligence_source and "/code/" in diligence_source
     record = check_document(RECORD, canonical="https://a11oy.net/record/")
     notes = check_document(NOTES, canonical="https://a11oy.net/notes/")
-    assert {"main", "permalinks", "receipt-ids", "stores", "verify"} <= record.ids
+    assert {"main", "permalinks", "receipt-ids", "live-store", "stores", "verify"} <= record.ids
     assert any(anchor.get("href") == "https://a-11-oy.com/verify" for anchor in record.anchors)
     assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
     assert "Alloy by SZL Holdings" in RECORD.read_text(encoding="utf-8")
@@ -283,6 +284,7 @@ def check() -> None:
         "static_reachability",
         "product_honesty_manifest",
         "receipt_verifier",
+        "product_lake_receipts",
         "implementation_source",
         "proof_registry_source",
         "public_hub_registry",
@@ -300,6 +302,10 @@ def check() -> None:
     assert "https://a11oy.net/evidence.json" in llms
     assert "https://a11oy.net/record/" in llms
     assert "does not establish A11oy product-runtime readiness" in llms
+    assert "This repository has no receipt store" in llms or "no receipt store" in llms
+    assert "SZLHOLDINGS/szl-evidence" in llms
+    assert "CNAME is a11oy.net" in llms
+    assert "_headers is policy intent" in llms
     assert "/healthz is not published" in llms
     assert "https://a11oy.net/health.json" in llms
     record_contract = json.loads(RECORD_JSON.read_text(encoding="utf-8"))
@@ -313,6 +319,13 @@ def check() -> None:
     assert record_contract["boundaries"]["interactive_verifier_cloned"] is False
     assert record_contract["boundaries"]["product_runtime_required_for_first_paint"] is False
     assert record_contract["boundaries"]["receipt_database_hosted_here"] is False
+    assert record_contract["boundaries"]["lake_api_hosted_here"] is False
+    assert record_contract["boundaries"]["this_origin_is_not_a_product_host"] is True
+    assert record_contract["live_store"]["hosted_here"] is False
+    assert record_contract["live_store"]["query_api"]["path"] == "/api/lake/v1/receipts"
+    assert record_contract["live_store"]["query_api"]["url"] == "https://a-11-oy.com/api/lake/v1/receipts"
+    assert record_contract["live_store"]["persistence"]["resource"] == "SZLHOLDINGS/szl-evidence"
+    assert record_contract["live_store"]["persistence"]["public_listing"] is False
     assert record_contract["status"]["receipt_ids"] == []
     assert record_contract["status"]["receipt_ids_class"] == "UNAVAILABLE"
     atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
