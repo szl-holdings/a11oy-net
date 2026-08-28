@@ -69,6 +69,10 @@ equivalence.
 - **Static route scope:** [`/health.json`](https://a11oy.net/health.json) is a
   committed static JSON document. Receiving it proves only that this exact path
   was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
+  `signer` is `unavailable`: this origin has no DSSE signer and no local key.
+  `UNSIGNED-LOCAL` would be wrong here. `sha` is the last published main
+  revision; a static file cannot contain its own future commit SHA. ÑAWI
+  owns the locked-proven formula count; this document does not.
   [`/readyz/`](https://a11oy.net/readyz/) is an HTML directory route; GitHub
   Pages may 301 `/readyz` to `/readyz/`. That 301 lands on HTML, not JSON. Do
   not treat `/readyz` as a health URL. `/healthz` is not published: GitHub
@@ -159,7 +163,7 @@ The checks validate:
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
-| `health.json` | Only health document: committed static JSON; not runtime, not DSSE-LIVE, not uptime. |
+| `health.json` | Only health document: committed static JSON; `signer=unavailable`; `sha` is last published main; not runtime, not DSSE-LIVE, not uptime. |
 | `readyz/index.html` | HTML directory reachability only; never a health URL. `/healthz` is not published. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
 | `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |

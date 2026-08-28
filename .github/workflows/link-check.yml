@@ -167,6 +167,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
+      - name: Stamp health.json sha onto the Pages artifact
+        run: |
+          set -euo pipefail
+          python3 scripts/stamp_health_sha.py --sha "${GITHUB_SHA}"
+          python3 - <<'PY'
+          import json, os, pathlib
+          health = json.loads(pathlib.Path("health.json").read_text(encoding="utf-8"))
+          assert health["signer"] == "unavailable"
+          assert health["sha"] == os.environ["GITHUB_SHA"].strip().lower()
+          assert len(health["sha"]) == 40
+          assert health["uptime"] == "NOT_MEASURED"
+          assert health["probe_contract"] == "STATIC_DOCUMENT"
+          assert health["dsse_live"] == "NOT_CLAIMED"
+          print("OK: Pages artifact health.json sha matches GITHUB_SHA; signer remains unavailable.")
+          PY
+
       - name: Build and inspect raw Pages artifact
         shell: bash
         run: |

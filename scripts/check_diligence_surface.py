@@ -240,8 +240,18 @@ def check() -> None:
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"
     assert health["artifact_kind"] == "static"
+    assert health["probe_contract"] == "STATIC_DOCUMENT"
     assert health["dsse_live"] == "NOT_CLAIMED"
+    assert health["signer"] == "unavailable"
+    assert health["signer"] in ("DSSE-LIVE", "UNSIGNED-LOCAL", "unavailable")
+    assert health["signer"] != "DSSE-LIVE"
+    assert health["signer"] != "UNSIGNED-LOCAL"
+    assert health["sha"] == "82ad0481753ddd0043e3b55352704e187be14a08"
+    assert re.fullmatch(r"[0-9a-f]{40}", health["sha"])
     assert health["uptime"] == "NOT_MEASURED"
+    health_blob = json.dumps(health)
+    assert "exactly 8" not in health_blob
+    assert "locked-proven" not in health_blob.lower()
     assert health["readyz"] == "NOT_A_HEALTH_URL"
     assert health["healthz"] == "NOT_PUBLISHED"
     assert health["json_probe_document"] == "https://a11oy.net/health.json"
