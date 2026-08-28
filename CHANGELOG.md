@@ -1,8 +1,26 @@
 # Changelog
 
-Dated notes for the a11oy.net proof registry. This is a status pointer, not a product-release feed and not a capability claim.
+Dated notes for the a11oy.net proof registry. This is a status pointer, not a
+product-release feed and not a capability claim.
 
 Public HTML: [https://a11oy.net/notes/](https://a11oy.net/notes/).
+
+## [Unreleased]
+
+### Added - investor smoke gate
+
+- Added a fail-closed S1–S12 / L1–L6 / D1–D10 investor smoke gate
+  (`.github/workflows/investor-smoke-gate.yml`, `scripts/investor_smoke_gate.py`).
+  S7 (AYNI) asserts every a11oy.net kernel chip binds `/honest`
+  `locked_formula_count` (8 or N/A / UNAVAILABLE), not genome `LOCKED-PROVEN`
+  (25). Both numbers are real. Catalog 25 stays labelled. Do not demand 25 be
+  deleted. Committed chips bind via `scripts/honest_kernel_bind.js` (#24).
+  S2 committed `health.json` carries `signer=unavailable` and `sha` of last
+  published main (#25). That is not DSSE-LIVE and not an uptime claim.
+  `dsse_live` stays `NOT_CLAIMED`. S1 HEAD 405/404 remains a KALLPA-owned
+  probe only. L1–L6 are SNAPSHOT 2026-08-28 (not executed; no N). S4/S6/S9
+  are UNAVAILABLE (no POST). This PR cannot self-certify as
+  control-plane-required. See `docs/INVESTOR_SMOKE_GATE.md`.
 
 ## 2026-08-28
 

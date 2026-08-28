@@ -143,6 +143,10 @@ python scripts/check_honest_kernel_bind.py
 node scripts/check_atlas_policy.mjs
 node scripts/check_probe_policy.mjs
 node scripts/check_honest_kernel_bind.mjs
+python3 -m pytest -q tests/test_investor_smoke_gate.py
+python3 -m pytest -q tests/test_investor_smoke_bind.py
+python3 scripts/investor_smoke_gate.py --mode live \
+  --origin https://a11oy.net --origin https://www.a11oy.net
 ```
 
 The checks validate:
@@ -156,7 +160,8 @@ The checks validate:
 - exclusion of interactive Spaces and Killinchu-named resources;
 - the investor/developer diligence room, static machine contract, `llms.txt`,
   branded 404, SVG mark, and no-JavaScript route boundaries;
-- the committed edge-security contract without promoting it to deployed state.
+- the committed edge-security contract without promoting it to deployed state;
+- skip-as-green rejection for the investor smoke matrix (a missing probe is FAIL).
 
 ## Repository map
 
@@ -187,6 +192,9 @@ The checks validate:
 | `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. |
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
+| `.github/workflows/investor-smoke-gate.yml` | Fail-closed S1–S12 investor smoke (proposed required checks). |
+| `scripts/investor_smoke_gate.py` | GET/HEAD probes, skip-as-green rejection, S7 `/honest` bind. |
+| `docs/INVESTOR_SMOKE_GATE.md`, `.github/BRANCH_PROTECTION.md` | Matrix, owners, exact check-run names (cannot self-certify). |
 
 ## Publishing and security
 
