@@ -30,6 +30,9 @@ PROBE_POLICY_CHECK = ROOT / "scripts" / "check_probe_policy.mjs"
 READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
+STAMP_HEALTH_SHA = ROOT / "scripts" / "stamp_health_sha.py"
+LAST_PUBLISHED_MAIN_SHA = "82ad0481753ddd0043e3b55352704e187be14a08"
+ALLOWED_HEALTH_SIGNERS = ("DSSE-LIVE", "UNSIGNED-LOCAL", "unavailable")
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
@@ -118,6 +121,8 @@ def check() -> None:
     assert 'root.rglob("*.html")' in workflow
     assert "python3 scripts/check_diligence_surface.py" in workflow
     assert "node scripts/check_probe_policy.mjs" in workflow
+    assert "python3 scripts/stamp_health_sha.py --sha \"${GITHUB_SHA}\"" in workflow
+    assert STAMP_HEALTH_SHA.is_file(), "Pages artifact stamp for health.json sha must exist"
     for protected_artifact in (
         "404.html",
         "assets/a11oy-mark.svg",
@@ -275,11 +280,51 @@ def check() -> None:
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"
+    assert health["probe_contract"] == "STATIC_DOCUMENT"
     assert health["dsse_live"] == "NOT_CLAIMED"
+    assert health["signer"] == "unavailable"
+    assert health["signer"] in ALLOWED_HEALTH_SIGNERS
+    assert health["signer"] != "DSSE-LIVE"
+    assert health["signer"] != "UNSIGNED-LOCAL"
+    assert health["sha"] == LAST_PUBLISHED_MAIN_SHA
+    assert re.fullmatch(r"[0-9a-f]{40}", health["sha"])
     assert health["uptime"] == "NOT_MEASURED"
+    health_blob = json.dumps(health)
+    assert "exactly 8" not in health_blob
+    assert "exactly eight" not in health_blob.lower()
+    assert "locked-proven" not in health_blob.lower()
+    assert "hardcoded-8" not in health_blob
     assert health["readyz"] == "NOT_A_HEALTH_URL"
     assert health["healthz"] == "NOT_PUBLISHED"
     assert health["json_probe_document"] == "https://a11oy.net/health.json"
+    import importlib.util
+    import shutil
+    import tempfile
+
+    spec = importlib.util.spec_from_file_location("stamp_health_sha", STAMP_HEALTH_SHA)
+    assert spec is not None and spec.loader is not None
+    stamp_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(stamp_mod)
+    with tempfile.TemporaryDirectory() as tmp:
+        copy = Path(tmp) / "health.json"
+        shutil.copyfile(ROOT / "health.json", copy)
+        stamped = stamp_mod.stamp(copy, "a" * 40)
+        assert stamped["sha"] == "a" * 40
+        assert stamped["signer"] == "unavailable"
+        assert stamped["uptime"] == "NOT_MEASURED"
+        assert stamped["dsse_live"] == "NOT_CLAIMED"
+        for forbidden_signer in ("DSSE-LIVE", "UNSIGNED-LOCAL"):
+            tampered = json.loads(copy.read_text(encoding="utf-8"))
+            tampered["signer"] = forbidden_signer
+            copy.write_text(json.dumps(tampered), encoding="utf-8")
+            try:
+                stamp_mod.stamp(copy, "b" * 40)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError(
+                    f"stamp_health_sha must refuse signer={forbidden_signer}"
+                )
     assert not (ROOT / "healthz").exists(), "/healthz must not be published as a competing route"
     assert not (ROOT / "healthz.html").exists(), "/healthz must not be published as a competing file"
     assert any(
