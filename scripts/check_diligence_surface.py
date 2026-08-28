@@ -267,6 +267,19 @@ def check() -> None:
     assert "Product ↗" in CODE.read_text(encoding="utf-8")
     assert "Diligence handoff" in CHAT.read_text(encoding="utf-8")
     assert "Diligence handoff" in CODE.read_text(encoding="utf-8")
+    assert 'href="/investor"' not in diligence_source
+    assert not (ROOT / "investor").exists()
+    assert not (ROOT / "verify").exists()
+    assert "this registry does not clone" in diligence_source
+    chat_source = CHAT.read_text(encoding="utf-8")
+    code_source = CODE.read_text(encoding="utf-8")
+    assert chat_source.count("empty-panel") == 1
+    assert code_source.count("empty-panel") == 1
+    assert "https://a-11-oy.com/verify" in llms
+    assert "There is no /investor route" in llms
+    not_found = NOT_FOUND.read_text(encoding="utf-8")
+    assert "no local /verify clone" in not_found
+    assert "no /investor route" in not_found
 
 
 if __name__ == "__main__":

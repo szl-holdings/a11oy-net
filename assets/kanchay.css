@@ -1,6 +1,8 @@
-/* KANCHAY on a11oy.net only. .com tokens stay LLIKA's lane.
+/* KANCHAY house palette (canonical on both origins; this file is .net RECORD).
    void #080c14 / proof teal #3af4c8 / lattice #5b8dee / gold #d7b96b
-   Named families; 0 runtime font CDN. Purple is banned. */
+   Same chip / hairline language as .com Command|Proof — here Product|Proof.
+   Named families; 0 runtime font CDN. Purple is banned. Do not invent a
+   competing token war with LLIKA a11oy PR 1391. */
 :root{
   --void:#080c14;
   --deep:#0a1019;
@@ -111,14 +113,14 @@ h1,h2,h3,.wordmark,.brand,.scope,.btn,.button{font-family:var(--head)}
 }
 .nav-chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .origin-switch{
-  display:inline-flex;align-items:center;gap:8px;margin-left:4px;padding-left:14px;
-  border-left:1px solid var(--border);letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:7px;margin-left:4px;padding-left:12px;
+  border-left:1px solid var(--border);letter-spacing:.06em;font-size:12px;
 }
 .origin-switch a{color:var(--sub)}
 .origin-switch a:hover{color:var(--proof)}
 .origin-switch .origin-product{color:var(--proof);font-weight:600}
 .origin-switch .origin-proof[aria-current]{color:var(--ink);font-weight:700}
-.origin-sep{color:var(--ghost)}
+.origin-sep{color:var(--ghost);font-weight:300;opacity:.72}
 .handoff-line{
   margin:0 0 28px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;
   background:rgba(14,22,38,.72);color:var(--sub);font:13px/1.55 var(--mono);

@@ -1,9 +1,9 @@
 # A11oy Proof Registry
 
-> A separately hosted first-party evidence registry for A11oy, published by SZL Holdings.
+> RECORD on a11oy.net. Hub atlas and ROADMAP live here, not on a-11-oy.com.
 
 Authoritative public paths:
-- Evidence homepage: https://a11oy.net/
+- Evidence homepage (RECORD, Hub atlas, ROADMAP): https://a11oy.net/
 - Investor and developer diligence room: https://a11oy.net/diligence/
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/
@@ -14,6 +14,7 @@ Authoritative public paths:
 - Product source: https://github.com/szl-holdings/a11oy
 - Public artifact registry: https://huggingface.co/SZLHOLDINGS
 - Security reporting: https://a11oy.net/.well-known/security.txt
+- Interactive receipt verifier (product domain, not cloned here): https://a-11-oy.com/verify
 
 Truth boundary:
 - This static site's availability does not establish A11oy product-runtime readiness.
@@ -21,4 +22,5 @@ Truth boundary:
 - Public Hugging Face metadata is not an authenticated private inventory.
 - Preserve MEASURED, REPORTED, MODELED, HEURISTIC, UNKNOWN, and UNAVAILABLE labels.
 - Product runtime and receipt-verifier state must be observed at their own live sources.
-- The /chat/ and /code/ pages are static cross-domain handoffs, not product-runtime execution surfaces.
+- The /chat/ and /code/ pages are static Diligence handoffs, not product-runtime execution surfaces.
+- There is no /investor route. There is no local /verify clone.
