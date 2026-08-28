@@ -9,9 +9,11 @@ No Dockerfile / HF byte-parity changes.
 
 S1 HEAD 405/404 and S2 signer enum: KALLPA owns (probes only).
 S3 unlabeled live coords: UNAVAILABLE or MEASURED with method — never invent MEASURED.
-S7 (AYNI): kernel chips must bind ``/honest`` ``locked_formula_count`` (8 or N/A),
-not genome ``LOCKED-PROVEN`` (25). Both numbers are real. Catalog 25 stays labelled.
-Do not demand 25 be deleted.
+S7 (AYNI): kernel chips must bind ``/honest`` ``locked_formula_count``
+(8 or N/A / UNAVAILABLE), not genome ``LOCKED-PROVEN`` (25). Both numbers are
+real. Catalog 25 stays labelled. Do not demand 25 be deleted. Committed chips
+bind via ``scripts/honest_kernel_bind.js``. S2 committed ``health.json`` carries
+``signer=unavailable`` and a SHA; that is not DSSE-LIVE and not uptime.
 """
 from __future__ import annotations
 
@@ -97,12 +99,20 @@ _HONEST_BIND = re.compile(
     r"""|locked_formula_count[\s\S]{0,240}?(?:/api/a11oy/v1/honest|/honest)""",
     re.I,
 )
+_DATA_HONEST_ATTRS = re.compile(
+    r"""data-honest-url\s*=\s*["'][^"']*(?:/api/a11oy/v1/honest|/honest)"""
+    r"""[\s\S]{0,400}?data-honest-field\s*=\s*["']locked_formula_count["']"""
+    r"""|data-honest-field\s*=\s*["']locked_formula_count["']"""
+    r"""[\s\S]{0,400}?data-honest-url\s*=\s*["'][^"']*(?:/api/a11oy/v1/honest|/honest)""",
+    re.I,
+)
 _NA_BIND = re.compile(
     r"""(?:cnt-locked|pt-locked|data-kernel-chip|locked_formula_count)"""
     r"""[\s\S]{0,240}?N/A"""
     r"""|N/A[\s\S]{0,80}?locked_formula_count""",
     re.I,
 )
+_BIND_SCRIPT = re.compile(r"""honest_kernel_bind\.js""", re.I)
 _CNT_LOCKED_FROM_GENOME = re.compile(
     r"""\$\(\s*['"]cnt-locked['"]\s*\)[\s\S]{0,240}?"""
     r"""(?:tier_counts|tc)\s*(?:\[\s*['"]LOCKED-PROVEN['"]\s*\]|\.LOCKED)""",
@@ -209,7 +219,9 @@ REQUIRED_MATRIX_IDS = (
 )
 # Contract mode cannot honestly PASS live HTTP rows. It still must include every
 # non-network id so a missing static probe is FAIL, never skip-as-green.
+# S2 is also static: committed health.json is the document live GET must serve.
 CONTRACT_REQUIRED_IDS = (
+    "S2",
     "S4",
     "S5",
     "S6",
@@ -265,6 +277,25 @@ def validate_matrix(
 # ---------------------------------------------------------------------------
 
 
+def surface_binds_honest(text: str) -> bool:
+    """True when a surface binds /honest (8 or N/A / UNAVAILABLE), not a static 8.
+
+    A footer chip without per-element data-honest-url still binds when the page
+    loads honest_kernel_bind.js, which paints every [data-kernel-chip].
+    Labelled N/A on a scriptless surface (diligence) with the honest URL+field
+    is a bind. Hardcoded exactly 8 is not.
+    """
+    if _HONEST_BIND.search(text) or _DATA_HONEST_ATTRS.search(text):
+        return True
+    if _BIND_SCRIPT.search(text) and _KERNEL_CHIP.search(text):
+        return True
+    if _NA_BIND.search(text) and (
+        HONEST_FIELD in text or HONEST_PATH in text or _BIND_SCRIPT.search(text)
+    ):
+        return True
+    return False
+
+
 def kernel_slot_bind_failures(text: str, *, source_name: str) -> list[str]:
     """FAIL if a kernel chip binds genome LOCKED-PROVEN or is hardcoded 8.
 
@@ -291,16 +322,17 @@ def kernel_slot_bind_failures(text: str, *, source_name: str) -> list[str]:
             "LOCKED-PROVEN into the kernel slot (catalog 25 is not the kernel)."
         )
     has_chip = bool(_KERNEL_CHIP.search(text))
-    honest = bool(_HONEST_BIND.search(text) or _NA_BIND.search(text))
+    honest = surface_binds_honest(text)
     if has_chip and not honest:
         failures.append(
             f"{source_name}: kernel chip present but does not bind "
-            f"{HONEST_PATH} {HONEST_FIELD} (8 or N/A). Hardcoded 8 is not a bind."
+            f"{HONEST_PATH} {HONEST_FIELD} (8 or N/A / UNAVAILABLE). "
+            "Hardcoded 8 is not a bind."
         )
     if _HARDCODED_KERNEL_EIGHT.search(text) and not honest:
         failures.append(
             f"{source_name}: locked-proven count is hardcoded; bind /honest "
-            "(8 or N/A) instead of painting a static 8."
+            "(8 or N/A / UNAVAILABLE) instead of painting a static 8."
         )
     return failures
 
@@ -321,13 +353,17 @@ def analyze_repo_kernel_binds(root: Path = ROOT) -> list[str]:
         failures.append("no HTML surfaces to probe for kernel chips; missing probe is FAIL")
         return failures
     saw_chip = False
+    bind_js = root / "scripts" / "honest_kernel_bind.js"
     for path in surfaces:
         text = path.read_text(encoding="utf-8", errors="replace")
+        rel = str(path.relative_to(root))
         if _KERNEL_CHIP.search(text) or _HARDCODED_KERNEL_EIGHT.search(text):
             saw_chip = True
-        failures.extend(
-            kernel_slot_bind_failures(text, source_name=str(path.relative_to(root)))
-        )
+        if _BIND_SCRIPT.search(text) and not bind_js.is_file():
+            failures.append(
+                f"{rel}: loads honest_kernel_bind.js but scripts/honest_kernel_bind.js is missing"
+            )
+        failures.extend(kernel_slot_bind_failures(text, source_name=rel))
     if not saw_chip:
         failures.append(
             "no a11oy.net kernel chips found; missing probe is FAIL "
@@ -348,7 +384,8 @@ def s7_bind_agreement(
             f"{HONEST_PATH} {HONEST_FIELD}={LOCKED_KERNEL_COUNT} or N/A, "
             f"not genome LOCKED-PROVEN={GENOME_CATALOG_LOCKED_PROVEN}. "
             "Both numbers are real. Catalog 25 stays labelled. "
-            "Do not demand 25 be deleted. Fail-closed until every kernel chip binds /honest."
+            "Do not demand 25 be deleted. Fail-closed until every kernel chip binds /honest "
+            "(live /honest paints 8 or N/A / UNAVAILABLE)."
         )
         return Verdict(
             id="S7",
@@ -362,7 +399,7 @@ def s7_bind_agreement(
         status="PASS",
         detail=(
             f"every probed kernel chip binds {HONEST_PATH} {HONEST_FIELD} "
-            f"({LOCKED_KERNEL_COUNT} or N/A); catalog "
+            f"({LOCKED_KERNEL_COUNT} or N/A / UNAVAILABLE); catalog "
             f"LOCKED-PROVEN={GENOME_CATALOG_LOCKED_PROVEN} stays labelled separately"
         ),
         owner="INTI",
@@ -388,7 +425,10 @@ def evaluate_catalog_vs_kernel(root: Path = ROOT) -> Verdict:
         re.search(r"locked-proven\s*=\s*(?:<b>)?25", index, re.I)
         or re.search(r"exactly 25 formulas", index, re.I)
     )
-    kernel_labelled_8 = "exactly 8" in index or "exactly eight" in index.lower()
+    kernel_labelled_8 = bool(
+        re.search(r'data-kernel-chip=["\']locked-proven["\']', index, re.I)
+        and surface_binds_honest(index)
+    )
     catalog_labelled = bool(_CATALOG_LABEL.search(index))
     if paints_25_as_kernel:
         return Verdict(
@@ -660,16 +700,26 @@ def static_debug_verdicts(root: Path = ROOT) -> list[Verdict]:
             evidence="sitemap.xml",
         )
     )
+    hero_chip = bool(re.search(r'data-kernel-chip=["\']locked-proven["\']', index, re.I))
+    first_paint_na = bool(
+        re.search(r'id=["\']cnt-locked["\'][^>]*>\s*N/A', index, re.I)
+        or re.search(r'id=["\']cnt-locked["\'][\s\S]{0,80}?>N/A<', index, re.I)
+    )
     hero_labelled = (
-        "locked-proven = <b>exactly 8</b> formulas" in index
-        or "locked-proven = exactly 8 formulas" in index
+        hero_chip
+        and surface_binds_honest(index)
+        and first_paint_na
+        and _HARDCODED_KERNEL_EIGHT.search(index) is None
     )
     out.append(
         Verdict(
             id="D3",
             status="PASS" if hero_labelled else "FAIL",
-            detail="Hero locked count 8 is labelled as locked-proven formulas",
-            evidence="index.html .hero-canon",
+            detail=(
+                "Hero kernel chip is labelled locked-proven and bound to /honest "
+                "(first paint N/A; live count is 8 or N/A / UNAVAILABLE, not a hardcoded 8)"
+            ),
+            evidence="index.html data-kernel-chip + honest_kernel_bind.js",
         )
     )
     out.append(
@@ -682,13 +732,24 @@ def static_debug_verdicts(root: Path = ROOT) -> list[Verdict]:
     )
     out.append(evaluate_catalog_vs_kernel(root))
     out.append(inclusion_verdict(root))
-    ids_ok = all(fid in index for fid in LOCKED_KERNEL_IDS)
+    bind_js = root / "scripts" / "honest_kernel_bind.js"
+    bind_text = bind_js.read_text(encoding="utf-8", errors="replace") if bind_js.is_file() else ""
+    ids_from_honest = (
+        bind_js.is_file()
+        and "locked_formula_ids" in bind_text
+        and HONEST_FIELD in bind_text
+        and "data-kernel-ids" in index
+        and "honest_kernel_bind.js" in index
+    )
     out.append(
         Verdict(
             id="D7",
-            status="PASS" if ids_ok else "FAIL",
-            detail="Locked-8 ids appear on the proof-registry surface",
-            evidence="index.html locked formula ids",
+            status="PASS" if ids_from_honest else "FAIL",
+            detail=(
+                "Locked-8 ids are painted from /honest locked_formula_ids "
+                "(not hardcoded in index.html)"
+            ),
+            evidence="scripts/honest_kernel_bind.js + index.html [data-kernel-ids]",
         )
     )
     out.append(
@@ -748,6 +809,54 @@ def static_debug_verdicts(root: Path = ROOT) -> list[Verdict]:
     return out
 
 
+def s2_static_verdict(root: Path = ROOT) -> Verdict:
+    """Committed health.json must carry signer enum + SHA. Not DSSE-LIVE. Not uptime."""
+    path = root / "health.json"
+    if not path.is_file():
+        return Verdict(
+            id="S2",
+            status="FAIL",
+            detail="Committed health.json missing; skip-as-green rejected",
+            evidence="health.json",
+            owner="KALLPA",
+        )
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return Verdict(
+            id="S2",
+            status="FAIL",
+            detail=f"Committed health.json is not JSON: {exc}",
+            evidence="health.json",
+            owner="KALLPA",
+        )
+    fail = s2_from_payload(payload, source="health.json")
+    signer = extract_signer_status(payload)
+    sha = extract_sha(payload)
+    if fail:
+        return Verdict(
+            id="S2",
+            status="FAIL",
+            detail=(
+                "Health JSON must carry a SHA and signer enum "
+                "{DSSE-LIVE, UNSIGNED-LOCAL, unavailable}. "
+                "Do not invent DSSE-LIVE. This origin is not an uptime claim."
+            ),
+            evidence="; ".join(fail),
+            owner="KALLPA",
+        )
+    return Verdict(
+        id="S2",
+        status="PASS",
+        detail=(
+            f"Committed health.json signer={signer!r} with SHA; "
+            "dsse_live not claimed; not an uptime claim. Do not invent DSSE-LIVE."
+        ),
+        evidence=f"health.json signer={signer} sha={sha}",
+        owner="KALLPA",
+    )
+
+
 def s5_static_verdict(root: Path = ROOT) -> Verdict:
     blob = ""
     for rel in (
@@ -789,6 +898,7 @@ def s8_static_verdict(root: Path = ROOT) -> Verdict:
 
 def static_s_verdicts(root: Path = ROOT) -> list[Verdict]:
     out: list[Verdict] = []
+    out.append(s2_static_verdict(root))
     out.append(s7_verdict(root))
     out.append(s5_static_verdict(root))
     out.append(s8_static_verdict(root))
@@ -1138,9 +1248,10 @@ def live_matrix(origins: list[str], root: Path = ROOT) -> Matrix:
         )
     )
 
-    # S2 health JSON SHA + signer enum (KALLPA) — probes only.
+    # S2 health JSON SHA + signer enum (KALLPA) — probes only. Do not invent DSSE-LIVE.
     health = http_request(_join(primary, HEALTH_JSON_PATH), method="GET", follow=True)
     s2_fail: list[str] = []
+    s2_ev = ""
     if health.status != 200 or "json" not in health.content_type.lower():
         s2_fail.append(
             f"GET {HEALTH_JSON_PATH} signer/SHA probe HTTP {health.status} "
@@ -1158,15 +1269,22 @@ def live_matrix(origins: list[str], root: Path = ROOT) -> Matrix:
                     payload, source=HEALTH_JSON_PATH, http_status=health.status
                 )
             )
+            signer = extract_signer_status(payload)
+            sha = extract_sha(payload)
+            s2_ev = (
+                f"GET {HEALTH_JSON_PATH} signer={signer!r} sha={sha}; "
+                "dsse_live not claimed; not an uptime claim"
+            )
     matrix.add(
         Verdict(
             id="S2",
             status="FAIL" if s2_fail else "PASS",
             detail=(
                 "Health JSON must carry a SHA and signer enum "
-                "{DSSE-LIVE, UNSIGNED-LOCAL, unavailable}"
+                "{DSSE-LIVE, UNSIGNED-LOCAL, unavailable}. "
+                "Do not invent DSSE-LIVE. This document is not an uptime claim."
             ),
-            evidence="; ".join(s2_fail) if s2_fail else f"signer+SHA present on {primary}",
+            evidence="; ".join(s2_fail) if s2_fail else s2_ev,
             owner="KALLPA",
         )
     )

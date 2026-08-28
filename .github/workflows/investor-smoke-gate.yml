@@ -4,9 +4,10 @@ name: Investor smoke gate (S1–S12)
 # Does not touch Dockerfile / HF byte parity (this repo has neither).
 # No POST. No HEAD handlers (KALLPA owns those on a11oy).
 #
-# S7 (AYNI): kernel chips must bind /honest locked_formula_count (8 or N/A),
-# not genome LOCKED-PROVEN (25). Both numbers are real. Catalog 25 stays
-# labelled. Do not demand 25 be deleted.
+S7 (AYNI): kernel chips must bind /honest locked_formula_count (8 or N/A /
+UNAVAILABLE), not genome LOCKED-PROVEN (25). Both numbers are real. Catalog
+25 stays labelled. Do not demand 25 be deleted. Committed chips bind via
+scripts/honest_kernel_bind.js (#24).
 #
 # This workflow is ordinary Actions until branch protection lists the exact
 # check-run names. This PR cannot self-certify as control-plane-required.
@@ -73,7 +74,7 @@ jobs:
       - name: Install pytest
         run: python3 -m pip install pytest
 
-      - name: S7 kernel chips must bind /honest (8 or N/A), not genome 25
+      - name: S7 kernel chips must bind /honest (8 or N/A / UNAVAILABLE), not genome 25
         run: python3 -m pytest -q tests/test_investor_smoke_bind.py
 
   live:

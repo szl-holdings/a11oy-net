@@ -3,11 +3,12 @@
 # Doctrine v11 LOCKED. Λ = Conjecture 1 (NOT a theorem).
 """Fail-closed unit tests for the a11oy.net investor smoke gate (no live HTTP).
 
-S7 against live index.html chips lives in test_investor_smoke_bind.py so this
-file can stay green while INTI's /honest bind is still RED.
+S7 against live index.html chips lives in test_investor_smoke_bind.py.
+Committed health.json (#25) carries signer=unavailable + sha; that is not DSSE-LIVE.
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -95,6 +96,13 @@ def test_s7_passes_when_kernel_chip_binds_honest_and_catalog_25_is_labelled():
     assert failures == []
     verdict = gate.s7_bind_agreement(chips_bind_honest=True)
     assert verdict.status == "PASS"
+
+
+def test_s7_passes_when_footer_chip_binds_via_honest_kernel_bind_js():
+    text = (FIXTURES / "kernel_slot_footer_js_bind.html").read_text(encoding="utf-8")
+    failures = gate.kernel_slot_bind_failures(text, source_name="fixture-footer-js")
+    assert failures == []
+    assert gate.surface_binds_honest(text)
 
 
 def test_d5_labels_catalog_25_not_kernel():
@@ -193,6 +201,48 @@ def test_s2_requires_sha_and_signer():
     assert fail2 == []
 
 
+def test_s2_unavailable_signer_and_sha_is_pass_not_dsse_live():
+    fail = gate.s2_from_payload(
+        {
+            "signer": "unavailable",
+            "sha": "82ad0481753ddd0043e3b55352704e187be14a08",
+            "dsse_live": "NOT_CLAIMED",
+        },
+        source="/health.json",
+    )
+    assert fail == []
+    assert (
+        gate.extract_signer_status(
+            {"signer": "unavailable", "sha": "82ad0481753ddd0043e3b55352704e187be14a08"}
+        )
+        == "unavailable"
+    )
+
+
+def test_committed_health_json_signer_unavailable_and_sha_is_pass():
+    path = ROOT / "health.json"
+    assert path.is_file(), "committed /health.json missing; skip-as-green rejected"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    fail = gate.s2_from_payload(payload, source="health.json")
+    assert fail == [], fail
+    assert gate.extract_signer_status(payload) == "unavailable"
+    assert gate.extract_sha(payload)
+    assert payload.get("dsse_live") == "NOT_CLAIMED"
+    assert payload.get("signer") != "DSSE-LIVE"
+    verdict = gate.s2_static_verdict(ROOT)
+    assert verdict.status == "PASS", verdict.detail
+
+
+def test_health_json_without_signer_is_fail_not_skip():
+    payload = json.loads(
+        (FIXTURES / "health_missing_signer.json").read_text(encoding="utf-8")
+    )
+    fail = gate.s2_from_payload(payload, source="fixture-no-signer")
+    assert fail, "health.json without SHA+signer enum must FAIL, never skip-as-green"
+    blob = " ".join(fail)
+    assert "signer" in blob.lower() or "SHA" in blob
+
+
 def test_locked_formula_count_nested_or_top_level():
     assert gate.locked_formula_count_from_honest({"locked_formula_count": 8}) == 8
     assert (
@@ -225,8 +275,10 @@ def test_contract_matrix_does_not_skip_required_ids():
     matrix = gate.contract_matrix(ROOT)
     errors = gate.validate_matrix(matrix, required=gate.CONTRACT_REQUIRED_IDS)
     assert errors == []
+    assert matrix.by_id("S2") is not None
+    assert matrix.by_id("S2").status == "PASS"
     assert matrix.by_id("S7") is not None
-    assert matrix.by_id("S7").status == "FAIL"
+    assert matrix.by_id("S7").status == "PASS"
     assert matrix.by_id("S11").status == "FAIL"
     assert matrix.by_id("S12").status == "FAIL"
 

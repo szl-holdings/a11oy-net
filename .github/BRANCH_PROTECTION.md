@@ -29,13 +29,16 @@ if they are later required:
 The three investor-smoke contexts are **proposed** required checks. See
 [`docs/INVESTOR_SMOKE_GATE.md`](../docs/INVESTOR_SMOKE_GATE.md).
 
-S7 stays RED until every a11oy.net kernel chip binds `/honest`
-`locked_formula_count` (8 or N/A). Catalog genome `LOCKED-PROVEN` (25) is a
+S7 asserts every a11oy.net kernel chip binds `/honest`
+`locked_formula_count` (8 or N/A / UNAVAILABLE). Committed chips bind via
+`scripts/honest_kernel_bind.js` (#24). Catalog genome `LOCKED-PROVEN` (25) is a
 real labelled catalog count. Do not demand 25 be deleted. Do not rewrite
-chips to fake a `/honest` bind.
+chips to fake a `/honest` bind. Hardcoded 8 is still FAIL.
 
-S1 HEAD 405/404 (where GET is 200) and S2 signer enum stay KALLPA-owned
-probes. This repository does not add HEAD handlers.
+S1 HEAD 405/404 (where GET is 200) stays KALLPA-owned. S2 committed
+`health.json` (#25) carries `signer=unavailable` and `sha` of last published
+main; that is not DSSE-LIVE and not an uptime claim. This repository does
+not add HEAD handlers.
 
 Verify a context before requiring it: the name must match the job `name:`
 field exactly as GitHub reports it on the check run.

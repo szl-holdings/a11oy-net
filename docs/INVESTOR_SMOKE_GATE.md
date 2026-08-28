@@ -15,8 +15,8 @@ Workflow: `.github/workflows/investor-smoke-gate.yml`
 
 | Job (exact check-run name) | What it proves |
 |---|---|
-| `Investor smoke contract (S1-S12 static)` | Fixtures, skip-as-green rejection, D-rows, L-row SNAPSHOT date |
-| `Investor smoke bind (S7 kernel chips bind /honest)` | Every a11oy.net kernel chip binds `/honest` `locked_formula_count` (8 or N/A), not genome `LOCKED-PROVEN` (25) |
+| `Investor smoke contract (S1-S12 static)` | Fixtures, skip-as-green rejection, D-rows, committed `health.json` S2 |
+| `Investor smoke bind (S7 kernel chips bind /honest)` | Every a11oy.net kernel chip binds `/honest` `locked_formula_count` (8 or N/A / UNAVAILABLE), not genome `LOCKED-PROVEN` (25) |
 | `Investor smoke live probes` | GET/HEAD against `https://a11oy.net` and `https://www.a11oy.net` only |
 
 This pull request cannot certify those names as control-plane-required. See
@@ -26,9 +26,9 @@ This pull request cannot certify those names as control-plane-required. See
 
 | Defect | Owner | This PR |
 |---|---|---|
-| S7 kernel chips not bound to `/honest` | **INTI** | Fail-closed assertion. Keep RED until every a11oy.net kernel chip binds `/honest` (8 or N/A). Catalog 25 stays labelled. Do not demand 25 be deleted. |
+| S7 kernel chips bind `/honest` | **INTI** | Fail-closed assertion. Committed chips bind live `/honest` via #24 (`scripts/honest_kernel_bind.js`; 8 or N/A / UNAVAILABLE). Catalog 25 stays labelled. Do not demand 25 be deleted. |
 | S1 HEAD 405/404 vs GET 200 | **KALLPA** | Probes only. No HEAD handlers. |
-| S2 health JSON SHA + signer enum | **KALLPA** | Probes only. Lean SHA is not enough. |
+| S2 health JSON SHA + signer enum | **KALLPA** | Committed `health.json` (#25) has `signer=unavailable` and `sha` of last published main. That is not DSSE-LIVE and not an uptime claim. `dsse_live` stays `NOT_CLAIMED`. |
 | S3 unlabeled live coords | this gate | Fail-closed: UNAVAILABLE or MEASURED **with method**. Do not invent MEASURED. |
 | PR 1366 memory covenant PG18 | out of scope | **RED**. Not this gate. Lives on a11oy. |
 
@@ -37,7 +37,8 @@ This pull request cannot certify those names as control-plane-required. See
 Fail-closed assertion:
 
 Every **kernel chip** on a11oy.net **must bind** `/api/a11oy/v1/honest`
-`locked_formula_count` (**8** or **N/A**), not genome `LOCKED-PROVEN` (**25**).
+`locked_formula_count` (**8** or **N/A** / **UNAVAILABLE**), not genome
+`LOCKED-PROVEN` (**25**).
 
 Both numbers are real:
 
@@ -46,6 +47,13 @@ Both numbers are real:
 
 Do not demand 25 be deleted. Do not rewrite chips to fake agreement. A
 hardcoded `exactly 8` that does not read `/honest` is still **FAIL**.
+
+Committed surfaces (#24): hero chip carries `data-honest-url` +
+`data-honest-field="locked_formula_count"` with first paint **N/A**. Footer
+chip has no per-element URL; `scripts/honest_kernel_bind.js` paints every
+`[data-kernel-chip]`. Diligence is scriptless N/A with the honest URL+field
+labelled. Formula ids are painted from `/honest` `locked_formula_ids`, not
+hardcoded in HTML.
 
 ## Dual-origin inclusion
 
@@ -59,17 +67,17 @@ Verdicts: `PASS` · `FAIL` · `UNAVAILABLE` · `SNAPSHOT <date>` · `UNCONFIGURE
 A missing probe is **FAIL**. `SNAPSHOT` without a date is rejected.
 `UNAVAILABLE` is allowed only for S4 / S6 / S9. `UNCONFIGURED` is allowed only
 for wire-D. L1–L6 are `SNAPSHOT 2026-08-28`. Never claim production-scale with
-no N.
+no N. Do not invent DSSE-LIVE. Do not claim LIVE uptime.
 
 | ID | Check | Honest result this PR encodes |
 |---|---|---|
 | S1 | Both origins 200 on core routes; HEAD must not 405/404 where GET is 200 | Live probe (KALLPA owns 405/404 product fixes) |
-| S2 | Health JSON SHA + signer enum `{DSSE-LIVE, UNSIGNED-LOCAL, unavailable}` | Live FAIL until a signer-bearing health JSON exists on this origin |
+| S2 | Health JSON SHA + signer enum `{DSSE-LIVE, UNSIGNED-LOCAL, unavailable}` | Committed document: `signer=unavailable` + `sha` of last published main. Not DSSE-LIVE. Not uptime. Live GET must 200 the same contract. |
 | S3 | Live-fetch coords UNAVAILABLE or MEASURED with method; no raw unlabeled latitude in first viewport | Viewport probe; do not invent MEASURED |
 | S4 | Staging receipt-write | **UNAVAILABLE** (no POST) |
 | S5 | Read-only does not mint | Static + live GET |
 | S6 | Refuse / abstain | **UNAVAILABLE** (no POST) |
-| S7 | Kernel chips bind `/honest` 8 or N/A, not genome 25 | **FAIL** until INTI |
+| S7 | Kernel chips bind `/honest` 8 or N/A / UNAVAILABLE, not genome 25 | Committed chips bind via #24. Live Pages must serve that bind. Catalog 25 labelled. |
 | S8 | Designed 404 | Live undeclared `*.js` must not be HTML 200 |
 | S9 | Authz empty-state | **UNAVAILABLE** |
 | S10 | OG image 200 | Live `/assets/a11oy-net-social.png` |
@@ -89,11 +97,15 @@ no N.
 - No HEAD handlers.
 - Do not demand genome catalog 25 be deleted.
 - Do not run stress. L1–L6 stay SNAPSHOT 2026-08-28.
+- Do not invent DSSE-LIVE.
+- Do not claim LIVE uptime.
 
-## Measured live (2026-08-28, GET/HEAD only, no POST)
+## Measured live (re-probe after rebase)
 
 Canonical origin `https://a11oy.net`. Alias `https://www.a11oy.net`.
-Re-probe after INTI kernel-chip bind and KALLPA health/signer work.
+Contract S2/S7 follow committed #24/#25. Live GET/HEAD may still FAIL if
+GitHub Pages has not published those revisions. Missing live probe is FAIL,
+never skip-as-green.
 
 See the pull-request body for the live matrix recorded at ship time.
 
@@ -101,7 +113,7 @@ See the pull-request body for the live matrix recorded at ship time.
 
 ```bash
 python3 -m pytest -q tests/test_investor_smoke_gate.py
-python3 -m pytest -q tests/test_investor_smoke_bind.py   # RED until INTI
+python3 -m pytest -q tests/test_investor_smoke_bind.py
 python3 scripts/investor_smoke_gate.py --mode live \
   --origin https://a11oy.net --origin https://www.a11oy.net
 ```
