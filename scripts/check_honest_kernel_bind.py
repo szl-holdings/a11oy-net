@@ -86,6 +86,8 @@ def check() -> None:
     catalog_text = catalog.group(1).lower()
     assert "genome catalog" in catalog_text or "not the kernel" in catalog_text
     assert "Lean-8 ≠ genome-144" in index or "Lean-8 != genome-144" in index
+    assert 'class="frontier-kernel"' in index
+    assert "not ROADMAP" in index
     assert 'class="conjecture"' in index
     assert "Conjecture 1" in index
     kanchay = (ROOT / "assets" / "kanchay.css").read_text(encoding="utf-8")
