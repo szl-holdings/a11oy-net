@@ -1,0 +1,581 @@
+name: Rebuild investor smoke gate with HF ecosystem binding
+
+on:
+  push:
+    branches:
+      - fix/investor-smoke-hf-ecosystem-current-main-20260828
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebuild-investor-smoke-hf-ecosystem-current-main-20260828
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    if: github.repository == 'szl-holdings/a11oy-net' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out current-main successor branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Import the reviewed smoke gate and bind canonical HF surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_head='946425b5cd5c3d9b9d56832578c7ea8e6c9488a2'
+          git fetch --no-tags origin "$source_head"
+          git checkout "$source_head" -- \
+            .github/BRANCH_PROTECTION.md \
+            .github/workflows/investor-smoke-gate.yml \
+            .github/workflows/link-check.yml \
+            CHANGELOG.md \
+            README.md \
+            docs/INVESTOR_SMOKE_GATE.md \
+            docs/investor/screenshot-catalog.md \
+            scripts/check_honest_kernel_bind.py \
+            scripts/investor_smoke_gate.py \
+            tests/fixtures/investor_smoke/health_missing_signer.json \
+            tests/fixtures/investor_smoke/kernel_slot_footer_js_bind.html \
+            tests/fixtures/investor_smoke/kernel_slot_genome_bind.html \
+            tests/fixtures/investor_smoke/kernel_slot_honest_bind.html \
+            tests/fixtures/investor_smoke/kernel_slot_static_eight.html \
+            tests/test_investor_smoke_bind.py \
+            tests/test_investor_smoke_gate.py
+
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import json
+          from pathlib import Path
+          import re
+
+          binding = {
+              "schema": "szl.a11oy-net-hf-binding/v1",
+              "evidence_origin": "https://a11oy.net",
+              "product_origin": "https://a-11-oy.com",
+              "space": {
+                  "repo_id": "SZLHOLDINGS/a11oy",
+                  "source_repository": "szl-holdings/a11oy",
+                  "live_base_url": "https://szlholdings-a11oy.hf.space",
+                  "build_info_path": "/api/build-info",
+                  "health_path": "/healthz",
+                  "honest_path": "/api/a11oy/v1/honest",
+              },
+              "org_card": {
+                  "repo_id": "SZLHOLDINGS/README",
+                  "source_repository": "szl-holdings/.github",
+                  "live_base_url": "https://szlholdings-readme.static.hf.space",
+                  "deployment_path": "/deployment.json",
+                  "readme_url": "https://huggingface.co/spaces/SZLHOLDINGS/README/resolve/main/README.md",
+                  "required_frontmatter": [
+                      "colorFrom",
+                      "colorTo",
+                      "emoji",
+                      "sdk",
+                      "title",
+                  ],
+              },
+          }
+          binding_path = Path("docs/HF_ECOSYSTEM_BINDING.json")
+          binding_path.write_text(
+              json.dumps(binding, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+
+          source_path = Path("scripts/investor_smoke_gate.py")
+          source = source_path.read_text(encoding="utf-8")
+          anchor = 'HONEST_ORIGIN = "https://a-11-oy.com"\nUSER_AGENT = ('
+          replacement = '''HONEST_ORIGIN = "https://a-11-oy.com"
+          HF_BINDING_RELATIVE = "docs/HF_ECOSYSTEM_BINDING.json"
+          EXACT_SHA40 = re.compile(r"^[0-9a-f]{40}$")
+          USER_AGENT = ('''
+          if source.count(anchor) != 1:
+              raise SystemExit("HF constant insertion anchor is not exact")
+          source = source.replace(anchor, replacement, 1)
+
+          start = source.index("def s12_verdict(root: Path = ROOT) -> Verdict:")
+          end_marker = "\n\n# ---------------------------------------------------------------------------\n# Dual-origin inclusion"
+          end = source.index(end_marker, start)
+          new_hf_contract = r'''
+          def _expected_hf_binding() -> dict[str, Any]:
+              return {
+                  "schema": "szl.a11oy-net-hf-binding/v1",
+                  "evidence_origin": CANONICAL_ORIGIN,
+                  "product_origin": HONEST_ORIGIN,
+                  "space": {
+                      "repo_id": "SZLHOLDINGS/a11oy",
+                      "source_repository": "szl-holdings/a11oy",
+                      "live_base_url": "https://szlholdings-a11oy.hf.space",
+                      "build_info_path": "/api/build-info",
+                      "health_path": "/healthz",
+                      "honest_path": HONEST_PATH,
+                  },
+                  "org_card": {
+                      "repo_id": "SZLHOLDINGS/README",
+                      "source_repository": "szl-holdings/.github",
+                      "live_base_url": "https://szlholdings-readme.static.hf.space",
+                      "deployment_path": "/deployment.json",
+                      "readme_url": (
+                          "https://huggingface.co/spaces/SZLHOLDINGS/README/"
+                          "resolve/main/README.md"
+                      ),
+                      "required_frontmatter": [
+                          "colorFrom",
+                          "colorTo",
+                          "emoji",
+                          "sdk",
+                          "title",
+                      ],
+                  },
+              }
+
+
+          def load_hf_binding(root: Path = ROOT) -> dict[str, Any]:
+              path = root / HF_BINDING_RELATIVE
+              try:
+                  value = json.loads(path.read_text(encoding="utf-8"))
+              except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                  raise ValueError(f"HF ecosystem binding is unreadable: {exc}") from exc
+              expected = _expected_hf_binding()
+              if value != expected:
+                  raise ValueError("HF ecosystem binding is not exact and canonical")
+              return value
+
+
+          def _binding_verdict(
+              *, root: Path, verdict_id: str, component: str, detail: str
+          ) -> Verdict:
+              try:
+                  binding = load_hf_binding(root)
+              except ValueError as exc:
+                  return Verdict(
+                      id=verdict_id,
+                      status="FAIL",
+                      detail=f"{component} binding failed closed: {exc}",
+                      evidence=HF_BINDING_RELATIVE,
+                  )
+              node = binding[component]
+              return Verdict(
+                  id=verdict_id,
+                  status="PASS",
+                  detail=detail,
+                  evidence=(
+                      f"{HF_BINDING_RELATIVE}: {node['repo_id']} <- "
+                      f"{node['source_repository']} @ {node['live_base_url']}"
+                  ),
+              )
+
+
+          def s11_verdict(root: Path = ROOT) -> Verdict:
+              return _binding_verdict(
+                  root=root,
+                  verdict_id="S11",
+                  component="space",
+                  detail=(
+                      "Evidence origin explicitly binds the canonical product Space; "
+                      "live mode must prove exact protected-main deployment parity"
+                  ),
+              )
+
+
+          def s12_verdict(root: Path = ROOT) -> Verdict:
+              return _binding_verdict(
+                  root=root,
+                  verdict_id="S12",
+                  component="org_card",
+                  detail=(
+                      "Evidence origin explicitly binds the canonical organization card; "
+                      "live mode must prove card fields and exact source revision"
+                  ),
+              )
+
+
+          _REVISION_KEYS = (
+              "source_revision",
+              "revision",
+              "git_sha",
+              "commit",
+              "source_sha",
+              "sha",
+          )
+
+
+          def source_revision_from_payload(payload: Any) -> str | None:
+              if not isinstance(payload, dict):
+                  return None
+              source_node = payload.get("source")
+              if isinstance(source_node, dict):
+                  for key in _REVISION_KEYS:
+                      raw = source_node.get(key)
+                      if isinstance(raw, str) and EXACT_SHA40.fullmatch(raw.lower()):
+                          return raw.lower()
+              build_node = payload.get("build")
+              if isinstance(build_node, dict):
+                  for key in _REVISION_KEYS:
+                      raw = build_node.get(key)
+                      if isinstance(raw, str) and EXACT_SHA40.fullmatch(raw.lower()):
+                          return raw.lower()
+              for key in _REVISION_KEYS:
+                  raw = payload.get(key)
+                  if isinstance(raw, str) and EXACT_SHA40.fullmatch(raw.lower()):
+                      return raw.lower()
+              candidates: set[str] = set()
+
+              def walk(node: Any) -> None:
+                  if isinstance(node, dict):
+                      for value in node.values():
+                          walk(value)
+                  elif isinstance(node, list):
+                      for value in node:
+                          walk(value)
+                  elif isinstance(node, str) and EXACT_SHA40.fullmatch(node.lower()):
+                      candidates.add(node.lower())
+
+              walk(payload)
+              return next(iter(candidates)) if len(candidates) == 1 else None
+
+
+          def source_repository_from_payload(payload: Any) -> str | None:
+              if not isinstance(payload, dict):
+                  return None
+              source_node = payload.get("source")
+              if isinstance(source_node, dict):
+                  raw = source_node.get("repository") or source_node.get(
+                      "source_repository"
+                  )
+                  if isinstance(raw, str):
+                      return raw
+              for key in ("source_repository", "repository"):
+                  raw = payload.get(key)
+                  if isinstance(raw, str) and raw.startswith("szl-holdings/"):
+                      return raw
+              return None
+
+
+          def github_main_sha(repository: str) -> tuple[str | None, str]:
+              url = f"https://api.github.com/repos/{repository}/branches/main"
+              got = http_request(url, method="GET", follow=True)
+              if got.status != 200:
+                  return None, f"GET {url} -> {got.status} {got.error}".strip()
+              try:
+                  payload = got.json()
+              except Exception as exc:  # noqa: BLE001
+                  return None, f"GET {url} JSON parse: {exc}"
+              commit = payload.get("commit") if isinstance(payload, dict) else None
+              sha = commit.get("sha") if isinstance(commit, dict) else None
+              if not isinstance(sha, str) or not EXACT_SHA40.fullmatch(sha.lower()):
+                  return None, f"GET {url} did not return one exact main SHA"
+              return sha.lower(), f"GET {url} -> {sha.lower()}"
+
+
+          def s11_live_verdict(root: Path = ROOT) -> Verdict:
+              try:
+                  node = load_hf_binding(root)["space"]
+              except ValueError as exc:
+                  return Verdict(
+                      id="S11",
+                      status="FAIL",
+                      detail=f"canonical product Space binding failed closed: {exc}",
+                      evidence=HF_BINDING_RELATIVE,
+                  )
+              base = node["live_base_url"].rstrip("/")
+              build = http_request(base + node["build_info_path"], method="GET")
+              health = http_request(base + node["health_path"], method="GET")
+              honest = http_request(base + node["honest_path"], method="GET")
+              github_sha, github_evidence = github_main_sha(node["source_repository"])
+              failures: list[str] = []
+              evidence = [github_evidence]
+              build_payload: Any = None
+              honest_payload: Any = None
+              for label, result in (
+                  ("build-info", build),
+                  ("health", health),
+                  ("honest", honest),
+              ):
+                  evidence.append(f"GET {result.url} -> {result.status}")
+                  if result.status != 200:
+                      failures.append(f"{label} HTTP {result.status} {result.error}".strip())
+              if build.status == 200:
+                  try:
+                      build_payload = build.json()
+                  except Exception as exc:  # noqa: BLE001
+                      failures.append(f"build-info JSON parse: {exc}")
+              if honest.status == 200:
+                  try:
+                      honest_payload = honest.json()
+                  except Exception as exc:  # noqa: BLE001
+                      failures.append(f"honest JSON parse: {exc}")
+              deployed_sha = source_revision_from_payload(build_payload)
+              deployed_repo = source_repository_from_payload(build_payload)
+              if github_sha is None:
+                  failures.append("current protected a11oy/main SHA is unavailable")
+              if deployed_sha is None:
+                  failures.append("Space build-info has no exact 40-character source revision")
+              elif github_sha is not None and deployed_sha != github_sha:
+                  failures.append(
+                      f"Space source drift: deployed {deployed_sha} != main {github_sha}"
+                  )
+              if deployed_repo not in {None, node["source_repository"]}:
+                  failures.append(
+                      f"Space source repository drift: {deployed_repo!r} != "
+                      f"{node['source_repository']!r}"
+                  )
+              locked = locked_formula_count_from_honest(honest_payload)
+              if locked != LOCKED_KERNEL_COUNT:
+                  failures.append(
+                      f"Space honest locked_formula_count={locked!r}, expected "
+                      f"{LOCKED_KERNEL_COUNT}"
+                  )
+              evidence.append(f"deployed_revision={deployed_sha}")
+              evidence.append(f"locked_formula_count={locked}")
+              return Verdict(
+                  id="S11",
+                  status="FAIL" if failures else "PASS",
+                  detail=(
+                      "Canonical SZLHOLDINGS/a11oy Space is reachable, doctrine-bound, "
+                      "and byte-source aligned with protected a11oy/main"
+                  ),
+                  evidence="; ".join(failures or evidence),
+              )
+
+
+          def s12_live_verdict(root: Path = ROOT) -> Verdict:
+              try:
+                  node = load_hf_binding(root)["org_card"]
+              except ValueError as exc:
+                  return Verdict(
+                      id="S12",
+                      status="FAIL",
+                      detail=f"canonical organization-card binding failed closed: {exc}",
+                      evidence=HF_BINDING_RELATIVE,
+                  )
+              card = http_request(node["readme_url"], method="GET", follow=True)
+              deployment = http_request(
+                  node["live_base_url"].rstrip("/") + node["deployment_path"],
+                  method="GET",
+                  follow=True,
+              )
+              github_sha, github_evidence = github_main_sha(node["source_repository"])
+              failures: list[str] = []
+              evidence = [github_evidence]
+              card_fields: dict[str, Any] = {}
+              deployment_payload: Any = None
+              evidence.append(f"GET {card.url} -> {card.status}")
+              evidence.append(f"GET {deployment.url} -> {deployment.status}")
+              if card.status != 200:
+                  failures.append(f"organization card HTTP {card.status} {card.error}".strip())
+              else:
+                  try:
+                      card_fields = parse_simple_yaml_frontmatter(card.text(256_000))
+                  except ValueError as exc:
+                      failures.append(f"organization card YAML parse: {exc}")
+              missing = [
+                  field
+                  for field in node["required_frontmatter"]
+                  if field not in card_fields
+              ]
+              if missing:
+                  failures.append(f"organization card missing frontmatter {missing}")
+              if deployment.status != 200:
+                  failures.append(
+                      f"organization-card deployment HTTP {deployment.status} "
+                      f"{deployment.error}".strip()
+                  )
+              else:
+                  try:
+                      deployment_payload = deployment.json()
+                  except Exception as exc:  # noqa: BLE001
+                      failures.append(f"deployment JSON parse: {exc}")
+              deployed_sha = source_revision_from_payload(deployment_payload)
+              deployed_repo = source_repository_from_payload(deployment_payload)
+              if github_sha is None:
+                  failures.append("current protected .github/main SHA is unavailable")
+              if deployed_sha is None:
+                  failures.append(
+                      "organization-card deployment has no exact source revision"
+                  )
+              elif github_sha is not None and deployed_sha != github_sha:
+                  failures.append(
+                      f"organization-card source drift: deployed {deployed_sha} "
+                      f"!= main {github_sha}"
+                  )
+              if deployed_repo != node["source_repository"]:
+                  failures.append(
+                      f"organization-card source repository {deployed_repo!r} != "
+                      f"{node['source_repository']!r}"
+                  )
+              evidence.append(f"deployed_revision={deployed_sha}")
+              evidence.append(
+                  "frontmatter=" + ",".join(sorted(node["required_frontmatter"]))
+              )
+              return Verdict(
+                  id="S12",
+                  status="FAIL" if failures else "PASS",
+                  detail=(
+                      "Canonical SZLHOLDINGS/README card is parseable and aligned "
+                      "with protected .github/main"
+                  ),
+                  evidence="; ".join(failures or evidence),
+              )
+          '''
+          source = source[:start] + new_hf_contract.strip() + source[end:]
+          old_live = "    matrix.add(s11_verdict(root))\n    matrix.add(s12_verdict(root))"
+          new_live = (
+              "    matrix.add(s11_live_verdict(root))\n"
+              "    matrix.add(s12_live_verdict(root))"
+          )
+          if source.count(old_live) != 1:
+              raise SystemExit("live S11/S12 insertion anchor is not exact")
+          source = source.replace(old_live, new_live, 1)
+          source_path.write_text(source, encoding="utf-8")
+
+          tests_path = Path("tests/test_investor_smoke_gate.py")
+          tests = tests_path.read_text(encoding="utf-8")
+          tests_start = tests.index("def test_s11_missing_space_is_fail_not_skip():")
+          tests_end = tests.index("\n\ndef test_l_rows_are_snapshot_2026_08_28", tests_start)
+          new_tests = r'''
+          def test_s11_binds_canonical_product_space():
+              verdict = gate.s11_verdict(ROOT)
+              assert verdict.status == "PASS", verdict.detail
+              assert "SZLHOLDINGS/a11oy" in verdict.evidence
+              assert "szl-holdings/a11oy" in verdict.evidence
+
+
+          def test_s12_binds_canonical_organization_card():
+              verdict = gate.s12_verdict(ROOT)
+              assert verdict.status == "PASS", verdict.detail
+              assert "SZLHOLDINGS/README" in verdict.evidence
+              assert "szl-holdings/.github" in verdict.evidence
+
+
+          def test_hf_binding_drift_fails_closed(tmp_path):
+              source = json.loads(
+                  (ROOT / gate.HF_BINDING_RELATIVE).read_text(encoding="utf-8")
+              )
+              source["space"]["repo_id"] = "SZLHOLDINGS/not-a11oy"
+              target = tmp_path / gate.HF_BINDING_RELATIVE
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_text(json.dumps(source), encoding="utf-8")
+              assert gate.s11_verdict(tmp_path).status == "FAIL"
+              assert gate.s12_verdict(tmp_path).status == "FAIL"
+          '''
+          tests = tests[:tests_start] + new_tests.strip() + tests[tests_end:]
+          old_assertions = '''    assert matrix.by_id("S11").status == "FAIL"
+              assert matrix.by_id("S12").status == "FAIL"'''
+          new_assertions = '''    assert matrix.by_id("S11").status == "PASS"
+              assert matrix.by_id("S12").status == "PASS"'''
+          if tests.count(old_assertions) != 1:
+              raise SystemExit("contract matrix expectation anchor is not exact")
+          tests = tests.replace(old_assertions, new_assertions, 1)
+          tests_path.write_text(tests, encoding="utf-8")
+
+          workflow_path = Path(".github/workflows/investor-smoke-gate.yml")
+          workflow = workflow_path.read_text(encoding="utf-8")
+          workflow = workflow.replace(
+              "# Does not touch Dockerfile / HF byte parity (this repo has neither).",
+              "# Keeps a11oy.net separate while binding canonical HF Space/card sources.",
+          )
+          workflow_path.write_text(workflow, encoding="utf-8")
+
+          docs_path = Path("docs/INVESTOR_SMOKE_GATE.md")
+          docs = docs_path.read_text(encoding="utf-8")
+          docs = re.sub(
+              r"\| S11 \| \*\*FAIL\*\* \|[^\n]*",
+              "| S11 | **PASS when measured** | `SZLHOLDINGS/a11oy` must be HTTP 200, return locked_formula_count=8, and report the exact current `szl-holdings/a11oy@main` revision. |",
+              docs,
+          )
+          docs = re.sub(
+              r"\| S12 \| \*\*FAIL\*\* \|[^\n]*",
+              "| S12 | **PASS when measured** | `SZLHOLDINGS/README` frontmatter and deployment.json must bind the exact current `szl-holdings/.github@main` revision. |",
+              docs,
+          )
+          docs += (
+              "\n\n## Canonical Hugging Face ecosystem binding\n\n"
+              "`a11oy.net` is the evidence origin, not a third product Space. "
+              "The exact cross-surface authority is committed in "
+              "`docs/HF_ECOSYSTEM_BINDING.json`: S11 binds `SZLHOLDINGS/a11oy` "
+              "to `szl-holdings/a11oy`; S12 binds `SZLHOLDINGS/README` to "
+              "`szl-holdings/.github`. Live checks compare deployed revisions "
+              "with each repository's protected `main`.\n"
+          )
+          docs_path.write_text(docs, encoding="utf-8")
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme += (
+              "\n\n## Hugging Face source binding\n\n"
+              "This evidence origin remains separate from the product Space. "
+              "Its fail-closed investor gate binds `SZLHOLDINGS/a11oy` to "
+              "`szl-holdings/a11oy` and the `SZLHOLDINGS/README` organization card "
+              "to `szl-holdings/.github`, including exact protected-main revision "
+              "readback. See `docs/HF_ECOSYSTEM_BINDING.json`.\n"
+          )
+          readme_path.write_text(readme, encoding="utf-8")
+
+          changelog_path = Path("CHANGELOG.md")
+          changelog = changelog_path.read_text(encoding="utf-8")
+          marker = "## [Unreleased]"
+          entry = (
+              "\n- Bind the investor smoke gate to the canonical "
+              "`SZLHOLDINGS/a11oy` Space and `SZLHOLDINGS/README` organization "
+              "card, with exact protected-main revision readback.\n"
+          )
+          if marker in changelog:
+              changelog = changelog.replace(marker, marker + entry, 1)
+          else:
+              changelog = marker + entry + "\n" + changelog
+          changelog_path.write_text(changelog, encoding="utf-8")
+
+          bootstrap = Path(
+              ".github/workflows/rebuild-investor-smoke-hf-binding.yml"
+          )
+          if not bootstrap.is_file():
+              raise SystemExit("bounded rebuild workflow is missing")
+          bootstrap.unlink()
+          PY
+
+      - name: Validate static and live contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pytest
+          python3 -m py_compile \
+            scripts/investor_smoke_gate.py \
+            scripts/check_honest_kernel_bind.py \
+            tests/test_investor_smoke_gate.py \
+            tests/test_investor_smoke_bind.py
+          python3 -m pytest -q \
+            tests/test_investor_smoke_gate.py \
+            tests/test_investor_smoke_bind.py
+          python3 scripts/investor_smoke_gate.py --mode contract
+          python3 scripts/investor_smoke_gate.py --mode live \
+            --origin https://a11oy.net \
+            --origin https://www.a11oy.net
+          python3 scripts/check_proof_surface.py
+          python3 scripts/check_diligence_surface.py
+          python3 scripts/check_security_headers.py
+          python3 scripts/check_honest_kernel_bind.py
+          node scripts/check_honest_kernel_bind.mjs
+          git diff --check
+
+      - name: Commit the current-main successor
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Lutar, Stephen P.'
+          git config user.email 'stephenlutar2@gmail.com'
+          git add -A
+          test ! -e .github/workflows/rebuild-investor-smoke-hf-binding.yml
+          git diff --cached --check
+          git commit \
+            -m "fix(smoke): bind proof origin to canonical HF surfaces" \
+            -m "Rebuild the investor smoke gate on current protected main, keep a11oy.net as the evidence origin, bind SZLHOLDINGS/a11oy and SZLHOLDINGS/README to their exact GitHub sources, require live protected-main revision parity, and remove this bounded rebuild workflow." \
+            -m "Signed-off-by: Lutar, Stephen P. <stephenlutar2@gmail.com>"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
