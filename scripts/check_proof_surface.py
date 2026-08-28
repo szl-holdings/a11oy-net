@@ -111,6 +111,7 @@ def check() -> None:
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
+        "assets/kanchay.css",
         "chat/index.html",
         "code/index.html",
         "diligence/index.html",
@@ -250,12 +251,27 @@ def check() -> None:
         assert len(blocks) == 1, (
             f"the root proof registry must have exactly one {landmark}"
         )
+    nav_block, footer_block = (
+        landmark_markup["navigation"][0],
+        landmark_markup["footer"][0],
+    )
+    assert "Chat gateway" not in nav_block, (
+        "Chat gateway must not remain a top-level nav peer"
+    )
+    assert "Code gateway" not in nav_block, (
+        "Code gateway must not remain a top-level nav peer"
+    )
+    assert "Product ↗" in nav_block, "Product ↗ must remain the outbound origin"
+    assert 'aria-current="true"' in nav_block and ">Proof</a>" in nav_block, (
+        "Proof must remain the current origin on a11oy.net"
+    )
+    assert "RECORD" in nav_block
     for gateway in ("chat", "code"):
         assert (ROOT / gateway / "index.html").is_file()
-        for landmark, blocks in landmark_markup.items():
-            assert f'href="/{gateway}/"' in blocks[0], (
-                f"the root {landmark} must expose the {gateway} gateway"
-            )
+        assert f'href="/{gateway}/"' in footer_block, (
+            f"the root footer must keep the {gateway} diligence handoff discoverable"
+        )
+        assert f'href="/{gateway}/"' not in nav_block
     readyz_index = READYZ / "index.html" if READYZ.is_dir() else READYZ
     assert readyz_index.is_file(), "front-door readiness route must exist"
     build_info_index = BUILD_INFO / "index.html" if BUILD_INFO.is_dir() else BUILD_INFO
@@ -422,8 +438,28 @@ def check() -> None:
         "product routes are public links only and must not be browser-probed"
     )
     colors = dict(re.findall(r"--([a-z-]+):(#[0-9a-fA-F]{6})", source))
+    assert colors["void"] == "#080c14"
+    assert colors["proof"] == "#3af4c8"
+    assert colors["lattice"] == "#5b8dee"
+    assert colors["gold"] == "#d7b96b"
     for background in ("void", "deep", "surface"):
         assert contrast_ratio(colors["ghost"], colors[background]) >= 4.5
+    assert "#c9b787" not in source.lower()
+    assert "#5fb3a3" not in source.lower()
+    assert "#0a0a0a" not in source.lower()
+    kanchay = (ROOT / "assets" / "kanchay.css").read_text(encoding="utf-8")
+    assert "--void:#080c14" in kanchay
+    assert "--proof:#3af4c8" in kanchay
+    assert "--lattice:#5b8dee" in kanchay
+    assert "--gold:#d7b96b" in kanchay
+    assert "Space Grotesk" in kanchay and "JetBrains Mono" in kanchay
+    assert ".empty-panel" in kanchay
+    assert "kanchay-lattice-drift" in kanchay
+    assert "prefers-reduced-motion:reduce" in kanchay
+    assert "class=\"empty-panel\"" in source or "empty-panel" in source
+    assert "PROOF REGISTRY" in source
+    assert colors["gray"] == "#7d8aa0"
+    assert ".wordmark .glyph{width:26px;height:26px;border-radius:7px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--gray);" in source
     assert 'id="atlasResources" aria-busy="false"' in source
     assert 'grid.setAttribute("aria-busy","true")' in source
     assert 'grid.setAttribute("aria-busy","false")' in source

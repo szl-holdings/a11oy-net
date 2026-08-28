@@ -105,6 +105,7 @@ def check() -> None:
         NOT_FOUND,
         STYLE,
         ICON,
+        ROOT / "assets" / "kanchay.css",
         BUILD_INFO,
         READYZ,
         MANIFEST,
@@ -117,6 +118,7 @@ def check() -> None:
     )
     assert {"main", "scope", "investors", "developers", "risks", "labels"} <= diligence.ids
     assert {"rel": "stylesheet", "href": "/assets/diligence.css"} in diligence.links
+    assert {"rel": "stylesheet", "href": "/assets/kanchay.css"} in diligence.links
     assert 'id="main" tabindex="-1"' in DILIGENCE.read_text(encoding="utf-8")
     diligence_hrefs = {anchor.get("href") for anchor in diligence.anchors}
     assert {
@@ -128,6 +130,16 @@ def check() -> None:
         "/chat/",
         "/code/",
     } <= diligence_hrefs, "diligence must link every local machine contract"
+    diligence_source = DILIGENCE.read_text(encoding="utf-8")
+    diligence_nav = re.search(
+        r"<nav\b.*?</nav>", diligence_source, re.IGNORECASE | re.DOTALL
+    )
+    assert diligence_nav is not None
+    assert "Chat gateway" not in diligence_nav.group(0)
+    assert "Code gateway" not in diligence_nav.group(0)
+    assert "Product ↗" in diligence_nav.group(0)
+    assert 'id="handoffs"' in diligence_source
+    assert "/chat/" in diligence_source and "/code/" in diligence_source
     check_document(NOT_FOUND, canonical=None)
 
     chat = check_document(CHAT, canonical="https://a11oy.net/chat/")
@@ -245,6 +257,16 @@ def check() -> None:
     css = STYLE.read_text(encoding="utf-8")
     assert "@media print" in css
     assert "@media(prefers-reduced-motion:reduce)" in css
+    assert "--void:#080c14" in css
+    assert "--proof:#3af4c8" in css
+    assert "--lattice:#5b8dee" in css
+    assert "--gold:#d7b96b" in css
+    assert "#c9b787" not in css.lower()
+    assert "#5fb3a3" not in css.lower()
+    assert "Product ↗" in CHAT.read_text(encoding="utf-8")
+    assert "Product ↗" in CODE.read_text(encoding="utf-8")
+    assert "Diligence handoff" in CHAT.read_text(encoding="utf-8")
+    assert "Diligence handoff" in CODE.read_text(encoding="utf-8")
 
 
 if __name__ == "__main__":

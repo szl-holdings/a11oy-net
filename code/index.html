@@ -12,17 +12,23 @@
   <meta name="description" content="A source-bounded handoff from the A11oy proof registry to the separately deployed governed code run-loop." />
   <link rel="canonical" href="https://a11oy.net/code/" />
   <link rel="icon" href="/assets/a11oy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/kanchay.css" />
   <link rel="stylesheet" href="/assets/diligence.css" />
 </head>
 <body>
   <a class="skip" href="#main">Skip to code gateway</a>
-  <nav aria-label="Primary">
-    <div class="wrap nav">
-      <a class="brand" href="/" aria-label="A11oy.net home"><img src="/assets/a11oy-mark.svg" alt="" />A11OY.NET</a>
+  <nav class="topbar" aria-label="Primary">
+    <div class="wrap nav nav-in">
+      <a class="wordmark" href="/" aria-label="A11oy.net home"><span class="glyph" aria-hidden="true">Λ</span><span class="scope"><span class="scope-name">A11OY</span><span class="scope-sep">/</span><span class="scope-role">PROOF REGISTRY</span></span></a>
+      <div class="nav-chips" aria-label="Surface posture">
+        <span class="chip glass record"><span class="dot"></span>RECORD</span>
+        <span class="chip gray honesty"><span class="dot"></span>HONEST</span>
+      </div>
       <div class="nav-links">
         <a href="/diligence/">Diligence</a>
-        <a href="/chat/">Chat gateway</a>
+        <a href="/diligence/#handoffs">Handoffs</a>
         <a href="/evidence.json">Machine evidence</a>
+        <span class="origin-switch" aria-label="Origins"><a class="origin-product" href="https://a-11-oy.com" target="_blank" rel="noopener">Product ↗</a><span class="origin-sep" aria-hidden="true">|</span><a class="origin-proof" href="/" aria-current="true">Proof</a></span>
       </div>
     </div>
   </nav>
@@ -30,9 +36,24 @@
   <main id="main" tabindex="-1">
     <header class="hero">
       <div class="wrap">
-        <p class="eyebrow">Developer gateway · separate runtime</p>
+        <p class="eyebrow">Diligence handoff · separate runtime</p>
         <h1>Inspect, run, and verify governed code.</h1>
-        <p class="lede">The governed code surface runs on the separate A11oy product domain. This proof-registry route supplies a stable developer handoff and keeps execution claims attached to their real runtime.</p>
+        <p class="lede">This proof-registry route is a Diligence handoff, not a top-level nav peer. The governed code surface runs on the separate A11oy product domain. Execution claims stay attached to that runtime.</p>
+        <div class="empty-panel" data-kind="idle">
+          <span class="empty-kicker">IDLE · UNKNOWN HERE</span>
+          <b>The governed run-loop is not observed on this proof surface.</b>
+          <small>This page does not execute code. Engine, signer, approval gate, and sandbox state must be read on a-11-oy.com.</small>
+        </div>
+        <div class="empty-panel" data-kind="permission">
+          <span class="empty-kicker">PERMISSION</span>
+          <b>No account, token, or session is requested here.</b>
+          <small>Authentication, if any, exists only on the product runtime.</small>
+        </div>
+        <div class="empty-panel" data-kind="first-use">
+          <span class="empty-kicker">FIRST USE</span>
+          <b>Start in Diligence, then cross to governed code.</b>
+          <small>Return to <a href="/diligence/#handoffs">the Diligence handoff line</a> if you arrived here from an old bookmark.</small>
+        </div>
         <div class="actions">
           <a class="button primary" href="https://a-11-oy.com/code">Open governed code</a>
           <a class="button" href="https://a-11-oy.com/api/a11oy/v1/code/capabilities">Read capabilities JSON</a>

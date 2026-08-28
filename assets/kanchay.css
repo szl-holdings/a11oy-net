@@ -1,0 +1,134 @@
+/* KANCHAY on a11oy.net only. .com tokens stay LLIKA's lane.
+   void #080c14 / proof teal #3af4c8 / lattice #5b8dee / gold #d7b96b
+   Named families; 0 runtime font CDN. Purple is banned. */
+:root{
+  --void:#080c14;
+  --deep:#0a1019;
+  --surface:#0e1626;
+  --surface-2:#121d30;
+  --border:#1c2942;
+  --control:#7185a3;
+  --proof:#3af4c8;
+  --proof-soft:rgba(58,244,200,.12);
+  --proof-dim:rgba(58,244,200,.06);
+  --lattice:#5b8dee;
+  --lattice-soft:rgba(91,141,238,.12);
+  --gold:#d7b96b;
+  --ink:#eef4fb;
+  --sub:#aebccf;
+  --ghost:#7f90a6;
+  --gray:#7d8aa0;
+  --down:#e8746e;
+  --r:16px;
+  --head:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --sans:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono","SF Mono",SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+}
+h1,h2,h3,.wordmark,.brand,.scope,.btn,.button{font-family:var(--head)}
+.mono,.chip,.empty-kicker,.origin-switch,.nav-chips,.scope-role{font-family:var(--mono)}
+
+/* ---- chips: glass only on live / receipt-bearing ---- */
+.chip{
+  display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--ghost);background:transparent;white-space:nowrap;
+}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.chip.gray,.chip.honesty{color:var(--gray);border-color:rgba(125,138,160,.35);background:rgba(125,138,160,.06)}
+.chip.gray .dot,.chip.honesty .dot{background:var(--gray)}
+.chip.glass,.chip.record,.chip.live{
+  color:var(--proof);border-color:rgba(58,244,200,.32);
+  background:linear-gradient(180deg,rgba(14,22,38,.55),rgba(8,12,20,.28));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(58,244,200,.08);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.chip.glass .dot,.chip.record .dot,.chip.live .dot{background:var(--proof);box-shadow:0 0 8px var(--proof)}
+.chip.roadmap{color:var(--gold);border-color:rgba(215,185,107,.34);background:rgba(215,185,107,.08)}
+.chip.roadmap .dot{background:var(--gold)}
+@media (prefers-reduced-transparency:reduce){
+  .chip.glass,.chip.record,.chip.live{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--proof-dim)}
+}
+
+/* ---- designed empty states (never a dead JSON box) ---- */
+.empty-panel{
+  min-width:0;min-height:112px;padding:16px 16px 18px;border-radius:14px;
+  border:1px dashed rgba(91,141,238,.34);
+  background:
+    linear-gradient(180deg,rgba(14,22,38,.42),rgba(8,12,20,.78)),
+    repeating-linear-gradient(-18deg,transparent,transparent 11px,rgba(91,141,238,.045) 11px,rgba(91,141,238,.045) 12px);
+  color:var(--ink);
+}
+.empty-panel.compact{min-height:0;padding:10px 12px;margin-top:10px}
+.hero .empty-panel{margin-top:28px}
+.hero .empty-panel + .empty-panel{margin-top:12px}
+.empty-kicker{
+  display:block;color:var(--gray);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+}
+.empty-panel b{display:block;margin-top:8px;font-size:14px;font-weight:600}
+.empty-panel small{display:block;margin-top:6px;color:var(--ghost);font:12px/1.55 var(--mono)}
+.empty-panel[data-kind="first-use"]{border-color:rgba(58,244,200,.22);border-style:solid}
+.empty-panel[data-kind="cleared"],
+.empty-panel[data-kind="no-results"]{border-color:rgba(91,141,238,.3)}
+.empty-panel[data-kind="permission"]{border-color:rgba(215,185,107,.38);border-style:solid}
+.empty-panel[data-kind="error"]{border-color:rgba(232,116,110,.38);border-style:solid}
+.empty-panel[data-kind="unavailable"],
+.empty-panel[data-kind="idle"]{border-color:rgba(125,138,160,.32);border-style:solid}
+.live.is-empty{
+  border-style:dashed;border-color:rgba(125,138,160,.34);
+  background:
+    linear-gradient(180deg,rgba(14,22,38,.42),rgba(8,12,20,.78)),
+    repeating-linear-gradient(-18deg,transparent,transparent 11px,rgba(91,141,238,.045) 11px,rgba(91,141,238,.045) 12px);
+}
+.live.is-empty .st{color:var(--gray)}
+.resource-grid > .empty-panel{grid-column:1 / -1}
+
+/* ---- topbar: scope + chips + Product | Proof ---- */
+.topbar{position:relative;overflow:hidden}
+.topbar::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;z-index:0;
+  background:
+    linear-gradient(100deg,transparent 0%,rgba(91,141,238,.9) 46%,transparent 72%),
+    linear-gradient(rgba(91,141,238,.7) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(91,141,238,.7) 1px,transparent 1px);
+  background-size:220% 100%,22px 22px,22px 22px;
+  animation:kanchay-lattice-drift 22s linear infinite;
+}
+@keyframes kanchay-lattice-drift{
+  to{background-position:220% 0,22px 22px,22px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .topbar::before{animation:none}
+}
+.topbar > *{position:relative;z-index:1}
+.wordmark .glyph,.brand .glyph{
+  color:var(--gray);
+}
+.scope{display:inline-flex;align-items:baseline;gap:8px;min-width:0}
+.scope-name{letter-spacing:.06em;font-weight:700}
+.scope-sep{color:var(--ghost);font-weight:400}
+.scope-role{
+  color:var(--ghost);font-weight:500;font-size:10.5px;letter-spacing:.16em;
+}
+.nav-chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.origin-switch{
+  display:inline-flex;align-items:center;gap:8px;margin-left:4px;padding-left:14px;
+  border-left:1px solid var(--border);letter-spacing:.04em;
+}
+.origin-switch a{color:var(--sub)}
+.origin-switch a:hover{color:var(--proof)}
+.origin-switch .origin-product{color:var(--proof);font-weight:600}
+.origin-switch .origin-proof[aria-current]{color:var(--ink);font-weight:700}
+.origin-sep{color:var(--ghost)}
+.handoff-line{
+  margin:0 0 28px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;
+  background:rgba(14,22,38,.72);color:var(--sub);font:13px/1.55 var(--mono);
+}
+.handoff-line .empty-kicker{margin-bottom:6px;color:var(--lattice)}
+.conjecture,.conjecture b{color:var(--gray);font-weight:600}
+@media(max-width:720px){
+  .origin-switch{margin:0;padding:12px 14px;border-left:0;border-top:1px solid var(--border);width:100%}
+  .nav-chips{width:100%}
+}
+@media (prefers-reduced-transparency:reduce){
+  .topbar::before{opacity:.04}
+}
