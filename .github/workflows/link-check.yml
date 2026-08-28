@@ -189,6 +189,7 @@ jobs:
             code/index.html \
             diligence/index.html \
             evidence.json \
+            health.json \
             index.html \
             llms.txt \
             notes/index.html \

@@ -13,7 +13,8 @@ Authoritative public paths:
 - Governed code gateway: https://a11oy.net/code/
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
-- Static reachability only: https://a11oy.net/readyz/
+- Static probe document (not runtime health): https://a11oy.net/health.json
+- Static HTML reachability only (not JSON health): https://a11oy.net/readyz/
 - Source: https://github.com/szl-holdings/a11oy-net
 - Product source: https://github.com/szl-holdings/a11oy
 - Public artifact registry: https://huggingface.co/SZLHOLDINGS

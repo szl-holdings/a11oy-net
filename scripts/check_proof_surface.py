@@ -117,6 +117,7 @@ def check() -> None:
         "code/index.html",
         "diligence/index.html",
         "evidence.json",
+        "health.json",
         "llms.txt",
         "notes/index.html",
         "record.json",
@@ -259,7 +260,12 @@ def check() -> None:
     assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
-    assert (ROOT / "CHANGELOG.md").is_file(), "changelog status pointer must exist"
+    assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
+    health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
+    assert health["path"] == "/health.json"
+    assert health["dsse_live"] == "NOT_CLAIMED"
+    assert health["uptime"] == "NOT_MEASURED"
+    assert health["readyz"] == "NOT_A_HEALTH_URL"
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
@@ -329,6 +335,11 @@ def check() -> None:
     assert build_info_index.is_file(), "front-door build-info route must exist"
     readyz_html = readyz_index.read_text(encoding="utf-8")
     build_info_html = build_info_index.read_text(encoding="utf-8")
+    assert (
+        "not a json health" in readyz_html.lower()
+        or "not json health" in readyz_html.lower()
+    ), "readyz must not be registered as a health URL"
+    assert "/health.json" in readyz_html
     assert (
         "a-11-oy.com" in readyz_html.lower()
     ), "readiness route must link to the runtime source explicitly"

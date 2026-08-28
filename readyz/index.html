@@ -32,18 +32,20 @@
 <body>
   <main id="main-content">
     <h1>Static evidence front door reachability</h1>
-    <p class="boundary"><strong>Scope:</strong> receiving this document establishes only that this static route responded to this request. It does not establish A11oy product-runtime readiness, capability, uptime, or deployed equivalence.</p>
+    <p class="boundary"><strong>Scope:</strong> receiving this document establishes only that this static HTML directory route responded. It is not JSON health. GitHub Pages may 301 /readyz to /readyz/. Use <a href="/health.json">/health.json</a> for the committed static probe document. It does not establish a11oy product-runtime readiness, capability, uptime, or deployed equivalence.</p>
     <pre aria-label="Static reachability contract"><code>{
   "surface": "a11oy.net",
   "artifact": "public evidence front door",
   "artifact_kind": "static",
   "readyz": "REACHABILITY_ONLY",
+  "readyz_is_health_url": false,
+  "json_probe_document": "https://a11oy.net/health.json",
   "product_runtime_readiness": "NOT_MEASURED",
   "immutable_build_identity": "NOT_CLAIMED",
   "runtime_source": "https://a-11-oy.com/api/a11oy/v1/honest"
 }</code></pre>
     <noscript><p>No JavaScript is required. The complete reachability contract is present in the server-served HTML.</p></noscript>
-    <nav aria-label="Related evidence surfaces"><a href="/">Evidence homepage</a><a href="/diligence/">Diligence room</a><a href="/api/build-info/">Static build-info scope</a></nav>
+    <nav aria-label="Related evidence surfaces"><a href="/">Evidence homepage</a><a href="/diligence/">Diligence room</a><a href="/health.json">Static health.json</a><a href="/api/build-info/">Static build-info scope</a></nav>
   </main>
 </body>
 </html>

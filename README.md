@@ -62,8 +62,11 @@ equivalence.
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
-- **Static route scope:** [`/readyz/`](https://a11oy.net/readyz/) proves only
-  that its static route responded, and
+- **Static route scope:** [`/health.json`](https://a11oy.net/health.json) is a
+  committed static JSON document. Receiving it proves only that this exact path
+  was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
+  [`/readyz/`](https://a11oy.net/readyz/) is an HTML directory route; GitHub
+  Pages may 301 `/readyz` to `/readyz/`. Do not treat `/readyz` as JSON health.
   [`/api/build-info/`](https://a11oy.net/api/build-info/) does not publish or
   claim an immutable source revision or product-runtime readiness.
 
@@ -143,7 +146,8 @@ The checks validate:
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
-| `readyz/index.html` | Static front-door reachability only; never product readiness. |
+| `health.json` | Committed static probe document; not runtime health, not DSSE-LIVE. |
+| `readyz/index.html` | HTML directory reachability only; never JSON health. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
 | `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |
 | `404.html`, `assets/a11oy-mark.svg` | Branded recovery route and shared SVG identity mark. |

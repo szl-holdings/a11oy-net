@@ -138,6 +138,7 @@ def check() -> None:
         "/site.webmanifest",
         "/llms.txt",
         "/api/build-info/",
+        "/health.json",
         "/readyz/",
         "/record/",
         "/notes/",
@@ -220,10 +221,20 @@ def check() -> None:
         "artifact": "public evidence front door",
         "artifact_kind": "static",
         "readyz": "REACHABILITY_ONLY",
+        "readyz_is_health_url": False,
+        "json_probe_document": "https://a11oy.net/health.json",
         "product_runtime_readiness": "NOT_MEASURED",
         "immutable_build_identity": "NOT_CLAIMED",
         "runtime_source": "https://a-11-oy.com/api/a11oy/v1/honest",
     }
+    health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
+    assert health["path"] == "/health.json"
+    assert health["artifact_kind"] == "static"
+    assert health["dsse_live"] == "NOT_CLAIMED"
+    assert health["uptime"] == "NOT_MEASURED"
+    assert health["readyz"] == "NOT_A_HEALTH_URL"
+    assert health["record"] == "https://a11oy.net/record/"
+    assert health["interactive_verifier"] == "https://a-11-oy.com/verify"
 
     evidence = json.loads(EVIDENCE.read_text(encoding="utf-8"))
     assert evidence["contract_version"] == "1.0.0"
@@ -259,6 +270,7 @@ def check() -> None:
         "governed_console_gateway",
         "governed_code_gateway",
         "static_build_info",
+        "static_health_document",
         "static_reachability",
         "product_honesty_manifest",
         "receipt_verifier",
@@ -284,7 +296,9 @@ def check() -> None:
     assert record_contract["interactive_verifier"]["url"] == "https://a-11-oy.com/verify"
     assert record_contract["boundaries"]["interactive_verifier_cloned"] is False
     assert record_contract["boundaries"]["product_runtime_required_for_first_paint"] is False
-    assert record_contract["status"]["live_chain"] == "UNAVAILABLE"
+    assert record_contract["boundaries"]["receipt_database_hosted_here"] is False
+    assert record_contract["status"]["receipt_ids"] == []
+    assert record_contract["status"]["receipt_ids_class"] == "UNAVAILABLE"
     atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
     assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-28"
     assert atlas_contract["hub_snapshot"]["n"] == 57

@@ -22,14 +22,17 @@
     "state": "PARTIAL",
     "evidence_class": "REPORTED",
     "live_chain": "UNAVAILABLE",
-    "meaning": "This index lists public receipt locations. Hash-chain and signature checks are not executed by a11oy.net. Live chain state remains UNAVAILABLE here."
+    "receipt_ids": [],
+    "receipt_ids_class": "UNAVAILABLE",
+    "meaning": "This index lists public receipt locations. It is not a receipt database. Hash-chain and signature checks are not executed by a11oy.net. Live chain state remains UNAVAILABLE here. An empty receipt-id listing is UNAVAILABLE, not a measured zero."
   },
   "boundaries": {
     "this_origin_does_not_run_verification": true,
     "interactive_verifier_cloned": false,
     "product_runtime_required_for_first_paint": false,
     "http_response_proves_capability": false,
-    "receipt_bodies_are_not_rehosted_here": true
+    "receipt_bodies_are_not_rehosted_here": true,
+    "receipt_database_hosted_here": false
   },
   "stores": [
     {
