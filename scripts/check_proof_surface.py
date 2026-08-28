@@ -296,6 +296,17 @@ def check() -> None:
         'open ? "Close evidence navigation" : "Explore evidence navigation"'
         in source
     )
+    assert "main{position:relative;z-index:1}" in source
+    assert "nav{position:sticky;top:0;z-index:10;" in source
+    short_screen_nav = """@media(max-height:500px) and (max-width:900px){
+  html{scroll-padding-top:0}
+  nav{position:relative}
+  [id]{scroll-margin-top:12px}
+}"""
+    assert source.count(short_screen_nav) == 1, (
+        "short-screen navigation must remain positioned so its z-index stays "
+        "above the positioned main content"
+    )
     assert ".menu-toggle{display:none!important}" in source
     assert ".nav-links{display:flex!important;position:static!important" in source
     noscript_styles = re.findall(
