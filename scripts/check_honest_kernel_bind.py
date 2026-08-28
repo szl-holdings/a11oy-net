@@ -15,10 +15,12 @@ BIND = ROOT / "scripts" / "honest_kernel_bind.js"
 HEADERS = ROOT / "_headers"
 HONEST_URL = "https://a-11-oy.com/api/a11oy/v1/honest"
 HONEST_FIELD = "locked_formula_count"
+# Published HTML only. Pytest fixtures under tests/ are not served by Pages
+# and include deliberate FAIL cases (genome bind, hardcoded 8).
 HTML_SURFACES = tuple(
     path
     for path in sorted(ROOT.rglob("*.html"))
-    if ".git" not in path.parts
+    if ".git" not in path.parts and "tests" not in path.parts
 )
 KERNEL_CHIP = re.compile(
     r"""id=["']cnt-locked["']"""

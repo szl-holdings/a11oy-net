@@ -402,6 +402,7 @@ def s7_bind_agreement(
             f"({LOCKED_KERNEL_COUNT} or N/A / UNAVAILABLE); catalog "
             f"LOCKED-PROVEN={GENOME_CATALOG_LOCKED_PROVEN} stays labelled separately"
         ),
+        evidence=" | ".join(extras) if extras else "kernel chips bind /honest",
         owner="INTI",
     )
 
@@ -421,9 +422,15 @@ def s7_verdict(root: Path = ROOT) -> Verdict:
 
 def evaluate_catalog_vs_kernel(root: Path = ROOT) -> Verdict:
     index = (root / "index.html").read_text(encoding="utf-8", errors="replace")
+    without_catalog = re.sub(
+        r'<span class="catalog-chip"[^>]*>.*?</span>',
+        "",
+        index,
+        flags=re.I | re.S,
+    )
     paints_25_as_kernel = bool(
-        re.search(r"locked-proven\s*=\s*(?:<b>)?25", index, re.I)
-        or re.search(r"exactly 25 formulas", index, re.I)
+        re.search(r"locked-proven\s*=\s*(?:<b[^>]*>)?\s*25\b", without_catalog, re.I)
+        or re.search(r"exactly 25 formulas", without_catalog, re.I)
     )
     kernel_labelled_8 = bool(
         re.search(r'data-kernel-chip=["\']locked-proven["\']', index, re.I)
