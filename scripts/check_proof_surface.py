@@ -459,9 +459,13 @@ def check() -> None:
     assert "2026-08-11" not in source, (
         "the noscript/fallback snapshot must not retain the prior 2026-08-11 counts"
     )
-    assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 9, (
-        "Fall 2026 original-cut Hub cards must remain ROADMAP, never trained-weight claims"
+    assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 12, (
+        "Fall 2026 cuts and KERNEL originals must remain ROADMAP, never OPERATIONAL"
     )
+    assert not re.search(r'class="stack-truth[^"]*"[^>]*>OPERATIONAL', source), (
+        "no stack listing may carry an OPERATIONAL label"
+    )
+    assert "tok/s" not in source.lower()
     assert "KHIPU-R2" in source
     assert "WILLAY" in source
     assert "YARQA-ATTN" in source
@@ -471,6 +475,58 @@ def check() -> None:
     assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
+    assert source.count('href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN"') == 1, (
+        "YARQA-ATTN stays one KERNEL-owned cutting card, not a fourth Triton stack"
+    )
+    assert "alias for szl-receipt-attn" not in source
+    assert "ATELIER · YARQA" not in source
+    yarqa_start = source.find("<h3>YARQA-ATTN</h3>")
+    assert yarqa_start >= 0
+    yarqa = source[yarqa_start : source.find("</a>", yarqa_start)]
+    assert "KERNEL-owned" in yarqa
+    assert "alias" not in yarqa
+    assert "ATELIER model" in yarqa and "not an ATELIER model" in yarqa
+    kernels_start = source.find('<section id="kernels"')
+    kernels_end = source.find("<section", kernels_start + 1)
+    assert kernels_start >= 0 and kernels_end > kernels_start, (
+        "KERNEL originals must be a first-class section, not Hub-card-only stubs"
+    )
+    kernels = source[kernels_start:kernels_end]
+    assert kernels.count('<span class="stack-truth roadmap">ROADMAP</span>') == 3
+    assert "OPERATIONAL" not in kernels.replace("not OPERATIONAL", "")
+    assert "<h3>YARQA-ATTN</h3>" not in kernels
+    assert "<h3>Sage" not in kernels
+    assert "not listed as shipped" in kernels
+    assert "Only szl-receipt-attn has Triton bytes on main" in kernels
+    assert "CPU Khipu lab pin" in kernels
+    assert "Conjecture 1" in kernels
+    assert "theorem" not in kernels.lower()
+    assert 'href="https://github.com/szl-holdings/szl-receipt-attn"' in kernels
+    assert 'href="https://github.com/szl-holdings/szl-maskmod"' in kernels
+    assert 'href="https://github.com/szl-holdings/szl-block-kv"' in kernels
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-receipt-attn"' in kernels
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-maskmod"' in kernels
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-block-kv"' in kernels
+
+    def kernel_card(name: str) -> str:
+        start = kernels.find(f"<h3>{name}</h3>")
+        assert start >= 0, f"missing KERNEL card {name}"
+        end = kernels.find("<h3>", start + 1)
+        if end < 0:
+            end = len(kernels)
+        return kernels[start:end]
+
+    receipt = kernel_card("szl-receipt-attn")
+    maskmod = kernel_card("szl-maskmod")
+    block_kv = kernel_card("szl-block-kv")
+    assert "Triton bytes are in-tree" in receipt
+    assert "not Triton-in-tree" in maskmod
+    assert "Triton bytes" not in maskmod
+    assert "torch paged KV gather" in block_kv
+    assert "the gather is not a Triton kernel" in block_kv
+    assert "Triton page kernel remains ROADMAP" in block_kv
+    assert "szl-serve stays a CPU Khipu lab pin" in kernels
+    assert "KILLINCHU-EYE" not in source
     assert 'event.key==="Escape"' in source
     live_start = source.find('document.querySelectorAll(".live[data-space]")')
     live_end = source.find("var resources=", live_start)
