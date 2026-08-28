@@ -99,6 +99,9 @@ jobs:
           for htmlfile in sorted(root.rglob("*.html")):
               if ".git" in htmlfile.relative_to(root).parts:
                   continue
+              # Pytest fixtures are not published Pages HTML (deliberate FAIL cases).
+              if "tests" in htmlfile.relative_to(root).parts:
+                  continue
               ex = Extractor()
               ex.feed(htmlfile.read_text(encoding="utf-8"))
               documents[htmlfile] = ex
