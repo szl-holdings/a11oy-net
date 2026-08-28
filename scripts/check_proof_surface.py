@@ -450,12 +450,27 @@ def check() -> None:
     assert "Inventory unavailable; this is not an observed-empty result." in source
     assert 'aria-label="A11oy public evidence dossier"' in source
     assert "The dated static registry snapshot remains visible" in source
-    assert 'data-static-snapshot="2026-08-11"' in source
-    assert '<b id="atlasTotal">55</b>' in source
-    assert '<b id="atlasModels">16</b>' in source
-    assert '<b id="atlasDatasets">26</b>' in source
+    assert 'data-static-snapshot="2026-08-28"' in source
+    assert '<b id="atlasTotal">57</b>' in source
+    assert '<b id="atlasModels">17</b>' in source
+    assert '<b id="atlasDatasets">27</b>' in source
     assert '<b id="atlasCollections">12</b>' in source
     assert '<b id="atlasBuckets">1</b>' in source
+    assert "2026-08-11" not in source, (
+        "the noscript/fallback snapshot must not retain the prior 2026-08-11 counts"
+    )
+    assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 9, (
+        "Fall 2026 original-cut Hub cards must remain ROADMAP, never trained-weight claims"
+    )
+    assert "KHIPU-R2" in source
+    assert "WILLAY" in source
+    assert "YARQA-ATTN" in source
+    assert "A11OY-MINI" in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/chaski"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/qantu"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
     assert 'event.key==="Escape"' in source
     live_start = source.find('document.querySelectorAll(".live[data-space]")')
     live_end = source.find("var resources=", live_start)

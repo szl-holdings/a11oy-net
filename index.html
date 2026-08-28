@@ -238,6 +238,7 @@ h2{font-size:clamp(26px,3.6vw,36px);letter-spacing:-.018em;line-height:1.15}
 .stack-kind,.stack-truth{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
 .stack-kind{color:var(--proof)}
 .stack-truth{color:var(--ghost);padding:4px 7px;border:1px solid var(--border);border-radius:999px}
+.stack-truth.roadmap{color:var(--gold);border-color:rgba(215,185,107,.34)}
 .stack-card h3{font-size:19px;margin-bottom:8px}
 .stack-card p{font-size:13.5px;color:var(--sub);max-width:38ch}
 .stack-link{display:inline-block;margin-top:18px;color:var(--proof);font-family:var(--mono);font-size:11.5px}
@@ -450,6 +451,22 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   </div>
 </div></section>
 
+<section id="cuts" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="kicker">Fall 2026 original cuts</div><h2>Named silhouettes, cards before weights.</h2>
+  <p>These public Hub listings exist as cutting cards. Each is ROADMAP, not a trained checkpoint: no weights, kernel binary, or capability claim is asserted here. Killinchu-named resources stay outside this inventory.</p></div>
+  <div class="frontier">
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/KHIPU-R2" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CUTTING · KHIPU</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>KHIPU-R2</h3><p>Public cutting card for the Khipu successor. Receipt-native drafts only; no weights are published on this listing.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/WILLAY" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CUTTING · REFUSAL</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>WILLAY</h3><p>Public cutting card for a signed-refusal specialist. No weights are published; this is not an authorizer or executor.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CUTTING · KERNEL</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>YARQA-ATTN</h3><p>Public cutting card for a receipt-aware attention kernel. No kernel binary is published; throughput remains unmeasured here.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/A11OY-MINI" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CUTTING · MINI</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>A11OY-MINI</h3><p>Public cutting card for an on-device command-center copilot. No weights are published; proposal-only, never execute.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/chaski" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ATELIER · CHASKI</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>chaski</h3><p>Atelier messenger cut. Adapter not uploaded; listing metadata only, not a trained messenger checkpoint.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/qantu" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ATELIER · QANTU</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>qantu</h3><p>Atelier document/receipt VLM cut. Adapter not uploaded; listing metadata only, not a trained vision checkpoint.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/waman" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ATELIER · WAMAN</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>waman</h3><p>Atelier object-detection cut. No weights uploaded; a named silhouette on the Hub, not a trained detector.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/chakana" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ATELIER · CHAKANA</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>chakana</h3><p>Named Atelier cutting card on the public Hub. Listing only; no README, weights, or capability claim is attached yet.</p><span class="stack-link">Open Hub card →</span></a>
+    <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/tinku" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ATELIER · TINKU</span><span class="stack-truth roadmap">ROADMAP</span></div><h3>tinku</h3><p>Named Atelier cutting card on the public Hub. Listing only; no README, weights, or capability claim is attached yet.</p><span class="stack-link">Open Hub card →</span></a>
+  </div>
+</div></section>
+
 <section id="governance" style="padding-top:0"><div class="wrap">
   <div class="sec-head"><h2>How a claim earns its label</h2>
   <p>The pipeline is deliberately boring — and deliberately auditable.</p></div>
@@ -483,11 +500,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 <section id="atlas" style="padding-top:0"><div class="wrap">
   <div class="sec-head"><div class="kicker">Public Hub metadata</div><h2>The public artifact registry, consolidated.</h2><p>Search reported model, dataset, collection, and bucket listings without leaving the flagship. Executable Spaces and Killinchu-named resources are outside this evidence inventory.</p></div>
   <div class="atlas-shell">
-    <div class="atlas-summary"><div><span class="atlas-summary-label">STATIC SNAPSHOT + BROWSER REFRESH</span><h3>Public metadata observation</h3></div><span class="status-badge" id="atlasState" data-state="snapshot">SNAPSHOT - 2026-08-11</span></div>
+    <div class="atlas-summary"><div><span class="atlas-summary-label">STATIC SNAPSHOT + BROWSER REFRESH</span><h3>Public metadata observation</h3></div><span class="status-badge" id="atlasState" data-state="snapshot">SNAPSHOT - 2026-08-28</span></div>
     <div class="atlas-bar">
-      <div class="atlas-stat"><b id="atlasTotal">55</b><span>LISTED ARTIFACTS</span></div>
-      <div class="atlas-stat"><b id="atlasModels">16</b><span>MODELS</span></div>
-      <div class="atlas-stat"><b id="atlasDatasets">26</b><span>DATASETS</span></div>
+      <div class="atlas-stat"><b id="atlasTotal">57</b><span>LISTED ARTIFACTS</span></div>
+      <div class="atlas-stat"><b id="atlasModels">17</b><span>MODELS</span></div>
+      <div class="atlas-stat"><b id="atlasDatasets">27</b><span>DATASETS</span></div>
       <div class="atlas-stat"><b id="atlasCollections">12</b><span>COLLECTIONS</span></div>
       <div class="atlas-stat"><b id="atlasBuckets">1</b><span>BUCKETS</span></div>
     </div>
@@ -501,10 +518,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
       <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
       <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </fieldset>
-    <div class="resource-grid" id="atlasResources" aria-busy="false"><div class="resource" data-static-snapshot="2026-08-11"><div class="resource-top"><span class="resource-type">ATLAS SNAPSHOT</span><span class="resource-state">REPORTED</span></div><b>55 public artifacts observed on 2026-08-11.</b><small>16 models, 26 datasets, 12 collections, and 1 bucket. Browser refresh replaces this dated snapshot when public Hub metadata is available.</small></div></div>
+    <div class="resource-grid" id="atlasResources" aria-busy="false"><div class="resource" data-static-snapshot="2026-08-28"><div class="resource-top"><span class="resource-type">ATLAS SNAPSHOT</span><span class="resource-state">REPORTED</span></div><b>57 public artifacts observed on 2026-08-28.</b><small>17 models, 27 datasets, 12 collections, and 1 bucket. Browser refresh replaces this dated snapshot when public Hub metadata is available.</small></div></div>
     <noscript><p class="atlas-note">JavaScript is disabled. The dated static registry snapshot remains visible; live public Hub refresh is not observed.</p></noscript>
-    <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Static snapshot observed 2026-08-11; live browser refresh pending.</p></div>
-    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">55 public artifacts in the dated static snapshot.</p>
+    <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Static snapshot observed 2026-08-28; live browser refresh pending.</p></div>
+    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">57 public artifacts in the dated static snapshot.</p>
   </div>
 </div></section>
 
