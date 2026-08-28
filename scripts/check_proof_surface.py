@@ -267,6 +267,7 @@ def check() -> None:
         "https://a11oy.net/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
+        "https://a11oy.net/estate/",
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
@@ -283,6 +284,8 @@ def check() -> None:
     assert DILIGENCE.is_file(), "the public diligence route must exist"
     assert (ROOT / "record" / "index.html").is_file(), "canonical RECORD must exist"
     assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
+    assert (ROOT / "estate" / "index.html").is_file(), "estate snapshot HTML must exist"
+    assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"

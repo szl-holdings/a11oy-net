@@ -290,6 +290,8 @@ def check() -> None:
         "record_index",
         "record_contract",
         "hub_atlas",
+        "estate_snapshot",
+        "estate_contract",
         "dated_notes",
         "governed_console_gateway",
         "governed_code_gateway",

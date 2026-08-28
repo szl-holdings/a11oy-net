@@ -6,6 +6,7 @@ Public HTML: [https://a11oy.net/notes/](https://a11oy.net/notes/).
 
 ## 2026-08-28
 
+- `/estate/` admitted into sitemap, llms.txt, and evidence.json as a dated MEASURED inventory snapshot. Not a live dashboard. Not product runtime. Does not clone `/verify`. Does not depend on #23.
 - Live Lean-8 kernel chip on Frontier and hero: GET `/api/a11oy/v1/honest` `locked_formula_count`. Paint **8** only when that field is exactly 8; fetch failure is **UNAVAILABLE**, never a hardcoded 8. Not ROADMAP.
 - Kernel chips bind live `https://a-11-oy.com/api/a11oy/v1/honest` `locked_formula_count` and paint **8** only when that field is exactly 8; otherwise **N/A** / **UNAVAILABLE**. Catalog `LOCKED-PROVEN=25` stays labelled as genome catalog, never the kernel, never green. Lean-8 ≠ genome-144. Λ stays Conjecture 1.
 - Proof-registry job split: bidirectional **Product | Proof** header (`https://a-11-oy.com` | `https://a11oy.net`), canonical **RECORD** on this origin, 90-second diligence table, GitHub atlas inventory, and these dated notes.
