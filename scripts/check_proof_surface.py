@@ -460,29 +460,38 @@ def check() -> None:
         "the noscript/fallback snapshot must not retain the prior 2026-08-11 counts"
     )
     assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 9, (
-        "Fall 2026 original-cut Hub cards must remain ROADMAP, never trained-weight claims"
+        "Fall 2026 originals plus YARQA-ATTN must remain ROADMAP, never trained-weight claims"
     )
-    assert "KHIPU-R2" in source
-    assert "WILLAY" in source
-    assert "YARQA-ATTN" in source
-    assert "A11OY-MINI" in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/chaski"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/qantu"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
+    cuts_start = source.find('id="cuts"')
+    kernel_start = source.find('id="kernels"')
+    kernel_end = source.find('id="governance"', kernel_start)
+    assert cuts_start >= 0 and kernel_start > cuts_start and kernel_end > kernel_start
+    cuts_source = source[cuts_start:kernel_start]
+    kernel_source = source[kernel_start:kernel_end]
+    assert "KHIPU-R2" in cuts_source
+    assert "Khipu navigator successor" in cuts_source
+    assert "WILLAY" in cuts_source
+    assert "YARQA-ATTN" not in cuts_source or "lives with KERNEL" in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN"' not in cuts_source
+    assert "KILLINCHU-EYE" not in source
+    assert "ATELIER · MESSENGER" in cuts_source
+    assert "Later Chaski GGUF SKU, not a separate original" in cuts_source
+    assert "ATELIER · DETECTOR" in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/chaski"' in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/A11OY-MINI"' in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/qantu"' in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in cuts_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in cuts_source
+    assert "KERNEL · ATTENTION" in kernel_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN"' in kernel_source
+    assert "not an ATELIER model" in kernel_source
     assert source.count('<span class="stack-truth in-progress">ROADMAP · IN PROGRESS</span>') == 3, (
         "KERNEL Triton listings must stay ROADMAP · IN PROGRESS, not trained weights"
     )
-    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-receipt-attn"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-maskmod"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-block-kv"' in source
-    kernel_start = source.find('id="kernels"')
-    kernel_end = source.find('id="governance"', kernel_start)
-    assert kernel_start >= 0 and kernel_end > kernel_start
-    kernel_source = source[kernel_start:kernel_end]
-    assert "YARQA-ATTN" in kernel_source
-    assert "distinct from YARQA-ATTN" in kernel_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-receipt-attn"' in kernel_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-maskmod"' in kernel_source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-block-kv"' in kernel_source
     assert "OPERATIONAL status" in kernel_source
     assert "does not claim benches, CUDA binaries, or OPERATIONAL status" in kernel_source
     for forbidden in ("OPERATIONAL</span>", "trained weights</h3>", "CUDA binary published"):
