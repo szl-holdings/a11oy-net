@@ -10,7 +10,23 @@
   <title>A11oy.net /readyz — Static Reachability Only</title>
   <link rel="canonical" href="https://a11oy.net/readyz/" />
   <style>
-    :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#080c14;color:#eef4fb;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}main{max-width:780px;margin:0 auto;padding:clamp(24px,6vw,64px)}h1{line-height:1.15}p{color:#aebccf}strong{color:#eef4fb}pre{padding:18px;overflow:auto;border:1px solid #1c2942;border-radius:12px;background:#0e1626;color:#eef4fb;font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}a{color:#3af4c8}.boundary{padding:14px 16px;border-left:3px solid #d7b96b;background:#0e1626}nav{margin-top:24px}
+    :root{color-scheme:dark;--bg:#080c14;--surface:#0e1626;--border:#526987;--ink:#eef4fb;--sub:#bac7d8;--proof:#3af4c8;--gold:#e0c47f}
+    *,*::before,*::after{box-sizing:border-box}
+    html{max-width:100%;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+    body{max-width:100%;margin:0;overflow-x:hidden;overflow-x:clip;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    main{width:min(100%,780px);margin:0 auto;padding-top:clamp(24px,6vw,64px);padding-right:calc(clamp(18px,6vw,64px) + env(safe-area-inset-right,0px));padding-bottom:calc(clamp(24px,6vw,64px) + env(safe-area-inset-bottom,0px));padding-left:calc(clamp(18px,6vw,64px) + env(safe-area-inset-left,0px))}
+    h1{font-size:clamp(1.9rem,8vw,2.75rem);line-height:1.15;overflow-wrap:anywhere}
+    p{color:var(--sub);overflow-wrap:anywhere}
+    strong{color:var(--ink)}
+    pre{max-width:100%;padding:18px;overflow:auto;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}
+    a{color:var(--proof);overflow-wrap:anywhere;text-underline-offset:.2em}
+    :focus-visible{outline:3px solid var(--proof);outline-offset:4px}
+    .boundary{padding:14px 16px;border-left:3px solid var(--gold);border-radius:0 10px 10px 0;background:var(--surface)}
+    nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:24px}
+    nav a{display:inline-flex;min-height:44px;align-items:center;touch-action:manipulation}
+    @media(max-width:480px){nav{display:grid;grid-template-columns:minmax(0,1fr)}nav a{border-bottom:1px solid var(--border)}}
+    @media(prefers-contrast:more){pre,.boundary{border-width:2px}}
+    @media(forced-colors:active){pre,.boundary{forced-color-adjust:auto}}
   </style>
 </head>
 <body>
@@ -27,7 +43,7 @@
   "runtime_source": "https://a-11-oy.com/api/a11oy/v1/honest"
 }</code></pre>
     <noscript><p>No JavaScript is required. The complete reachability contract is present in the server-served HTML.</p></noscript>
-    <nav aria-label="Related evidence surfaces"><a href="/">Evidence homepage</a> · <a href="/diligence/">Diligence room</a> · <a href="/api/build-info/">Static build-info scope</a></nav>
+    <nav aria-label="Related evidence surfaces"><a href="/">Evidence homepage</a><a href="/diligence/">Diligence room</a><a href="/api/build-info/">Static build-info scope</a></nav>
   </main>
 </body>
 </html>
