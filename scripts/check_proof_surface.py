@@ -657,6 +657,18 @@ def check() -> None:
     assert 'id="cnt-locked"' in source
     assert "catalog LOCKED-PROVEN" in source
     assert "Lean-8 ≠ genome-144" in source
+    assert 'class="frontier-kernel"' in source
+    assert "Lean-8 kernel" in source
+    assert "not ROADMAP" in source
+    frontier_kernel = re.search(
+        r'class="frontier-kernel"[^>]*>.*?</p>',
+        source,
+        re.I | re.S,
+    )
+    assert frontier_kernel, "Frontier must host a live Lean-8 kernel chip"
+    assert "stack-truth roadmap" not in frontier_kernel.group(0)
+    assert "cls-roadmap" not in frontier_kernel.group(0)
+    assert ">25<" not in frontier_kernel.group(0)
     assert "probePolicy.classifySpaceMetadata(data)" in source
     assert 'probePolicy.classifyFailure("METADATA_REQUEST_FAILED")' in source
     assert 'document.querySelectorAll(".live[data-space]")' in source

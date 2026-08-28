@@ -163,7 +163,60 @@ assert.match(source, /\/api\/a11oy\/v1\/honest/);
 assert.match(source, /locked_formula_count/);
 assert.match(source, /value === 8/);
 assert.match(source, /N\/A/);
-assert.match(source, /UNAVAILABLE/);
+assert.match(source, /factory\(root\)/);
+assert.match(source, /function \(root\)/);
+assert.match(source, /mode:\s*["']cors["']/);
+assert.doesNotMatch(source, /var policy = factory\(\)/);
+
+import vm from "node:vm";
+const autoCount = { textContent: "N/A" };
+const autoChip = {
+  dataset: { state: "unavailable" },
+  querySelector(selector) {
+    if (selector === "[data-kernel-count]" || selector === "b") return autoCount;
+    if (selector === "[data-kernel-ids]") return { textContent: "" };
+    return null;
+  },
+};
+const sandbox = {
+  document: {
+    readyState: "complete",
+    addEventListener() {},
+    querySelectorAll(selector) {
+      return selector === "[data-kernel-chip]" ? [autoChip] : [];
+    },
+    getElementById() {
+      return autoChip;
+    },
+  },
+  fetch: async (url) => {
+    assert.equal(url, policy.HONEST_URL);
+    return {
+      ok: true,
+      redirected: false,
+      url,
+      json: async () => ({ doctrine_lock: { locked_formula_count: 8 } }),
+    };
+  },
+  setTimeout,
+  clearTimeout,
+  AbortController,
+  URL,
+  Promise,
+  Object,
+  Array,
+  TypeError,
+  Error,
+  Math,
+  isFinite,
+  console,
+};
+sandbox.globalThis = sandbox;
+vm.runInNewContext(source, sandbox);
+await new Promise((resolve) => setTimeout(resolve, 50));
+assert.equal(sandbox.A11oyHonestKernelBind.HONEST_FIELD, "locked_formula_count");
+assert.equal(autoCount.textContent, "8");
+assert.equal(autoChip.dataset.state, "observed");
 
 console.log(
   "OK: kernel chips bind /honest locked_formula_count === 8 or N/A; fetch failure is UNAVAILABLE.",

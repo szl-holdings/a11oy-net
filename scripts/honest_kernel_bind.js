@@ -8,12 +8,12 @@
 // Lean-8 ≠ genome-144. Λ stays Conjecture 1.
 (function (root, factory) {
   "use strict";
-  var policy = factory();
+  var policy = factory(root);
   if (typeof module === "object" && module.exports) {
     module.exports = policy;
   }
   root.A11oyHonestKernelBind = policy;
-}(typeof globalThis !== "undefined" ? globalThis : this, function () {
+}(typeof globalThis !== "undefined" ? globalThis : this, function (root) {
   "use strict";
 
   var HONEST_URL = "https://a-11-oy.com/api/a11oy/v1/honest";
@@ -141,7 +141,7 @@
         controller.abort();
       }
     }, FETCH_MS);
-    var request = { cache: "no-store", redirect: "error" };
+    var request = { cache: "no-store", redirect: "error", mode: "cors", credentials: "omit" };
     if (controller) {
       request.signal = controller.signal;
     }
@@ -252,7 +252,11 @@
 
   if (typeof document !== "undefined") {
     var start = function () {
-      autoBind(document);
+      try {
+        autoBind(document);
+      } catch (_error) {
+        // Fail closed: never invent 8 if the binder throws.
+      }
     };
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", start);
