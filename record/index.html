@@ -79,6 +79,31 @@
       <article><span>Bodies</span><b>Not re-hosted</b><p>Receipt bytes stay in their published stores.</p></article>
     </div>
 
+    <section id="permalinks">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Permalinks a reader can follow</span><h2>Two hosts. Two jobs.</h2><p>The signed RECORD index lives on a11oy.net. The tool that checks a record lives on a-11-oy.com. They are not the same site.</p></div>
+        <div class="summary-scroll">
+          <table class="summary-table">
+            <thead>
+              <tr><th>What</th><th>Permalink</th><th>Job</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Canonical RECORD</td><td><a href="https://a11oy.net/record/">https://a11oy.net/record/</a></td><td>Public receipt-record index on this origin.</td></tr>
+              <tr><td>Machine RECORD</td><td><a href="https://a11oy.net/record.json">https://a11oy.net/record.json</a></td><td>Fetchable contract. Empty receipt_ids is UNAVAILABLE.</td></tr>
+              <tr><td>Interactive tool</td><td><a href="https://a-11-oy.com/verify">https://a-11-oy.com/verify</a></td><td>Checks a record. Not the record. Not cloned here.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="receipt-ids">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Receipt IDs in this index</span><h2>Empty, labelled UNAVAILABLE.</h2><p>This origin does not enumerate receipt identifiers and does not invent them. An empty index is UNAVAILABLE, not a measured zero.</p></div>
+        <article class="panel limit"><h3>receipt_ids</h3><p>None published in this index. Class: <strong>UNAVAILABLE</strong>. Live chain state is also UNAVAILABLE here. Pointers to public stores follow; they are locations, not verified envelopes.</p></article>
+      </div>
+    </section>
+
     <section id="stores">
       <div class="wrap">
         <div class="section-head"><span class="section-label">Public stores</span><h2>Where published receipts are listed.</h2><p>Each row is a location. Listing metadata is REPORTED. This page does not assert that a store is reachable, complete, or that any receipt verifies.</p></div>

@@ -7,6 +7,7 @@
     "hosting_boundary": "separately hosted first-party evidence registry",
     "implementation": "static GitHub Pages site"
   },
+  "reader_guide": "a11oy.net is the proof registry and canonical RECORD index. a-11-oy.com is the command center. https://a-11-oy.com/verify is the interactive tool that checks a record, not the record itself. Do not merge hosts. Never a11oy.com.",
   "status": {
     "state": "PARTIAL",
     "evidence_class": "REPORTED",

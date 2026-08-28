@@ -7,6 +7,12 @@
     "meaning": "Canonical public receipt-record index on a11oy.net. Static and fetchable on this origin. Not an interactive verifier.",
     "implementation": "static GitHub Pages JSON"
   },
+  "reader_guide": "The signed RECORD index lives at https://a11oy.net/record/. The tool that checks a record is https://a-11-oy.com/verify. They are different hosts and must not be merged. This file lists store locations. receipt_ids is empty and UNAVAILABLE: that is not a measured zero, and no receipt identifiers are invented here. Never a11oy.com.",
+  "permalinks": {
+    "record_html": "https://a11oy.net/record/",
+    "record_json": "https://a11oy.net/record.json",
+    "interactive_verify_tool": "https://a-11-oy.com/verify"
+  },
   "interactive_verifier": {
     "url": "https://a-11-oy.com/verify",
     "evidence_class": "UNKNOWN",

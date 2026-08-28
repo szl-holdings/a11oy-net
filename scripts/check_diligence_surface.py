@@ -159,6 +159,7 @@ def check() -> None:
     assert "/chat/" in diligence_source and "/code/" in diligence_source
     record = check_document(RECORD, canonical="https://a11oy.net/record/")
     notes = check_document(NOTES, canonical="https://a11oy.net/notes/")
+    assert {"main", "permalinks", "receipt-ids", "stores", "verify"} <= record.ids
     assert any(anchor.get("href") == "https://a-11-oy.com/verify" for anchor in record.anchors)
     assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
     assert "Alloy by SZL Holdings" in RECORD.read_text(encoding="utf-8")
@@ -293,7 +294,12 @@ def check() -> None:
     assert "does not establish A11oy product-runtime readiness" in llms
     record_contract = json.loads(RECORD_JSON.read_text(encoding="utf-8"))
     assert record_contract["surface"]["url"] == "https://a11oy.net/record/"
-    assert record_contract["interactive_verifier"]["url"] == "https://a-11-oy.com/verify"
+    assert record_contract["permalinks"] == {
+        "record_html": "https://a11oy.net/record/",
+        "record_json": "https://a11oy.net/record.json",
+        "interactive_verify_tool": "https://a-11-oy.com/verify",
+    }
+    assert "Different hosts" in record_contract["reader_guide"] or "different hosts" in record_contract["reader_guide"].lower()
     assert record_contract["boundaries"]["interactive_verifier_cloned"] is False
     assert record_contract["boundaries"]["product_runtime_required_for_first_paint"] is False
     assert record_contract["boundaries"]["receipt_database_hosted_here"] is False

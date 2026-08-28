@@ -277,7 +277,8 @@ def check() -> None:
     assert "id=\"record\"" in source
     assert "id=\"github-atlas\"" in source
     assert "Ninety seconds" in source
-    assert "canonical receipt record" in source.lower()
+    assert "https://a11oy.net/record/" in source
+    assert "The signed RECORD index lives at" in source
     assert "https://a-11-oy.com/verify" in source
     assert "fetch(\"https://a-11-oy.com" not in source
     assert "huggingface.co/spaces" not in meta_value("property", "og:url")
@@ -349,8 +350,34 @@ def check() -> None:
     security = SECURITY.read_text(encoding="utf-8")
     assert "Canonical: https://a11oy.net/.well-known/security.txt" in security
     assert "https://a11oy.com" not in source + robots + security
-    assert "https://a11oy.com" not in (ROOT / "record" / "index.html").read_text(encoding="utf-8")
-    assert "https://a11oy.com" not in (ROOT / "diligence" / "index.html").read_text(encoding="utf-8")
+    forbidden = "https://a11oy.com"
+    for path in ROOT.rglob("*"):
+        if ".git" in path.parts or "scripts" in path.parts or not path.is_file():
+            continue
+        if path.suffix.lower() not in {
+            ".html",
+            ".json",
+            ".md",
+            ".txt",
+            ".py",
+            ".js",
+            ".mjs",
+            ".yml",
+            ".css",
+            ".xml",
+        }:
+            continue
+        text = path.read_text(encoding="utf-8")
+        assert forbidden not in text, (
+            f"{path.relative_to(ROOT)} must not stamp the furniture-shop domain {forbidden}"
+        )
+    record_source = (ROOT / "record" / "index.html").read_text(encoding="utf-8")
+    assert "https://a11oy.net/record/" in record_source
+    assert "https://a-11-oy.com/verify" in record_source
+    assert "id=\"permalinks\"" in record_source
+    assert "id=\"receipt-ids\"" in record_source
+    assert "empty is UNAVAILABLE" in record_source.lower() or "empty, labelled unavailable" in record_source.lower()
+    assert "Two hosts. Two jobs." in record_source
 
     assert len(surface.mains) == 1, "the root document needs one main landmark"
     main = surface.mains[0]
