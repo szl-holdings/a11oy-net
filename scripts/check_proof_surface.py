@@ -471,6 +471,22 @@ def check() -> None:
     assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
+    assert source.count('<span class="stack-truth in-progress">ROADMAP · IN PROGRESS</span>') == 3, (
+        "KERNEL Triton listings must stay ROADMAP · IN PROGRESS, not trained weights"
+    )
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-receipt-attn"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-maskmod"' in source
+    assert 'href="https://huggingface.co/SZLHOLDINGS/szl-block-kv"' in source
+    kernel_start = source.find('id="kernels"')
+    kernel_end = source.find('id="governance"', kernel_start)
+    assert kernel_start >= 0 and kernel_end > kernel_start
+    kernel_source = source[kernel_start:kernel_end]
+    assert "YARQA-ATTN" in kernel_source
+    assert "distinct from YARQA-ATTN" in kernel_source
+    assert "OPERATIONAL status" in kernel_source
+    assert "does not claim benches, CUDA binaries, or OPERATIONAL status" in kernel_source
+    for forbidden in ("OPERATIONAL</span>", "trained weights</h3>", "CUDA binary published"):
+        assert forbidden not in kernel_source
     assert 'event.key==="Escape"' in source
     live_start = source.find('document.querySelectorAll(".live[data-space]")')
     live_end = source.find("var resources=", live_start)
