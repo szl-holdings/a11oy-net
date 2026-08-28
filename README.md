@@ -34,9 +34,10 @@ uptime, or deployed equivalence.
   sequences the public thesis, controls, source, boundaries, and estate links.
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
   starts from executable validation and machine-readable contracts.
-- **Product gateways:** [`/chat/`](https://a11oy.net/chat/) and
-  [`/code/`](https://a11oy.net/code/) hand visitors to the separately deployed
-  governed console and code runtime without claiming those systems are ready.
+- **Product handoffs:** [`/chat/`](https://a11oy.net/chat/) and
+  [`/code/`](https://a11oy.net/code/) remain live URLs as one-line Diligence
+  handoffs, not top-level nav peers. They do not claim product readiness.
+  Interactive receipt verify stays on [a-11-oy.com/verify](https://a-11-oy.com/verify).
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
