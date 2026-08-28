@@ -32,112 +32,23 @@
     }
   },
   "entrypoints": [
-    {
-      "name": "diligence_room",
-      "url": "https://a11oy.net/diligence/",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "record_index",
-      "url": "https://a11oy.net/record/",
-      "evidence_class": "REPORTED",
-      "scope": "canonical receipt-record index on this origin; pointers only; not a receipt database; not an interactive verifier"
-    },
-    {
-      "name": "record_contract",
-      "url": "https://a11oy.net/record.json",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "hub_atlas",
-      "url": "https://a11oy.net/atlas.json",
-      "evidence_class": "REPORTED",
-      "scope": "committed HF snapshot plus GitHub inventory; reachability is not quality"
-    },
-    {
-      "name": "estate_snapshot",
-      "url": "https://a11oy.net/estate/",
-      "evidence_class": "MEASURED",
-      "scope": "dated public GitHub/HF inventory snapshot; not product runtime; not a live dashboard; machine contract at /estate.json"
-    },
-    {
-      "name": "estate_contract",
-      "url": "https://a11oy.net/estate.json",
-      "evidence_class": "MEASURED",
-      "scope": "machine-readable estate snapshot; counts are inventory not quality"
-    },
-    {
-      "name": "dated_notes",
-      "url": "https://a11oy.net/notes/",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "governed_console_gateway",
-      "url": "https://a11oy.net/chat/",
-      "evidence_class": "REPORTED",
-      "scope": "static handoff; product runtime state must be observed at a-11-oy.com"
-    },
-    {
-      "name": "governed_code_gateway",
-      "url": "https://a11oy.net/code/",
-      "evidence_class": "REPORTED",
-      "scope": "static handoff; code execution state must be observed at a-11-oy.com"
-    },
-    {
-      "name": "static_build_info",
-      "url": "https://a11oy.net/api/build-info/",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "static_health_document",
-      "url": "https://a11oy.net/health.json",
-      "evidence_class": "REPORTED",
-      "scope": "only health document; committed static JSON; not runtime health, not DSSE-LIVE, not uptime"
-    },
-    {
-      "name": "static_reachability",
-      "url": "https://a11oy.net/readyz/",
-      "evidence_class": "REPORTED",
-      "scope": "HTML directory route only; GitHub Pages may 301 /readyz to /readyz/; not a health URL"
-    },
-    {
-      "name": "product_honesty_manifest",
-      "url": "https://a-11-oy.com/api/a11oy/v1/honest",
-      "evidence_class": "UNKNOWN",
-      "scope": "must be observed live"
-    },
-    {
-      "name": "receipt_verifier",
-      "url": "https://a-11-oy.com/verify",
-      "evidence_class": "UNKNOWN",
-      "scope": "interactive tool on the product origin; must be observed live; not cloned here"
-    },
-    {
-      "name": "product_lake_receipts",
-      "url": "https://a-11-oy.com/api/lake/v1/receipts",
-      "evidence_class": "UNKNOWN",
-      "scope": "live receipt query on the product origin; Khipu + /data SZLHOLDINGS/szl-evidence; not hosted here; must be observed live"
-    },
-    {
-      "name": "implementation_source",
-      "url": "https://github.com/szl-holdings/a11oy",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "proof_registry_source",
-      "url": "https://github.com/szl-holdings/a11oy-net",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "public_hub_registry",
-      "url": "https://huggingface.co/SZLHOLDINGS",
-      "evidence_class": "REPORTED"
-    },
-    {
-      "name": "security_reporting",
-      "url": "https://a11oy.net/.well-known/security.txt",
-      "evidence_class": "REPORTED"
-    }
+    {"name": "diligence_room", "url": "https://a11oy.net/diligence/", "evidence_class": "REPORTED"},
+    {"name": "record_index", "url": "https://a11oy.net/record/", "evidence_class": "REPORTED", "scope": "canonical receipt-record index on this origin; pointers only; not a receipt database; not an interactive verifier"},
+    {"name": "record_contract", "url": "https://a11oy.net/record.json", "evidence_class": "REPORTED"},
+    {"name": "hub_atlas", "url": "https://a11oy.net/atlas.json", "evidence_class": "REPORTED", "scope": "committed HF snapshot plus GitHub inventory; reachability is not quality"},
+    {"name": "dated_notes", "url": "https://a11oy.net/notes/", "evidence_class": "REPORTED"},
+    {"name": "governed_console_gateway", "url": "https://a11oy.net/chat/", "evidence_class": "REPORTED", "scope": "static handoff; product runtime state must be observed at a-11-oy.com"},
+    {"name": "governed_code_gateway", "url": "https://a11oy.net/code/", "evidence_class": "REPORTED", "scope": "static handoff; code execution state must be observed at a-11-oy.com"},
+    {"name": "static_build_info", "url": "https://a11oy.net/api/build-info/", "evidence_class": "REPORTED"},
+    {"name": "static_health_document", "url": "https://a11oy.net/health.json", "evidence_class": "REPORTED", "scope": "only health document; committed static JSON; not runtime health, not DSSE-LIVE, not uptime"},
+    {"name": "static_reachability", "url": "https://a11oy.net/readyz/", "evidence_class": "REPORTED", "scope": "HTML directory route only; GitHub Pages may 301 /readyz to /readyz/; not a health URL"},
+    {"name": "product_honesty_manifest", "url": "https://a-11-oy.com/api/a11oy/v1/honest", "evidence_class": "UNKNOWN", "scope": "must be observed live"},
+    {"name": "receipt_verifier", "url": "https://a-11-oy.com/verify", "evidence_class": "UNKNOWN", "scope": "interactive tool on the product origin; must be observed live; not cloned here"},
+    {"name": "product_lake_receipts", "url": "https://a-11-oy.com/api/lake/v1/receipts", "evidence_class": "UNKNOWN", "scope": "live receipt query on the product origin; Khipu + /data SZLHOLDINGS/szl-evidence; not hosted here; must be observed live"},
+    {"name": "implementation_source", "url": "https://github.com/szl-holdings/a11oy", "evidence_class": "REPORTED"},
+    {"name": "proof_registry_source", "url": "https://github.com/szl-holdings/a11oy-net", "evidence_class": "REPORTED"},
+    {"name": "public_hub_registry", "url": "https://huggingface.co/SZLHOLDINGS", "evidence_class": "REPORTED"},
+    {"name": "security_reporting", "url": "https://a11oy.net/.well-known/security.txt", "evidence_class": "REPORTED"}
   ],
   "labels": {
     "MEASURED": "Direct observation with a disclosed source and context.",
