@@ -351,6 +351,7 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
         "connect-src": {
             "'self'",
             "https://huggingface.co",
+            "https://a-11-oy.com",
         },
         "font-src": {"'self'", "data:"},
         "manifest-src": {"'self'"},

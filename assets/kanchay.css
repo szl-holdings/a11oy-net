@@ -127,6 +127,8 @@ h1,h2,h3,.wordmark,.brand,.scope,.btn,.button{font-family:var(--head)}
 }
 .handoff-line .empty-kicker{margin-bottom:6px;color:var(--lattice)}
 .conjecture,.conjecture b{color:var(--gray);font-weight:600}
+.catalog-chip,.catalog-chip b{color:var(--gray);font-weight:600}
+.kernel-chip[data-state="unavailable"] b{color:var(--gray)}
 @media(max-width:720px){
   .origin-switch{margin:0;padding:12px 14px;border-left:0;border-top:1px solid var(--border);width:100%}
   .nav-chips{width:100%}

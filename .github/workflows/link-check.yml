@@ -147,6 +147,11 @@ jobs:
       - name: Validate fail-closed browser observation policy
         run: node scripts/check_probe_policy.mjs
 
+      - name: Validate kernel chips bind /honest locked_formula_count
+        run: |
+          python3 scripts/check_honest_kernel_bind.py
+          node scripts/check_honest_kernel_bind.mjs
+
       - name: Validate edge security contract
         run: python3 scripts/check_security_headers.py
 
@@ -218,6 +223,7 @@ jobs:
             robots.txt \
             scripts/atlas_policy.js \
             scripts/check_probe_policy.mjs \
+            scripts/honest_kernel_bind.js \
             scripts/probe_policy.js \
             site.webmanifest \
             sitemap.xml; do

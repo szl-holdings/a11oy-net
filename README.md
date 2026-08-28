@@ -123,9 +123,12 @@ claims.
 Operational status is separate from evidence class. Hub `RUNNING` state is
 transport metadata and does not establish end-to-end capability.
 
-The formal canon remains explicit: exactly eight formulas are locked-proven;
-Lambda uniqueness remains **Conjecture 1**, advisory and not a theorem. The
-trust ceiling is `0.97`, never 100%.
+The kernel chip binds live `/api/a11oy/v1/honest` `locked_formula_count` and
+paints **8** only when that field is exactly 8; otherwise **N/A** /
+**UNAVAILABLE**. Catalog `LOCKED-PROVEN=25` stays labelled as genome catalog,
+not the kernel. Lean-8 ≠ genome-144. Lambda uniqueness remains
+**Conjecture 1**, advisory and not a theorem. The trust ceiling is `0.97`,
+never 100%.
 
 ## Local verification
 
@@ -136,8 +139,10 @@ repository root:
 python scripts/check_proof_surface.py
 python scripts/check_diligence_surface.py
 python scripts/check_security_headers.py
+python scripts/check_honest_kernel_bind.py
 node scripts/check_atlas_policy.mjs
 node scripts/check_probe_policy.mjs
+node scripts/check_honest_kernel_bind.mjs
 ```
 
 The checks validate:
@@ -147,6 +152,7 @@ The checks validate:
 - keyboard navigation, live-state announcements, and no-script behavior;
 - fail-closed atlas admission and honest evidence labels;
 - fail-closed Hugging Face runtime-stage classification while product links stay unprobed;
+- kernel chips bind `/honest` `locked_formula_count` (8 or N/A / UNAVAILABLE);
 - exclusion of interactive Spaces and Killinchu-named resources;
 - the investor/developer diligence room, static machine contract, `llms.txt`,
   branded 404, SVG mark, and no-JavaScript route boundaries;
@@ -173,6 +179,9 @@ The checks validate:
 | `scripts/check_atlas_policy.mjs` | Executable policy regression contract. |
 | `scripts/probe_policy.js` | Shared browser/Node runtime-metadata observation policy. |
 | `scripts/check_probe_policy.mjs` | Malformed, transitional, terminal, and `RUNNING` stage regressions. |
+| `scripts/honest_kernel_bind.js` | Fail-closed `/honest` `locked_formula_count` kernel-chip bind. |
+| `scripts/check_honest_kernel_bind.mjs` | Exact-8 / N/A / UNAVAILABLE regressions for the kernel bind. |
+| `scripts/check_honest_kernel_bind.py` | HTML/CSP contract: no hardcoded kernel 8; catalog 25 labelled. |
 | `scripts/check_proof_surface.py` | Metadata, accessibility, and truth-surface guard. |
 | `scripts/check_diligence_surface.py` | Diligence, machine-contract, no-script, and recovery-route guard. |
 | `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. |
