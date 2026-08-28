@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#080c14" />
 <meta name="color-scheme" content="dark" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-m22o5/gOJshTUuh5Y8Iw7j3uiG65V8LSunZlKL0mqds=' 'sha256-bkgM2tNIY0/bkjCXCpNdT+z0eU6+NdVjP+Zc3SphGFI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://huggingface.co; font-src 'self' data:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-m22o5/gOJshTUuh5Y8Iw7j3uiG65V8LSunZlKL0mqds=' 'sha256-bkgM2tNIY0/bkjCXCpNdT+z0eU6+NdVjP+Zc3SphGFI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://huggingface.co https://a-11-oy.com; font-src 'self' data:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
 <meta name="robots" content="index,follow,max-image-preview:large" />
 <title>a11oy Proof Registry | Alloy by SZL Holdings</title>
 <meta name="description" content="RECORD on a11oy.net: Hub atlas and ROADMAP live here. Inspect receipts, diligence, and public-estate metadata without cloning the product verifier." />
@@ -152,6 +152,8 @@ h1 .g{background:linear-gradient(92deg,var(--ink) 30%,var(--proof) 78%);-webkit-
 .hero-canon{margin-top:44px;font-family:var(--mono);font-size:12px;color:var(--ghost);display:flex;gap:18px;flex-wrap:wrap}
 .hero-canon span b{color:var(--gold);font-weight:600}
 .hero-canon .conjecture,.hero-canon .conjecture b{color:var(--gray)}
+.hero-canon .catalog-chip,.hero-canon .catalog-chip b{color:var(--gray)}
+.hero-canon .kernel-chip[data-state="unavailable"] b{color:var(--gray)}
 
 /* ---- doctrine strip ---- */
 .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--deep)}
@@ -404,7 +406,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     </div>
     <div class="hero-canon">
       <span>trust ceiling <b>0.97</b> — never 100%</span>
-      <span>locked-proven = <b>exactly 8</b> formulas</span>
+      <span class="kernel-chip" data-kernel-chip="locked-proven" data-honest-url="https://a-11-oy.com/api/a11oy/v1/honest" data-honest-field="locked_formula_count" data-state="unavailable" id="hs-proven">locked-proven = <b id="cnt-locked" data-kernel-count>N/A</b> formulas<span data-kernel-ids></span></span>
+      <span class="catalog-chip">catalog LOCKED-PROVEN = <b>25</b> · genome catalog, not the kernel · Lean-8 ≠ genome-144</span>
       <span class="conjecture">Λ = Conjecture 1 · advisory, never a theorem</span>
     </div>
   </div>
@@ -416,7 +419,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
       <a class="dossier-row" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><span class="dossier-index">03</span><span><b>Implementation source</b><small>review history, checks, and architecture</small></span><span class="dossier-action">SOURCE ↗</span></a>
       <a class="dossier-row" href="#atlas"><span class="dossier-index">04</span><span><b>Hub atlas</b><small>public HF and GitHub surfaces</small></span><span class="dossier-action">INSPECT ↓</span></a>
     </div>
-    <p class="dossier-note">No account, token, model weight, dataset payload, or private resource is requested by this page. First paint does not fetch a-11-oy.com.</p>
+    <p class="dossier-note">No account, token, model weight, dataset payload, or private resource is requested by this page. The kernel chip may GET <code>/api/a11oy/v1/honest</code> for <code>locked_formula_count</code> only. Product routes stay NOT PROBED.</p>
     <p class="signal-rail">Product experience and evidence experience remain separate.</p>
   </aside>
 </div></header>
@@ -441,11 +444,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
         <tr><td>Origin health document</td><td><span class="cls cls-measured">MEASURED</span></td><td>/health.json · committed static file · 2026-08-28</td><td>Not DSSE-LIVE. signer=unavailable. sha is last published main. Not uptime. /readyz is HTML. /healthz is not published (404 HTML).</td></tr>
         <tr><td>Receipt store on this origin</td><td><span class="cls cls-measured">MEASURED</span></td><td>This repository · 2026-08-28</td><td>None. RECORD is pointers. Live receipts stay on the product Space.</td></tr>
         <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">REPORTED</span></td><td>Committed Hub metadata · 2026-08-28 · N=57</td><td>17 models, 27 datasets, 12 collections, 1 bucket. Listing metadata, not quality.</td></tr>
-        <tr><td>Eight locked-proven formulas</td><td><span class="cls cls-reported">REPORTED</span></td><td>Lean kernel c7c0ba17 in public source</td><td>Not re-proved by this page. Λ is not among the eight.</td></tr>
+        <tr><td>Eight locked-proven formulas</td><td><span class="cls cls-reported">REPORTED</span></td><td>Lean kernel c7c0ba17 in public source</td><td>Source-bounded. Live kernel count is the chip bound to /honest locked_formula_count, not this row. Λ is not among the eight.</td></tr>
         <tr><td>Λ uniqueness</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>Conjecture 1 · advisory</td><td>Never a theorem. Never green.</td></tr>
         <tr><td>Fall 2026 cuts and KERNEL originals</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>Named Hub cards and GitHub source on this page</td><td>Not OPERATIONAL. No weights or throughput claimed.</td></tr>
         <tr><td>Interactive receipt verification</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Tool stays at a-11-oy.com/verify. Not run here.</td></tr>
-        <tr><td>Product runtime honesty / health</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Observe a-11-oy.com. This origin does not probe it.</td></tr>
+        <tr><td>Product runtime honesty / health</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Kernel chip may GET locked_formula_count only. Product health/readiness is not probed.</td></tr>
         <tr><td>Eval leaderboard or quality scores</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>No method+date+N figure is published on this origin.</td></tr>
         <tr><td>SLSA L3</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>—</td><td>L1 honest · L2 attested · L3 not claimed here.</td></tr>
       </tbody>
@@ -623,7 +626,9 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <p class="foot-canon">
     <b>Canon.</b> Public name: <b>a11oy</b>. Subtitle only: Alloy by SZL Holdings.
     Labels honest by default: MEASURED / REPORTED / MODELED / HEURISTIC / UNKNOWN / UNAVAILABLE.
-    locked-proven = exactly 8 formulas {F1, F4, F7, F11, F12, F18, F19, F22}. Λ = Conjecture 1 — advisory, never a theorem.
+    <span class="kernel-chip" data-kernel-chip="locked-proven" data-state="unavailable">locked-proven = <b id="pt-locked" data-kernel-count>N/A</b> formulas<span data-kernel-ids></span>.</span>
+    <span class="catalog-chip">catalog LOCKED-PROVEN = <b>25</b> (genome catalog, not the kernel; Lean-8 ≠ genome-144).</span>
+    <span class="conjecture">Λ = Conjecture 1 — advisory, never a theorem.</span>
     Trust ceiling 0.97 — never 100%. SLSA: L1 honest · L2 attested · L3 roadmap.
     Product: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>. Proof: <b>a11oy.net</b>. Never a11oy.com.
   </p>
@@ -646,6 +651,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 </div></footer>
 <script src="scripts/atlas_policy.js"></script>
 <script src="scripts/probe_policy.js"></script>
+<script src="scripts/honest_kernel_bind.js"></script>
 <script>
 (function(){
   "use strict";

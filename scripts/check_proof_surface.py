@@ -27,6 +27,8 @@ SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
 PROBE_POLICY = ROOT / "scripts" / "probe_policy.js"
 PROBE_POLICY_CHECK = ROOT / "scripts" / "check_probe_policy.mjs"
+HONEST_KERNEL_BIND = ROOT / "scripts" / "honest_kernel_bind.js"
+HONEST_KERNEL_BIND_CHECK = ROOT / "scripts" / "check_honest_kernel_bind.mjs"
 READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
@@ -123,6 +125,8 @@ def check() -> None:
     assert "node scripts/check_probe_policy.mjs" in workflow
     assert "python3 scripts/stamp_health_sha.py --sha \"${GITHUB_SHA}\"" in workflow
     assert STAMP_HEALTH_SHA.is_file(), "Pages artifact stamp for health.json sha must exist"
+    assert "python3 scripts/check_honest_kernel_bind.py" in workflow
+    assert "node scripts/check_honest_kernel_bind.mjs" in workflow
     for protected_artifact in (
         "404.html",
         "assets/a11oy-mark.svg",
@@ -139,11 +143,15 @@ def check() -> None:
         "record/index.html",
         "atlas.json",
         "scripts/check_probe_policy.mjs",
+        "scripts/honest_kernel_bind.js",
         "scripts/probe_policy.js",
     ):
         assert protected_artifact in workflow
     assert PROBE_POLICY.is_file() and PROBE_POLICY_CHECK.is_file(), (
         "shared fail-closed browser observation policy and regression check are required"
+    )
+    assert HONEST_KERNEL_BIND.is_file() and HONEST_KERNEL_BIND_CHECK.is_file(), (
+        "shared fail-closed /honest kernel-chip bind and regression check are required"
     )
     source = INDEX.read_text(encoding="utf-8")
     surface = Surface()
@@ -637,6 +645,18 @@ def check() -> None:
         script.get("src") == "scripts/probe_policy.js"
         for script in surface.scripts
     ), "HF runtime reads must load the shared fail-closed observation policy"
+    assert any(
+        script.get("src") == "scripts/honest_kernel_bind.js"
+        for script in surface.scripts
+    ), "kernel chips must load the shared fail-closed /honest bind"
+    assert "exactly 8" not in source
+    assert "exactly eight" not in source.lower()
+    assert 'data-kernel-chip="locked-proven"' in source
+    assert 'data-honest-url="https://a-11-oy.com/api/a11oy/v1/honest"' in source
+    assert 'data-honest-field="locked_formula_count"' in source
+    assert 'id="cnt-locked"' in source
+    assert "catalog LOCKED-PROVEN" in source
+    assert "Lean-8 ≠ genome-144" in source
     assert "probePolicy.classifySpaceMetadata(data)" in source
     assert 'probePolicy.classifyFailure("METADATA_REQUEST_FAILED")' in source
     assert 'document.querySelectorAll(".live[data-space]")' in source
