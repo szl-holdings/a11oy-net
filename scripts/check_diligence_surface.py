@@ -167,6 +167,10 @@ def check() -> None:
     assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
     assert "Alloy by SZL Holdings" in RECORD.read_text(encoding="utf-8")
     assert "Alloy by SZL Holdings" in NOTES.read_text(encoding="utf-8")
+    assert "Product ↗" in RECORD.read_text(encoding="utf-8")
+    assert "Product ↗" in NOTES.read_text(encoding="utf-8")
+    assert RECORD.read_text(encoding="utf-8").count("origin-switch") == 1
+    assert NOTES.read_text(encoding="utf-8").count("origin-switch") == 1
     assert "https://a11oy.com" not in RECORD.read_text(encoding="utf-8")
     assert "https://huggingface.co/spaces" not in [
         link.get("href") for link in record.links if link.get("rel") == "canonical"
