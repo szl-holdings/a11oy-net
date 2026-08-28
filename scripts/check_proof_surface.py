@@ -21,6 +21,7 @@ SITEMAP = ROOT / "sitemap.xml"
 MANIFEST = ROOT / "site.webmanifest"
 MANIFEST_ALIAS = ROOT / "manifest.webmanifest"
 HEADERS = ROOT / "_headers"
+CNAME = ROOT / "CNAME"
 SECURITY = ROOT / ".well-known" / "security.txt"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
@@ -32,6 +33,7 @@ DILIGENCE = ROOT / "diligence" / "index.html"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
+    "record",
     "assurance",
     "benchmarks",
     "source",
@@ -98,6 +100,15 @@ def check() -> None:
     assert NOJEKYLL.is_file(), (
         ".nojekyll is required to publish .well-known/security.txt on GitHub Pages"
     )
+    assert CNAME.read_text(encoding="utf-8").strip() == "a11oy.net", (
+        "CNAME must remain a11oy.net; this origin is not a product host"
+    )
+    assert not (ROOT / "api" / "lake").exists(), (
+        "this origin must not host /api/lake; live receipts stay on the product Space"
+    )
+    assert not (ROOT / "receipts").exists()
+    assert not (ROOT / "record" / "receipts").exists()
+    assert not list(ROOT.glob("*.dsse.json"))
     workflow = LINK_WORKFLOW.read_text(encoding="utf-8")
     assert re.search(r"^    name: Link & Asset Check$", workflow, re.MULTILINE)
     assert re.search(
@@ -116,7 +127,12 @@ def check() -> None:
         "code/index.html",
         "diligence/index.html",
         "evidence.json",
+        "health.json",
         "llms.txt",
+        "notes/index.html",
+        "record.json",
+        "record/index.html",
+        "atlas.json",
         "scripts/check_probe_policy.mjs",
         "scripts/probe_policy.js",
     ):
@@ -214,7 +230,19 @@ def check() -> None:
     structured = json.loads(structured_blocks[0])
     assert structured["@type"] == "WebSite"
     assert structured["url"] == "https://a11oy.net/"
+    assert structured["name"] == "a11oy Proof Registry"
+    assert structured["alternateName"] == "Alloy by SZL Holdings"
+    assert structured["sameAs"] == [
+        "https://a11oy.net/diligence/",
+        "https://a11oy.net/record/",
+        "https://a11oy.net/notes/",
+    ]
+    assert all(str(url).startswith("https://a11oy.net/") for url in structured["sameAs"])
+    assert "huggingface.co/spaces" not in json.dumps(structured)
+    assert "a11oy.com" not in json.dumps(structured)
     assert structured["publisher"]["url"] == "https://github.com/szl-holdings"
+    assert structured["isRelatedTo"]["name"] == "a11oy"
+    assert structured["isRelatedTo"]["url"] == "https://a-11-oy.com/"
 
     robots = ROBOTS.read_text(encoding="utf-8")
     assert "Sitemap: https://a11oy.net/sitemap.xml" in robots
@@ -225,9 +253,13 @@ def check() -> None:
     ] == [
         "https://a11oy.net/",
         "https://a11oy.net/diligence/",
+        "https://a11oy.net/record/",
+        "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
     ]
+    assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
+    assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
@@ -236,9 +268,43 @@ def check() -> None:
         "manifest.webmanifest must be byte-identical to site.webmanifest"
     )
     assert DILIGENCE.is_file(), "the public diligence route must exist"
+    assert (ROOT / "record" / "index.html").is_file(), "canonical RECORD must exist"
+    assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
+    assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
+    assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
+    assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
+    health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
+    assert health["path"] == "/health.json"
+    assert health["dsse_live"] == "NOT_CLAIMED"
+    assert health["uptime"] == "NOT_MEASURED"
+    assert health["readyz"] == "NOT_A_HEALTH_URL"
+    assert health["healthz"] == "NOT_PUBLISHED"
+    assert health["json_probe_document"] == "https://a11oy.net/health.json"
+    assert not (ROOT / "healthz").exists(), "/healthz must not be published as a competing route"
+    assert not (ROOT / "healthz.html").exists(), "/healthz must not be published as a competing file"
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
+    assert any(
+        anchor.get("href") == "/record/" for anchor in surface.anchors
+    ), "the root proof registry must expose RECORD"
+    assert "Alloy by SZL Holdings" in source
+    assert "id=\"summary\"" in source
+    assert "id=\"record\"" in source
+    assert "id=\"github-atlas\"" in source
+    assert "Ninety seconds" in source
+    assert "Origin health document" in source
+    assert "healthz is not published" in source.lower()
+    assert "https://a11oy.net/record/" in source
+    assert "The signed RECORD index lives at" in source
+    assert "https://a-11-oy.com/verify" in source
+    assert "Receipt store on this origin" in source
+    assert "api/lake" not in source, (
+        "root first paint must not fetch or register the product lake API"
+    )
+    assert "fetch(\"https://a-11-oy.com" not in source
+    assert "huggingface.co/spaces" not in meta_value("property", "og:url")
+    assert meta_value("property", "og:url") == "https://a11oy.net/"
     landmark_markup = {
         "navigation": re.findall(
             r"<nav\b.*?</nav>", source, re.DOTALL | re.IGNORECASE
@@ -262,6 +328,9 @@ def check() -> None:
         "Code gateway must not remain a top-level nav peer"
     )
     assert "Product ↗" in nav_block, "Product ↗ must remain the outbound origin"
+    assert nav_block.count("origin-switch") == 1, (
+        "root must keep a single Product | Proof header"
+    )
     assert 'aria-current="true"' in nav_block and ">Proof</a>" in nav_block, (
         "Proof must remain the current origin on a11oy.net"
     )
@@ -290,6 +359,14 @@ def check() -> None:
     readyz_html = readyz_index.read_text(encoding="utf-8")
     build_info_html = build_info_index.read_text(encoding="utf-8")
     assert (
+        "not a json health" in readyz_html.lower()
+        or "not json health" in readyz_html.lower()
+    ), "readyz must not be registered as a health URL"
+    assert "not a health url" in readyz_html.lower() or "not a health probe" in readyz_html.lower()
+    assert "/health.json" in readyz_html
+    assert "healthz" in readyz_html.lower()
+    assert "not published" in readyz_html.lower()
+    assert (
         "a-11-oy.com" in readyz_html.lower()
     ), "readiness route must link to the runtime source explicitly"
     assert (
@@ -298,6 +375,39 @@ def check() -> None:
     security = SECURITY.read_text(encoding="utf-8")
     assert "Canonical: https://a11oy.net/.well-known/security.txt" in security
     assert "https://a11oy.com" not in source + robots + security
+    forbidden = "https://a11oy.com"
+    for path in ROOT.rglob("*"):
+        if ".git" in path.parts or "scripts" in path.parts or not path.is_file():
+            continue
+        if path.suffix.lower() not in {
+            ".html",
+            ".json",
+            ".md",
+            ".txt",
+            ".py",
+            ".js",
+            ".mjs",
+            ".yml",
+            ".css",
+            ".xml",
+        }:
+            continue
+        text = path.read_text(encoding="utf-8")
+        assert forbidden not in text, (
+            f"{path.relative_to(ROOT)} must not stamp the furniture-shop domain {forbidden}"
+        )
+    record_source = (ROOT / "record" / "index.html").read_text(encoding="utf-8")
+    assert "https://a11oy.net/record/" in record_source
+    assert "https://a-11-oy.com/verify" in record_source
+    assert "id=\"permalinks\"" in record_source
+    assert "id=\"receipt-ids\"" in record_source
+    assert "id=\"live-store\"" in record_source
+    assert "no receipt store" in record_source.lower() or "not a receipt database" in record_source.lower()
+    assert "SZLHOLDINGS/szl-evidence" in record_source
+    assert "/api/lake/v1/receipts" in record_source
+    assert "not a product host" in record_source.lower()
+    assert "empty is UNAVAILABLE" in record_source.lower() or "empty, labelled unavailable" in record_source.lower()
+    assert "Two hosts. Two jobs." in record_source
 
     assert len(surface.mains) == 1, "the root document needs one main landmark"
     main = surface.mains[0]

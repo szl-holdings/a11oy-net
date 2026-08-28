@@ -1,20 +1,26 @@
-# A11oy Proof Registry
+# a11oy Proof Registry
 
-> RECORD on a11oy.net. Hub atlas and ROADMAP live here, not on a-11-oy.com.
+> RECORD on a11oy.net. Hub atlas and ROADMAP live here, not on a-11-oy.com. Subtitle only: Alloy by SZL Holdings.
 
 Authoritative public paths:
 - Evidence homepage (RECORD, Hub atlas, ROADMAP): https://a11oy.net/
 - Investor and developer diligence room: https://a11oy.net/diligence/
+- Canonical receipt RECORD index (pointers only; no receipt store here): https://a11oy.net/record/
+- RECORD contract: https://a11oy.net/record.json
+- Hub atlas contract: https://a11oy.net/atlas.json
+- Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
-- Static reachability only: https://a11oy.net/readyz/
+- Static probe document (not runtime health): https://a11oy.net/health.json
+- Static HTML reachability only (not JSON health; not a health URL): https://a11oy.net/readyz/
+- /healthz is not published (GitHub Pages 404 HTML). It is not a health probe.
 - Source: https://github.com/szl-holdings/a11oy-net
 - Product source: https://github.com/szl-holdings/a11oy
 - Public artifact registry: https://huggingface.co/SZLHOLDINGS
+- Interactive receipt verifier (product origin, not cloned here): https://a-11-oy.com/verify
 - Security reporting: https://a11oy.net/.well-known/security.txt
-- Interactive receipt verifier (product domain, not cloned here): https://a-11-oy.com/verify
 
 Truth boundary:
 - This static site's availability does not establish A11oy product-runtime readiness.
@@ -24,3 +30,7 @@ Truth boundary:
 - Product runtime and receipt-verifier state must be observed at their own live sources.
 - The /chat/ and /code/ pages are static Diligence handoffs, not product-runtime execution surfaces.
 - There is no /investor route. There is no local /verify clone.
+- RECORD on this origin is an index of pointers, not a receipt database. This repository has no receipt store. Live receipts stay on the product Space (Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts on a-11-oy.com). Interactive /verify is not cloned here.
+- CNAME is a11oy.net. Live DNS is GitHub Pages. Product code may 301 a11oy.net to a-11-oy.com only if that Host is routed into the product app. This origin is not a product host.
+- Canonical, og:url, and sameAs for these pages are https://a11oy.net/... never a11oy.com, never a Hugging Face Space as page canonical.
+- _headers is policy intent. GitHub Pages does not apply it. live_edge_security_headers_deployment_proven=false.

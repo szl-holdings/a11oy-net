@@ -1,0 +1,19 @@
+{
+  "surface": "a11oy.net",
+  "path": "/health.json",
+  "artifact_kind": "static",
+  "probe_contract": "STATIC_DOCUMENT",
+  "meaning": "This file is a committed static JSON document on GitHub Pages. Receiving it proves only that this exact path was served. It is not a runtime health check, not product readiness, not DSSE-LIVE, and not an uptime claim. GitHub Pages has no process to ping.",
+  "dsse_live": "NOT_CLAIMED",
+  "uptime": "NOT_MEASURED",
+  "product_runtime_readiness": "NOT_MEASURED",
+  "readyz": "NOT_A_HEALTH_URL",
+  "readyz_note": "/readyz and /readyz/ are HTML directory routes. GitHub Pages may 301 /readyz to /readyz/. The 301 lands on HTML, not JSON. Do not treat them as a health probe.",
+  "healthz": "NOT_PUBLISHED",
+  "healthz_note": "/healthz is not a file on this origin. GitHub Pages serves 404 HTML for missing paths. That 404 is not a health probe. Do not register /healthz as a health URL.",
+  "json_probe_document": "https://a11oy.net/health.json",
+  "record": "https://a11oy.net/record/",
+  "interactive_verifier": "https://a-11-oy.com/verify",
+  "runtime_source": "https://a-11-oy.com/api/a11oy/v1/honest",
+  "observed_at_utc": null
+}

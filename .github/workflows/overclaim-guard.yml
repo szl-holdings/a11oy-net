@@ -23,4 +23,4 @@ jobs:
   overclaim:
     uses: szl-holdings/.github/.github/workflows/reusable-overclaim-guard.yml@main
     with:
-      files: "README.md index.html"
+      files: "README.md index.html diligence/index.html record/index.html notes/index.html"

@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "A11oy Proof Registry",
-  "short_name": "A11oy.net",
-  "description": "The separately hosted first-party evidence registry for A11oy.",
+  "name": "a11oy Proof Registry",
+  "short_name": "a11oy.net",
+  "description": "The separately hosted first-party public proof registry for a11oy.",
   "start_url": "/",
   "scope": "/",
   "display": "minimal-ui",

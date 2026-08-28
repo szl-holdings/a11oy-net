@@ -1,40 +1,62 @@
-# A11oy Proof Registry
+# a11oy Proof Registry
 
 <p align="center">
-  <img src="assets/a11oy-net-social.png" alt="A11oy.net — separately hosted first-party proof registry" width="960" />
+  <img src="assets/a11oy-net-social.png" alt="a11oy.net — separately hosted first-party proof registry" width="960" />
 </p>
 
-[`a11oy.net`](https://a11oy.net) is the separately hosted first-party **RECORD**
-for [A11oy](https://a-11-oy.com). Domain lock: this origin is the proof registry.
-Hub atlas and ROADMAP live here, not on `.com`. Interactive `/verify` stays on
+[`a11oy.net`](https://a11oy.net) is the canonical public proof/registry for
+[a11oy](https://a-11-oy.com) (subtitle only: Alloy by SZL Holdings). Domain lock:
+this origin is the RECORD. Hub atlas and ROADMAP live here, not on `.com`.
+Interactive `/verify` stays on
 [a-11-oy.com/verify](https://a-11-oy.com/verify) and is not cloned. There is no `/investor` route;
 investor review is [`/diligence/#investors`](https://a11oy.net/diligence/#investors).
+This origin remains independently reachable if a-11-oy.com or the Hugging Face
+Space is down.
 
 Header on both origins: **Product | Proof**. Product ↗ → `https://a-11-oy.com`.
 Proof is the current surface here.
 
 The product experience and the evidence experience are intentionally separate.
+Header lockup: **Product | Proof**, linking
+[https://a-11-oy.com](https://a-11-oy.com) and
+[https://a11oy.net](https://a11oy.net) with those exact words.
+
 A product link proves location and remains `NOT PROBED · UNKNOWN` here. A
 schema-valid public Hub runtime stage is only a bounded, point-in-time
-`REPORTED` transport observation. Neither proves capability, safety, quality,
-uptime, or deployed equivalence.
+`REPORTED` transport observation. Reachability of a URL is `REACHABLE` only,
+never quality. Neither proves capability, safety, uptime, or deployed
+equivalence.
 
 ## Start here
 
 - **Review evidence:** open [a11oy.net](https://a11oy.net).
 - **Use the product:** open [a-11-oy.com](https://a-11-oy.com).
-- **Verify a receipt:** use the [public verifier](https://a-11-oy.com/verify).
+- **Read RECORD:** open [a11oy.net/record/](https://a11oy.net/record/).
+- **Verify a receipt interactively:** use
+  [https://a-11-oy.com/verify](https://a-11-oy.com/verify). Do not clone that tool here.
 - **Inspect source:** begin with the
-  [A11oy repository](https://github.com/szl-holdings/a11oy).
-- **Browse public artifacts:** inspect
+  [a11oy repository](https://github.com/szl-holdings/a11oy).
+- **Browse public artifacts:** inspect the Hub atlas on this origin, or
   [SZLHOLDINGS on Hugging Face](https://huggingface.co/SZLHOLDINGS).
 
 ## Audience routes
 
 - **Evidence registry:** [`/`](https://a11oy.net/) is the RECORD: Hub atlas,
-  ROADMAP cards, and browser-observed metadata live here.
-- **Investor diligence:** [`/diligence/#investors`](https://a11oy.net/diligence/#investors)
-  sequences the public thesis, controls, source, boundaries, and estate links.
+  ROADMAP cards, 90-second diligence table, and browser-observed metadata live here.
+- **Investor diligence:** [`/diligence/#summary`](https://a11oy.net/diligence/#summary)
+  is the 90-second MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
+  and boundaries. There is no `/investor` route.
+- **RECORD:** [`/record/`](https://a11oy.net/record/) is the canonical receipt
+  **index** on this origin — pointers, not a receipt database. This repository
+  has no receipt store. Live receipts stay on the product Space (Khipu +
+  `/data SZLHOLDINGS/szl-evidence` + `/api/lake/v1/receipts`).
+  [`/record.json`](https://a11oy.net/record.json) is the machine contract.
+  Interactive verify stays at
+  [https://a-11-oy.com/verify](https://a-11-oy.com/verify).
+- **Hub atlas:** [`/#atlas`](https://a11oy.net/#atlas) inventories public HF and
+  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is fetchable.
+- **Dated notes:** [`/notes/`](https://a11oy.net/notes/) and
+  [`CHANGELOG.md`](https://a11oy.net/CHANGELOG.md).
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
   starts from executable validation and machine-readable contracts.
 - **Product handoffs:** [`/chat/`](https://a11oy.net/chat/) and
@@ -44,15 +66,26 @@ uptime, or deployed equivalence.
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
-- **Static route scope:** [`/readyz/`](https://a11oy.net/readyz/) proves only
-  that its static route responded, and
+- **Static route scope:** [`/health.json`](https://a11oy.net/health.json) is a
+  committed static JSON document. Receiving it proves only that this exact path
+  was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
+  [`/readyz/`](https://a11oy.net/readyz/) is an HTML directory route; GitHub
+  Pages may 301 `/readyz` to `/readyz/`. That 301 lands on HTML, not JSON. Do
+  not treat `/readyz` as a health URL. `/healthz` is not published: GitHub
+  Pages returns 404 HTML for that path. That 404 is not a health probe. Do not
+  register `/healthz` as a health URL.
   [`/api/build-info/`](https://a11oy.net/api/build-info/) does not publish or
   claim an immutable source revision or product-runtime readiness.
 
 ## Architecture
 
 The registry is a dependency-light static site served by GitHub Pages behind
-Cloudflare DNS.
+Cloudflare DNS. The committed `CNAME` file is `a11oy.net`. Live DNS for
+a11oy.net currently resolves to GitHub Pages, so this proof registry is
+independently reachable. Product source (`a11oy_canonical_domain.py`) may
+SUNSET-301 `a11oy.net` → `a-11-oy.com` only when that Host header is routed
+into the product app. Do not assume this origin is a product host, and do
+not add product routes such as `/api/lake` here.
 
 ```text
 visitor browser
@@ -119,10 +152,15 @@ The checks validate:
 
 | Path | Responsibility |
 | --- | --- |
-| `index.html` | Accessible product narrative, live reads, and registry UI. |
-| `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths and print-safe presentation. |
+| `index.html` | Accessible product narrative, 90-second table, RECORD, live reads, and registry UI. |
+| `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths, 90-second table, and print-safe presentation. |
+| `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
+| `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
+| `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
+| `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
-| `readyz/index.html` | Static front-door reachability only; never product readiness. |
+| `health.json` | Only health document: committed static JSON; not runtime, not DSSE-LIVE, not uptime. |
+| `readyz/index.html` | HTML directory reachability only; never a health URL. `/healthz` is not published. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
 | `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |
 | `404.html`, `assets/a11oy-mark.svg` | Branded recovery route and shared SVG identity mark. |

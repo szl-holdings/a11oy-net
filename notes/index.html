@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#080c14" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>Notes · a11oy proof registry</title>
+  <meta name="description" content="Dated notes for the a11oy.net proof registry. Status pointers, not a product-release feed." />
+  <meta property="og:title" content="Notes · a11oy proof registry" />
+  <meta property="og:description" content="Dated notes for receipts, atlas, and diligence surfaces on a11oy.net." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://a11oy.net/notes/" />
+  <meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1731" />
+  <meta property="og:image:height" content="909" />
+  <meta property="og:image:alt" content="a11oy.net public proof registry by SZL Holdings" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
+  <meta name="twitter:image:alt" content="a11oy.net public proof registry by SZL Holdings" />
+  <link rel="canonical" href="https://a11oy.net/notes/" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" href="/assets/a11oy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/kanchay.css" />
+  <link rel="stylesheet" href="/assets/diligence.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to notes</a>
+  <nav class="topbar" aria-label="Primary">
+    <div class="wrap nav nav-in">
+      <a class="wordmark" href="/" aria-label="A11oy.net home"><span class="glyph" aria-hidden="true">Λ</span><span class="scope"><span class="scope-name">A11OY</span><span class="scope-sep">/</span><span class="scope-role">PROOF REGISTRY</span></span></a>
+      <div class="nav-chips" aria-label="Surface posture">
+        <span class="chip glass record"><span class="dot"></span>RECORD</span>
+        <span class="chip gray honesty"><span class="dot"></span>HONEST</span>
+      </div>
+      <div class="nav-links">
+        <a href="/diligence/">Diligence</a>
+        <a href="/record/">RECORD</a>
+        <a href="/CHANGELOG.md">CHANGELOG.md</a>
+        <span class="origin-switch" aria-label="Origins"><a class="origin-product" href="https://a-11-oy.com" target="_blank" rel="noopener">Product ↗</a><span class="origin-sep" aria-hidden="true">|</span><a class="origin-proof" href="/" aria-current="true">Proof</a></span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Dated notes · status pointer</p>
+        <h1>What changed on this origin.</h1>
+        <p class="lede">These notes track the public proof registry. They are not a product changelog, not a runtime health feed, and not an eval leaderboard.</p>
+        <div class="actions">
+          <a class="button primary" href="/CHANGELOG.md">Read CHANGELOG.md</a>
+          <a class="button" href="/record/">Open RECORD</a>
+          <a class="button" href="/diligence/">Diligence room</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="2026-08-28">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">2026-08-28</span><h2>Proof-registry job split.</h2><p>a11oy.net remains the canonical public proof/registry if a-11-oy.com or the HF Space is down.</p></div>
+        <article class="panel">
+          <ul>
+            <li>Header <strong>Product | Proof</strong> links <code>https://a-11-oy.com</code> and <code>https://a11oy.net</code> with those exact words.</li>
+            <li>Canonical RECORD is static on this origin. It is an index of pointers, not a receipt database. This repository has no receipt store. Live receipts stay on the product Space (Khipu + <code>/data SZLHOLDINGS/szl-evidence</code> + <code>/api/lake/v1/receipts</code>). Interactive /verify stays on the product origin and is not cloned. Empty receipt IDs are UNAVAILABLE, never invented.</li>
+            <li>CNAME is <code>a11oy.net</code>. Live DNS is GitHub Pages. This origin is not a product host. <code>_headers</code> is policy intent; GitHub Pages does not apply it.</li>
+            <li><code>/health.json</code> is the only health document: a committed static JSON file (not runtime, not DSSE-LIVE, not uptime). <code>/readyz</code> is an HTML directory (Pages may 301 <code>/readyz</code> → <code>/readyz/</code>). <code>/healthz</code> is not published (404 HTML). Neither is a probe.</li>
+            <li>Hub atlas and ROADMAP cuts remain first-class here, including a committed GitHub inventory.</li>
+            <li>90-second diligence table states MEASURED, REPORTED, ROADMAP, and UNAVAILABLE without inventing evals.</li>
+            <li>Hub snapshot: 57 public artifacts observed 2026-08-28 (17 models, 27 datasets, 12 collections, 1 bucket). Listing metadata only.</li>
+            <li>KERNEL originals and Fall 2026 cuts stay ROADMAP. Λ remains Conjecture 1.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Machine readers</span><h2>Fetch the contracts.</h2></div>
+        <div class="actions"><a class="button primary" href="/evidence.json">evidence.json</a><a class="button" href="/record.json">record.json</a><a class="button" href="/atlas.json">atlas.json</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer"><p>Published by SZL Holdings. Alloy by SZL Holdings is the subtitle only. Never a11oy.com.</p><div class="footer-links"><a href="/">Proof</a><a href="/record/">RECORD</a><a href="/.well-known/security.txt">Security</a></div></div>
+  </footer>
+</body>
+</html>

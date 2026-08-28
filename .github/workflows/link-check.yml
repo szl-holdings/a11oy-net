@@ -189,8 +189,14 @@ jobs:
             code/index.html \
             diligence/index.html \
             evidence.json \
+            health.json \
             index.html \
             llms.txt \
+            notes/index.html \
+            record.json \
+            record/index.html \
+            atlas.json \
+            CHANGELOG.md \
             manifest.webmanifest \
             readyz/index.html \
             robots.txt \

@@ -6,27 +6,27 @@
 <meta name="theme-color" content="#080c14" />
 <meta name="color-scheme" content="dark" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-y2414fTv+63hSOQOJ1AhTsItRH3286QgnKPRwPmg7jA=' 'sha256-bkgM2tNIY0/bkjCXCpNdT+z0eU6+NdVjP+Zc3SphGFI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://huggingface.co; font-src 'self' data:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-m22o5/gOJshTUuh5Y8Iw7j3uiG65V8LSunZlKL0mqds=' 'sha256-bkgM2tNIY0/bkjCXCpNdT+z0eU6+NdVjP+Zc3SphGFI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://huggingface.co; font-src 'self' data:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
 <meta name="robots" content="index,follow,max-image-preview:large" />
-<title>A11oy Proof Registry | SZL Holdings</title>
-<meta name="description" content="RECORD on a11oy.net: Hub atlas and ROADMAP live here. Inspect runtime truth, receipts, and public-estate metadata without cloning the product verifier." />
-<meta property="og:title" content="A11oy Proof Registry" />
+<title>a11oy Proof Registry | Alloy by SZL Holdings</title>
+<meta name="description" content="RECORD on a11oy.net: Hub atlas and ROADMAP live here. Inspect receipts, diligence, and public-estate metadata without cloning the product verifier." />
+<meta property="og:title" content="a11oy Proof Registry" />
 <meta property="og:description" content="RECORD on a11oy.net. Hub atlas and ROADMAP live here, not on the product domain." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://a11oy.net/" />
-<meta property="og:site_name" content="A11oy Proof Registry" />
+<meta property="og:site_name" content="a11oy Proof Registry" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1731" />
 <meta property="og:image:height" content="909" />
-<meta property="og:image:alt" content="A11oy.net — public proof registry by SZL Holdings" />
+<meta property="og:image:alt" content="a11oy.net — public proof registry by SZL Holdings" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@szlholdings" />
-<meta name="twitter:title" content="A11oy Proof Registry" />
+<meta name="twitter:title" content="a11oy Proof Registry" />
 <meta name="twitter:description" content="RECORD on a11oy.net. Hub atlas and ROADMAP live here." />
 <meta name="twitter:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
-<meta name="twitter:image:alt" content="A11oy.net public proof registry by SZL Holdings" />
+<meta name="twitter:image:alt" content="a11oy.net public proof registry by SZL Holdings" />
 <link rel="canonical" href="https://a11oy.net/" />
 <link rel="manifest" href="site.webmanifest" />
 <link rel="icon" type="image/svg+xml" href="/assets/a11oy-mark.svg" />
@@ -37,10 +37,12 @@
   "@type": "WebSite",
   "@id": "https://a11oy.net/#website",
   "url": "https://a11oy.net/",
-  "name": "A11oy Proof Registry",
-  "description": "The separately hosted first-party evidence registry for A11oy.",
+  "name": "a11oy Proof Registry",
+  "alternateName": "Alloy by SZL Holdings",
+  "description": "The separately hosted first-party public proof registry for a11oy.",
   "inLanguage": "en",
   "isAccessibleForFree": true,
+  "sameAs": ["https://a11oy.net/diligence/", "https://a11oy.net/record/", "https://a11oy.net/notes/"],
   "publisher": {
     "@type": "Organization",
     "@id": "https://a11oy.net/#publisher",
@@ -51,7 +53,7 @@
   },
   "isRelatedTo": {
     "@type": "SoftwareApplication",
-    "name": "A11oy",
+    "name": "a11oy",
     "url": "https://a-11-oy.com/",
     "applicationCategory": "DeveloperApplication"
   }
@@ -158,6 +160,19 @@ h1 .g{background:linear-gradient(92deg,var(--ink) 30%,var(--proof) 78%);-webkit-
 .strip .cell:first-child{border-left:none}
 .strip .cell b{display:block;color:var(--ink);font-size:15px;margin-bottom:3px;font-weight:600}
 .strip .cell .lab{color:var(--proof);font-size:12px;letter-spacing:.12em}
+
+/* ---- 90-second summary ---- */
+.summary-scroll{width:100%;overflow-x:auto;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+.summary-table{width:100%;min-width:680px;border-collapse:collapse}
+.summary-table th,.summary-table td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.summary-table th{color:var(--ghost);font:12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.summary-table td{font-size:14px;color:var(--sub)}
+.summary-table td:first-child{color:var(--ink);font-weight:600}
+.summary-table .cls{font:12px var(--mono);letter-spacing:.08em;white-space:nowrap}
+.cls-measured{color:var(--proof)}
+.cls-reported{color:var(--lattice)}
+.cls-roadmap{color:var(--gold)}
+.cls-unavailable{color:var(--down)}
 
 /* ---- proof registry ---- */
 .proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
@@ -372,7 +387,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   </div>
   <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
   <div class="nav-links" id="primaryLinks" data-open="false">
-    <a href="/diligence/">Diligence</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
+    <a href="/diligence/">Diligence</a><a href="/record/">RECORD</a><a href="/notes/">Notes</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
     <span class="origin-switch" aria-label="Origins"><a class="origin-product" href="https://a-11-oy.com" target="_blank" rel="noopener">Product ↗</a><span class="origin-sep" aria-hidden="true">|</span><a class="origin-proof" href="/" aria-current="true">Proof</a></span>
   </div>
 </div></nav>
@@ -381,8 +396,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 <header class="hero"><div class="wrap hero-grid">
   <div class="hero-copy">
     <div class="kicker">Public RECORD · Hub atlas and ROADMAP live here</div>
-    <h1>The evidence behind <span class="g">A11oy</span>.</h1>
-    <p class="lede">Inspect runtime truth, receipt verification, assurance evidence, benchmarks, source, and public-estate metadata <b>without relying on the product interface</b>. A link proves location; a browser observation may establish only a bounded transport result. Neither proves capability.</p>
+    <h1>The evidence behind <span class="g">a11oy</span>.</h1>
+    <p class="lede">RECORD, Hub atlas, diligence, audit trail, and ROADMAP cuts live on this origin, not on a-11-oy.com. Inspect them <b>without relying on the product interface</b>. A listed URL is location only. Reachability, if observed, is REACHABLE only — never quality. This origin is not a receipt database.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/diligence/">Open diligence room →</a>
       <a class="btn btn-ghost" href="#proof">Browse evidence</a>
@@ -396,12 +411,12 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <aside class="dossier" aria-label="A11oy public evidence dossier">
     <div class="dossier-head"><span>EVIDENCE DOSSIER</span><span class="chip glass record"><span class="dot"></span>PUBLIC</span></div>
     <div class="dossier-list">
-      <a class="dossier-row" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dossier-index">01</span><span><b>Runtime honesty manifest</b><small>/api/a11oy/v1/honest</small></span><span class="dossier-action">READ ↗</span></a>
-      <a class="dossier-row" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="dossier-index">02</span><span><b>Receipt verifier</b><small>public verification entry point</small></span><span class="dossier-action">VERIFY ↗</span></a>
+      <a class="dossier-row" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="dossier-index">01</span><span><b>Runtime honesty manifest</b><small>/api/a11oy/v1/honest · product origin</small></span><span class="dossier-action">READ ↗</span></a>
+      <a class="dossier-row" href="/record/"><span class="dossier-index">02</span><span><b>RECORD</b><small>canonical receipt record on this origin</small></span><span class="dossier-action">OPEN ↓</span></a>
       <a class="dossier-row" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><span class="dossier-index">03</span><span><b>Implementation source</b><small>review history, checks, and architecture</small></span><span class="dossier-action">SOURCE ↗</span></a>
-      <a class="dossier-row" href="#atlas"><span class="dossier-index">04</span><span><b>Public artifact registry</b><small>browser-read Hugging Face metadata</small></span><span class="dossier-action">INSPECT ↓</span></a>
+      <a class="dossier-row" href="#atlas"><span class="dossier-index">04</span><span><b>Hub atlas</b><small>public HF and GitHub surfaces</small></span><span class="dossier-action">INSPECT ↓</span></a>
     </div>
-    <p class="dossier-note">No account, token, model weight, dataset payload, or private resource is requested by this page.</p>
+    <p class="dossier-note">No account, token, model weight, dataset payload, or private resource is requested by this page. First paint does not fetch a-11-oy.com.</p>
     <p class="signal-rail">Product experience and evidence experience remain separate.</p>
   </aside>
 </div></header>
@@ -413,6 +428,43 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <div class="cell"><span class="lab">DOCTRINE</span><b>Overclaim guards</b>CI gates ban invented stats and banned tokens</div>
 </div></div>
 
+<section id="summary"><div class="wrap">
+  <div class="sec-head"><div class="kicker">Ninety seconds</div><h2>What is MEASURED, ROADMAP, or UNAVAILABLE.</h2>
+  <p>Scan this table first. A figure without method, date, and N is omitted. Product-runtime state is not implied by this origin being up.</p></div>
+  <div class="summary-scroll">
+    <table class="summary-table">
+      <thead>
+        <tr><th>Claim</th><th>Class</th><th>Method / date / N</th><th>Bound</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>This origin is a static proof registry</td><td><span class="cls cls-measured">MEASURED</span></td><td>This document · GitHub Pages · 2026-08-28</td><td>Reachability of a11oy.net only. Not product readiness.</td></tr>
+        <tr><td>Origin health document</td><td><span class="cls cls-measured">MEASURED</span></td><td>/health.json · committed static file · 2026-08-28</td><td>Not DSSE-LIVE. Not uptime. /readyz is HTML. /healthz is not published (404 HTML).</td></tr>
+        <tr><td>Receipt store on this origin</td><td><span class="cls cls-measured">MEASURED</span></td><td>This repository · 2026-08-28</td><td>None. RECORD is pointers. Live receipts stay on the product Space.</td></tr>
+        <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">REPORTED</span></td><td>Committed Hub metadata · 2026-08-28 · N=57</td><td>17 models, 27 datasets, 12 collections, 1 bucket. Listing metadata, not quality.</td></tr>
+        <tr><td>Eight locked-proven formulas</td><td><span class="cls cls-reported">REPORTED</span></td><td>Lean kernel c7c0ba17 in public source</td><td>Not re-proved by this page. Λ is not among the eight.</td></tr>
+        <tr><td>Λ uniqueness</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>Conjecture 1 · advisory</td><td>Never a theorem. Never green.</td></tr>
+        <tr><td>Fall 2026 cuts and KERNEL originals</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>Named Hub cards and GitHub source on this page</td><td>Not OPERATIONAL. No weights or throughput claimed.</td></tr>
+        <tr><td>Interactive receipt verification</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Tool stays at a-11-oy.com/verify. Not run here.</td></tr>
+        <tr><td>Product runtime honesty / health</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Observe a-11-oy.com. This origin does not probe it.</td></tr>
+        <tr><td>Eval leaderboard or quality scores</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>No method+date+N figure is published on this origin.</td></tr>
+        <tr><td>SLSA L3</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>—</td><td>L1 honest · L2 attested · L3 not claimed here.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<section id="record"><div class="wrap">
+  <!-- Canonical RECORD permalink: https://a11oy.net/record/ · tool: https://a-11-oy.com/verify · empty receipt IDs = UNAVAILABLE, never invented -->
+  <div class="sec-head"><div class="kicker">RECORD</div><h2>Canonical receipt record, hosted here.</h2>
+  <p>The signed RECORD index lives at <a href="https://a11oy.net/record/">https://a11oy.net/record/</a>. The tool that checks a record is <a href="https://a-11-oy.com/verify" target="_blank" rel="noopener">https://a-11-oy.com/verify</a> — linked, not cloned. Different hosts. Receipt IDs are not enumerated here; empty is UNAVAILABLE, never invented.</p></div>
+  <div class="proof-grid">
+    <a class="proof-link" data-proof="record" href="/record/"><span class="kind">This origin</span><b>RECORD</b><p>Static HTML index of public receipt stores, keys, and bounds.</p><span class="path">a11oy.net/record/</span></a>
+    <a class="proof-link" href="/record.json"><span class="kind">Machine</span><b>record.json</b><p>Fetchable contract. Live chain state is UNAVAILABLE on this origin.</p><span class="path">a11oy.net/record.json</span></a>
+    <a class="proof-link" data-proof="receipt-verifier" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="kind">Verifier</span><b>Interactive /verify</b><p>Open the public verification entry point before relying on a receipt or subject digest.</p><span class="path">a-11-oy.com/verify</span></a>
+    <a class="proof-link" href="https://github.com/szl-holdings/.github/blob/main/cosign.pub" target="_blank" rel="noopener"><span class="kind">Public key</span><b>cosign.pub</b><p>Org-published key listing. This page does not re-verify signatures.</p><span class="path">github.com/szl-holdings/.github</span></a>
+  </div>
+</div></section>
+
 <section id="audiences"><div class="wrap">
   <div class="sec-head"><div class="kicker">Decision paths</div><h2>One public record, three ways in.</h2><p>Start with the questions you need answered; each path preserves the same evidence labels and operating boundaries.</p></div>
   <div class="grid3">
@@ -423,11 +475,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 </div></section>
 
 <section id="proof"><div class="wrap">
-  <div class="sec-head"><div class="kicker">Evidence index</div><h2>Six public ways to inspect the estate.</h2>
+  <div class="sec-head"><div class="kicker">Evidence index</div><h2>Public ways to inspect the estate.</h2>
   <p>These links expose public evidence directly. Dynamic state remains labeled at the source; an HTTP response alone is never promoted to proof of quality or readiness.</p></div>
   <div class="proof-grid">
     <a class="proof-link" data-proof="runtime-truth" href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener"><span class="kind">Live read</span><b>Runtime truth</b><p>Read the deployed revision and honesty posture from the product runtime.</p><span class="path">/api/a11oy/v1/honest</span></a>
-    <a class="proof-link" data-proof="receipt-verifier" href="https://a-11-oy.com/verify" target="_blank" rel="noopener"><span class="kind">Verifier</span><b>Receipt verification</b><p>Open the public verifier before relying on a receipt or subject digest.</p><span class="path">a-11-oy.com/verify</span></a>
     <a class="proof-link" data-proof="assurance" href="https://a-11-oy.com/assurance" target="_blank" rel="noopener"><span class="kind">Assurance</span><b>Controls and evidence</b><p>Inspect the assurance surface and its linked evidence rather than a marketing summary.</p><span class="path">a-11-oy.com/assurance</span></a>
     <a class="proof-link" data-proof="benchmarks" href="https://github.com/szl-holdings/a11oy/tree/main/benchmarks/governed-agent-bench" target="_blank" rel="noopener"><span class="kind">Public source</span><b>Governed-agent benchmark</b><p>Review the benchmark schema, cases, and implementation in versioned source.</p><span class="path">benchmarks/governed-agent-bench</span></a>
     <a class="proof-link" data-proof="source" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><span class="kind">Public source</span><b>Source and CI</b><p>Inspect implementation history, checks, releases, and open review state.</p><span class="path">github.com/szl-holdings/a11oy</span></a>
@@ -437,7 +488,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 
 <section id="orchestrator"><div class="wrap">
   <div class="sec-head"><h2>An architecture designed to make claims accountable.</h2>
-  <p>Alloy is designed to conduct agents across providers through callsigns, evidence labels, and audit logs. Operational behavior remains subject to the linked runtime evidence.</p></div>
+  <p>a11oy is designed to conduct agents across providers through callsigns, evidence labels, and audit logs. Operational behavior remains subject to the linked runtime evidence.</p></div>
   <div class="grid3">
             <div class="card"><span class="tag">GOVERN</span><div class="ic conjecture" aria-hidden="true">Λ</div><h3>Doctrine-gated inference</h3><p>The architecture applies doctrine gates to outputs: evidence labels are explicit, overclaim patterns are checked, and exceptions are designed to fail closed.</p></div>
     <div class="card lat"><span class="tag">SIGN</span><div class="ic" aria-hidden="true">✓</div><h3>Receipts, not vibes</h3><p>Qualifying work products can carry DSSE-wrapped receipts with subject digests that can be checked offline.</p></div>
@@ -454,7 +505,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/anatomy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ANATOMY V5</span><span class="stack-truth">REPORTED</span></div><h3>Living anatomy</h3><p>The body map for organs, contracts, trust boundaries, and the controller outside model weights.</p><span class="stack-link">Open anatomy →</span></a>
     <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/holographic" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC</span><span class="stack-truth">REPORTED</span></div><h3>Holographic estate</h3><p>A spatial front door into the wider public estate, built as a distinct interface over shared evidence.</p><span class="stack-link">Open holographic →</span></a>
     <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/szl-kernels" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">KERNELS · PROOF</span><span class="stack-truth">REPORTED</span></div><h3>Governed kernels</h3><p>Reusable verifier and policy components with explicit source, license, and provenance boundaries.</p><span class="stack-link">Open kernel suite →</span></a>
-    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CONTROL PLANE</span><span class="stack-truth">REPORTED</span></div><h3>A11oy command surface</h3><p>The public Hub listing for the control-plane interface and its stated formulas, inventory, governance, and route scope.</p><span class="stack-link">Open control plane →</span></a>
+    <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/a11oy" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">CONTROL PLANE</span><span class="stack-truth">REPORTED</span></div><h3>a11oy command surface</h3><p>The public Hub listing for the control-plane interface and its stated formulas, inventory, governance, and route scope.</p><span class="stack-link">Open control plane →</span></a>
   </div>
 </div></section>
 
@@ -540,10 +591,24 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Static snapshot observed 2026-08-28; live browser refresh pending.</p></div>
     <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">57 public artifacts in the dated static snapshot.</p>
   </div>
+  <div class="sec-head" style="margin-top:44px"><div class="kicker">GitHub surfaces</div><h2>Public source inventory, committed here.</h2><p>These URLs are a static inventory on this origin. They are not probed. A listed URL is location only — never quality. Killinchu-named resources stay outside this inventory.</p></div>
+  <div class="estate" id="github-atlas">
+    <a class="epill" href="https://github.com/szl-holdings/a11oy" target="_blank" rel="noopener"><b>a11oy</b><span>product source · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/a11oy-net" target="_blank" rel="noopener"><b>a11oy-net</b><span>this proof registry · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/szl-receipt" target="_blank" rel="noopener"><b>szl-receipt</b><span>shared signing library · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/szl-lake" target="_blank" rel="noopener"><b>szl-lake</b><span>append-only receipt store · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/governed-receipt-spec" target="_blank" rel="noopener"><b>governed-receipt-spec</b><span>format + offline verifier spec · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/lutar-lean" target="_blank" rel="noopener"><b>lutar-lean</b><span>Lean 4 · Λ = Conjecture 1 · REPORTED</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/szl-receipt-attn" target="_blank" rel="noopener"><b>szl-receipt-attn</b><span>KERNEL original · ROADMAP</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/szl-maskmod" target="_blank" rel="noopener"><b>szl-maskmod</b><span>KERNEL original · ROADMAP</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/szl-block-kv" target="_blank" rel="noopener"><b>szl-block-kv</b><span>KERNEL original · ROADMAP</span></a>
+    <a class="epill" href="https://github.com/szl-holdings/.github" target="_blank" rel="noopener"><b>.github</b><span>doctrine + cosign.pub · REPORTED</span></a>
+  </div>
+  <p class="probe-note">Machine copy: <a href="/atlas.json">/atlas.json</a>. Hub live chips may go UNAVAILABLE; this GitHub inventory remains in the document.</p>
 </div></section>
 
 <section id="estate" style="padding-top:0"><div class="wrap">
-  <div class="sec-head"><h2>The governed estate</h2><p>Alloy is the conductor; these are the sections of the orchestra.</p></div>
+  <div class="sec-head"><h2>The governed estate</h2><p>a11oy is the conductor; these are the sections of the orchestra.</p></div>
   <div class="estate">
     <a class="epill" href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener"><b>Hugging Face org</b><span>models · kernels · datasets · live spaces</span></a>
     <a class="epill" href="https://github.com/szl-holdings" target="_blank" rel="noopener"><b>GitHub — szl-holdings</b><span>source, CI doctrine gates, provenance</span></a>
@@ -556,16 +621,21 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 <footer><div class="wrap">
   <div class="wordmark" style="margin-bottom:22px"><span class="glyph" aria-hidden="true">Λ</span><span class="scope"><span class="scope-name">A11OY</span><span class="scope-sep">/</span><span class="scope-role">PROOF REGISTRY</span></span></div>
   <p class="foot-canon">
-    <b>Canon.</b> Labels honest by default: MEASURED / REPORTED / MODELED / HEURISTIC / UNKNOWN / UNAVAILABLE.
+    <b>Canon.</b> Public name: <b>a11oy</b>. Subtitle only: Alloy by SZL Holdings.
+    Labels honest by default: MEASURED / REPORTED / MODELED / HEURISTIC / UNKNOWN / UNAVAILABLE.
     locked-proven = exactly 8 formulas {F1, F4, F7, F11, F12, F18, F19, F22}. Λ = Conjecture 1 — advisory, never a theorem.
     Trust ceiling 0.97 — never 100%. SLSA: L1 honest · L2 attested · L3 roadmap.
-    Product domain: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>. Separately hosted proof domain: <b>a11oy.net</b>.
+    Product: <a href="https://a-11-oy.com" style="color:var(--proof)">a-11-oy.com</a>. Proof: <b>a11oy.net</b>. Never a11oy.com.
   </p>
   <div class="foot-links">
     <a href="/diligence/">Diligence</a>
+    <a href="/record/">RECORD</a>
     <a href="/chat/">Chat gateway</a>
     <a href="/code/">Code gateway</a>
+    <a href="/notes/">Notes</a>
     <a href="/evidence.json">Machine contract</a>
+    <a href="/record.json">RECORD contract</a>
+    <a href="/atlas.json">Atlas contract</a>
     <a href="/.well-known/security.txt">Security</a>
     <a href="https://a-11-oy.com" target="_blank" rel="noopener">Product</a>
     <a href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">Hugging Face</a>
