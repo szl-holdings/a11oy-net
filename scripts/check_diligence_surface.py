@@ -130,6 +130,8 @@ def check() -> None:
     assert 'id="main" tabindex="-1"' in DILIGENCE.read_text(encoding="utf-8")
     diligence_source = DILIGENCE.read_text(encoding="utf-8")
     assert "Alloy by SZL Holdings" in diligence_source
+    assert "Origin health document" in diligence_source
+    assert "healthz is not published" in diligence_source.lower()
     diligence_hrefs = {anchor.get("href") for anchor in diligence.anchors}
     assert {
         "/evidence.json",
@@ -223,6 +225,8 @@ def check() -> None:
         "artifact_kind": "static",
         "readyz": "REACHABILITY_ONLY",
         "readyz_is_health_url": False,
+        "healthz": "NOT_PUBLISHED",
+        "healthz_is_health_url": False,
         "json_probe_document": "https://a11oy.net/health.json",
         "product_runtime_readiness": "NOT_MEASURED",
         "immutable_build_identity": "NOT_CLAIMED",
@@ -234,8 +238,12 @@ def check() -> None:
     assert health["dsse_live"] == "NOT_CLAIMED"
     assert health["uptime"] == "NOT_MEASURED"
     assert health["readyz"] == "NOT_A_HEALTH_URL"
+    assert health["healthz"] == "NOT_PUBLISHED"
+    assert health["json_probe_document"] == "https://a11oy.net/health.json"
     assert health["record"] == "https://a11oy.net/record/"
     assert health["interactive_verifier"] == "https://a-11-oy.com/verify"
+    assert not (ROOT / "healthz").exists()
+    assert not (ROOT / "healthz.html").exists()
 
     evidence = json.loads(EVIDENCE.read_text(encoding="utf-8"))
     assert evidence["contract_version"] == "1.0.0"
@@ -292,6 +300,8 @@ def check() -> None:
     assert "https://a11oy.net/evidence.json" in llms
     assert "https://a11oy.net/record/" in llms
     assert "does not establish A11oy product-runtime readiness" in llms
+    assert "/healthz is not published" in llms
+    assert "https://a11oy.net/health.json" in llms
     record_contract = json.loads(RECORD_JSON.read_text(encoding="utf-8"))
     assert record_contract["surface"]["url"] == "https://a11oy.net/record/"
     assert record_contract["permalinks"] == {

@@ -66,7 +66,10 @@ equivalence.
   committed static JSON document. Receiving it proves only that this exact path
   was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
   [`/readyz/`](https://a11oy.net/readyz/) is an HTML directory route; GitHub
-  Pages may 301 `/readyz` to `/readyz/`. Do not treat `/readyz` as JSON health.
+  Pages may 301 `/readyz` to `/readyz/`. That 301 lands on HTML, not JSON. Do
+  not treat `/readyz` as a health URL. `/healthz` is not published: GitHub
+  Pages returns 404 HTML for that path. That 404 is not a health probe. Do not
+  register `/healthz` as a health URL.
   [`/api/build-info/`](https://a11oy.net/api/build-info/) does not publish or
   claim an immutable source revision or product-runtime readiness.
 
@@ -146,8 +149,8 @@ The checks validate:
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
-| `health.json` | Committed static probe document; not runtime health, not DSSE-LIVE. |
-| `readyz/index.html` | HTML directory reachability only; never JSON health. |
+| `health.json` | Only health document: committed static JSON; not runtime, not DSSE-LIVE, not uptime. |
+| `readyz/index.html` | HTML directory reachability only; never a health URL. `/healthz` is not published. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
 | `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |
 | `404.html`, `assets/a11oy-mark.svg` | Branded recovery route and shared SVG identity mark. |

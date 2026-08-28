@@ -14,7 +14,8 @@ Authoritative public paths:
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
 - Static probe document (not runtime health): https://a11oy.net/health.json
-- Static HTML reachability only (not JSON health): https://a11oy.net/readyz/
+- Static HTML reachability only (not JSON health; not a health URL): https://a11oy.net/readyz/
+- /healthz is not published (GitHub Pages 404 HTML). It is not a health probe.
 - Source: https://github.com/szl-holdings/a11oy-net
 - Product source: https://github.com/szl-holdings/a11oy
 - Public artifact registry: https://huggingface.co/SZLHOLDINGS

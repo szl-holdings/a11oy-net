@@ -1,4 +1,22 @@
 <!doctype html>
+<!--
+  Plain-language note for anyone reading the source:
+
+  This folder exists because some scanners look for /readyz.
+  GitHub Pages treats folders as directories. Asking for /readyz
+  often gets a 301 redirect to /readyz/, which is this HTML page —
+  not a JSON health check. That is expected. It is not a live
+  heartbeat and not proof that the product is up.
+
+  /healthz is not published here at all. If you request it, GitHub
+  Pages returns a 404 HTML error page. That is also not a health
+  probe. Do not register /readyz or /healthz as health URLs.
+
+  The only health document on this origin is /health.json — a
+  static JSON file we committed. It does not measure uptime and
+  does not claim DSSE-LIVE. There is no process to ping on GitHub
+  Pages.
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -32,13 +50,15 @@
 <body>
   <main id="main-content">
     <h1>Static evidence front door reachability</h1>
-    <p class="boundary"><strong>Scope:</strong> receiving this document establishes only that this static HTML directory route responded. It is not JSON health. GitHub Pages may 301 /readyz to /readyz/. Use <a href="/health.json">/health.json</a> for the committed static probe document. It does not establish a11oy product-runtime readiness, capability, uptime, or deployed equivalence.</p>
+    <p class="boundary"><strong>Scope:</strong> receiving this document establishes only that this static HTML directory route responded. It is not JSON health. GitHub Pages may 301 /readyz to /readyz/. /healthz is not published (404 HTML) and is not a health probe. Use <a href="/health.json">/health.json</a> for the committed static probe document. It does not establish a11oy product-runtime readiness, capability, uptime, or deployed equivalence.</p>
     <pre aria-label="Static reachability contract"><code>{
   "surface": "a11oy.net",
   "artifact": "public evidence front door",
   "artifact_kind": "static",
   "readyz": "REACHABILITY_ONLY",
   "readyz_is_health_url": false,
+  "healthz": "NOT_PUBLISHED",
+  "healthz_is_health_url": false,
   "json_probe_document": "https://a11oy.net/health.json",
   "product_runtime_readiness": "NOT_MEASURED",
   "immutable_build_identity": "NOT_CLAIMED",

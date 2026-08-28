@@ -248,6 +248,8 @@ def check() -> None:
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
     ]
+    assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
+    assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
@@ -266,6 +268,10 @@ def check() -> None:
     assert health["dsse_live"] == "NOT_CLAIMED"
     assert health["uptime"] == "NOT_MEASURED"
     assert health["readyz"] == "NOT_A_HEALTH_URL"
+    assert health["healthz"] == "NOT_PUBLISHED"
+    assert health["json_probe_document"] == "https://a11oy.net/health.json"
+    assert not (ROOT / "healthz").exists(), "/healthz must not be published as a competing route"
+    assert not (ROOT / "healthz.html").exists(), "/healthz must not be published as a competing file"
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
@@ -277,6 +283,8 @@ def check() -> None:
     assert "id=\"record\"" in source
     assert "id=\"github-atlas\"" in source
     assert "Ninety seconds" in source
+    assert "Origin health document" in source
+    assert "healthz is not published" in source.lower()
     assert "https://a11oy.net/record/" in source
     assert "The signed RECORD index lives at" in source
     assert "https://a-11-oy.com/verify" in source
@@ -340,7 +348,10 @@ def check() -> None:
         "not a json health" in readyz_html.lower()
         or "not json health" in readyz_html.lower()
     ), "readyz must not be registered as a health URL"
+    assert "not a health url" in readyz_html.lower() or "not a health probe" in readyz_html.lower()
     assert "/health.json" in readyz_html
+    assert "healthz" in readyz_html.lower()
+    assert "not published" in readyz_html.lower()
     assert (
         "a-11-oy.com" in readyz_html.lower()
     ), "readiness route must link to the runtime source explicitly"
