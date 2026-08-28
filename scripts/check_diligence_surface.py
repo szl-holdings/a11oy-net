@@ -16,7 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 DILIGENCE = ROOT / "diligence" / "index.html"
 CHAT = ROOT / "chat" / "index.html"
 CODE = ROOT / "code" / "index.html"
+RECORD = ROOT / "record" / "index.html"
+NOTES = ROOT / "notes" / "index.html"
 EVIDENCE = ROOT / "evidence.json"
+RECORD_JSON = ROOT / "record.json"
+ATLAS_JSON = ROOT / "atlas.json"
 LLMS = ROOT / "llms.txt"
 NOT_FOUND = ROOT / "404.html"
 STYLE = ROOT / "assets" / "diligence.css"
@@ -100,7 +104,11 @@ def check() -> None:
         DILIGENCE,
         CHAT,
         CODE,
+        RECORD,
+        NOTES,
         EVIDENCE,
+        RECORD_JSON,
+        ATLAS_JSON,
         LLMS,
         NOT_FOUND,
         STYLE,
@@ -116,21 +124,26 @@ def check() -> None:
     diligence = check_document(
         DILIGENCE, canonical="https://a11oy.net/diligence/"
     )
-    assert {"main", "scope", "investors", "developers", "risks", "labels"} <= diligence.ids
+    assert {"main", "scope", "investors", "developers", "risks", "labels", "summary"} <= diligence.ids
     assert {"rel": "stylesheet", "href": "/assets/diligence.css"} in diligence.links
     assert {"rel": "stylesheet", "href": "/assets/kanchay.css"} in diligence.links
     assert 'id="main" tabindex="-1"' in DILIGENCE.read_text(encoding="utf-8")
+    diligence_source = DILIGENCE.read_text(encoding="utf-8")
+    assert "Alloy by SZL Holdings" in diligence_source
     diligence_hrefs = {anchor.get("href") for anchor in diligence.anchors}
     assert {
         "/evidence.json",
+        "/record.json",
+        "/atlas.json",
         "/site.webmanifest",
         "/llms.txt",
         "/api/build-info/",
         "/readyz/",
+        "/record/",
+        "/notes/",
         "/chat/",
         "/code/",
     } <= diligence_hrefs, "diligence must link every local machine contract"
-    diligence_source = DILIGENCE.read_text(encoding="utf-8")
     diligence_nav = re.search(
         r"<nav\b.*?</nav>", diligence_source, re.IGNORECASE | re.DOTALL
     )
@@ -138,8 +151,21 @@ def check() -> None:
     assert "Chat gateway" not in diligence_nav.group(0)
     assert "Code gateway" not in diligence_nav.group(0)
     assert "Product ↗" in diligence_nav.group(0)
+    assert diligence_nav.group(0).count("origin-switch") == 1, (
+        "diligence must keep a single Product | Proof header"
+    )
     assert 'id="handoffs"' in diligence_source
     assert "/chat/" in diligence_source and "/code/" in diligence_source
+    record = check_document(RECORD, canonical="https://a11oy.net/record/")
+    notes = check_document(NOTES, canonical="https://a11oy.net/notes/")
+    assert any(anchor.get("href") == "https://a-11-oy.com/verify" for anchor in record.anchors)
+    assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
+    assert "Alloy by SZL Holdings" in RECORD.read_text(encoding="utf-8")
+    assert "Alloy by SZL Holdings" in NOTES.read_text(encoding="utf-8")
+    assert "https://a11oy.com" not in RECORD.read_text(encoding="utf-8")
+    assert "https://huggingface.co/spaces" not in [
+        link.get("href") for link in record.links if link.get("rel") == "canonical"
+    ]
     check_document(NOT_FOUND, canonical=None)
 
     chat = check_document(CHAT, canonical="https://a11oy.net/chat/")
@@ -226,6 +252,10 @@ def check() -> None:
     names = {entry["name"] for entry in evidence["entrypoints"]}
     assert {
         "diligence_room",
+        "record_index",
+        "record_contract",
+        "hub_atlas",
+        "dated_notes",
         "governed_console_gateway",
         "governed_code_gateway",
         "static_build_info",
@@ -247,7 +277,19 @@ def check() -> None:
     }
     llms = LLMS.read_text(encoding="utf-8")
     assert "https://a11oy.net/evidence.json" in llms
+    assert "https://a11oy.net/record/" in llms
     assert "does not establish A11oy product-runtime readiness" in llms
+    record_contract = json.loads(RECORD_JSON.read_text(encoding="utf-8"))
+    assert record_contract["surface"]["url"] == "https://a11oy.net/record/"
+    assert record_contract["interactive_verifier"]["url"] == "https://a-11-oy.com/verify"
+    assert record_contract["boundaries"]["interactive_verifier_cloned"] is False
+    assert record_contract["boundaries"]["product_runtime_required_for_first_paint"] is False
+    assert record_contract["status"]["live_chain"] == "UNAVAILABLE"
+    atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
+    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-28"
+    assert atlas_contract["hub_snapshot"]["n"] == 57
+    assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
+    assert atlas_contract["boundaries"]["killinchu_named_resources_excluded"] is True
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     assert manifest["start_url"] == "/"
     assert MANIFEST_ALIAS.read_bytes() == MANIFEST.read_bytes()

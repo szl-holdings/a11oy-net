@@ -1,0 +1,59 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Hub atlas",
+    "url": "https://a11oy.net/#atlas",
+    "publisher": "SZL Holdings",
+    "meaning": "Inventory of public Hugging Face and GitHub surfaces for a11oy. A listed URL is location only. Reachability, if ever observed, is REACHABLE only — never quality, safety, or capability."
+  },
+  "status": {
+    "state": "PARTIAL",
+    "evidence_class": "REPORTED"
+  },
+  "hub_snapshot": {
+    "observed_at": "2026-08-28",
+    "evidence_class": "REPORTED",
+    "method": "Committed public Hub listing snapshot on a11oy-net",
+    "n": 57,
+    "models": 17,
+    "datasets": 27,
+    "collections": 12,
+    "buckets": 1,
+    "org": "https://huggingface.co/SZLHOLDINGS",
+    "bound": "Point-in-time listing metadata. Interactive Spaces and Killinchu-named resources are outside this inventory."
+  },
+  "github_surfaces": [
+    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source", "evidence_class": "REPORTED"},
+    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry", "evidence_class": "REPORTED"},
+    {"name": "szl-receipt", "url": "https://github.com/szl-holdings/szl-receipt", "role": "Shared signing library", "evidence_class": "REPORTED"},
+    {"name": "szl-lake", "url": "https://github.com/szl-holdings/szl-lake", "role": "Append-only receipt store", "evidence_class": "REPORTED"},
+    {"name": "governed-receipt-spec", "url": "https://github.com/szl-holdings/governed-receipt-spec", "role": "Receipt format and offline verifier spec", "evidence_class": "REPORTED"},
+    {"name": "lutar-lean", "url": "https://github.com/szl-holdings/lutar-lean", "role": "Lean 4 formal work; Λ remains Conjecture 1", "evidence_class": "REPORTED"},
+    {"name": "szl-receipt-attn", "url": "https://github.com/szl-holdings/szl-receipt-attn", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
+    {"name": "szl-maskmod", "url": "https://github.com/szl-holdings/szl-maskmod", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
+    {"name": "szl-block-kv", "url": "https://github.com/szl-holdings/szl-block-kv", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
+    {"name": ".github", "url": "https://github.com/szl-holdings/.github", "role": "Doctrine and cosign.pub", "evidence_class": "REPORTED"}
+  ],
+  "roadmap_cuts": {
+    "status": "ROADMAP",
+    "url": "https://a11oy.net/#cuts",
+    "bound": "Public Hub cutting cards. Not trained checkpoints. No weights, kernel binary, or capability claim.",
+    "items": [
+      "KHIPU-R2",
+      "WILLAY",
+      "YARQA-ATTN",
+      "A11OY-MINI",
+      "chaski",
+      "qantu",
+      "waman",
+      "chakana",
+      "tinku"
+    ]
+  },
+  "boundaries": {
+    "http_response_proves_capability": false,
+    "reachability_is_not_quality": true,
+    "killinchu_named_resources_excluded": true,
+    "interactive_spaces_excluded_from_generated_cards": true
+  }
+}

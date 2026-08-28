@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#080c14" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>RECORD · a11oy proof registry</title>
+  <meta name="description" content="Canonical public receipt record for a11oy, hosted on a11oy.net. Interactive verification stays at a-11-oy.com/verify." />
+  <meta property="og:title" content="RECORD · a11oy proof registry" />
+  <meta property="og:description" content="Static, fetchable receipt-record index on a11oy.net. The interactive verifier is not cloned here." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://a11oy.net/record/" />
+  <meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1731" />
+  <meta property="og:image:height" content="909" />
+  <meta property="og:image:alt" content="a11oy.net public proof registry by SZL Holdings" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://a11oy.net/assets/a11oy-net-social.png" />
+  <meta name="twitter:image:alt" content="a11oy.net public proof registry by SZL Holdings" />
+  <link rel="canonical" href="https://a11oy.net/record/" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" href="/assets/a11oy-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/diligence.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to RECORD</a>
+  <nav aria-label="Primary">
+    <div class="wrap nav">
+      <div class="nav-brand">
+        <a class="brand" href="/" aria-label="a11oy.net home"><img src="/assets/a11oy-mark.svg" alt="" />a11oy.net</a>
+        <span class="subtitle">Alloy by SZL Holdings</span>
+      </div>
+      <div class="origin-switch" aria-label="Product and Proof origins">
+        <a href="https://a-11-oy.com" target="_blank" rel="noopener">Product</a>
+        <span class="origin-rule" aria-hidden="true">|</span>
+        <a href="https://a11oy.net" aria-current="page">Proof</a>
+      </div>
+      <div class="nav-links">
+        <a href="/diligence/">Diligence</a>
+        <a href="/#atlas">Hub atlas</a>
+        <a href="/notes/">Notes</a>
+        <a href="/record.json">record.json</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">RECORD · canonical receipt record</p>
+        <h1>The receipt record lives here.</h1>
+        <p class="lede">This origin holds the public index of where a11oy receipts are published. It is static HTML and <a href="/record.json">record.json</a>. First paint does not fetch a-11-oy.com or a Hugging Face Space.</p>
+        <div class="actions">
+          <a class="button primary" href="https://a-11-oy.com/verify" target="_blank" rel="noopener">Open interactive /verify</a>
+          <a class="button" href="/record.json">Fetch record.json</a>
+          <a class="button" href="https://github.com/szl-holdings/.github/blob/main/cosign.pub" target="_blank" rel="noopener">Public cosign key</a>
+        </div>
+        <p class="boundary"><strong>Boundary:</strong> RECORD is an index, not a verifier. Interactive verification stays at <a href="https://a-11-oy.com/verify">https://a-11-oy.com/verify</a>. This page does not clone that tool, does not re-host receipt bodies, and does not execute signature or hash-chain checks. Live chain state is <strong>UNAVAILABLE</strong> here.</p>
+      </div>
+    </header>
+
+    <div class="wrap rail" aria-label="RECORD contract">
+      <article><span>This origin</span><b>Canonical RECORD</b><p>Static index, fetchable if the product origin is down.</p></article>
+      <article><span>Interactive tool</span><b>/verify on .com</b><p>Link only. Not cloned. Not required for first paint.</p></article>
+      <article><span>Live chain</span><b>UNAVAILABLE here</b><p>Observe verification on the product origin.</p></article>
+      <article><span>Bodies</span><b>Not re-hosted</b><p>Receipt bytes stay in their published stores.</p></article>
+    </div>
+
+    <section id="stores">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Public stores</span><h2>Where published receipts are listed.</h2><p>Each row is a location. Listing metadata is REPORTED. This page does not assert that a store is reachable, complete, or that any receipt verifies.</p></div>
+        <div class="steps">
+          <article class="step"><h3>szl-lake</h3><p>Append-only receipt store. GitHub is the origin; Hub is a mirror.</p><a href="https://github.com/szl-holdings/szl-lake" target="_blank" rel="noopener">GitHub origin</a></article>
+          <article class="step"><h3>Governance receipts</h3><p>Public Hub dataset listing for UDS governance decision receipts.</p><a href="https://huggingface.co/datasets/SZLHOLDINGS/uds-governance-receipts" target="_blank" rel="noopener">Open listing</a></article>
+          <article class="step"><h3>Span receipts</h3><p>Public Hub dataset listing for UDS span receipts.</p><a href="https://huggingface.co/datasets/SZLHOLDINGS/uds-spans-receipts" target="_blank" rel="noopener">Open listing</a></article>
+          <article class="step"><h3>Conformance corpus</h3><p>Public bench listing for the governed-receipt spec. Not re-run here.</p><a href="https://huggingface.co/datasets/SZLHOLDINGS/governed-receipts-bench" target="_blank" rel="noopener">Open listing</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="verify">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">How to verify</span><h2>Check a receipt without trusting this page.</h2><p>Verification proves integrity and origin of an envelope, never accuracy, quality, or performance.</p></div>
+        <div class="split">
+          <article class="panel truth"><h3>Interactive tool</h3><ul><li>Use <a href="https://a-11-oy.com/verify">https://a-11-oy.com/verify</a> on the product origin.</li><li>Paste a DSSE/SZL envelope or a receipt id.</li><li>That tool is not cloned on a11oy.net.</li><li>If the product origin is down, this RECORD index remains readable; live verification is UNAVAILABLE.</li></ul></article>
+          <article class="panel limit"><h3>Offline pointers</h3><ul><li>Public key: <a href="https://github.com/szl-holdings/.github/blob/main/cosign.pub">szl-holdings/.github/cosign.pub</a>.</li><li>Shared library: <a href="https://github.com/szl-holdings/szl-receipt">szl-receipt</a>.</li><li>Format and offline verifier spec: <a href="https://github.com/szl-holdings/governed-receipt-spec">governed-receipt-spec</a>.</li><li>This origin does not publish a method+date+N verification result for any receipt id.</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="labels">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Labels on RECORD</span><h2>Nothing here is silently promoted.</h2></div>
+        <dl class="labels">
+          <div class="label"><dt>REPORTED</dt><dd>A public listing or source pointer. Not independently measured on this page.</dd></div>
+          <div class="label"><dt>UNAVAILABLE</dt><dd>Live chain, signature, and product-runtime checks are not run here.</dd></div>
+          <div class="label"><dt>ROADMAP</dt><dd>Work that is named and not claimed as operational.</dd></div>
+          <div class="label"><dt>MEASURED</dt><dd>Requires method, date, and N. RECORD does not invent those figures.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Continue</span><h2>Return to the proof registry.</h2><p>Hub atlas, ROADMAP cuts, and the 90-second diligence table stay on this origin.</p></div>
+        <div class="actions"><a class="button primary" href="/">Open proof registry</a><a class="button" href="/diligence/">Diligence room</a><a class="button" href="/atlas.json">atlas.json</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer"><p>Published by SZL Holdings as the canonical RECORD on a11oy.net. Alloy by SZL Holdings is the subtitle only. Λ = Conjecture 1. Interactive /verify stays on a-11-oy.com.</p><div class="footer-links"><a href="/">Proof</a><a href="/diligence/">Diligence</a><a href="/notes/">Notes</a><a href="/.well-known/security.txt">Security</a></div></div>
+  </footer>
+</body>
+</html>

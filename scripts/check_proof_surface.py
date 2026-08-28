@@ -32,6 +32,7 @@ DILIGENCE = ROOT / "diligence" / "index.html"
 EXPECTED_PROOFS = {
     "runtime-truth",
     "receipt-verifier",
+    "record",
     "assurance",
     "benchmarks",
     "source",
@@ -117,6 +118,10 @@ def check() -> None:
         "diligence/index.html",
         "evidence.json",
         "llms.txt",
+        "notes/index.html",
+        "record.json",
+        "record/index.html",
+        "atlas.json",
         "scripts/check_probe_policy.mjs",
         "scripts/probe_policy.js",
     ):
@@ -214,7 +219,19 @@ def check() -> None:
     structured = json.loads(structured_blocks[0])
     assert structured["@type"] == "WebSite"
     assert structured["url"] == "https://a11oy.net/"
+    assert structured["name"] == "a11oy Proof Registry"
+    assert structured["alternateName"] == "Alloy by SZL Holdings"
+    assert structured["sameAs"] == [
+        "https://a11oy.net/diligence/",
+        "https://a11oy.net/record/",
+        "https://a11oy.net/notes/",
+    ]
+    assert all(str(url).startswith("https://a11oy.net/") for url in structured["sameAs"])
+    assert "huggingface.co/spaces" not in json.dumps(structured)
+    assert "a11oy.com" not in json.dumps(structured)
     assert structured["publisher"]["url"] == "https://github.com/szl-holdings"
+    assert structured["isRelatedTo"]["name"] == "a11oy"
+    assert structured["isRelatedTo"]["url"] == "https://a-11-oy.com/"
 
     robots = ROBOTS.read_text(encoding="utf-8")
     assert "Sitemap: https://a11oy.net/sitemap.xml" in robots
@@ -225,6 +242,8 @@ def check() -> None:
     ] == [
         "https://a11oy.net/",
         "https://a11oy.net/diligence/",
+        "https://a11oy.net/record/",
+        "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
     ]
@@ -236,9 +255,27 @@ def check() -> None:
         "manifest.webmanifest must be byte-identical to site.webmanifest"
     )
     assert DILIGENCE.is_file(), "the public diligence route must exist"
+    assert (ROOT / "record" / "index.html").is_file(), "canonical RECORD must exist"
+    assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
+    assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
+    assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
+    assert (ROOT / "CHANGELOG.md").is_file(), "changelog status pointer must exist"
     assert any(
         anchor.get("href") == "/diligence/" for anchor in surface.anchors
     ), "the root proof registry must expose the diligence route"
+    assert any(
+        anchor.get("href") == "/record/" for anchor in surface.anchors
+    ), "the root proof registry must expose RECORD"
+    assert "Alloy by SZL Holdings" in source
+    assert "id=\"summary\"" in source
+    assert "id=\"record\"" in source
+    assert "id=\"github-atlas\"" in source
+    assert "Ninety seconds" in source
+    assert "canonical receipt record" in source.lower()
+    assert "https://a-11-oy.com/verify" in source
+    assert "fetch(\"https://a-11-oy.com" not in source
+    assert "huggingface.co/spaces" not in meta_value("property", "og:url")
+    assert meta_value("property", "og:url") == "https://a11oy.net/"
     landmark_markup = {
         "navigation": re.findall(
             r"<nav\b.*?</nav>", source, re.DOTALL | re.IGNORECASE
@@ -262,6 +299,9 @@ def check() -> None:
         "Code gateway must not remain a top-level nav peer"
     )
     assert "Product ↗" in nav_block, "Product ↗ must remain the outbound origin"
+    assert nav_block.count("origin-switch") == 1, (
+        "root must keep a single Product | Proof header"
+    )
     assert 'aria-current="true"' in nav_block and ">Proof</a>" in nav_block, (
         "Proof must remain the current origin on a11oy.net"
     )
@@ -298,6 +338,8 @@ def check() -> None:
     security = SECURITY.read_text(encoding="utf-8")
     assert "Canonical: https://a11oy.net/.well-known/security.txt" in security
     assert "https://a11oy.com" not in source + robots + security
+    assert "https://a11oy.com" not in (ROOT / "record" / "index.html").read_text(encoding="utf-8")
+    assert "https://a11oy.com" not in (ROOT / "diligence" / "index.html").read_text(encoding="utf-8")
 
     assert len(surface.mains) == 1, "the root document needs one main landmark"
     main = surface.mains[0]

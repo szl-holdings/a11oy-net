@@ -1,40 +1,58 @@
-# A11oy Proof Registry
+# a11oy Proof Registry
 
 <p align="center">
-  <img src="assets/a11oy-net-social.png" alt="A11oy.net — separately hosted first-party proof registry" width="960" />
+  <img src="assets/a11oy-net-social.png" alt="a11oy.net — separately hosted first-party proof registry" width="960" />
 </p>
 
-[`a11oy.net`](https://a11oy.net) is the separately hosted first-party **RECORD**
-for [A11oy](https://a-11-oy.com). Domain lock: this origin is the proof registry.
-Hub atlas and ROADMAP live here, not on `.com`. Interactive `/verify` stays on
+[`a11oy.net`](https://a11oy.net) is the canonical public proof/registry for
+[a11oy](https://a-11-oy.com) (subtitle only: Alloy by SZL Holdings). Domain lock:
+this origin is the RECORD. Hub atlas and ROADMAP live here, not on `.com`.
+Interactive `/verify` stays on
 [a-11-oy.com/verify](https://a-11-oy.com/verify) and is not cloned. There is no `/investor` route;
 investor review is [`/diligence/#investors`](https://a11oy.net/diligence/#investors).
+This origin remains independently reachable if a-11-oy.com or the Hugging Face
+Space is down.
 
 Header on both origins: **Product | Proof**. Product ↗ → `https://a-11-oy.com`.
 Proof is the current surface here.
 
 The product experience and the evidence experience are intentionally separate.
+Header lockup: **Product | Proof**, linking
+[https://a-11-oy.com](https://a-11-oy.com) and
+[https://a11oy.net](https://a11oy.net) with those exact words.
+
 A product link proves location and remains `NOT PROBED · UNKNOWN` here. A
 schema-valid public Hub runtime stage is only a bounded, point-in-time
-`REPORTED` transport observation. Neither proves capability, safety, quality,
-uptime, or deployed equivalence.
+`REPORTED` transport observation. Reachability of a URL is `REACHABLE` only,
+never quality. Neither proves capability, safety, uptime, or deployed
+equivalence.
 
 ## Start here
 
 - **Review evidence:** open [a11oy.net](https://a11oy.net).
 - **Use the product:** open [a-11-oy.com](https://a-11-oy.com).
-- **Verify a receipt:** use the [public verifier](https://a-11-oy.com/verify).
+- **Read RECORD:** open [a11oy.net/record/](https://a11oy.net/record/).
+- **Verify a receipt interactively:** use
+  [https://a-11-oy.com/verify](https://a-11-oy.com/verify). Do not clone that tool here.
 - **Inspect source:** begin with the
-  [A11oy repository](https://github.com/szl-holdings/a11oy).
-- **Browse public artifacts:** inspect
+  [a11oy repository](https://github.com/szl-holdings/a11oy).
+- **Browse public artifacts:** inspect the Hub atlas on this origin, or
   [SZLHOLDINGS on Hugging Face](https://huggingface.co/SZLHOLDINGS).
 
 ## Audience routes
 
 - **Evidence registry:** [`/`](https://a11oy.net/) is the RECORD: Hub atlas,
-  ROADMAP cards, and browser-observed metadata live here.
-- **Investor diligence:** [`/diligence/#investors`](https://a11oy.net/diligence/#investors)
-  sequences the public thesis, controls, source, boundaries, and estate links.
+  ROADMAP cards, 90-second diligence table, and browser-observed metadata live here.
+- **Investor diligence:** [`/diligence/#summary`](https://a11oy.net/diligence/#summary)
+  is the 90-second MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
+  and boundaries. There is no `/investor` route.
+- **RECORD:** [`/record/`](https://a11oy.net/record/) is the canonical receipt
+  record on this origin. [`/record.json`](https://a11oy.net/record.json) is the
+  machine contract.
+- **Hub atlas:** [`/#atlas`](https://a11oy.net/#atlas) inventories public HF and
+  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is fetchable.
+- **Dated notes:** [`/notes/`](https://a11oy.net/notes/) and
+  [`CHANGELOG.md`](https://a11oy.net/CHANGELOG.md).
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
   starts from executable validation and machine-readable contracts.
 - **Product handoffs:** [`/chat/`](https://a11oy.net/chat/) and
@@ -119,8 +137,11 @@ The checks validate:
 
 | Path | Responsibility |
 | --- | --- |
-| `index.html` | Accessible product narrative, live reads, and registry UI. |
-| `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths and print-safe presentation. |
+| `index.html` | Accessible product narrative, 90-second table, RECORD, live reads, and registry UI. |
+| `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths, 90-second table, and print-safe presentation. |
+| `record/index.html`, `record.json` | Canonical receipt RECORD on this origin; links to `.com /verify`. |
+| `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
+| `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
 | `readyz/index.html` | Static front-door reachability only; never product readiness. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |

@@ -1,7 +1,7 @@
 {
   "contract_version": "1.0.0",
   "surface": {
-    "name": "A11oy Proof Registry",
+    "name": "a11oy Proof Registry",
     "url": "https://a11oy.net/",
     "publisher": "SZL Holdings",
     "hosting_boundary": "separately hosted first-party evidence registry",
@@ -32,12 +32,16 @@
   },
   "entrypoints": [
     {"name": "diligence_room", "url": "https://a11oy.net/diligence/", "evidence_class": "REPORTED"},
+    {"name": "record_index", "url": "https://a11oy.net/record/", "evidence_class": "REPORTED", "scope": "canonical receipt record on this origin; not an interactive verifier"},
+    {"name": "record_contract", "url": "https://a11oy.net/record.json", "evidence_class": "REPORTED"},
+    {"name": "hub_atlas", "url": "https://a11oy.net/atlas.json", "evidence_class": "REPORTED", "scope": "committed HF snapshot plus GitHub inventory; reachability is not quality"},
+    {"name": "dated_notes", "url": "https://a11oy.net/notes/", "evidence_class": "REPORTED"},
     {"name": "governed_console_gateway", "url": "https://a11oy.net/chat/", "evidence_class": "REPORTED", "scope": "static handoff; product runtime state must be observed at a-11-oy.com"},
     {"name": "governed_code_gateway", "url": "https://a11oy.net/code/", "evidence_class": "REPORTED", "scope": "static handoff; code execution state must be observed at a-11-oy.com"},
     {"name": "static_build_info", "url": "https://a11oy.net/api/build-info/", "evidence_class": "REPORTED"},
     {"name": "static_reachability", "url": "https://a11oy.net/readyz/", "evidence_class": "REPORTED", "scope": "route declares a reachability-only contract; a client must observe it"},
     {"name": "product_honesty_manifest", "url": "https://a-11-oy.com/api/a11oy/v1/honest", "evidence_class": "UNKNOWN", "scope": "must be observed live"},
-    {"name": "receipt_verifier", "url": "https://a-11-oy.com/verify", "evidence_class": "UNKNOWN", "scope": "must be observed live"},
+    {"name": "receipt_verifier", "url": "https://a-11-oy.com/verify", "evidence_class": "UNKNOWN", "scope": "interactive tool on the product origin; must be observed live; not cloned here"},
     {"name": "implementation_source", "url": "https://github.com/szl-holdings/a11oy", "evidence_class": "REPORTED"},
     {"name": "proof_registry_source", "url": "https://github.com/szl-holdings/a11oy-net", "evidence_class": "REPORTED"},
     {"name": "public_hub_registry", "url": "https://huggingface.co/SZLHOLDINGS", "evidence_class": "REPORTED"},
