@@ -4,7 +4,7 @@
     "name": "Hub Space consolidation",
     "url": "https://a11oy.net/spaces.json",
     "publisher": "SZL Holdings",
-    "meaning": "Fold 43 Hub Spaces into two origins. Leave 5–7 running. A listed URL is location only. Reachability is never quality.",
+    "meaning": "Fold Hub Spaces into two origins. Leave 5–7 public. A listed URL is location only. Reachability is never quality.",
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
   "origins": {
@@ -14,18 +14,18 @@
     "never": "a11oy.com — foreign storefront, scheme omitted on this origin"
   },
   "cut": {
-    "compiledAt": "2026-08-29T17:30:00Z",
-    "measured": 43,
+    "compiledAt": "2026-08-29T17:55:00Z",
+    "measured": 44,
     "keep": 7,
     "keepTarget": 7,
-    "fold": 35,
-    "toProduct": 16,
+    "fold": 36,
+    "toProduct": 17,
     "toProof": 19,
     "archive": 1,
-    "leftover": 36,
+    "leftover": 37,
     "inBand": true,
-    "hubArchive": "ROADMAP",
-    "hubArchiveNote": "No HF_TOKEN in this runtime. Hub pause/delete is operator-owned. Plan is COMPILED. Destinations are existing Product and Proof paths. /verify is not cloned."
+    "hubArchive": "MEASURED",
+    "hubArchiveNote": "Unauthenticated Hub API MEASURED 7 public keepers. Folded docker/gradio Spaces PAUSED and PRIVATE. Static holograms PRIVATE. Destinations are existing Product and Proof paths. /verify is not cloned."
   },
   "keep": [
     {"id": "a11oy", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Command body. Product origin is a-11-oy.com. Hub Space stays as the public docker."},
@@ -71,7 +71,8 @@
     {"id": "szl-estate-live", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Estate snapshot already exists on the proof origin."},
     {"id": "szl-forge-lab", "sink": "proof", "dest": "https://a11oy.net/atelier/", "sdk": "static", "why": "Cuts belong next to the forty-model walk, not as a sibling Space."},
     {"id": "governed-agent-bench", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "gradio", "why": "Bench metadata is REPORTED. Not a runtime origin."},
-    {"id": "evidence-studio", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "docker", "why": "Evidence wall is RECORD. Studio is not a third origin."}
+    {"id": "evidence-studio", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "docker", "why": "Evidence wall is RECORD. Studio is not a third origin."},
+    {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Unmapped docker that appeared after the 43-list. Not a flagship. Fold into product. Occupancy stays UNAVAILABLE."}
   ],
   "archive": [
     {"id": "second-brain", "why": "Duplicate brain. Not an origin. Not a lab. Stamp HISTORICAL."}
