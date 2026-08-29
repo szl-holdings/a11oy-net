@@ -265,6 +265,7 @@ def check() -> None:
         element.text for element in sitemap.findall(".//sm:loc", namespace)
     ] == [
         "https://a11oy.net/",
+        "https://a11oy.net/ayllu/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
