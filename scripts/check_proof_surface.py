@@ -398,6 +398,19 @@ def check() -> None:
         "Proof must remain the current origin on a11oy.net"
     )
     assert "RECORD" in nav_block
+    assert ">Atlas</a>" in nav_block, "Atlas is the inventory peer, not Public registry"
+    assert 'href="#atlas"' in nav_block
+    assert ">Index</a>" in nav_block and 'href="#index"' in nav_block, (
+        "Index is the overflow peer, not a sixth origin"
+    )
+    assert 'href="/atelier/"' not in nav_block, "Atelier is a lab under Index, not a nav peer"
+    assert 'href="/notes/"' not in nav_block, "Notes is a lab under Index, not a nav peer"
+    assert "Evidence index" not in nav_block
+    assert "Live reads" not in nav_block
+    assert "Public registry" not in nav_block
+    assert "Walk 40 models" not in source, "atelier is not a first-fold CTA"
+    assert "Open RECORD" in source, "first fold CTA is RECORD"
+    assert 'id="index"' in source, "Index catalog must exist on the proof homepage"
     assert "Hub atlas and ROADMAP live here" in source, (
         "Hub atlas + ROADMAP must be locked to a11oy.net, not the product domain"
     )
