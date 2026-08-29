@@ -11,6 +11,12 @@ Authoritative public paths:
 - Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
 - Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
 - Estate contract: https://a11oy.net/estate.json
+- Origin lock RECORD (INC-05 MEASURED public-identity-host probe; not DNS control; not a fourth origin): https://a11oy.net/origin/
+- Origin lock contract: https://a11oy.net/origin.json
+- Factory organs RECORD (N1–N25; runtime a-11-oy.com/organs; this origin does not execute organs): https://a11oy.net/factory/
+- Factory organs contract: https://a11oy.net/factory.json
+- Named frontiers SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N27 holograms; promotion BLOCKED while INC-05 www Cloudflare 404; does not rewrite /factory/): https://a11oy.net/frontiers/
+- Named frontiers contract: https://a11oy.net/frontiers.json
 - Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/

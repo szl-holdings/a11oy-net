@@ -42,7 +42,7 @@
       "name": "ayllu_winay_record",
       "url": "https://a11oy.net/ayllu/psyche/",
       "evidence_class": "REPORTED",
-      "scope": "Wiñay/Huklla/IIT honesty map; this origin does not run the pulse; IIT φ_s UNAVAILABLE; presence CONJECTURE"
+      "scope": "Wi\u00f1ay/Huklla/IIT honesty map; this origin does not run the pulse; IIT \u03c6_s UNAVAILABLE; presence CONJECTURE"
     },
     {
       "name": "ayllu_winay_contract",
@@ -89,6 +89,42 @@
       "url": "https://a11oy.net/estate/os/",
       "evidence_class": "REPORTED",
       "scope": "static on-origin catalog hologram of the 17:35Z PUBLIC_PARTIAL bake; READ-ONLY; not a live dashboard; not product runtime; not a fourth origin; Lambda remains Conjecture 1"
+    },
+    {
+      "name": "origin_lock_record",
+      "url": "https://a11oy.net/origin/",
+      "evidence_class": "MEASURED",
+      "scope": "INC-05 dated public-identity-host probe; not DNS control; not a Cloudflare API; not product runtime; not a fourth origin; a Grok working copy is not published here"
+    },
+    {
+      "name": "origin_lock_contract",
+      "url": "https://a11oy.net/origin.json",
+      "evidence_class": "MEASURED",
+      "scope": "machine-readable origin lock; www Cloudflare 404; HF custom domain PENDING; proof DNS is GitHub Pages"
+    },
+    {
+      "name": "factory_organs_record",
+      "url": "https://a11oy.net/factory/",
+      "evidence_class": "REPORTED",
+      "scope": "N1–N25 organs RECORD; runtime is a-11-oy.com/organs; this origin does not execute organs; not 25 public Spaces"
+    },
+    {
+      "name": "factory_organs_contract",
+      "url": "https://a11oy.net/factory.json",
+      "evidence_class": "REPORTED",
+      "scope": "machine-readable factory organs record; GPU tune UNAVAILABLE; not a rewrite target of /frontiers/"
+    },
+    {
+      "name": "named_frontiers_snapshot",
+      "url": "https://a11oy.net/frontiers/",
+      "evidence_class": "SNAPSHOT",
+      "scope": "Lyte STRUCTURAL-ONLY plus N1–N27 holograms; promotion BLOCKED while INC-05 www Cloudflare 404; does not rewrite /factory/; not GPU; not a fourth origin"
+    },
+    {
+      "name": "named_frontiers_contract",
+      "url": "https://a11oy.net/frontiers.json",
+      "evidence_class": "SNAPSHOT",
+      "scope": "machine-readable named-theatre SNAPSHOT; N26 REPORTED; N27 UNAVAILABLE; formula authority NONE"
     },
     {
       "name": "dated_notes",
@@ -166,6 +202,7 @@
   "labels": {
     "MEASURED": "Direct observation with a disclosed source and context.",
     "REPORTED": "Public upstream metadata; not independently measured here.",
+    "SNAPSHOT": "A dated copy of a catalog or hologram; not a live measurement.",
     "MODELED": "Simulated or analytically derived.",
     "HEURISTIC": "A bounded rule or score, not a proof.",
     "UNKNOWN": "Evidence is insufficient.",

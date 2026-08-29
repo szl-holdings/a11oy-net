@@ -293,6 +293,12 @@ def check() -> None:
         "estate_snapshot",
         "estate_contract",
         "estate_os_hologram",
+        "origin_lock_record",
+        "origin_lock_contract",
+        "factory_organs_record",
+        "factory_organs_contract",
+        "named_frontiers_snapshot",
+        "named_frontiers_contract",
         "dated_notes",
         "governed_console_gateway",
         "governed_code_gateway",
@@ -313,6 +319,7 @@ def check() -> None:
     assert set(evidence["labels"]) == {
         "MEASURED",
         "REPORTED",
+        "SNAPSHOT",
         "MODELED",
         "HEURISTIC",
         "UNKNOWN",
@@ -322,6 +329,9 @@ def check() -> None:
     assert "https://a11oy.net/evidence.json" in llms
     assert "https://a11oy.net/record/" in llms
     assert "https://a11oy.net/estate/os/" in llms
+    assert "https://a11oy.net/origin/" in llms
+    assert "https://a11oy.net/frontiers/" in llms
+    assert "https://a11oy.net/factory/" in llms
     assert "does not establish A11oy product-runtime readiness" in llms
     assert "This repository has no receipt store" in llms or "no receipt store" in llms
     assert "SZLHOLDINGS/szl-evidence" in llms

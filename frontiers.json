@@ -1,0 +1,82 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Named frontiers SNAPSHOT",
+    "url": "https://a11oy.net/frontiers/",
+    "contract": "https://a11oy.net/frontiers.json",
+    "publisher": "SZL Holdings",
+    "implementation": "static GitHub Pages document",
+    "meaning": "Dated SNAPSHOT of named theatres Lyte + N1–N27. Not GPU. Not a product certificate. Not a rewrite of /factory/. A Grok working copy is not published here."
+  },
+  "observed_at_utc": "2026-08-29T19:30:00Z",
+  "evidence_class": "SNAPSHOT",
+  "bind": "BIND_AS_A11OY_PACKAGE",
+  "promotion": {
+    "verdict": "BLOCKED",
+    "honesty": "MEASURED",
+    "reason": "INC-05 open: www.a-11-oy.com is Cloudflare HTTP 404. Frontiers stay holograms. Do not stamp production LIVE.",
+    "incident": "INC-05",
+    "origin_lock": "https://a11oy.net/origin/"
+  },
+  "related": {
+    "factory_record": "https://a11oy.net/factory/",
+    "factory_contract": "https://a11oy.net/factory.json",
+    "product_organs": "https://a-11-oy.com/organs",
+    "lyte_services": "https://github.com/szl-holdings/lyte-services",
+    "lyte_lattice": "https://github.com/szl-holdings/lyte-lattice",
+    "a11oy_factory": "https://github.com/szl-holdings/a11oy-factory",
+    "product": "https://a-11-oy.com/"
+  },
+  "counts": {
+    "named_n1_n25": 25,
+    "admitted_cells": 1,
+    "admitted_cell": "lyte",
+    "lyte_bound": "STRUCTURAL-ONLY",
+    "n26": "REPORTED",
+    "n27": "UNAVAILABLE",
+    "gpu_train": "DENIED"
+  },
+  "cells": [
+    {"n": "lyte", "title": "Lyte", "job": "Owner-admitted design-partner cell", "honesty": "SNAPSHOT", "admitted": true, "bound": "STRUCTURAL-ONLY. Not a production certificate of a-11-oy.com.", "cite": "szl-holdings/lyte-services"},
+    {"n": "N1", "title": "Serve", "job": "Inference serving", "honesty": "SIMULATED", "admitted": false, "bound": "Schema envelope. Not a vLLM rehost.", "cite": "vLLM / SGLang / Ollama / TensorRT-LLM"},
+    {"n": "N2", "title": "Graph", "job": "Agent orchestration", "honesty": "SIMULATED", "admitted": false, "bound": "Human interrupt required.", "cite": "LangGraph"},
+    {"n": "N3", "title": "Guard", "job": "Input/output safeguard", "honesty": "MEASURED", "admitted": false, "bound": "LOG_ONLY overlay. Not Llama Guard weights.", "cite": "Llama Guard"},
+    {"n": "N4", "title": "Mosaic", "job": "Own-data mosaic", "honesty": "SIMULATED", "admitted": false, "bound": "Synthetic join only.", "cite": "MosaicML / Databricks"},
+    {"n": "N5", "title": "Lattice", "job": "Defense overlay", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a measured SOC.", "cite": "immune SENTRA / YAWAR"},
+    {"n": "N6", "title": "Cover", "job": "P&C insurance core", "honesty": "SIMULATED", "admitted": false, "bound": "Not a licensed bind.", "cite": "Guidewire"},
+    {"n": "N7", "title": "Quant", "job": "Algorithmic research and backtest", "honesty": "SIMULATED", "admitted": false, "bound": "Causal claims prohibited. Not financial advice.", "cite": "QuantConnect LEAN"},
+    {"n": "N8", "title": "Title", "job": "Public property records", "honesty": "SIMULATED", "admitted": false, "bound": "Occupancy UNAVAILABLE. Not MLS. Not a county system.", "cite": "Zillow / public records"},
+    {"n": "N9", "title": "Retrieve", "job": "Retrieval and memory indexes", "honesty": "SOFTWARE", "admitted": false, "bound": "Handles only. Not a trained retriever.", "cite": "LlamaIndex / Haystack / Letta"},
+    {"n": "N10", "title": "Observe", "job": "Eval and trace overlay", "honesty": "SOFTWARE", "admitted": false, "bound": "No live vendor tenant.", "cite": "Phoenix / LangSmith / Langfuse / DeepEval"},
+    {"n": "N11", "title": "Tune", "job": "LoRA / QLoRA job", "honesty": "UNKNOWN", "admitted": false, "bound": "GPU tune DENIED. No CUDA in this RECORD.", "cite": "Unsloth"},
+    {"n": "N12", "title": "Schema", "job": "Constrained generation", "honesty": "SOFTWARE", "admitted": false, "bound": "Schema envelope. Not a model.", "cite": "Outlines / Instructor"},
+    {"n": "N13", "title": "Energy", "job": "Joule channel", "honesty": "UNKNOWN", "admitted": false, "bound": "Joule UNAVAILABLE unless RAPL/NVML reads. Never fabricated.", "cite": "RAPL / NVML"},
+    {"n": "N14", "title": "Tool", "job": "MCP tools", "honesty": "SOFTWARE", "admitted": false, "bound": "Catalog only. Not a live MCP host.", "cite": "Anthropic MCP"},
+    {"n": "N15", "title": "Memory", "job": "Governed memory plane", "honesty": "SOFTWARE", "admitted": false, "bound": "Deny-by-default. Approval cannot lift a hard deny.", "cite": "szl-frontier Memory Covenant"},
+    {"n": "N16", "title": "Eval", "job": "Benchmark overlay", "honesty": "SOFTWARE", "admitted": false, "bound": "Scores are not a production certificate.", "cite": "RAGAS / HELM / LMSYS"},
+    {"n": "N17", "title": "Mesh", "job": "Serve mesh", "honesty": "UNKNOWN", "admitted": false, "bound": "GPU UNAVAILABLE.", "cite": "NVIDIA Dynamo / Ray Serve / llm-d"},
+    {"n": "N18", "title": "Route", "job": "Model router", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a live broker.", "cite": "LiteLLM / OpenRouter / RouteLLM"},
+    {"n": "N19", "title": "Cache", "job": "KV / prompt cache", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a rehost of LMCache.", "cite": "LMCache / Mooncake / GPTCache"},
+    {"n": "N20", "title": "Voice", "job": "Realtime audio", "honesty": "SOFTWARE", "admitted": false, "bound": "No audio bytes in this RECORD.", "cite": "LiveKit / Cartesia / Deepgram"},
+    {"n": "N21", "title": "Sandbox", "job": "Isolated exec", "honesty": "SOFTWARE", "admitted": false, "bound": "AST whitelist. Plan only.", "cite": "Daytona / E2B"},
+    {"n": "N22", "title": "Identity", "job": "Workload identity", "honesty": "SOFTWARE", "admitted": false, "bound": "UNSIGNED. vLEI OOR is the decision identity, not a login.", "cite": "SPIFFE / SPIRE / Astrix NHI"},
+    {"n": "N23", "title": "Rails", "job": "Guardrail overlay", "honesty": "SOFTWARE", "admitted": false, "bound": "Not Llama Guard. Not NeMotron.", "cite": "NVIDIA NeMo Guardrails"},
+    {"n": "N24", "title": "Browser", "job": "Browser plan", "honesty": "SOFTWARE", "admitted": false, "bound": "Plan only. No live tenant.", "cite": "Playwright / Stagehand / Browserbase"},
+    {"n": "N25", "title": "Policy", "job": "External policy", "honesty": "SOFTWARE", "admitted": false, "bound": "Fail-closed. Formula outputs have authority NONE.", "cite": "AWS Cedar / OPA"},
+    {"n": "N26", "title": "Inference", "job": "Wrapped inference joule", "honesty": "REPORTED", "admitted": false, "bound": "Joule REPORTED from command-lab wrap, never MEASURED here. Compiler stays BLOCKED.", "cite": "szl-command-lab /api/energy/inference"},
+    {"n": "N27", "title": "Train", "job": "Receipted GPU train gate", "honesty": "UNKNOWN", "admitted": false, "bound": "No CUDA. gpu-bridge NEVER_DISPATCH. Not an Unsloth rehost.", "cite": "szl-forge / szl-gpu-bridge"}
+  ],
+  "boundaries": {
+    "this_origin_is_not_a_product_host": true,
+    "does_not_run_organs": true,
+    "does_not_rewrite_factory": true,
+    "does_not_stamp_live": true,
+    "does_not_clone_verify": true,
+    "gpu_train_denied": true,
+    "formula_grants_authority": false,
+    "grok_spa_not_published_here": true,
+    "fourth_public_origin_published": false,
+    "http_response_proves_capability": false,
+    "lambda_uniqueness": "Conjecture 1 OPEN"
+  }
+}
