@@ -37,6 +37,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://a11oy.net/estate/os/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://a11oy.net/command/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>

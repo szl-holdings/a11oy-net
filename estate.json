@@ -50,6 +50,21 @@
     "verify_cloned": false,
     "receipt_database_hosted_here": false,
     "spaces_deleted": false,
-    "grok_spa_published_here": false
+    "grok_spa_published_here": false,
+    "fourth_public_origin_published": false,
+    "hologram_is_on_origin": true
+  },
+  "hologram": {
+    "url": "https://a11oy.net/estate/os/",
+    "meaning": "Static on-origin hologram of the PUBLIC_PARTIAL public catalog. READ-ONLY. Not a live dashboard. Not product runtime. Not a fourth origin.",
+    "captured_at": "2026-08-29T17:35:39Z",
+    "scope": "PUBLIC_PARTIAL",
+    "github_public": 93,
+    "space_public": 6,
+    "space_gated": 37,
+    "hub_models": 43,
+    "hub_datasets": 28,
+    "hub_collections": 18,
+    "bound": "Hologram bake is 17:35Z PUBLIC_PARTIAL unauthenticated catalog. This file's captured_at keep-7 Hub recapture (43/36/7) is later and is not overwritten."
   }
 }

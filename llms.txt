@@ -9,6 +9,7 @@ Authoritative public paths:
 - RECORD contract: https://a11oy.net/record.json
 - Hub atlas contract: https://a11oy.net/atlas.json
 - Estate snapshot (dated MEASURED inventory; not a live dashboard): https://a11oy.net/estate/
+- Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
 - Estate contract: https://a11oy.net/estate.json
 - Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
