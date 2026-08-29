@@ -33,6 +33,24 @@
   },
   "entrypoints": [
     {
+      "name": "ayllu_record",
+      "url": "https://a11oy.net/ayllu/",
+      "evidence_class": "REPORTED",
+      "scope": "counsel showcase RECORD; does not run the council; not the pulse organ"
+    },
+    {
+      "name": "ayllu_winay_record",
+      "url": "https://a11oy.net/ayllu/psyche/",
+      "evidence_class": "REPORTED",
+      "scope": "Wiñay/Huklla/IIT honesty map; this origin does not run the pulse; IIT φ_s UNAVAILABLE; presence CONJECTURE"
+    },
+    {
+      "name": "ayllu_winay_contract",
+      "url": "https://a11oy.net/ayllu/winay.json",
+      "evidence_class": "REPORTED",
+      "scope": "machine-readable honesty labels; not a live score"
+    },
+    {
       "name": "diligence_room",
       "url": "https://a11oy.net/diligence/",
       "evidence_class": "REPORTED"

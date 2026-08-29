@@ -280,6 +280,7 @@ def check() -> None:
         "https://a11oy.net/aegis/",
         "https://a11oy.net/puriq-markets/",
         "https://a11oy.net/counsel/",
+        "https://a11oy.net/ayllu/psyche/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -335,6 +336,24 @@ def check() -> None:
         assert "Formula authority NONE" in text or "formula authority NONE" in text
         assert "https://a11oy.com" not in text
         assert "Never a11oy.com." in text
+    psyche = ROOT / "ayllu" / "psyche" / "index.html"
+    assert psyche.is_file(), "Wiñay/Huklla/IIT honesty RECORD must exist"
+    psyche_text = psyche.read_text(encoding="utf-8")
+    assert "script-src 'none'" in psyche_text
+    assert "connect-src 'none'" in psyche_text
+    assert "googleapis.com" not in psyche_text
+    assert "cdn." not in psyche_text
+    assert "https://a11oy.com" not in psyche_text
+    assert "Never a11oy.com." in psyche_text
+    assert "UNAVAILABLE" in psyche_text
+    assert "CONJECTURE" in psyche_text
+    assert "this origin does not run" in psyche_text.lower()
+    assert "Not IIT" in psyche_text or "not IIT" in psyche_text
+    winay = json.loads((ROOT / "ayllu" / "winay.json").read_text(encoding="utf-8"))
+    assert winay["labels"]["iit_phi_s"] == "UNAVAILABLE"
+    assert winay["labels"]["presence"] == "CONJECTURE"
+    assert winay["iit"]["phi_s"] is None
+    assert winay["boundaries"]["this_origin_runs_the_pulse"] is False
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"

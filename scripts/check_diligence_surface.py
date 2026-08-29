@@ -305,6 +305,9 @@ def check() -> None:
         "proof_registry_source",
         "public_hub_registry",
         "security_reporting",
+        "ayllu_record",
+        "ayllu_winay_record",
+        "ayllu_winay_contract",
     } == names
     assert set(evidence["labels"]) == {
         "MEASURED",
