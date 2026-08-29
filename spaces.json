@@ -52,6 +52,7 @@
     {"id": "immune-lattice", "sink": "product", "dest": "https://a-11-oy.com/immune", "sdk": "docker", "why": "Lattice is not a sibling of IMMUNE. One admission surface."},
     {"id": "a11oy-factory", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Factory is a bind (AO-2026-08-29-001), not a second flagship."},
     {"id": "lyte-services", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Lyte is the one admitted cell. Compiling a frontier still returns BLOCKED."},
+    {"id": "lyte-lattice", "sink": "product", "dest": "https://a-11-oy.com/lyte", "sdk": "docker", "why": "BIND hologram. Cite GitHub @ 2773eba. Hub is the artifact registry. Not a second flagship. Not a product certificate. Hub RUNNING only after Immune readback."},
     {"id": "szl-quant-live", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "static", "why": "Static hologram. Paper quotes already MEASURED in this OS. No order routing."},
     {"id": "ayllu", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Counsel showcase already lives on the proof origin. Does not run the council."},
     {"id": "counsel", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Duplicate of ayllu. One lab URL."},
