@@ -573,7 +573,7 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 6
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 8
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source
