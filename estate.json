@@ -8,22 +8,22 @@
     "implementation": "static GitHub Pages JSON"
   },
   "reader_guide": "This file is a recapture snapshot. Counts are MEASURED from public GitHub and public Hugging Face APIs at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com. Interactive /verify is not cloned here.",
-  "captured_at": "2026-08-29T00:39:00Z",
+  "captured_at": "2026-08-29T00:56:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
-    "repositories": 75,
-    "public": 70,
+    "repositories": 76,
+    "public": 71,
     "private": 5,
     "archived": 7,
     "open_prs": 11,
     "merge_qualified_this_recapture": 0,
     "anchor_was": 63,
     "protected_mains": {
-      "a11oy": "6065ebc2aaa7a91d0cd51cf4e21aae563b7527c9",
+      "a11oy": "4783ee5597c2129df0feddd3620f07f1fc73a5ff",
       "killinchu": "eab124aae976f1c7f98564b92810d88224a62b2b",
-      "a11oy-net": "37364c8aecb81015cf2cbeafaad12c3d33ce437b",
-      "szl-forge": "488734cdc91ef5d961a6fb303be4f692a883a10c"
+      "a11oy-net": "e738e05f3652b9e65bbd7a0b10ae1615d0485f35",
+      "szl-forge": "27d93514936e52d5812050aa03e7dec211267410"
     }
   },
   "huggingface": {
@@ -39,7 +39,7 @@
     "product": "https://a-11-oy.com",
     "proof": "https://a11oy.net/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com — foreign storefront, scheme omitted on this origin"
+    "never": "a11oy.com \u2014 foreign storefront, scheme omitted on this origin"
   },
   "canonical_entries": [
     "a11oy",
