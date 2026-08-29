@@ -32,7 +32,7 @@ equivalence.
 - **Review evidence:** open [a11oy.net](https://a11oy.net).
 - **Use the product:** open [a-11-oy.com](https://a-11-oy.com).
 - **Read RECORD:** open [a11oy.net/record/](https://a11oy.net/record/).
-- **Decision Integrity RECORD:** open [a11oy.net/decision/](https://a11oy.net/decision/). Evaluate on [a-11-oy.com/decision](https://a-11-oy.com/decision). Kernel is not run here.
+- **Decision Integrity RECORD:** open [a11oy.net/decision/](https://a11oy.net/decision/). Evaluate on [a-11-oy.com/decision](https://a-11-oy.com/decision) and vanity paths `/terra` `/aegis` `/puriq-markets` `/counsel`. Kernel is not run here. Hub Spaces are not required.
 - **Verify a receipt interactively:** use
   [https://a-11-oy.com/verify](https://a-11-oy.com/verify). Do not clone that tool here.
 - **Inspect source:** begin with the

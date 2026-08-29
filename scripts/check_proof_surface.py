@@ -275,6 +275,10 @@ def check() -> None:
         "https://a11oy.net/code/",
         "https://a11oy.net/atelier/",
         "https://a11oy.net/decision/",
+        "https://a11oy.net/terra/",
+        "https://a11oy.net/aegis/",
+        "https://a11oy.net/puriq-markets/",
+        "https://a11oy.net/counsel/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -295,6 +299,16 @@ def check() -> None:
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
     assert (ROOT / "decision" / "index.html").is_file(), "decision RECORD must exist"
     assert (ROOT / "decision.json").is_file(), "decision machine contract must exist"
+    for stub in ("terra", "aegis", "puriq-markets", "counsel"):
+        path = ROOT / stub / "index.html"
+        assert path.is_file(), f"{stub} RECORD stub must exist"
+        text = path.read_text(encoding="utf-8")
+        assert "script-src 'none'" in text, f"{stub} must ship CSP script-src none"
+        assert "googleapis.com" not in text
+        assert "cdn." not in text
+        assert "Formula authority NONE" in text or "formula authority NONE" in text
+        assert "https://a11oy.com" not in text
+        assert "Never a11oy.com." in text
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"
