@@ -1,0 +1,89 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Hub Space consolidation",
+    "url": "https://a11oy.net/spaces.json",
+    "publisher": "SZL Holdings",
+    "meaning": "Fold 43 Hub Spaces into two origins. Leave 5–7 running. A listed URL is location only. Reachability is never quality.",
+    "implementation": "static GitHub Pages JSON on the proof origin"
+  },
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net/",
+    "hub": "https://huggingface.co/SZLHOLDINGS",
+    "never": "a11oy.com — foreign storefront, scheme omitted on this origin"
+  },
+  "cut": {
+    "compiledAt": "2026-08-29T17:30:00Z",
+    "measured": 43,
+    "keep": 7,
+    "keepTarget": 7,
+    "fold": 35,
+    "toProduct": 16,
+    "toProof": 19,
+    "archive": 1,
+    "leftover": 36,
+    "inBand": true,
+    "hubArchive": "ROADMAP",
+    "hubArchiveNote": "No HF_TOKEN in this runtime. Hub pause/delete is operator-owned. Plan is COMPILED. Destinations are existing Product and Proof paths. /verify is not cloned."
+  },
+  "keep": [
+    {"id": "a11oy", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Command body. Product origin is a-11-oy.com. Hub Space stays as the public docker."},
+    {"id": "killinchu", "dest": "https://szlholdings-killinchu.hf.space/elite", "sdk": "docker", "why": "Defense docker. Proof front door excludes Killinchu-named resources. Stays Hub."},
+    {"id": "david-leads", "dest": "https://huggingface.co/spaces/SZLHOLDINGS/david-leads", "sdk": "docker", "why": "Insurance vertical. OpenFEMA MEASURED. 0 private fields."},
+    {"id": "anatomy", "dest": "https://a-11-oy.com/anatomy-v5", "sdk": "docker", "why": "Living map. Hologram sink. Product also serves /living-anatomy."},
+    {"id": "immune", "dest": "https://a-11-oy.com/immune", "sdk": "docker", "why": "SENTRA/GATE organ. Product already hosts /immune."},
+    {"id": "szl-real-estate", "dest": "https://huggingface.co/spaces/SZLHOLDINGS/szl-real-estate", "sdk": "docker", "why": "Public-records underwriting. NYC PLUTO MEASURED. Occupancy UNAVAILABLE."},
+    {"id": "szl-atelier", "dest": "https://a11oy.net/atelier/", "sdk": "static", "why": "Proof origin already walks forty models at /atelier/. Canonical playable Space stays Hub."}
+  ],
+  "fold": [
+    {"id": "llm-router-live", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Router is the product. Status Space is STALE. Do not keep a second front door."},
+    {"id": "hatun-mcp", "sink": "product", "dest": "https://a-11-oy.com/wires", "sdk": "docker", "why": "MCP is a bind, not a flagship. Product wires already exist."},
+    {"id": "sda", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Organ workstation. Residuals MODELED. Not a second detection product."},
+    {"id": "yarqa", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Canal partition is an organ, not a Space. CFD, never locked-8."},
+    {"id": "holographic", "sink": "product", "dest": "https://a-11-oy.com/anatomy-v5", "sdk": "docker", "why": "Hologram sprawl. One atlas. Fold into anatomy."},
+    {"id": "cosmos", "sink": "product", "dest": "https://a-11-oy.com/living-anatomy", "sdk": "docker", "why": "Unmapped RUNNING Space. Bind as anatomy, not a third map."},
+    {"id": "szl-model-inference-lab", "sink": "product", "dest": "https://a-11-oy.com/console", "sdk": "docker", "why": "Lab is not a flagship. Command Center is /console."},
+    {"id": "szl-khipu", "sink": "product", "dest": "https://a-11-oy.com/formulas", "sdk": "docker", "why": "Weights stay on Hub as models. The Space is not a second kernel."},
+    {"id": "khipu-lab", "sink": "product", "dest": "https://a-11-oy.com/formulas", "sdk": "docker", "why": "Duplicate knot lab. Formulas already live on product."},
+    {"id": "nexus", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Analog map, not kernel. Do not keep a Space for a local-first toy."},
+    {"id": "szl-command-lab", "sink": "product", "dest": "https://a-11-oy.com/console", "sdk": "docker", "why": "Command already has a body. Lab is a fork."},
+    {"id": "szl-sovereign-os", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "This OS is the operator kernel. Hub rehost is a hologram."},
+    {"id": "immune-lattice", "sink": "product", "dest": "https://a-11-oy.com/immune", "sdk": "docker", "why": "Lattice is not a sibling of IMMUNE. One admission surface."},
+    {"id": "a11oy-factory", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Factory is a bind (AO-2026-08-29-001), not a second flagship."},
+    {"id": "lyte-services", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Lyte is the one admitted cell. Compiling a frontier still returns BLOCKED."},
+    {"id": "szl-quant-live", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "static", "why": "Static hologram. Paper quotes already MEASURED in this OS. No order routing."},
+    {"id": "ayllu", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Counsel showcase already lives on the proof origin. Does not run the council."},
+    {"id": "counsel", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Duplicate of ayllu. One lab URL."},
+    {"id": "experiments", "sink": "proof", "dest": "https://a11oy.net/experiments/", "sdk": "docker", "why": "Experimental split-outs already have a proof path. Not locked-8."},
+    {"id": "szl-experiments", "sink": "proof", "dest": "https://a11oy.net/experiments/", "sdk": "docker", "why": "Same lab, second Space. Fold, do not twin."},
+    {"id": "energy-attested-runs", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Energy stays UNAVAILABLE until NVML is MEASURED. Index the claim, do not host a joule hologram."},
+    {"id": "governed-receipt-verifier", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Interactive /verify stays on product. Proof holds the RECORD index only."},
+    {"id": "guardrail-receipt", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "One signing primitive. Wrappers become adapters."},
+    {"id": "governed-norm-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Static HTML Space. Estate snapshot is the inventory, not a live dashboard."},
+    {"id": "lambda-gate-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Λ remains Conjecture 1. A hologram is not a theorem."},
+    {"id": "energy-attest-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "One meter. Honest UNAVAILABLE. No second joule path."},
+    {"id": "receipt-chain-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Live chain is on product /api/lake. Proof indexes pointers."},
+    {"id": "szl-provctl-live", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Hub-mirror explosion. Publish from one suite."},
+    {"id": "szl-kernels-live", "sink": "proof", "dest": "https://a11oy.net/#atlas", "sdk": "static", "why": "Atlas lists kernels. A live Space is not a second source."},
+    {"id": "szl-govsign-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Fold into szl-receipt + governed-receipt-spec."},
+    {"id": "szl-blocked-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Refusals are tamper-EVIDENT on product. Hologram is theater."},
+    {"id": "szl-estate-live", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Estate snapshot already exists on the proof origin."},
+    {"id": "szl-forge-lab", "sink": "proof", "dest": "https://a11oy.net/atelier/", "sdk": "static", "why": "Cuts belong next to the forty-model walk, not as a sibling Space."},
+    {"id": "governed-agent-bench", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "gradio", "why": "Bench metadata is REPORTED. Not a runtime origin."},
+    {"id": "evidence-studio", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "docker", "why": "Evidence wall is RECORD. Studio is not a third origin."}
+  ],
+  "archive": [
+    {"id": "second-brain", "why": "Duplicate brain. Not an origin. Not a lab. Stamp HISTORICAL."}
+  ],
+  "boundaries": {
+    "this_origin_is_not_a_product_host": true,
+    "verify_not_cloned": true,
+    "interactive_spaces_not_atlas_cards": true,
+    "killinchu_excluded_from_proof_front_door": true,
+    "hub_is_not_a_front_door": true,
+    "http_response_proves_capability": false,
+    "hub_mutation_from_this_runtime": false,
+    "factory_is_a_bind_not_a_flagship": true
+  }
+}
