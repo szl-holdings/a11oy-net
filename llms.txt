@@ -15,6 +15,8 @@ Authoritative public paths:
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/
 - Forty-model atelier walk (static; canonical Space is huggingface.co/spaces/SZLHOLDINGS/szl-atelier): https://a11oy.net/atelier/
+- Ayllu counsel showcase (does not run the council): https://a11oy.net/ayllu/
+- KHIPU RECORD (kernel is not run here; evaluate at a-11-oy.com/khipu): https://a11oy.net/khipu/
 - Decision Integrity RECORD (static; kernel is not run here; evaluate at a-11-oy.com/decision): https://a11oy.net/decision/
 - Terra RECORD stub (evaluate at a-11-oy.com/terra): https://a11oy.net/terra/
 - Aegis RECORD stub (evaluate at a-11-oy.com/aegis): https://a11oy.net/aegis/
