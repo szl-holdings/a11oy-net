@@ -109,6 +109,12 @@
       "url": "https://github.com/szl-holdings/lyte-lattice",
       "role": "BIND hologram for named frontiers N1–N25. Product bind https://a-11-oy.com/lyte. Not a flagship. Not a product certificate.",
       "evidence_class": "REPORTED"
+    },
+    {
+      "name": "nexus",
+      "url": "https://github.com/szl-holdings/nexus",
+      "role": "BIND hologram for the analog workstation (six modules). Product bind https://a-11-oy.com/nexus. Not a flagship. Not a product certificate. Hub Space private; location is GitHub.",
+      "evidence_class": "REPORTED"
     }
   ],
   "boundaries": {
