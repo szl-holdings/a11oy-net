@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0.0",
+  "contract_version": "1.1.0",
   "surface": {
     "name": "Estate snapshot",
     "url": "https://a11oy.net/estate/",
@@ -7,57 +7,46 @@
     "meaning": "Dated MEASURED public inventory snapshot on the proof origin. Not product runtime. Not a live dashboard. Not a receipt store.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "This file is a recapture snapshot. Counts are MEASURED from public GitHub and public Hugging Face APIs at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com. Interactive /verify is not cloned here.",
-  "captured_at": "2026-08-29T03:54:00Z",
+  "reader_guide": "Counts are MEASURED from authenticated Hugging Face API and public GitHub search at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
+  "captured_at": "2026-08-29T17:25:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
-    "repositories": 78,
-    "public": 73,
-    "private": 5,
-    "archived": 7,
-    "open_prs": 2,
-    "merge_qualified_this_recapture": 0,
-    "anchor_was": 63,
-    "protected_mains": {
-      "a11oy": "83dbdbb2269145c476d56d7d4dc6a54a60a77314",
-      "killinchu": "a31d39e3ec5c39768f1efe5afdfc433d00788c2a",
-      "a11oy-net": "eb70f32c20b6c9a0afe7a8b1d34d7c922756adac",
-      "szl-forge": "42fac35ee49ef2b32689593432caac5559f7cae7"
-    }
+    "repositories_search_total": 98,
+    "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash. Includes archived."
   },
   "huggingface": {
     "org": "SZLHOLDINGS",
-    "models": 40,
-    "datasets": 28,
-    "spaces": 29,
-    "remaining_joblib": 0,
-    "training_submit": "REJECTED_WITH_REASON",
-    "bound": "Public listing metadata. Not an authenticated private inventory. Not quality."
+    "models": 43,
+    "datasets": 36,
+    "spaces_total": 45,
+    "spaces_public": 7,
+    "spaces_private": 38,
+    "public_spaces": [
+      "SZLHOLDINGS/README",
+      "SZLHOLDINGS/a11oy",
+      "SZLHOLDINGS/killinchu",
+      "SZLHOLDINGS/immune",
+      "SZLHOLDINGS/szl-khipu",
+      "SZLHOLDINGS/szl-atelier",
+      "SZLHOLDINGS/governed-receipt-verifier"
+    ],
+    "action": "pause+private, never delete",
+    "collection": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
+    "bound": "Authenticated org-admin listing. Archive set is retained private. Models and datasets remain public."
   },
   "origins": {
     "product": "https://a-11-oy.com",
     "proof": "https://a11oy.net/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com \u2014 foreign storefront, scheme omitted on this origin"
+    "never": "a11oy.com — foreign storefront"
   },
-  "canonical_entries": [
-    "a11oy",
-    "killinchu",
-    "platform",
-    "szl-forge",
-    "szl-kernels",
-    "szl-receipt",
-    "szl-trust",
-    "lutar-lean",
-    "docs-site",
-    "a11oy-net"
-  ],
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
     "http_response_proves_capability": false,
     "live_dashboard_cloned": false,
     "verify_cloned": false,
-    "receipt_database_hosted_here": false
+    "receipt_database_hosted_here": false,
+    "spaces_deleted": false
   }
 }

@@ -1,59 +1,47 @@
 {
-  "contract_version": "1.0.0",
+  "contract_version": "1.1.0",
   "surface": {
     "name": "Hub atlas",
     "url": "https://a11oy.net/#atlas",
     "publisher": "SZL Holdings",
-    "meaning": "Inventory of public Hugging Face and GitHub surfaces for a11oy. A listed URL is location only. Reachability, if ever observed, is REACHABLE only — never quality, safety, or capability."
+    "meaning": "Inventory of public Hugging Face and GitHub surfaces for a11oy. A listed URL is location only. Reachability is not quality, safety, or capability."
   },
   "status": {
-    "state": "PARTIAL",
-    "evidence_class": "REPORTED"
+    "state": "CURRENT",
+    "evidence_class": "MEASURED"
   },
   "hub_snapshot": {
-    "observed_at": "2026-08-28",
-    "evidence_class": "REPORTED",
-    "method": "Committed public Hub listing snapshot on a11oy-net",
-    "n": 57,
-    "models": 17,
-    "datasets": 27,
-    "collections": 12,
-    "buckets": 1,
+    "observed_at": "2026-08-29T17:25:00Z",
+    "evidence_class": "MEASURED",
+    "method": "Authenticated Hugging Face API as SZLHOLDINGS admin",
+    "spaces_total": 45,
+    "spaces_public": 7,
+    "spaces_private": 38,
+    "models": 43,
+    "datasets": 36,
+    "collections_canonical": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
     "org": "https://huggingface.co/SZLHOLDINGS",
-    "bound": "Point-in-time listing metadata. Interactive Spaces and Killinchu-named resources are outside this inventory."
+    "bound": "Public keep set is the seven Spaces below. 38 others are private, paused when docker, not deleted."
   },
-  "github_surfaces": [
-    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source", "evidence_class": "REPORTED"},
-    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry", "evidence_class": "REPORTED"},
-    {"name": "szl-receipt", "url": "https://github.com/szl-holdings/szl-receipt", "role": "Shared signing library", "evidence_class": "REPORTED"},
-    {"name": "szl-lake", "url": "https://github.com/szl-holdings/szl-lake", "role": "Append-only receipt store", "evidence_class": "REPORTED"},
-    {"name": "governed-receipt-spec", "url": "https://github.com/szl-holdings/governed-receipt-spec", "role": "Receipt format and offline verifier spec", "evidence_class": "REPORTED"},
-    {"name": "lutar-lean", "url": "https://github.com/szl-holdings/lutar-lean", "role": "Lean 4 formal work; Λ remains Conjecture 1", "evidence_class": "REPORTED"},
-    {"name": "szl-receipt-attn", "url": "https://github.com/szl-holdings/szl-receipt-attn", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
-    {"name": "szl-maskmod", "url": "https://github.com/szl-holdings/szl-maskmod", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
-    {"name": "szl-block-kv", "url": "https://github.com/szl-holdings/szl-block-kv", "role": "KERNEL original", "status": "ROADMAP", "evidence_class": "REPORTED"},
-    {"name": ".github", "url": "https://github.com/szl-holdings/.github", "role": "Doctrine and cosign.pub", "evidence_class": "REPORTED"}
+  "public_spaces": [
+    {"name": "README", "url": "https://huggingface.co/spaces/SZLHOLDINGS/README", "role": "Org card", "evidence_class": "MEASURED"},
+    {"name": "a11oy", "url": "https://a-11-oy.com", "role": "Product Command Center", "evidence_class": "MEASURED"},
+    {"name": "killinchu", "url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu", "role": "Defense vertical", "evidence_class": "MEASURED"},
+    {"name": "immune", "url": "https://huggingface.co/spaces/SZLHOLDINGS/immune", "role": "Safety kernel", "evidence_class": "MEASURED"},
+    {"name": "szl-khipu", "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-khipu", "role": "Model demo", "evidence_class": "MEASURED"},
+    {"name": "szl-atelier", "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier", "role": "Artifact walk", "evidence_class": "MEASURED"},
+    {"name": "governed-receipt-verifier", "url": "https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier", "role": "Receipt replay", "evidence_class": "MEASURED"}
   ],
-  "roadmap_cuts": {
-    "status": "ROADMAP",
-    "url": "https://a11oy.net/#cuts",
-    "bound": "Public Hub cutting cards. Not trained checkpoints. No weights, kernel binary, or capability claim.",
-    "items": [
-      "KHIPU-R2",
-      "WILLAY",
-      "YARQA-ATTN",
-      "A11OY-MINI",
-      "chaski",
-      "qantu",
-      "waman",
-      "chakana",
-      "tinku"
-    ]
-  },
+  "github_surfaces": [
+    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source", "evidence_class": "MEASURED"},
+    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry", "evidence_class": "MEASURED"},
+    {"name": "killinchu", "url": "https://github.com/szl-holdings/killinchu", "role": "Defense vertical source", "evidence_class": "MEASURED"},
+    {"name": "immune", "url": "https://github.com/szl-holdings/immune", "role": "Safety kernel source", "evidence_class": "MEASURED"},
+    {"name": ".github", "url": "https://github.com/szl-holdings/.github", "role": "Doctrine and org card source", "evidence_class": "MEASURED"}
+  ],
   "boundaries": {
     "http_response_proves_capability": false,
     "reachability_is_not_quality": true,
-    "killinchu_named_resources_excluded": true,
-    "interactive_spaces_excluded_from_generated_cards": true
+    "spaces_deleted": false
   }
 }
