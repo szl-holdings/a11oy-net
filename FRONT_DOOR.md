@@ -213,7 +213,7 @@ choice, not a new origin).
 | `/atelier/` | Forty-model Hub walk | Static. Canonical playable Space is `huggingface.co/spaces/SZLHOLDINGS/szl-atelier`. Not product runtime. |
 | `/decision/` | Packet 8 Decision Integrity RECORD | Static. Kernel is not run here. Evaluate on `a-11-oy.com/decision`. Hub Spaces not required. |
 | `/terra/` `/aegis/` `/puriq-markets/` `/counsel/` | Packet 8 vertical RECORD stubs | Static. Kernel is not run here. Evaluate on matching a-11-oy.com vanity paths. Not four Hub Spaces. |
-| `/ayllu/` | Counsel showcase | Proof-origin showcase. Does not run the council. Lab. |
+| `/ayllu/` | Counsel showcase | Proof-origin showcase. Does not run the council. Lab. Wiñay/Huklla honesty nested at `/ayllu/psyche/`. |
 | `/experiments/` | Experimental split-outs | EXPERIMENTAL. Not locked-8. Not a Λ theorem. |
 | `/chat/` | Diligence handoff | One-line gateway. No local execution claim. |
 | `/code/` | Diligence handoff | One-line gateway. No local execution claim. |
@@ -248,6 +248,7 @@ remain**. Removing any of them is a contract break.
 | `decision/` | Packet 8 RECORD. Index, not nav. Keep the URL. Kernel is not run here. |
 | `terra/` `aegis/` `puriq-markets/` `counsel/` | Packet 8 vertical RECORD stubs. Index, not nav. Keep the URLs. Kernel is not run here. |
 | `ayllu/` | Lab showcase. Index, not nav. Keep the URL. |
+| `ayllu/psyche/` | Wiñay/Huklla/IIT honesty RECORD. Nested lab. Pulse is not run here. Keep the URL. |
 | `experiments/` | Lab. Index, not nav. Keep the URL. |
 | `chat/` | Diligence handoff. Keep the URL. |
 | `code/` | Diligence handoff. Keep the URL. |
@@ -262,6 +263,7 @@ These are not optional just because they are not in the primary list.
 | Path | Why it stays |
 | --- | --- |
 | `record.json` | RECORD machine contract. |
+| `ayllu/winay.json` | Wiñay/Huklla/IIT honesty machine contract. Not a live score. |
 | `estate/` | Estate snapshot HTML. Sitemap + llms.txt already admit it. |
 | `CNAME` | Must remain `a11oy.net`. |
 | `.nojekyll` | Required to publish `.well-known/security.txt` on GitHub Pages. |
@@ -405,7 +407,7 @@ It may not:
 - `health.json` `probe_contract == STATIC_DOCUMENT`
 - sitemap locs for `/`, `/ayllu/`, `/experiments/`, `/diligence/`, `/record/`,
   `/estate/`, `/notes/`, `/chat/`, `/code/`, `/atelier/`, `/decision/`
-  `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/`
+  `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/`, `/ayllu/psyche/`
 
 Those assertions are why this note exists as a note. Implement collapse by
 changing the gate and the HTML together. Do not fight the gate.

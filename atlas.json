@@ -99,6 +99,12 @@
       "evidence_class": "MEASURED"
     },
     {
+      "name": "ayllu",
+      "url": "https://github.com/szl-holdings/ayllu",
+      "role": "Split-out Ayllu organ source. Counsel + Wiñay pulse. IIT φ_s UNAVAILABLE. Presence CONJECTURE.",
+      "evidence_class": "REPORTED"
+    },
+    {
       "name": "lyte-lattice",
       "url": "https://github.com/szl-holdings/lyte-lattice",
       "role": "BIND hologram for named frontiers N1–N25. Product bind https://a-11-oy.com/lyte. Not a flagship. Not a product certificate.",

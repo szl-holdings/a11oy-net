@@ -1,0 +1,53 @@
+{
+  "contract_version": "1.0.0",
+  "schema": "szl.ayllu.winay-record/v1",
+  "surface": {
+    "name": "Wiñay · Huklla · IIT honesty",
+    "url": "https://a11oy.net/ayllu/psyche/",
+    "publisher": "SZL Holdings",
+    "meaning": "Static RECORD of Ayllu closure and IIT bounds. This origin does not run the pulse."
+  },
+  "origins": {
+    "proof": "https://a11oy.net/ayllu/psyche/",
+    "product": "https://a-11-oy.com/ayllu/psyche",
+    "council": "https://a-11-oy.com/ayllu",
+    "source": "https://github.com/szl-holdings/ayllu",
+    "space": "https://huggingface.co/spaces/SZLHOLDINGS/ayllu",
+    "space_is_location_only": true
+  },
+  "labels": {
+    "occupancy": "MEASURED",
+    "closure_C": "MEASURED",
+    "ignition_I": "MEASURED",
+    "sync_R": "MODELED",
+    "sigma": "MODELED",
+    "huklla_H": "MODELED",
+    "imaymana_D": "MODELED",
+    "iit_phi_s": "UNAVAILABLE",
+    "iit_Phi_structure": "UNAVAILABLE",
+    "main_complex": "UNAVAILABLE",
+    "presence": "CONJECTURE",
+    "agi": "CONJECTURE",
+    "joules": null,
+    "lambda": "CONJECTURE_1"
+  },
+  "huklla": {
+    "definition": "H = min_cut / E over 15 bipartitions of the five-organ cycle. E = sum L_i L_{i+1}.",
+    "uniform": 0.4,
+    "silent_organ": 0.0,
+    "note": "Cheapest pentagon cut. Not IIT Φ. Not presence. MIP is a fault line, not a conscious complex."
+  },
+  "iit": {
+    "reference": "Albantakis et al. 2023 PLOS Computational Biology 19(10) e1011465",
+    "requires": "transition probability matrix of discrete units under intervention",
+    "phi_s": null,
+    "honesty": "UNAVAILABLE",
+    "note": "No TPM. Huklla H is not Φ. Exclusion search is refused."
+  },
+  "boundaries": {
+    "this_origin_runs_the_pulse": false,
+    "presence_is_a_function_of_C_I_H_or_D": false,
+    "http_response_proves_capability": false,
+    "never": "a11oy.com"
+  }
+}
