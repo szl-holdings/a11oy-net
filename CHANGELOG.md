@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- `/frontiers.json` compiler SNAPSHOT: Lyte ADMIT STRUCTURAL-ONLY; N1–N25 BLOCKED STARTED; N13/N26 joule UNAVAILABLE; N27 NEVER_DISPATCH. Energy UNAVAILABLE. Not LIVE. Does not rewrite `/factory/`. INC-05 remains operator-only ([a11oy#1497](https://github.com/szl-holdings/a11oy/issues/1497)).
 - `/frontiers/` admitted as named-theatres SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N25 holograms; N26 REPORTED; N27 UNAVAILABLE). Promotion BLOCKED while INC-05 www Cloudflare 404. Does not rewrite `/factory/`. Does not run organs. Does not stamp LIVE. Index, not nav, not the first fold. Never a furniture-shop canonical.
 - `/origin/` admitted as INC-05 Origin lock RECORD. MEASURED 2026-08-29T18:53:21Z: product apex Cloudflare HTTP 200; www Cloudflare HTTP 404; proof DNS GitHub Pages; HF custom domain PENDING. Does not mint DNS. Does not stamp LIVE. Does not clone `/verify`. A Grok working copy is not a fourth public origin. Index, not nav, not the first fold. Never a furniture-shop canonical.
 - `/estate/` closeout recapture: live a11oy organ signed a DSSE at 18:00Z (MATCH vs Space /cosign.pub keyid 9926bf69; org GitHub key mismatch; HMAC PLACEHOLDER). Envelope is not stored here. Closeout stays BLOCKED_EXTERNAL_AUTHORITY. Unauth Hub author-list MEASURED 6 at 18:37Z is not a rewrite of atlas keep-7. A Grok working copy is not a fourth public origin.

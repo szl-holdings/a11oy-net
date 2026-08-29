@@ -25,7 +25,9 @@
     "lyte_services": "https://github.com/szl-holdings/lyte-services",
     "lyte_lattice": "https://github.com/szl-holdings/lyte-lattice",
     "a11oy_factory": "https://github.com/szl-holdings/a11oy-factory",
-    "product": "https://a-11-oy.com/"
+    "product": "https://a-11-oy.com/",
+    "inc_05_issue": "https://github.com/szl-holdings/a11oy/issues/1497",
+    "origin_lock_pr": "https://github.com/szl-holdings/a11oy-net/pull/77"
   },
   "counts": {
     "named_n1_n25": 25,
@@ -66,6 +68,19 @@
     {"n": "N26", "title": "Inference", "job": "Wrapped inference joule", "honesty": "REPORTED", "admitted": false, "bound": "Joule REPORTED from command-lab wrap, never MEASURED here. Compiler stays BLOCKED.", "cite": "szl-command-lab /api/energy/inference"},
     {"n": "N27", "title": "Train", "job": "Receipted GPU train gate", "honesty": "UNKNOWN", "admitted": false, "bound": "No CUDA. gpu-bridge NEVER_DISPATCH. Not an Unsloth rehost.", "cite": "szl-forge / szl-gpu-bridge"}
   ],
+  "compiler": {
+    "fail_closed": true,
+    "order": "AO-2026-08-29-001",
+    "lyte": "ADMIT STRUCTURAL-ONLY",
+    "n1_n25": "BLOCKED STARTED",
+    "n13_n26": "BLOCKED joule UNAVAILABLE",
+    "n27": "BLOCKED NEVER_DISPATCH",
+    "energy": "UNAVAILABLE",
+    "signer": "HASH-LINKED",
+    "authority_default": "NONE",
+    "production_certificate": false,
+    "note": "This origin does not run the compiler. The product desk seals HASH-LINKED receipts. Watts are never converted into joules."
+  },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
     "does_not_run_organs": true,
