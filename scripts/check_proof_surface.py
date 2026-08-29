@@ -265,6 +265,8 @@ def check() -> None:
         element.text for element in sitemap.findall(".//sm:loc", namespace)
     ] == [
         "https://a11oy.net/",
+        "https://a11oy.net/ayllu/",
+        "https://a11oy.net/experiments/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
@@ -571,7 +573,7 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 6
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 8
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source

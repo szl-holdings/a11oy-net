@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ayllu Counsel — RECORD on a11oy.net</title>
+<meta name="description" content="RECORD showcase of Ayllu Counsel. Eleven Quechua seats, fail-closed Λ-gate, dissent retained. Product runtime is not hosted here."/>
+<link rel="canonical" href="https://a11oy.net/ayllu/"/>
+<style>
+:root{--void:#03060c;--panel:rgba(8,16,26,.82);--line:#1b2a38;--teal:#3af4c8;--gold:#e8c074;--cream:#eef3f6;--dim:#8aa0b3}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--void);color:var(--cream);font:14px/1.5 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+.wrap{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:28px 18px 80px}
+.banner{font:11px ui-monospace,monospace;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+h1{margin:0;color:var(--teal);font-size:clamp(28px,5vw,44px)}
+.lede{color:var(--dim);max-width:62ch}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 22px}
+.links a{color:var(--teal);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font:12px ui-monospace,monospace;background:var(--panel)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;backdrop-filter:blur(8px)}
+.card h2{margin:0 0 6px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.card p,.card li{color:var(--dim);font-size:13px}
+.kpi b{display:block;color:var(--teal);font-size:18px}
+.seat{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #13202c;padding:5px 0;font-size:13px}
+.foot{margin-top:22px;color:var(--dim);font:11.5px ui-monospace,monospace}
+</style>
+</head>
+<body>
+<canvas id="holo" aria-hidden="true"></canvas>
+<main class="wrap">
+  <div class="banner">a11oy.net · RECORD · not a product host · Λ = Conjecture 1</div>
+  <h1>Ayllu Counsel</h1>
+  <p class="lede">Evidence-bound holographic agent counsel. Eleven Quechua kinship seats around a khipu knot. Fail-closed Λ-gate. Debate then converge. Dissent retained. This page is the proof-origin showcase — it does not run the council.</p>
+  <nav class="links">
+    <a href="https://github.com/szl-holdings/ayllu">GitHub product</a>
+    <a href="https://a-11-oy.com/ayllu">Product organ · a-11-oy.com</a>
+    <a href="https://huggingface.co/spaces/SZLHOLDINGS/ayllu">HF Space (ROADMAP until Hub token)</a>
+    <a href="/">Proof home</a>
+  </nav>
+  <div class="grid">
+    <section class="card">
+      <h2>Honesty</h2>
+      <p class="kpi"><b>SOFTWARE / LIVE</b>never mixed</p>
+      <p>LIVE only when a reachable OpenAI-compat backend answers. Otherwise SOFTWARE, clearly labeled. Receipts are UNSIGNED unless a Cosign signer is injected. Semantic consensus is NOT_MEASURED.</p>
+    </section>
+    <section class="card">
+      <h2>Frontier we own</h2>
+      <ul>
+        <li>Dissent-first converge — no fake “best answer”.</li>
+        <li>0-CDN holographic chamber (khipu torus knot).</li>
+        <li>Eleven roles, one routed backend — not a model zoo.</li>
+        <li>Λ uniqueness stays Conjecture 1.</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Leaders studied, not copied</h2>
+      <ul>
+        <li>Unanimous AI Hyperchat / (Co)agents</li>
+        <li>Multiagent Debate (arXiv:2305.14325)</li>
+        <li>3D LLM Council WebGL chambers</li>
+        <li>AutoGen · CrewAI · CAMEL · MetaGPT</li>
+        <li>EvoTavern Council 2026</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Eleven seats</h2>
+      <div id="seats"></div>
+    </section>
+  </div>
+  <p class="foot">Canonical source: github.com/szl-holdings/ayllu · Product origin a-11-oy.com · Proof origin a11oy.net · Never a11oy.com · Apache-2.0 · Doctrine v11</p>
+</main>
+<script>
+const ROSTER = [
+  ["Amaru","serpent / vision"],["Ruwaq","maker"],["Yupaq","one who counts"],
+  ["Qhaway","one who sees"],["Maskaq","seeker"],["Hampiq","healer"],
+  ["Yanapaq","helper"],["Chaka","bridge"],["Kamachiq","organizer"],
+  ["Qhatuq","trader"],["Willakuq","chronicler"]
+];
+const COLORS = ["#e8c074","#ff9a4a","#3af4c8","#b38bff","#7ad7ff","#7dffb0","#6ea8ff","#e8c074","#eef3f6","#ff7a9c","#c9d6e2"];
+document.getElementById("seats").innerHTML = ROSTER.map((s,i)=>
+  `<div class="seat"><b style="color:${COLORS[i]}">${s[0]}</b><span>${s[1]}</span></div>`
+).join("");
+const cv = document.getElementById("holo"), ctx = cv.getContext("2d");
+let rot = 0.2;
+function resize(){ cv.width = innerWidth*devicePixelRatio; cv.height = innerHeight*devicePixelRatio; }
+addEventListener("resize", resize); resize();
+function knot(t,R,r,p,q){ return [(R+r*Math.cos(q*t))*Math.cos(p*t), r*Math.sin(q*t)*0.85, (R+r*Math.cos(q*t))*Math.sin(p*t)]; }
+function proj(x,y,z,w,h){ const c=Math.cos(rot), s=Math.sin(rot); const x2=x*c-z*s, z2=x*s+z*c; const f=2.6/(4.2+z2); return [w*0.72+x2*f*w*0.16, h*0.38+y*f*h*0.22]; }
+function frame(){
+  const w=cv.width,h=cv.height; ctx.fillStyle="#03060c"; ctx.fillRect(0,0,w,h);
+  const g=ctx.createRadialGradient(w*0.72,h*0.38,10,w*0.7,h*0.4,Math.max(w,h)*0.5);
+  g.addColorStop(0,"rgba(58,244,200,.09)"); g.addColorStop(1,"rgba(3,6,12,0)");
+  ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+  rot += 0.003; ctx.save(); ctx.globalCompositeOperation="lighter";
+  ctx.strokeStyle="rgba(232,192,116,.5)"; ctx.lineWidth=2*devicePixelRatio; ctx.beginPath();
+  for(let i=0;i<=240;i++){ const k=knot(i/240*Math.PI*2,0.72,0.28,3,2); const q=proj(k[0],k[1],k[2],w,h); i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]); }
+  ctx.stroke();
+  ROSTER.forEach((s,i)=>{ const a=(i/11)*Math.PI*2-Math.PI/2; const q=proj(Math.cos(a+rot*0.15)*1.85,0.05,Math.sin(a+rot*0.15)*1.85,w,h);
+    ctx.fillStyle=COLORS[i]; ctx.beginPath(); ctx.arc(q[0],q[1],7*devicePixelRatio,0,Math.PI*2); ctx.fill(); });
+  ctx.restore(); requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
