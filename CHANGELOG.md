@@ -2,8 +2,8 @@
 
 ## 2026-08-29
 
-- `/atelier/` admitted: static forty-model walk of SZLHOLDINGS Hub ids. Canonical playable Space is `https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier`. Source `szl-holdings/szl-atelier`. Nano silhouettes MEASURED in-browser. 1.5B numbers SIGNED, not retrained here. Energy UNAVAILABLE. Not a product runtime. Does not clone `/verify`.
-- Nav + hero CTA point at `/atelier/`. Hub cards remain the weight origin.
+- Primary nav collapsed to Product | RECORD | Diligence | Atlas | Index. First-fold CTA is RECORD. Product remains a text link. Atelier, Ayllu, experiments, chat, code, notes, and estate live under Index. Nothing deleted.
+- `/atelier/` admitted: static forty-model walk of SZLHOLDINGS Hub ids. Canonical playable Space is `https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier`. Source `szl-holdings/szl-atelier`. Nano silhouettes MEASURED in-browser. 1.5B numbers SIGNED, not retrained here. Energy UNAVAILABLE. Not a product runtime. Does not clone `/verify`. Index, not nav, not the first fold.
 
 Dated notes for the a11oy.net proof registry. This is a status pointer, not a product-release feed and not a capability claim.
 

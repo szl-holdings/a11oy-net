@@ -143,7 +143,14 @@ h1{font-size:clamp(38px,6.4vw,68px);line-height:1.04;letter-spacing:-.022em;font
 h1 .g{background:linear-gradient(92deg,var(--ink) 30%,var(--proof) 78%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{margin-top:22px;font-size:clamp(16px,2vw,19px);color:var(--sub);max-width:660px}
 .lede b{color:var(--ink);font-weight:600}
-.cta-row{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+.cta-row{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-product{display:inline-flex;align-items:center;min-height:44px;font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.hero-product:hover{color:var(--ink)}
+.index-catalog{margin-top:8px;display:grid;gap:0;max-width:760px}
+.index-catalog li{font-size:15px;color:var(--sub);border-bottom:1px solid var(--border);padding:14px 0}
+.index-catalog a{color:var(--ink);font-weight:600}
+.index-catalog a:hover{color:var(--proof)}
+#index{scroll-margin-top:84px}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-size:14.5px;font-weight:600;border:1px solid var(--border);transition:.18s}
 .btn-primary{background:var(--proof);color:#04120d;border-color:transparent}
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(58,244,200,.25)}
@@ -392,8 +399,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   </div>
   <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
   <div class="nav-links" id="primaryLinks" data-open="false">
-    <a href="/diligence/">Diligence</a><a href="/record/">RECORD</a><a href="/notes/">Notes</a><a href="/atelier/">Atelier</a><a href="#proof">Evidence index</a><a href="#live">Live reads</a><a href="#atlas">Public registry</a>
     <span class="origin-switch" aria-label="Origins"><a class="origin-product" href="https://a-11-oy.com" target="_blank" rel="noopener">Product ↗</a><span class="origin-sep" aria-hidden="true">|</span><a class="origin-proof" href="/" aria-current="true">Proof</a></span>
+    <a href="/record/">RECORD</a>
+    <a href="/diligence/">Diligence</a>
+    <a href="#atlas">Atlas</a>
+    <a href="#index">Index</a>
   </div>
 </div></nav>
 <main id="main-content" tabindex="-1">
@@ -404,9 +414,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
     <h1>The evidence behind <span class="g">a11oy</span>.</h1>
     <p class="lede">RECORD, Hub atlas, diligence, audit trail, and ROADMAP cuts live on this origin, not on a-11-oy.com. Inspect them <b>without relying on the product interface</b>. A listed URL is location only. Reachability, if observed, is REACHABLE only — never quality. This origin is not a receipt database.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/diligence/">Open diligence room →</a>
-      <a class="btn btn-ghost" href="/atelier/">Walk 40 models →</a>
-      <a class="btn btn-ghost" href="#proof">Browse evidence</a>
+      <a class="btn btn-primary" href="/record/">Open RECORD →</a>
+      <a class="hero-product" href="https://a-11-oy.com">Product ↗</a>
     </div>
     <div class="hero-canon">
       <span>trust ceiling <b>0.97</b> — never 100%</span>
@@ -434,6 +443,21 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <div class="cell"><span class="lab">SUPPLY CHAIN</span><b>SLSA</b>L1 honest · L2 attested · L3 roadmap</div>
   <div class="cell"><span class="lab">DOCTRINE</span><b>Overclaim guards</b>CI gates ban invented stats and banned tokens</div>
 </div></div>
+
+<section id="index"><div class="wrap">
+  <div class="sec-head"><div class="kicker">Index</div><h2>Labs stay labs.</h2>
+  <p>Overflow from this origin. Not a fifth flagship and not a new homepage. Atelier, Ayllu, experiments, chat, code, notes, and estate stay live URLs. They are not primary nav and they are not the first fold.</p></div>
+  <ul class="index-catalog">
+    <li><a href="/atelier/">Atelier</a> — forty-model Hub walk. Canonical playable Space is SZLHOLDINGS/szl-atelier. Not product runtime.</li>
+    <li><a href="/ayllu/">Ayllu</a> — counsel showcase. Does not run the council. Lab.</li>
+    <li><a href="/experiments/">Experiments</a> — experimental split-outs. Not locked-8. Not a Λ theorem.</li>
+    <li><a href="/chat/">Chat</a> — diligence handoff. No local execution claim.</li>
+    <li><a href="/code/">Code</a> — diligence handoff. No local execution claim.</li>
+    <li><a href="/notes/">Notes</a> — dated status pointer, not a capability feed.</li>
+    <li><a href="/estate/">Estate</a> — MEASURED inventory snapshot. Counts are not quality.</li>
+    <li><a href="/evidence.json">Machine contracts</a> — evidence.json, record.json, atlas.json, health.json, llms.txt.</li>
+  </ul>
+</div></section>
 
 <section id="summary"><div class="wrap">
   <div class="sec-head"><div class="kicker">Ninety seconds</div><h2>What is MEASURED, ROADMAP, or UNAVAILABLE.</h2>

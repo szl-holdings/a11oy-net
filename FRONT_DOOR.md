@@ -15,11 +15,14 @@ second flagship, not a palette drive-by.
 
 ## Status
 
-LOCKED for doctrine. OPEN for implementation.
+LOCKED for doctrine. IMPLEMENTED for the first fold and primary nav
+(HTML + `check_proof_surface.py` in the same PR). Palette, companion
+pages, and remaining gates stay as written.
 
-This note may be merged without touching `index.html`. Any later collapse of
-the first fold or nav **must** land HTML and gate updates in the same PR.
-A note-only commit that rewrites `index.html` is a doctrine violation.
+This note is the IA lock. Collapse of the first fold and nav landed with
+gate updates in the same PR. Do not re-expand Atelier, Notes, Evidence
+index, or Live reads into primary nav. Do not put atelier back on the
+first fold.
 
 Current main (tree observed 2026-08-29):
 
