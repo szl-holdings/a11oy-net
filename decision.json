@@ -1,0 +1,48 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Decision Integrity RECORD",
+    "url": "https://a11oy.net/decision/",
+    "publisher": "SZL Holdings",
+    "meaning": "Proof-origin index of Packet 8 Decision Assurance. Does not run the kernel. Evaluate on the product origin. Hub Spaces are not required.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "permalinks": {
+    "proof_html": "https://a11oy.net/decision/",
+    "proof_json": "https://a11oy.net/decision.json",
+    "product_desk": "https://a-11-oy.com/decision",
+    "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals"
+  },
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "formula_authority": "NONE",
+  "lambda": "Conjecture 1 / ADVISORY_CONJECTURAL",
+  "kernel_version": "8.0.0",
+  "kernel_schema": "szl.decision-integrity-kernel/v8",
+  "runtime_claimed": false,
+  "hub_spaces_required": false,
+  "hub_create_cap": "Hugging Face 20 Space-creates/day. Adapters are optional. Do not wait on them for this desk.",
+  "verticals": [
+    {"id": "terra", "display_name": "Terra Assurance", "wedge": "NYC Property Risk-to-Committee Decision Assurance", "case_count": 6},
+    {"id": "aegis", "display_name": "Aegis Assurance", "wedge": "Exposure-to-Remediation Decision Assurance", "case_count": 4},
+    {"id": "puriq-markets", "display_name": "Puriq Markets", "wedge": "Event Definition-to-Decision Forecast Assurance", "case_count": 4},
+    {"id": "counsel", "display_name": "Counsel Assurance", "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance", "case_count": 4}
+  ],
+  "adapters": [
+    {"id": "terra-assurance", "hub": "SZLHOLDINGS/terra-assurance", "state": "exists-private", "sink": "https://a-11-oy.com/decision"},
+    {"id": "aegis-assurance", "hub": "SZLHOLDINGS/aegis-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"},
+    {"id": "puriq-markets", "hub": "SZLHOLDINGS/puriq-markets", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"},
+    {"id": "counsel-assurance", "hub": "SZLHOLDINGS/counsel-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"}
+  ],
+  "boundaries": {
+    "this_origin_does_not_run_the_kernel": true,
+    "this_origin_is_not_a_product_host": true,
+    "hub_spaces_required": false,
+    "verify_not_cloned": true,
+    "http_response_proves_capability": false,
+    "stamps_live": false,
+    "legal_advice": false,
+    "trading_bot": false,
+    "palantir_clone": false
+  }
+}
