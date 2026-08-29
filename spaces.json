@@ -76,6 +76,24 @@
   "archive": [
     {"id": "second-brain", "why": "Duplicate brain. Not an origin. Not a lab. Stamp HISTORICAL."}
   ],
+  "packet8": {
+    "status": "ROADMAP",
+    "formula_authority": "NONE",
+    "kernel_version": "8.0.0",
+    "runtime_claimed": false,
+    "hub_spaces_required": false,
+    "hub_create": "NOT_REQUIRED",
+    "hub_create_note": "Hugging Face 20 Space-creates/day blocked three adapters. Fold into product /decision. Do not wait on Hub.",
+    "product": "https://a-11-oy.com/decision",
+    "proof": "https://a11oy.net/decision/",
+    "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals",
+    "adapters": [
+      {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "exists-private"},
+      {"id": "aegis-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"},
+      {"id": "puriq-markets", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"},
+      {"id": "counsel-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"}
+    ]
+  },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
     "verify_not_cloned": true,

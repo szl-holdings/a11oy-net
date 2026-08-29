@@ -14,6 +14,8 @@ Authoritative public paths:
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/
 - Forty-model atelier walk (static; canonical Space is huggingface.co/spaces/SZLHOLDINGS/szl-atelier): https://a11oy.net/atelier/
+- Decision Integrity RECORD (static; kernel is not run here; evaluate at a-11-oy.com/decision): https://a11oy.net/decision/
+- Decision Integrity contract: https://a11oy.net/decision.json
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
 - Static probe document (not runtime health): https://a11oy.net/health.json
