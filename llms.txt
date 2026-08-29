@@ -15,6 +15,10 @@ Authoritative public paths:
 - Governed code gateway: https://a11oy.net/code/
 - Forty-model atelier walk (static; canonical Space is huggingface.co/spaces/SZLHOLDINGS/szl-atelier): https://a11oy.net/atelier/
 - Decision Integrity RECORD (static; kernel is not run here; evaluate at a-11-oy.com/decision): https://a11oy.net/decision/
+- Terra RECORD stub (evaluate at a-11-oy.com/terra): https://a11oy.net/terra/
+- Aegis RECORD stub (evaluate at a-11-oy.com/aegis): https://a11oy.net/aegis/
+- Puriq Markets RECORD stub (evaluate at a-11-oy.com/puriq-markets): https://a11oy.net/puriq-markets/
+- Counsel RECORD stub (evaluate at a-11-oy.com/counsel): https://a11oy.net/counsel/
 - Decision Integrity contract: https://a11oy.net/decision.json
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/

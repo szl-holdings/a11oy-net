@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/` admitted as Packet 8 RECORD stubs. Kernel is not run here. Evaluate on `a-11-oy.com/terra` (and the matching vanity paths). Hub Spaces are not required. Same kernel, four desks, not four Spaces. Index, not nav, not the first fold.
 - `/decision/` admitted: Packet 8 Decision Integrity RECORD. Terra, Aegis, Puriq Markets, Counsel frozen cases. Formula authority NONE. Kernel is not run here. Evaluate on `a-11-oy.com/decision`. Hub Spaces are not required. Index, not nav, not the first fold.
 - Primary nav collapsed to Product | RECORD | Diligence | Atlas | Index. First-fold CTA is RECORD. Product remains a text link. Atelier, Ayllu, experiments, chat, code, notes, and estate live under Index. Nothing deleted.
 - `/atelier/` admitted: static forty-model walk of SZLHOLDINGS Hub ids. Canonical playable Space is `https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier`. Source `szl-holdings/szl-atelier`. Nano silhouettes MEASURED in-browser. 1.5B numbers SIGNED, not retrained here. Energy UNAVAILABLE. Not a product runtime. Does not clone `/verify`. Index, not nav, not the first fold.

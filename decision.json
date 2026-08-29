@@ -11,6 +11,14 @@
     "proof_html": "https://a11oy.net/decision/",
     "proof_json": "https://a11oy.net/decision.json",
     "product_desk": "https://a-11-oy.com/decision",
+    "product_terra": "https://a-11-oy.com/terra",
+    "product_aegis": "https://a-11-oy.com/aegis",
+    "product_puriq_markets": "https://a-11-oy.com/puriq-markets",
+    "product_counsel": "https://a-11-oy.com/counsel",
+    "proof_terra": "https://a11oy.net/terra/",
+    "proof_aegis": "https://a11oy.net/aegis/",
+    "proof_puriq_markets": "https://a11oy.net/puriq-markets/",
+    "proof_counsel": "https://a11oy.net/counsel/",
     "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals"
   },
   "status": "ROADMAP",
@@ -29,10 +37,10 @@
     {"id": "counsel", "display_name": "Counsel Assurance", "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance", "case_count": 4}
   ],
   "adapters": [
-    {"id": "terra-assurance", "hub": "SZLHOLDINGS/terra-assurance", "state": "exists-private", "sink": "https://a-11-oy.com/decision"},
-    {"id": "aegis-assurance", "hub": "SZLHOLDINGS/aegis-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"},
-    {"id": "puriq-markets", "hub": "SZLHOLDINGS/puriq-markets", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"},
-    {"id": "counsel-assurance", "hub": "SZLHOLDINGS/counsel-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/decision"}
+    {"id": "terra-assurance", "hub": "SZLHOLDINGS/terra-assurance", "state": "exists-private", "sink": "https://a-11-oy.com/terra"},
+    {"id": "aegis-assurance", "hub": "SZLHOLDINGS/aegis-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/aegis"},
+    {"id": "puriq-markets", "hub": "SZLHOLDINGS/puriq-markets", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/puriq-markets"},
+    {"id": "counsel-assurance", "hub": "SZLHOLDINGS/counsel-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/counsel"}
   ],
   "boundaries": {
     "this_origin_does_not_run_the_kernel": true,

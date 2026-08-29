@@ -85,15 +85,15 @@
     "runtime_claimed": false,
     "hub_spaces_required": false,
     "hub_create": "NOT_REQUIRED",
-    "hub_create_note": "Hugging Face 20 Space-creates/day blocked three adapters. Fold into product /decision. Do not wait on Hub.",
+    "hub_create_note": "Hugging Face 20 Space-creates/day blocked three adapters. Fold into product vanity paths /terra /aegis /puriq-markets /counsel. Do not wait on Hub.",
     "product": "https://a-11-oy.com/decision",
     "proof": "https://a11oy.net/decision/",
     "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals",
     "adapters": [
-      {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "exists-private"},
-      {"id": "aegis-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"},
-      {"id": "puriq-markets", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"},
-      {"id": "counsel-assurance", "sink": "product", "dest": "https://a-11-oy.com/decision", "hub": "blocked-space-create-cap"}
+      {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com/terra", "hub": "exists-private"},
+      {"id": "aegis-assurance", "sink": "product", "dest": "https://a-11-oy.com/aegis", "hub": "blocked-space-create-cap"},
+      {"id": "puriq-markets", "sink": "product", "dest": "https://a-11-oy.com/puriq-markets", "hub": "blocked-space-create-cap"},
+      {"id": "counsel-assurance", "sink": "product", "dest": "https://a-11-oy.com/counsel", "hub": "blocked-space-create-cap"}
     ]
   },
   "boundaries": {
