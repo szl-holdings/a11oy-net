@@ -13,6 +13,7 @@ Authoritative public paths:
 - Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
 - Governed code gateway: https://a11oy.net/code/
+- Forty-model atelier walk (static; canonical Space is huggingface.co/spaces/SZLHOLDINGS/szl-atelier): https://a11oy.net/atelier/
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
 - Static-surface scope: https://a11oy.net/api/build-info/
 - Static probe document (not runtime health): https://a11oy.net/health.json

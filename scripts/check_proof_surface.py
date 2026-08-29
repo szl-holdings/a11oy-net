@@ -273,6 +273,7 @@ def check() -> None:
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
+        "https://a11oy.net/atelier/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -290,6 +291,7 @@ def check() -> None:
     assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
+    assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"
@@ -346,6 +348,9 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/record/" for anchor in surface.anchors
     ), "the root proof registry must expose RECORD"
+    assert any(
+        anchor.get("href") == "/atelier/" for anchor in surface.anchors
+    ), "the root proof registry must expose the atelier walk"
     assert "Alloy by SZL Holdings" in source
     assert "id=\"summary\"" in source
     assert "id=\"record\"" in source
