@@ -1,0 +1,28 @@
+{
+  "date": "2026-08-29",
+  "kind": "dated note",
+  "honesty": "MEASURED",
+  "incident": "INC-05",
+  "title": "Origin lock + fail-closed frontier compiler",
+  "product": "https://a-11-oy.com",
+  "proof": "https://a11oy.net/frontiers/",
+  "issue": "https://github.com/szl-holdings/a11oy/issues/1497",
+  "record_pr": "https://github.com/szl-holdings/a11oy-net/pull/77",
+  "compiler": {
+    "fail_closed": true,
+    "lyte": "ADMIT STRUCTURAL-ONLY",
+    "n1_n25": "BLOCKED STARTED",
+    "n13_n26": "BLOCKED joule UNAVAILABLE",
+    "n27": "BLOCKED NEVER_DISPATCH",
+    "energy": "UNAVAILABLE",
+    "production_certificate": false
+  },
+  "operator": "Cloudflare Redirect Rule: www.a-11-oy.com 301 to https://a-11-oy.com/. Same zone. This note does not mint DNS.",
+  "boundaries": {
+    "does_not_stamp_live": true,
+    "does_not_rewrite_factory": true,
+    "does_not_clone_verify": true,
+    "grok_spa_not_published_here": true,
+    "fourth_public_origin_published": false
+  }
+}

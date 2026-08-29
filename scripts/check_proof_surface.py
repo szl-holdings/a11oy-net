@@ -326,6 +326,11 @@ def check() -> None:
     assert frontiers_contract["promotion"]["verdict"] == "BLOCKED"
     assert frontiers_contract["boundaries"]["does_not_rewrite_factory"] is True
     assert frontiers_contract["boundaries"]["grok_spa_not_published_here"] is True
+    assert frontiers_contract["compiler"]["fail_closed"] is True
+    assert frontiers_contract["compiler"]["n27"] == "BLOCKED NEVER_DISPATCH"
+    assert frontiers_contract["compiler"]["production_certificate"] is False
+    assert 'id="compiler"' in frontiers_src
+    assert "NEVER_DISPATCH" in frontiers_src
     hologram = ROOT / "estate" / "os"
     assert (hologram / "index.html").is_file(), "estate catalog hologram HTML must exist"
     assert (hologram / "app.js").is_file(), "estate catalog hologram script must exist"
