@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- `/five-space/` admitted as a RECORD stub of the five-space BIND hologram (Command · Loop · Queue · Memory · Ledger). Kernel is not run here. Evaluate on `a-11-oy.com/five-space`. Does not replace `/console`. Does not clone `/verify`. Formula authority NONE. Energy UNAVAILABLE. Λ stays Conjecture 1. Index, not nav, not the first fold.
 - `/estate/os/` admitted: static on-origin estate catalog hologram (hash router). PUBLIC_PARTIAL bake 2026-08-29T17:35:39Z from the public GitHub + Hub catalog. READ-ONLY. Not a live dashboard. Not product runtime. Not a fourth origin. Later keep-7 recapture stays `/estate.json` and is not overwritten. Linked from `/estate/`. Index, not nav, not the first fold. Does not clone `/verify`. Λ remains Conjecture 1.
 - `/estate/` recapture 2026-08-29T18:23Z: GitHub 98 / 93 public / 4 open PRs 0 merge-qualified. Hub unauth 43 models / 28 datasets / 6 public Spaces. GPU train UNAVAILABLE (command-lab#12 fail-closed; factory#22 N27; Hub runtimes private). Energy UNAVAILABLE (live NVML not recapturable). Product honesty UNAVAILABLE (a-11-oy.com custom domain PENDING; Space HTTP timeout). Λ stays Conjecture 1. Atlas keep-7 snapshot at 18:05Z is not rewritten. /verify is not cloned. Never a11oy.com.
 - `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/` admitted as Packet 8 RECORD stubs. Kernel is not run here. Evaluate on `a-11-oy.com/terra` (and the matching vanity paths). Hub Spaces are not required. Same kernel, four desks, not four Spaces. Index, not nav, not the first fold.
