@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON"
   },
   "reader_guide": "Counts are MEASURED from authenticated Hugging Face API and public GitHub search at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
-  "captured_at": "2026-08-29T17:25:00Z",
+  "captured_at": "2026-08-29T18:05:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
@@ -23,23 +23,23 @@
     "spaces_public": 7,
     "spaces_private": 38,
     "public_spaces": [
-      "SZLHOLDINGS/README",
       "SZLHOLDINGS/a11oy",
       "SZLHOLDINGS/killinchu",
+      "SZLHOLDINGS/david-leads",
+      "SZLHOLDINGS/anatomy",
       "SZLHOLDINGS/immune",
-      "SZLHOLDINGS/szl-khipu",
-      "SZLHOLDINGS/szl-atelier",
-      "SZLHOLDINGS/governed-receipt-verifier"
+      "SZLHOLDINGS/szl-real-estate",
+      "SZLHOLDINGS/szl-atelier"
     ],
     "action": "pause+private, never delete",
     "collection": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
-    "bound": "Authenticated org-admin listing. Archive set is retained private. Models and datasets remain public."
+    "bound": "Unauthenticated Hub author-list recapture. Public keepers are these seven. szl-khipu and governed-receipt-verifier recaptured private (401). Org README Space is a profile card, not one of the seven. Private counts retained from the 17:25 authenticated snapshot. None deleted."
   },
   "origins": {
     "product": "https://a-11-oy.com",
     "proof": "https://a11oy.net/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com — foreign storefront"
+    "never": "a11oy.com \u2014 foreign storefront"
   },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
