@@ -23,8 +23,11 @@
     "bound": "Point-in-time listing metadata. Interactive Spaces and Killinchu-named resources are outside this inventory."
   },
   "github_surfaces": [
-    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source", "evidence_class": "REPORTED"},
-    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry", "evidence_class": "REPORTED"},
+    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source · a-11-oy.com", "evidence_class": "REPORTED"},
+    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry · a11oy.net", "evidence_class": "REPORTED"},
+    {"name": "immune", "url": "https://github.com/szl-holdings/immune", "role": "Verifiable-AI defense matrix", "evidence_class": "REPORTED"},
+    {"name": "ayllu", "url": "https://github.com/szl-holdings/ayllu", "role": "Evidence-bound counsel", "evidence_class": "REPORTED"},
+    {"name": "szl-forge", "url": "https://github.com/szl-holdings/szl-forge", "role": "Own-metal train kit", "evidence_class": "REPORTED"},
     {"name": "szl-receipt", "url": "https://github.com/szl-holdings/szl-receipt", "role": "Shared signing library", "evidence_class": "REPORTED"},
     {"name": "szl-lake", "url": "https://github.com/szl-holdings/szl-lake", "role": "Append-only receipt store", "evidence_class": "REPORTED"},
     {"name": "governed-receipt-spec", "url": "https://github.com/szl-holdings/governed-receipt-spec", "role": "Receipt format and offline verifier spec", "evidence_class": "REPORTED"},
@@ -37,13 +40,9 @@
   "roadmap_cuts": {
     "status": "ROADMAP",
     "url": "https://a11oy.net/#cuts",
-    "bound": "Public Hub cutting cards. Not trained checkpoints. No weights, kernel binary, or capability claim.",
+    "bound": "Public Hub cutting cards without admitted train data or kernel binary. Adapter listings with bytes are not in this list.",
     "items": [
-      "KHIPU-R2",
-      "WILLAY",
       "YARQA-ATTN",
-      "A11OY-MINI",
-      "chaski",
       "qantu",
       "waman",
       "chakana",
