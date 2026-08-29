@@ -345,8 +345,11 @@ def check() -> None:
     assert record_contract["status"]["receipt_ids"] == []
     assert record_contract["status"]["receipt_ids_class"] == "UNAVAILABLE"
     atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
-    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-28"
-    assert atlas_contract["hub_snapshot"]["n"] == 57
+    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-29T17:25:00Z"
+    assert atlas_contract["hub_snapshot"]["spaces_public"] == 7
+    assert atlas_contract["hub_snapshot"]["spaces_private"] == 38
+    assert atlas_contract["hub_snapshot"]["spaces_total"] == 45
+    assert len(atlas_contract["public_spaces"]) == 7
     assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
     assert atlas_contract["boundaries"]["killinchu_named_resources_excluded"] is True
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
