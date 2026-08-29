@@ -274,6 +274,7 @@ def check() -> None:
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
         "https://a11oy.net/atelier/",
+        "https://a11oy.net/decision/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -292,6 +293,8 @@ def check() -> None:
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
+    assert (ROOT / "decision" / "index.html").is_file(), "decision RECORD must exist"
+    assert (ROOT / "decision.json").is_file(), "decision machine contract must exist"
     assert (ROOT / "health.json").is_file(), "static JSON probe document must exist"
     health = json.loads((ROOT / "health.json").read_text(encoding="utf-8"))
     assert health["path"] == "/health.json"
