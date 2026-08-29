@@ -57,6 +57,7 @@ SNAPSHOT_IDS = frozenset({"L1", "L2", "L3", "L4", "L5", "L6"})
 CORE_ROUTES = (
     "/",
     "/diligence/",
+    "/estate/",
     "/chat/",
     "/code/",
     "/evidence.json",
@@ -71,6 +72,7 @@ OG_CANDIDATES = (
 HTML_SURFACES = (
     "index.html",
     "diligence/index.html",
+    "estate/index.html",
     "chat/index.html",
     "code/index.html",
     "404.html",
@@ -695,6 +697,7 @@ def static_debug_verdicts(root: Path = ROOT) -> list[Verdict]:
         for path in (
             "https://a11oy.net/",
             "https://a11oy.net/diligence/",
+            "https://a11oy.net/estate/",
             "https://a11oy.net/chat/",
             "https://a11oy.net/code/",
         )
