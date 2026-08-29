@@ -11,9 +11,9 @@
     "evidence_class": "MEASURED"
   },
   "hub_snapshot": {
-    "observed_at": "2026-08-29T17:25:00Z",
+    "observed_at": "2026-08-29T18:05:00Z",
     "evidence_class": "MEASURED",
-    "method": "Authenticated Hugging Face API as SZLHOLDINGS admin",
+    "method": "Unauthenticated Hugging Face API public author-list recapture; private counts from 17:25 authenticated snapshot",
     "spaces_total": 45,
     "spaces_public": 7,
     "spaces_private": 38,
@@ -21,23 +21,83 @@
     "datasets": 36,
     "collections_canonical": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
     "org": "https://huggingface.co/SZLHOLDINGS",
-    "bound": "Public keep set is the seven Spaces below. 38 others are private, paused when docker, not deleted."
+    "bound": "Unauthenticated Hub author-list recapture. Public keepers are these seven. szl-khipu and governed-receipt-verifier recaptured private (401). Org README Space is a profile card, not one of the seven. Private counts retained from the 17:25 authenticated snapshot. None deleted."
   },
   "public_spaces": [
-    {"name": "README", "url": "https://huggingface.co/spaces/SZLHOLDINGS/README", "role": "Org card", "evidence_class": "MEASURED"},
-    {"name": "a11oy", "url": "https://a-11-oy.com", "role": "Product Command Center", "evidence_class": "MEASURED"},
-    {"name": "killinchu", "url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu", "role": "Defense vertical", "evidence_class": "MEASURED"},
-    {"name": "immune", "url": "https://huggingface.co/spaces/SZLHOLDINGS/immune", "role": "Safety kernel", "evidence_class": "MEASURED"},
-    {"name": "szl-khipu", "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-khipu", "role": "Model demo", "evidence_class": "MEASURED"},
-    {"name": "szl-atelier", "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier", "role": "Artifact walk", "evidence_class": "MEASURED"},
-    {"name": "governed-receipt-verifier", "url": "https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier", "role": "Receipt replay", "evidence_class": "MEASURED"}
+    {
+      "name": "a11oy",
+      "url": "https://a-11-oy.com",
+      "role": "Product Command Center",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "killinchu",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
+      "role": "Defense vertical",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "david-leads",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/david-leads",
+      "role": "Insurance vertical",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "anatomy",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/anatomy",
+      "role": "Living map",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "immune",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
+      "role": "Safety kernel",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "szl-real-estate",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-real-estate",
+      "role": "Public-records underwriting",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "szl-atelier",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
+      "role": "Artifact walk",
+      "evidence_class": "MEASURED"
+    }
   ],
   "github_surfaces": [
-    {"name": "a11oy", "url": "https://github.com/szl-holdings/a11oy", "role": "Product source", "evidence_class": "MEASURED"},
-    {"name": "a11oy-net", "url": "https://github.com/szl-holdings/a11oy-net", "role": "This proof registry", "evidence_class": "MEASURED"},
-    {"name": "killinchu", "url": "https://github.com/szl-holdings/killinchu", "role": "Defense vertical source", "evidence_class": "MEASURED"},
-    {"name": "immune", "url": "https://github.com/szl-holdings/immune", "role": "Safety kernel source", "evidence_class": "MEASURED"},
-    {"name": ".github", "url": "https://github.com/szl-holdings/.github", "role": "Doctrine and org card source", "evidence_class": "MEASURED"}
+    {
+      "name": "a11oy",
+      "url": "https://github.com/szl-holdings/a11oy",
+      "role": "Product source",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "a11oy-net",
+      "url": "https://github.com/szl-holdings/a11oy-net",
+      "role": "This proof registry",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "killinchu",
+      "url": "https://github.com/szl-holdings/killinchu",
+      "role": "Defense vertical source",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": "immune",
+      "url": "https://github.com/szl-holdings/immune",
+      "role": "Safety kernel source",
+      "evidence_class": "MEASURED"
+    },
+    {
+      "name": ".github",
+      "url": "https://github.com/szl-holdings/.github",
+      "role": "Doctrine and org card source",
+      "evidence_class": "MEASURED"
+    }
   ],
   "boundaries": {
     "http_response_proves_capability": false,
