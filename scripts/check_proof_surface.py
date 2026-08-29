@@ -287,6 +287,8 @@ def check() -> None:
         "https://a11oy.net/five-space/",
         "https://a11oy.net/nexus/",
         "https://a11oy.net/factory/",
+        "https://a11oy.net/origin/",
+        "https://a11oy.net/frontiers/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -304,6 +306,26 @@ def check() -> None:
     assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
     assert (ROOT / "factory" / "index.html").is_file(), "factory RECORD HTML must exist"
     assert (ROOT / "factory.json").is_file(), "factory RECORD contract must exist"
+    assert (ROOT / "origin" / "index.html").is_file(), "origin lock RECORD HTML must exist"
+    assert (ROOT / "origin.json").is_file(), "origin lock contract must exist"
+    origin_src = (ROOT / "origin" / "index.html").read_text(encoding="utf-8")
+    assert "script-src 'none'" in origin_src
+    assert "INC-05" in origin_src
+    assert "https://a11oy.com" not in origin_src
+    origin_contract = json.loads((ROOT / "origin.json").read_text(encoding="utf-8"))
+    assert origin_contract["incident"] == "INC-05"
+    assert origin_contract["boundaries"]["does_not_change_dns"] is True
+    assert origin_contract["boundaries"]["grok_spa_not_published_here"] is True
+    assert (ROOT / "frontiers" / "index.html").is_file(), "named frontiers SNAPSHOT HTML must exist"
+    assert (ROOT / "frontiers.json").is_file(), "named frontiers contract must exist"
+    frontiers_src = (ROOT / "frontiers" / "index.html").read_text(encoding="utf-8")
+    assert "script-src 'none'" in frontiers_src
+    assert "STRUCTURAL-ONLY" in frontiers_src
+    assert "https://a11oy.com" not in frontiers_src
+    frontiers_contract = json.loads((ROOT / "frontiers.json").read_text(encoding="utf-8"))
+    assert frontiers_contract["promotion"]["verdict"] == "BLOCKED"
+    assert frontiers_contract["boundaries"]["does_not_rewrite_factory"] is True
+    assert frontiers_contract["boundaries"]["grok_spa_not_published_here"] is True
     hologram = ROOT / "estate" / "os"
     assert (hologram / "index.html").is_file(), "estate catalog hologram HTML must exist"
     assert (hologram / "app.js").is_file(), "estate catalog hologram script must exist"
