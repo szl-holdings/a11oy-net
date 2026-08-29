@@ -266,6 +266,7 @@ def check() -> None:
     ] == [
         "https://a11oy.net/",
         "https://a11oy.net/ayllu/",
+        "https://a11oy.net/experiments/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
