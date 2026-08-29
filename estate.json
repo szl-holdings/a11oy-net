@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON"
   },
   "reader_guide": "This file is a recapture snapshot. Counts are MEASURED from public GitHub and public Hugging Face APIs at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com. Interactive /verify is not cloned here.",
-  "captured_at": "2026-08-29T00:56:00Z",
+  "captured_at": "2026-08-29T01:18:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
@@ -16,21 +16,21 @@
     "public": 71,
     "private": 5,
     "archived": 7,
-    "open_prs": 11,
+    "open_prs": 10,
     "merge_qualified_this_recapture": 0,
     "anchor_was": 63,
     "protected_mains": {
-      "a11oy": "4783ee5597c2129df0feddd3620f07f1fc73a5ff",
-      "killinchu": "eab124aae976f1c7f98564b92810d88224a62b2b",
-      "a11oy-net": "e738e05f3652b9e65bbd7a0b10ae1615d0485f35",
+      "a11oy": "6f37a66136520b3dd8d7aded1d825e6bc0f00c35",
+      "killinchu": "ff5d43c846d54472390ef01cc4edcaf1cc4d9708",
+      "a11oy-net": "81cd8050fc2f110e17a01a605980840902b85d4d",
       "szl-forge": "27d93514936e52d5812050aa03e7dec211267410"
     }
   },
   "huggingface": {
     "org": "SZLHOLDINGS",
-    "models": 33,
+    "models": 38,
     "datasets": 28,
-    "spaces": 27,
+    "spaces": 28,
     "remaining_joblib": 0,
     "training_submit": "REJECTED_WITH_REASON",
     "bound": "Public listing metadata. Not an authenticated private inventory. Not quality."
