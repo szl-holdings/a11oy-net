@@ -282,6 +282,7 @@ def check() -> None:
         "https://a11oy.net/aegis/",
         "https://a11oy.net/puriq-markets/",
         "https://a11oy.net/counsel/",
+        "https://a11oy.net/vessels/",
         "https://a11oy.net/ayllu/psyche/",
         "https://a11oy.net/five-space/",
     ]
@@ -353,7 +354,7 @@ def check() -> None:
     assert "cdn." not in khipu_src
     assert (ROOT / "decision" / "index.html").is_file(), "decision RECORD must exist"
     assert (ROOT / "decision.json").is_file(), "decision machine contract must exist"
-    for stub in ("terra", "aegis", "puriq-markets", "counsel", "five-space"):
+    for stub in ("terra", "aegis", "puriq-markets", "counsel", "vessels", "five-space"):
         path = ROOT / stub / "index.html"
         assert path.is_file(), f"{stub} RECORD stub must exist"
         text = path.read_text(encoding="utf-8")
