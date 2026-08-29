@@ -286,6 +286,7 @@ def check() -> None:
         "https://a11oy.net/ayllu/psyche/",
         "https://a11oy.net/five-space/",
         "https://a11oy.net/nexus/",
+        "https://a11oy.net/factory/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -301,6 +302,8 @@ def check() -> None:
     assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
     assert (ROOT / "estate" / "index.html").is_file(), "estate snapshot HTML must exist"
     assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
+    assert (ROOT / "factory" / "index.html").is_file(), "factory RECORD HTML must exist"
+    assert (ROOT / "factory.json").is_file(), "factory RECORD contract must exist"
     hologram = ROOT / "estate" / "os"
     assert (hologram / "index.html").is_file(), "estate catalog hologram HTML must exist"
     assert (hologram / "app.js").is_file(), "estate catalog hologram script must exist"
