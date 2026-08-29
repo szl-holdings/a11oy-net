@@ -1,13 +1,13 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "surface": {
     "name": "Estate snapshot",
     "url": "https://a11oy.net/estate/",
     "publisher": "SZL Holdings",
-    "meaning": "Dated MEASURED public inventory snapshot on the proof origin. Not product runtime. Not a live dashboard. Not a receipt store.",
+    "meaning": "Dated MEASURED public inventory snapshot on the proof origin, plus a closeout recapture. Not product runtime. Not a live dashboard. Not a receipt store. This origin does not host a DSSE signer.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "Counts are MEASURED from authenticated Hugging Face API and public GitHub search at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
+  "reader_guide": "Authenticated Hub author-list at captured_at is the 18:20Z seven including the org README Space. Unauthenticated author-list recaptured 18:37Z is six and omits README (profile card). Atlas keep-7 at 18:05Z is not rewritten. Counts are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com. Closeout signatures, if any, were produced by the live a11oy Space organ and are not hosted here.",
   "captured_at": "2026-08-29T18:20:00Z",
   "evidence_class": "MEASURED",
   "github": {
@@ -33,7 +33,22 @@
     ],
     "action": "pause+private, never delete",
     "collection": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
-    "bound": "Authenticated Hub author-list 2026-08-29 as org admin betterwithage. Keep-7 is these seven, including the org README Space. anatomy, david-leads, and szl-real-estate were re-privatized and paused. None deleted. Product Space a11oy was not rebuilt as a different app."
+    "bound": "Authenticated Hub author-list 2026-08-29T18:20Z as org admin betterwithage. Includes the org README Space (profile card). anatomy, david-leads, and szl-real-estate were re-privatized and paused. None deleted. Product Space a11oy was not rebuilt as a different app. Atlas keep-7 at 18:05Z is a prior snapshot and is not rewritten here."
+  },
+  "unauth_author_list": {
+    "observed_at": "2026-08-29T18:37:00Z",
+    "evidence_class": "MEASURED",
+    "method": "Unauthenticated Hugging Face API GET /api/spaces?author=SZLHOLDINGS&limit=100",
+    "spaces_public": 6,
+    "public_spaces": [
+      "SZLHOLDINGS/a11oy",
+      "SZLHOLDINGS/killinchu",
+      "SZLHOLDINGS/immune",
+      "SZLHOLDINGS/szl-khipu",
+      "SZLHOLDINGS/szl-atelier",
+      "SZLHOLDINGS/governed-receipt-verifier"
+    ],
+    "bound": "README Space exists (private=false) and is omitted from the unauth author-list. Atlas bound: README is a profile card, not one of the seven. Do not treat this six as a rewrite of atlas keep-7."
   },
   "origins": {
     "product": "https://a-11-oy.com",
@@ -50,10 +65,218 @@
     "verify_cloned": false,
     "receipt_database_hosted_here": false,
     "spaces_deleted": false,
+    "fourth_public_origin": false,
+    "lambda_uniqueness": "Conjecture 1 OPEN",
+    "dsse_signer_hosted_here": false,
+    "dsse_envelope_hosted_here": false,
     "grok_spa_published_here": false,
+    "grok_spa_published_as_fourth_origin": false,
     "fourth_public_origin_published": false,
     "hologram_is_on_origin": true
   },
+  "closeout_recapture_at": "2026-08-29T18:00:00Z",
+  "keys": {
+    "evidence_class": "MEASURED",
+    "private_keys_in_public_git": 0,
+    "hmac_keys_in_public_git": 0,
+    "observed_at": "2026-08-29T18:00:00Z",
+    "note": "Deep public scan of szl-receipt, szl-govsign, a11oy, killinchu, .github/keys, developers/VERIFY.md, and szl-lake. Private key is never committed. It lives as HF Space secret SZL_COSIGN_PRIVATE_PEM. HMAC key A11OY_HMAC_KEY is not in public git. Do not mint a replacement identity.",
+    "org_github_cosign_pub": {
+      "url": "https://raw.githubusercontent.com/szl-holdings/.github/main/keys/cosign.pub",
+      "pem_sha256": "31b8c7f11a57c05986c6ee8b7f21aefef4af1072c11e8058ce79c0f11502e0ad",
+      "keyid_reported": "d3028f8a",
+      "matches_live_closeout": false,
+      "observed_at": "2026-08-29T18:16:00Z"
+    },
+    "a11oy_space_cosign_pub": {
+      "url": "https://szlholdings-a11oy.hf.space/cosign.pub",
+      "keyid_reported": "9926bf69",
+      "matches_live_closeout": true,
+      "observed_at": "2026-08-29T18:00:00Z",
+      "bound": "Node ECDSA-P256-SHA256 verify of live /khipu/sign against Space /cosign.pub. MATCH. Space GET timed out at 18:16Z and honesty timed out at 18:23Z; fingerprint is not re-hashed after the ceremony."
+    },
+    "a11oy_khipu_pubkey": {
+      "url": "https://szlholdings-a11oy.hf.space/khipu/pubkey.pem",
+      "matches_live_closeout": false,
+      "bound": "Distinct P-256 key from Space /cosign.pub. Ceremony mismatch."
+    },
+    "killinchu_cosign_pub": {
+      "url": "https://szlholdings-killinchu.hf.space/cosign.pub",
+      "matches_live_closeout": false,
+      "bound": "Distinct P-256 key. Ceremony mismatch."
+    }
+  },
+  "signing": {
+    "this_origin_has_signer": false,
+    "live_organ": "SZLHOLDINGS/a11oy",
+    "sign_endpoint": "https://szlholdings-a11oy.hf.space/api/a11oy/khipu/sign",
+    "payload_type": "application/vnd.szl.khipu+json",
+    "honesty": "REAL — ECDSA-P256-SHA256 over DSSE PAE, verified against a11oy Space /cosign.pub. Does not match published org GitHub cosign.pub. HMAC remains PLACEHOLDER. Not ALLOW. Not a production certificate.",
+    "hmac_layer": "placeholder",
+    "hmac_key_id": "hmac-sha256:PLACEHOLDER",
+    "non_repudiation": false,
+    "matches_published_org_key": false,
+    "key_persistent": true,
+    "application_git_sha_at_ceremony": "e198c1a49fa6c8d8cfb411fe26d8bda7db842cea",
+    "doctrine": "v11",
+    "doctrine_lock_at_ceremony": "c7c0ba17",
+    "envelope_hosted_here": false,
+    "observed_at": "2026-08-29T18:00:00Z",
+    "bound": "Ceremony ran while the Space answered. At 18:23Z product honesty was UNAVAILABLE (custom domain PENDING; Space HTTP timeout). This origin records the facts. It does not store the envelope and does not re-sign."
+  },
+  "closeout": {
+    "state": "BLOCKED_EXTERNAL_AUTHORITY",
+    "evidence_class": "REPORTED",
+    "reason": "Live organ produced a verifiable closeout DSSE earlier this date. Exact-SHA deploy, HMAC non-repudiation, and org-key match remain outside this surface. At 18:23Z product honesty is UNAVAILABLE. GPU train is UNAVAILABLE. Open P0 findings remain. Trust stays UNAVAILABLE."
+  },
+  "findings": [
+    {
+      "id": "P0-JOBLIB",
+      "severity": "P0",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Unsafe serialization on public model serving"
+    },
+    {
+      "id": "P0-PROD-LAG",
+      "severity": "P0",
+      "status": "open",
+      "evidence": "MEASURED",
+      "title": "Production honesty UNAVAILABLE; prior ceremony SHA lagged GitHub main"
+    },
+    {
+      "id": "P0-UNSIGNED",
+      "severity": "P0",
+      "status": "open",
+      "evidence": "MEASURED",
+      "title": "Assurance pack is unsigned"
+    },
+    {
+      "id": "P0-KERNEL-DIVERGE",
+      "severity": "P0",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Two kernel / model code divergences"
+    },
+    {
+      "id": "P1-KEY-DIVERGE",
+      "severity": "P1",
+      "status": "open",
+      "evidence": "MEASURED",
+      "title": "Published cosign keys diverge across organs"
+    },
+    {
+      "id": "P1-HMAC",
+      "severity": "P1",
+      "status": "blocked",
+      "evidence": "MEASURED",
+      "title": "HMAC non-repudiation layer is placeholder"
+    },
+    {
+      "id": "P1-SOURCEMAP",
+      "severity": "P1",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Space source-map drift"
+    },
+    {
+      "id": "P1-VIEWER",
+      "severity": "P1",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Dataset viewer failures"
+    },
+    {
+      "id": "P1-LICENSE",
+      "severity": "P1",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Missing license metadata"
+    },
+    {
+      "id": "P1-BUCKET",
+      "severity": "P1",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Stale bucket-manifest evidence"
+    },
+    {
+      "id": "P1-PRIVATE-GAP",
+      "severity": "P1",
+      "status": "blocked",
+      "evidence": "REPORTED",
+      "title": "Public / authenticated inventory gap"
+    },
+    {
+      "id": "P2-STALL",
+      "severity": "P2",
+      "status": "open",
+      "evidence": "REPORTED",
+      "title": "Cooling and stalled organs"
+    }
+  ],
+  "workgraph": [
+    {
+      "id": "W1",
+      "phase": "reconnaissance",
+      "state": "done",
+      "title": "Freeze public audit digest"
+    },
+    {
+      "id": "W2",
+      "phase": "exact-base lock",
+      "state": "done",
+      "title": "Lock merged main SHA"
+    },
+    {
+      "id": "W3",
+      "phase": "minimal implementation",
+      "state": "ready",
+      "title": "Quarantine joblib serving"
+    },
+    {
+      "id": "W4",
+      "phase": "minimal implementation",
+      "state": "ready",
+      "title": "Reconcile two kernel/model divergences"
+    },
+    {
+      "id": "W5",
+      "phase": "focused tests",
+      "state": "ready",
+      "title": "License and card pass"
+    },
+    {
+      "id": "W6",
+      "phase": "focused tests",
+      "state": "ready",
+      "title": "Repair dataset viewers"
+    },
+    {
+      "id": "W7",
+      "phase": "repository gates",
+      "state": "ready",
+      "title": "Lock Space source-maps"
+    },
+    {
+      "id": "W8",
+      "phase": "evidence packet",
+      "state": "ready",
+      "title": "Sign closeout via live a11oy organ"
+    },
+    {
+      "id": "W9",
+      "phase": "exact-SHA deployment",
+      "state": "external",
+      "title": "Deploy merged SHA to production"
+    },
+    {
+      "id": "W10",
+      "phase": "live readback",
+      "state": "blocked",
+      "title": "Independent post-deploy verification"
+    }
+  ],
   "hologram": {
     "url": "https://a11oy.net/estate/os/",
     "meaning": "Static on-origin hologram of the PUBLIC_PARTIAL public catalog. READ-ONLY. Not a live dashboard. Not product runtime. Not a fourth origin.",

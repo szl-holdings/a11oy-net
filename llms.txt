@@ -8,7 +8,7 @@ Authoritative public paths:
 - Canonical receipt RECORD index (pointers only; no receipt store here): https://a11oy.net/record/
 - RECORD contract: https://a11oy.net/record.json
 - Hub atlas contract: https://a11oy.net/atlas.json
-- Estate snapshot (dated MEASURED inventory; not a live dashboard): https://a11oy.net/estate/
+- Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
 - Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
 - Estate contract: https://a11oy.net/estate.json
 - Dated notes: https://a11oy.net/notes/

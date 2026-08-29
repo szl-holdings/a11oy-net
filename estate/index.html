@@ -49,13 +49,13 @@
       <div class="wrap">
         <p class="eyebrow">Estate snapshot · MEASURED · 2026-08-29T18:23:00Z</p>
         <h1>Inventory on the proof origin. Runtime stays on the product.</h1>
-        <p class="lede">This page is a dated public recapture. It is not a live operator console, not a receipt store, and not a-11-oy.com. Do not merge hosts. Never a11oy.com.</p>
+        <p class="lede">This page is a dated public recapture. It is not a live operator console, not a receipt store, and not a-11-oy.com. The live a11oy organ can sign. This origin does not. Do not merge hosts. Never a11oy.com.</p>
         <div class="actions">
           <a class="button primary" href="/estate/os/">Open estate catalog hologram</a>
           <a class="button" href="/estate.json">Read machine snapshot</a>
           <a class="button" href="https://a-11-oy.com" target="_blank" rel="noopener">Open product</a>
         </div>
-        <p class="boundary"><strong>Operational boundary:</strong> GitHub Pages served this HTML. That proves reachability of this path only. Product honesty is <code>https://a-11-oy.com/api/a11oy/v1/honest</code> and is UNAVAILABLE this recapture (custom domain PENDING; Space HTTP timeout). Interactive verify is not cloned here.</p>
+        <p class="boundary"><strong>Operational boundary:</strong> GitHub Pages served this HTML. That proves reachability of this path only. Product honesty is <code>https://a-11-oy.com/api/a11oy/v1/honest</code> and is UNAVAILABLE this recapture (custom domain PENDING; Space HTTP timeout). Interactive verify is not cloned here. A Grok working copy is not a fourth public origin.</p>
       </div>
     </header>
 
@@ -85,8 +85,113 @@
               <tr><td>Energy joules</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>RAPL/NVML only · command-lab Hub private</td><td>Prior wrap 17.095 J / 1.0002 s while T4 was RUNNING is not a live meter. Package joule ≠ inference joule.</td></tr>
               <tr><td>Hub Space git is a distinct object</td><td><span class="cls cls-measured">MEASURED</span></td><td>HfApi.space_info SZLHOLDINGS/a11oy sha 505fab44</td><td>Not a GitHub commit. Matching GitHub and honest is not a deploy claim.</td></tr>
               <tr><td>Λ uniqueness</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>Conjecture 1</td><td>Never a theorem. Never green. proven_trust=false.</td></tr>
+              <tr><td>Private keys in public git = 0</td><td><span class="cls cls-measured">MEASURED</span></td><td>Public git scan · 2026-08-29T18:00Z</td><td>Key lives as Space secret SZL_COSIGN_PRIVATE_PEM. Do not mint a replacement.</td></tr>
+              <tr><td>Four published P-256 keys diverge</td><td><span class="cls cls-measured">MEASURED</span></td><td>Live pubkey fetch + Node ECDSA verify · 18:00Z</td><td>Closeout MATCH only vs a11oy Space /cosign.pub (keyid 9926bf69). Org GitHub key d3028f8a did not produce the signature.</td></tr>
+              <tr><td>Live organ signed a closeout DSSE</td><td><span class="cls cls-measured">MEASURED</span></td><td>POST /api/a11oy/khipu/sign then local verify · 18:00Z</td><td>REAL ECDSA. Not ALLOW. Envelope is not stored on this origin. Honesty later UNAVAILABLE at 18:23Z.</td></tr>
+              <tr><td>HMAC non-repudiation</td><td><span class="cls cls-measured">MEASURED</span></td><td>/api/a11oy/v1/signing-status · 18:00Z</td><td>hmac_layer=placeholder. non_repudiation=false. A11OY_HMAC_KEY is not in public git.</td></tr>
+              <tr><td>Unauth Hub author-list</td><td><span class="cls cls-measured">MEASURED</span></td><td>GET /api/spaces?author=SZLHOLDINGS · 18:37Z</td><td>Six public. README omitted from unauth list. Not a rewrite of atlas keep-7 (18:05Z).</td></tr>
               <tr><td>Estate catalog hologram at /estate/os/</td><td><span class="cls cls-reported">REPORTED</span></td><td>Static Pages SPA · 17:35Z PUBLIC_PARTIAL bake</td><td>On-origin. READ-ONLY. Not a live dashboard. Not a fourth origin. Λ remains Conjecture 1.</td></tr>
               <tr><td>This preview SPA as a fourth public origin</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Rejected. Fold tables here; keep demos unpublished. The hologram is on this origin, not a Grok URL.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="keys">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Key hunt</span><h2>The signer is a Space secret. Not git.</h2><p>Solo build. Search was public git only. Private keys were not committed.</p></div>
+        <div class="summary-scroll">
+          <table class="summary-table">
+            <thead>
+              <tr><th>Published key</th><th>Class</th><th>Identity</th><th>Closeout match</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>GitHub <a href="https://github.com/szl-holdings/.github/blob/main/keys/cosign.pub">.github/keys/cosign.pub</a></td><td><span class="cls cls-measured">MEASURED</span></td><td>PEM SHA-256 31b8c7f1… · keyid d3028f8a</td><td>mismatch</td></tr>
+              <tr><td>a11oy Space /cosign.pub</td><td><span class="cls cls-measured">MEASURED</span></td><td>keyid 9926bf69 · persistent SZL_COSIGN_PRIVATE_PEM</td><td>MATCH at 18:00Z</td></tr>
+              <tr><td>a11oy /khipu/pubkey.pem</td><td><span class="cls cls-measured">MEASURED</span></td><td>Distinct P-256 key</td><td>mismatch</td></tr>
+              <tr><td>killinchu Space /cosign.pub</td><td><span class="cls cls-measured">MEASURED</span></td><td>Distinct P-256 key</td><td>mismatch</td></tr>
+              <tr><td>A11OY_HMAC_KEY</td><td><span class="cls cls-measured">MEASURED</span></td><td>Not in public git</td><td>placeholder</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="boundary">PEM SHA-256 for the org GitHub key was re-hashed at 18:16Z. Space GETs timed out after the ceremony; Space match remains the 18:00Z observation. Product honesty timed out at 18:23Z. This page does not embed private material and does not host a signer.</p>
+      </div>
+    </section>
+
+    <section id="closeout">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Closeout recapture</span><h2>SIGNED_BY_LIVE_ORGAN is not PRODUCTION_VERIFIED.</h2><p>W8 can talk to the live organ when it answers. W9, HMAC, and live honesty stay outside this surface.</p></div>
+        <div class="split">
+          <article class="panel truth">
+            <h3>What was measured at 18:00Z</h3>
+            <ul>
+              <li>Organ <code>SZLHOLDINGS/a11oy</code> accepted <code>action=estate-atlas-closeout</code>.</li>
+              <li>Payload type <code>application/vnd.szl.khipu+json</code>. DSSE PAE verified with Node <code>crypto.verify</code>.</li>
+              <li>Local verify MATCH against Space <code>/cosign.pub</code> only (keyid 9926bf69).</li>
+              <li>Doctrine v11 LOCKED at <code>c7c0ba17</code> at ceremony. Lean 749 / 14 / 163. Λ remains Conjecture 1.</li>
+            </ul>
+          </article>
+          <article class="panel limit">
+            <h3>What this is not</h3>
+            <ul>
+              <li>Not ALLOW. Not a production certificate. Trust stays UNAVAILABLE.</li>
+              <li>Not org-key match. Published GitHub cosign.pub did not produce the signature.</li>
+              <li>Not HMAC non-repudiation. <code>hmac_layer=placeholder</code>.</li>
+              <li>Not live honesty at 18:23Z. Custom domain PENDING. Space HTTP timeout.</li>
+              <li>Envelope is not stored here. RECORD is pointers. No <code>*.dsse.json</code> on this origin.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="findings">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Findings</span><h2>Four P0 remain open. No fabricated green checks.</h2><p>Status is fail-closed. Contained is not claimed.</p></div>
+        <div class="summary-scroll">
+          <table class="summary-table">
+            <thead>
+              <tr><th>ID</th><th>Class</th><th>Title</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>P0-JOBLIB</td><td><span class="cls cls-reported">REPORTED</span></td><td>Unsafe serialization on public model serving</td><td>open</td></tr>
+              <tr><td>P0-PROD-LAG</td><td><span class="cls cls-measured">MEASURED</span></td><td>Honesty UNAVAILABLE at 18:23Z; ceremony SHA e198c1a lagged then-locked main</td><td>open</td></tr>
+              <tr><td>P0-UNSIGNED</td><td><span class="cls cls-measured">MEASURED</span></td><td>Assurance pack is unsigned</td><td>open</td></tr>
+              <tr><td>P0-KERNEL-DIVERGE</td><td><span class="cls cls-reported">REPORTED</span></td><td>Two kernel / model code divergences</td><td>open</td></tr>
+              <tr><td>P1-KEY-DIVERGE</td><td><span class="cls cls-measured">MEASURED</span></td><td>Published cosign keys diverge across organs</td><td>open</td></tr>
+              <tr><td>P1-HMAC</td><td><span class="cls cls-measured">MEASURED</span></td><td>HMAC non-repudiation layer is placeholder</td><td>blocked</td></tr>
+              <tr><td>P1-SOURCEMAP</td><td><span class="cls cls-reported">REPORTED</span></td><td>Space source-map drift (27 of 44)</td><td>open</td></tr>
+              <tr><td>P1-VIEWER</td><td><span class="cls cls-reported">REPORTED</span></td><td>Dataset viewer failures</td><td>open</td></tr>
+              <tr><td>P1-LICENSE</td><td><span class="cls cls-reported">REPORTED</span></td><td>Missing license metadata</td><td>open</td></tr>
+              <tr><td>P1-BUCKET</td><td><span class="cls cls-reported">REPORTED</span></td><td>Stale bucket-manifest evidence</td><td>open</td></tr>
+              <tr><td>P1-PRIVATE-GAP</td><td><span class="cls cls-reported">REPORTED</span></td><td>Public / authenticated inventory gap</td><td>blocked</td></tr>
+              <tr><td>P2-STALL</td><td><span class="cls cls-reported">REPORTED</span></td><td>Cooling and stalled organs</td><td>open</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="workgraph">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">Workgraph</span><h2>Codex loop, frozen.</h2><p>W1–W2 done. W3–W8 ready. W9 external. W10 blocked. This PR is the protected-PR step for the proof origin only.</p></div>
+        <div class="summary-scroll">
+          <table class="summary-table">
+            <thead>
+              <tr><th>ID</th><th>Phase</th><th>Title</th><th>State</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>W1</td><td>reconnaissance</td><td>Freeze public audit digest</td><td>done</td></tr>
+              <tr><td>W2</td><td>exact-base lock</td><td>Lock merged main SHA</td><td>done</td></tr>
+              <tr><td>W3</td><td>minimal implementation</td><td>Quarantine joblib serving</td><td>ready</td></tr>
+              <tr><td>W4</td><td>minimal implementation</td><td>Reconcile two kernel/model divergences</td><td>ready</td></tr>
+              <tr><td>W5</td><td>focused tests</td><td>License and card pass</td><td>ready</td></tr>
+              <tr><td>W6</td><td>focused tests</td><td>Repair dataset viewers</td><td>ready</td></tr>
+              <tr><td>W7</td><td>repository gates</td><td>Lock Space source-maps</td><td>ready</td></tr>
+              <tr><td>W8</td><td>evidence packet</td><td>Sign closeout via live a11oy organ</td><td>ready</td></tr>
+              <tr><td>W9</td><td>exact-SHA deployment</td><td>Deploy merged SHA to production</td><td>external</td></tr>
+              <tr><td>W10</td><td>live readback</td><td>Independent post-deploy verification</td><td>blocked</td></tr>
             </tbody>
           </table>
         </div>
@@ -98,14 +203,14 @@
         <div class="section-head"><span class="section-label">Origins</span><h2>Product | Proof. Do not merge.</h2></div>
         <div class="split">
           <article class="panel truth"><h3>Keep</h3><ul><li><a href="https://a-11-oy.com">a-11-oy.com</a> — command center, /verify, honesty manifest. Custom domain PENDING this recapture; Space host is szlholdings-a11oy.hf.space.</li><li><a href="https://a11oy.net/">a11oy.net</a> — RECORD, diligence, this estate snapshot.</li><li><a href="https://huggingface.co/SZLHOLDINGS">huggingface.co/SZLHOLDINGS</a> — public artifacts. Not a front door.</li><li><a href="/estate/os/">/estate/os/</a> — Estate catalog hologram. Static. Index, not nav.</li></ul></article>
-          <article class="panel limit"><h3>Do not</h3><ul><li>Do not publish a Grok Build SPA as a fourth public origin.</li><li>Do not clone /verify onto this origin.</li><li>Do not treat a11oy.com (home-and-garden storefront) as canonical.</li><li>Do not bill a CPU fit as a GPU train. Do not flip approved=true on willay/khipu-r3/waman.</li></ul></article>
+          <article class="panel limit"><h3>Do not</h3><ul><li>Do not publish a Grok Build SPA as a fourth public origin.</li><li>Do not clone /verify onto this origin.</li><li>Do not treat a11oy.com (home-and-garden storefront) as canonical.</li><li>Do not bill a CPU fit as a GPU train. Do not flip approved=true on willay/khipu-r3/waman.</li><li>Do not host a DSSE signer or receipt bodies here.</li></ul></article>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap footer"><p>Published by SZL Holdings as a separately hosted first-party evidence registry. This snapshot is not product-runtime readiness.</p><div class="footer-links"><a href="/">Proof</a><a href="/record/">RECORD</a><a href="/estate.json">estate.json</a><a href="/.well-known/security.txt">Security</a></div></div>
+    <div class="wrap footer"><p>Published by SZL Holdings as a separately hosted first-party evidence registry. This snapshot is not product-runtime readiness. Closeout state is BLOCKED_EXTERNAL_AUTHORITY.</p><div class="footer-links"><a href="/">Proof</a><a href="/record/">RECORD</a><a href="/estate.json">estate.json</a><a href="/.well-known/security.txt">Security</a></div></div>
   </footer>
 </body>
 </html>
