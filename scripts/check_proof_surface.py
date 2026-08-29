@@ -578,16 +578,16 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 8
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 9
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source
     ), "curated Hub cards need bounded non-runtime evidence labels"
     assert "independent verification entry point" not in source.lower()
     assert "public verification entry point" in source.lower()
-    assert source.count('data-static="product-route"') == 3
-    assert source.count("NOT PROBED · UNKNOWN") == 4, (
-        "three product rows and the explanatory boundary must remain explicit"
+    assert source.count('data-static="product-route"') == 4
+    assert source.count("NOT PROBED · UNKNOWN") == 5, (
+        "four product rows and the explanatory boundary must remain explicit"
     )
     assert source.count('data-space="SZLHOLDINGS/') == 2
     expected_space_bindings = {
