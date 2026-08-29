@@ -281,6 +281,7 @@ def check() -> None:
         "https://a11oy.net/puriq-markets/",
         "https://a11oy.net/counsel/",
         "https://a11oy.net/ayllu/psyche/",
+        "https://a11oy.net/five-space/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
@@ -326,7 +327,7 @@ def check() -> None:
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
     assert (ROOT / "decision" / "index.html").is_file(), "decision RECORD must exist"
     assert (ROOT / "decision.json").is_file(), "decision machine contract must exist"
-    for stub in ("terra", "aegis", "puriq-markets", "counsel"):
+    for stub in ("terra", "aegis", "puriq-markets", "counsel", "five-space"):
         path = ROOT / stub / "index.html"
         assert path.is_file(), f"{stub} RECORD stub must exist"
         text = path.read_text(encoding="utf-8")

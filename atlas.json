@@ -109,6 +109,12 @@
       "url": "https://github.com/szl-holdings/lyte-lattice",
       "role": "BIND hologram for named frontiers N1–N25. Product bind https://a-11-oy.com/lyte. Not a flagship. Not a product certificate.",
       "evidence_class": "REPORTED"
+    },
+    {
+      "name": "five-space-operator",
+      "url": "https://github.com/szl-holdings/a11oy",
+      "role": "BIND hologram for Command/Loop/Queue/Memory/Ledger. Product bind https://a-11-oy.com/five-space. RECORD https://a11oy.net/five-space/. Not a flagship. Not /console.",
+      "evidence_class": "REPORTED"
     }
   ],
   "boundaries": {

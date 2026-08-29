@@ -19,6 +19,7 @@ Authoritative public paths:
 - Aegis RECORD stub (evaluate at a-11-oy.com/aegis): https://a11oy.net/aegis/
 - Puriq Markets RECORD stub (evaluate at a-11-oy.com/puriq-markets): https://a11oy.net/puriq-markets/
 - Counsel RECORD stub (evaluate at a-11-oy.com/counsel): https://a11oy.net/counsel/
+- Five-space operator RECORD stub (evaluate at a-11-oy.com/five-space; not /console): https://a11oy.net/five-space/
 - Ayllu RECORD (counsel showcase; does not run the council): https://a11oy.net/ayllu/
 - Wiñay · Huklla · IIT honesty RECORD (does not run the pulse): https://a11oy.net/ayllu/psyche/
 - Wiñay honesty contract: https://a11oy.net/ayllu/winay.json
