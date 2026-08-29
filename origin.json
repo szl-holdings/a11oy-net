@@ -1,0 +1,103 @@
+{
+  "contract_version": "1.0.0",
+  "incident": "INC-05",
+  "surface": {
+    "name": "Origin lock RECORD",
+    "url": "https://a11oy.net/origin/",
+    "contract": "https://a11oy.net/origin.json",
+    "publisher": "SZL Holdings",
+    "implementation": "static GitHub Pages document",
+    "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
+  },
+  "observed_at_utc": "2026-08-29T18:53:21Z",
+  "evidence_class": "MEASURED",
+  "observer": "Public HTTP HEAD/GET and A records from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
+  "hosts": [
+    {
+      "id": "product",
+      "host": "a-11-oy.com",
+      "role": "product apex",
+      "status": 200,
+      "front": "CLOUDFLARE",
+      "a_records": ["104.21.27.230", "172.67.169.206"],
+      "server": "cloudflare",
+      "x_szl_space": "a11oy",
+      "x_szl_wire_d": "LIVE",
+      "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
+      "honesty": "MEASURED",
+      "verdict": "ADMIT",
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain is a separate PENDING row."
+    },
+    {
+      "id": "www",
+      "host": "www.a-11-oy.com",
+      "role": "product www",
+      "status": 404,
+      "front": "CLOUDFLARE",
+      "a_records": ["104.21.27.230", "172.67.169.206"],
+      "server": "cloudflare",
+      "honesty": "MEASURED",
+      "verdict": "BLOCKED",
+      "note": "Same orange-cloud A records as apex. GET / is Cloudflare HTTP 404, not the Space. Needs a Cloudflare Redirect Rule 301 www to apex. Do not add www as a second Hugging Face custom domain. This RECORD does not mint DNS."
+    },
+    {
+      "id": "proof",
+      "host": "a11oy.net",
+      "role": "proof registry",
+      "status": 200,
+      "front": "GITHUB_PAGES",
+      "a_records": ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"],
+      "server": "GitHub.com",
+      "honesty": "MEASURED",
+      "verdict": "ADMIT",
+      "note": "Live A records are GitHub Pages. Separate failure domain. Do not 301 onto the product origin. _headers is policy intent; GitHub Pages does not apply it."
+    },
+    {
+      "id": "forbidden",
+      "host": "unhyphenated third-party furniture host",
+      "role": "not ours",
+      "status": 200,
+      "front": "OTHER",
+      "honesty": "MEASURED",
+      "verdict": "BLOCKED",
+      "note": "Foreign storefront. Never canonical, never og:url, never sameAs, never a redirect target."
+    }
+  ],
+  "huggingface": {
+    "space": "SZLHOLDINGS/a11oy",
+    "runtime_stage": "RUNNING",
+    "domains": [
+      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
+      { "domain": "a-11-oy.com", "stage": "PENDING" }
+    ],
+    "note": "Space RUNNING is not Hugging Face custom-domain READY. Do not grey-cloud the apex to make the provider row green. Public 200 on the proxied apex beats a green HF domain row. Optional later: _huggingface.a-11-oy.com TXT without dropping orange-cloud."
+  },
+  "signer": {
+    "healthz": "ABSENT",
+    "scheme": "UNAVAILABLE",
+    "note": "Only the rollup may stamp DSSE-LIVE when a live key is present. Do not copy LIVE from x-szl-wire-d."
+  },
+  "operator_actions": [
+    "Cloudflare Redirect Rule: www.a-11-oy.com 301 to https://a-11-oy.com/. Same zone. Do not add www as a second Hugging Face custom domain.",
+    "Keep orange-cloud on the product apex. Do not grey-cloud to satisfy Hugging Face PENDING.",
+    "Optional: _huggingface.a-11-oy.com TXT without dropping that proxy.",
+    "Optional: orange-cloud a11oy.net only if Cloudflare should sit in front of GitHub Pages. Live DNS is Pages today.",
+    "This proof origin does not change DNS. Product source does not change DNS."
+  ],
+  "related": {
+    "factory_record": "https://a11oy.net/factory/",
+    "product": "https://a-11-oy.com/",
+    "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
+    "incident": "INC-05"
+  },
+  "boundaries": {
+    "this_origin_is_not_a_product_host": true,
+    "cloudflare_api_unavailable": true,
+    "does_not_change_dns": true,
+    "does_not_stamp_live": true,
+    "does_not_clone_verify": true,
+    "grok_spa_not_published_here": true,
+    "fourth_public_origin_published": false,
+    "http_response_proves_capability": false
+  }
+}
