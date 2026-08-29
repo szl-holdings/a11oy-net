@@ -685,7 +685,7 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 10
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 14
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source
@@ -810,8 +810,8 @@ def check() -> None:
     assert "2026-08-11" not in source, (
         "the noscript/fallback snapshot must not retain the prior 2026-08-11 counts"
     )
-    assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 12, (
-        "Fall 2026 cuts and KERNEL originals must remain ROADMAP, never OPERATIONAL"
+    assert source.count('<span class="stack-truth roadmap">ROADMAP</span>') == 8, (
+        "empty Hub cards and KERNEL originals stay ROADMAP; adapters with bytes are REPORTED"
     )
     assert not re.search(r'class="stack-truth[^"]*"[^>]*>OPERATIONAL', source), (
         "no stack listing may carry an OPERATIONAL label"
