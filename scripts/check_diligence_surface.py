@@ -351,7 +351,16 @@ def check() -> None:
     assert atlas_contract["hub_snapshot"]["spaces_total"] == 45
     assert len(atlas_contract["public_spaces"]) == 7
     assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
-    assert atlas_contract["boundaries"]["killinchu_named_resources_excluded"] is True
+    assert atlas_contract["boundaries"]["spaces_deleted"] is False
+    assert {s["name"] for s in atlas_contract["public_spaces"]} == {
+        "README",
+        "a11oy",
+        "killinchu",
+        "immune",
+        "szl-khipu",
+        "szl-atelier",
+        "governed-receipt-verifier",
+    }
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     assert manifest["start_url"] == "/"
     assert MANIFEST_ALIAS.read_bytes() == MANIFEST.read_bytes()
