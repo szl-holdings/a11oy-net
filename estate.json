@@ -7,86 +7,39 @@
     "meaning": "Dated MEASURED public inventory snapshot on the proof origin. Not product runtime. Not a live dashboard. Not a receipt store.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "Counts are MEASURED from unauthenticated Hugging Face API and authenticated GitHub search at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
-  "captured_at": "2026-08-29T18:23:00Z",
+  "reader_guide": "Counts are MEASURED from authenticated Hugging Face API and public GitHub search at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
+  "captured_at": "2026-08-29T18:20:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
     "repositories_search_total": 98,
-    "public": 93,
-    "private": 5,
-    "archived": 34,
-    "open_pull_requests": 4,
-    "merge_qualified": 0,
-    "a11oy_main": "5bcde41b8eb16899a20357af38b4acbfbed6f7db",
-    "a11oy_net_main": "671aa806e947c3555281aa67f28396e0a890c53a",
-    "a11oy_factory_main": "0a92bffbe65dfef70f74a71c6f8e7c75f739d1d6",
-    "szl_command_lab_main": "e8eb159e4fab1b9ec3b635dfdfab2afaa760304b",
-    "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash. Includes archived. Open PRs a11oy#1463 #1462 #1460 and a11oy-net#55 are not merge-qualified (required-check FAILURE or CONFLICTING)."
+    "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash. Includes archived."
   },
   "huggingface": {
     "org": "SZLHOLDINGS",
     "models": 43,
-    "datasets": 28,
-    "spaces_public": 6,
-    "spaces_private": "UNAVAILABLE",
+    "datasets": 36,
+    "spaces_total": 45,
+    "spaces_public": 7,
+    "spaces_private": 38,
     "public_spaces": [
+      "SZLHOLDINGS/README",
       "SZLHOLDINGS/a11oy",
       "SZLHOLDINGS/killinchu",
       "SZLHOLDINGS/immune",
-      "SZLHOLDINGS/governed-receipt-verifier",
       "SZLHOLDINGS/szl-khipu",
-      "SZLHOLDINGS/szl-atelier"
-    ],
-    "folded_private_this_recapture": [
-      "SZLHOLDINGS/a11oy-factory",
-      "SZLHOLDINGS/szl-command-lab"
+      "SZLHOLDINGS/szl-atelier",
+      "SZLHOLDINGS/governed-receipt-verifier"
     ],
     "action": "pause+private, never delete",
-    "bound": "Unauthenticated Hub author-list recapture. Public list is these six. Factory and command-lab 401 private. Private totals not re-counted this recapture (no Hub write token). Atlas.json remains the 2026-08-29T18:05Z keep-7 snapshot and is not rewritten here."
-  },
-  "product": {
-    "host": "https://a-11-oy.com",
-    "space": "SZLHOLDINGS/a11oy",
-    "space_sha": "505fab44466097ebc3fe368bea26dd1e88eb5b22",
-    "runtime_stage": "RUNNING",
-    "hardware": "cpu-basic",
-    "custom_domain_a-11-oy.com": "PENDING",
-    "honesty_manifest": "UNAVAILABLE",
-    "bound": "HfApi.space_info reports RUNNING cpu-basic and custom domain PENDING. GET https://a-11-oy.com/api/a11oy/v1/honest returned HF 500 then timeout. GET https://szlholdings-a11oy.hf.space/api/a11oy/v1/honest timed out. Live product honesty is UNAVAILABLE this recapture. Hub Space git is not a GitHub commit. Matching is not a deploy claim."
-  },
-  "energy": {
-    "honesty": "UNAVAILABLE",
-    "source": "RAPL or NVML only",
-    "command_lab_hub": "PRIVATE",
-    "prior_measured_wrap": {
-      "when": "2026-08-29 while SZLHOLDINGS/szl-command-lab was RUNNING t4-small",
-      "joules": 17.095,
-      "seconds": 1.0002,
-      "class": "MEASURED",
-      "bound": "Prior wrap only. Not a live meter this recapture. Package joule is not inference joule."
-    }
-  },
-  "train": {
-    "honesty": "UNAVAILABLE",
-    "decision": "BLOCKED",
-    "approved": false,
-    "proven_trust": false,
-    "github_gate": "szl-holdings/szl-command-lab@e8eb159e (#12) fail-closed GET /api/train",
-    "factory_cell": "szl-holdings/a11oy-factory@0a92bffb (#22) N27 Train UNAVAILABLE",
-    "hub_runtime": "UNAVAILABLE",
-    "missing": [
-      "T4 mounted on a public runtime",
-      "CUDA runtime in the hologram image",
-      "rights-cleared dataset plus exact base and dataset revisions",
-      "image digest / cost cap / job command",
-      "approved=true and submit_this_run"
-    ],
-    "bound": "GPU train is not run. willay-v1 / khipu-r3 / waman stay NOT_APPROVED. A CPU fit is not a GPU train. Live Hub /api/train is not recapturable while command-lab is private."
+    "collection": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
+    "bound": "Authenticated Hub author-list 2026-08-29 as org admin betterwithage. Keep-7 is these seven, including the org README Space. anatomy, david-leads, and szl-real-estate were re-privatized and paused. None deleted. Product Space a11oy was not rebuilt as a different app."
   },
   "origins": {
     "product": "https://a-11-oy.com",
+    "product_command": "https://a-11-oy.com/series-a",
     "proof": "https://a11oy.net/",
+    "proof_command_record": "https://a11oy.net/command/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
     "never": "a11oy.com — foreign storefront"
   },
@@ -97,7 +50,6 @@
     "verify_cloned": false,
     "receipt_database_hosted_here": false,
     "spaces_deleted": false,
-    "fourth_public_origin": false,
-    "lambda_uniqueness": "Conjecture 1 OPEN"
+    "grok_spa_published_here": false
   }
 }

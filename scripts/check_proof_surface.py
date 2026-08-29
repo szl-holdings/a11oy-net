@@ -270,6 +270,7 @@ def check() -> None:
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
+        "https://a11oy.net/command/",
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
         "https://a11oy.net/code/",
@@ -294,6 +295,31 @@ def check() -> None:
     assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
     assert (ROOT / "estate" / "index.html").is_file(), "estate snapshot HTML must exist"
     assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
+    assert (ROOT / "command" / "index.html").is_file(), "command RECORD must exist"
+    command_source = (ROOT / "command" / "index.html").read_text(encoding="utf-8")
+    assert "script-src 'none'" in command_source
+    assert "Never a11oy.com." in command_source
+    assert "https://a-11-oy.com/series-a" in command_source
+    assert "not a live operator console" in command_source.lower()
+    assert "Formula authority NONE" in command_source or "formula authority NONE" in command_source
+    assert "googleapis.com" not in command_source
+    assert "cdn." not in command_source
+    assert "https://a11oy.com" not in command_source
+    estate_contract = json.loads((ROOT / "estate.json").read_text(encoding="utf-8"))
+    assert estate_contract["huggingface"]["spaces_public"] == 7
+    public_spaces = estate_contract["huggingface"]["public_spaces"]
+    assert public_spaces == [
+        "SZLHOLDINGS/README",
+        "SZLHOLDINGS/a11oy",
+        "SZLHOLDINGS/killinchu",
+        "SZLHOLDINGS/immune",
+        "SZLHOLDINGS/szl-khipu",
+        "SZLHOLDINGS/szl-atelier",
+        "SZLHOLDINGS/governed-receipt-verifier",
+    ]
+    assert estate_contract["origins"]["product"] == "https://a-11-oy.com"
+    leaked = {"SZLHOLDINGS/david-leads", "SZLHOLDINGS/anatomy", "SZLHOLDINGS/szl-real-estate"}
+    assert not leaked.intersection(public_spaces)
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
