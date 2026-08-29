@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- `/estate/` recapture 2026-08-29T18:23Z: GitHub 98 / 93 public / 4 open PRs 0 merge-qualified. Hub unauth 43 models / 28 datasets / 6 public Spaces. GPU train UNAVAILABLE (command-lab#12 fail-closed; factory#22 N27; Hub runtimes private). Energy UNAVAILABLE (live NVML not recapturable). Product honesty UNAVAILABLE (a-11-oy.com custom domain PENDING; Space HTTP timeout). Λ stays Conjecture 1. Atlas keep-7 snapshot at 18:05Z is not rewritten. /verify is not cloned. Never a11oy.com.
 - `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/` admitted as Packet 8 RECORD stubs. Kernel is not run here. Evaluate on `a-11-oy.com/terra` (and the matching vanity paths). Hub Spaces are not required. Same kernel, four desks, not four Spaces. Index, not nav, not the first fold.
 - `/decision/` admitted: Packet 8 Decision Integrity RECORD. Terra, Aegis, Puriq Markets, Counsel frozen cases. Formula authority NONE. Kernel is not run here. Evaluate on `a-11-oy.com/decision`. Hub Spaces are not required. Index, not nav, not the first fold.
 - Primary nav collapsed to Product | RECORD | Diligence | Atlas | Index. First-fold CTA is RECORD. Product remains a text link. Atelier, Ayllu, experiments, chat, code, notes, and estate live under Index. Nothing deleted.
