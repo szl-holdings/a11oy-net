@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON"
   },
   "reader_guide": "This file is a recapture snapshot. Counts are MEASURED from public GitHub and public Hugging Face APIs at captured_at. They are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com. Interactive /verify is not cloned here.",
-  "captured_at": "2026-08-29T02:03:00Z",
+  "captured_at": "2026-08-29T02:25:00Z",
   "evidence_class": "MEASURED",
   "github": {
     "org": "szl-holdings",
@@ -22,13 +22,13 @@
     "protected_mains": {
       "a11oy": "8b8530b6a8db84ad881caf998f531d4283946bfd",
       "killinchu": "62cb7359edd7b49cb62eacc76d71a29f2cfa7ee4",
-      "a11oy-net": "f740dc8a71f3b3089ddb5e3ae890958d5332e51a",
+      "a11oy-net": "02fc5005773549ee96f1941e530ca8cbcc55f916",
       "szl-forge": "a3f982a7102736dbfe72b5782c9966cbb5d6b942"
     }
   },
   "huggingface": {
     "org": "SZLHOLDINGS",
-    "models": 38,
+    "models": 40,
     "datasets": 28,
     "spaces": 28,
     "remaining_joblib": 0,
