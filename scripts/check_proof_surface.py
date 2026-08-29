@@ -266,6 +266,7 @@ def check() -> None:
     ] == [
         "https://a11oy.net/",
         "https://a11oy.net/ayllu/",
+        "https://a11oy.net/khipu/",
         "https://a11oy.net/experiments/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
@@ -342,6 +343,13 @@ def check() -> None:
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
+    assert (ROOT / "khipu" / "index.html").is_file(), "khipu RECORD must exist"
+    khipu_src = (ROOT / "khipu" / "index.html").read_text(encoding="utf-8")
+    assert "Kernel is not run here" in khipu_src or "does not run the kernel" in khipu_src
+    assert "Conjecture 1" in khipu_src
+    assert "https://a11oy.com" not in khipu_src
+    assert "Never a11oy.com" in khipu_src or "never a11oy.com" in khipu_src
+    assert "cdn." not in khipu_src
     assert (ROOT / "decision" / "index.html").is_file(), "decision RECORD must exist"
     assert (ROOT / "decision.json").is_file(), "decision machine contract must exist"
     for stub in ("terra", "aegis", "puriq-markets", "counsel"):
@@ -431,6 +439,9 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/atelier/" for anchor in surface.anchors
     ), "the root proof registry must expose the atelier walk"
+    assert any(
+        anchor.get("href") == "/khipu/" for anchor in surface.anchors
+    ), "the root proof registry must expose the khipu RECORD"
     assert "Alloy by SZL Holdings" in source
     assert "id=\"summary\"" in source
     assert "id=\"record\"" in source
@@ -671,7 +682,7 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 9
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 10
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source
