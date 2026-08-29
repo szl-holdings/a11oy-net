@@ -1,0 +1,14 @@
+{
+  "schema": "szl.factory-record/v1",
+  "surface": "RECORD",
+  "origin": "https://a11oy.net/factory/",
+  "runtime": "https://a-11-oy.com/organs",
+  "catalog": "https://a-11-oy.com/api/a11oy/v1/organs",
+  "honesty": "LIVE",
+  "admitted_public": false,
+  "count": 25,
+  "gpu_tune": "UNAVAILABLE",
+  "formula_grants_authority": false,
+  "note": "N1–N25 execute on the product origin. This file is proof copy only. Not 25 public Spaces.",
+  "captured_at": "2026-08-29T19:16:00Z"
+}
