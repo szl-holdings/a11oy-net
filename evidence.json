@@ -67,6 +67,12 @@
       "scope": "machine-readable estate snapshot; counts are inventory not quality"
     },
     {
+      "name": "estate_os_hologram",
+      "url": "https://a11oy.net/estate/os/",
+      "evidence_class": "REPORTED",
+      "scope": "static on-origin hologram of the 16:49Z PUBLIC_PARTIAL bake; not a live dashboard; not product runtime; not a fourth origin; PROPOSE_ONLY; Lambda remains Conjecture 1"
+    },
+    {
       "name": "dated_notes",
       "url": "https://a11oy.net/notes/",
       "evidence_class": "REPORTED"

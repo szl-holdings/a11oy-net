@@ -292,6 +292,7 @@ def check() -> None:
         "hub_atlas",
         "estate_snapshot",
         "estate_contract",
+        "estate_os_hologram",
         "dated_notes",
         "governed_console_gateway",
         "governed_code_gateway",
@@ -317,6 +318,7 @@ def check() -> None:
     llms = LLMS.read_text(encoding="utf-8")
     assert "https://a11oy.net/evidence.json" in llms
     assert "https://a11oy.net/record/" in llms
+    assert "https://a11oy.net/estate/os/" in llms
     assert "does not establish A11oy product-runtime readiness" in llms
     assert "This repository has no receipt store" in llms or "no receipt store" in llms
     assert "SZLHOLDINGS/szl-evidence" in llms

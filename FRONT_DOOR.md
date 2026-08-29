@@ -118,6 +118,7 @@ here. The canonical receipt **index** lives here: pointers, not bodies.
 | `/diligence/` | Investor / developer 90-second table. No `/investor`. |
 | `/#atlas` + `/atlas.json` | Hub + GitHub inventory. Location, not quality. |
 | `/estate/` + `/estate.json` | Dated MEASURED inventory snapshot. Not a live dashboard. |
+| `/estate/os/` | Estate OS hologram. Static hash-router SPA. PUBLIC_PARTIAL. Not runtime. Not a live dashboard. Not a fourth origin. |
 | `/evidence.json` + `/llms.txt` | Machine contract and automated-reader routing. |
 | `/health.json` | Only health document. Static. Not runtime. |
 | `/notes/` | Dated notes. Status pointer, not a release feed. |
@@ -219,6 +220,7 @@ choice, not a new origin).
 | `/code/` | Diligence handoff | One-line gateway. No local execution claim. |
 | `/notes/` | Dated notes | Status pointer, not a capability feed. |
 | `/estate/` + `/estate.json` | Inventory snapshot | MEASURED counts are not quality. Not a live dashboard. |
+| `/estate/os/` | Estate OS hologram | Static. Canonical is this origin, not a Grok Build URL. PROPOSE_ONLY. Index, not nav. |
 | `/readyz/` | HTML reachability | Not a health URL. Pages may 301 `/readyz` → `/readyz/`. |
 | `/api/build-info/` | Static surface scope | No immutable source-revision claim. |
 | `/evidence.json` `/llms.txt` `/record.json` `/atlas.json` `/health.json` | Machine contracts | Stay fetchable. Not nav peers. |
@@ -263,6 +265,7 @@ These are not optional just because they are not in the primary list.
 | --- | --- |
 | `record.json` | RECORD machine contract. |
 | `estate/` | Estate snapshot HTML. Sitemap + llms.txt already admit it. |
+| `estate/os/` | Estate OS hologram. On-origin SPA. Not a fourth origin. Keep the URL. |
 | `CNAME` | Must remain `a11oy.net`. |
 | `.nojekyll` | Required to publish `.well-known/security.txt` on GitHub Pages. |
 | `404.html` | Branded recovery. |
@@ -404,7 +407,7 @@ It may not:
 - `--gold:#d7b96b` and `#c9b787` absent
 - `health.json` `probe_contract == STATIC_DOCUMENT`
 - sitemap locs for `/`, `/ayllu/`, `/experiments/`, `/diligence/`, `/record/`,
-  `/estate/`, `/notes/`, `/chat/`, `/code/`, `/atelier/`, `/decision/`
+  `/estate/`, `/estate/os/`, `/notes/`, `/chat/`, `/code/`, `/atelier/`, `/decision/`
   `/terra/`, `/aegis/`, `/puriq-markets/`, `/counsel/`
 
 Those assertions are why this note exists as a note. Implement collapse by

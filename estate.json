@@ -41,7 +41,7 @@
     "proof": "https://a11oy.net/",
     "proof_command_record": "https://a11oy.net/command/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com — foreign storefront"
+    "never": "a11oy.com \u2014 foreign storefront"
   },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
@@ -50,6 +50,23 @@
     "verify_cloned": false,
     "receipt_database_hosted_here": false,
     "spaces_deleted": false,
-    "grok_spa_published_here": false
+    "grok_spa_published_here": false,
+    "fourth_public_origin_published": false,
+    "hologram_is_on_origin": true
+  },
+  "hologram": {
+    "url": "https://a11oy.net/estate/os/",
+    "meaning": "Static on-origin hologram of the PUBLIC_PARTIAL control plane. Not a live dashboard. Not product runtime. Not a fourth origin. Mutations are PROPOSE_ONLY and stay in the browser session.",
+    "captured_at": "2026-08-29T16:49:00Z",
+    "scope": "PUBLIC_PARTIAL",
+    "github_observed": 91,
+    "github_public_not_archived": 84,
+    "github_archived": 7,
+    "private_unavailable": 5,
+    "hub_models": 20,
+    "hub_datasets": 28,
+    "hub_spaces": 29,
+    "kernels_misplaced": 14,
+    "bound": "Hologram bake is 16:49Z PUBLIC_PARTIAL. This file captured_at 18:20Z keep-7 Hub recapture (43/36/45, 7 public including README Space) is later and is not overwritten."
   }
 }
