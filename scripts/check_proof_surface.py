@@ -270,6 +270,7 @@ def check() -> None:
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
+        "https://a11oy.net/estate/os/",
         "https://a11oy.net/command/",
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
@@ -296,6 +297,23 @@ def check() -> None:
     assert (ROOT / "record.json").is_file(), "RECORD machine contract must exist"
     assert (ROOT / "estate" / "index.html").is_file(), "estate snapshot HTML must exist"
     assert (ROOT / "estate.json").is_file(), "estate snapshot contract must exist"
+    hologram = ROOT / "estate" / "os"
+    assert (hologram / "index.html").is_file(), "estate catalog hologram HTML must exist"
+    assert (hologram / "app.js").is_file(), "estate catalog hologram script must exist"
+    assert (hologram / "data.json").is_file(), "estate catalog hologram bake must exist"
+    assert (hologram / "os.css").is_file(), "estate catalog hologram styles must exist"
+    hologram_html = (hologram / "index.html").read_text(encoding="utf-8")
+    hologram_js = (hologram / "app.js").read_text(encoding="utf-8")
+    assert "script-src 'self'" in hologram_html
+    assert "not a live dashboard" in hologram_html.lower()
+    assert "not a fourth origin" in hologram_html.lower()
+    assert "READ-ONLY" in hologram_html or "read-only" in hologram_html.lower()
+    assert "Conjecture 1" in hologram_html
+    assert 'href="/verify"' not in hologram_html and 'href="/verify/"' not in hologram_html
+    assert "https://a11oy.com" not in hologram_html
+    assert "https://a11oy.com" not in hologram_js
+    estate_html = (ROOT / "estate" / "index.html").read_text(encoding="utf-8")
+    assert 'href="/estate/os/"' in estate_html, "estate snapshot must hand off to the hologram"
     assert (ROOT / "command" / "index.html").is_file(), "command RECORD must exist"
     command_source = (ROOT / "command" / "index.html").read_text(encoding="utf-8")
     assert "script-src 'none'" in command_source
