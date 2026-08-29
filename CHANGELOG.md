@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-08-29
+
+- `/atelier/` admitted: static forty-model walk of SZLHOLDINGS Hub ids. Canonical playable Space is `https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier`. Source `szl-holdings/szl-atelier`. Nano silhouettes MEASURED in-browser. 1.5B numbers SIGNED, not retrained here. Energy UNAVAILABLE. Not a product runtime. Does not clone `/verify`.
+- Nav + hero CTA point at `/atelier/`. Hub cards remain the weight origin.
+
 Dated notes for the a11oy.net proof registry. This is a status pointer, not a product-release feed and not a capability claim.
 
 Public HTML: [https://a11oy.net/notes/](https://a11oy.net/notes/).
