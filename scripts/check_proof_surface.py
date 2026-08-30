@@ -244,7 +244,7 @@ def check() -> None:
     assert structured["@type"] == "WebSite"
     assert structured["url"] == "https://a11oy.net/"
     assert structured["name"] == "a11oy Proof Registry"
-    assert structured["alternateName"] == "Alloy by SZL Holdings"
+    assert structured["alternateName"] == "a11oy"  # lexicon locked 2026-08-30: the product is a11oy; "Alloy" subtitle retired (lexicon_gate)
     assert structured["sameAs"] == [
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
@@ -504,7 +504,9 @@ def check() -> None:
     assert any(
         anchor.get("href") == "/khipu/" for anchor in surface.anchors
     ), "the root proof registry must expose the khipu RECORD"
-    assert "Alloy by SZL Holdings" in source
+    # The former subtitle "Alloy by SZL Holdings" was retired 2026-08-30 (lexicon_gate);
+    # the canon line now records the retirement as history, and this check enforces that record.
+    assert "Former subtitle" in source
     assert "id=\"summary\"" in source
     assert "id=\"record\"" in source
     assert "id=\"github-atlas\"" in source
