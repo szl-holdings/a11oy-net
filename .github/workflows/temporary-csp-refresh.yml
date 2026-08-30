@@ -1,0 +1,117 @@
+name: temporary-csp-refresh
+
+on:
+  push:
+    branches:
+      - lexicon/retire-alloy-subtitle
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: ${{ !contains(github.event.head_commit.message, '[csp-refreshed]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact branch
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          ref: lexicon/retire-alloy-subtitle
+          fetch-depth: 0
+
+      - name: Recompute the exact inline-script CSP and remove bytecode
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import base64
+          import hashlib
+          import pathlib
+          import re
+          import shutil
+
+          root = pathlib.Path(".")
+          index_path = root / "index.html"
+          headers_path = root / "_headers"
+
+          html = index_path.read_text(encoding="utf-8")
+          pattern = re.compile(
+              r"<script(?P<attrs>[^>]*)>(?P<body>.*?)</script>",
+              re.IGNORECASE | re.DOTALL,
+          )
+          hashes: list[str] = []
+          for match in pattern.finditer(html):
+              if re.search(r"\bsrc\s*=", match.group("attrs"), re.IGNORECASE):
+                  continue
+              digest = hashlib.sha256(match.group("body").encode("utf-8")).digest()
+              hashes.append("'sha256-" + base64.b64encode(digest).decode("ascii") + "'")
+          hashes = sorted(set(hashes))
+          if len(hashes) != 2:
+              raise SystemExit(f"expected exactly two inline-script hashes, got {hashes}")
+
+          csp = "; ".join(
+              [
+                  "default-src 'self'",
+                  "script-src 'self' " + " ".join(hashes),
+                  "style-src 'self' 'unsafe-inline'",
+                  "img-src 'self' data:",
+                  "connect-src 'self' https://huggingface.co https://a-11-oy.com",
+                  "font-src 'self' data:",
+                  "manifest-src 'self'",
+                  "object-src 'none'",
+                  "base-uri 'self'",
+                  "frame-ancestors 'none'",
+                  "form-action 'none'",
+                  "worker-src 'none'",
+                  "upgrade-insecure-requests",
+              ]
+          )
+
+          meta_pattern = re.compile(
+              r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")[^"]*("\s*/?>)',
+              re.IGNORECASE,
+          )
+          refreshed_html, count = meta_pattern.subn(
+              lambda match: match.group(1) + csp + match.group(2),
+              html,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit(f"expected one index meta CSP, replaced {count}")
+          index_path.write_text(refreshed_html, encoding="utf-8")
+
+          lines = headers_path.read_text(encoding="utf-8").splitlines()
+          replaced = 0
+          for position, line in enumerate(lines):
+              if line.lstrip().lower().startswith("content-security-policy:"):
+                  indent = line[: len(line) - len(line.lstrip())]
+                  lines[position] = indent + "Content-Security-Policy: " + csp
+                  replaced += 1
+          if replaced != 1:
+              raise SystemExit(f"expected one edge CSP header, replaced {replaced}")
+          headers_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+          shutil.rmtree(root / "scripts" / "__pycache__", ignore_errors=True)
+          print("refreshed hashes:", " ".join(hashes))
+          PY
+
+      - name: Validate the refreshed security contract
+        run: python3 scripts/check_security_headers.py
+
+      - name: Commit the deterministic result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No refresh required."
+            exit 0
+          fi
+          git commit \
+            -m "fix(security): refresh CSP after lexicon change [csp-refreshed]" \
+            -m "Signed-off-by: Lutar, Stephen P. <stephenlutar2@gmail.com>"
+          git push origin HEAD:refs/heads/lexicon/retire-alloy-subtitle
