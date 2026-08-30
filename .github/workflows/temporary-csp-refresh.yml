@@ -20,7 +20,7 @@ jobs:
           ref: lexicon/retire-alloy-subtitle
           fetch-depth: 0
 
-      - name: Recompute the exact inline-script CSP and remove bytecode
+      - name: Recompute exact edge and meta CSPs; remove bytecode
         shell: bash
         run: |
           python3 - <<'PY'
@@ -51,30 +51,33 @@ jobs:
           if len(hashes) != 2:
               raise SystemExit(f"expected exactly two inline-script hashes, got {hashes}")
 
-          csp = "; ".join(
-              [
-                  "default-src 'self'",
-                  "script-src 'self' " + " ".join(hashes),
-                  "style-src 'self' 'unsafe-inline'",
-                  "img-src 'self' data:",
-                  "connect-src 'self' https://huggingface.co https://a-11-oy.com",
-                  "font-src 'self' data:",
-                  "manifest-src 'self'",
-                  "object-src 'none'",
-                  "base-uri 'self'",
-                  "frame-ancestors 'none'",
-                  "form-action 'none'",
-                  "worker-src 'none'",
-                  "upgrade-insecure-requests",
-              ]
-          )
+          shared_parts = [
+              "default-src 'self'",
+              "script-src 'self' " + " ".join(hashes),
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data:",
+              "connect-src 'self' https://huggingface.co https://a-11-oy.com",
+              "font-src 'self' data:",
+              "manifest-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'none'",
+              "worker-src 'none'",
+              "upgrade-insecure-requests",
+          ]
+          # frame-ancestors is valid and required in the HTTP header, but browsers
+          # ignore it in a meta CSP; the reviewed contract explicitly forbids it there.
+          meta_csp = "; ".join(shared_parts)
+          header_parts = list(shared_parts)
+          header_parts.insert(header_parts.index("form-action 'none'"), "frame-ancestors 'none'")
+          header_csp = "; ".join(header_parts)
 
           meta_pattern = re.compile(
               r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")[^"]*("\s*/?>)',
               re.IGNORECASE,
           )
           refreshed_html, count = meta_pattern.subn(
-              lambda match: match.group(1) + csp + match.group(2),
+              lambda match: match.group(1) + meta_csp + match.group(2),
               html,
               count=1,
           )
@@ -87,7 +90,7 @@ jobs:
           for position, line in enumerate(lines):
               if line.lstrip().lower().startswith("content-security-policy:"):
                   indent = line[: len(line) - len(line.lstrip())]
-                  lines[position] = indent + "Content-Security-Policy: " + csp
+                  lines[position] = indent + "Content-Security-Policy: " + header_csp
                   replaced += 1
           if replaced != 1:
               raise SystemExit(f"expected one edge CSP header, replaced {replaced}")
