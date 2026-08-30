@@ -129,7 +129,8 @@ def check() -> None:
     assert {"rel": "stylesheet", "href": "/assets/kanchay.css"} in diligence.links
     assert 'id="main" tabindex="-1"' in DILIGENCE.read_text(encoding="utf-8")
     diligence_source = DILIGENCE.read_text(encoding="utf-8")
-    assert "Alloy by SZL Holdings" in diligence_source
+    # "Alloy by SZL Holdings" subtitle retired 2026-08-30 (lexicon_gate); each surface must still be first-party a11oy + SZL Holdings.
+    assert "a11oy Diligence Room | SZL Holdings" in diligence_source
     assert "Origin health document" in diligence_source
     assert "healthz is not published" in diligence_source.lower()
     assert "Receipt store on this origin" in diligence_source
@@ -165,8 +166,9 @@ def check() -> None:
     assert {"main", "permalinks", "receipt-ids", "live-store", "stores", "verify"} <= record.ids
     assert any(anchor.get("href") == "https://a-11-oy.com/verify" for anchor in record.anchors)
     assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
-    assert "Alloy by SZL Holdings" in RECORD.read_text(encoding="utf-8")
-    assert "Alloy by SZL Holdings" in NOTES.read_text(encoding="utf-8")
+    assert "RECORD" in RECORD.read_text(encoding="utf-8"
+              ) and "SZL Holdings" in RECORD.read_text(encoding="utf-8")
+    assert "SZL Holdings" in NOTES.read_text(encoding="utf-8")
     assert "Product ↗" in RECORD.read_text(encoding="utf-8")
     assert "Product ↗" in NOTES.read_text(encoding="utf-8")
     assert RECORD.read_text(encoding="utf-8").count("origin-switch") == 1
