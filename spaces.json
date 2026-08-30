@@ -1,82 +1,350 @@
 {
-  "contract_version": "1.0.0",
+  "contract_version": "1.1.0",
   "surface": {
     "name": "Hub Space consolidation",
     "url": "https://a11oy.net/spaces.json",
     "publisher": "SZL Holdings",
-    "meaning": "Fold Hub Spaces into two origins. Leave 5–7 public. A listed URL is location only. Reachability is never quality.",
+    "meaning": "Fold Hub Spaces into two origins. Leave the measured public application cut public. A listed URL is location only. Reachability is never quality.",
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
   "origins": {
     "product": "https://a-11-oy.com",
     "proof": "https://a11oy.net/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com — foreign storefront, scheme omitted on this origin"
+    "never": "a11oy.com \u2014 foreign storefront, scheme omitted on this origin"
   },
   "cut": {
-    "compiledAt": "2026-08-29T17:55:00Z",
-    "measured": 44,
-    "keep": 7,
-    "keepTarget": 7,
-    "fold": 36,
-    "toProduct": 17,
-    "toProof": 19,
+    "compiledAt": "2026-08-30T16:15:00Z",
+    "measured": 45,
+    "keep": 6,
+    "keepTarget": 6,
+    "fold": 38,
+    "toProduct": 20,
+    "toProof": 18,
     "archive": 1,
-    "leftover": 37,
+    "hubPublicApplication": 6,
+    "hubPublicIncludingReadme": 7,
+    "hubPrivate": 38,
     "inBand": true,
     "hubArchive": "MEASURED",
-    "hubArchiveNote": "Unauthenticated Hub API MEASURED 7 public keepers. Folded docker/gradio Spaces PAUSED and PRIVATE. Static holograms PRIVATE. Destinations are existing Product and Proof paths. /verify is not cloned."
+    "hubArchiveNote": "Unauthenticated Hub API MEASURED 6 public application Spaces on 2026-08-30. README is a profile card, not application KEEP. Atlas keep-7 at 18:05Z is a prior snapshot and is not rewritten. Folded docker/gradio Spaces stay PAUSED+PRIVATE. Destinations are existing Product and Proof paths. /verify is not cloned. pause+private, never delete. This runtime has no Hub write token and does not unprivate the 38.",
+    "atlasKeep7Rewritten": false
   },
   "keep": [
-    {"id": "a11oy", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Command body. Product origin is a-11-oy.com. Hub Space stays as the public docker."},
-    {"id": "killinchu", "dest": "https://szlholdings-killinchu.hf.space/elite", "sdk": "docker", "why": "Defense docker. Proof front door excludes Killinchu-named resources. Stays Hub."},
-    {"id": "david-leads", "dest": "https://huggingface.co/spaces/SZLHOLDINGS/david-leads", "sdk": "docker", "why": "Insurance vertical. OpenFEMA MEASURED. 0 private fields."},
-    {"id": "anatomy", "dest": "https://a-11-oy.com/anatomy-v5", "sdk": "docker", "why": "Living map. Hologram sink. Product also serves /living-anatomy."},
-    {"id": "immune", "dest": "https://a-11-oy.com/immune", "sdk": "docker", "why": "SENTRA/GATE organ. Product already hosts /immune."},
-    {"id": "szl-real-estate", "dest": "https://huggingface.co/spaces/SZLHOLDINGS/szl-real-estate", "sdk": "docker", "why": "Public-records underwriting. NYC PLUTO MEASURED. Occupancy UNAVAILABLE."},
-    {"id": "szl-atelier", "dest": "https://a11oy.net/atelier/", "sdk": "static", "why": "Proof origin already walks forty models at /atelier/. Canonical playable Space stays Hub."}
+    {
+      "id": "a11oy",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Command body. Product origin is a-11-oy.com. Hub Space stays as the public docker."
+    },
+    {
+      "id": "killinchu",
+      "dest": "https://szlholdings-killinchu.hf.space/elite",
+      "sdk": "docker",
+      "why": "Defense docker. Proof front door excludes Killinchu-named resources. Stays Hub."
+    },
+    {
+      "id": "immune",
+      "dest": "https://a-11-oy.com/immune",
+      "sdk": "docker",
+      "why": "SENTRA/GATE organ. Product already hosts /immune."
+    },
+    {
+      "id": "szl-khipu",
+      "dest": "https://a-11-oy.com/khipu",
+      "sdk": "docker",
+      "why": "Public Hub application KEEP. Weights stay on Hub as models. Evaluate on product /khipu. RECORD on a11oy.net/khipu/."
+    },
+    {
+      "id": "szl-atelier",
+      "dest": "https://a11oy.net/atelier/",
+      "sdk": "static",
+      "why": "Proof origin already walks forty models at /atelier/. Canonical playable Space stays Hub."
+    },
+    {
+      "id": "governed-receipt-verifier",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "Public Hub application KEEP. Interactive /verify stays on product. Proof holds the RECORD index only."
+    }
   ],
   "fold": [
-    {"id": "llm-router-live", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Router is the product. Status Space is STALE. Do not keep a second front door."},
-    {"id": "hatun-mcp", "sink": "product", "dest": "https://a-11-oy.com/wires", "sdk": "docker", "why": "MCP is a bind, not a flagship. Product wires already exist."},
-    {"id": "sda", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Organ workstation. Residuals MODELED. Not a second detection product."},
-    {"id": "yarqa", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Canal partition is an organ, not a Space. CFD, never locked-8."},
-    {"id": "holographic", "sink": "product", "dest": "https://a-11-oy.com/anatomy-v5", "sdk": "docker", "why": "Hologram sprawl. One atlas. Fold into anatomy."},
-    {"id": "cosmos", "sink": "product", "dest": "https://a-11-oy.com/living-anatomy", "sdk": "docker", "why": "Unmapped RUNNING Space. Bind as anatomy, not a third map."},
-    {"id": "szl-model-inference-lab", "sink": "product", "dest": "https://a-11-oy.com/console", "sdk": "docker", "why": "Lab is not a flagship. Command Center is /console."},
-    {"id": "szl-khipu", "sink": "product", "dest": "https://a-11-oy.com/khipu", "sdk": "docker", "why": "Weights stay on Hub as models. The Space is not a second kernel. Evaluate on product /khipu. RECORD on a11oy.net/khipu/."},
-    {"id": "khipu-lab", "sink": "product", "dest": "https://a-11-oy.com/khipu", "sdk": "docker", "why": "Duplicate knot lab. KHIPU already lives on product /khipu. RECORD on a11oy.net/khipu/."},
-    {"id": "nexus", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Analog map, not kernel. Do not keep a Space for a local-first toy."},
-    {"id": "szl-command-lab", "sink": "product", "dest": "https://a-11-oy.com/console", "sdk": "docker", "why": "Command already has a body. Lab is a fork."},
-    {"id": "szl-sovereign-os", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "This OS is the operator kernel. Hub rehost is a hologram."},
-    {"id": "immune-lattice", "sink": "product", "dest": "https://a-11-oy.com/immune", "sdk": "docker", "why": "Lattice is not a sibling of IMMUNE. One admission surface."},
-    {"id": "a11oy-factory", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Factory is a bind (AO-2026-08-29-001), not a second flagship."},
-    {"id": "lyte-services", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Lyte is the one admitted cell. Compiling a frontier still returns BLOCKED."},
-    {"id": "lyte-lattice", "sink": "product", "dest": "https://a-11-oy.com/lyte", "sdk": "docker", "why": "BIND hologram. Cite GitHub @ 2773eba. Hub is the artifact registry. Not a second flagship. Not a product certificate. Hub RUNNING only after Immune readback."},
-    {"id": "szl-quant-live", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "static", "why": "Static hologram. Paper quotes already MEASURED in this OS. No order routing."},
-    {"id": "ayllu", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Counsel showcase already lives on the proof origin. Does not run the council. Pulse organ is github.com/szl-holdings/ayllu / SZLHOLDINGS/ayllu. IIT φ_s UNAVAILABLE."},
-    {"id": "counsel", "sink": "proof", "dest": "https://a11oy.net/ayllu/", "sdk": "docker", "why": "Duplicate of ayllu. One lab URL."},
-    {"id": "experiments", "sink": "proof", "dest": "https://a11oy.net/experiments/", "sdk": "docker", "why": "Experimental split-outs already have a proof path. Not locked-8."},
-    {"id": "szl-experiments", "sink": "proof", "dest": "https://a11oy.net/experiments/", "sdk": "docker", "why": "Same lab, second Space. Fold, do not twin."},
-    {"id": "energy-attested-runs", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Energy stays UNAVAILABLE until NVML is MEASURED. Index the claim, do not host a joule hologram."},
-    {"id": "governed-receipt-verifier", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Interactive /verify stays on product. Proof holds the RECORD index only."},
-    {"id": "guardrail-receipt", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "One signing primitive. Wrappers become adapters."},
-    {"id": "governed-norm-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Static HTML Space. Estate snapshot is the inventory, not a live dashboard."},
-    {"id": "lambda-gate-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Λ remains Conjecture 1. A hologram is not a theorem."},
-    {"id": "energy-attest-holo", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "One meter. Honest UNAVAILABLE. No second joule path."},
-    {"id": "receipt-chain-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Live chain is on product /api/lake. Proof indexes pointers."},
-    {"id": "szl-provctl-live", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Hub-mirror explosion. Publish from one suite."},
-    {"id": "szl-kernels-live", "sink": "proof", "dest": "https://a11oy.net/#atlas", "sdk": "static", "why": "Atlas lists kernels. A live Space is not a second source."},
-    {"id": "szl-govsign-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Fold into szl-receipt + governed-receipt-spec."},
-    {"id": "szl-blocked-live", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "static", "why": "Refusals are tamper-EVIDENT on product. Hologram is theater."},
-    {"id": "szl-estate-live", "sink": "proof", "dest": "https://a11oy.net/estate/", "sdk": "static", "why": "Estate snapshot already exists on the proof origin."},
-    {"id": "szl-forge-lab", "sink": "proof", "dest": "https://a11oy.net/atelier/", "sdk": "static", "why": "Cuts belong next to the forty-model walk, not as a sibling Space."},
-    {"id": "governed-agent-bench", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "gradio", "why": "Bench metadata is REPORTED. Not a runtime origin."},
-    {"id": "evidence-studio", "sink": "proof", "dest": "https://a11oy.net/record/", "sdk": "docker", "why": "Evidence wall is RECORD. Studio is not a third origin."},
-    {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com", "sdk": "docker", "why": "Unmapped docker that appeared after the 43-list. Not a flagship. Fold into product. Occupancy stays UNAVAILABLE."}
+    {
+      "id": "llm-router-live",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Router is the product. Status Space is STALE. Do not keep a second front door."
+    },
+    {
+      "id": "hatun-mcp",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/wires",
+      "sdk": "docker",
+      "why": "MCP is a bind, not a flagship. Product wires already exist."
+    },
+    {
+      "id": "sda",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Organ workstation. Residuals MODELED. Not a second detection product."
+    },
+    {
+      "id": "yarqa",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Canal partition is an organ, not a Space. CFD, never locked-8."
+    },
+    {
+      "id": "holographic",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/anatomy-v5",
+      "sdk": "docker",
+      "why": "Hologram sprawl. One atlas. Fold into anatomy."
+    },
+    {
+      "id": "cosmos",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/living-anatomy",
+      "sdk": "docker",
+      "why": "Unmapped RUNNING Space. Bind as anatomy, not a third map."
+    },
+    {
+      "id": "szl-model-inference-lab",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/console",
+      "sdk": "docker",
+      "why": "Lab is not a flagship. Command Center is /console."
+    },
+    {
+      "id": "khipu-lab",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/khipu",
+      "sdk": "docker",
+      "why": "Duplicate knot lab. KHIPU already lives on product /khipu. RECORD on a11oy.net/khipu/."
+    },
+    {
+      "id": "nexus",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/nexus",
+      "sdk": "docker",
+      "why": "Analog workstation is an a11oy package (AO-2026-08-29-003), not a flagship. Bound at /nexus."
+    },
+    {
+      "id": "szl-command-lab",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/console",
+      "sdk": "docker",
+      "why": "Command already has a body. Lab is a fork."
+    },
+    {
+      "id": "szl-sovereign-os",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "This OS is the operator kernel. Hub rehost is a hologram."
+    },
+    {
+      "id": "immune-lattice",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/immune",
+      "sdk": "docker",
+      "why": "Lattice is not a sibling of IMMUNE. One admission surface."
+    },
+    {
+      "id": "a11oy-factory",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Factory is a bind (AO-2026-08-29-001), not a second flagship."
+    },
+    {
+      "id": "lyte-services",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Lyte is the one admitted cell. Compiling a frontier still returns BLOCKED."
+    },
+    {
+      "id": "lyte-lattice",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/lyte",
+      "sdk": "docker",
+      "why": "BIND hologram. Hub is the artifact registry. Not a second flagship."
+    },
+    {
+      "id": "szl-quant-live",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "static",
+      "why": "Static hologram. Paper quotes already MEASURED. No order routing."
+    },
+    {
+      "id": "terra-assurance",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Unmapped docker. Not a flagship. Occupancy stays UNAVAILABLE."
+    },
+    {
+      "id": "ayllu",
+      "sink": "proof",
+      "dest": "https://a11oy.net/ayllu/",
+      "sdk": "docker",
+      "why": "Counsel showcase already lives on the proof origin. Does not run the council."
+    },
+    {
+      "id": "counsel",
+      "sink": "proof",
+      "dest": "https://a11oy.net/ayllu/",
+      "sdk": "docker",
+      "why": "Duplicate of ayllu. One lab URL."
+    },
+    {
+      "id": "experiments",
+      "sink": "proof",
+      "dest": "https://a11oy.net/experiments/",
+      "sdk": "docker",
+      "why": "Experimental split-outs already have a proof path. Not locked-8."
+    },
+    {
+      "id": "szl-experiments",
+      "sink": "proof",
+      "dest": "https://a11oy.net/experiments/",
+      "sdk": "docker",
+      "why": "Same lab, second Space. Fold, do not twin."
+    },
+    {
+      "id": "energy-attested-runs",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "Energy stays UNAVAILABLE until NVML is MEASURED. Index the claim, do not host a joule hologram.",
+      "honesty": "8/8 SIMULATED"
+    },
+    {
+      "id": "guardrail-receipt",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "One signing primitive. Wrappers become adapters."
+    },
+    {
+      "id": "governed-norm-holo",
+      "sink": "proof",
+      "dest": "https://a11oy.net/estate/",
+      "sdk": "static",
+      "why": "Static HTML Space. Estate snapshot is the inventory, not a live dashboard."
+    },
+    {
+      "id": "lambda-gate-holo",
+      "sink": "proof",
+      "dest": "https://a11oy.net/estate/",
+      "sdk": "static",
+      "why": "\u039b remains Conjecture 1. A hologram is not a theorem."
+    },
+    {
+      "id": "energy-attest-holo",
+      "sink": "proof",
+      "dest": "https://a11oy.net/estate/",
+      "sdk": "static",
+      "why": "One meter. Honest UNAVAILABLE. No second joule path."
+    },
+    {
+      "id": "receipt-chain-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "Live chain is on product /api/lake. Proof indexes pointers."
+    },
+    {
+      "id": "szl-provctl-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/estate/",
+      "sdk": "static",
+      "why": "Hub-mirror explosion. Publish from one suite."
+    },
+    {
+      "id": "szl-kernels-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/#atlas",
+      "sdk": "static",
+      "why": "Atlas lists kernels. A live Space is not a second source."
+    },
+    {
+      "id": "szl-govsign-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "Fold into szl-receipt + governed-receipt-spec."
+    },
+    {
+      "id": "szl-blocked-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "static",
+      "why": "Refusals are tamper-EVIDENT on product. Hologram is theater."
+    },
+    {
+      "id": "szl-estate-live",
+      "sink": "proof",
+      "dest": "https://a11oy.net/estate/",
+      "sdk": "static",
+      "why": "Estate snapshot already exists on the proof origin."
+    },
+    {
+      "id": "szl-forge-lab",
+      "sink": "proof",
+      "dest": "https://a11oy.net/atelier/",
+      "sdk": "static",
+      "why": "Cuts belong next to the forty-model walk, not as a sibling Space.",
+      "honesty": "SNAPSHOT \u2014 not a trainer, not Serve Studio"
+    },
+    {
+      "id": "governed-agent-bench",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "gradio",
+      "why": "Bench metadata is REPORTED. Not a runtime origin."
+    },
+    {
+      "id": "evidence-studio",
+      "sink": "proof",
+      "dest": "https://a11oy.net/record/",
+      "sdk": "docker",
+      "why": "Evidence wall is RECORD. Studio is not a third origin."
+    },
+    {
+      "id": "david-leads",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Insurance vertical is not a flagship. Hub Space is PAUSED+PRIVATE. pause+private, never delete.",
+      "honesty": "PII/leads stay private"
+    },
+    {
+      "id": "anatomy",
+      "sink": "product",
+      "dest": "https://a-11-oy.com/anatomy-v5",
+      "sdk": "docker",
+      "why": "Living map already on product /anatomy-v5 and /living-anatomy. Hub Space re-privatized. Not a second origin."
+    },
+    {
+      "id": "szl-real-estate",
+      "sink": "product",
+      "dest": "https://a-11-oy.com",
+      "sdk": "docker",
+      "why": "Public-records underwriting is not a flagship. Occupancy stays UNAVAILABLE. Hub Space PAUSED+PRIVATE.",
+      "honesty": "Occupancy UNAVAILABLE"
+    }
   ],
   "archive": [
-    {"id": "second-brain", "why": "Duplicate brain. Not an origin. Not a lab. Stamp HISTORICAL."}
+    {
+      "id": "second-brain",
+      "why": "Duplicate brain. Not an origin. Not a lab. Stamp HISTORICAL."
+    }
   ],
   "packet8": {
     "status": "ROADMAP",
@@ -90,10 +358,30 @@
     "proof": "https://a11oy.net/decision/",
     "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals",
     "adapters": [
-      {"id": "terra-assurance", "sink": "product", "dest": "https://a-11-oy.com/terra", "hub": "exists-private"},
-      {"id": "aegis-assurance", "sink": "product", "dest": "https://a-11-oy.com/aegis", "hub": "blocked-space-create-cap"},
-      {"id": "puriq-markets", "sink": "product", "dest": "https://a-11-oy.com/puriq-markets", "hub": "blocked-space-create-cap"},
-      {"id": "counsel-assurance", "sink": "product", "dest": "https://a-11-oy.com/counsel", "hub": "blocked-space-create-cap"}
+      {
+        "id": "terra-assurance",
+        "sink": "product",
+        "dest": "https://a-11-oy.com/terra",
+        "hub": "exists-private"
+      },
+      {
+        "id": "aegis-assurance",
+        "sink": "product",
+        "dest": "https://a-11-oy.com/aegis",
+        "hub": "blocked-space-create-cap"
+      },
+      {
+        "id": "puriq-markets",
+        "sink": "product",
+        "dest": "https://a-11-oy.com/puriq-markets",
+        "hub": "blocked-space-create-cap"
+      },
+      {
+        "id": "counsel-assurance",
+        "sink": "product",
+        "dest": "https://a-11-oy.com/counsel",
+        "hub": "blocked-space-create-cap"
+      }
     ]
   },
   "boundaries": {
@@ -104,6 +392,8 @@
     "hub_is_not_a_front_door": true,
     "http_response_proves_capability": false,
     "hub_mutation_from_this_runtime": false,
-    "factory_is_a_bind_not_a_flagship": true
+    "factory_is_a_bind_not_a_flagship": true,
+    "atlas_keep_7_not_rewritten": true,
+    "unprivate_38_from_this_runtime": false
   }
 }

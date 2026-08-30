@@ -1,0 +1,753 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Models and kernels honesty RECORD",
+    "url": "https://a11oy.net/models.json",
+    "publisher": "SZL Holdings",
+    "meaning": "Dated MEASURED classification of the 43 public Hub model cards. TRAINED means weight files exist. KERNEL-SOFTWARE means source/tests, not a LoRA. ROADMAP means empty card. NANO means synthetic npz. A listed URL is location only. Reachability is never quality. This origin does not train, bench, or serve weights.",
+    "implementation": "static GitHub Pages JSON on the proof origin"
+  },
+  "reader_guide": "Every public Hub model is already unprivate. None of the 38 private Spaces were unprivated. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Atlas keep-7 is a prior snapshot and is not rewritten. Evaluate kernels and 1.5B adapters on a-11-oy.com; this origin only indexes the cards.",
+  "captured_at": "2026-08-30T16:15:00Z",
+  "evidence_class": "MEASURED",
+  "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS plus per-id sibling file lists.",
+  "operational": false,
+  "trained_all": false,
+  "benched_all": false,
+  "energy": "UNAVAILABLE",
+  "gpu_train": "UNAVAILABLE",
+  "p0_joblib": "open",
+  "hub": {
+    "org": "SZLHOLDINGS",
+    "models": 43,
+    "private": 0,
+    "listing": "https://huggingface.co/SZLHOLDINGS"
+  },
+  "counts": {
+    "TRAINED_WEIGHTS": 13,
+    "ROADMAP_EMPTY": 6,
+    "NANO_SYNTHETIC": 5,
+    "KERNEL_SOFTWARE": 16,
+    "CODE_OR_SCRIPTS": 3
+  },
+  "classes": {
+    "TRAINED_WEIGHTS": "safetensors, GGUF, or PEFT adapter bytes present",
+    "NANO_SYNTHETIC": "numpy npz silhouette; not a 1.5B trainer",
+    "KERNEL_SOFTWARE": "source/tests/bench receipts; weights:false; Unsloth is the wrong tool",
+    "ROADMAP_EMPTY": "card exists; files=README only or eval-without-weights",
+    "CODE_OR_SCRIPTS": "scripts, substrate, or org profile; not a served model"
+  },
+  "models": [
+    {
+      "id": "SZLHOLDINGS/SZL-Khipu-1.5B",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 32,
+      "weights": [
+        "adapter/adapter_model.safetensors",
+        "model.safetensors"
+      ],
+      "bench": {
+        "source": "eval_receipt.signed.json",
+        "evaluated_at": "2026-07-14T02:01:28Z",
+        "planValid": "11/11",
+        "groundingCorrect": "4/5",
+        "abstainCorrect": "2/6",
+        "evidence_class": "MEASURED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Khipu-1.5B-GGUF",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "llama.cpp",
+      "files": 13,
+      "weights": [
+        "SZL-Khipu-1.5B-F16.gguf",
+        "SZL-Khipu-1.5B-Q4_K_M.gguf",
+        "SZL-Khipu-1.5B-Q5_K_M.gguf",
+        "SZL-Khipu-1.5B-Q8_0.gguf"
+      ],
+      "bench": {
+        "source": "eval_receipt.signed.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Forge-1.5B-ReceiptAgent",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 18,
+      "weights": [
+        "adapter/adapter_model.safetensors",
+        "model.safetensors"
+      ],
+      "bench": {
+        "source": "eval_receipt.signed.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/chaski",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 28,
+      "weights": [
+        "adapter-unsloth/adapter_model.safetensors",
+        "adapter_model.safetensors",
+        "chaski.npz",
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": {
+        "source": "eval_measured.json",
+        "json_draft": "0/5",
+        "adversarial_refusal": "2/6",
+        "publication_eligible": false,
+        "evidence_class": "MEASURED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/chaski-5050",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 19,
+      "weights": [
+        "adapter-unsloth/adapter_model.safetensors",
+        "adapter_model.safetensors",
+        "chaski_5050.npz"
+      ],
+      "bench": {
+        "source": "training_receipt.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/chaski-r2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 24,
+      "weights": [
+        "adapter-unsloth/adapter_model.safetensors",
+        "adapter_model.safetensors",
+        "chaski_r2.npz"
+      ],
+      "bench": {
+        "source": "eval_named_n_generate.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/WILLAY",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 17,
+      "weights": [
+        "adapter-unsloth/adapter_model.safetensors",
+        "adapter_model.safetensors",
+        "willay.npz"
+      ],
+      "bench": {
+        "source": "adapter-unsloth/training_receipt.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/A11OY-MINI",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "llama.cpp",
+      "files": 6,
+      "weights": [
+        "a11oy-mini-f16.gguf",
+        "a11oy-mini-q4_k_m.gguf"
+      ],
+      "bench": {
+        "source": "conversion_receipt.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/KHIPU-R2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 13,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": {
+        "source": "eval_measured.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/khipu-r3",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 9,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": {
+        "source": "training_receipt.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 29,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": {
+        "source": "reports/eval-report.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 11,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": {
+        "source": "eval_dev_named_n.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/brain-navigator-r2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 10,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": {
+        "source": "eval_report.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Khipu-1.5B-abstain",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 11,
+      "weights": [],
+      "bench": {
+        "source": "eval.jsonl",
+        "note": "eval corpus present; adapter weights absent",
+        "evidence_class": "MEASURED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/TinyKhipu-Nano",
+      "class": "NANO_SYNTHETIC",
+      "pipeline": null,
+      "library": "numpy",
+      "files": 6,
+      "weights": [
+        "tiny_khipu.npz"
+      ],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/ReceiptAgent-Nano",
+      "class": "NANO_SYNTHETIC",
+      "pipeline": null,
+      "library": "numpy",
+      "files": 6,
+      "weights": [
+        "receipt_agent.npz"
+      ],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/MiniEmbed-Nano",
+      "class": "NANO_SYNTHETIC",
+      "pipeline": null,
+      "library": "numpy",
+      "files": 5,
+      "weights": [
+        "mini_embed.npz"
+      ],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/Moons-Nano",
+      "class": "NANO_SYNTHETIC",
+      "pipeline": null,
+      "library": "numpy",
+      "files": 5,
+      "weights": [
+        "moons.npz"
+      ],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-khipu",
+      "class": "NANO_SYNTHETIC",
+      "pipeline": null,
+      "library": "numpy",
+      "files": 177,
+      "weights": [
+        "artifacts/tiny_khipu.npz",
+        "artifacts/receipt_agent.npz",
+        "artifacts/mini_embed.npz",
+        "artifacts/moons.npz",
+        "lambda_gate.npz"
+      ],
+      "bench": {
+        "source": "artifacts/TRAINING_RECEIPT.json",
+        "note": "kit/atelier artifacts, not a 1.5B trainer",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-kernels",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": "feature-extraction",
+      "library": "kernels",
+      "files": 48,
+      "weights": [
+        "vectors.npz"
+      ],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "tests": "29 passed in 2.59s",
+        "weights_trained": false,
+        "evidence_class": "MEASURED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-khipu-kernels",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 39,
+      "weights": [],
+      "bench": {
+        "source": "kernels/receipt_attn.py",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-governed-norm",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 22,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "laptop pytest FAIL on that host; not retried here",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-lambda-gate",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 19,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "laptop pytest FAIL on that host; not retried here",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/governed-inference-meter",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 24,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/YARQA-ATTN",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 23,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "KERNEL-owned; not an ATELIER model; not a fourth Triton stack",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receipt-attn",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 22,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "Triton bytes in-tree. Canonical GitHub szl-holdings/szl-receipt-attn.",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-maskmod",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 12,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "not Triton-in-tree",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-block-kv",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 13,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "torch paged KV gather; Triton page kernel remains ROADMAP",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-invariants",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 15,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-blocked",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 20,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-govsign",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 16,
+      "weights": [],
+      "bench": {
+        "source": "TRAINING_RECEIPT.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-provctl",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 16,
+      "weights": [],
+      "bench": {
+        "source": "TRAINING_RECEIPT.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-nemo",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "sklearn",
+      "files": 13,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "note": "P0-JOBLIB remains open. sklearn surrogate is not a LoRA.",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-ouroboros",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 17,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-formulas",
+      "class": "KERNEL_SOFTWARE",
+      "pipeline": null,
+      "library": "kernels",
+      "files": 17,
+      "weights": [],
+      "bench": {
+        "source": "BENCH.laptop-blackwell.json",
+        "locked_proven": [
+          "F1",
+          "F4",
+          "F7",
+          "F11",
+          "F12",
+          "F18",
+          "F19",
+          "F22"
+        ],
+        "lambda": "Conjecture 1",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/qantu",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "other",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/waman",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "other",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/chakana",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "other",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/tinku",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "other",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/KILLINCHU-EYE",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "other",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/a11oy-v19-substrate",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 44,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/SZLHOLDINGS",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 4,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-training-scripts",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": "other",
+      "files": 12,
+      "weights": [],
+      "bench": {
+        "source": "receipts/*-unsloth.json",
+        "evidence_class": "REPORTED"
+      },
+      "operational": false,
+      "trained": false
+    }
+  ],
+  "kernels_shipped_github": [
+    {
+      "id": "szl-receipt-attn",
+      "github": "https://github.com/szl-holdings/szl-receipt-attn",
+      "triton_in_tree": true,
+      "operational": false
+    },
+    {
+      "id": "szl-maskmod",
+      "github": "https://github.com/szl-holdings/szl-maskmod",
+      "triton_in_tree": false,
+      "operational": false
+    },
+    {
+      "id": "szl-block-kv",
+      "github": "https://github.com/szl-holdings/szl-block-kv",
+      "triton_in_tree": false,
+      "operational": false
+    }
+  ],
+  "local_nexus_kernel": {
+    "package": "AO-2026-08-29-003",
+    "bound": "https://a-11-oy.com/nexus",
+    "proof": "https://a11oy.net/nexus/",
+    "flagship": false,
+    "tests": {
+      "passed": 51,
+      "failed": 0,
+      "evidence_class": "MEASURED",
+      "host": "grok-build-sandbox",
+      "observed_at": "2026-08-30T16:15:00Z"
+    },
+    "energy": "UNAVAILABLE",
+    "operational": false
+  },
+  "boundaries": {
+    "this_origin_does_not_train": true,
+    "this_origin_does_not_serve_weights": true,
+    "http_response_proves_capability": false,
+    "operational_false": true,
+    "trained_all_false": true,
+    "atlas_keep_7_not_rewritten": true,
+    "energy_unavailable_until_rapl": true,
+    "gpu_train_unavailable": true,
+    "unprivate_38_from_this_runtime": false,
+    "p0_joblib_open": true
+  }
+}

@@ -373,6 +373,35 @@ def check() -> None:
     assert estate_contract["origins"]["product"] == "https://a-11-oy.com"
     leaked = {"SZLHOLDINGS/david-leads", "SZLHOLDINGS/anatomy", "SZLHOLDINGS/szl-real-estate"}
     assert not leaked.intersection(public_spaces)
+    recapture = estate_contract["recapture_2026_08_30"]
+    assert recapture["spaces_json_keep"] == 6
+    assert recapture["atlas_keep_7_rewritten"] is False
+    assert recapture["unprivate_38"] is False
+    assert recapture["operational"] is False
+    spaces_contract = json.loads((ROOT / "spaces.json").read_text(encoding="utf-8"))
+    keep_ids = [item["id"] for item in spaces_contract["keep"]]
+    assert keep_ids == [
+        "a11oy",
+        "killinchu",
+        "immune",
+        "szl-khipu",
+        "szl-atelier",
+        "governed-receipt-verifier",
+    ]
+    assert spaces_contract["cut"]["keep"] == 6
+    assert "david-leads" not in keep_ids
+    assert "anatomy" not in keep_ids
+    assert "szl-real-estate" not in keep_ids
+    nexus = next(item for item in spaces_contract["fold"] if item["id"] == "nexus")
+    assert nexus["dest"] == "https://a-11-oy.com/nexus"
+    models_contract = json.loads((ROOT / "models.json").read_text(encoding="utf-8"))
+    assert models_contract["operational"] is False
+    assert models_contract["trained_all"] is False
+    assert models_contract["hub"]["models"] == 43
+    assert len(models_contract["models"]) == 43
+    assert models_contract["energy"] == "UNAVAILABLE"
+    assert models_contract["boundaries"]["atlas_keep_7_not_rewritten"] is True
+    assert not any(item.get("operational") for item in models_contract["models"])
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
