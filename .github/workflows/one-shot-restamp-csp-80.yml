@@ -1,0 +1,62 @@
+name: one-shot restamp CSP for PR 80
+
+on:
+  push:
+    branches:
+      - lexicon/retire-alloy-subtitle
+    paths:
+      - .github/workflows/one-shot-restamp-csp-80.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restamp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: lexicon/retire-alloy-subtitle
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Recompute inline script CSP hashes and clean bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64, hashlib, pathlib, re
+
+          root = pathlib.Path('.')
+          index = root / 'index.html'
+          headers = root / '_headers'
+          source = index.read_text(encoding='utf-8')
+
+          hashes = []
+          for match in re.finditer(r'<script(?P<attrs>[^>]*)>(?P<body>.*?)</script>', source, re.I | re.S):
+              if re.search(r'\bsrc\s*=', match.group('attrs'), re.I):
+                  continue
+              digest = hashlib.sha256(match.group('body').encode('utf-8')).digest()
+              hashes.append("'sha256-" + base64.b64encode(digest).decode('ascii') + "'")
+          if not hashes:
+              raise SystemExit('no inline script hashes found')
+
+          token_text = ' '.join(sorted(set(hashes)))
+          pattern = re.compile(r"script-src 'self'(?: 'sha256-[A-Za-z0-9+/=]+')*;")
+          updated_index, n_index = pattern.subn("script-src 'self' " + token_text + ';', source, count=1)
+          hsource = headers.read_text(encoding='utf-8')
+          updated_headers, n_headers = pattern.subn("script-src 'self' " + token_text + ';', hsource, count=1)
+          if n_index != 1 or n_headers != 1:
+              raise SystemExit(f'CSP replacement count index={n_index} headers={n_headers}')
+          index.write_text(updated_index, encoding='utf-8', newline='\n')
+          headers.write_text(updated_headers, encoding='utf-8', newline='\n')
+          print('restamped hashes:', token_text)
+          PY
+          rm -rf scripts/__pycache__
+          python3 scripts/check_security_headers.py
+          rm .github/workflows/one-shot-restamp-csp-80.yml
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add index.html _headers scripts/__pycache__ .github/workflows/one-shot-restamp-csp-80.yml
+          git commit -m "fix(security): restamp exact CSP hashes after lexicon update" -m "Signed-off-by: Stephen P. Lutar <stephenlutar2@gmail.com>"
+          git push origin HEAD:lexicon/retire-alloy-subtitle
