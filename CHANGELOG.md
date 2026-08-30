@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-30
+
+- `/spaces.json` KEEP recut to the MEASURED unauthenticated application six (a11oy, killinchu, immune, szl-khipu, szl-atelier, governed-receipt-verifier). david-leads, anatomy, and szl-real-estate fold onto product paths and stay PAUSED+PRIVATE. nexus dest is `a-11-oy.com/nexus`. Atlas keep-7 at 18:05Z is not rewritten. pause+private, never delete. This runtime has no Hub write token and does not unprivate the 38.
+- `/models.json` admitted as the models-and-kernels honesty RECORD. 43 public Hub cards classified TRAINED_WEIGHTS / NANO_SYNTHETIC / KERNEL_SOFTWARE / ROADMAP_EMPTY / CODE_OR_SCRIPTS. operational:false. trained_all:false. Energy UNAVAILABLE. GPU train UNAVAILABLE. P0-JOBLIB remains open. Does not stamp LIVE.
+- `/estate.json` recapture 2026-08-30T16:15Z records the KEEP-6 cut and models RECORD pointer. Authenticated public_spaces seven including README is unchanged. Atlas keep-7 is not rewritten. Never a11oy.com.
+
+
 ## 2026-08-29
 
 - `/frontiers.json` compiler SNAPSHOT: Lyte ADMIT STRUCTURAL-ONLY; N1–N25 BLOCKED STARTED; N13/N26 joule UNAVAILABLE; N27 NEVER_DISPATCH. Energy UNAVAILABLE. Not LIVE. Does not rewrite `/factory/`. INC-05 remains operator-only ([a11oy#1497](https://github.com/szl-holdings/a11oy/issues/1497)).

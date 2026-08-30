@@ -11,6 +11,8 @@ Authoritative public paths:
 - Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
 - Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
 - Estate contract: https://a11oy.net/estate.json
+- Hub Space consolidation contract: https://a11oy.net/spaces.json
+- Models and kernels honesty RECORD: https://a11oy.net/models.json
 - Origin lock RECORD (INC-05 MEASURED public-identity-host probe; not DNS control; not a fourth origin): https://a11oy.net/origin/
 - Origin lock contract: https://a11oy.net/origin.json
 - Factory organs RECORD (N1–N25; runtime a-11-oy.com/organs; this origin does not execute organs): https://a11oy.net/factory/
