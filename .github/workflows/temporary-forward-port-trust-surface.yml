@@ -1,0 +1,55 @@
+name: temporary-forward-port-trust-surface
+
+on:
+  push:
+    branches:
+      - fix/trust-surface-current-main-20260831
+    paths:
+      - .github/workflows/temporary-forward-port-trust-surface.yml
+
+permissions:
+  contents: write
+
+jobs:
+  forward-port:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact current-main successor
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/trust-surface-current-main-20260831
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Apply only reviewed trust-surface files
+        shell: bash
+        env:
+          REVIEWED_HEAD: 02254db2410e55b1e788e5403f81040fdc260d62
+          EXPECTED_BASE: 445da39a739e8f7d70b62fdb90e2e90e039772be
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "$EXPECTED_BASE"
+          git cat-file -e "$REVIEWED_HEAD^{commit}"
+          git checkout "$REVIEWED_HEAD" -- \
+            diligence/index.html \
+            index.html \
+            scripts/check_proof_surface.py
+          changed="$(git diff --name-only | sort)"
+          expected="$(printf '%s\n' diligence/index.html index.html scripts/check_proof_surface.py | sort)"
+          test "$changed" = "$expected"
+          python3 -m py_compile scripts/check_proof_surface.py
+          python3 scripts/check_proof_surface.py
+          git diff --check
+
+      - name: Commit exact reviewed files to successor branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add diligence/index.html index.html scripts/check_proof_surface.py
+          git commit \
+            -m "fix(site): clarify origin and manifest-driven estate counts" \
+            -m "Signed-off-by: Stephen P. Lutar <stephenlutar2@gmail.com>"
+          git push origin HEAD:refs/heads/fix/trust-surface-current-main-20260831
