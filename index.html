@@ -391,6 +391,10 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 <body>
 <a class="skip-link" href="#main-content">Skip to evidence</a>
 <div class="lattice-bg" aria-hidden="true"><i class="baton"></i><i class="baton"></i><i class="baton"></i><i class="baton"></i></div>
+<!-- audit 2026-08-30: origin disambiguation banner (static, slim). This origin = proof & verification; product = a-11-oy.com. Never a11oy.com. -->
+<div class="origin-banner" role="note" style="background:var(--deep);border-bottom:1px solid var(--border);color:var(--sub);font:12.5px/1.5 var(--mono);padding:8px 0;text-align:center">
+  <div class="wrap">a11oy.net is the proof &amp; verification surface of SZL Holdings — the product site is <a href="https://a-11-oy.com" target="_blank" rel="noopener" style="color:var(--proof);text-decoration:underline;text-underline-offset:.2em">a-11-oy.com</a>. Not affiliated with a11oy.com.</div>
+</div>
 <nav class="topbar" aria-label="Primary"><div class="wrap nav-in">
   <a class="wordmark" href="/" aria-label="A11oy.net home"><span class="glyph" aria-hidden="true">Λ</span><span class="scope"><span class="scope-name">A11OY</span><span class="scope-sep">/</span><span class="scope-role">PROOF REGISTRY</span></span></a>
   <div class="nav-chips" aria-label="Surface posture">
@@ -400,10 +404,13 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryLinks" aria-expanded="false">Explore</button>
   <div class="nav-links" id="primaryLinks" data-open="false">
     <span class="origin-switch" aria-label="Origins"><a class="origin-product" href="https://a-11-oy.com" target="_blank" rel="noopener">Product ↗</a><span class="origin-sep" aria-hidden="true">|</span><a class="origin-proof" href="/" aria-current="true">Proof</a></span>
-    <a href="/record/">RECORD</a>
+    <!-- audit 2026-08-30: primary nav trimmed to exactly 6 items. Removed #atlas / #index links pointed at on-page sections that remain below; every prior page stays reachable by URL and via the footer. -->
+    <a href="/record/">Record</a>
+    <a href="https://github.com/szl-holdings/governed-receipt-spec" target="_blank" rel="noopener">Spec ↗</a>
+    <a href="https://huggingface.co/datasets/SZLHOLDINGS/governed-receipts-bench" target="_blank" rel="noopener">Conformance ↗</a>
+    <a href="/.well-known/security.txt">Security</a>
     <a href="/diligence/">Diligence</a>
-    <a href="#atlas">Atlas</a>
-    <a href="#index">Index</a>
+    <a href="/estate/">Estate</a>
   </div>
 </div></nav>
 <main id="main-content" tabindex="-1">
@@ -478,7 +485,8 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
         <tr><td>This origin is a static proof registry</td><td><span class="cls cls-measured">MEASURED</span></td><td>This document · GitHub Pages · 2026-08-28</td><td>Reachability of a11oy.net only. Not product readiness.</td></tr>
         <tr><td>Origin health document</td><td><span class="cls cls-measured">MEASURED</span></td><td>/health.json · committed static file · 2026-08-28</td><td>Not DSSE-LIVE. signer=unavailable. sha is last published main. Not uptime. /readyz is HTML. /healthz is not published (404 HTML).</td></tr>
         <tr><td>Receipt store on this origin</td><td><span class="cls cls-measured">MEASURED</span></td><td>This repository · 2026-08-28</td><td>None. RECORD is pointers. Live receipts stay on the product Space.</td></tr>
-        <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">REPORTED</span></td><td>Committed Hub metadata · 2026-08-28 · N=57</td><td>17 models, 27 datasets, 12 collections, 1 bucket. Listing metadata, not quality.</td></tr>
+        <!-- estate counts render from estate.json manifest — see szl-holdings org: https://github.com/szl-holdings -->
+        <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">REPORTED</span></td><td>Committed Hub metadata · 2026-08-28</td><td>Estate counts render from the <a href="/estate.json">estate.json manifest</a> — see <a href="https://github.com/szl-holdings" target="_blank" rel="noopener">github.com/szl-holdings</a>. Listing metadata, not quality.</td></tr>
         <tr><td>Eight locked-proven formulas</td><td><span class="cls cls-reported">REPORTED</span></td><td>Lean kernel c7c0ba17 in public source</td><td>Source-bounded. Live kernel count is the chip bound to /honest locked_formula_count, not this row. Λ is not among the eight.</td></tr>
         <tr><td>Packet 8 Decision Integrity</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>a-11-oy.com/terra · /aegis · /puriq-markets · /counsel · a11oy.net/decision/ · 2026-08-29</td><td>Frozen evals. Formula authority NONE. Kernel not run here. Hub Spaces not required. Same kernel, four vanity paths. Not four Spaces.</td></tr>
         <tr><td>SZL KHIPU original cuts</td><td><span class="cls cls-measured">MEASURED</span></td><td>a11oy.net/khipu/ · holdings.a-11-oy.com/khipu/ · a-11-oy.com/khipu · 2026-08-29</td><td>RECORD here. Kernel is not run here. CUDA UNAVAILABLE. Energy UNAVAILABLE. Conjecture 1 OPEN. FIFO Hub cards stay 401.</td></tr>
@@ -616,11 +624,12 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
   <div class="atlas-shell">
     <div class="atlas-summary"><div><span class="atlas-summary-label">STATIC SNAPSHOT + BROWSER REFRESH</span><h3>Public metadata observation</h3></div><span class="status-badge" id="atlasState" data-state="snapshot">SNAPSHOT - 2026-08-28</span></div>
     <div class="atlas-bar">
-      <div class="atlas-stat"><b id="atlasTotal">57</b><span>LISTED ARTIFACTS</span></div>
-      <div class="atlas-stat"><b id="atlasModels">17</b><span>MODELS</span></div>
-      <div class="atlas-stat"><b id="atlasDatasets">27</b><span>DATASETS</span></div>
-      <div class="atlas-stat"><b id="atlasCollections">12</b><span>COLLECTIONS</span></div>
-      <div class="atlas-stat"><b id="atlasBuckets">1</b><span>BUCKETS</span></div>
+      <!-- estate counts render from estate.json manifest — see szl-holdings org: https://github.com/szl-holdings · static fallbacks stay honest em-dashes; the browser refresh below fills live counts, and a failed read already renders "—" -->
+      <div class="atlas-stat"><b id="atlasTotal">—</b><span>LISTED ARTIFACTS</span></div>
+      <div class="atlas-stat"><b id="atlasModels">—</b><span>MODELS</span></div>
+      <div class="atlas-stat"><b id="atlasDatasets">—</b><span>DATASETS</span></div>
+      <div class="atlas-stat"><b id="atlasCollections">—</b><span>COLLECTIONS</span></div>
+      <div class="atlas-stat"><b id="atlasBuckets">—</b><span>BUCKETS</span></div>
     </div>
     <fieldset class="atlas-controls">
       <legend class="sr-only">Filter public artifact listings</legend>
@@ -632,10 +641,11 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
       <button class="filter-btn" type="button" data-filter="COLLECTION" aria-pressed="false">COLLECTIONS</button>
       <button class="filter-btn" type="button" data-filter="BUCKET" aria-pressed="false">BUCKETS</button>
     </fieldset>
-    <div class="resource-grid" id="atlasResources" aria-busy="false"><div class="resource" data-static-snapshot="2026-08-28"><div class="resource-top"><span class="resource-type">ATLAS SNAPSHOT</span><span class="resource-state">REPORTED</span></div><b>57 public artifacts observed on 2026-08-28.</b><small>17 models, 27 datasets, 12 collections, and 1 bucket. Browser refresh replaces this dated snapshot when public Hub metadata is available.</small></div></div>
+    <!-- estate counts render from estate.json manifest — see szl-holdings org: https://github.com/szl-holdings -->
+    <div class="resource-grid" id="atlasResources" aria-busy="false"><div class="resource" data-static-snapshot="2026-08-28"><div class="resource-top"><span class="resource-type">ATLAS SNAPSHOT</span><span class="resource-state">REPORTED</span></div><b>Public artifact counts render from the estate.json manifest.</b><small>See the dated MEASURED inventory at /estate.json and github.com/szl-holdings. Browser refresh replaces this static placeholder when public Hub metadata is available.</small></div></div>
     <noscript><p class="atlas-note">JavaScript is disabled. The dated static registry snapshot remains visible; live public Hub refresh is not observed.</p></noscript>
     <div class="atlas-status-line"><p class="atlas-note" id="atlasNote">REPORTED means point-in-time public Hub listing metadata only. It does not prove capability, quality, safety, data rights, or deployed equivalence.</p><p class="atlas-observed" id="atlasObservedAt">Static snapshot observed 2026-08-28; live browser refresh pending.</p></div>
-    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">57 public artifacts in the dated static snapshot.</p>
+    <p class="atlas-note" id="atlasResultCount" role="status" aria-live="polite" aria-atomic="true">Estate counts render from the estate.json manifest — see github.com/szl-holdings.</p>
   </div>
   <div class="sec-head" style="margin-top:44px"><div class="kicker">GitHub surfaces</div><h2>Public source inventory, committed here.</h2><p>These URLs are a static inventory on this origin. They are not probed. A listed URL is location only — never quality. Killinchu-named resources stay outside this inventory.</p></div>
   <div class="estate" id="github-atlas">
