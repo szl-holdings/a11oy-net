@@ -923,7 +923,7 @@ def check() -> None:
     assert "Inventory unavailable; this is not an observed-empty result." in source
     assert 'aria-label="A11oy public evidence dossier"' in source
     assert "The dated static registry snapshot remains visible" in source
-    assert 'data-static-snapshot="2026-08-28"' in source
+    assert 'data-static-snapshot="2026-08-31"' in source
     # audit 2026-08-30: static fallbacks are honest em-dashes (the same state a
     # failed live read renders), never hand-typed estate counts; the browser
     # refresh still fills live numbers, and every count zone carries the
