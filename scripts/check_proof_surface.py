@@ -418,7 +418,6 @@ def check() -> None:
     # 2026-08-31: david-leads, anatomy, and szl-real-estate are publicly listed on the Hub
     # (measured in the unauth author-list). The 2026-08-30 PAUSED+PRIVATE fold policy in
     # spaces.json is a destination plan, not current Hub privacy. No exclusion asserted.
-    leaked = set()
     recapture = estate_contract["recapture_2026_08_30"]
     assert recapture["spaces_json_keep"] == 6
     assert recapture["atlas_keep_7_rewritten"] is False
