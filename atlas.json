@@ -11,17 +11,17 @@
     "evidence_class": "MEASURED"
   },
   "hub_snapshot": {
-    "observed_at": "2026-08-29T18:05:00Z",
+    "observed_at": "2026-08-31T18:59:11Z",
     "evidence_class": "MEASURED",
-    "method": "Unauthenticated Hugging Face API public author-list recapture; private counts from 17:25 authenticated snapshot",
-    "spaces_total": 45,
-    "spaces_public": 7,
-    "spaces_private": 38,
-    "models": 43,
-    "datasets": 36,
+    "method": "Unauthenticated Hugging Face API public author-list recapture 2026-08-31; totals from org-authenticated view same day",
+    "spaces_total": 49,
+    "spaces_public": 48,
+    "spaces_private": 1,
+    "models": 44,
+    "datasets": 38,
     "collections_canonical": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
     "org": "https://huggingface.co/SZLHOLDINGS",
-    "bound": "Unauthenticated Hub author-list recapture. Public keepers are these seven. szl-khipu and governed-receipt-verifier recaptured private (401). Org README Space is a profile card, not one of the seven. Private counts retained from the 17:25 authenticated snapshot. None deleted."
+    "bound": "Unauthenticated Hub author-list recapture 2026-08-31: 44 models, 30 public datasets, 47 Space rows. Org-authenticated REPORTED 44 models / 38 datasets / 49 Spaces; 48 publicly readable including the README profile card, 1 not publicly listed. Public visibility expanded from the 2026-08-29 keep-7 (45 total / 7 public / 38 private) off this runtime; nothing deleted. The seven below are the curated canonical set, not the exhaustive public list."
   },
   "public_spaces": [
     {

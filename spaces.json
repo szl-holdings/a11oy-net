@@ -11,23 +11,23 @@
     "product": "https://a-11-oy.com",
     "proof": "https://a11oy.net/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com \u2014 foreign storefront, scheme omitted on this origin"
+    "never": "a11oy.com — foreign storefront, scheme omitted on this origin"
   },
   "cut": {
-    "compiledAt": "2026-08-30T16:15:00Z",
-    "measured": 45,
+    "compiledAt": "2026-08-31T18:59:11Z",
+    "measured": 49,
     "keep": 6,
     "keepTarget": 6,
     "fold": 38,
     "toProduct": 20,
     "toProof": 18,
     "archive": 1,
-    "hubPublicApplication": 6,
-    "hubPublicIncludingReadme": 7,
-    "hubPrivate": 38,
+    "hubPublicApplication": 47,
+    "hubPublicIncludingReadme": 48,
+    "hubPrivate": 1,
     "inBand": true,
     "hubArchive": "MEASURED",
-    "hubArchiveNote": "Unauthenticated Hub API MEASURED 6 public application Spaces on 2026-08-30. README is a profile card, not application KEEP. Atlas keep-7 at 18:05Z is a prior snapshot and is not rewritten. Folded docker/gradio Spaces stay PAUSED+PRIVATE. Destinations are existing Product and Proof paths. /verify is not cloned. pause+private, never delete. This runtime has no Hub write token and does not unprivate the 38.",
+    "hubArchiveNote": "Unauthenticated Hub API MEASURED 47 public Spaces on 2026-08-31; the README profile card is a 48th public Space outside the list API. Org-authenticated view REPORTED 49 total, 1 not publicly listed (47 list rows + README profile card = 48 public). The KEEP-6 / fold-38 numbers below are the 2026-08-30 policy snapshot; Hub visibility changed after this plan was compiled, off this runtime. The fold list describes destinations, not current Hub privacy. Destinations are existing Product and Proof paths. /verify is not cloned. pause+private, never delete. This runtime has no Hub write token and did not unprivate anything.",
     "atlasKeep7Rewritten": false
   },
   "keep": [
@@ -243,7 +243,7 @@
       "sink": "proof",
       "dest": "https://a11oy.net/estate/",
       "sdk": "static",
-      "why": "\u039b remains Conjecture 1. A hologram is not a theorem."
+      "why": "Λ remains Conjecture 1. A hologram is not a theorem."
     },
     {
       "id": "energy-attest-holo",
@@ -300,7 +300,7 @@
       "dest": "https://a11oy.net/atelier/",
       "sdk": "static",
       "why": "Cuts belong next to the forty-model walk, not as a sibling Space.",
-      "honesty": "SNAPSHOT \u2014 not a trainer, not Serve Studio"
+      "honesty": "SNAPSHOT — not a trainer, not Serve Studio"
     },
     {
       "id": "governed-agent-bench",
