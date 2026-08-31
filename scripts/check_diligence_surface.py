@@ -362,11 +362,13 @@ def check() -> None:
     assert record_contract["status"]["receipt_ids"] == []
     assert record_contract["status"]["receipt_ids_class"] == "UNAVAILABLE"
     atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
-    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-29T18:05:00Z"
-    assert atlas_contract["hub_snapshot"]["spaces_public"] == 7
-    assert atlas_contract["hub_snapshot"]["spaces_private"] == 38
-    assert atlas_contract["hub_snapshot"]["spaces_total"] == 45
-    assert len(atlas_contract["public_spaces"]) == 7
+    # 2026-08-31 recapture: 49 Spaces total, 48 publicly readable (47 list rows + README),
+    # 1 not publicly listed. Prior keep-7 pin (2026-08-29T18:05Z, 45/7/38) superseded.
+    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-31T18:59:11Z"
+    assert atlas_contract["hub_snapshot"]["spaces_public"] == 48
+    assert atlas_contract["hub_snapshot"]["spaces_private"] == 1
+    assert atlas_contract["hub_snapshot"]["spaces_total"] == 49
+    assert len(atlas_contract["public_spaces"]) == 7  # curated canonical set, not exhaustive
     assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
     assert atlas_contract["boundaries"]["spaces_deleted"] is False
     assert {s["name"] for s in atlas_contract["public_spaces"]} == {
