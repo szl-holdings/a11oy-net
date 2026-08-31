@@ -244,7 +244,8 @@ def check() -> None:
     assert structured["@type"] == "WebSite"
     assert structured["url"] == "https://a11oy.net/"
     assert structured["name"] == "a11oy Proof Registry"
-    assert structured["alternateName"] == "Alloy by SZL Holdings"
+    # Subtitle retired 2026-08-30 (lexicon_gate); a11oy is the product name.
+    assert structured["alternateName"] == "a11oy"
     assert structured["sameAs"] == [
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
