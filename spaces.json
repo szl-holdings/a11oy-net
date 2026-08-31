@@ -24,10 +24,10 @@
     "archive": 1,
     "hubPublicApplication": 47,
     "hubPublicIncludingReadme": 48,
-    "hubPrivate": 2,
+    "hubPrivate": 1,
     "inBand": true,
     "hubArchive": "MEASURED",
-    "hubArchiveNote": "Unauthenticated Hub API MEASURED 47 public Spaces on 2026-08-31; the README profile card is a 48th public Space outside the list API. Org-authenticated view REPORTED 49 total, 2 private. The KEEP-6 / fold-38 numbers below are the 2026-08-30 policy snapshot; Hub visibility changed after this plan was compiled, off this runtime. The fold list describes destinations, not current Hub privacy. Destinations are existing Product and Proof paths. /verify is not cloned. pause+private, never delete. This runtime has no Hub write token and did not unprivate anything.",
+    "hubArchiveNote": "Unauthenticated Hub API MEASURED 47 public Spaces on 2026-08-31; the README profile card is a 48th public Space outside the list API. Org-authenticated view REPORTED 49 total, 1 not publicly listed (47 list rows + README profile card = 48 public). The KEEP-6 / fold-38 numbers below are the 2026-08-30 policy snapshot; Hub visibility changed after this plan was compiled, off this runtime. The fold list describes destinations, not current Hub privacy. Destinations are existing Product and Proof paths. /verify is not cloned. pause+private, never delete. This runtime has no Hub write token and did not unprivate anything.",
     "atlasKeep7Rewritten": false
   },
   "keep": [
