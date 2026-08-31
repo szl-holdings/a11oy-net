@@ -1,0 +1,147 @@
+name: temporary-build-lexicon-csp-successor
+
+on:
+  push:
+    branches:
+      - fix/lexicon-csp-current-main-20260830-v2
+    paths:
+      - .github/workflows/temporary-build-lexicon-csp-successor.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/lexicon-csp-current-main-20260830-v2
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Apply reviewed lexicon delta and recompute exact CSP
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git fetch origin main lexicon/retire-alloy-subtitle
+          merge_base="$(git merge-base origin/main origin/lexicon/retire-alloy-subtitle)"
+          git diff --name-only "${merge_base}..origin/lexicon/retire-alloy-subtitle" -- \
+            . ':(exclude).github/workflows/temporary-*' ':(exclude).ci-*' \
+            ':(exclude)**/__pycache__/**' ':(exclude)**/*.pyc' | sort -u > /tmp/observed-paths
+          python - <<'PY'
+          from pathlib import Path
+
+          required = {
+              'index.html',
+              'diligence/index.html',
+              'record/index.html',
+              'notes/index.html',
+              'estate/os/index.html',
+              'scripts/check_diligence_surface.py',
+              'scripts/check_proof_surface.py',
+          }
+          allowed = required | {'_headers'}
+          observed = {
+              line.strip()
+              for line in Path('/tmp/observed-paths').read_text(encoding='utf-8').splitlines()
+              if line.strip()
+          }
+          missing = sorted(required - observed)
+          extra = sorted(observed - allowed)
+          if missing or extra:
+              raise SystemExit(f'proof-origin source path contract failed: missing={missing}, extra={extra}')
+          print(f'validated reviewed proof-origin paths: {sorted(observed)}')
+          PY
+          reviewed=(
+            index.html
+            diligence/index.html
+            record/index.html
+            notes/index.html
+            estate/os/index.html
+            scripts/check_diligence_surface.py
+            scripts/check_proof_surface.py
+          )
+          git diff --binary "${merge_base}..origin/lexicon/retire-alloy-subtitle" -- "${reviewed[@]}" > /tmp/proof-origin.patch
+          git reset --hard origin/main
+          git apply --3way --index /tmp/proof-origin.patch
+          find scripts -type f \( -path '*/__pycache__/*' -o -name '*.pyc' \) -delete
+
+          python - <<'PY'
+          from __future__ import annotations
+          import importlib.util
+          import pathlib
+          import re
+
+          checker_path = pathlib.Path('scripts/check_security_headers.py')
+          spec = importlib.util.spec_from_file_location('security_headers', checker_path)
+          checker = importlib.util.module_from_spec(spec)
+          assert spec and spec.loader
+          spec.loader.exec_module(checker)
+
+          index_path = pathlib.Path('index.html')
+          html = index_path.read_text(encoding='utf-8')
+          hashes = sorted(checker.inline_script_hashes(html))
+          if not hashes:
+              raise SystemExit('index.html has no inline script hashes; refusing an empty script contract')
+
+          meta_pattern = re.compile(
+              r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")([^"]*)("\s*/?>)',
+              re.I,
+          )
+          match = meta_pattern.search(html)
+          if not match:
+              raise SystemExit('index.html has no unique Content-Security-Policy meta tag')
+          meta = checker.parse_csp(match.group(2))
+          meta['script-src'] = {"'self'", *hashes}
+
+          def render(parsed: dict[str, set[str]]) -> str:
+              parts = []
+              for directive, tokens in parsed.items():
+                  ordered = []
+                  if directive == 'script-src' and "'self'" in tokens:
+                      ordered.append("'self'")
+                      ordered.extend(sorted(tokens - {"'self'"}))
+                  else:
+                      ordered.extend(sorted(tokens))
+                  parts.append(directive + ((' ' + ' '.join(ordered)) if ordered else ''))
+              return '; '.join(parts)
+
+          rendered_meta = render(meta)
+          html = html[:match.start(2)] + rendered_meta + html[match.end(2):]
+          index_path.write_text(html, encoding='utf-8')
+
+          headers_path = pathlib.Path('_headers')
+          lines = headers_path.read_text(encoding='utf-8').splitlines()
+          found = 0
+          for idx, line in enumerate(lines):
+              if line.lstrip().lower().startswith('content-security-policy:'):
+                  indent = line[:len(line) - len(line.lstrip())]
+                  value = line.split(':', 1)[1].strip()
+                  parsed = checker.parse_csp(value)
+                  parsed['script-src'] = {"'self'", *hashes}
+                  lines[idx] = indent + 'Content-Security-Policy: ' + render(parsed)
+                  found += 1
+          if found != 1:
+              raise SystemExit(f'_headers must contain exactly one CSP line, observed {found}')
+          headers_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+          rm -f .github/workflows/temporary-build-lexicon-csp-successor.yml
+          git add -A
+          git diff --cached --check
+          python3 scripts/check_proof_surface.py
+          python3 scripts/check_diligence_surface.py
+          python3 scripts/check_security_headers.py
+          node scripts/check_atlas_policy.mjs
+          node scripts/check_probe_policy.mjs
+          python3 scripts/check_honest_kernel_bind.py
+          node scripts/check_honest_kernel_bind.mjs
+          if find scripts -type f \( -path '*/__pycache__/*' -o -name '*.pyc' \) | grep -q .; then
+            echo "::error::generated Python bytecode remains in the proof-origin tree"
+            exit 1
+          fi
+          git commit -m "fix(lexicon): retire Alloy subtitle and refresh exact CSP" -m "Signed-off-by: Stephen P. Lutar <stephenlutar2@gmail.com>"
+          git push --force-with-lease origin HEAD:fix/lexicon-csp-current-main-20260830-v2
