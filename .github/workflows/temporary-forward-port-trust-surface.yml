@@ -29,18 +29,20 @@ jobs:
           EXPECTED_BASE: 445da39a739e8f7d70b62fdb90e2e90e039772be
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = "$EXPECTED_BASE"
+          test "$(git merge-base HEAD "$EXPECTED_BASE")" = "$EXPECTED_BASE"
+          preexisting="$(git diff --name-only "$EXPECTED_BASE"...HEAD | sort)"
+          test "$preexisting" = ".github/workflows/temporary-forward-port-trust-surface.yml"
           git cat-file -e "$REVIEWED_HEAD^{commit}"
           git checkout "$REVIEWED_HEAD" -- \
             diligence/index.html \
             index.html \
             scripts/check_proof_surface.py
-          changed="$(git diff --name-only | sort)"
+          changed="$(git diff --cached --name-only | sort)"
           expected="$(printf '%s\n' diligence/index.html index.html scripts/check_proof_surface.py | sort)"
           test "$changed" = "$expected"
           python3 -m py_compile scripts/check_proof_surface.py
           python3 scripts/check_proof_surface.py
-          git diff --check
+          git diff --cached --check
 
       - name: Commit exact reviewed files to successor branch
         shell: bash
@@ -48,7 +50,6 @@ jobs:
           set -euo pipefail
           git config user.name "Lutar, Stephen P."
           git config user.email "stephenlutar2@gmail.com"
-          git add diligence/index.html index.html scripts/check_proof_surface.py
           git commit \
             -m "fix(site): clarify origin and manifest-driven estate counts" \
             -m "Signed-off-by: Stephen P. Lutar <stephenlutar2@gmail.com>"
