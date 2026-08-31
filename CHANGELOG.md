@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-31
+
+- Hub snapshot refresh MEASURED 2026-08-31: unauthenticated author-list reports 44 models, 30 datasets, 47 public Spaces (README profile card is a 48th public Space outside the list API), 21 collections, 1 bucket. Org-authenticated view REPORTED 44 models, 38 datasets (8 private), 49 Spaces (1 private; 47 list rows plus the README profile card are public). GitHub MEASURED 95 public repositories unauthenticated, 103 authenticated (8 private). Public Space count moved 6 → 47 since the 2026-08-30 KEEP-6 cut; the unprivatizing happened off this runtime. Nothing deleted.
+- `/estate.json`, `/atlas.json`, `/estate/os/` recaptured to the same observation. `/models.json` admits the 44th card (SZLHOLDINGS/szl-energy-attest, CODE_OR_SCRIPTS). `/notes/` 2026-08-28 hub line marked superseded, not rewritten. Counts are listing metadata only — not quality, safety, or readiness. Λ remains Conjecture 1. Never a11oy.com.
+
+
 ## 2026-08-30
 
 - `/spaces.json` KEEP recut to the MEASURED unauthenticated application six (a11oy, killinchu, immune, szl-khipu, szl-atelier, governed-receipt-verifier). david-leads, anatomy, and szl-real-estate fold onto product paths and stay PAUSED+PRIVATE. nexus dest is `a-11-oy.com/nexus`. Atlas keep-7 at 18:05Z is not rewritten. pause+private, never delete. This runtime has no Hub write token and does not unprivate the 38.

@@ -4,11 +4,11 @@
     "name": "Models and kernels honesty RECORD",
     "url": "https://a11oy.net/models.json",
     "publisher": "SZL Holdings",
-    "meaning": "Dated MEASURED classification of the 43 public Hub model cards. TRAINED means weight files exist. KERNEL-SOFTWARE means source/tests, not a LoRA. ROADMAP means empty card. NANO means synthetic npz. A listed URL is location only. Reachability is never quality. This origin does not train, bench, or serve weights.",
+    "meaning": "Dated MEASURED classification of the 44 public Hub model cards. TRAINED means weight files exist. KERNEL-SOFTWARE means source/tests, not a LoRA. ROADMAP means empty card. NANO means synthetic npz. A listed URL is location only. Reachability is never quality. This origin does not train, bench, or serve weights.",
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
-  "reader_guide": "Every public Hub model is already unprivate. None of the 38 private Spaces were unprivated. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Atlas keep-7 is a prior snapshot and is not rewritten. Evaluate kernels and 1.5B adapters on a-11-oy.com; this origin only indexes the cards.",
-  "captured_at": "2026-08-30T16:15:00Z",
+  "reader_guide": "Every public Hub model card is classified here; the 44th card (szl-energy-attest, 2026-08-31) is ROADMAP_EMPTY. Hub Space visibility changed after the 2026-08-30 bake — see /estate.json for the 2026-08-31 recapture (48 public Spaces incl. README). This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and 1.5B adapters on a-11-oy.com; this origin only indexes the cards.",
+  "captured_at": "2026-08-31T18:59:11Z",
   "evidence_class": "MEASURED",
   "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS plus per-id sibling file lists.",
   "operational": false,
@@ -19,13 +19,13 @@
   "p0_joblib": "open",
   "hub": {
     "org": "SZLHOLDINGS",
-    "models": 43,
+    "models": 44,
     "private": 0,
     "listing": "https://huggingface.co/SZLHOLDINGS"
   },
   "counts": {
     "TRAINED_WEIGHTS": 13,
-    "ROADMAP_EMPTY": 6,
+    "ROADMAP_EMPTY": 7,
     "NANO_SYNTHETIC": 5,
     "KERNEL_SOFTWARE": 16,
     "CODE_OR_SCRIPTS": 3
@@ -699,6 +699,17 @@
         "source": "receipts/*-unsloth.json",
         "evidence_class": "REPORTED"
       },
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-energy-attest",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": null,
+      "files": 2,
+      "weights": [],
+      "bench": null,
       "operational": false,
       "trained": false
     }
