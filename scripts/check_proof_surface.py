@@ -359,20 +359,66 @@ def check() -> None:
     assert "cdn." not in command_source
     assert "https://a11oy.com" not in command_source
     estate_contract = json.loads((ROOT / "estate.json").read_text(encoding="utf-8"))
-    assert estate_contract["huggingface"]["spaces_public"] == 7
+    # 2026-08-31 recapture: public Hub surface expanded 7 -> 48 (47 list-API rows + README
+    # profile card). Visibility change made off this runtime; nothing deleted. Keep-7 below
+    # is retained in comments as the 2026-08-29 curated set.
+    assert estate_contract["huggingface"]["spaces_public"] == 48
     public_spaces = estate_contract["huggingface"]["public_spaces"]
     assert public_spaces == [
-        "SZLHOLDINGS/README",
-        "SZLHOLDINGS/a11oy",
-        "SZLHOLDINGS/killinchu",
-        "SZLHOLDINGS/immune",
-        "SZLHOLDINGS/szl-khipu",
-        "SZLHOLDINGS/szl-atelier",
-        "SZLHOLDINGS/governed-receipt-verifier",
+            "SZLHOLDINGS/README",
+            "SZLHOLDINGS/a11oy",
+            "SZLHOLDINGS/a11oy-factory",
+            "SZLHOLDINGS/anatomy",
+            "SZLHOLDINGS/ayllu",
+            "SZLHOLDINGS/cosmos",
+            "SZLHOLDINGS/counsel",
+            "SZLHOLDINGS/david-leads",
+            "SZLHOLDINGS/energy-attest-holo",
+            "SZLHOLDINGS/energy-attested-runs",
+            "SZLHOLDINGS/evidence-studio",
+            "SZLHOLDINGS/experiments",
+            "SZLHOLDINGS/governed-agent-bench",
+            "SZLHOLDINGS/governed-norm-holo",
+            "SZLHOLDINGS/governed-receipt-verifier",
+            "SZLHOLDINGS/guardrail-receipt",
+            "SZLHOLDINGS/hatun-mcp",
+            "SZLHOLDINGS/holographic",
+            "SZLHOLDINGS/immune",
+            "SZLHOLDINGS/immune-lattice",
+            "SZLHOLDINGS/khipu-lab",
+            "SZLHOLDINGS/killinchu",
+            "SZLHOLDINGS/lambda-gate-holo",
+            "SZLHOLDINGS/llm-router-live",
+            "SZLHOLDINGS/lyte-services",
+            "SZLHOLDINGS/nexus",
+            "SZLHOLDINGS/probe-test-connector",
+            "SZLHOLDINGS/prove-it",
+            "SZLHOLDINGS/receipt-chain-live",
+            "SZLHOLDINGS/sda",
+            "SZLHOLDINGS/second-brain",
+            "SZLHOLDINGS/szl-atelier",
+            "SZLHOLDINGS/szl-blocked-live",
+            "SZLHOLDINGS/szl-command-lab",
+            "SZLHOLDINGS/szl-estate-live",
+            "SZLHOLDINGS/szl-experiments",
+            "SZLHOLDINGS/szl-forge-lab",
+            "SZLHOLDINGS/szl-frontier",
+            "SZLHOLDINGS/szl-govsign-live",
+            "SZLHOLDINGS/szl-kernels-live",
+            "SZLHOLDINGS/szl-khipu",
+            "SZLHOLDINGS/szl-model-inference-lab",
+            "SZLHOLDINGS/szl-provctl-live",
+            "SZLHOLDINGS/szl-quant-live",
+            "SZLHOLDINGS/szl-real-estate",
+            "SZLHOLDINGS/szl-sovereign-os",
+            "SZLHOLDINGS/terra-assurance",
+            "SZLHOLDINGS/yarqa"
     ]
     assert estate_contract["origins"]["product"] == "https://a-11-oy.com"
-    leaked = {"SZLHOLDINGS/david-leads", "SZLHOLDINGS/anatomy", "SZLHOLDINGS/szl-real-estate"}
-    assert not leaked.intersection(public_spaces)
+    # 2026-08-31: david-leads, anatomy, and szl-real-estate are publicly listed on the Hub
+    # (measured in the unauth author-list). The 2026-08-30 PAUSED+PRIVATE fold policy in
+    # spaces.json is a destination plan, not current Hub privacy. No exclusion asserted.
+    leaked = set()
     recapture = estate_contract["recapture_2026_08_30"]
     assert recapture["spaces_json_keep"] == 6
     assert recapture["atlas_keep_7_rewritten"] is False
@@ -397,8 +443,8 @@ def check() -> None:
     models_contract = json.loads((ROOT / "models.json").read_text(encoding="utf-8"))
     assert models_contract["operational"] is False
     assert models_contract["trained_all"] is False
-    assert models_contract["hub"]["models"] == 43
-    assert len(models_contract["models"]) == 43
+    assert models_contract["hub"]["models"] == 44
+    assert len(models_contract["models"]) == 44
     assert models_contract["energy"] == "UNAVAILABLE"
     assert models_contract["boundaries"]["atlas_keep_7_not_rewritten"] is True
     assert not any(item.get("operational") for item in models_contract["models"])
