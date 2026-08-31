@@ -553,10 +553,25 @@ def check() -> None:
         "Proof must remain the current origin on a11oy.net"
     )
     assert "RECORD" in nav_block
-    assert ">Atlas</a>" in nav_block, "Atlas is the inventory peer, not Public registry"
-    assert 'href="#atlas"' in nav_block
-    assert ">Index</a>" in nav_block and 'href="#index"' in nav_block, (
-        "Index is the overflow peer, not a sixth origin"
+    # audit 2026-08-30: primary nav trimmed to exactly six peers — Record, Spec,
+    # Conformance, Security, Diligence, Estate. Atlas and Index stay on-page
+    # sections: the #atlas / #index fragments still resolve, the sections are
+    # unchanged below the fold; they are no longer top-level nav peers.
+    assert ">Record</a>" in nav_block and 'href="/record/"' in nav_block
+    assert ">Spec ↗</a>" in nav_block and (
+        'href="https://github.com/szl-holdings/governed-receipt-spec"' in nav_block
+    ), "Spec peer links the governed-receipt-spec repo"
+    assert ">Conformance ↗</a>" in nav_block and (
+        'href="https://huggingface.co/datasets/SZLHOLDINGS/governed-receipts-bench"' in nav_block
+    ), "Conformance peer links the receipts bench dataset"
+    assert ">Security</a>" in nav_block and 'href="/.well-known/security.txt"' in nav_block
+    assert ">Diligence</a>" in nav_block and 'href="/diligence/"' in nav_block
+    assert ">Estate</a>" in nav_block and 'href="/estate/"' in nav_block
+    assert ">Atlas</a>" not in nav_block and 'href="#atlas"' not in nav_block, (
+        "Atlas moved out of the trimmed nav; the #atlas section stays on-page"
+    )
+    assert ">Index</a>" not in nav_block and 'href="#index"' not in nav_block, (
+        "Index moved out of the trimmed nav; the #index section stays on-page"
     )
     assert 'href="/atelier/"' not in nav_block, "Atelier is a lab under Index, not a nav peer"
     assert 'href="/notes/"' not in nav_block, "Notes is a lab under Index, not a nav peer"
@@ -863,11 +878,21 @@ def check() -> None:
     assert 'aria-label="A11oy public evidence dossier"' in source
     assert "The dated static registry snapshot remains visible" in source
     assert 'data-static-snapshot="2026-08-28"' in source
-    assert '<b id="atlasTotal">57</b>' in source
-    assert '<b id="atlasModels">17</b>' in source
-    assert '<b id="atlasDatasets">27</b>' in source
-    assert '<b id="atlasCollections">12</b>' in source
-    assert '<b id="atlasBuckets">1</b>' in source
+    # audit 2026-08-30: static fallbacks are honest em-dashes (the same state a
+    # failed live read renders), never hand-typed estate counts; the browser
+    # refresh still fills live numbers, and every count zone carries the
+    # estate.json manifest placeholder comment.
+    assert '<b id="atlasTotal">—</b>' in source
+    assert '<b id="atlasModels">—</b>' in source
+    assert '<b id="atlasDatasets">—</b>' in source
+    assert '<b id="atlasCollections">—</b>' in source
+    assert '<b id="atlasBuckets">—</b>' in source
+    assert "estate counts render from estate.json manifest" in source, (
+        "count placeholders must point at the estate.json manifest"
+    )
+    assert not re.search(r'id="atlas\w+">\d+<', source), (
+        "no atlas stat may carry a hand-typed numeric fallback"
+    )
     assert "2026-08-11" not in source, (
         "the noscript/fallback snapshot must not retain the prior 2026-08-11 counts"
     )
