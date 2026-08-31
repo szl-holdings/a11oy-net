@@ -1,0 +1,37 @@
+name: temporary-update-pr80
+
+on:
+  push:
+    branches:
+      - lexicon/retire-alloy-subtitle
+    paths:
+      - .github/workflows/temporary-update-pr80.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: lexicon/retire-alloy-subtitle
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Integrate current main and verify exact surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git fetch origin main
+          git merge --no-ff --no-commit origin/main
+          python3 scripts/check_security_headers.py
+          python3 scripts/check_diligence_surface.py
+          python3 scripts/check_proof_surface.py
+          rm .github/workflows/temporary-update-pr80.yml
+          git add -A
+          git commit -m "chore: integrate current main into PR 80" -m "Signed-off-by: Stephen P. Lutar <stephenlutar2@gmail.com>"
+          git push origin HEAD:lexicon/retire-alloy-subtitle
