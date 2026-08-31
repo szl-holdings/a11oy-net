@@ -88,7 +88,7 @@ Do not add:
 - a factory origin
 - a Hugging Face origin
 - a Warhacker origin
-- `a11oy.com`
+- `a11oy.com` (forbidden — never an origin, not a guard target rewrite)
 - a cloned `/verify`
 - an `/investor` route
 - a Ring-1 preview as a public origin
@@ -392,7 +392,7 @@ It may not:
 - Rewrite `index.html` from *this* note’s landing commit.
 - Clone `/verify`.
 - Host receipts, lake, or a DSSE signer.
-- Add `a11oy.com`.
+- Add `a11oy.com` (forbidden).
 - Promote Factory, Warhacker, or Hugging Face to origin or primary nav.
 - Mint `/investor` or a second homepage.
 - Register `/readyz` or `/healthz` as health.
