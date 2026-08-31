@@ -162,7 +162,7 @@ def check() -> None:
     assert 'id="handoffs"' in diligence_source
     assert "/chat/" in diligence_source and "/code/" in diligence_source
     record = check_document(RECORD, canonical="https://a11oy.net/record/")
-    notes = check_document(NOTES, canonical="https://a11oy.net/notes/")
+    check_document(NOTES, canonical="https://a11oy.net/notes/")
     assert {"main", "permalinks", "receipt-ids", "live-store", "stores", "verify"} <= record.ids
     assert any(anchor.get("href") == "https://a-11-oy.com/verify" for anchor in record.anchors)
     assert any(anchor.get("href") == "/record.json" for anchor in record.anchors)
