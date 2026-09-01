@@ -37,5 +37,13 @@
   "proof_origin": "https://a11oy.net",
   "rollout": "workflow_dispatch:.github/workflows/rollout-proof-flow-shell.yml",
   "schema": "szl.frontend-flow-shell-state/v1",
-  "state": "ROLLED_OUT"
+  "state": "ROLLED_OUT",
+  "zero_javascript_documents": [
+    "404.html",
+    "chat/index.html",
+    "code/index.html",
+    "diligence/index.html",
+    "notes/index.html",
+    "record/index.html"
+  ]
 }
