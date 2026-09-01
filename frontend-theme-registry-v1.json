@@ -1,0 +1,44 @@
+{
+  "schema": "szl.frontend-theme-registry/v1",
+  "version": "1.0.0",
+  "principle": "One flow shell, distinct instruments; product acts, proof records.",
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net"
+  },
+  "shared_contract": {
+    "minimum_touch_target_px": 44,
+    "viewports": [320, 360, 390, 768, 1024, 1440],
+    "safe_area_aware": true,
+    "reduced_motion_required": true,
+    "horizontal_overflow_forbidden": true,
+    "external_runtime_assets_forbidden": true,
+    "proof_palette": "MONOCHROME"
+  },
+  "journeys": [
+    {"id": "start", "label": "Start Here"},
+    {"id": "products", "label": "Products & Demos"},
+    {"id": "models", "label": "Models & Data"},
+    {"id": "kernels", "label": "Kernels & SDKs"},
+    {"id": "proofs", "label": "Proofs & Research"}
+  ],
+  "application_spaces": [
+    {"id": "a11oy", "instrument": "conductor", "source": "szl-holdings/a11oy"},
+    {"id": "killinchu", "instrument": "sentry", "source": "szl-holdings/killinchu"},
+    {"id": "immune", "instrument": "sentinel", "source": "szl-holdings/immune"},
+    {"id": "szl-khipu", "instrument": "weave", "source": "szl-holdings/szl-khipu"},
+    {"id": "szl-atelier", "instrument": "atelier", "source": "szl-holdings/szl-atelier"},
+    {"id": "governed-receipt-verifier", "instrument": "forensic", "source": "szl-holdings/governed-receipt-spec"}
+  ],
+  "proof_routes": {
+    "/": "ledger",
+    "/record/": "forensic",
+    "/diligence/": "dossier",
+    "/estate/": "atlas-mono",
+    "/atelier/": "atelier-mono",
+    "/khipu/": "weave-mono",
+    "/decision/": "decision-mono",
+    "/security/": "security-mono",
+    "/notes/": "notebook"
+  }
+}

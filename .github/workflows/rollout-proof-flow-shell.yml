@@ -1,0 +1,80 @@
+name: Roll out Proof Flow Shell
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate and show the patch without pushing a branch"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: rollout-proof-flow-shell
+  cancel-in-progress: false
+
+jobs:
+  rollout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout exact main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Bind all published proof documents
+        run: python tools/rollout_proof_flow_shell.py --report /tmp/proof-flow-rollout.json
+      - name: Verify contract and exact idempotence
+        run: |
+          python tests/test_proof_flow_shell.py -v
+          python tools/rollout_proof_flow_shell.py --check
+          git diff --check
+      - name: Publish reviewable rollout pull request
+        if: ${{ !inputs.dry_run }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="feat/proof-flow-shell-${GITHUB_RUN_ID}"
+          git config user.name "SZL Proof Flow Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git checkout -b "$branch"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No rollout changes remain."
+            exit 0
+          fi
+          git commit -s -m "feat(frontend): bind proof records to one monochrome flow"
+          git push origin "$branch"
+          pr_url="$(gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "feat(frontend): distinct proof records, one monochrome flow" \
+            --body-file - <<'BODY'
+          ## What changes
+
+          Binds every published proof HTML document to the local monochrome Flow Shell. Ledger, forensic, dossier, atlas, atelier, weave, decision, security, and notebook records retain separate textures while sharing the same five journeys, product handoff, keyboard behavior, 44px touch targets, safe-area handling, reduced-motion behavior, and scroll progress.
+
+          ## Boundaries
+
+          - The proof palette remains strictly neutral.
+          - All assets are local to GitHub Pages.
+          - No JSON evidence, claim, hash, inventory count, product API, or DNS behavior changes.
+          - `a11oy.net` remains independent from the product failure domain.
+          BODY
+          )"
+          echo "### Rollout PR" >> "$GITHUB_STEP_SUMMARY"
+          echo "$pr_url" >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish dry-run diff
+        if: ${{ inputs.dry_run }}
+        run: git diff --stat && git diff --check
