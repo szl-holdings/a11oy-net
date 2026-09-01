@@ -20,6 +20,14 @@ SCRIPT = '<script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-ass
 STATIC_MARKER = 'data-szl-proof-flow-asset="static"'
 STATE = ROOT / "frontend-flow-shell-state.json"
 EXCLUDE_PARTS = {"node_modules", "vendor", ".git", "fixtures", "archive", "archives"}
+# Reviewed scriptless status surfaces whose exact meta CSP (default-src 'none',
+# no script-src, no 'self' style-src) deliberately forbids flow-shell assets.
+# Opt-out requires BOTH membership here AND the data-szl-proof-flow-opt-out
+# marker in the document; check_proof_surface.py still guards their contracts.
+OPT_OUT_DOCUMENTS = {
+    "api/build-info/index.html",
+    "readyz/index.html",
+}
 NO_SCRIPT_DOCUMENTS = {
     "404.html",
     "chat/index.html",
@@ -131,7 +139,7 @@ def is_bound(rel: str, text: str) -> bool:
 def inject(path: Path) -> str:
     rel = path.relative_to(ROOT).as_posix()
     text = read(path)
-    if "data-szl-proof-flow-opt-out" in text:
+    if "data-szl-proof-flow-opt-out" in text and rel in OPT_OUT_DOCUMENTS:
         return "opt-out"
     if "</head>" not in text.lower() or "</body>" not in text.lower():
         return "not-document"
@@ -175,11 +183,12 @@ def inject(path: Path) -> str:
     return "present"
 
 
-def update_state(bound: list[str], examined: int) -> None:
+def update_state(bound: list[str], examined: int, opted_out: list[str]) -> None:
     payload = json.loads(STATE.read_text(encoding="utf-8"))
     payload["state"] = "ROLLED_OUT"
     payload["examined_documents"] = examined
     payload["injected_documents"] = sorted(bound)
+    payload["opt_out_documents"] = sorted(opted_out)
     payload["zero_javascript_documents"] = sorted(NO_SCRIPT_DOCUMENTS)
     STATE.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
@@ -194,7 +203,13 @@ def main() -> int:
     for path in candidates():
         rel = path.relative_to(ROOT).as_posix()
         text = read(path)
-        result = ("present" if is_bound(rel, text) else "missing") if args.check else inject(path)
+        if args.check:
+            # CHECK mode must honor the same opt-out contract as APPLY mode:
+            # reviewed scriptless status surfaces (exact minimal meta CSP)
+            # deliberately carry no flow-shell assets and are not "missing".
+            result = "opt-out" if (rel in OPT_OUT_DOCUMENTS and "data-szl-proof-flow-opt-out" in text) else ("present" if is_bound(rel, text) else "missing")
+        else:
+            result = inject(path)
         rows.append({"path": rel, "result": result, "mode": "STATIC" if rel in NO_SCRIPT_DOCUMENTS else "INTERACTIVE"})
         if result == "injected":
             changed.append(rel)
@@ -207,7 +222,8 @@ def main() -> int:
         raise SystemExit("missing proof flow shell: " + ", ".join(row["path"] for row in rows if row["result"] == "missing"))
     if not args.check:
         bound = [row["path"] for row in rows if row["result"] in {"injected", "present"}]
-        update_state(bound, len(rows))
+        opted_out = [row["path"] for row in rows if row["result"] == "opt-out"]
+        update_state(bound, len(rows), opted_out)
     report = {
         "schema": "szl.proof-flow-shell-rollout/v1",
         "mode": "CHECK" if args.check else "APPLY",

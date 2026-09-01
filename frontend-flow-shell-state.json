@@ -3,7 +3,6 @@
   "injected_documents": [
     "404.html",
     "aegis/index.html",
-    "api/build-info/index.html",
     "atelier/index.html",
     "ayllu/index.html",
     "ayllu/psyche/index.html",
@@ -27,11 +26,14 @@
     "origin/index.html",
     "pricing/index.html",
     "puriq-markets/index.html",
-    "readyz/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",
     "terra/index.html",
     "vessels/index.html"
+  ],
+  "opt_out_documents": [
+    "api/build-info/index.html",
+    "readyz/index.html"
   ],
   "product_origin": "https://a-11-oy.com",
   "proof_origin": "https://a11oy.net",

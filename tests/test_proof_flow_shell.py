@@ -79,7 +79,19 @@ class ProofFlowShellContract(unittest.TestCase):
         self.assertIn(self.state["state"], {"ASSETS_READY", "ROLLED_OUT"})
         if self.state["state"] == "ROLLED_OUT":
             bound = set(self.state.get("injected_documents", []))
-            self.assertEqual(bound, {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")} | {"404.html"})
+            opted_out = set(self.state.get("opt_out_documents", []))
+            all_documents = {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")} | {"404.html"}
+            self.assertEqual(bound | opted_out, all_documents)
+            self.assertFalse(bound & opted_out)
+            # Opt-out is a deliberate, enumerated exception for reviewed
+            # scriptless status surfaces whose exact meta CSP forbids assets.
+            self.assertEqual(opted_out, {"api/build-info/index.html", "readyz/index.html"})
+            for rel in opted_out:
+                text = (ROOT / rel).read_text(encoding="utf-8")
+                self.assertIn("data-szl-proof-flow-opt-out", text, rel)
+                self.assertEqual(text.count(STYLE_MARKER), 0, rel)
+                self.assertEqual(text.count(SCRIPT_MARKER), 0, rel)
+                self.assertEqual(text.count(STATIC_MARKER), 0, rel)
             self.assertEqual(set(self.state.get("zero_javascript_documents", [])), NO_SCRIPT_DOCUMENTS)
             for rel in bound:
                 text = (ROOT / rel).read_text(encoding="utf-8")
