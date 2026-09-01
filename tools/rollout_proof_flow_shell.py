@@ -28,6 +28,17 @@ NO_SCRIPT_DOCUMENTS = {
     "notes/index.html",
     "record/index.html",
 }
+
+# Machine-readable gateways whose reviewed meta CSP is `default-src 'none'` with
+# inline style only. They admit NO external stylesheet and NO script, so the Flow
+# Shell must not bind to them at all -- not even the static rail, which is still
+# an external stylesheet. Injecting here makes each page block its own assets and
+# turns Link & Asset Check red on main.
+# Keep in lockstep with the scriptless contracts in scripts/check_security_headers.py.
+SEALED_DOCUMENTS = {
+    "api/build-info/index.html",
+    "readyz/index.html",
+}
 STATIC_THEMES = {
     "404.html": "ledger",
     "chat/index.html": "decision-mono",
@@ -62,7 +73,7 @@ def candidates() -> list[Path]:
     for path in ROOT.rglob("index.html"):
         if path.is_file() and not (set(path.relative_to(ROOT).parts) & EXCLUDE_PARTS):
             paths.add(path)
-    return sorted(paths)
+    return sorted(p for p in paths if p.relative_to(ROOT).as_posix() not in SEALED_DOCUMENTS)
 
 
 def read(path: Path) -> str:

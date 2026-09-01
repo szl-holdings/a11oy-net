@@ -26,6 +26,12 @@ NO_SCRIPT_DOCUMENTS = {
     "notes/index.html",
     "record/index.html",
 }
+# Gateways whose reviewed meta CSP is default-src 'none' with inline style only:
+# no external stylesheet, no script, so the Flow Shell must not bind at all.
+SEALED_DOCUMENTS = {
+    "api/build-info/index.html",
+    "readyz/index.html",
+}
 ALLOWED_HEX = {"#000", "#080c14", "#1c1c1f", "#2a2a2e", "#7f7f83", "#9a9a9e", "#f0eee6"}
 
 
@@ -79,7 +85,8 @@ class ProofFlowShellContract(unittest.TestCase):
         self.assertIn(self.state["state"], {"ASSETS_READY", "ROLLED_OUT"})
         if self.state["state"] == "ROLLED_OUT":
             bound = set(self.state.get("injected_documents", []))
-            self.assertEqual(bound, {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")} | {"404.html"})
+            expected = ({path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")} | {"404.html"}) - SEALED_DOCUMENTS
+            self.assertEqual(bound, expected)
             self.assertEqual(set(self.state.get("zero_javascript_documents", [])), NO_SCRIPT_DOCUMENTS)
             for rel in bound:
                 text = (ROOT / rel).read_text(encoding="utf-8")
@@ -93,6 +100,22 @@ class ProofFlowShellContract(unittest.TestCase):
                 else:
                     self.assertEqual(text.count(SCRIPT_MARKER), 1, rel)
                     self.assertEqual(text.count(STATIC_MARKER), 0, rel)
+
+    def test_sealed_gateways_receive_no_flow_shell_assets(self) -> None:
+        """Machine-readable gateways declare default-src 'none' with inline style only.
+
+        They admit no external stylesheet and no script, so the Flow Shell must not
+        bind to them at all. Regression guard: re-injecting here makes each page block
+        its own assets and turns Link & Asset Check red on main.
+        """
+        for rel in SEALED_DOCUMENTS:
+            path = ROOT / rel
+            self.assertTrue(path.is_file(), rel)
+            text = path.read_text(encoding="utf-8")
+            self.assertEqual(text.count(STYLE_MARKER), 0, rel)
+            self.assertEqual(text.count(SCRIPT_MARKER), 0, rel)
+            self.assertNotIn("szl-flow-proof", text, rel)
+            self.assertNotIn(rel, set(self.state.get("injected_documents", [])), rel)
 
     def test_no_script_contract_is_explicit_and_complete(self) -> None:
         for rel in NO_SCRIPT_DOCUMENTS:
