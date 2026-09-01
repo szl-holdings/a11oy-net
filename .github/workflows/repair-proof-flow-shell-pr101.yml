@@ -1,0 +1,51 @@
+name: Repair Proof Flow Shell PR 101
+
+on:
+  push:
+    branches:
+      - "feat/proof-flow-shell-33512702521"
+    paths:
+      - ".github/workflows/repair-proof-flow-shell-pr101.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-proof-flow-shell-pr101
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact pull-request branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: feat/proof-flow-shell-33512702521
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Apply the repository-native idempotent rollout
+        run: python tools/rollout_proof_flow_shell.py --report /tmp/proof-flow-repair.json
+      - name: Verify static and interactive contracts
+        run: |
+          python tests/test_proof_flow_shell.py -v
+          python tools/rollout_proof_flow_shell.py --check
+          git diff --check
+      - name: Remove bounded repair workflow and commit exact changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/repair-proof-flow-shell-pr101.yml
+          git config user.name "SZL Proof Flow Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No repair changes remain."
+            exit 0
+          fi
+          git commit -s -m "fix(frontend): complete script-free proof bindings"
+          git push origin HEAD:feat/proof-flow-shell-33512702521
