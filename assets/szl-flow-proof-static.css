@@ -1,0 +1,49 @@
+/* CSS-only Flow Shell adaptation for proof documents that intentionally execute zero JavaScript. */
+.szl-proof-static-rail .szl-proof-links {
+  position: static;
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--szl-proof-line) transparent;
+}
+.szl-proof-static-rail .szl-proof-link {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.szl-proof-static-rail .szl-proof-link[aria-current="page"] {
+  border-color: var(--szl-proof-ink);
+  background: rgba(255,255,255,.08);
+  color: var(--szl-proof-ink);
+}
+
+@media (max-width: 820px) {
+  .szl-proof-static-rail {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .szl-proof-static-rail .szl-proof-links {
+    position: static;
+    display: flex;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+  .szl-proof-static-rail .szl-proof-link {
+    justify-content: center;
+    padding-inline: 12px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .szl-proof-static-rail .szl-proof-switch span,
+  .szl-proof-static-rail .szl-proof-origin span {
+    display: none;
+  }
+}
