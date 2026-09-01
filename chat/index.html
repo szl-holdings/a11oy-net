@@ -15,8 +15,9 @@
   <link rel="stylesheet" href="/assets/kanchay.css" />
   <link rel="stylesheet" href="/assets/diligence.css" />
   <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
+  <link rel="stylesheet" href="/assets/szl-flow-proof-static.css" data-szl-proof-flow-asset="static-style" />
 </head>
-<body>
+<body data-szl-proof-flow="record" data-szl-proof-theme="decision-mono">
   <a class="skip" href="#main">Skip to console gateway</a>
   <nav class="topbar" aria-label="Primary">
     <div class="wrap nav nav-in">
@@ -76,6 +77,18 @@
   </main>
 
   <footer><div class="wrap footer"><p>Published by SZL Holdings as a static, separately hosted gateway. Product availability is not implied.</p><div class="footer-links"><a href="/">Evidence</a><a href="/diligence/">Diligence</a><a href="/.well-known/security.txt">Security</a></div></div></footer>
-  <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
+  <nav class="szl-proof-rail szl-proof-static-rail" aria-label="SZL public-estate journeys" data-szl-proof-flow-asset="static">
+    <div class="szl-proof-origin" title="a11oy.net independent proof origin"><span>Record</span></div>
+    <div class="szl-proof-links">
+      <a class="szl-proof-link" href="https://a11oy.net/" data-journey="start">Start Here</a>
+      <a class="szl-proof-link" href="https://a-11-oy.com/" data-journey="products" aria-current="page">Products &amp; Demos</a>
+      <a class="szl-proof-link" href="https://a11oy.net/estate/" data-journey="models">Models &amp; Data</a>
+      <a class="szl-proof-link" href="https://a11oy.net/khipu/" data-journey="kernels">Kernels &amp; SDKs</a>
+      <a class="szl-proof-link" href="https://a11oy.net/record/" data-journey="proofs">Proofs &amp; Research</a>
+    </div>
+    <div class="szl-proof-actions">
+      <a class="szl-proof-switch" href="https://a-11-oy.com/" title="Open the product command origin"><span>Open</span><strong>Product</strong></a>
+    </div>
+  </nav>
 </body>
 </html>
