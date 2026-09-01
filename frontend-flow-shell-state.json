@@ -1,9 +1,8 @@
 {
-  "examined_documents": 31,
+  "examined_documents": 29,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
-    "api/build-info/index.html",
     "atelier/index.html",
     "ayllu/index.html",
     "ayllu/psyche/index.html",
@@ -27,7 +26,6 @@
     "origin/index.html",
     "pricing/index.html",
     "puriq-markets/index.html",
-    "readyz/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",
     "terra/index.html",
