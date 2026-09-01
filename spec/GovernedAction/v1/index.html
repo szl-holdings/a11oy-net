@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#080c14" />
+<meta name="color-scheme" content="dark" />
+<title>GovernedAction/v1 — SZL Receipt Predicate | a11oy.net</title>
+<meta name="description" content="The GovernedAction/v1 receipt predicate specification: the open, offline-verifiable format for proving what a governed AI action was authorized to do, what it did, and whether required evidence exists." />
+<link rel="canonical" href="https://a11oy.net/spec/GovernedAction/v1/" />
+<link rel="icon" type="image/svg+xml" href="/assets/a11oy-mark.svg" />
+<link rel="stylesheet" href="/assets/kanchay.css" />
+<style>
+  :root{
+    --bg:#0a0e14; --ink:#e6edf3; --dim:#8b98a5; --line:#222c38;
+    --gold:#d7b96b; --teal:#3af4c8; --card:#11161d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  header{padding:26px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:700;font-size:17px}
+  .logo em{color:var(--teal);font-style:normal}
+  nav a{color:var(--dim);text-decoration:none;margin-left:22px;font-size:14px}
+  nav a:hover{color:var(--ink)}
+  main{padding:56px 0 20px}
+  .kicker{color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:clamp(26px,4vw,40px);line-height:1.12;font-weight:800}
+  h1 .mono{font-family:ui-monospace,Menlo,monospace;color:var(--teal)}
+  .sub{color:var(--dim);font-size:16px;max-width:640px;margin-top:18px}
+  h2{font-size:20px;margin:40px 0 14px;padding-top:8px;border-top:1px solid var(--line)}
+  p{color:var(--ink);margin-bottom:12px;max-width:72ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;margin:18px 0}
+  pre{background:#070b12;border:1px solid #1d2c47;border-radius:10px;padding:16px;overflow:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--dim)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;color:var(--teal)}
+  .uri{font-family:ui-monospace,Menlo,monospace;color:var(--ink);background:#070b12;border:1px solid #1d2c47;border-radius:8px;padding:2px 10px;font-size:13px}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}
+  td,th{border:1px solid var(--line);padding:8px 12px;text-align:left}
+  th{color:var(--dim);font-weight:600}
+  td .mono{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--teal)}
+  footer{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;display:flex;justify-content:space-between}
+  footer a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><em>a11oy</em> · SZL Holdings</div>
+    <nav>
+      <a href="/">Registry</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/contact/">Contact</a>
+      <a href="/record/">Record</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="kicker">Open specification</div>
+    <h1>GovernedAction <span class="mono">/v1</span></h1>
+    <p class="sub">The open, offline-verifiable receipt predicate: a signed record of what a governed action was authorized to do, what it actually did, and whether the required evidence exists. Give the format away; sell the control plane above it.</p>
+
+    <h2>Namespace</h2>
+    <p>The canonical predicate type URI is <span class="uri">https://szl.dev/GovernedAction/v1</span>. While szl.dev completes registration, this page is the authoritative specification and the URI remains the stable public identifier — the URI denotes the specification; it is not a fetch endpoint.</p>
+
+    <div class="card">
+      <strong>Predicate type:</strong> <code>https://szl.dev/GovernedAction/v1</code><br/>
+      <strong>Envelope:</strong> in-toto Statement v1 + DSSE signature<br/>
+      <strong>Schema:</strong> <a href="./v1.schema.json"><code>v1.schema.json</code></a> (JSON Schema 2020-12)<br/>
+      <strong>Reference verifier:</strong> <a href="https://huggingface.co/spaces/SZLHOLDINGS/prove-it">SZLHOLDINGS/prove-it</a> (offline, in-browser; zero network during verification)<br/>
+      <strong>Reference implementation:</strong> <a href="https://github.com/szl-holdings/szl-receipt">szl-holdings/szl-receipt</a> (Python, in-toto-attestation 0.9.3)
+    </div>
+
+    <h2>Core invariants (non-negotiable)</h2>
+    <table>
+      <tr><th>Rule</th><th>Meaning</th></tr>
+      <tr><td class="mono">is_service_account === false on human_principal</td><td>Article 12 logging conformance requires identification of the natural persons involved in verification. A service account can never claim to be the human approver. Structurally enforced.</td></tr>
+      <tr><td class="mono">missing evidence ⇒ INCOMPLETE</td><td>Never PASS. Even with a valid signature, if any declared evidence obligation is unmet the verdict is INCOMPLETE, not forged success.</td></tr>
+      <tr><td class="mono">malformed is not forged</td><td>Undecodable or non-object payloads return UNAVAILABLE, not a security verdict.</td></tr>
+      <tr><td class="mono">PAE length over decoded bytes</td><td>The DSSE PAE length field counts decoded payload bytes, never the base64-encoded length. A verifier that uses the base64 length is silently bypassable.</td></tr>
+      <tr><td class="mono">transcript binding</td><td>Every envelope carries a <code>transcript_id</code>; splice/reorder of single envelopes is MISMATCH.</td></tr>
+      <tr><td class="mono">signature ≠ truth</td><td>A signature proves integrity and signer identity, not factual truth.</td></tr>
+    </table>
+
+    <h2>The four side-effect classes</h2>
+    <p>Every governed action declares one of four side-effect classes: <code>READ_ONLY</code>, <code>REVERSIBLE</code>, <code>COMPENSATABLE</code>, <code>IRREVERSIBLE</code>. IRREVERSIBLE always requires human approval. They are never collapsed or reordered.</p>
+
+    <h2>Verdict taxonomy</h2>
+    <p>Six states, and no others: <code>VERIFIED</code> / <code>MISMATCH</code> / <code>INCOMPLETE</code> / <code>PENDING_SYNC</code> / <code>UNSIGNED-LOCAL</code> / <code>UNAVAILABLE</code>. Soft-state precedence is <code>UNSIGNED-LOCAL &gt; PENDING_SYNC &gt; VERIFIED</code> — a signed bundle that cannot still never renders as a pass.</p>
+
+    <h2>EU AI Act framing</h2>
+    <p>This predicate is an <strong>Article 12 logging conformance profile</strong>. It is never claimed as "EU AI Act compliant": applicability, classification, and deployer obligations are customer-specific. The retention floor for the fields defined here is six months.</p>
+
+    <h2>Reference material</h2>
+    <pre>envelope.payloadType = "application/vnd.in-toto+json"
+envelope.payload     = base64(in-toto Statement)
+statement._type      = "https://in-toto.io/Statement/v1"
+statement.predicateType = "https://szl.dev/GovernedAction/v1"
+statement.predicate.schema = "GovernedAction/v1"</pre>
+  </main>
+
+  <footer>
+    <span>© SZL Holdings · a11oy</span>
+    <span><a href="/spec/">All specs</a> · <a href="/record/">Record</a> · <a href="/contact/">Contact</a></span>
+  </footer>
+</div>
+</body>
+</html>
