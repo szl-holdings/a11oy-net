@@ -29,7 +29,11 @@ BASELINE_ZERO_JAVASCRIPT = {
 def source_requires_zero_javascript(relative: str) -> bool:
     text = (ROOT / relative).read_text(encoding="utf-8")
     return relative in BASELINE_ZERO_JAVASCRIPT or bool(
-        re.search(r"\bscript-src\s+'none'\b", text, flags=re.IGNORECASE)
+        re.search(
+            r"(?:^|[;\"'\s])script-src\s+(?:'none'|\"none\")(?:[;\"'\s]|$)",
+            text,
+            flags=re.IGNORECASE,
+        )
     )
 
 
