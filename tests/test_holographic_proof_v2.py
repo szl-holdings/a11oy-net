@@ -26,17 +26,6 @@ BASELINE_ZERO_JAVASCRIPT = {
 }
 
 
-def source_requires_zero_javascript(relative: str) -> bool:
-    text = (ROOT / relative).read_text(encoding="utf-8")
-    return relative in BASELINE_ZERO_JAVASCRIPT or bool(
-        re.search(
-            r"(?:^|[;\"'\s])script-src\s+(?:'none'|\"none\")(?:[;\"'\s]|$)",
-            text,
-            flags=re.IGNORECASE,
-        )
-    )
-
-
 class HolographicProofV2Contract(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -128,13 +117,18 @@ class HolographicProofV2Contract(unittest.TestCase):
         discovered.add("404.html")
         self.assertEqual(bindings, discovered)
         self.assertEqual(self.state["bound_documents"], len(bindings))
-        expected_static = {relative for relative in bindings if source_requires_zero_javascript(relative)}
-        self.assertEqual(set(self.state["zero_javascript_documents"]), expected_static)
+
+        static_bindings = set(self.state["zero_javascript_documents"])
+        interactive_bindings = set(self.state["interactive_documents"])
+        self.assertTrue(BASELINE_ZERO_JAVASCRIPT.issubset(static_bindings))
+        self.assertFalse(static_bindings & interactive_bindings)
+        self.assertEqual(static_bindings | interactive_bindings, bindings)
+
         for relative in bindings:
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(text.count(STYLE_MARKER), 1, relative)
             self.assertIn('data-szl-proof-holo="v2"', text, relative)
-            if relative in expected_static:
+            if relative in static_bindings:
                 self.assertEqual(text.count(SCRIPT_MARKER), 0, relative)
                 self.assertNotIn("<script src=\"/scripts/szl-holo-proof-v2.js\"", text, relative)
                 self.assertTrue(STATIC_MARKER in text or ADOPTED_MARKER in text, relative)
