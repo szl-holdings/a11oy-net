@@ -597,6 +597,176 @@ footer{background:var(--bg-soft,#0a0a0b);border-top:1px solid var(--line)}
 .live.is-empty .st{color:var(--t2)}
 .kernel-chip[data-state="unavailable"] b{color:var(--t2)}
 .chip.gray,.chip.honesty{border-color:var(--line2);background:transparent}
+
+/* ============================================================================
+   a11oy.net IDENTITY v2 — "ANTHROPIC" EDITORIAL LAYER
+   One-of-one identity for the proof origin: this surface reads like a research
+   paper, not an instrument panel. Serif display (Fraunces, self-hosted woff2 so
+   font-src 'self' stays byte-identical), humanist sans body (Inter), a modular
+   1.25 fluid scale, a 680px / 68ch reading measure, 8px baseline rhythm, 96px
+   section breaks, editorial asymmetry (kicker in a left margin rail), and one
+   marginal pull-quote. Palette is unchanged and monochrome only: black, white,
+   warm off-white #f0eee6, one neutral grey ramp, hairlines. No colour, no
+   decorative motion, no game-like effects. Doctrine v11 labels unchanged.
+   ==========================================================================*/
+
+/* ---- self-hosted type (no third-party origin; CSP font-src 'self' holds) --- */
+@font-face{
+  font-family:"Fraunces";font-style:normal;font-weight:300 700;font-display:swap;
+  src:url("assets/fonts/fraunces-latin-var.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{
+  font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;
+  src:url("assets/fonts/instrument-serif-latin-italic.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{
+  font-family:"Inter var";font-style:normal;font-weight:300 700;font-display:swap;
+  src:url("assets/fonts/inter-latin-var.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{
+  /* signature families */
+  --serif:"Fraunces",Georgia,"Times New Roman",Times,serif;
+  --serif-quote:"Instrument Serif","Fraunces",Georgia,serif;
+  --sans:"Inter var",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --head:"Inter var",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  /* modular 1.25 (major third) scale from a 12px base, expressed fluidly */
+  --s1:clamp(11.5px,.9vw,12px);
+  --s2:clamp(13px,1.1vw,15px);
+  --s3:clamp(15.5px,1.2vw,19px);
+  --s4:clamp(19px,1.8vw,24px);
+  --s5:clamp(22px,2.4vw,30px);
+  --s6:clamp(26px,3.4vw,37px);
+  --s7:clamp(30px,4.4vw,46px);
+  --s8:clamp(34px,5.4vw,58px);
+  --s9:clamp(38px,6.4vw,72px);
+  /* editorial rhythm */
+  --rhythm:8px;
+  --break:clamp(56px,9vw,96px);
+  --measure:min(680px,68ch);
+  --rail:clamp(140px,15vw,190px);
+}
+
+/* ---- optical defaults ---- */
+body{font-family:var(--sans);font-size:var(--s3);line-height:1.65;
+  text-rendering:optimizeLegibility;font-optical-sizing:auto;
+  font-feature-settings:"kern" 1,"liga" 1,"calt" 1}
+p,li,dd,dt,small,figcaption,blockquote{text-wrap:pretty}
+h1,h2,h3,h4,.inv-card b,.proof-link b,.card h3,.stack-card h3{text-wrap:balance}
+.mono,code,.summary-table,.inv-metrics,.atlas-stat b,.inv-stat b,.hero-canon,
+.dossier-row small,.inv-provenance{font-variant-numeric:tabular-nums}
+
+/* ---- serif display: the signature that separates .net from the product ---- */
+h1{font-family:var(--serif);font-size:var(--s9);font-weight:400;line-height:1.04;
+  letter-spacing:-.014em;color:var(--cream);max-width:22ch}
+h1 .g{font-family:var(--serif);font-weight:400;font-style:italic;color:#fff}
+h2{font-family:var(--serif);font-size:var(--s6);font-weight:400;line-height:1.16;
+  letter-spacing:-.01em;color:var(--cream);max-width:28ch}
+h3{font-family:var(--serif);font-size:var(--s4);font-weight:500;line-height:1.25;
+  letter-spacing:-.005em;color:var(--cream)}
+.inv-group-head h3,.atlas-summary h3{font-family:var(--serif);font-weight:500;letter-spacing:-.005em}
+
+/* ---- reading measure + baseline rhythm ---- */
+.lede{font-size:var(--s3);line-height:1.65;color:var(--t2);max-width:var(--measure);
+  margin-top:24px}
+.sec-head{max-width:none;margin-bottom:48px}
+.sec-head p,.sec-head>p{font-size:var(--s3);color:var(--t2);max-width:var(--measure)}
+.index-catalog li,.dossier-note,.inv-group-head p,.atlas-note,.foot-canon{max-width:var(--measure)}
+section{padding:var(--break) 0}
+.cta-row{margin-top:32px}
+.hero-canon{margin-top:48px;font-size:var(--s1);letter-spacing:.02em}
+.kicker{font-family:var(--mono);font-size:var(--s1);letter-spacing:.12em;
+  color:var(--t3);text-transform:uppercase;margin-bottom:16px}
+
+/* ---- editorial asymmetry: the eyebrow drops into a left margin rail ---- */
+@media(min-width:1000px){
+  .sec-head{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);
+    column-gap:clamp(32px,4vw,56px);row-gap:16px;align-items:start}
+  .sec-head>.kicker{grid-column:1;grid-row:1;margin-bottom:0;padding-top:.55em}
+  .sec-head>h2{grid-column:2;grid-row:1}
+  .sec-head>p{grid-column:2;grid-row:2;margin-top:0}
+  .sec-head>.ed-quote{grid-column:1;grid-row:2}
+}
+
+/* ---- calm hero: paper, not instrumentation. The point cloud is demoted to a
+   faint watermark; the grid and the falling batons are retired here. -------- */
+.lattice-bg::before{background:
+    radial-gradient(72% 46% at 50% -8%,rgba(240,238,230,.055),transparent 66%),
+    radial-gradient(40% 30% at 84% 6%,rgba(255,255,255,.03),transparent 62%);
+  background-size:100% 100%,100% 100%;
+  mask-image:linear-gradient(#000 0%,#000 52%,transparent 94%)}
+.baton{display:none}
+#holo{opacity:.16}
+.hero{padding:clamp(64px,11vw,128px) 0 var(--break);border-bottom:1px solid var(--line)}
+.hero::after{background:
+  radial-gradient(120% 100% at 82% 40%,transparent 30%,#000 88%),
+  linear-gradient(90deg,#000 0%,rgba(0,0,0,.94) 34%,rgba(0,0,0,.55) 64%,rgba(0,0,0,.2) 84%)}
+@media(min-width:1000px){
+  .hero-grid{grid-template-columns:minmax(0,1.32fr) minmax(320px,.68fr);
+    gap:clamp(48px,6vw,88px);align-items:start}
+  #holo{left:44%;width:56%;opacity:.14}
+  /* one open-book drop cap: editorial, typographic, no imagery */
+  .hero-copy .lede::first-letter{font-family:var(--serif);font-weight:400;
+    font-size:3.1em;line-height:.82;float:left;margin:.06em .1em 0 0;color:var(--cream)}
+}
+@media(max-width:999px){#holo{opacity:.12;height:62%}}
+
+/* ---- marginal pull-quote (the editorial device) ---- */
+.ed-quote{margin:0 0 24px;padding:16px 0 0;border-top:1px solid var(--line2);max-width:var(--measure)}
+.ed-quote p{font-family:var(--serif-quote);font-style:italic;font-weight:400;
+  font-size:var(--s4);line-height:1.32;color:var(--cream);letter-spacing:0;max-width:26ch}
+.ed-quote cite{display:block;margin-top:12px;font-family:var(--mono);font-style:normal;
+  font-size:var(--s1);letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+
+/* ---- registry entries as editorial cards: shared DNA, editorial styling ---- */
+.inv-shell{border:0;background:transparent;padding:0}
+.inv-bar{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:0;margin-bottom:var(--break)}
+.inv-stat{border:0;border-top:1px solid var(--line2);border-radius:0;background:transparent;
+  padding:16px 16px 16px 0}
+.inv-stat b{font-family:var(--mono);font-size:var(--s5);font-weight:400;color:var(--cream);
+  letter-spacing:-.01em;margin-bottom:8px}
+.inv-stat span{font-size:var(--s1);letter-spacing:.12em;color:var(--t3)}
+.inv-group{margin-top:var(--break);padding-top:32px;border-top:1px solid var(--line)}
+.inv-group-head{margin-bottom:32px;max-width:var(--measure)}
+.inv-grid{gap:clamp(16px,2.2vw,28px)}
+.inv-card{background:transparent;border:1px solid var(--line2);border-radius:14px;
+  padding:clamp(20px,2.4vw,28px);gap:12px}
+.inv-card b{font-family:var(--serif);font-size:var(--s4);font-weight:400;
+  letter-spacing:-.005em;color:var(--cream);line-height:1.22}
+.inv-card p{font-family:var(--sans);font-size:var(--s2);line-height:1.6;color:var(--t2)}
+.inv-eyebrow{font-size:var(--s1);letter-spacing:.12em;color:var(--t3)}
+.inv-metrics{font-size:var(--s1);line-height:1.8;color:var(--t2)}
+.inv-foot{padding-top:16px;border-top:1px solid var(--line)}
+.inv-card:hover{border-color:var(--t2);background:rgba(240,238,230,.02);
+  transform:translateY(-1px);box-shadow:0 8px 30px -12px #000}
+.inv-provenance{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:var(--s1);line-height:1.85;color:var(--t3);max-width:none}
+.inv-more{border-radius:0;border:0;border-bottom:1px solid var(--line2);padding:0 0 6px;
+  margin-top:24px;font-size:var(--s1);letter-spacing:.12em}
+.inv-more:hover{border-color:var(--cream);color:var(--cream)}
+@media(min-width:700px){.inv-grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}}
+@media(min-width:1000px){.inv-grid{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}}
+
+/* ---- the rest of the page, tuned to the same editorial voice ---- */
+.strip .cell{font-family:var(--mono);font-size:var(--s1);line-height:1.8;padding:24px 24px 24px 20px}
+.strip .cell b{font-family:var(--serif);font-size:var(--s3);font-weight:500;color:var(--cream);
+  margin-bottom:8px}
+.proof-link b,.card h3,.stack-card h3,.epill b,.resource b{font-family:var(--serif);
+  font-weight:400;font-size:var(--s4);letter-spacing:-.005em;color:var(--cream);line-height:1.24}
+.proof-link p,.card p,.stack-card p,.resource small,.epill span{font-size:var(--s2);line-height:1.6}
+.proof-link,.card,.stack-card,.resource{padding:clamp(20px,2.4vw,28px);background:transparent}
+.proof-link:hover,.card:hover,.stack-card:hover,.resource:hover{background:rgba(240,238,230,.02)}
+.dossier{background:transparent;border-color:var(--line2);padding:clamp(20px,2.4vw,26px)}
+.dossier-row b{font-family:var(--sans);font-size:var(--s2);font-weight:600;color:var(--t1)}
+.index-catalog li{padding-top:12px;padding-bottom:12px;font-size:var(--s2);line-height:1.7}
+.summary-table th{font-family:var(--mono);font-size:var(--s1);letter-spacing:.1em}
+.summary-table td{font-size:var(--s2);line-height:1.6}
+footer{padding-top:var(--break)}
+.copyright,.foot-canon{font-size:var(--s1);line-height:1.85}
+
+@media(prefers-reduced-motion:reduce){
+  .inv-card:hover{transform:none}
+}
 </style>
   <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
 </head>
@@ -752,7 +922,8 @@ footer{background:var(--bg-soft,#0a0a0b);border-top:1px solid var(--line)}
 </div></section>
 
 <section id="orchestrator"><div class="wrap">
-  <div class="sec-head"><h2>An architecture designed to make claims accountable.</h2>
+  <div class="sec-head"><div class="kicker">Architecture</div><h2>An architecture designed to make claims accountable.</h2>
+  <aside class="ed-quote"><p>What can be checked is published. What cannot is labelled, not narrated.</p><cite>Editorial rule of this origin &middot; doctrine v11</cite></aside>
   <p>a11oy is designed to conduct agents across providers through callsigns, evidence labels, and audit logs. Operational behavior remains subject to the linked runtime evidence.</p></div>
   <div class="grid3">
             <div class="card"><span class="tag">GOVERN</span><div class="ic conjecture" aria-hidden="true">Λ</div><h3>Doctrine-gated inference</h3><p>The architecture applies doctrine gates to outputs: evidence labels are explicit, overclaim patterns are checked, and exceptions are designed to fail closed.</p></div>
