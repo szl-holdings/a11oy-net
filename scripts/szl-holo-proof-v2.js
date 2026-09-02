@@ -175,3 +175,15 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
   else boot();
 })();
+
+;(function () {
+  "use strict";
+  if (window.__SZL_ADAPTIVE_PROOF_V3_LOADER__) return;
+  window.__SZL_ADAPTIVE_PROOF_V3_LOADER__ = true;
+  if (document.querySelector("script[data-szl-adaptive-proof-v3-loader]")) return;
+  var script = document.createElement("script");
+  script.src = "/scripts/szl-adaptive-proof-v3.js";
+  script.defer = true;
+  script.dataset.szlAdaptiveProofV3Loader = "true";
+  document.head.appendChild(script);
+}());
