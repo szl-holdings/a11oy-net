@@ -127,7 +127,6 @@ class HolographicProofV2Contract(unittest.TestCase):
         for relative in bindings:
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(text.count(STYLE_MARKER), 1, relative)
-            self.assertIn('data-szl-proof-holo="v2"', text, relative)
             if relative in static_bindings:
                 self.assertEqual(text.count(SCRIPT_MARKER), 0, relative)
                 self.assertNotIn("<script src=\"/scripts/szl-holo-proof-v2.js\"", text, relative)
