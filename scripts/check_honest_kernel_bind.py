@@ -47,14 +47,14 @@ CATALOG_LABEL = re.compile(
 def neutral_semantic_style(source: str, selector: str) -> bool:
     """Require semantic chips to remain neutral, never proof/live colored.
 
-    Presentation layers may choose either the named --gray token or the
-    hierarchy-neutral --t2 token. The guard intentionally checks semantics,
-    not a particular minifier byte sequence.
+    The selector may be qualified by a component scope (for example
+    ``.hero-canon .catalog-chip``). We validate the declaration semantics
+    rather than a historical minifier byte sequence.
     """
     escaped = re.escape(selector)
     patterns = (
-        rf"{escaped}\s*,\s*{escaped}\s+b\s*\{{[^}}]*color\s*:\s*var\(--gray\)",
-        rf"{escaped}\s*,\s*{escaped}\s+b\s*\{{[^}}]*color\s*:\s*var\(--t2\)",
+        rf"{escaped}[^{{]*\{{[^}}]*color\s*:\s*var\(--gray\)",
+        rf"{escaped}[^{{]*\{{[^}}]*color\s*:\s*var\(--t2\)",
     )
     return any(re.search(pattern, source, re.I) for pattern in patterns)
 
