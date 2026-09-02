@@ -1,0 +1,44 @@
+{
+  "schema": "szl.proof-responsive-experience/v3",
+  "state": "ASSET_READY",
+  "origin": "https://a11oy.net",
+  "role": "independent-static-proof-origin",
+  "viewports": [
+    [320, 568],
+    [375, 812],
+    [430, 932],
+    [812, 375],
+    [768, 1024],
+    [1280, 800],
+    [1440, 900],
+    [1920, 1080],
+    [2560, 1440],
+    [3440, 1440]
+  ],
+  "requirements": {
+    "horizontal_overflow_px": 0,
+    "minimum_touch_target_px": 44,
+    "minimum_touch_target_coarse_px": 48,
+    "zero_javascript_records_preserved": true,
+    "complete_hashes_and_links_preserved": true,
+    "keyboard_focus_visible": true,
+    "safe_area_aware": true,
+    "reduced_motion": true,
+    "increased_contrast": true,
+    "forced_colors": true,
+    "print_mode": true,
+    "external_runtime_dependencies": 0
+  },
+  "bindings": [
+    {
+      "host": "assets/szl-holo-proof-v2.css",
+      "asset": "assets/szl-responsive-proof-v3.css",
+      "marker": "szl-responsive-proof-v3"
+    },
+    {
+      "host": "assets/szl-flow-proof-static.css",
+      "asset": "assets/szl-responsive-proof-v3.css",
+      "marker": "szl-responsive-proof-v3"
+    }
+  ]
+}
