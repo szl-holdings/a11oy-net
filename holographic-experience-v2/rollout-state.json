@@ -6,7 +6,6 @@
   "bindings": [
     "404.html",
     "aegis/index.html",
-    "api/build-info/index.html",
     "atelier/index.html",
     "ayllu/index.html",
     "ayllu/psyche/index.html",
@@ -30,17 +29,15 @@
     "origin/index.html",
     "pricing/index.html",
     "puriq-markets/index.html",
-    "readyz/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",
     "terra/index.html",
     "vessels/index.html"
   ],
-  "bound_documents": 31,
+  "bound_documents": 29,
   "decorative_motion_is_measured_telemetry": false,
   "examined_documents": 31,
   "interactive_documents": [
-    "api/build-info/index.html",
     "atelier/index.html",
     "ayllu/index.html",
     "contact/index.html",
@@ -49,10 +46,12 @@
     "index.html",
     "khipu/index.html",
     "pricing/index.html",
-    "readyz/index.html",
     "spec/GovernedAction/v1/index.html"
   ],
-  "opt_out_documents": [],
+  "opt_out_documents": [
+    "api/build-info/index.html",
+    "readyz/index.html"
+  ],
   "product_origin": "https://a-11-oy.com",
   "proof_origin": "https://a11oy.net",
   "schema": "szl.proof-holographic-experience-rollout/v2",
