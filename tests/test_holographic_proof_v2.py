@@ -16,7 +16,7 @@ STYLE_MARKER = 'data-szl-proof-holo-asset="style-v2"'
 SCRIPT_MARKER = 'data-szl-proof-holo-asset="script-v2"'
 STATIC_MARKER = 'data-szl-proof-holo-static="v2"'
 ADOPTED_MARKER = 'data-szl-proof-holo-adopted="true"'
-ZERO_JAVASCRIPT = {
+BASELINE_ZERO_JAVASCRIPT = {
     "404.html",
     "chat/index.html",
     "code/index.html",
@@ -24,6 +24,13 @@ ZERO_JAVASCRIPT = {
     "notes/index.html",
     "record/index.html",
 }
+
+
+def source_requires_zero_javascript(relative: str) -> bool:
+    text = (ROOT / relative).read_text(encoding="utf-8")
+    return relative in BASELINE_ZERO_JAVASCRIPT or bool(
+        re.search(r"\bscript-src\s+'none'\b", text, flags=re.IGNORECASE)
+    )
 
 
 class HolographicProofV2Contract(unittest.TestCase):
@@ -79,10 +86,13 @@ class HolographicProofV2Contract(unittest.TestCase):
         self.assertIs(self.state["decorative_motion_is_measured_telemetry"], False)
         self.assertIn("Decorative effects never imply measured runtime state", self.css)
 
-    def test_zero_javascript_contract_is_explicit(self) -> None:
-        self.assertEqual(set(self.state["zero_javascript_documents"]), ZERO_JAVASCRIPT)
-        for relative in ZERO_JAVASCRIPT:
+    def test_zero_javascript_contract_is_explicit_and_csp_aware(self) -> None:
+        state_zero = set(self.state["zero_javascript_documents"])
+        self.assertTrue(BASELINE_ZERO_JAVASCRIPT.issubset(state_zero))
+        for relative in BASELINE_ZERO_JAVASCRIPT:
             self.assertIn(f'"{relative}"', self.binder)
+        self.assertIn("has_zero_javascript_contract", self.binder)
+        self.assertIn("script-src", self.binder)
         self.assertIn("static_rail", self.binder)
         self.assertIn("remove_own_script", self.binder)
         self.assertIn(STATIC_MARKER, self.binder)
@@ -114,13 +124,15 @@ class HolographicProofV2Contract(unittest.TestCase):
         discovered.add("404.html")
         self.assertEqual(bindings, discovered)
         self.assertEqual(self.state["bound_documents"], len(bindings))
+        expected_static = {relative for relative in bindings if source_requires_zero_javascript(relative)}
+        self.assertEqual(set(self.state["zero_javascript_documents"]), expected_static)
         for relative in bindings:
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(text.count(STYLE_MARKER), 1, relative)
             self.assertIn('data-szl-proof-holo="v2"', text, relative)
-            if relative in ZERO_JAVASCRIPT:
+            if relative in expected_static:
                 self.assertEqual(text.count(SCRIPT_MARKER), 0, relative)
-                self.assertNotIn("<script", text.lower(), relative)
+                self.assertNotIn("<script src=\"/scripts/szl-holo-proof-v2.js\"", text, relative)
                 self.assertTrue(STATIC_MARKER in text or ADOPTED_MARKER in text, relative)
             else:
                 self.assertEqual(text.count(SCRIPT_MARKER), 1, relative)
