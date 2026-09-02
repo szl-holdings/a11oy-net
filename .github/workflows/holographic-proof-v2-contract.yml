@@ -1,0 +1,52 @@
+name: Holographic Proof v2 Contract
+
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "assets/szl-hologram-proof-v2.css"
+      - "tools/rollout_holographic_proof_v2.py"
+      - "tests/test_holographic_proof_v2.py"
+      - "holographic-proof-v2-state.json"
+      - ".github/workflows/holographic-proof-v2-contract.yml"
+      - ".github/workflows/rollout-holographic-proof-v2.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "assets/szl-hologram-proof-v2.css"
+      - "tools/rollout_holographic_proof_v2.py"
+      - "tests/test_holographic_proof_v2.py"
+      - "holographic-proof-v2-state.json"
+      - ".github/workflows/holographic-proof-v2-contract.yml"
+      - ".github/workflows/rollout-holographic-proof-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Compile controllers
+        run: python -m py_compile tools/rollout_holographic_proof_v2.py tests/test_holographic_proof_v2.py
+      - name: Run offline proof contracts
+        run: python tests/test_holographic_proof_v2.py
+      - name: Verify exact rollout when active
+        shell: bash
+        run: |
+          if [ -f holographic-proof-v2-state.json ]; then
+            python tools/rollout_holographic_proof_v2.py --check
+          fi
+      - name: Source integrity
+        run: git diff --check
