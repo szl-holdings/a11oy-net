@@ -24,6 +24,10 @@ BASELINE_ZERO_JAVASCRIPT = {
     "notes/index.html",
     "record/index.html",
 }
+EXACT_CSP_OPT_OUTS = {
+    "api/build-info/index.html",
+    "readyz/index.html",
+}
 
 
 class HolographicProofV2Contract(unittest.TestCase):
@@ -91,6 +95,15 @@ class HolographicProofV2Contract(unittest.TestCase):
         self.assertIn(STATIC_MARKER, self.binder)
         self.assertIn(ADOPTED_MARKER, self.binder)
 
+    def test_exact_csp_machine_surfaces_are_explicit_opt_outs(self) -> None:
+        self.assertEqual(set(self.state.get("opt_out_documents", [])), EXACT_CSP_OPT_OUTS)
+        for relative in EXACT_CSP_OPT_OUTS:
+            self.assertIn(f'"{relative}"', self.binder)
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertEqual(text.count(STYLE_MARKER), 0, relative)
+            self.assertEqual(text.count(SCRIPT_MARKER), 0, relative)
+            self.assertIn("default-src 'none'", text, relative)
+
     def test_existing_flow_rail_is_adopted_not_duplicated(self) -> None:
         self.assertIn("adopt_existing_rail", self.binder)
         self.assertIn("szl-proof-static-rail|szl-proof-rail", self.binder)
@@ -113,10 +126,13 @@ class HolographicProofV2Contract(unittest.TestCase):
         if self.state["state"] != "ROLLED_OUT":
             return
         bindings = set(self.state.get("bindings", []))
+        opt_outs = set(self.state.get("opt_out_documents", []))
         discovered = {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")}
         discovered.add("404.html")
-        self.assertEqual(bindings, discovered)
+        self.assertEqual(bindings | opt_outs, discovered)
+        self.assertFalse(bindings & opt_outs)
         self.assertEqual(self.state["bound_documents"], len(bindings))
+        self.assertEqual(opt_outs, EXACT_CSP_OPT_OUTS)
 
         static_bindings = set(self.state["zero_javascript_documents"])
         interactive_bindings = set(self.state["interactive_documents"])

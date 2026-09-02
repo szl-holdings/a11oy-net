@@ -2,8 +2,9 @@
 """Bind Holographic Evidence Vault v2 to a11oy.net proof documents.
 
 Documents with a zero-JavaScript contract receive a CSS-only journey rail.
-Other documents receive the interactive first-party controller. The operation
-is deterministic, idempotent, and preserves evidence content and claims.
+Other documents receive the interactive first-party controller. Machine-readable
+static boundary pages whose exact CSP forbids local assets are explicit opt-outs.
+The operation is deterministic, idempotent, and preserves evidence contracts.
 """
 from __future__ import annotations
 
@@ -20,6 +21,10 @@ STATE = ROOT / "holographic-experience-v2" / "rollout-state.json"
 STATIC_MARKER = 'data-szl-proof-holo-static="v2"'
 ADOPTED_MARKER = 'data-szl-proof-holo-adopted="true"'
 EXCLUDED_PARTS = {".git", "node_modules", "vendor", "fixtures", "archive", "archives", "coverage", "dist"}
+CSP_ASSET_OPT_OUT = {
+    "api/build-info/index.html",
+    "readyz/index.html",
+}
 ZERO_JAVASCRIPT = {
     "404.html",
     "chat/index.html",
@@ -63,7 +68,6 @@ def read(path: Path) -> str:
 
 
 def has_zero_javascript_contract(text: str) -> bool:
-    """Honor any document that explicitly refuses JavaScript in its CSP."""
     return bool(
         re.search(
             r"(?:^|[;\"'\s])script-src\s+(?:'none'|\"none\")(?:[;\"'\s]|$)",
@@ -142,7 +146,7 @@ def is_bound(relative: str, text: str) -> bool:
 def bind(path: Path) -> str:
     relative = path.relative_to(ROOT).as_posix()
     text = read(path)
-    if "data-szl-proof-holo-disabled" in text:
+    if relative in CSP_ASSET_OPT_OUT or "data-szl-proof-holo-disabled" in text:
         return "opt-out"
     if "</head>" not in text.lower() or "</body>" not in text.lower():
         return "not-document"
@@ -185,7 +189,7 @@ def update_state(rows: list[dict[str, str]]) -> None:
     state["bound_documents"] = len(bindings)
     state["zero_javascript_documents"] = static_bindings
     state["interactive_documents"] = interactive_bindings
-    state["opt_out_documents"] = [row["path"] for row in rows if row["result"] == "opt-out"]
+    state["opt_out_documents"] = sorted(row["path"] for row in rows if row["result"] == "opt-out")
     STATE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -194,8 +198,12 @@ def run(*, check: bool) -> dict[str, object]:
     for path in documents():
         relative = path.relative_to(ROOT).as_posix()
         text = read(path)
-        mode = "STATIC" if is_zero_javascript(relative, text) else "INTERACTIVE"
-        result = ("present" if is_bound(relative, text) else "missing") if check else bind(path)
+        if relative in CSP_ASSET_OPT_OUT or "data-szl-proof-holo-disabled" in text:
+            mode = "OPT_OUT"
+            result = "opt-out"
+        else:
+            mode = "STATIC" if is_zero_javascript(relative, text) else "INTERACTIVE"
+            result = ("present" if is_bound(relative, text) else "missing") if check else bind(path)
         rows.append({"path": relative, "result": result, "mode": mode})
     if not rows:
         raise RuntimeError("no a11oy.net HTML documents were discovered")
@@ -214,6 +222,7 @@ def run(*, check: bool) -> dict[str, object]:
         "changed": sum(row["result"] == "bound" for row in rows),
         "static": sum(row["mode"] == "STATIC" for row in rows),
         "interactive": sum(row["mode"] == "INTERACTIVE" for row in rows),
+        "opt_out": sum(row["mode"] == "OPT_OUT" for row in rows),
         "rows": rows,
     }
 
