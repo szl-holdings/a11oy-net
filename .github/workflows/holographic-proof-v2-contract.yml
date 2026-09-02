@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "assets/szl-holo-proof-v2.css"
+      - "assets/kanchay.css"
       - "scripts/szl-holo-proof-v2.js"
       - "holographic-experience-v2/**"
       - "tools/rollout_holographic_proof_v2.py"
@@ -15,6 +16,7 @@ on:
     branches: [main]
     paths:
       - "assets/szl-holo-proof-v2.css"
+      - "assets/kanchay.css"
       - "scripts/szl-holo-proof-v2.js"
       - "holographic-experience-v2/**"
       - "tools/rollout_holographic_proof_v2.py"
