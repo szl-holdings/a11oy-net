@@ -11,7 +11,7 @@
   },
   "palette_contract": {
     "mode": "STRICT_NEUTRAL",
-    "allowed": ["black", "white", "gray", "alpha"],
+    "allowed": ["black", "deep near-black #080c14", "white", "gray", "alpha"],
     "semantic_color": false,
     "reason": "Proof labels and evidence classes must carry meaning through text and structure rather than decorative hue."
   },
