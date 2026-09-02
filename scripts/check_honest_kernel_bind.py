@@ -44,6 +44,21 @@ CATALOG_LABEL = re.compile(
 )
 
 
+def neutral_semantic_style(source: str, selector: str) -> bool:
+    """Require semantic chips to remain neutral, never proof/live colored.
+
+    Presentation layers may choose either the named --gray token or the
+    hierarchy-neutral --t2 token. The guard intentionally checks semantics,
+    not a particular minifier byte sequence.
+    """
+    escaped = re.escape(selector)
+    patterns = (
+        rf"{escaped}\s*,\s*{escaped}\s+b\s*\{{[^}}]*color\s*:\s*var\(--gray\)",
+        rf"{escaped}\s*,\s*{escaped}\s+b\s*\{{[^}}]*color\s*:\s*var\(--t2\)",
+    )
+    return any(re.search(pattern, source, re.I) for pattern in patterns)
+
+
 def check() -> None:
     bind = BIND.read_text(encoding="utf-8")
     assert BIND.is_file()
@@ -90,9 +105,21 @@ def check() -> None:
     assert "not ROADMAP" in index
     assert 'class="conjecture"' in index
     assert "Conjecture 1" in index
+
     kanchay = (ROOT / "assets" / "kanchay.css").read_text(encoding="utf-8")
-    assert ".conjecture,.conjecture b{color:var(--gray)" in kanchay
-    assert ".catalog-chip,.catalog-chip b{color:var(--gray)" in kanchay
+    combined_style = index + "\n" + kanchay
+    assert neutral_semantic_style(combined_style, ".conjecture"), (
+        "Conjecture must remain hierarchy-neutral (gray/t2), never proof/live colored"
+    )
+    assert neutral_semantic_style(combined_style, ".catalog-chip"), (
+        "catalog chip must remain hierarchy-neutral (gray/t2), never proof/live colored"
+    )
+    for semantic_class in ("conjecture", "catalog-chip"):
+        assert re.search(
+            rf"\.{semantic_class}[^{{]*\{{[^}}]*color\s*:\s*var\(--proof\)",
+            combined_style,
+            re.I,
+        ) is None, f"{semantic_class} must never inherit proof/live color"
 
     kernel_hosts = re.findall(
         r"<span[^>]*data-kernel-chip[^>]*>.*?</span>",
