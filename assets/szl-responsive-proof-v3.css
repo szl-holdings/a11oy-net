@@ -1,0 +1,373 @@
+/*
+ * SZL Proof Responsive Experience v3
+ * Responsive composition for a11oy.net's static and interactive evidence records.
+ * Neutral presentation only; no visual treatment changes evidentiary meaning.
+ */
+
+:root {
+  --proof-stage-max: 100rem;
+  --proof-reading-max: 74ch;
+  --proof-gutter: clamp(1rem, 2.5vw, 2.75rem);
+  --proof-section: clamp(3rem, 7vw, 8rem);
+  --proof-gap: clamp(.8rem, 1.6vw, 1.5rem);
+  --proof-touch: 44px;
+  --proof-touch-coarse: 48px;
+  --proof-safe-top: calc(4rem + env(safe-area-inset-top, 0px));
+  --proof-safe-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  --proof-display: clamp(2.4rem, 1.6rem + 3.8vw, 6.5rem);
+  --proof-h1: clamp(2.2rem, 1.55rem + 3vw, 5rem);
+  --proof-h2: clamp(1.6rem, 1.25rem + 1.7vw, 3.1rem);
+  --proof-body: clamp(.97rem, .94rem + .15vw, 1.1rem);
+}
+
+html {
+  min-inline-size: 20rem;
+  max-inline-size: 100%;
+  overflow-x: clip;
+  scroll-padding-top: var(--proof-safe-top);
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  min-inline-size: 0;
+}
+
+body {
+  max-inline-size: 100%;
+  overflow-x: clip;
+  font-size: var(--proof-body);
+  line-height: 1.62;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(main, [role="main"]) {
+  inline-size: min(100%, var(--proof-stage-max));
+  margin-inline: auto;
+}
+
+:where(.wrap, .container, .shell, .proof-shell, .record-shell, .dossier-shell,
+  .atlas-shell, .page-shell, [data-proof-container]) {
+  inline-size: min(100%, var(--proof-stage-max));
+  margin-inline: auto;
+  padding-inline: var(--proof-gutter);
+}
+
+:where(article, section, header, footer, nav, aside) {
+  scroll-margin-top: var(--proof-safe-top);
+}
+
+:where(.prose, .copy, .lede, .record-copy, .claim-copy, .note-copy,
+  [data-proof-reading]) {
+  max-inline-size: var(--proof-reading-max);
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  max-inline-size: 28ch;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--proof-h1); line-height: 1; }
+h2 { font-size: var(--proof-h2); line-height: 1.08; }
+
+:where(p, li, dd, dt, figcaption, blockquote, .hash, .digest, .commit, .uri) {
+  overflow-wrap: anywhere;
+}
+
+:where(img, picture, video, canvas, svg, iframe) {
+  display: block;
+  max-inline-size: 100%;
+}
+
+:where(img, video, canvas, svg) { block-size: auto; }
+
+:where(pre, .code-block, .json-block, .receipt-block, .hash-block) {
+  max-inline-size: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  tab-size: 2;
+  white-space: pre;
+}
+
+:where(code, samp, kbd) {
+  font-variant-ligatures: none;
+}
+
+:where(.table-wrap, .table-scroll, .ledger-scroll, .matrix-scroll,
+  [data-proof-table-scroll]) {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+:where(table) {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  border-collapse: collapse;
+}
+
+:where(th, td) {
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
+:where(button, [role="button"], input, select, textarea, summary,
+  a[class*="button"], a[class*="btn"], .chip, .tag, .filter, [role="tab"]) {
+  min-block-size: var(--proof-touch);
+  max-inline-size: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, [role="button"], a, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: max(2px, .14em) solid currentColor;
+  outline-offset: 3px;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  font: inherit;
+}
+
+:where(dialog, [role="dialog"], .modal, .drawer, .sheet) {
+  max-inline-size: min(calc(100vw - 2 * var(--proof-gutter)), 72rem);
+  max-block-size: min(90dvh, 60rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+:where(.grid, .record-grid, .proof-grid, .dossier-grid, .atlas-grid,
+  .inventory-grid, .card-grid, [data-proof-grid]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--proof-grid-min, 18rem)), 1fr));
+  gap: var(--proof-gap);
+  align-items: stretch;
+}
+
+:where(.cluster, .actions, .filters, .chips, .record-actions,
+  [data-proof-cluster]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(.5rem, 1vw, .9rem);
+  align-items: center;
+}
+
+:where(.hero, .proof-hero, .record-hero, .masthead, [data-proof-hero]) {
+  min-block-size: min(76svh, 58rem);
+  padding-block: clamp(5rem, 10vh, 9rem) clamp(3rem, 7vh, 6rem);
+}
+
+:where(.hero-grid, .split, .proof-split, [data-proof-split]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr);
+  gap: clamp(1.5rem, 4vw, 5rem);
+  align-items: start;
+}
+
+:where(.proof-card, .record-card, .claim-card, .artifact-card, .card,
+  .panel, [data-proof-panel]) {
+  container-type: inline-size;
+  border-radius: clamp(10px, 1vw, 18px);
+}
+
+:where(.szl-proof-rail, .szl-proof-static-rail, [data-proof-dock]) {
+  max-inline-size: calc(100vw - 2 * max(.5rem, env(safe-area-inset-left, 0px)));
+  max-block-size: calc(100dvh - var(--proof-safe-top) - env(safe-area-inset-bottom, 0px));
+}
+
+:where(.szl-proof-links, .record-nav, nav ul, nav ol) {
+  max-inline-size: 100%;
+}
+
+@container (max-width: 28rem) {
+  :where(.proof-card, .record-card, .claim-card, .artifact-card, .card,
+    .panel, [data-proof-panel]) {
+    --proof-card-padding: 1rem;
+  }
+  :where(.record-head, .card-head, .claim-head, .artifact-head) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Compact evidence reading: preserve every byte and link, recompose the frame. */
+@media (max-width: 47.999rem) {
+  :root {
+    --proof-gutter: clamp(.875rem, 4.5vw, 1.25rem);
+    --proof-section: clamp(2.75rem, 11vw, 5rem);
+    --proof-gap: .8rem;
+  }
+
+  body { line-height: 1.55; }
+
+  :where(.hero, .proof-hero, .record-hero, .masthead, [data-proof-hero]) {
+    min-block-size: auto;
+    padding-block: clamp(4.5rem, 15vw, 6.5rem) clamp(2.5rem, 9vw, 4rem);
+  }
+
+  :where(.hero-grid, .split, .proof-split, [data-proof-split]) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem;
+  }
+
+  :where(.grid, .record-grid, .proof-grid, .dossier-grid, .atlas-grid,
+    .inventory-grid, .card-grid, [data-proof-grid]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.actions, .record-actions, [data-proof-actions]) > :where(a, button) {
+    flex: 1 1 10rem;
+    justify-content: center;
+  }
+
+  :where(.sticky, [data-proof-sticky]) { position: static; }
+
+  :where(.szl-proof-rail, .szl-proof-static-rail, [data-proof-dock]) {
+    inset-inline: max(.5rem, env(safe-area-inset-left, 0px));
+    inline-size: auto;
+    transform: none;
+  }
+
+  :where(.szl-proof-static-rail .szl-proof-links) {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+  }
+
+  :where(.szl-proof-static-rail .szl-proof-link) {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  :where(table[data-proof-responsive="stack"], .responsive-proof-table) {
+    display: block;
+  }
+  :where(table[data-proof-responsive="stack"], .responsive-proof-table) thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  :where(table[data-proof-responsive="stack"], .responsive-proof-table) :where(tbody, tr, td) {
+    display: block;
+    inline-size: 100%;
+  }
+}
+
+@media (max-height: 31rem) and (orientation: landscape) {
+  :root { --proof-safe-top: calc(3.25rem + env(safe-area-inset-top, 0px)); }
+
+  :where(.hero, .proof-hero, .record-hero, .masthead, [data-proof-hero]) {
+    min-block-size: auto;
+    padding-block: 3.75rem 2rem;
+  }
+
+  :where(.szl-proof-rail, .szl-proof-static-rail, [data-proof-dock]) {
+    max-block-size: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 79.999rem) {
+  :root {
+    --proof-stage-max: 76rem;
+    --proof-grid-min: 15rem;
+  }
+}
+
+/* Theatre: widen evidence comparisons while retaining a readable prose measure. */
+@media (min-width: 100rem) {
+  :root {
+    --proof-stage-max: min(92vw, 120rem);
+    --proof-reading-max: 78ch;
+    --proof-gutter: clamp(2rem, 3vw, 4.5rem);
+    --proof-gap: clamp(1.2rem, 1.5vw, 2.2rem);
+    --proof-grid-min: 20rem;
+  }
+
+  :where(.hero-grid, .split, .proof-split, [data-proof-split]) {
+    grid-template-columns: minmax(32rem, .9fr) minmax(40rem, 1.1fr);
+  }
+
+  :where(.comparison-grid, .record-grid[data-proof-theatre],
+    [data-proof-theatre-grid]) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  :where([data-proof-span="3"]) { grid-column: span 3; }
+  :where([data-proof-span="4"]) { grid-column: span 4; }
+  :where([data-proof-span="6"]) { grid-column: span 6; }
+  :where([data-proof-span="8"]) { grid-column: span 8; }
+  :where([data-proof-span="12"]) { grid-column: 1 / -1; }
+}
+
+@media (min-width: 150rem) {
+  :root {
+    --proof-stage-max: 136rem;
+    --proof-body: 1.15rem;
+    --proof-grid-min: 22rem;
+  }
+}
+
+@media (pointer: coarse) {
+  :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    font-size: max(16px, 1em);
+  }
+  :where(button, [role="button"], summary, a[class*="button"], a[class*="btn"],
+    .chip, .tag, .filter, [role="tab"]) {
+    min-block-size: var(--proof-touch-coarse);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.proof-card, .record-card, .claim-card, .artifact-card, .card,
+    .panel, [data-proof-panel]) {
+    border-width: max(1px, .08em);
+  }
+}
+
+@media (forced-colors: active) {
+  :where(button, [role="button"], input, select, textarea, summary, a,
+    .proof-card, .record-card, .claim-card, .artifact-card, .card, .panel) {
+    forced-color-adjust: auto;
+  }
+}
+
+@media print {
+  :root { --proof-stage-max: none; }
+  html, body { overflow: visible; }
+  :where(.szl-proof-rail, .szl-proof-static-rail, [data-proof-dock],
+    canvas[aria-hidden="true"], .ambient-field, .hologram-field) {
+    display: none !important;
+  }
+  :where(main, [role="main"], .wrap, .container, .shell, .proof-shell) {
+    max-inline-size: none;
+    padding: 0;
+  }
+  :where(a[href])::after { content: " (" attr(href) ")"; font-size: .8em; }
+  :where(pre, table, blockquote) { break-inside: avoid; }
+}
