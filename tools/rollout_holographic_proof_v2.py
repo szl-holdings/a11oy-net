@@ -62,6 +62,21 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def has_zero_javascript_contract(text: str) -> bool:
+    """Honor any document that explicitly refuses JavaScript in its CSP.
+
+    The proof origin intentionally contains more static evidence records than
+    the historical hand-maintained allowlist. A document-level `script-src
+    'none'` is authoritative and must never be weakened merely to install the
+    decorative progressive controller.
+    """
+    return bool(re.search(r"\bscript-src\s+'none'\b", text, flags=re.IGNORECASE))
+
+
+def is_zero_javascript(relative: str, text: str) -> bool:
+    return relative in ZERO_JAVASCRIPT or has_zero_javascript_contract(text)
+
+
 def add_html_attribute(text: str) -> tuple[str, bool]:
     match = re.search(r"<html(?P<attrs>[^>]*)>", text, flags=re.IGNORECASE)
     if match is None:
@@ -105,7 +120,7 @@ def adopt_existing_rail(text: str) -> tuple[str, bool]:
 
 
 def static_rail(relative: str) -> str:
-    current = CURRENT[relative]
+    current = CURRENT.get(relative, "Proof")
     links: list[str] = []
     for label, href in JOURNEYS:
         active = ' aria-current="page"' if label == current else ""
@@ -130,7 +145,7 @@ def static_rail(relative: str) -> str:
 def is_bound(relative: str, text: str) -> bool:
     if STYLE not in text or 'data-szl-proof-holo="v2"' not in text:
         return False
-    if relative in ZERO_JAVASCRIPT:
+    if is_zero_javascript(relative, text):
         return SCRIPT not in text and (ADOPTED_MARKER in text or STATIC_MARKER in text)
     return SCRIPT in text
 
@@ -146,6 +161,7 @@ def bind(path: Path) -> str:
         if text.count(marker) > 1:
             raise RuntimeError(f"duplicate marker {marker!r} in {relative}")
 
+    zero_javascript = is_zero_javascript(relative, text)
     changed = False
     text, html_changed = add_html_attribute(text)
     changed = changed or html_changed
@@ -153,7 +169,7 @@ def bind(path: Path) -> str:
         text = add_before(text, "</head>", "  " + STYLE + "\n")
         changed = True
 
-    if relative in ZERO_JAVASCRIPT:
+    if zero_javascript:
         text, removed = remove_own_script(text)
         changed = changed or removed
         text, adopted = adopt_existing_rail(text)
@@ -174,12 +190,14 @@ def bind(path: Path) -> str:
 def update_state(rows: list[dict[str, str]]) -> None:
     state = json.loads(STATE.read_text(encoding="utf-8"))
     bindings = [row["path"] for row in rows if row["result"] in {"bound", "present"}]
+    static_bindings = sorted(row["path"] for row in rows if row["mode"] == "STATIC" and row["path"] in bindings)
+    interactive_bindings = sorted(row["path"] for row in rows if row["mode"] == "INTERACTIVE" and row["path"] in bindings)
     state["state"] = "ROLLED_OUT"
     state["bindings"] = bindings
     state["examined_documents"] = len(rows)
     state["bound_documents"] = len(bindings)
-    state["zero_javascript_documents"] = sorted(ZERO_JAVASCRIPT)
-    state["interactive_documents"] = sorted(set(bindings) - ZERO_JAVASCRIPT)
+    state["zero_javascript_documents"] = static_bindings
+    state["interactive_documents"] = interactive_bindings
     state["opt_out_documents"] = [row["path"] for row in rows if row["result"] == "opt-out"]
     STATE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
@@ -188,8 +206,10 @@ def run(*, check: bool) -> dict[str, object]:
     rows: list[dict[str, str]] = []
     for path in documents():
         relative = path.relative_to(ROOT).as_posix()
-        result = ("present" if is_bound(relative, read(path)) else "missing") if check else bind(path)
-        rows.append({"path": relative, "result": result, "mode": "STATIC" if relative in ZERO_JAVASCRIPT else "INTERACTIVE"})
+        text = read(path)
+        mode = "STATIC" if is_zero_javascript(relative, text) else "INTERACTIVE"
+        result = ("present" if is_bound(relative, text) else "missing") if check else bind(path)
+        rows.append({"path": relative, "result": result, "mode": mode})
     if not rows:
         raise RuntimeError("no a11oy.net HTML documents were discovered")
     root = next((row for row in rows if row["path"] == "index.html"), None)
