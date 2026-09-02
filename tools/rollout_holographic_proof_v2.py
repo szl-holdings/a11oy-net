@@ -77,17 +77,6 @@ def is_zero_javascript(relative: str, text: str) -> bool:
     return relative in ZERO_JAVASCRIPT or has_zero_javascript_contract(text)
 
 
-def add_html_attribute(text: str) -> tuple[str, bool]:
-    match = re.search(r"<html(?P<attrs>[^>]*)>", text, flags=re.IGNORECASE)
-    if match is None:
-        raise RuntimeError("document has no html element")
-    attrs = match.group("attrs")
-    if 'data-szl-proof-holo="v2"' in attrs:
-        return text, False
-    replacement = f'<html{attrs} data-szl-proof-holo="v2">'
-    return text[: match.start()] + replacement + text[match.end() :], True
-
-
 def add_before(text: str, closing_tag: str, payload: str) -> str:
     offset = text.lower().rfind(closing_tag.lower())
     if offset < 0:
@@ -143,7 +132,7 @@ def static_rail(relative: str) -> str:
 
 
 def is_bound(relative: str, text: str) -> bool:
-    if STYLE not in text or 'data-szl-proof-holo="v2"' not in text:
+    if STYLE not in text:
         return False
     if is_zero_javascript(relative, text):
         return SCRIPT not in text and (ADOPTED_MARKER in text or STATIC_MARKER in text)
@@ -163,8 +152,6 @@ def bind(path: Path) -> str:
 
     zero_javascript = is_zero_javascript(relative, text)
     changed = False
-    text, html_changed = add_html_attribute(text)
-    changed = changed or html_changed
     if STYLE not in text:
         text = add_before(text, "</head>", "  " + STYLE + "\n")
         changed = True
