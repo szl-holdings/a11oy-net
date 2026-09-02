@@ -1,0 +1,81 @@
+name: Holographic Proof v2 Contract
+
+on:
+  pull_request:
+    paths:
+      - "assets/szl-holo-proof-v2.css"
+      - "scripts/szl-holo-proof-v2.js"
+      - "holographic-experience-v2/**"
+      - "tools/rollout_holographic_proof_v2.py"
+      - "tests/test_holographic_proof_v2.py"
+      - ".github/workflows/holographic-proof-v2-contract.yml"
+      - ".github/workflows/rollout-holographic-proof-v2.yml"
+      - "**/*.html"
+  push:
+    branches: [main]
+    paths:
+      - "assets/szl-holo-proof-v2.css"
+      - "scripts/szl-holo-proof-v2.js"
+      - "holographic-experience-v2/**"
+      - "tools/rollout_holographic_proof_v2.py"
+      - "tests/test_holographic_proof_v2.py"
+      - ".github/workflows/holographic-proof-v2-contract.yml"
+      - ".github/workflows/rollout-holographic-proof-v2.yml"
+      - "**/*.html"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Compile controllers and tests
+        run: |
+          python -m py_compile \
+            tools/rollout_holographic_proof_v2.py \
+            tests/test_holographic_proof_v2.py
+      - name: Validate JavaScript and JSON syntax
+        run: |
+          node --check scripts/szl-holo-proof-v2.js
+          python -m json.tool holographic-experience-v2/rollout-state.json >/dev/null
+      - name: Run offline contract suite
+        run: python tests/test_holographic_proof_v2.py
+      - name: Prove binding and preserve proof contracts in an isolated copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          trap 'rm -rf "$work"' EXIT
+          cp -a . "$work/repo"
+          cd "$work/repo"
+          python tools/rollout_holographic_proof_v2.py --report "$work/apply.json"
+          python tools/rollout_holographic_proof_v2.py --check --report "$work/check.json"
+          python tests/test_holographic_proof_v2.py
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          git diff --check
+      - name: Enforce compressed asset budgets
+        shell: bash
+        run: |
+          set -euo pipefail
+          gzip -9 -c assets/szl-holo-proof-v2.css > /tmp/szl-holo-proof-v2.css.gz
+          gzip -9 -c scripts/szl-holo-proof-v2.js > /tmp/szl-holo-proof-v2.js.gz
+          css_bytes="$(wc -c < /tmp/szl-holo-proof-v2.css.gz)"
+          js_bytes="$(wc -c < /tmp/szl-holo-proof-v2.js.gz)"
+          echo "CSS gzip: $css_bytes bytes"
+          echo "JS gzip: $js_bytes bytes"
+          test "$css_bytes" -le 16384
+          test "$js_bytes" -le 12288
+      - name: Whitespace integrity
+        run: git diff --check
