@@ -63,14 +63,14 @@ def read(path: Path) -> str:
 
 
 def has_zero_javascript_contract(text: str) -> bool:
-    """Honor any document that explicitly refuses JavaScript in its CSP.
-
-    The proof origin intentionally contains more static evidence records than
-    the historical hand-maintained allowlist. A document-level `script-src
-    'none'` is authoritative and must never be weakened merely to install the
-    decorative progressive controller.
-    """
-    return bool(re.search(r"\bscript-src\s+'none'\b", text, flags=re.IGNORECASE))
+    """Honor any document that explicitly refuses JavaScript in its CSP."""
+    return bool(
+        re.search(
+            r"(?:^|[;\"'\s])script-src\s+(?:'none'|\"none\")(?:[;\"'\s]|$)",
+            text,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def is_zero_javascript(relative: str, text: str) -> bool:
