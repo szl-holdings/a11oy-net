@@ -1,0 +1,93 @@
+name: Apply Adaptive Proof Theatre v3 once
+
+on:
+  push:
+    branches:
+      - feat/adaptive-proof-theatre-v3
+    paths:
+      - ".github/workflows/zz-adaptive-proof-v3-once.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: adaptive-proof-theatre-v3-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact feature branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: feat/adaptive-proof-theatre-v3
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+      - name: Bind adaptive proof assets through the reviewed host layer
+        shell: python
+        run: |
+          from pathlib import Path
+
+          css_path = Path("assets/szl-holo-proof-v2.css")
+          js_path = Path("scripts/szl-holo-proof-v2.js")
+          css_import = '@import url("/assets/szl-adaptive-proof-v3.css"); /* szl:adaptive-proof-v3 */\n'
+          js_marker = "data-szl-adaptive-proof-v3-loader"
+          js_loader = r'''
+          ;(function () {
+            "use strict";
+            if (window.__SZL_ADAPTIVE_PROOF_V3_LOADER__) return;
+            window.__SZL_ADAPTIVE_PROOF_V3_LOADER__ = true;
+            if (document.querySelector("script[data-szl-adaptive-proof-v3-loader]")) return;
+            var script = document.createElement("script");
+            script.src = "/scripts/szl-adaptive-proof-v3.js";
+            script.defer = true;
+            script.dataset.szlAdaptiveProofV3Loader = "true";
+            document.head.appendChild(script);
+          }());
+          '''.strip() + "\n"
+
+          css = css_path.read_text(encoding="utf-8")
+          if css.count("szl:adaptive-proof-v3") > 1:
+              raise SystemExit("duplicate adaptive proof CSS marker")
+          if "szl:adaptive-proof-v3" not in css:
+              if css.startswith("@charset"):
+                  end = css.find(";") + 1
+                  css = css[:end] + "\n" + css_import + css[end:].lstrip("\n")
+              else:
+                  css = css_import + css
+              css_path.write_text(css, encoding="utf-8", newline="\n")
+
+          js = js_path.read_text(encoding="utf-8")
+          if js.count(js_marker) > 1:
+              raise SystemExit("duplicate adaptive proof JavaScript marker")
+          if js_marker not in js:
+              js_path.write_text(js.rstrip() + "\n\n" + js_loader, encoding="utf-8", newline="\n")
+      - name: Verify responsive, proof, syntax, and zero-JavaScript contracts
+        run: |
+          python tests/test_adaptive_proof_v3.py -v
+          python tests/test_holographic_proof_v2.py -v
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          node --check scripts/szl-holo-proof-v2.js
+          node --check scripts/szl-adaptive-proof-v3.js
+          python -m py_compile tests/test_adaptive_proof_v3.py
+          git diff --check
+      - name: Commit exact validated binding and remove this controller
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/zz-adaptive-proof-v3-once.yml
+          git config user.name "SZL Adaptive Proof Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          git commit -s -m "feat(frontend): bind Adaptive Proof Theatre v3"
+          git push origin HEAD:feat/adaptive-proof-theatre-v3
