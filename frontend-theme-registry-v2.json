@@ -1,0 +1,69 @@
+{
+  "schema": "szl.spectral-proof-theme-registry/v2",
+  "version": "2.0.0",
+  "name": "SZL Spectral Proof",
+  "principle": "The proof origin is visually advanced but evidentially restrained: neutral geometry may guide attention, never imply verification.",
+  "relationship": {
+    "product_origin": "https://a-11-oy.com",
+    "proof_origin": "https://a11oy.net",
+    "shared_flow": true,
+    "shared_trade_dress": false
+  },
+  "palette_contract": {
+    "mode": "STRICT_NEUTRAL",
+    "allowed": ["black", "deep near-black #080c14", "white", "gray", "alpha"],
+    "semantic_color": false,
+    "reason": "Proof labels and evidence classes must carry meaning through text and structure rather than decorative hue."
+  },
+  "shared_contract": {
+    "journeys": [
+      {"id": "start", "label": "Start Here"},
+      {"id": "products", "label": "Products & Demos"},
+      {"id": "models", "label": "Models & Data"},
+      {"id": "kernels", "label": "Kernels & SDKs"},
+      {"id": "proofs", "label": "Proofs & Research"}
+    ],
+    "minimum_touch_target_px": 44,
+    "viewports": [320, 360, 390, 768, 1024, 1440],
+    "keyboard_escape_navigation": true,
+    "visible_focus": true,
+    "safe_area_aware": true,
+    "reduced_motion_required": true,
+    "high_contrast_required": true,
+    "forced_colors_required": true,
+    "print_fallback_required": true,
+    "external_runtime_assets_forbidden": true,
+    "analytics_or_tracking": false,
+    "decorative_layers_are_evidence": false
+  },
+  "performance_tiers": {
+    "full": "Grid, ledger, nodes, beam, scan, bloom, and pointer depth.",
+    "balanced": "Reduced layer count and opacity for mobile or constrained hardware.",
+    "quiet": "Static beam and bloom for reduced motion, data saver, or low-resource devices."
+  },
+  "proof_instruments": [
+    {"route": "/", "theme": "ledger", "label": "A11oy Proof", "motif": "evidence ledger"},
+    {"route": "/record/", "theme": "forensic", "label": "Receipt Record", "motif": "checksum lanes"},
+    {"route": "/diligence/", "theme": "dossier", "label": "Diligence Room", "motif": "ruled dossier"},
+    {"route": "/estate/", "theme": "atlas-mono", "label": "Estate Record", "motif": "topology coordinates"},
+    {"route": "/atelier/", "theme": "atelier-mono", "label": "Atelier Record", "motif": "artifact specimen"},
+    {"route": "/khipu/", "theme": "weave-mono", "label": "KHIPU Record", "motif": "woven provenance"},
+    {"route": "/decision/", "theme": "decision-mono", "label": "Decision Record", "motif": "adjudication geometry"},
+    {"route": "/security/", "theme": "security-mono", "label": "Security Record", "motif": "control radar"},
+    {"route": "/notes/", "theme": "notebook", "label": "Research Notes", "motif": "research notebook"}
+  ],
+  "zero_javascript_documents": [
+    "404.html",
+    "chat/index.html",
+    "code/index.html",
+    "diligence/index.html",
+    "notes/index.html",
+    "record/index.html"
+  ],
+  "truth_boundary": [
+    "Holographic layers are decorative and carry no evidence class.",
+    "Reachability does not establish product readiness.",
+    "Committed policy intent is not live deployment evidence.",
+    "Verification claims remain bound to the existing machine-readable record."
+  ]
+}

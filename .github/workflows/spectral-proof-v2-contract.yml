@@ -1,0 +1,53 @@
+name: Spectral Proof v2 Contract
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "assets/szl-spectral-proof-v2.css"
+      - "assets/szl-flow-proof.css"
+      - "assets/szl-flow-proof-static.css"
+      - "scripts/szl-flow-proof.js"
+      - "frontend-theme-registry-v2.json"
+      - "SPECTRAL_PROOF_V2.md"
+      - "tests/test_spectral_proof_v2.py"
+      - ".github/workflows/spectral-proof-v2-contract.yml"
+  push:
+    branches: [main]
+    paths:
+      - "assets/szl-spectral-proof-v2.css"
+      - "assets/szl-flow-proof.css"
+      - "assets/szl-flow-proof-static.css"
+      - "scripts/szl-flow-proof.js"
+      - "frontend-theme-registry-v2.json"
+      - "SPECTRAL_PROOF_V2.md"
+      - "tests/test_spectral_proof_v2.py"
+      - ".github/workflows/spectral-proof-v2-contract.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Validate JavaScript syntax
+        run: node --check scripts/szl-flow-proof.js
+      - name: Run offline Spectral Proof contract
+        run: python tests/test_spectral_proof_v2.py
+      - name: Preserve the existing no-JavaScript diligence contract
+        run: python scripts/check_diligence_surface.py
+      - name: Verify registry and whitespace integrity
+        run: |
+          python -m json.tool frontend-theme-registry-v2.json >/dev/null
+          git diff --check
