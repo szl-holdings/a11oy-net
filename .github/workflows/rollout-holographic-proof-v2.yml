@@ -1,0 +1,61 @@
+name: Roll out Holographic Proof v2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/rollout-holographic-proof-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rollout-holographic-proof-v2
+  cancel-in-progress: false
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Bind proof documents
+        run: python tools/rollout_holographic_proof_v2.py --report /tmp/holographic-proof-v2.json
+      - name: Verify exact idempotence and existing proof contracts
+        run: |
+          python tools/rollout_holographic_proof_v2.py --check
+          python tests/test_holographic_proof_v2.py
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          node --check scripts/szl-holo-proof-v2.js
+          git diff --check
+      - name: Push review branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="feat/holographic-proof-v2-bound"
+          git config user.name "SZL Holographic Proof Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "::error::Review branch $branch already exists; refusing to overwrite it."
+            exit 1
+          fi
+          git checkout -b "$branch"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No binding changes remain."
+            exit 0
+          fi
+          git commit -s -m "feat(frontend): bind Holographic Evidence Vault v2"
+          git push origin "$branch"
+          echo "## Review branch" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`$branch\` contains the exact proof document bindings and must be merged through normal review." >> "$GITHUB_STEP_SUMMARY"

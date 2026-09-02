@@ -38,6 +38,7 @@ class Document(HTMLParser):
         self.ids: set[str] = set()
         self.links: list[dict[str, str | None]] = []
         self.metas: list[dict[str, str | None]] = []
+        self.html_lang: str | None = None
         self.scripts = 0
         self.main_count = 0
         self.h1_count = 0
@@ -48,7 +49,9 @@ class Document(HTMLParser):
         item = dict(attrs)
         if item.get("id"):
             self.ids.add(str(item["id"]))
-        if tag == "a":
+        if tag == "html":
+            self.html_lang = item.get("lang")
+        elif tag == "a":
             self.anchors.append(item)
         elif tag == "link":
             self.links.append(item)
@@ -68,7 +71,7 @@ def check_document(path: Path, *, canonical: str | None) -> Document:
     document.feed(source)
     assert document.main_count == 1, f"{path}: exactly one main landmark required"
     assert document.h1_count == 1, f"{path}: exactly one h1 required"
-    assert '<html lang="en">' in source, f"{path}: document language required"
+    assert document.html_lang == "en", f"{path}: document language required"
     assert 'name="referrer" content="no-referrer"' in source
     assert 'http-equiv="Content-Security-Policy"' in source
     assert document.scripts == 0, f"{path}: no JavaScript is required"
