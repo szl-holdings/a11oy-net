@@ -1,0 +1,21 @@
+{
+  "schema": "szl.proof-holographic-experience-rollout/v2",
+  "state": "ASSETS_READY",
+  "version": "2.0.0",
+  "product_origin": "https://a-11-oy.com",
+  "proof_origin": "https://a11oy.net",
+  "assets": [
+    "/assets/szl-holo-proof-v2.css",
+    "/scripts/szl-holo-proof-v2.js"
+  ],
+  "bindings": [],
+  "zero_javascript_documents": [
+    "404.html",
+    "chat/index.html",
+    "code/index.html",
+    "diligence/index.html",
+    "notes/index.html",
+    "record/index.html"
+  ],
+  "decorative_motion_is_measured_telemetry": false
+}
