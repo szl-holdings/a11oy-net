@@ -1,0 +1,159 @@
+/*
+ * SZL Holographic Proof v2
+ * A restrained, neutral evidence plane: archival typography remains primary;
+ * light, depth, and motion communicate provenance without implying runtime.
+ * CSS-only so zero-JavaScript proof contracts remain intact.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+:root {
+  --szl-proof-holo-void: #080c14;
+  --szl-proof-holo-ink: #f0eee6;
+  --szl-proof-holo-mid: #9a9a9e;
+  --szl-proof-holo-line: rgba(255,255,255,.13);
+  --szl-proof-holo-line-soft: rgba(255,255,255,.045);
+  --szl-proof-holo-glow: rgba(255,255,255,.09);
+}
+
+html[data-szl-proof-hologram-v2="true"] {
+  color-scheme: dark;
+  background: var(--szl-proof-holo-void);
+}
+
+html[data-szl-proof-hologram-v2="true"] body {
+  min-height: 100%;
+  isolation: isolate;
+}
+
+.szl-proof-hologram-v2 {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  opacity: .58;
+  mix-blend-mode: screen;
+}
+
+.szl-proof-hologram-v2 > span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.szl-proof-holo-ledger {
+  inset: -8%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 35px, var(--szl-proof-holo-line-soft) 36px 37px),
+    linear-gradient(90deg, transparent 0 11%, var(--szl-proof-holo-line-soft) 11.1% 11.25%, transparent 11.35% 76%, var(--szl-proof-holo-line-soft) 76.1% 76.25%, transparent 76.35%);
+  mask-image: linear-gradient(90deg, transparent, #000 12% 88%, transparent);
+  transform: perspective(980px) rotateX(2deg) rotateZ(-.45deg);
+  transform-origin: center;
+  animation: szl-proof-ledger-drift 34s ease-in-out infinite alternate;
+}
+
+.szl-proof-holo-axis {
+  left: 11%;
+  top: 5%;
+  bottom: 5%;
+  width: 1px;
+  background: linear-gradient(transparent, var(--szl-proof-holo-line), transparent);
+  box-shadow: 65vw 0 0 var(--szl-proof-holo-line-soft);
+  opacity: .72;
+}
+
+.szl-proof-holo-orbit {
+  right: -13vw;
+  top: 9vh;
+  width: min(62vw, 720px);
+  aspect-ratio: 1;
+  border: 1px solid var(--szl-proof-holo-line-soft);
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, transparent 0 63px, var(--szl-proof-holo-line-soft) 64px 65px),
+    conic-gradient(from 235deg, transparent 0 80%, var(--szl-proof-holo-glow) 82% 84%, transparent 86%);
+  box-shadow: inset 0 0 90px rgba(255,255,255,.025), 0 0 100px rgba(255,255,255,.025);
+  opacity: .42;
+  animation: szl-proof-orbit 68s linear infinite;
+}
+
+.szl-proof-holo-nodes {
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.5) 0 1.5px, transparent 2.5px);
+  background-size: 144px 72px;
+  mask-image: radial-gradient(ellipse at 64% 37%, #000, transparent 62%);
+  opacity: .2;
+}
+
+.szl-proof-holo-scan {
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 7px, rgba(255,255,255,.012) 8px 9px);
+  mask-image: linear-gradient(transparent 0 8%, #000 22% 82%, transparent 96%);
+  animation: szl-proof-scan 17s linear infinite;
+}
+
+.szl-proof-holo-seal {
+  left: max(18px, 4vw);
+  bottom: max(92px, 11vh);
+  width: 124px;
+  aspect-ratio: 1;
+  border: 1px solid var(--szl-proof-holo-line);
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, var(--szl-proof-holo-line-soft) 0 1deg, transparent 1deg 15deg),
+    radial-gradient(circle, transparent 0 46%, var(--szl-proof-holo-line-soft) 47% 48%, transparent 49%);
+  box-shadow: inset 0 0 34px rgba(255,255,255,.03), 0 0 44px rgba(255,255,255,.025);
+  opacity: .34;
+  animation: szl-proof-seal 44s linear infinite reverse;
+}
+
+/* Route families retain independent evidence textures. */
+body[data-szl-proof-holo-theme="ledger"] .szl-proof-holo-ledger { background-size: auto; }
+body[data-szl-proof-holo-theme="forensic"] .szl-proof-holo-ledger { background: repeating-linear-gradient(0deg, transparent 0 31px, var(--szl-proof-holo-line-soft) 32px 33px), repeating-linear-gradient(90deg, transparent 0 167px, var(--szl-proof-holo-line-soft) 168px 169px); }
+body[data-szl-proof-holo-theme="forensic"] .szl-proof-holo-seal { opacity: .55; }
+body[data-szl-proof-holo-theme="dossier"] .szl-proof-holo-ledger { background: repeating-linear-gradient(0deg, transparent 0 47px, var(--szl-proof-holo-line-soft) 48px 49px), linear-gradient(90deg, transparent 0 9%, var(--szl-proof-holo-line) 9.1% 9.25%, transparent 9.35%); }
+body[data-szl-proof-holo-theme="atlas"] .szl-proof-holo-ledger { background: repeating-radial-gradient(ellipse at 24% 58%, transparent 0 34px, var(--szl-proof-holo-line-soft) 35px 36px), repeating-radial-gradient(ellipse at 78% 31%, transparent 0 53px, rgba(255,255,255,.025) 54px 55px); transform: rotate(-8deg) scale(1.16); }
+body[data-szl-proof-holo-theme="atelier"] .szl-proof-holo-ledger { background: linear-gradient(110deg, rgba(255,255,255,.04), transparent 23%), repeating-linear-gradient(90deg, transparent 0 95px, var(--szl-proof-holo-line-soft) 96px 97px); }
+body[data-szl-proof-holo-theme="weave"] .szl-proof-holo-ledger { background: repeating-linear-gradient(28deg, transparent 0 25px, var(--szl-proof-holo-line-soft) 26px 27px), repeating-linear-gradient(-28deg, transparent 0 31px, rgba(255,255,255,.025) 32px 33px); transform: scale(1.12); }
+body[data-szl-proof-holo-theme="decision"] .szl-proof-holo-orbit { border-radius: 0; clip-path: polygon(50% 0, 100% 28%, 83% 100%, 17% 100%, 0 28%); animation-duration: 52s; }
+body[data-szl-proof-holo-theme="security"] .szl-proof-holo-orbit { background: repeating-radial-gradient(circle, transparent 0 48px, var(--szl-proof-holo-line-soft) 49px 50px), conic-gradient(from 0deg, rgba(255,255,255,.08), transparent 10% 90%, rgba(255,255,255,.08)); animation-duration: 22s; }
+body[data-szl-proof-holo-theme="notebook"] .szl-proof-holo-ledger { background: repeating-linear-gradient(0deg, transparent 0 35px, var(--szl-proof-holo-line-soft) 36px 37px), linear-gradient(90deg, transparent 0 8%, var(--szl-proof-holo-line) 8.1% 8.25%, transparent 8.35%); }
+body[data-szl-proof-holo-theme="gateway"] .szl-proof-holo-nodes { background-size: 88px 88px; mask-image: radial-gradient(circle at 50% 50%, #000, transparent 70%); }
+body[data-szl-proof-holo-theme="vertical"] .szl-proof-holo-ledger { background: linear-gradient(30deg, transparent 49%, var(--szl-proof-holo-line-soft) 50%, transparent 51%), linear-gradient(150deg, transparent 49%, var(--szl-proof-holo-line-soft) 50%, transparent 51%); background-size: 92px 92px; }
+
+html[data-szl-proof-hologram-v2="true"] :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--szl-proof-holo-ink) !important;
+  outline-offset: 4px !important;
+}
+
+@keyframes szl-proof-ledger-drift {
+  from { transform: perspective(980px) rotateX(2deg) rotateZ(-.45deg) translate3d(-.35%, -.25%, 0); }
+  to { transform: perspective(980px) rotateX(2deg) rotateZ(.45deg) translate3d(.35%, .25%, 0); }
+}
+@keyframes szl-proof-orbit { to { rotate: 360deg; } }
+@keyframes szl-proof-seal { to { rotate: 360deg; } }
+@keyframes szl-proof-scan { from { transform: translateY(-7%); } to { transform: translateY(7%); } }
+
+@media (max-width: 760px) {
+  .szl-proof-hologram-v2 { opacity: .42; }
+  .szl-proof-holo-orbit { width: 96vw; right: -44vw; top: 7vh; }
+  .szl-proof-holo-seal { width: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .szl-proof-hologram-v2 > span { animation: none !important; transform: none !important; }
+  .szl-proof-holo-scan { display: none; }
+}
+
+@media (prefers-contrast: more) {
+  .szl-proof-hologram-v2 { opacity: .28; }
+  .szl-proof-holo-ledger, .szl-proof-holo-orbit, .szl-proof-holo-seal { filter: none; }
+}
+
+@media (forced-colors: active) {
+  .szl-proof-hologram-v2 { display: none !important; }
+}
+
+@media print {
+  .szl-proof-hologram-v2 { display: none !important; }
+}
