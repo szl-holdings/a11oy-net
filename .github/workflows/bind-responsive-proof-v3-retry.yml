@@ -1,0 +1,55 @@
+name: Complete Responsive Proof v3 Binding
+
+on:
+  push:
+    branches:
+      - feat/responsive-proof-v3
+    paths:
+      - ".github/workflows/bind-responsive-proof-v3-retry.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bind-responsive-proof-v3
+  cancel-in-progress: false
+
+jobs:
+  bind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact review branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: feat/responsive-proof-v3
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Bind both interactive and scriptless proof hosts
+        run: python tools/apply_responsive_proof_v3.py
+
+      - name: Verify complete proof contract
+        run: |
+          python tools/bind_responsive_proof_v3.py --check
+          python tests/test_responsive_proof_v3.py -v
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          python scripts/check_security_headers.py
+          git diff --check
+
+      - name: Commit generated bindings and retire one-shot controllers
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/bind-responsive-proof-v3-on-branch.yml
+          rm -f .github/workflows/bind-responsive-proof-v3-retry.yml
+          git config user.name "SZL Proof Responsive Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          git commit -s -m "feat(frontend): bind responsive v3 across proof surfaces"
+          git push origin HEAD:feat/responsive-proof-v3
