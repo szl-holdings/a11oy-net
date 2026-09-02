@@ -284,7 +284,7 @@ def check() -> None:
         "observed_at_utc": None,
         "source_revision": None,
         "reason": (
-            "No source-bound live response-header readback URI is attached to this "
+            "No source-bound live response-header readback is attached to this "
             "candidate. The committed _headers file is policy intent, not "
             "deployment evidence."
         ),
