@@ -1,0 +1,68 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-02",
+  "observed_at_utc": "2026-09-02T19:40:23Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP HEAD/GET. Cloudflare API UNAVAILABLE. No DNS mutation.",
+  "delta_from_origin_json_2026-08-29": {
+    "then": "a-11-oy.com described as Cloudflare orange-cloud in front of Space SZLHOLDINGS/a11oy with x-szl-space headers",
+    "now": "a-11-oy.com / returns GitHub Pages (x-github-request-id, varnish). /console and /api/a11oy/v1/honest are Pages 404.",
+    "cause_in_source": "szl-holdings.github.io CNAME file contains a-11-oy.com"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/",
+      "status": 200,
+      "front": "CLOUDFLARE_THEN_GITHUB_PAGES",
+      "verdict": "ADMIT_AS_LANDING_ONLY",
+      "note": "Landing reachable. Not product runtime."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/console",
+      "status": 404,
+      "front": "GITHUB_PAGES",
+      "verdict": "BROKEN_AS_ADVERTISED_CONSOLE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 404,
+      "front": "GITHUB_PAGES",
+      "verdict": "BROKEN_AS_ADVERTISED_API"
+    },
+    {
+      "host": "a11oy.net",
+      "path": "/",
+      "status": 200,
+      "front": "CLOUDFLARE_THEN_GITHUB_PAGES",
+      "verdict": "ADMIT_AS_PROOF"
+    },
+    {
+      "host": "szlholdings-a11oy.hf.space",
+      "path": "/",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_LOCATION",
+      "note": "Space reachable. Health tiles may still be CHECKING. HTTP 200 is not a production certificate."
+    },
+    {
+      "host": "a11oy-verify.pplx.app",
+      "role": "Perplexity sidecar",
+      "verdict": "NOT_PRODUCT_ORIGIN"
+    }
+  ],
+  "operator_actions_still_required": [
+    "Reconnect Cloudflare with a valid Global API Key or API Token. Current connector rejects X-Auth-Key format.",
+    "Decide whether apex a-11-oy.com should orange-cloud to the Space or remain Pages landing. Do not leave advertised /console on a host that 404s.",
+    "If landing stays on apex, move CNAME of szl-holdings.github.io to holdings.a-11-oy.com after DNS exists.",
+    "Do not merge a11oy#1680 while Immutable HF repository byte parity is red."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
