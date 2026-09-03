@@ -1,6 +1,9 @@
 @import url("./kanchay-base.css");
 
-/* Public Experience Frontier v4 — root proof-registry interaction contract. */
+/* Public Experience Frontier v4 — root proof-registry interaction contract.
+ * Imported base retains .empty-panel, kanchay-lattice-drift, Space Grotesk,
+ * and JetBrains Mono proof-identity contracts. */
+:root{--void:#080c14;--proof:#3af4c8;--lattice:#5b8dee;--gold:#d7b96b}
 html,body{max-inline-size:100%;overflow-x:clip}
 :where(button,[role="button"],a[class*="btn"],input,select,textarea,summary){min-height:44px;min-block-size:44px;touch-action:manipulation}
 :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid currentColor;outline-offset:3px}
