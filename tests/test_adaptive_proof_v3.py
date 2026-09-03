@@ -62,6 +62,22 @@ class AdaptiveProofV3Contract(unittest.TestCase):
         ):
             self.assertIn(token, self.css)
 
+    def test_live_root_targets_inherit_the_full_control_contract(self) -> None:
+        selector = ":where(.wordmark, .nav-links a, .origin-switch a, .origin-banner a)"
+        self.assertIn(selector, self.css)
+        start = self.css.index(selector)
+        end = self.css.index("}\n", start)
+        rule = self.css[start:end]
+        for declaration in (
+            "display: inline-flex",
+            "min-width: var(--szl-proof-control)",
+            "min-height: var(--szl-proof-control)",
+            "align-items: center",
+            "justify-content: center",
+            "touch-action: manipulation",
+        ):
+            self.assertIn(declaration, rule)
+
     def test_proof_palette_remains_neutral(self) -> None:
         allowed = {"#fff", "#000"}
         actual = {value.lower() for value in re.findall(r"#[0-9a-fA-F]{3,8}", self.css)}

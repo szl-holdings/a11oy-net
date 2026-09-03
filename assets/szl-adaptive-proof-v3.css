@@ -160,6 +160,27 @@ button,
   min-width: var(--szl-proof-control);
 }
 
+/*
+ * Public Experience v3 live-root repair.
+ * These are the exact interactive selectors observed below 44px by the
+ * browser audit: the proof wordmark, primary navigation, origin switch, and
+ * the product-origin link in the disambiguation banner.
+ */
+:where(.wordmark, .nav-links a, .origin-switch a, .origin-banner a) {
+  display: inline-flex;
+  min-width: var(--szl-proof-control);
+  min-height: var(--szl-proof-control);
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.origin-banner a {
+  padding-inline: 4px;
+}
+
 input, select, textarea {
   width: min(100%, 48rem);
   max-width: 100%;
