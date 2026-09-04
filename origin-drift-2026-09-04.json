@@ -1,0 +1,131 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04",
+  "observed_at_utc": "2026-09-04T15:38:00Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus unauthenticated Hugging Face Spaces API. Cloudflare API UNAVAILABLE. No DNS mutation.",
+  "delta_from_origin_json_2026-08-29": {
+    "then": "a-11-oy.com orange-cloud in front of Space; HF custom-domain row PENDING; www GET / Cloudflare 404",
+    "now": "a-11-oy.com /console /verify /api/a11oy/v1/honest return Space runtime (server=szl, x-szl-space=a11oy). HF runtime.domains a-11-oy.com is READY. www.a-11-oy.com TLS handshake fails (tlsv1 alert access denied)."
+  },
+  "delta_from_origin_drift_2026-09-02": {
+    "then": "apex served GitHub Pages; /console and /honest were Pages 404",
+    "now": "apex is Space runtime again. Pages CNAME file in szl-holdings.github.io still contains a-11-oy.com; that file is residual source, not the live HTTP front."
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/",
+      "status": 200,
+      "server": "szl",
+      "x_szl_space": "a11oy",
+      "x_szl_wire_d": "LIVE",
+      "wire_d_meaning": "Provenance hop header. Not domain LIVE. Not DSSE-LIVE.",
+      "verdict": "ADMIT_AS_PRODUCT_RUNTIME_LOCATION",
+      "note": "HTTP 200 plus Space headers is reachability. Not a production certificate."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/console",
+      "status": 200,
+      "ctype": "text/html",
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_CONSOLE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/verify",
+      "status": 200,
+      "ctype": "text/html",
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_VERIFY_TOOL",
+      "note": "Interactive tool lives on product. Proof origin does not clone it."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "ctype": "application/json",
+      "git_sha_reported": "07c2d3f9b3208a5a2ae70d433b4d663d4cdac110",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "signing_available": false,
+      "scheme": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "Signer ABSENT. Do not stamp DSSE-LIVE."
+    },
+    {
+      "host": "www.a-11-oy.com",
+      "path": "/",
+      "status": null,
+      "error": "SSL: TLSV1_ALERT_ACCESS_DENIED",
+      "verdict": "UNAVAILABLE",
+      "note": "Canonical www redirect remains unproved. Do not invent a 301."
+    },
+    {
+      "host": "a11oy.net",
+      "path": "/record.json",
+      "status": 200,
+      "live_chain": "UNAVAILABLE",
+      "receipt_ids_class": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_PROOF_INDEX"
+    },
+    {
+      "host": "szlholdings-a11oy.hf.space",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "07c2d3f9b3208a5a2ae70d433b4d663d4cdac110",
+      "verdict": "ADMIT_AS_SPACE_RUNTIME",
+      "note": "Same honest body as apex in this probe. Byte-identity of full tree is a separate HF parity gate."
+    }
+  ],
+  "huggingface": {
+    "space": "SZLHOLDINGS/a11oy",
+    "runtime_stage": "RUNNING",
+    "hardware": "cpu-basic",
+    "private": false,
+    "volume": "SZLHOLDINGS/szl-evidence at /data",
+    "domains": [
+      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
+      { "domain": "a-11-oy.com", "stage": "READY" }
+    ],
+    "note": "HF custom-domain READY is a provider row. Combined with apex Space headers it is MEASURED reachability. Not DSSE-LIVE. Not uptime."
+  },
+  "signing": {
+    "healthz_signer": "ABSENT",
+    "signing_status_honesty": "PARTIAL",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false
+  },
+  "khipu_readyz": {
+    "khipu_backend": "sqlite",
+    "khipu_durable": true,
+    "khipu_depth": 0,
+    "khipu_chain_ok": true,
+    "note": "Depth 0 is a runtime counter, not a proof-origin receipt inventory. a11oy.net receipt_ids stay empty/UNAVAILABLE."
+  },
+  "operator_actions_still_required": [
+    "Fix www.a-11-oy.com TLS and add a Cloudflare 301 www → https://a-11-oy.com/. Do not add www as a second Hugging Face custom domain.",
+    "Decide whether szl-holdings.github.io CNAME should keep claiming a-11-oy.com. Live HTTP is the Space. Residual Pages CNAME is source drift.",
+    "Do not merge anatomy#61 while mergeable_state is dirty.",
+    "Do not merge .github#645 while Fixed-origin supervisor contract is red.",
+    "Do not merge szl-org-health#43 while contracts/SLO checks are red."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_receipt_ids": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
