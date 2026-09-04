@@ -298,6 +298,7 @@ def check() -> None:
         "estate_snapshot",
         "estate_contract",
         "estate_os_hologram",
+        "estate_os_plane",
         "origin_lock_record",
         "origin_lock_contract",
         "factory_organs_record",
@@ -334,6 +335,7 @@ def check() -> None:
     assert "https://a11oy.net/evidence.json" in llms
     assert "https://a11oy.net/record/" in llms
     assert "https://a11oy.net/estate/os/" in llms
+    assert "https://a11oy.net/estate/plane/" in llms
     assert "https://a11oy.net/origin/" in llms
     assert "https://a11oy.net/frontiers/" in llms
     assert "https://a11oy.net/factory/" in llms

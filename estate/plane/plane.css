@@ -1,0 +1,53 @@
+/* Estate OS control-plane hologram. Proof origin. Not product runtime. */
+.plane-subnav { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.25rem auto 0; }
+.plane-subnav a {
+  color: var(--ink-dim, #9aa3b2);
+  text-decoration:none;
+  border:1px solid color-mix(in srgb, #5b8dee 35%, transparent);
+  padding:.35rem .7rem;
+  border-radius:999px;
+  font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.plane-subnav a[aria-current="page"],
+.plane-subnav a.is-on {
+  color: #080c14;
+  background: #3af4c8;
+  border-color: #3af4c8;
+}
+.plane-shell { margin-top: 1.25rem; padding-bottom: 4rem; }
+.plane-app { min-height: 40vh; }
+.plane-grid { display:grid; gap: .85rem; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.plane-card, .plane-row, .plane-panel {
+  border: 1px solid color-mix(in srgb, #5b8dee 28%, transparent);
+  background: color-mix(in srgb, #0d1522 88%, #080c14);
+  padding: .85rem 1rem;
+}
+.plane-card span, .plane-row span { display:block; color:#9aa3b2; font: 600 10px/1.2 ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; }
+.plane-card b { display:block; font-size: 1.45rem; color:#e8edf5; margin:.2rem 0 .35rem; }
+.plane-card p, .plane-row p { margin:0; color:#c5c9d1; font-size:.92rem; }
+.plane-table { width:100%; border-collapse:collapse; font-size:.92rem; }
+.plane-table th { text-align:left; color:#9aa3b2; font:600 10px/1.2 ui-monospace,monospace; letter-spacing:.08em; padding:.4rem .5rem; }
+.plane-table td { border-top:1px solid color-mix(in srgb, #5b8dee 22%, transparent); padding:.5rem; color:#e8edf5; vertical-align:top; }
+.plane-table a { color:#3af4c8; }
+.truth { font:600 10px/1 ui-monospace,monospace; letter-spacing:.06em; padding:.15rem .4rem; border:1px solid currentColor; }
+.t-MEASURED,.t-OBSERVED { color:#3af4c8; }
+.t-PARTIAL,.t-ATTESTED,.t-REPORTED { color:#5b8dee; }
+.t-MODELED,.t-OPEN { color:#d7b96b; }
+.t-UNAVAILABLE,.t-ARCHIVED,.t-HOLD { color:#9aa3b2; }
+.t-BROKEN,.t-FAIL,.t-BLOCK,.t-LOCKED { color:#e07a6a; }
+.t-LIVE { color:#3af4c8; }
+.plane-form { display:grid; gap:.65rem; margin-top:.75rem; }
+.plane-form label { display:grid; gap:.25rem; color:#9aa3b2; font:600 10px/1.2 ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; }
+.plane-form input, .plane-form textarea, .plane-form select {
+  background:#080c14; color:#e8edf5; border:1px solid color-mix(in srgb, #5b8dee 35%, transparent);
+  padding:.45rem .55rem; font: 14px/1.4 ui-sans-serif, system-ui, sans-serif;
+}
+.plane-form button {
+  justify-self:start; background:#3af4c8; color:#080c14; border:0; padding:.55rem .9rem;
+  font:700 12px/1 ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+}
+.plane-form button[disabled] { opacity:.45; cursor:not-allowed; }
+.note { color:#9aa3b2; font-size:.88rem; }
+.locked-warn { color:#d7b96b; }

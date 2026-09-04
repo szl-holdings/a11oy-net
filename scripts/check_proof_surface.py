@@ -272,6 +272,7 @@ def check() -> None:
         "https://a11oy.net/record/",
         "https://a11oy.net/estate/",
         "https://a11oy.net/estate/os/",
+        "https://a11oy.net/estate/plane/",
         "https://a11oy.net/command/",
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
@@ -331,6 +332,21 @@ def check() -> None:
     assert frontiers_contract["compiler"]["production_certificate"] is False
     assert 'id="compiler"' in frontiers_src
     assert "NEVER_DISPATCH" in frontiers_src
+    plane = ROOT / "estate" / "plane"
+    assert (plane / "index.html").is_file(), "estate OS plane hologram HTML must exist"
+    assert (plane / "app.js").is_file(), "estate OS plane hologram script must exist"
+    assert (plane / "data.json").is_file(), "estate OS plane hologram bake must exist"
+    assert (plane / "plane.css").is_file(), "estate OS plane hologram styles must exist"
+    plane_html = (plane / "index.html").read_text(encoding="utf-8")
+    plane_js = (plane / "app.js").read_text(encoding="utf-8")
+    assert "script-src 'self'" in plane_html
+    assert "not a live dashboard" in plane_html.lower()
+    assert "not a fourth origin" in plane_html.lower()
+    assert "PROPOSE_ONLY" in plane_html
+    assert "Conjecture 1" in plane_html
+    assert 'href="/verify"' not in plane_html and 'href="/verify/"' not in plane_html
+    assert "https://a11oy.com" not in plane_html
+    assert "https://a11oy.com" not in plane_js
     hologram = ROOT / "estate" / "os"
     assert (hologram / "index.html").is_file(), "estate catalog hologram HTML must exist"
     assert (hologram / "app.js").is_file(), "estate catalog hologram script must exist"
@@ -348,6 +364,7 @@ def check() -> None:
     assert "https://a11oy.com" not in hologram_js
     estate_html = (ROOT / "estate" / "index.html").read_text(encoding="utf-8")
     assert 'href="/estate/os/"' in estate_html, "estate snapshot must hand off to the hologram"
+    assert 'href="/estate/plane/"' in estate_html, "estate snapshot must hand off to the control-plane hologram"
     assert (ROOT / "command" / "index.html").is_file(), "command RECORD must exist"
     command_source = (ROOT / "command" / "index.html").read_text(encoding="utf-8")
     assert "script-src 'none'" in command_source

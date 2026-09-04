@@ -141,7 +141,7 @@
     "proof": "https://a11oy.net/",
     "proof_command_record": "https://a11oy.net/command/",
     "hub": "https://huggingface.co/SZLHOLDINGS",
-    "never": "a11oy.com — foreign storefront"
+    "never": "a11oy.com \u2014 foreign storefront"
   },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
@@ -196,7 +196,7 @@
     "live_organ": "SZLHOLDINGS/a11oy",
     "sign_endpoint": "https://szlholdings-a11oy.hf.space/api/a11oy/khipu/sign",
     "payload_type": "application/vnd.szl.khipu+json",
-    "honesty": "REAL — ECDSA-P256-SHA256 over DSSE PAE, verified against a11oy Space /cosign.pub. Does not match published org GitHub cosign.pub. HMAC remains PLACEHOLDER. Not ALLOW. Not a production certificate.",
+    "honesty": "REAL \u2014 ECDSA-P256-SHA256 over DSSE PAE, verified against a11oy Space /cosign.pub. Does not match published org GitHub cosign.pub. HMAC remains PLACEHOLDER. Not ALLOW. Not a production certificate.",
     "hmac_layer": "placeholder",
     "hmac_key_id": "hmac-sha256:PLACEHOLDER",
     "non_repudiation": false,
@@ -398,5 +398,21 @@
     "energy": "UNAVAILABLE",
     "operational": false,
     "bound": "Unauthenticated Hub author-list recapture 2026-08-30. Application KEEP is the six public Spaces. README remains a profile card. anatomy, david-leads, and szl-real-estate stay PAUSED+PRIVATE (pause+private, never delete). No Hub write token in this runtime. Atlas keep-7 at 18:05Z is not rewritten. Product remains a-11-oy.com. Proof remains a11oy.net. Never a11oy.com."
+  },
+  "hologram_plane": {
+    "url": "https://a11oy.net/estate/plane/",
+    "meaning": "Static on-origin Estate OS control-plane hologram. PROPOSE_ONLY. Not a live dashboard. Not product runtime. Not a fourth origin.",
+    "captured_at": "2026-08-29T16:49:00Z",
+    "scope": "PUBLIC_PARTIAL",
+    "github_observed": 91,
+    "github_public": 84,
+    "github_archived": 7,
+    "private_unavailable": 5,
+    "hub_models": 20,
+    "hub_datasets": 28,
+    "hub_spaces": 29,
+    "kernels_in_model_ns": 14,
+    "frontiers": 17,
+    "bound": "Plane bake is 16:49Z PUBLIC_PARTIAL. Catalog hologram stays /estate/os/. This file's later keep-7 Hub recapture is not overwritten."
   }
 }

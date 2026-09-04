@@ -91,6 +91,12 @@
       "scope": "static on-origin catalog hologram of the 17:35Z PUBLIC_PARTIAL bake; READ-ONLY; not a live dashboard; not product runtime; not a fourth origin; Lambda remains Conjecture 1"
     },
     {
+      "name": "estate_os_plane",
+      "url": "https://a11oy.net/estate/plane/",
+      "evidence_class": "REPORTED",
+      "scope": "static on-origin Estate OS control-plane hologram; PROPOSE_ONLY; PUBLIC_PARTIAL 16:49Z bake; not a live dashboard; not product runtime; not a fourth origin; Lambda remains Conjecture 1; catalog remains /estate/os/"
+    },
+    {
       "name": "origin_lock_record",
       "url": "https://a11oy.net/origin/",
       "evidence_class": "MEASURED",
@@ -106,7 +112,7 @@
       "name": "factory_organs_record",
       "url": "https://a11oy.net/factory/",
       "evidence_class": "REPORTED",
-      "scope": "N1–N25 organs RECORD; runtime is a-11-oy.com/organs; this origin does not execute organs; not 25 public Spaces"
+      "scope": "N1\u2013N25 organs RECORD; runtime is a-11-oy.com/organs; this origin does not execute organs; not 25 public Spaces"
     },
     {
       "name": "factory_organs_contract",
@@ -118,7 +124,7 @@
       "name": "named_frontiers_snapshot",
       "url": "https://a11oy.net/frontiers/",
       "evidence_class": "SNAPSHOT",
-      "scope": "Lyte STRUCTURAL-ONLY plus N1–N27 holograms; promotion BLOCKED while INC-05 www Cloudflare 404; does not rewrite /factory/; not GPU; not a fourth origin"
+      "scope": "Lyte STRUCTURAL-ONLY plus N1\u2013N27 holograms; promotion BLOCKED while INC-05 www Cloudflare 404; does not rewrite /factory/; not GPU; not a fourth origin"
     },
     {
       "name": "named_frontiers_contract",
