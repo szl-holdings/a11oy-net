@@ -1,0 +1,131 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1612",
+  "observed_at_utc": "2026-09-04T16:11:54Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus unauthenticated Hugging Face Spaces API. Cloudflare API UNAVAILABLE. No DNS mutation. No secret write. Observed sole-writer hf-sync run 33893544615 already in progress; did not dispatch a second run.",
+  "delta_from_origin_drift_2026-09-04_1600": {
+    "then_honest_git_sha": "11ba481ea79b3f7d74348b740cc3cc2a363a7e23",
+    "now_honest_git_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "then_hf_runtime_sha": "c45c2e49bbe3840f67218b84565c299e645e9ae1",
+    "now_hf_runtime_sha": "26a4ddf4d7f9001a6c69f936680b77e06199353f",
+    "protected_a11oy_main": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "meaning": "Canonical hf-sync.yml run 1277 published Space SZLHOLDINGS/a11oy. Live /honest and /api/build-info now report the #1835 squash SHA. HMAC layer remains placeholder."
+  },
+  "space_republish": {
+    "class": "MEASURED",
+    "path": "szl-holdings/a11oy/.github/workflows/hf-sync.yml",
+    "run": "https://github.com/szl-holdings/a11oy/actions/runs/33893544615",
+    "run_number": 1277,
+    "event": "workflow_dispatch",
+    "head_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "run_status_at_observe": "in_progress",
+    "live_honest_matches_protected_main": true,
+    "note": "Live image identity is MEASURED. Workflow 1277 terminal conclusion is not yet MEASURED."
+  },
+  "github_protected": {
+    "a11oy_main": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "a11oy_1835": "merged_and_live_honest",
+    "a11oy_1811": "open_held_mergeable_unknown",
+    "a11oy_1838": "open_draft_held",
+    "platform_601": "open_draft_held"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/build-info",
+      "status": 200,
+      "revision": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "revision_source": "env:SZL_GIT_SHA",
+      "verdict": "ADMIT_AS_RUNTIME_BUILD_INFO"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "signing_available": false,
+      "scheme": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "Signer ABSENT after republish. Do not stamp DSSE-LIVE."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/signing-status",
+      "status": 200,
+      "honesty": "PARTIAL",
+      "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+      "hmac_layer": "placeholder",
+      "hmac_key_id": "hmac-sha256:PLACEHOLDER",
+      "non_repudiation": false,
+      "dsse_keyid": "9926bf69b799ea66",
+      "verdict": "ADMIT_AS_SIGNING_STATUS_PARTIAL"
+    },
+    {
+      "host": "www.a-11-oy.com",
+      "path": "/",
+      "status": null,
+      "error": "SSL: TLSV1_ALERT_ACCESS_DENIED",
+      "verdict": "UNAVAILABLE"
+    },
+    {
+      "host": "a11oy.net",
+      "path": "/record.json",
+      "status": 200,
+      "live_chain": "UNAVAILABLE",
+      "receipt_ids_class": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_PROOF_INDEX"
+    },
+    {
+      "host": "szlholdings-a11oy.hf.space",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "verdict": "ADMIT_AS_SPACE_RUNTIME"
+    }
+  ],
+  "huggingface": {
+    "space": "SZLHOLDINGS/a11oy",
+    "runtime_stage": "RUNNING",
+    "runtime_sha": "26a4ddf4d7f9001a6c69f936680b77e06199353f",
+    "lastModified": "2026-09-04T16:10:02.000Z",
+    "domains": [
+      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
+      { "domain": "a-11-oy.com", "stage": "READY" }
+    ]
+  },
+  "signing": {
+    "healthz_signer": "ABSENT",
+    "signing_status_honesty": "PARTIAL",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false,
+    "dsse_live": "NOT_STAMPED",
+    "note": "This connector cannot write Hugging Face Space secrets. HMAC stays PARTIAL until A11OY_HMAC_KEY is set and re-measured."
+  },
+  "operator_actions_still_required": [
+    "Wait for hf-sync run 33893544615 to reach a terminal conclusion; live honest SHA already matches protected main.",
+    "Set A11OY_HMAC_KEY on Space SZLHOLDINGS/a11oy (keep SZL_COSIGN_PRIVATE_PEM), then enable A11OY_REQUIRE_PERSISTENT_SIGNING. Re-measure before any DSSE-LIVE label.",
+    "Fix www.a-11-oy.com TLS and add a Cloudflare 301 www to https://a-11-oy.com/. Do not add www as a second Hugging Face custom domain.",
+    "Hold a11oy#1811 until rebase/re-qualify. Hold a11oy#1838 and platform#601 while draft."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_receipt_ids": true,
+    "does_not_mint_hmac_keys": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
