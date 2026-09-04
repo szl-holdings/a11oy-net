@@ -1,15 +1,16 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.0.0",
   "surface": {
     "name": "thread-ops",
     "url": "https://a11oy.net/estate/thread-ops/",
     "publisher": "szl-holdings/a11oy-net",
     "meaning": "Public proof fold of the grown second-brain thread. Handles only. Not product runtime.",
-    "not": ["product runtime", "huggingface space", "9000-node graph", "new Hub brand", "Hickok /brain replacement"]
+    "not": ["product runtime", "huggingface space", "9000-node graph", "new Hub brand", "Hickok /brain replacement", "signed receipt", "COMPLETE closeout"]
   },
   "captured_at": "2026-09-04T23:16:00Z",
   "evidence_class": "REPORTED",
   "placement": {
+    "source": "github.com/szl-holdings/a11oy-net",
     "source_docs": "https://github.com/szl-holdings/.github/blob/main/docs/SECOND_BRAIN_GROWN.md",
     "proof": "https://a11oy.net/estate/thread-ops/",
     "product": "https://a-11-oy.com",
@@ -17,9 +18,17 @@
     "product_brain_is": "Hickok Dual-Stream receipts. Do not overwrite.",
     "product_hosts_this": false,
     "hf_space_hosts_this": false,
-    "hub_second_brain": "ARCHIVE / family. Not a flagship.",
-    "holdings_pages": "holdings.a-11-oy.com root is GitHub Pages 404. Owner-gated DNS."
+    "hub_second_brain": "ARCHIVE / family. Not a flagship."
   },
+  "github_lane": {
+    "open_prs_a11oy_net_before_landing": 0,
+    "merge_queue_core_repos_last_probe": "empty"
+  },
+  "blocked_external_authority": [
+    "HF org write token for static Space index.html restore",
+    "Cloudflare API for www cert and gdw tunnel",
+    "Org CodeQL app or SZL_GITHUB_TOKEN for .github#158"
+  ],
   "recapture": {
     "github_authenticated": 95,
     "github_public_search": 90,
