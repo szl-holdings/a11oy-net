@@ -1,8 +1,8 @@
 {
-  "contract": "1.4.0",
+  "contract": "1.5.0",
   "kind": "RECORD",
   "service": "IMMUNE",
-  "asOf": "2026-09-04T18:54:00Z",
+  "asOf": "2026-09-04T23:03:00Z",
   "githubOrg": "szl-holdings",
   "hubOrg": "SZLHOLDINGS",
   "canonical": {
@@ -12,16 +12,31 @@
     "space": "https://szlholdings-immune.hf.space",
     "nexusOrgan": "https://github.com/szl-holdings/nexus"
   },
+  "revision": {
+    "github": "234472e742af6a39a5e77ff649ea6bf4653a031f",
+    "hubReadyz": "234472e742af6a39a5e77ff649ea6bf4653a031f",
+    "match": true
+  },
   "cut": { "keep": 6, "fold": 38, "models": 44, "trained": 13, "kernelSoftware": 16 },
   "drift": {
-    "aligned": false,
-    "missingOnHub": ["estate", "poorest", "energyClass"],
+    "aligned": true,
+    "missingOnHub": [],
     "hubKeys": ["hash", "payload", "prevHash", "seq", "ts"],
-    "evidenceClass": "MEASURED"
+    "v2InPayload": ["estate", "poorest", "energyClass", "energy_j"],
+    "evidenceClass": "MEASURED",
+    "measuredSeqFrom": 7
   },
+  "ledger": { "ok": true, "count": 8, "first_bad_seq": null },
+  "estate": "e7b04c982887ec1f",
+  "poorest": "unmeasured",
   "energy": "UNAVAILABLE",
+  "energyClass": "UNAVAILABLE",
   "frontier": "MODELED",
+  "write_ready": true,
+  "cycleReady": true,
   "operationalClaim": false,
+  "ato": false,
   "unprivate_38": false,
-  "hfPush": "Space rebuild follows GitHub szl-holdings/immune. Contract contracts/proof-carrying-v2.json is on main. Frozen ledger keys not rewritten."
+  "alignment_state": "REVISION_UNAVAILABLE",
+  "hfPush": "Space runtime matches GitHub 234472e. Frozen ledger keys untouched. v2 lives inside payload. Root HTML may 404; /readyz and POST /api/immune/cycle are the live paths."
 }
