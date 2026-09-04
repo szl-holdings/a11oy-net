@@ -6,6 +6,7 @@ on:
       - fix/repin-aegis-killinchu-intelligence-v4-v1
     paths:
       - .github/workflows/repin-aegis-killinchu-intelligence-v4-once.yml
+      - tests/test_aegis_killinchu_consolidation.py
 
 permissions:
   contents: write
