@@ -27,7 +27,7 @@ Authoritative public paths:
 - KHIPU RECORD (kernel is not run here; evaluate at a-11-oy.com/khipu): https://a11oy.net/khipu/
 - Decision Integrity RECORD (static; kernel is not run here; evaluate at a-11-oy.com/decision): https://a11oy.net/decision/
 - Terra RECORD stub (evaluate at a-11-oy.com/terra): https://a11oy.net/terra/
-- Aegis RECORD stub (evaluate at a-11-oy.com/aegis): https://a11oy.net/aegis/
+- Aegis → Killinchu consolidation RECORD (historical cases preserved; current authority SZLHOLDINGS/killinchu): https://a11oy.net/aegis/
 - Puriq Markets RECORD stub (evaluate at a-11-oy.com/puriq-markets): https://a11oy.net/puriq-markets/
 - Counsel RECORD stub (evaluate at a-11-oy.com/counsel): https://a11oy.net/counsel/
 - Five-space operator RECORD stub (evaluate at a-11-oy.com/five-space; not /console): https://a11oy.net/five-space/

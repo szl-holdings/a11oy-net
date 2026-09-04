@@ -1,0 +1,25 @@
+{
+  "schema": "szl.aegis-killinchu-consolidation/v1",
+  "effective_date": "2026-09-03",
+  "proof_route": "https://a11oy.net/aegis/",
+  "proof_route_status": "PRESERVED_HISTORICAL_RECORD",
+  "current_public_authority": "SZLHOLDINGS/killinchu",
+  "current_product": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
+  "current_source": "https://github.com/szl-holdings/killinchu",
+  "capability_planes": [
+    "aegis",
+    "sentra_defend",
+    "immune",
+    "vessels_maritime",
+    "counter_uas_airspace"
+  ],
+  "evidence": {
+    "killinchu_merge": "928a6dace657f8f9e067773d23d5686fe3dcc716",
+    "a11oy_frontier_publisher_merge": "775acaa54724ab206b0c5477d754fbd6ed36e5f7",
+    "vertical_services_source": "e08231a110fd80f85a61fba82d72ab7f1fe23836"
+  },
+  "formula_authority_on_proof_origin": "NONE",
+  "runtime_readiness_claimed": false,
+  "historical_cases_preserved": true,
+  "legacy_space_retirement": "GATED_BY_EXACT_SOURCE_AND_TERMINAL_ABSENCE"
+}

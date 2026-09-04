@@ -225,3 +225,9 @@ Report vulnerabilities through the organization
 Do not include secrets or sensitive evidence in a public issue.
 
 Apache-2.0 licensed. Copyright 2026 SZL Holdings.
+
+
+<!-- AEGIS-KILLINCHU-CONSOLIDATION:v1 -->
+## Aegis → Killinchu consolidation
+
+`/aegis/` remains a static historical proof route. Aegis is not a separate current product authority: it is an assurance and portfolio capability plane inside [Killinchu](https://huggingface.co/spaces/SZLHOLDINGS/killinchu). Sentra / Defend, IMMUNE, Vessels / Maritime, and Counter-UAS / Airspace are internal capability planes. Runtime readiness is never inferred from this repository or from URL reachability.
