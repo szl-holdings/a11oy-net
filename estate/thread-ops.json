@@ -4,17 +4,21 @@
     "name": "thread-ops",
     "url": "https://a11oy.net/estate/thread-ops/",
     "publisher": "szl-holdings/a11oy-net",
-    "meaning": "Operational closeout of the estate thread. Proof origin only.",
-    "not": ["product runtime", "huggingface space", "signed receipt", "COMPLETE closeout"]
+    "meaning": "Public proof fold of the grown second-brain thread. Handles only. Not product runtime.",
+    "not": ["product runtime", "huggingface space", "signed receipt", "COMPLETE closeout", "9000-node graph", "new Hub brand", "Hickok /brain replacement"]
   },
-  "captured_at": "2026-09-04T22:47:00Z",
+  "captured_at": "2026-09-04T23:32:00Z",
   "evidence_class": "REPORTED",
   "placement": {
     "source": "github.com/szl-holdings/a11oy-net",
+    "source_docs": "https://github.com/szl-holdings/.github/blob/main/docs/SECOND_BRAIN_GROWN.md",
     "proof": "https://a11oy.net/estate/thread-ops/",
     "product": "https://a-11-oy.com",
+    "product_brain": "https://a-11-oy.com/brain",
+    "product_brain_is": "Hickok Dual-Stream receipts. Do not overwrite.",
     "product_hosts_this": false,
-    "hf_space_hosts_this": false
+    "hf_space_hosts_this": false,
+    "hub_second_brain": "ARCHIVE / family. Not a flagship."
   },
   "github_lane": {
     "open_prs_a11oy_net_before_landing": 0,
@@ -25,5 +29,21 @@
     "Cloudflare API for www cert and gdw tunnel",
     "Org CodeQL app or SZL_GITHUB_TOKEN for .github#158"
   ],
+  "recapture": {
+    "github_authenticated": 95,
+    "github_public_search": 90,
+    "packet_registry": 76,
+    "hub_models": 42,
+    "hub_datasets": 28,
+    "hub_spaces": 43,
+    "hub_keep_public": 6
+  },
+  "undreamed": "Guardian for the SOW sits between CRM and PSA. Overlay. Do not replace.",
+  "honesty": {
+    "certified_production_ready": false,
+    "graph_9000": "UNAVAILABLE",
+    "minting": "DENY",
+    "lambda": "Conjecture 1 OPEN"
+  },
   "tracking": "https://github.com/szl-holdings/.github/issues/523"
 }
