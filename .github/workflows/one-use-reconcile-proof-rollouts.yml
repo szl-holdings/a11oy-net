@@ -42,7 +42,7 @@ jobs:
           python tools/rollout_holographic_proof_v2.py --check --report /tmp/holographic-check.json
           python tools/rollout_proof_flow_shell.py --check --report /tmp/flow-check.json
 
-      - name: Require the exact four durable generated changes
+      - name: Require the exact three durable generated changes
         shell: bash
         run: |
           set -euo pipefail
@@ -57,7 +57,6 @@ jobs:
               if line.strip()
           }
           expected = {
-              "estate/frontier-2026-09-04/index.html",
               "khipu/nan/index.html",
               "holographic-experience-v2/rollout-state.json",
               "frontend-flow-shell-state.json",
@@ -85,7 +84,6 @@ jobs:
           git config user.name "SZL Proof Rollout Controller"
           git config user.email "stephenlutar2@gmail.com"
           git add \
-            estate/frontier-2026-09-04/index.html \
             khipu/nan/index.html \
             holographic-experience-v2/rollout-state.json \
             frontend-flow-shell-state.json
