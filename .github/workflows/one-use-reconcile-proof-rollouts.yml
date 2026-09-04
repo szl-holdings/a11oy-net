@@ -19,7 +19,7 @@ jobs:
   reconcile:
     if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
@@ -67,14 +67,48 @@ jobs:
               )
           PY
 
-      - name: Run the complete proof-site contract suite
+      - name: Prove marker stability across every test module
+        shell: bash
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: |
+          set -euo pipefail
+          probe() {
+            python - "$1" <<'PY'
+          import hashlib
+          import pathlib
+          import sys
+
+          label = sys.argv[1]
+          path = pathlib.Path("khipu/nan/index.html")
+          text = path.read_text(encoding="utf-8")
+          counts = {
+              "holo_style": text.count('data-szl-proof-holo-asset="style-v2"'),
+              "holo_script": text.count('data-szl-proof-holo-asset="script-v2"'),
+              "flow_style": text.count('data-szl-proof-flow-asset="style"'),
+              "flow_script": text.count('data-szl-proof-flow-asset="script"'),
+          }
+          print(label, hashlib.sha256(path.read_bytes()).hexdigest(), counts)
+          if counts != {"holo_style": 1, "holo_script": 1, "flow_style": 1, "flow_script": 1}:
+              raise SystemExit(f"marker drift at {label}: {counts}")
+          PY
+          }
+          probe after-rollout
+          python -m pytest --version
+          for test_file in tests/test_*.py; do
+            python -m pytest -q "$test_file"
+            probe "after-${test_file}"
+          done
+          python -m pytest -q tests
+          probe after-full-suite
+
+      - name: Run standalone contracts and syntax checks
         shell: bash
         run: |
           set -euo pipefail
           python -m py_compile tools/rollout_holographic_proof_v2.py tools/rollout_proof_flow_shell.py tests/test_holographic_proof_v2.py tests/test_proof_flow_shell.py
           python tests/test_holographic_proof_v2.py -v
           python tests/test_proof_flow_shell.py -v
-          python -m pytest -q tests
           git diff --check
 
       - name: Commit durable repair and remove this controller
