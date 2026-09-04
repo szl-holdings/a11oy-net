@@ -1,0 +1,16 @@
+{
+  "schema": "szl.frontier-record/v1",
+  "as_of": "2026-09-04T23:00:00Z",
+  "origin": "https://a11oy.net/estate/frontier-2026-09-04/",
+  "source": "https://github.com/szl-holdings/szl-hf-frontier",
+  "bus": "https://github.com/szl-holdings/hatun-mcp",
+  "product": "https://a-11-oy.com",
+  "proof": "https://a11oy.net",
+  "hub_space": "NOT_FLAGSHIP",
+  "selftest": true,
+  "ready": false,
+  "winner": null,
+  "admitted": false,
+  "hub_write": "DENIED",
+  "lambda": "CONJECTURE_1_OPEN"
+}
