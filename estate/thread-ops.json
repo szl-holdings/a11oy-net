@@ -1,0 +1,29 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "thread-ops",
+    "url": "https://a11oy.net/estate/thread-ops/",
+    "publisher": "szl-holdings/a11oy-net",
+    "meaning": "Operational closeout of the estate thread. Proof origin only.",
+    "not": ["product runtime", "huggingface space", "signed receipt", "COMPLETE closeout"]
+  },
+  "captured_at": "2026-09-04T22:47:00Z",
+  "evidence_class": "REPORTED",
+  "placement": {
+    "source": "github.com/szl-holdings/a11oy-net",
+    "proof": "https://a11oy.net/estate/thread-ops/",
+    "product": "https://a-11-oy.com",
+    "product_hosts_this": false,
+    "hf_space_hosts_this": false
+  },
+  "github_lane": {
+    "open_prs_a11oy_net_before_landing": 0,
+    "merge_queue_core_repos_last_probe": "empty"
+  },
+  "blocked_external_authority": [
+    "HF org write token for static Space index.html restore",
+    "Cloudflare API for www cert and gdw tunnel",
+    "Org CodeQL app or SZL_GITHUB_TOKEN for .github#158"
+  ],
+  "tracking": "https://github.com/szl-holdings/.github/issues/523"
+}
