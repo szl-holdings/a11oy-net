@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "surface": {
     "name": "Decision Integrity RECORD",
     "url": "https://a11oy.net/decision/",
@@ -111,10 +111,13 @@
         "counter_uas_airspace"
       ],
       "killinchu_revision": "928a6dace657f8f9e067773d23d5686fe3dcc716",
-      "a11oy_publisher_revision": "775acaa54724ab206b0c5477d754fbd6ed36e5f7",
-      "vertical_services_revision": "e08231a110fd80f85a61fba82d72ab7f1fe23836",
+      "vertical_services_revision": "83edba5c5e730c91d8f5f0a6531213fb860677af",
       "runtime_readiness_claimed": false,
-      "historical_cases_preserved": true
+      "historical_cases_preserved": true,
+      "a11oy_public_taxonomy_revision": "a50b1970bae4383f9760f7146436d424d5101fd3",
+      "a11oy_intelligence_publisher_revision": "55d9336fed3a23da5b1abfed4f7f38dcc5121a06",
+      "vertical_services_runtime_version": "2.2.0",
+      "runtime_readiness_authority": "EXACT_PROVIDER_READBACK_REQUIRED"
     }
   }
 }
