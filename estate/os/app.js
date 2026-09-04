@@ -1,12 +1,13 @@
 /* Estate catalog hologram. READ-ONLY. No mutations. Not a live dashboard. */
 const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
-const esc = (s) =>
-  String(s ?? "")
-    .replaceAll("&", "&")
-    .replaceAll("<", "<")
-    .replaceAll(">", ">")
-    .replaceAll('"', """);
+const ESC = {
+  "&": "&" + "amp;",
+  "<": "&" + "lt;",
+  ">": "&" + "gt;",
+  '"': "&" + "quot;",
+};
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (ch) => ESC[ch]);
 
 const VIEWS = ["lattice", "catalog", "ledger"];
 const LANES = ["all", "github", "space", "gated", "model", "dataset", "collection"];
@@ -134,14 +135,14 @@ function renderLattice() {
       return `
         <div class="os-ring-head"><span>${esc(RING_LABEL[r])}</span><b>${list.length}</b></div>
         <div class="os-grid flag">
-          ${list.slice(0, 48).map((a) => `
+          ${list.slice(0, 200).map((a) => `
             <button type="button" class="os-card ${a.id === selectedId ? "on" : ""}" data-id="${esc(a.id)}">
               <p class="os-kicker">${esc(a.lane)}${a.gated ? " · gated" : ""} · ${esc(rel(a.updatedAt))}</p>
               <h3>${esc(a.title)}</h3>
               <p>${esc(a.description)}</p>
             </button>`).join("")}
         </div>
-        ${list.length > 48 ? `<p class="muted">Showing 48 of ${list.length}. Switch to Catalog for the rest.</p>` : ""}`;
+        ${list.length > 200 ? `<p class="muted">Showing 200 of ${list.length}. Switch to Catalog for the rest.</p>` : ""}`;
     }).join("")}
     <div class="handoff-line"><span class="os-kicker">Later recapture · do not overwrite</span>${esc(DATA.laterRecapture.bound)}</div>
   `;
@@ -236,38 +237,45 @@ function render() {
   bind();
 }
 
+let bound = false;
 function bind() {
-  const input = $("#q");
-  if (input) {
-    input.addEventListener("input", () => {
-      q = input.value;
-    });
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        render();
-      }
-    });
-    input.addEventListener("search", () => render());
-  }
-  $$("[data-lane]").forEach((b) =>
-    b.addEventListener("click", () => {
-      lane = b.dataset.lane;
+  if (bound) return;
+  bound = true;
+  const shell = document;
+  shell.addEventListener("input", (e) => {
+    if (e.target && e.target.id === "q") {
+      q = e.target.value;
       render();
-    }),
-  );
-  $$("[data-ring]").forEach((b) =>
-    b.addEventListener("click", () => {
-      ring = b.dataset.ring;
+    }
+  });
+  shell.addEventListener("keydown", (e) => {
+    if (e.target && e.target.id === "q" && e.key === "Enter") {
+      e.preventDefault();
       render();
-    }),
-  );
-  $$("[data-id]").forEach((b) =>
-    b.addEventListener("click", () => {
-      selectedId = b.dataset.id;
+    }
+  });
+  shell.addEventListener("search", (e) => {
+    if (e.target && e.target.id === "q") render();
+  });
+  shell.addEventListener("click", (e) => {
+    const laneBtn = e.target.closest("[data-lane]");
+    if (laneBtn) {
+      lane = laneBtn.dataset.lane;
+      render();
+      return;
+    }
+    const ringBtn = e.target.closest("[data-ring]");
+    if (ringBtn) {
+      ring = ringBtn.dataset.ring;
+      render();
+      return;
+    }
+    const idBtn = e.target.closest("[data-id]");
+    if (idBtn) {
+      selectedId = idBtn.dataset.id;
       go(`#/${view}/${encodeURIComponent(selectedId)}`);
-    }),
-  );
+    }
+  });
 }
 
 async function boot() {
