@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.1.1",
   "surface": {
     "name": "Hub atlas",
     "url": "https://a11oy.net/#atlas",
@@ -8,7 +8,9 @@
   },
   "status": {
     "state": "CURRENT",
-    "evidence_class": "MEASURED"
+    "evidence_class": "MEASURED",
+    "probed_at": "2026-09-04T16:00:00Z",
+    "probe_note": "Live HEAD of szlholdings-*.hf.space. Product a11oy + killinchu 200. immune Hub Space 404. Static holograms 404 at root."
   },
   "hub_snapshot": {
     "observed_at": "2026-08-31T18:59:11Z",
@@ -28,44 +30,61 @@
       "name": "a11oy",
       "url": "https://a-11-oy.com",
       "role": "Product Command Center",
-      "evidence_class": "MEASURED"
+      "evidence_class": "MEASURED",
+      "http_root": 200
     },
     {
       "name": "killinchu",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
       "role": "Defense vertical",
-      "evidence_class": "MEASURED"
+      "evidence_class": "MEASURED",
+      "http_root": 200
     },
     {
       "name": "david-leads",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/david-leads",
       "role": "Insurance vertical",
-      "evidence_class": "MEASURED"
+      "evidence_class": "REPORTED",
+      "note": "pause+private policy. Not re-probed as public runtime."
     },
     {
       "name": "anatomy",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/anatomy",
       "role": "Living map",
-      "evidence_class": "MEASURED"
+      "evidence_class": "REPORTED",
+      "note": "Product bind a-11-oy.com/anatomy-v5 is the playable path."
     },
     {
       "name": "immune",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
       "role": "Safety kernel",
-      "evidence_class": "MEASURED"
+      "evidence_class": "UNAVAILABLE",
+      "http_root": 404,
+      "canonical_product": "https://a-11-oy.com/immune",
+      "note": "Hub Space root 404 on 2026-09-04. Source remains github.com/szl-holdings/immune. Preserve, do not delete."
     },
     {
       "name": "szl-real-estate",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-real-estate",
       "role": "Public-records underwriting",
-      "evidence_class": "MEASURED"
+      "evidence_class": "REPORTED",
+      "note": "Occupancy UNAVAILABLE."
     },
     {
       "name": "szl-atelier",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
       "role": "Artifact walk",
-      "evidence_class": "MEASURED"
+      "evidence_class": "REPORTED"
     }
+  ],
+  "static_holograms_404_at_root": [
+    "governed-receipt-verifier",
+    "energy-attest-holo",
+    "energy-attested-runs",
+    "governed-norm-holo",
+    "guardrail-receipt",
+    "receipt-chain-live",
+    "szl-estate-live"
   ],
   "github_surfaces": [
     {
