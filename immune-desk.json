@@ -1,9 +1,9 @@
 {
-  "contract": "1.1.0",
+  "contract": "1.2.0",
   "kind": "RECORD",
   "service": "IMMUNE",
   "channel": "A",
-  "asOf": "2026-09-04T16:10:00Z",
+  "asOf": "2026-09-04T16:25:00Z",
   "write_ready": true,
   "read_ready": true,
   "evidenceClass": "SOFTWARE",
@@ -12,9 +12,27 @@
   "actuation": "SIMULATED",
   "frontier": "MODELED",
   "frontierSweep": "MODELED",
+  "programSweep": "MODELED",
+  "programs": [
+    "lorenz",
+    "harmonic",
+    "vanderpol",
+    "duffing",
+    "lotka",
+    "nemo"
+  ],
   "conjecture1": "OPEN",
   "kernelCommit": "c7c0ba17",
-  "lockedProven": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
+  "lockedProven": [
+    "F1",
+    "F4",
+    "F7",
+    "F11",
+    "F12",
+    "F18",
+    "F19",
+    "F22"
+  ],
   "rails": {
     "sentra": "OPERATIONAL",
     "yawar": "OPERATIONAL",
@@ -29,9 +47,13 @@
   "chassis": "https://a-11-oy.com/nexus",
   "source": "https://github.com/szl-holdings/immune",
   "organSource": "https://github.com/szl-holdings/nexus",
-  "flagships": ["a11oy", "killinchu", "immune"],
+  "flagships": [
+    "a11oy",
+    "killinchu",
+    "immune"
+  ],
   "nexusIsFlagship": false,
   "atlasKeep7Rewritten": false,
   "unprivate_38": false,
-  "note": "One product. NEXUS is the analog organ bound at /nexus. Drive sweep is MODELED. Hub cards stay operational:false. Not an ATO."
+  "note": "Frontier now sits on six analog programs. Sweep is MODELED. Not an ATO."
 }
