@@ -1,0 +1,147 @@
+{
+  "schema": "szl.estate-operational-payload-1/v1",
+  "surface": {
+    "name": "Operational payload 1",
+    "url": "https://a11oy.net/estate/operational-payload-1/",
+    "publisher": "SZL Holdings",
+    "meaning": "MEASURED closer for the Grok-in-terminal payload. Not product runtime. Not a live dashboard. Not READY.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "evidence_class": "MEASURED",
+  "ready": false,
+  "winner": null,
+  "lambda": "Conjecture 1 OPEN",
+  "energy": "UNAVAILABLE",
+  "hub_put": false,
+  "source": "https://github.com/szl-holdings/szl-hf-frontier",
+  "payload_md": "https://github.com/szl-holdings/szl-hf-frontier/blob/main/PAYLOAD_1.md",
+  "runner": "https://github.com/szl-holdings/szl-hf-frontier/blob/main/szl_estate_operational.py",
+  "product": "https://a-11-oy.com",
+  "analog_runtime": "https://szlholdings-immune.hf.space/nexus.html",
+  "report": {
+    "schema": "szl.estate-operational-payload-1/v1",
+    "payload": "SZL-ESTATE-OPERATIONAL-PAYLOAD-1",
+    "parent": "SZL-HF-FRONTIER-PAYLOAD-1",
+    "generated_at": "2026-09-04T22:47:45.808601+00:00",
+    "ready": false,
+    "winner": null,
+    "hub_put": false,
+    "flagship": false,
+    "lambda": "Conjecture 1 OPEN",
+    "energy": "UNAVAILABLE",
+    "false_allow_budget": 0,
+    "metal": "BLOCKED_NO_METAL",
+    "hub_write": "UNAVAILABLE_NO_TOKEN",
+    "selftest": {
+      "ok": true,
+      "gmb": {
+        "ok": true,
+        "leakage": "CLEAN",
+        "leaks": [],
+        "n_total": 20,
+        "n_passed": 20,
+        "n_false_allow": 0,
+        "winner": null,
+        "runner": "rule-baseline"
+      },
+      "invented_id": "REFUSE",
+      "grounded_draft": "DRAFT",
+      "catalog_has_owner_home": false,
+      "lambda": "Conjecture 1 OPEN",
+      "energy": "UNAVAILABLE"
+    },
+    "live": {
+      "product": {
+        "url": "https://a-11-oy.com/",
+        "status": 200,
+        "ok": true,
+        "bytes": 140094
+      },
+      "proof": {
+        "url": "https://a11oy.net/",
+        "status": 200,
+        "ok": true,
+        "bytes": 114892
+      },
+      "a11oy_space": {
+        "url": "https://szlholdings-a11oy.hf.space/",
+        "status": 200,
+        "ok": true,
+        "bytes": 140094
+      },
+      "immune_nexus": {
+        "url": "https://szlholdings-immune.hf.space/nexus.html",
+        "status": 200,
+        "ok": true,
+        "bytes": 13291
+      },
+      "nexus_hologram": {
+        "status": 404,
+        "role": null,
+        "energy": null,
+        "live": false,
+        "note": "instrument not bound \u00b7 hologram only"
+      },
+      "hf_models": 44,
+      "hf_spaces": 16,
+      "public_spaces_seen": [
+        "SZLHOLDINGS/a11oy",
+        "SZLHOLDINGS/killinchu",
+        "SZLHOLDINGS/immune",
+        "SZLHOLDINGS/lyte",
+        "SZLHOLDINGS/finance",
+        "SZLHOLDINGS/terra",
+        "SZLHOLDINGS/counsel",
+        "SZLHOLDINGS/sentra",
+        "SZLHOLDINGS/vertical-services",
+        "SZLHOLDINGS/szl-frontier",
+        "SZLHOLDINGS/szl-constellation"
+      ],
+      "not_public_seen": [],
+      "gh_repos": 100,
+      "open_prs": 8,
+      "receipt_owner_home": false,
+      "receipt_eligible": false,
+      "gmb_source": "forge-main",
+      "gmb": {
+        "ok": true,
+        "leakage": "CLEAN",
+        "leaks": [],
+        "n_total": 20,
+        "n_passed": 20,
+        "n_false_allow": 0,
+        "winner": null,
+        "runner": "rule-baseline"
+      },
+      "hf_ok": true,
+      "hf_sample": [
+        "SZLHOLDINGS/szl-invariants",
+        "SZLHOLDINGS/a11oy-v19-substrate",
+        "SZLHOLDINGS/szl-governed-norm",
+        "SZLHOLDINGS/szl-lambda-gate",
+        "SZLHOLDINGS/governed-inference-meter",
+        "SZLHOLDINGS/szl-kernels",
+        "SZLHOLDINGS/szl-blocked",
+        "SZLHOLDINGS/szl-govsign"
+      ],
+      "gh_ok": true,
+      "receipt_runtime": "huggingface:Qwen/Qwen3.5-0.8B@2fc06364715b967f1860aea9cf38778875588b17"
+    },
+    "gmb_passed": 20,
+    "gmb_total": 20,
+    "leakage": "CLEAN",
+    "doctrine": "Fail closed. Signed is not correct. Live is not qualified.",
+    "public_line": [
+      "a11oy",
+      "killinchu",
+      "immune"
+    ],
+    "nexus_runtime": "IMMUNE /nexus.html",
+    "next": [
+      "python3 szl_estate_operational.py --selftest",
+      "python3 szl_estate_operational.py --live",
+      "# metal absent \u2014 do not train; leave forge#124 Phase A on the laptop",
+      "# no Hub token \u2014 do not mint Spaces; occupancy stays ROADMAP"
+    ]
+  }
+}
