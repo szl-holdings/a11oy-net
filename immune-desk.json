@@ -1,9 +1,9 @@
 {
-  "contract": "1.0.0",
+  "contract": "1.1.0",
   "kind": "RECORD",
   "service": "IMMUNE",
   "channel": "A",
-  "asOf": "2026-09-04T16:00:00Z",
+  "asOf": "2026-09-04T16:10:00Z",
   "write_ready": true,
   "read_ready": true,
   "evidenceClass": "SOFTWARE",
@@ -11,6 +11,7 @@
   "energy": "UNAVAILABLE",
   "actuation": "SIMULATED",
   "frontier": "MODELED",
+  "frontierSweep": "MODELED",
   "conjecture1": "OPEN",
   "kernelCommit": "c7c0ba17",
   "lockedProven": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
@@ -25,8 +26,12 @@
     "actuation": "MODELED"
   },
   "product": "https://a-11-oy.com/immune",
+  "chassis": "https://a-11-oy.com/nexus",
   "source": "https://github.com/szl-holdings/immune",
+  "organSource": "https://github.com/szl-holdings/nexus",
+  "flagships": ["a11oy", "killinchu", "immune"],
+  "nexusIsFlagship": false,
   "atlasKeep7Rewritten": false,
   "unprivate_38": false,
-  "note": "SOFTWARE cycle runs in the operator desk. Hub model cards stay operational:false. Not an ATO."
+  "note": "One product. NEXUS is the analog organ bound at /nexus. Drive sweep is MODELED. Hub cards stay operational:false. Not an ATO."
 }
