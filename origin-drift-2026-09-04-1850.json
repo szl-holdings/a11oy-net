@@ -1,0 +1,58 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1850",
+  "observed_at_utc": "2026-09-04T18:50:40Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus GitHub read. No DNS write. No HMAC key minted. No DSSE-LIVE stamp. No second hf-sync dispatch.",
+  "landing_header": {
+    "live_nav_console_href_count": 2,
+    "live_honest_git_sha": "ee0c20121545eb89a032300069df624cc6fd6ed4",
+    "cause": "a11oy#1868 restored a second /console link beside the CTA",
+    "source_fix": {
+      "pr": "https://github.com/szl-holdings/a11oy/pull/1881",
+      "merge": "986a409cbf45082bd395a255187e15600305de44"
+    },
+    "verdict": "SOURCE_FIXED_RUNTIME_LAG"
+  },
+  "hmac_and_dsse": {
+    "healthz_signer": "ABSENT",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false,
+    "dsse_live": "NOT_STAMPED"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/",
+      "status": 200,
+      "nav_console_href_count": 2,
+      "verdict": "ADMIT_AS_LIVE_HEADER_DUPLICATE_PENDING_SYNC"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "ee0c20121545eb89a032300069df624cc6fd6ed4",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "verdict": "ADMIT_AS_HEALTHZ"
+    }
+  ],
+  "space_republish": {
+    "sole_writer": "szl-holdings/a11oy/.github/workflows/hf-sync.yml",
+    "did_not_dispatch": true,
+    "note": "Main push of #1881 queues sole-writer. Do not second-dispatch."
+  },
+  "boundaries": {
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_hmac_keys": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
