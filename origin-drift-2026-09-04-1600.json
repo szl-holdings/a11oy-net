@@ -1,0 +1,188 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1600",
+  "observed_at_utc": "2026-09-04T16:00:09Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus unauthenticated Hugging Face Spaces API. Cloudflare API UNAVAILABLE. No DNS mutation. No Space republish.",
+  "delta_from_origin_drift_2026-09-04_1538": {
+    "then_honest_git_sha": "07c2d3f9b3208a5a2ae70d433b4d663d4cdac110",
+    "now_honest_git_sha": "11ba481ea79b3f7d74348b740cc3cc2a363a7e23",
+    "protected_a11oy_main": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "meaning": "a11oy#1835 squash-merged to protected main. Live Space honest body has advanced from 07c2d3f9 to 11ba481e but is not the 1835 merge SHA. Brain Frontier repair is source-merged, not yet the published runtime image."
+  },
+  "github_protected": {
+    "a11oy_main": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "a11oy_1835": "merged",
+    "github_645": "merged",
+    "szl_org_health_43": "merged",
+    "immune_112": "merged",
+    "platform_739": "open_unstable_held",
+    "platform_601": "open_draft_held"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/",
+      "status": 200,
+      "server": "szl",
+      "x_szl_space": "a11oy",
+      "x_szl_wire_d": "LIVE",
+      "wire_d_meaning": "Provenance hop header. Not domain LIVE. Not DSSE-LIVE.",
+      "verdict": "ADMIT_AS_PRODUCT_RUNTIME_LOCATION"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/console",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_CONSOLE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/verify",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_VERIFY_TOOL"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/holographic",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_HOLO_SHELL",
+      "note": "HTTP 200 on pre-1835 Space image. Not proof that the 72-handle Brain Frontier repair is live."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/holo",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_HOLO_DEMO"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/brain",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_BRAIN_PAGE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/terra",
+      "status": 200,
+      "server": "szl",
+      "note": "Page labels Formula authority NONE and Status ROADMAP.",
+      "verdict": "ADMIT_AS_RUNTIME_TERRA_PAGE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/counsel",
+      "status": 200,
+      "server": "szl",
+      "note": "Same Decision Assurance shell as /terra. Formula authority NONE.",
+      "verdict": "ADMIT_AS_RUNTIME_COUNSEL_PAGE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "ctype": "application/json",
+      "git_sha_reported": "11ba481ea79b3f7d74348b740cc3cc2a363a7e23",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "signing_available": false,
+      "scheme": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "Signer ABSENT. Do not stamp DSSE-LIVE."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/signing-status",
+      "status": 200,
+      "honesty": "PARTIAL",
+      "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+      "hmac_layer": "placeholder",
+      "non_repudiation": false,
+      "verdict": "ADMIT_AS_SIGNING_STATUS_PARTIAL"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/readyz",
+      "status": 200,
+      "khipu_backend": "sqlite",
+      "khipu_durable": true,
+      "khipu_depth": 0,
+      "khipu_chain_ok": true,
+      "verdict": "ADMIT_AS_READYZ",
+      "note": "Depth 0 is a runtime counter, not a proof-origin receipt inventory."
+    },
+    {
+      "host": "www.a-11-oy.com",
+      "path": "/",
+      "status": null,
+      "error": "SSL: TLSV1_ALERT_ACCESS_DENIED",
+      "verdict": "UNAVAILABLE",
+      "note": "Canonical www redirect remains unproved. Do not invent a 301."
+    },
+    {
+      "host": "a11oy.net",
+      "path": "/record.json",
+      "status": 200,
+      "live_chain": "UNAVAILABLE",
+      "receipt_ids_class": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_PROOF_INDEX"
+    },
+    {
+      "host": "szlholdings-a11oy.hf.space",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "11ba481ea79b3f7d74348b740cc3cc2a363a7e23",
+      "verdict": "ADMIT_AS_SPACE_RUNTIME"
+    }
+  ],
+  "huggingface": {
+    "space": "SZLHOLDINGS/a11oy",
+    "runtime_stage": "RUNNING",
+    "hardware": "cpu-basic",
+    "replicas": 1,
+    "devMode": false,
+    "runtime_sha": "c45c2e49bbe3840f67218b84565c299e645e9ae1",
+    "domains": [
+      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
+      { "domain": "a-11-oy.com", "stage": "READY" }
+    ],
+    "note": "HF runtime sha and honest git_sha are different strings. Neither is a11oy#1835 f76f0907. Republish remains human/sole-writer."
+  },
+  "signing": {
+    "healthz_signer": "ABSENT",
+    "signing_status_honesty": "PARTIAL",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false,
+    "dsse_live": "NOT_STAMPED"
+  },
+  "operator_actions_still_required": [
+    "Republish SZLHOLDINGS/a11oy from protected main f76f0907 via the canonical sole-writer path so Brain Frontier #1835 is the live image.",
+    "Fix www.a-11-oy.com TLS and add a Cloudflare 301 www → https://a-11-oy.com/. Do not add www as a second Hugging Face custom domain.",
+    "Set A11OY_HMAC_KEY (and keep SZL_COSIGN_PRIVATE_PEM) as Space secrets if non-repudiation is required. healthz signer is ABSENT until that is measured.",
+    "Decide whether szl-holdings.github.io CNAME should keep claiming a-11-oy.com. Live HTTP is the Space. Residual Pages CNAME is source drift.",
+    "Hold platform#739 while mergeable_state is unstable. Hold platform#601 while draft."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_receipt_ids": true,
+    "does_not_republish_spaces": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
