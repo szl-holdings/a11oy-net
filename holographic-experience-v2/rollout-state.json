@@ -20,6 +20,7 @@
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",
+    "estate/thread-ops/index.html",
     "experiments/index.html",
     "factory/index.html",
     "five-space/index.html",
@@ -36,9 +37,9 @@
     "terra/index.html",
     "vessels/index.html"
   ],
-  "bound_documents": 31,
+  "bound_documents": 32,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 33,
+  "examined_documents": 34,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -46,6 +47,7 @@
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",
+    "estate/thread-ops/index.html",
     "experiments/index.html",
     "index.html",
     "khipu/index.html",
