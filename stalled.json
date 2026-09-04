@@ -1,0 +1,12 @@
+{
+  "asOf": "2026-09-04T18:56:00Z",
+  "perplexityBrief": "https://github.com/szl-holdings/a11oy/blob/main/docs/PERPLEXITY_BRIEF.md",
+  "stalled": [
+    {"id": "PERPLEXITY-MEMOS", "state": "HISTORICAL", "repo": "szl-holdings/platform"},
+    {"id": "HUB-SCHEMA", "state": "DRIFT", "repo": "szl-holdings/immune"},
+    {"id": "HF-FRONTIER-P0", "state": "OPEN", "issues": ["#8", "#9", "#10", "#1"]},
+    {"id": "HOLO-UNIFY", "state": "HOLOGRAM", "repo": "szl-holdings/holographic-unify"}
+  ],
+  "energy": "UNAVAILABLE",
+  "unprivate_38": false
+}
