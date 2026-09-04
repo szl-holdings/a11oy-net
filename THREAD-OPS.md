@@ -55,3 +55,15 @@ Pinned: 2026-09-04T22:47Z · org github.com/szl-holdings · HF huggingface.co/SZ
 - https://github.com/szl-holdings/.github/issues/523
 - Machine contract: /estate/thread-ops.json
 - Terminal payload: /SZL-GROK-PAYLOAD.md
+
+## Second-brain public home
+
+Chosen fold: https://a11oy.net/estate/thread-ops/
+
+- Proof origin only. RECORD, not runtime.
+- Do not overwrite https://a-11-oy.com/brain (Hickok Dual-Stream).
+- Do not mint a Hugging Face Space. Public Hub cut stays 6 KEEP. second-brain stays ARCHIVE / family.
+- holdings.a-11-oy.com/brain/ is not reachable; Pages root is 404.
+- 9000-node graph remains UNAVAILABLE.
+- certified_production_ready remains false.
+- Machine contract: /estate/thread-ops.json
