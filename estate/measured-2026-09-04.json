@@ -1,0 +1,72 @@
+{
+  "schema": "szl.estate.measured/v1",
+  "observed_at": "2026-09-04T23:35:00Z",
+  "evidence_class": "MEASURED",
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "source": "https://github.com/szl-holdings",
+    "hub": "https://huggingface.co/SZLHOLDINGS",
+    "never": ["a11oy.com"]
+  },
+  "huggingface": {
+    "org": "SZLHOLDINGS",
+    "spaces_hub_ui": 17,
+    "spaces_api_author": 16,
+    "spaces_note": "Hub UI lists 17. Public author API returned 16 IDs this probe. Do not use the 2026-08-31 atlas 48/49 snapshot as live count.",
+    "spaces_api_ids": [
+      "SZLHOLDINGS/a11oy",
+      "SZLHOLDINGS/killinchu",
+      "SZLHOLDINGS/immune",
+      "SZLHOLDINGS/immune-lattice",
+      "SZLHOLDINGS/ayllu",
+      "SZLHOLDINGS/david-leads",
+      "SZLHOLDINGS/counsel",
+      "SZLHOLDINGS/terra",
+      "SZLHOLDINGS/sentra",
+      "SZLHOLDINGS/finance",
+      "SZLHOLDINGS/lyte",
+      "SZLHOLDINGS/vertical-services",
+      "SZLHOLDINGS/szl-command-lab",
+      "SZLHOLDINGS/szl-constellation",
+      "SZLHOLDINGS/szl-frontier",
+      "SZLHOLDINGS/szl-model-inference-lab"
+    ],
+    "models_api": 50,
+    "datasets_api": 30,
+    "stale_atlas_spaces": 49,
+    "stale_atlas_observed_at": "2026-08-31T18:59:11Z"
+  },
+  "github": {
+    "org": "szl-holdings",
+    "website": "https://a-11-oy.com",
+    "search_total_reported": 123,
+    "pinned": ["a11oy", "szl-receipt", "governed-receipt-spec", "lutar-lean", "killinchu", "hatun-mcp"]
+  },
+  "product_runtime": {
+    "healthz": "https://a-11-oy.com/healthz",
+    "console": "https://a-11-oy.com/console",
+    "command": "https://a-11-oy.com/command",
+    "verify": "https://a-11-oy.com/verify",
+    "lake_receipts": "https://a-11-oy.com/api/lake/v1/receipts",
+    "process_ledger": "https://a-11-oy.com/api/a11oy/v1/ledger",
+    "signer": "ABSENT",
+    "lambda": "Conjecture 1",
+    "doctrine": "v11",
+    "lock": "749/14/163",
+    "commit": "c7c0ba17"
+  },
+  "killinchu": {
+    "elite": "https://szlholdings-killinchu.hf.space/elite",
+    "healthz": "https://szlholdings-killinchu.hf.space/api/killinchu/healthz",
+    "effector": "SIMULATED",
+    "public_ato": false
+  },
+  "boundaries": {
+    "http_200_is_not_a_certificate": true,
+    "do_not_merge_product_and_proof": true,
+    "do_not_say_SIGNED_when_signer_absent": true,
+    "do_not_claim_48_live_spaces": true,
+    "no_fedramp_no_ato": true
+  }
+}
