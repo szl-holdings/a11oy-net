@@ -1,0 +1,74 @@
+name: Repin Aegis Killinchu intelligence v4 evidence once
+
+on:
+  push:
+    branches:
+      - fix/repin-aegis-killinchu-intelligence-v4-v1
+    paths:
+      - .github/workflows/repin-aegis-killinchu-intelligence-v4-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repin-aegis-killinchu-intelligence-v4-once
+  cancel-in-progress: false
+
+jobs:
+  repin:
+    name: Repin proof evidence without promoting runtime
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact feature branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/repin-aegis-killinchu-intelligence-v4-v1
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Apply fail-closed evidence repin
+        run: python tools/repin_aegis_killinchu_intelligence_v4.py
+
+      - name: Verify static proof and source contract
+        run: |
+          set -euo pipefail
+          python -m json.tool decision.json >/dev/null
+          python -m json.tool consolidation/aegis-killinchu-20260903.json >/dev/null
+          python -m unittest tests.test_aegis_killinchu_consolidation -v
+          python -m py_compile \
+            tools/repin_aegis_killinchu_intelligence_v4.py \
+            tests/test_aegis_killinchu_consolidation.py
+          ! grep -R -F "e08231a110fd80f85a61fba82d72ab7f1fe23836" \
+            aegis/index.html decision.json consolidation/aegis-killinchu-20260903.json
+          ! grep -R -F "775acaa54724ab206b0c5477d754fbd6ed36e5f7" \
+            aegis/index.html decision.json consolidation/aegis-killinchu-20260903.json
+          git diff --check
+
+      - name: Commit only durable proof evidence
+        env:
+          BRANCH: fix/repin-aegis-killinchu-intelligence-v4-v1
+        run: |
+          set -euo pipefail
+          git rm tools/repin_aegis_killinchu_intelligence_v4.py
+          git rm .github/workflows/repin-aegis-killinchu-intelligence-v4-once.yml
+          git add \
+            aegis/index.html \
+            decision.json \
+            consolidation/aegis-killinchu-20260903.json \
+            tests/test_aegis_killinchu_consolidation.py
+          git config user.name "SZL Proof Evidence Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git commit -m "fix(proof): repin Aegis Killinchu evidence to intelligence v4" \
+            -m "Advance the static consolidation record to the five-body public taxonomy, the intelligence-v4 publisher, and vertical-services 2.2. Preserve formula authority NONE and require exact provider readback before any runtime readiness claim." \
+            -m "Signed-off-by: Stephen Lutar <stephenlutar2@gmail.com>"
+          git push origin "HEAD:${BRANCH}"
