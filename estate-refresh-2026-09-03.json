@@ -1,0 +1,81 @@
+{
+  "schema": "szl.estate-refresh/v1",
+  "date": "2026-09-03",
+  "kind": "MEASURED_DELTA",
+  "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash REPORTED 106 repositories on 2026-09-03 (includes archived). estate.json previously bound 103 on 2026-08-31.",
+  "repositories_search_total": 106,
+  "delta_vs_2026_08_31": 3,
+  "new_repositories": [
+    {
+      "name": "retrieval-bench",
+      "url": "https://github.com/szl-holdings/retrieval-bench",
+      "visibility": "public",
+      "initial_commit": "6f809762de74aacd61d8c00880c430ab9c57f120",
+      "latest_known_commit": "176eca1965cdd7af55b7cd9d6ab5165bb0fc16e1",
+      "ci": ".github/workflows/ci.yml armed; 23 tests (14 retrieval + 9 multivector) green pre-push",
+      "notes": "Retrieval Benchmark Plane: BM25, dense, hybrid RRF, cross-encoder rerank, multivector late interaction (v0.2). Five-state honesty contract; cross-family comparisons INVALID."
+    },
+    {
+      "name": "frontier-bench",
+      "url": "https://github.com/szl-holdings/frontier-bench",
+      "visibility": "public",
+      "initial_commit": "1e498b2c44c86441799f8f4b2fc46406b49a796d",
+      "latest_known_commit": "70ca3f3ec52e4769cfb8e28bcc77dc624a97eceb",
+      "ci": ".github/workflows/ci.yml armed; unit tests + live mock-server E2E on Python 3.11/3.12",
+      "notes": "Frontier Inference Engine Benchmark Harness: vendor-neutral OpenAI-compatible benchmarking for vLLM, SGLang, TGI, llama.cpp, MLX, Transformers. BLOCKED when unconfigured; never fabricated."
+    },
+    {
+      "name": "quant-curve",
+      "url": "https://github.com/szl-holdings/quant-curve",
+      "visibility": "public",
+      "initial_commit": "b8737ca71fd9f816fce627bca6590bef9cc2a96f",
+      "latest_known_commit": "b8737ca71fd9f816fce627bca6590bef9cc2a96f",
+      "ci": ".github/workflows/ci.yml armed in initial commit; 10 tests green pre-push",
+      "notes": "Quantization quality-vs-resource Pareto frontier + promotion gates. UNMEASURED points never frontier-eligible; cross-revision comparisons INVALID."
+    }
+  ],
+  "new_hf_spaces": [
+    {
+      "name": "SZLHOLDINGS/retrieval-bench",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/retrieval-bench",
+      "sdk": "static",
+      "commits": ["352e347619137d6451b699c987c0341b11bcaa7d", "5343eed20a98f9e40fdb15c7be7afcc92f2015ad"]
+    },
+    {
+      "name": "SZLHOLDINGS/frontier-bench",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/frontier-bench",
+      "sdk": "static",
+      "commits": ["5936476efa923d558847b8cc4f36e3d1f47f1e43", "2cdeda812118f85f2254879f906a7752398b2184"]
+    },
+    {
+      "name": "SZLHOLDINGS/quant-curve",
+      "url": "https://huggingface.co/spaces/SZLHOLDINGS/quant-curve",
+      "sdk": "static",
+      "commits": ["47510da5f63b412a4f8601466286c77a0fe96901", "0fd83d0fbe0f7a8688394b875c233345f34d168f"]
+    }
+  ],
+  "pr_queue_resolution_2026_09_03": {
+    "merged": [
+      "puriq-live#7 (db5feadc3708b2ce65b50fc4f247060763b4e803)",
+      "szl-real-estate#13 (3e66eb1fa8fa23ff71ab13da2223c8125ab72686)",
+      "lyte-lattice#11 (e5a53240a5caff2b472c00b332b3891694dd41ce)",
+      "a11oy#1749 (7572c39f81a1b6d5b15e73a2d231067af13a48fd)",
+      "a11oy#1750 (merged by owner)",
+      "killinchu#377 (merged by owner)",
+      "platform#729 (merged by owner)"
+    ],
+    "closed_unmerged": [
+      "david-leads#93 (merge conflict; repo is archived duplicate of a11oy; triage comment posted)"
+    ]
+  },
+  "blocked_legs": [
+    {
+      "system": "cloudflare_connector",
+      "state": "BLOCKED",
+      "evidence": "API error 6003/6103 Invalid format for X-Auth-Key header on 2026-09-23:23 UTC re-tests; credential malformed at connector config level. Owner reconnect in progress.",
+      "note": "Zone IDs are not committed to any repo (correct hygiene); zone ID required from Cloudflare dashboard once connector reads clean."
+    }
+  ],
+  "doctrine": "v11. No fabricated scores anywhere in the bench suite; unconfigured lanes report BLOCKED with reasons. Lambda = Conjecture 1 (advisory). Apache-2.0.",
+  "provenance": "Prepared via authenticated GitHub + Hugging Face connector session on 2026-09-03. Additive artifact; estate.json intentionally left unmodified pending its own governed refresh."
+}
