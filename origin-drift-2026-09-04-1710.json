@@ -1,0 +1,87 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1710",
+  "observed_at_utc": "2026-09-04T17:10:04Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus GitHub read of scripts/configure_hf_series_a_runtime.py on protected a11oy. Cloudflare API UNAVAILABLE. Hugging Face secret write UNAVAILABLE from this connector. No key minted. No DSSE-LIVE stamp.",
+  "delta_from_origin_drift_2026-09-04_1659": {
+    "then_honest_git_sha": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+    "now_honest_git_sha": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+    "protected_a11oy_main": "ce2bff7f8ba522897271f3ae8db5ea09ed656f4f",
+    "hmac": "still placeholder",
+    "meaning": "Live image still #1846. Protected main advanced through Menu lock, /products, and #1848 NEXUS tab. HMAC/DSSE posture unchanged."
+  },
+  "hmac_and_dsse": {
+    "healthz_signer": "ABSENT",
+    "signing_available": false,
+    "scheme": "UNAVAILABLE",
+    "signing_status_honesty": "PARTIAL",
+    "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+    "hmac_layer": "placeholder",
+    "hmac_key_id": "hmac-sha256:PLACEHOLDER",
+    "non_repudiation": false,
+    "dsse_keyid": "9926bf69b799ea66",
+    "dsse_live": "NOT_STAMPED",
+    "why_not_closed_from_this_session": [
+      "configure_hf_series_a_runtime.py writes only non-secret Space variables.",
+      "It requires SZL_COSIGN_PRIVATE_PEM to already exist and never reads or sets A11OY_HMAC_KEY.",
+      "This GitHub connector cannot write Hugging Face Space secrets.",
+      "Minting A11OY_HMAC_KEY into git would leak the key. Refused.",
+      "Stamping DSSE-LIVE while healthz signer is ABSENT and hmac_layer is placeholder would be a false LIVE. Refused."
+    ],
+    "operator_secret_write_required": {
+      "space": "SZLHOLDINGS/a11oy",
+      "keep": "SZL_COSIGN_PRIVATE_PEM",
+      "add_secret": "A11OY_HMAC_KEY",
+      "add_variable_already_in_sole_writer": "A11OY_REQUIRE_PERSISTENT_SIGNING=1",
+      "then": "restart Space, re-measure /healthz and /api/a11oy/v1/signing-status",
+      "dsse_live_gate": "ONLY after healthz signer is present AND signing-status non_repudiation is true AND hmac_layer is not placeholder"
+    }
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "Signer ABSENT. DSSE-LIVE not stamped."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/signing-status",
+      "status": 200,
+      "honesty": "PARTIAL",
+      "hmac_layer": "placeholder",
+      "non_repudiation": false,
+      "verdict": "ADMIT_AS_SIGNING_STATUS_PARTIAL"
+    }
+  ],
+  "space_republish": {
+    "sole_writer": "szl-holdings/a11oy/.github/workflows/hf-sync.yml",
+    "run_1285": {"id": 33897673361, "sha": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541", "status": "in_progress"},
+    "run_1288": {"id": 33898509884, "sha": "ce2bff7f8ba522897271f3ae8db5ea09ed656f4f", "status": "pending"},
+    "did_not_dispatch": true,
+    "note": "runtime-config job cannot install A11OY_HMAC_KEY. Dispatching again would not close HMAC."
+  },
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_hmac_keys": true,
+    "does_not_invent_receipt_ids": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
