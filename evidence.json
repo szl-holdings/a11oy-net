@@ -97,6 +97,24 @@
       "scope": "static on-origin Estate OS control-plane hologram; PROPOSE_ONLY; PUBLIC_PARTIAL 16:49Z bake; not a live dashboard; not product runtime; not a fourth origin; Lambda remains Conjecture 1; catalog remains /estate/os/"
     },
     {
+      "name": "estate_operational_payload_1",
+      "url": "https://a11oy.net/estate/operational-payload-1/",
+      "evidence_class": "MEASURED",
+      "scope": "Grok-in-terminal operational closer RECORD. Ready false. Winner null. Energy UNAVAILABLE. Lambda Conjecture 1 OPEN. Not product runtime. Not a Hub Space. Explicit file also served at /estate/operational-payload-1/index.html."
+    },
+    {
+      "name": "estate_thread_ops",
+      "url": "https://a11oy.net/estate/thread-ops/",
+      "evidence_class": "REPORTED",
+      "scope": "estate closeout thread RECORD; operator runbook is not a hologram; not a Hugging Face Space"
+    },
+    {
+      "name": "nexus_record",
+      "url": "https://a11oy.net/nexus/",
+      "evidence_class": "MEASURED",
+      "scope": "NEXUS analog workstation RECORD. Runtime is IMMUNE /nexus.html. Not a fourth flagship. Energy UNAVAILABLE. Lambda Conjecture 1 OPEN."
+    },
+    {
       "name": "origin_lock_record",
       "url": "https://a11oy.net/origin/",
       "evidence_class": "MEASURED",
