@@ -17,7 +17,7 @@ class AegisKillinchuConsolidation(unittest.TestCase):
         self.assertIn("One current product authority. Preserved historical proof.", page)
         self.assertIn(HUB, page)
         self.assertIn("formula authority NONE", page)
-        self.assertIn("runtime not claimed", page)
+        self.assertIn("exact runtime parity not claimed", page)
         self.assertNotIn(OLD, page)
 
     def test_decision_contract_points_current_authority_to_killinchu(self) -> None:
