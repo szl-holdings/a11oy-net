@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "surface": {
     "name": "Hub Space consolidation",
     "url": "https://a11oy.net/spaces.json",
@@ -353,7 +353,7 @@
     "runtime_claimed": false,
     "hub_spaces_required": false,
     "hub_create": "NOT_REQUIRED",
-    "hub_create_note": "Hugging Face 20 Space-creates/day blocked three adapters. Fold into product vanity paths /terra /aegis /puriq-markets /counsel. Do not wait on Hub.",
+    "hub_create_note": "Aegis no longer requires a sibling Space: preserve /aegis/ as proof and use Killinchu as current product authority. Other Packet 8 adapters remain governed by their own source and runtime evidence.",
     "product": "https://a-11-oy.com/decision",
     "proof": "https://a11oy.net/decision/",
     "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals",
@@ -367,8 +367,10 @@
       {
         "id": "aegis-assurance",
         "sink": "product",
-        "dest": "https://a-11-oy.com/aegis",
-        "hub": "blocked-space-create-cap"
+        "dest": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
+        "hub": "legacy-space-retirement-authorized",
+        "consolidated_into": "SZLHOLDINGS/killinchu",
+        "why": "Aegis is an internal assurance capability plane inside Killinchu, not a sibling public product. Preserve the proof route; retire the duplicate Space only after exact-source and terminal-absence checks."
       },
       {
         "id": "puriq-markets",
@@ -395,5 +397,12 @@
     "factory_is_a_bind_not_a_flagship": true,
     "atlas_keep_7_not_rewritten": true,
     "unprivate_38_from_this_runtime": false
+  },
+  "aegis_killinchu_consolidation": {
+    "status": "SOURCE_MERGED_PROVIDER_RETIREMENT_GATED",
+    "proof_route_preserved": "https://a11oy.net/aegis/",
+    "current_public_authority": "SZLHOLDINGS/killinchu",
+    "killinchu_revision": "928a6dace657f8f9e067773d23d5686fe3dcc716",
+    "runtime_readiness_claimed": false
   }
 }

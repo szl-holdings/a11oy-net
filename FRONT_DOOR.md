@@ -459,3 +459,12 @@ This note does not weaken those checks.
 
 **Product is a-11-oy.com. Proof is a11oy.net. This origin is RECORD.
 Collapse the door. Do not delete the house.**
+
+
+<!-- AEGIS-KILLINCHU-CONSOLIDATION:v1 -->
+## Current resilience authority
+
+- Preserve `/aegis/` as a consolidation RECORD with frozen historical cases.
+- Route current product authority to [SZLHOLDINGS/killinchu](https://huggingface.co/spaces/SZLHOLDINGS/killinchu).
+- Do not present Aegis, Sentra, IMMUNE, or Vessels as sibling public products.
+- Do not claim runtime readiness without exact source-revision and health-contract evidence.

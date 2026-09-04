@@ -21,7 +21,7 @@
     ["/khipu", "KHIPU Record", "Kernels"], ["/decision", "Decision Record", "Products"],
     ["/security", "Security Record", "Proof"], ["/notes", "Research Notes", "Proof"],
     ["/origin", "Origin Record", "Proof"], ["/vessels", "Vessels Record", "Products"],
-    ["/terra", "Terra Record", "Products"], ["/aegis", "Aegis Record", "Products"],
+    ["/terra", "Terra Record", "Products"], ["/aegis", "Aegis → Killinchu Record", "Products"],
     ["/counsel", "Counsel Record", "Products"], ["/factory", "Factory Record", "Products"],
     ["/frontiers", "Frontiers Record", "Proof"], ["/", "A11oy Proof Network", "Start"],
   ];

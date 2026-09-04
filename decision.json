@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0.0",
+  "contract_version": "1.1.0",
   "surface": {
     "name": "Decision Integrity RECORD",
     "url": "https://a11oy.net/decision/",
@@ -12,14 +12,15 @@
     "proof_json": "https://a11oy.net/decision.json",
     "product_desk": "https://a-11-oy.com/decision",
     "product_terra": "https://a-11-oy.com/terra",
-    "product_aegis": "https://a-11-oy.com/aegis",
+    "product_aegis": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
     "product_puriq_markets": "https://a-11-oy.com/puriq-markets",
     "product_counsel": "https://a-11-oy.com/counsel",
     "proof_terra": "https://a11oy.net/terra/",
     "proof_aegis": "https://a11oy.net/aegis/",
     "proof_puriq_markets": "https://a11oy.net/puriq-markets/",
     "proof_counsel": "https://a11oy.net/counsel/",
-    "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals"
+    "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals",
+    "source_killinchu": "https://github.com/szl-holdings/killinchu"
   },
   "status": "ROADMAP",
   "data_label": "SAMPLE",
@@ -31,16 +32,59 @@
   "hub_spaces_required": false,
   "hub_create_cap": "Hugging Face 20 Space-creates/day. Adapters are optional. Do not wait on them for this desk.",
   "verticals": [
-    {"id": "terra", "display_name": "Terra Assurance", "wedge": "NYC Property Risk-to-Committee Decision Assurance", "case_count": 6},
-    {"id": "aegis", "display_name": "Aegis Assurance", "wedge": "Exposure-to-Remediation Decision Assurance", "case_count": 4},
-    {"id": "puriq-markets", "display_name": "Puriq Markets", "wedge": "Event Definition-to-Decision Forecast Assurance", "case_count": 4},
-    {"id": "counsel", "display_name": "Counsel Assurance", "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance", "case_count": 4}
+    {
+      "id": "terra",
+      "display_name": "Terra Assurance",
+      "wedge": "NYC Property Risk-to-Committee Decision Assurance",
+      "case_count": 6
+    },
+    {
+      "id": "aegis",
+      "display_name": "Aegis → Killinchu Capability RECORD",
+      "wedge": "Exposure-to-Remediation assurance preserved inside Killinchu",
+      "case_count": 4,
+      "public_authority": "killinchu",
+      "runtime_claimed": false
+    },
+    {
+      "id": "puriq-markets",
+      "display_name": "Puriq Markets",
+      "wedge": "Event Definition-to-Decision Forecast Assurance",
+      "case_count": 4
+    },
+    {
+      "id": "counsel",
+      "display_name": "Counsel Assurance",
+      "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance",
+      "case_count": 4
+    }
   ],
   "adapters": [
-    {"id": "terra-assurance", "hub": "SZLHOLDINGS/terra-assurance", "state": "exists-private", "sink": "https://a-11-oy.com/terra"},
-    {"id": "aegis-assurance", "hub": "SZLHOLDINGS/aegis-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/aegis"},
-    {"id": "puriq-markets", "hub": "SZLHOLDINGS/puriq-markets", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/puriq-markets"},
-    {"id": "counsel-assurance", "hub": "SZLHOLDINGS/counsel-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/counsel"}
+    {
+      "id": "terra-assurance",
+      "hub": "SZLHOLDINGS/terra-assurance",
+      "state": "exists-private",
+      "sink": "https://a-11-oy.com/terra"
+    },
+    {
+      "id": "aegis-assurance",
+      "hub": "SZLHOLDINGS/aegis-assurance",
+      "state": "legacy-space-retirement-authorized",
+      "sink": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
+      "consolidated_into": "SZLHOLDINGS/killinchu"
+    },
+    {
+      "id": "puriq-markets",
+      "hub": "SZLHOLDINGS/puriq-markets",
+      "state": "blocked-space-create-cap",
+      "sink": "https://a-11-oy.com/puriq-markets"
+    },
+    {
+      "id": "counsel-assurance",
+      "hub": "SZLHOLDINGS/counsel-assurance",
+      "state": "blocked-space-create-cap",
+      "sink": "https://a-11-oy.com/counsel"
+    }
   ],
   "boundaries": {
     "this_origin_does_not_run_the_kernel": true,
@@ -52,5 +96,25 @@
     "legal_advice": false,
     "trading_bot": false,
     "palantir_clone": false
+  },
+  "consolidations": {
+    "aegis": {
+      "proof_route": "https://a11oy.net/aegis/",
+      "current_public_authority": "SZLHOLDINGS/killinchu",
+      "current_product": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
+      "current_source": "https://github.com/szl-holdings/killinchu",
+      "capability_planes": [
+        "aegis",
+        "sentra_defend",
+        "immune",
+        "vessels_maritime",
+        "counter_uas_airspace"
+      ],
+      "killinchu_revision": "928a6dace657f8f9e067773d23d5686fe3dcc716",
+      "a11oy_publisher_revision": "775acaa54724ab206b0c5477d754fbd6ed36e5f7",
+      "vertical_services_revision": "e08231a110fd80f85a61fba82d72ab7f1fe23836",
+      "runtime_readiness_claimed": false,
+      "historical_cases_preserved": true
+    }
   }
 }
