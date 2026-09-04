@@ -1,12 +1,47 @@
 {
-  "asOf": "2026-09-04T20:25:00Z",
+  "asOf": "2026-09-04T21:03:00Z",
   "perplexityBrief": "https://github.com/szl-holdings/a11oy/blob/main/docs/PERPLEXITY_BRIEF.md",
   "stalled": [
-    {"id": "PERPLEXITY-MEMOS", "state": "HISTORICAL", "repo": "szl-holdings/platform", "note": "June 2026 forge-perplexity memos. Not current runtime."},
-    {"id": "HUB-SCHEMA", "state": "MEASURED", "repo": "szl-holdings/immune", "note": "Channel A tape seq 7+ carries estate/poorest/energyClass/energy_j. Channel B additive in immune#121."},
-    {"id": "CODEX-FRONTIER-REVIEW", "state": "FIXING", "repo": "szl-holdings/szl-ouroboros", "note": "source_count drifted 6→7. Pin in ouroboros#19."},
-    {"id": "HF-FRONTIER-P0", "state": "OPEN", "issues": ["#8", "#9", "#10", "#1"], "note": "Metal-blocked. Source complete. Estate not ready."},
-    {"id": "HOLO-UNIFY", "state": "HOLOGRAM", "repo": "szl-holdings/holographic-unify", "note": "Not a public Hub Space (401). Not the flagship. Homepage a-11-oy.com."}
+    {
+      "id": "PERPLEXITY-MEMOS",
+      "state": "HISTORICAL",
+      "repo": "szl-holdings/platform",
+      "note": "June 2026 forge-perplexity memos are retained as provenance; they are not a current runtime, deployment authority, or unfinished build receipt."
+    },
+    {
+      "id": "HUB-SCHEMA",
+      "state": "RESOLVED",
+      "repo": "szl-holdings/immune",
+      "evidence": "https://github.com/szl-holdings/immune/pull/121",
+      "merge": "234472e742af6a39a5e77ff649ea6bf4653a031f",
+      "note": "Channel A tape seq 7+ and Channel B v2 estate fields landed through immune#121."
+    },
+    {
+      "id": "CODEX-FRONTIER-REVIEW",
+      "state": "RESOLVED",
+      "repo": "szl-holdings/szl-ouroboros",
+      "evidence": "https://github.com/szl-holdings/szl-ouroboros/pull/18",
+      "merge": "67bf1de0286dd05484fd33adcbbed77f4e3f3992",
+      "note": "The source_count 6-to-7 drift repair merged in #18. PR #19 was closed as a duplicate and is not an outstanding build."
+    },
+    {
+      "id": "CODEX-REVIEW-CREDITS",
+      "state": "BLOCKED_EXTERNAL",
+      "repo": "chatgpt-codex-connector",
+      "note": "Automated Codex review comments report exhausted review credits. This is an external review-service limit, not a source-build success or failure, and it is never converted into a fabricated approval."
+    },
+    {
+      "id": "HF-FRONTIER-P0",
+      "state": "BLOCKED_EXTERNAL",
+      "issues": ["#8", "#9", "#10", "#1"],
+      "note": "Source harnesses exist; final model qualification and benchmark claims require admitted datasets, authorized compute or owner metal, and measured receipts. Winner remains unselected until those conditions are met."
+    },
+    {
+      "id": "HOLO-UNIFY",
+      "state": "HOLOGRAM",
+      "repo": "szl-holdings/holographic-unify",
+      "note": "Not a canonical public Hub product Space and not the flagship runtime. The canonical product origin remains a-11-oy.com."
+    }
   ],
   "energy": "UNAVAILABLE",
   "unprivate_38": false
