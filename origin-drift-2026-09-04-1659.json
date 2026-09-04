@@ -1,0 +1,153 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1659",
+  "observed_at_utc": "2026-09-04T16:59:01Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET. Hugging Face Spaces API 429 from this IP. Cloudflare API UNAVAILABLE. No DNS mutation. No secret write. No second hf-sync dispatch.",
+  "delta_from_origin_drift_2026-09-04_1612": {
+    "then_honest_git_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "now_honest_git_sha": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+    "protected_a11oy_main": "7f51d72b82db33f4f06edb6f135ac9e0547102ac",
+    "meaning": "Live Space advanced from #1835 f76f0907 to #1846 1e6a80ae (alert-relay host canonicalize). Protected main already moved again to 7f51d72b Menu 48px lock. Image lag of one protected commit. hf-sync 1285 in_progress on 1e6a80ae; 1286 pending on 7f51d72b."
+  },
+  "github_protected": {
+    "a11oy_main": "7f51d72b82db33f4f06edb6f135ac9e0547102ac",
+    "a11oy_1835": "merged_superseded_by_later_main",
+    "a11oy_1846": "merged_and_live_honest",
+    "a11oy_1848": "open_unstable_held",
+    "immune_118": "open_unstable_held",
+    "szl_second_brain_14": "open_blocked_held",
+    "platform_601": "open_draft_held"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "server": "szl",
+      "x_szl_space": "a11oy",
+      "x_szl_wire_d": "LIVE",
+      "wire_d_meaning": "Provenance hop header. Not domain LIVE. Not DSSE-LIVE.",
+      "git_sha_reported": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/build-info",
+      "status": 200,
+      "revision": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+      "revision_source": "env:SZL_GIT_SHA",
+      "verdict": "ADMIT_AS_BUILD_INFO"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "signing_available": false,
+      "scheme": "UNAVAILABLE",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "Signer ABSENT. Do not stamp DSSE-LIVE."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/signing-status",
+      "status": 200,
+      "honesty": "PARTIAL",
+      "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+      "hmac_layer": "placeholder",
+      "hmac_key_id": "hmac-sha256:PLACEHOLDER",
+      "non_repudiation": false,
+      "dsse_keyid": "9926bf69b799ea66",
+      "verdict": "ADMIT_AS_SIGNING_STATUS_PARTIAL"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/readyz",
+      "status": 200,
+      "khipu_backend": "sqlite",
+      "khipu_durable": true,
+      "khipu_depth": 0,
+      "khipu_chain_ok": true,
+      "verdict": "ADMIT_AS_READYZ"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/console",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_CONSOLE"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/verify",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_VERIFY_TOOL"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/holographic",
+      "status": 200,
+      "server": "szl",
+      "verdict": "ADMIT_AS_RUNTIME_HOLO_SHELL",
+      "note": "HTTP 200 on #1846 image. Protected main Menu 48px lock 7f51d72b is not yet this process."
+    },
+    {
+      "host": "szlholdings-a11oy.hf.space",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541",
+      "verdict": "ADMIT_AS_SPACE_RUNTIME"
+    },
+    {
+      "host": "www.a-11-oy.com",
+      "path": "/",
+      "status": null,
+      "error": "SSL: TLSV1_ALERT_ACCESS_DENIED",
+      "verdict": "UNAVAILABLE",
+      "note": "Canonical www redirect remains unproved. Do not invent a 301. Do not add www as a second HF custom domain."
+    },
+    {
+      "host": "huggingface.co",
+      "path": "/api/spaces/SZLHOLDINGS/a11oy",
+      "status": 429,
+      "verdict": "UNAVAILABLE",
+      "note": "Unauthenticated HF API rate-limited from this observer IP. Runtime sha not refreshed this probe."
+    }
+  ],
+  "space_republish": {
+    "sole_writer": "szl-holdings/a11oy/.github/workflows/hf-sync.yml",
+    "run_1285": {"id": 33897673361, "sha": "1e6a80ae1e071f55e0e30c9de37236cccbfc4541", "status": "in_progress"},
+    "run_1286": {"id": 33898072640, "sha": "7f51d72b82db33f4f06edb6f135ac9e0547102ac", "status": "pending"},
+    "did_not_dispatch": true,
+    "live_matches_1846": true,
+    "live_matches_protected_main": false
+  },
+  "signing": {
+    "healthz_signer": "ABSENT",
+    "signing_status_honesty": "PARTIAL",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false,
+    "dsse_live": "NOT_STAMPED"
+  },
+  "operator_actions_still_required": [
+    "Observe hf-sync 1286 to publish 7f51d72b. Do not dispatch a competing run.",
+    "Set A11OY_HMAC_KEY on Space SZLHOLDINGS/a11oy, keep SZL_COSIGN_PRIVATE_PEM, then A11OY_REQUIRE_PERSISTENT_SIGNING. Re-measure before any DSSE-LIVE stamp.",
+    "Fix www.a-11-oy.com TLS and add a Cloudflare 301 www to https://a-11-oy.com/. Do not add www as a second Hugging Face custom domain.",
+    "Hold a11oy#1848 and immune#118 while mergeable_state is unstable. Hold szl-second-brain#14 while blocked. Hold platform#601 while draft."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_receipt_ids": true,
+    "does_not_dispatch_hf_sync": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "kernel": "c7c0ba17"
+  }
+}
