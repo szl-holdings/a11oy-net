@@ -1,11 +1,12 @@
 {
-  "asOf": "2026-09-04T18:56:00Z",
+  "asOf": "2026-09-04T20:25:00Z",
   "perplexityBrief": "https://github.com/szl-holdings/a11oy/blob/main/docs/PERPLEXITY_BRIEF.md",
   "stalled": [
-    {"id": "PERPLEXITY-MEMOS", "state": "HISTORICAL", "repo": "szl-holdings/platform"},
-    {"id": "HUB-SCHEMA", "state": "DRIFT", "repo": "szl-holdings/immune"},
-    {"id": "HF-FRONTIER-P0", "state": "OPEN", "issues": ["#8", "#9", "#10", "#1"]},
-    {"id": "HOLO-UNIFY", "state": "HOLOGRAM", "repo": "szl-holdings/holographic-unify"}
+    {"id": "PERPLEXITY-MEMOS", "state": "HISTORICAL", "repo": "szl-holdings/platform", "note": "June 2026 forge-perplexity memos. Not current runtime."},
+    {"id": "HUB-SCHEMA", "state": "MEASURED", "repo": "szl-holdings/immune", "note": "Channel A tape seq 7+ carries estate/poorest/energyClass/energy_j. Channel B additive in immune#121."},
+    {"id": "CODEX-FRONTIER-REVIEW", "state": "FIXING", "repo": "szl-holdings/szl-ouroboros", "note": "source_count drifted 6→7. Pin in ouroboros#19."},
+    {"id": "HF-FRONTIER-P0", "state": "OPEN", "issues": ["#8", "#9", "#10", "#1"], "note": "Metal-blocked. Source complete. Estate not ready."},
+    {"id": "HOLO-UNIFY", "state": "HOLOGRAM", "repo": "szl-holdings/holographic-unify", "note": "Not a public Hub Space (401). Not the flagship. Homepage a-11-oy.com."}
   ],
   "energy": "UNAVAILABLE",
   "unprivate_38": false
