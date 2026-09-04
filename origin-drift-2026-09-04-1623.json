@@ -1,0 +1,171 @@
+{
+  "contract_version": "1.1.0",
+  "incident": "INC-05-DRIFT-2026-09-04-1623",
+  "observed_at_utc": "2026-09-04T16:23:55Z",
+  "evidence_class": "MEASURED",
+  "observer": "Grok public HTTP GET plus unauthenticated Hugging Face Spaces API plus GitHub Actions list_workflow_runs. Cloudflare API UNAVAILABLE. No DNS mutation. No secret write. hf-sync already in_progress on later SHAs; did not dispatch a second run.",
+  "lambda": "Conjecture 1",
+  "dsse_live": "NOT_STAMPED",
+  "delta_from_origin_drift_2026-09-04_1612": {
+    "then_honest_git_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "now_honest_git_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "then_protected_a11oy_main": "f76f09079f5d37ea434435e199e446e1a977088a",
+    "now_protected_a11oy_main": "324bdda368158fc5915838a91f36c49eafd60e66",
+    "then_hf_runtime_stage": "RUNNING",
+    "now_hf_runtime_stage": "RUNNING_APP_STARTING",
+    "then_hf_runtime_sha": "26a4ddf4d7f9001a6c69f936680b77e06199353f",
+    "now_hf_runtime_sha": "26a4ddf4d7f9001a6c69f936680b77e06199353f",
+    "then_hf_sync_1277": "in_progress",
+    "now_hf_sync_1277": "completed_failure",
+    "meaning": "Live /honest still reports #1835 squash f76f0907. Protected main advanced to #1841 324bdda. Live image lags protected main. HMAC still placeholder. Do not stamp DSSE-LIVE. HF runtime sha and git sha remain different strings on purpose."
+  },
+  "space_republish": {
+    "class": "MEASURED",
+    "path": "szl-holdings/a11oy/.github/workflows/hf-sync.yml",
+    "did_not_dispatch": true,
+    "reason": "concurrency group sync-relock-canonical-a11oy already had in_progress/pending runs",
+    "run_1277": {
+      "id": 33893544615,
+      "url": "https://github.com/szl-holdings/a11oy/actions/runs/33893544615",
+      "head_sha": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    "run_1279": {
+      "id": 33894378952,
+      "url": "https://github.com/szl-holdings/a11oy/actions/runs/33894378952",
+      "head_sha": "72cfe25f7995d04d79e09b85cc4959224e9fab09",
+      "event": "push",
+      "status": "in_progress",
+      "note": "Attest exact running commit in_progress at observe. Head is #1840, not live honest SHA."
+    },
+    "run_1280": {
+      "id": 33894778462,
+      "url": "https://github.com/szl-holdings/a11oy/actions/runs/33894778462",
+      "head_sha": "324bdda368158fc5915838a91f36c49eafd60e66",
+      "event": "push",
+      "status": "pending"
+    },
+    "live_honest_matches_protected_main": false,
+    "live_honest_matches_1835": true
+  },
+  "github_protected": {
+    "a11oy_main": "324bdda368158fc5915838a91f36c49eafd60e66",
+    "a11oy_main_subject": "feat(landing): first-class IMMUNE tab on the public nav (#1841)",
+    "a11oy_1835": "merged_live_honest_still_this_sha",
+    "a11oy_1840": "merged_hf_sync_in_progress_72cfe25",
+    "a11oy_1811": "closed_unmerged_was_CONFLICTING",
+    "a11oy_1838": "closed_unmerged_was_draft",
+    "platform_601": "closed_unmerged_draft",
+    "lutar-lean_282": "merged"
+  },
+  "hosts": [
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/build-info",
+      "status": 200,
+      "revision": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "revision_source": "env:SZL_GIT_SHA",
+      "verdict": "ADMIT_AS_RUNTIME_BUILD_INFO"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/honest",
+      "status": 200,
+      "git_sha_reported": "f76f09079f5d37ea434435e199e446e1a977088a",
+      "doctrine": "v11 LOCKED",
+      "lambda": "Conjecture 1",
+      "locked_formula_count": 8,
+      "kernel": "c7c0ba17",
+      "verdict": "ADMIT_AS_RUNTIME_HONEST_CONTRACT",
+      "note": "Live git_sha lags protected main 324bdda. Not a DSSE-LIVE stamp. x-szl-wire-d is provenance hop only if present."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/healthz",
+      "status": 200,
+      "signer_status": "ABSENT",
+      "signing_available": false,
+      "scheme": "UNAVAILABLE",
+      "commit_field": "c7c0ba17",
+      "verdict": "ADMIT_AS_HEALTHZ",
+      "note": "healthz commit field is doctrine lock, not deploy SHA. Signer ABSENT. Do not stamp DSSE-LIVE."
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/api/a11oy/v1/signing-status",
+      "status": 200,
+      "honesty": "PARTIAL",
+      "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+      "hmac_layer": "placeholder",
+      "hmac_key_id": "hmac-sha256:PLACEHOLDER",
+      "non_repudiation": false,
+      "dsse_keyid": "9926bf69b799ea66",
+      "verdict": "ADMIT_AS_SIGNING_STATUS_PARTIAL"
+    },
+    {
+      "host": "a-11-oy.com",
+      "path": "/readyz",
+      "status": 200,
+      "khipu_backend": "sqlite",
+      "khipu_durable": true,
+      "khipu_depth": 0,
+      "khipu_chain_ok": true,
+      "verdict": "ADMIT_AS_READYZ"
+    },
+    {
+      "host": "www.a-11-oy.com",
+      "path": "/",
+      "status": null,
+      "error": "SSL: TLSV1_ALERT_ACCESS_DENIED",
+      "verdict": "UNAVAILABLE",
+      "note": "Human-only Cloudflare/DNS. No 301 invented."
+    },
+    {
+      "host": "a11oy.net",
+      "path": "/origin-drift-2026-09-04-1612.json",
+      "status": 200,
+      "verdict": "ADMIT_AS_PRIOR_DRIFT_SNAPSHOT"
+    }
+  ],
+  "huggingface": {
+    "space": "SZLHOLDINGS/a11oy",
+    "runtime_stage": "RUNNING_APP_STARTING",
+    "runtime_sha": "26a4ddf4d7f9001a6c69f936680b77e06199353f",
+    "hf_space_sha": "77271b40c94b8c61b987ee7a1b075dfa4a5c8b8e",
+    "lastModified": "2026-09-04T16:22:55.000Z",
+    "domains": [
+      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
+      { "domain": "a-11-oy.com", "stage": "READY" }
+    ],
+    "note": "HF runtime sha and git sha are different strings on purpose. RUNNING_APP_STARTING is not qualification."
+  },
+  "signing": {
+    "healthz_signer": "ABSENT",
+    "signing_status_honesty": "PARTIAL",
+    "hmac_layer": "placeholder",
+    "non_repudiation": false,
+    "dsse_live": "NOT_STAMPED",
+    "note": "This connector cannot write Hugging Face Space secrets. HMAC stays PARTIAL until operator sets A11OY_HMAC_KEY on Space SZLHOLDINGS/a11oy, keeps SZL_COSIGN_PRIVATE_PEM, then A11OY_REQUIRE_PERSISTENT_SIGNING, restart, re-measure."
+  },
+  "operator_actions_still_required": [
+    "Observe hf-sync 33894378952 and pending 33894778462. Do not dispatch another hf-sync while those exist.",
+    "Set A11OY_HMAC_KEY on Space SZLHOLDINGS/a11oy (keep SZL_COSIGN_PRIVATE_PEM), then enable A11OY_REQUIRE_PERSISTENT_SIGNING. Re-measure before any DSSE-LIVE label.",
+    "Fix www.a-11-oy.com TLS and add a Cloudflare 301 www to https://a-11-oy.com/. Do not add www as a second Hugging Face custom domain. Do not grey-cloud.",
+    "a11oy#1811 closed unmerged CONFLICTING. Do not treat static-gateway 200 as runtime. platform#601 closed unmerged draft. lutar-lean#282 merged."
+  ],
+  "boundaries": {
+    "this_file_does_not_change_dns": true,
+    "does_not_stamp_dsse_live": true,
+    "does_not_invent_receipt_ids": true,
+    "does_not_mint_hmac_keys": true,
+    "does_not_dispatch_huggingface_yml": true,
+    "does_not_rewrite_origin_json": true,
+    "lambda": "Conjecture 1",
+    "locked_formulas": 8,
+    "locked_ids": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
+    "kernel": "c7c0ba17",
+    "doctrine": "v11 LOCKED 749/14/163"
+  }
+}
