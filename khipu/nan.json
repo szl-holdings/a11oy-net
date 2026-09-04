@@ -1,0 +1,18 @@
+{
+  "kind": "RECORD",
+  "title": "SZL KHIPU Ñan lab",
+  "doctrine": "v11 LOCKED",
+  "conjecture_1": "OPEN",
+  "energy_status": "UNAVAILABLE",
+  "proven_trust": false,
+  "kernel_run_here": false,
+  "cuda": "UNAVAILABLE",
+  "hash": "djb2 silhouette",
+  "cuts": 22,
+  "source": "https://github.com/szl-holdings/szl-khipu/blob/main/szl_khipu/nan_lab.py",
+  "product": "https://a-11-oy.com/khipu",
+  "proof": "https://a11oy.net/khipu/",
+  "hub": "https://huggingface.co/SZLHOLDINGS/szl-khipu",
+  "not": ["killinchu", "a11oy.com", "SZLHoldings GitHub slug", "fabricated joule"],
+  "run": "python3 -m szl_khipu.nan_lab --selftest"
+}
