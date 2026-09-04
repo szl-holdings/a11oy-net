@@ -1,0 +1,94 @@
+name: One-use reconcile proof rollout registries
+
+on:
+  push:
+    branches:
+      - fix/proof-rollout-late-pages-20260904
+    paths:
+      - .github/workflows/one-use-reconcile-proof-rollouts.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-use-reconcile-proof-rollouts
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/proof-rollout-late-pages-20260904
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Apply both deterministic proof-shell rollouts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/rollout_holographic_proof_v2.py --report /tmp/holographic-apply.json
+          python tools/rollout_proof_flow_shell.py --report /tmp/flow-apply.json
+          python tools/rollout_holographic_proof_v2.py --check --report /tmp/holographic-check.json
+          python tools/rollout_proof_flow_shell.py --check --report /tmp/flow-check.json
+
+      - name: Require the exact four durable generated changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+
+          observed = {
+              line.strip()
+              for line in subprocess.check_output(
+                  ["git", "diff", "--name-only"], text=True
+              ).splitlines()
+              if line.strip()
+          }
+          expected = {
+              "estate/frontier-2026-09-04/index.html",
+              "khipu/nan/index.html",
+              "holographic-experience-v2/rollout-state.json",
+              "frontend-flow-shell-state.json",
+          }
+          if observed != expected:
+              raise SystemExit(
+                  f"unexpected rollout change set: expected={sorted(expected)} observed={sorted(observed)}"
+              )
+          PY
+
+      - name: Run the complete proof-site contract suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/rollout_holographic_proof_v2.py tools/rollout_proof_flow_shell.py tests/test_holographic_proof_v2.py tests/test_proof_flow_shell.py
+          python tests/test_holographic_proof_v2.py -v
+          python tests/test_proof_flow_shell.py -v
+          python -m pytest -q tests
+          git diff --check
+
+      - name: Commit durable repair and remove this controller
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "SZL Proof Rollout Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git add \
+            estate/frontier-2026-09-04/index.html \
+            khipu/nan/index.html \
+            holographic-experience-v2/rollout-state.json \
+            frontend-flow-shell-state.json
+          git rm .github/workflows/one-use-reconcile-proof-rollouts.yml
+          git commit -s -m "fix(proof): bind late pages into both rollout registries"
+          git push origin HEAD:fix/proof-rollout-late-pages-20260904
