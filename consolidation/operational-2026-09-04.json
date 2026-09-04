@@ -1,0 +1,49 @@
+{
+  "contract_version": "1.2.0",
+  "probed_at": "2026-09-04T23:20:00Z",
+  "evidence_class": "MEASURED",
+  "hub_writes": "UNSIGNED",
+  "github_archive": "UNSIGNED",
+  "spaces_deleted": false,
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "verify": "https://a-11-oy.com/verify",
+    "never": "a11oy.com"
+  },
+  "intended_first_fold": [
+    "SZLHOLDINGS/a11oy",
+    "SZLHOLDINGS/killinchu",
+    "SZLHOLDINGS/immune",
+    "SZLHOLDINGS/counsel",
+    "SZLHOLDINGS/szl-command-lab"
+  ],
+  "intended_first_fold_note": "Pin those five when a Hub token exists. Constellation is the broken atlas twin — leave URL up, do not pin next to command-lab. Verticals stay running unpinned. immune-lattice is Channel B — keep running, do not archive.",
+  "measured_pins_too_many": [
+    "a11oy",
+    "killinchu",
+    "counsel",
+    "terra",
+    "sentra",
+    "finance",
+    "vertical-services",
+    "szl-command-lab",
+    "david-leads",
+    "szl-constellation"
+  ],
+  "public_spaces": 16,
+  "folded_401": [
+    {"id": "SZLHOLDINGS/szl-khipu", "destination": "GitHub szl-khipu + a11oy.net"},
+    {"id": "SZLHOLDINGS/szl-atelier", "destination": "https://a11oy.net/atelier"},
+    {"id": "SZLHOLDINGS/governed-receipt-verifier", "destination": "https://a-11-oy.com/verify"},
+    {"id": "SZLHOLDINGS/anatomy", "destination": "https://a-11-oy.com/anatomy-v5"}
+  ],
+  "runtime": {
+    "a11oy_app": "https://szlholdings-a11oy.hf.space/",
+    "killinchu_app": "https://szlholdings-killinchu.hf.space/",
+    "immune_app": "https://szlholdings-immune.hf.space/",
+    "counsel_app": "https://szlholdings-counsel.hf.space/",
+    "atlas_app": "https://szlholdings-szl-command-lab.hf.space/",
+    "constellation_app": "503"
+  }
+}
