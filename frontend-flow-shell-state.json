@@ -1,5 +1,5 @@
 {
-  "examined_documents": 29,
+  "examined_documents": 30,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -15,6 +15,7 @@
     "diligence/index.html",
     "estate/index.html",
     "estate/os/index.html",
+    "estate/plane/index.html",
     "experiments/index.html",
     "factory/index.html",
     "five-space/index.html",

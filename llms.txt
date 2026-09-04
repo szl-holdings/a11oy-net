@@ -10,6 +10,7 @@ Authoritative public paths:
 - Hub atlas contract: https://a11oy.net/atlas.json
 - Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
 - Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
+- Estate OS control-plane hologram (static on-origin operator surface; PROPOSE_ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/plane/
 - Estate contract: https://a11oy.net/estate.json
 - Hub Space consolidation contract: https://a11oy.net/spaces.json
 - Models and kernels honesty RECORD: https://a11oy.net/models.json

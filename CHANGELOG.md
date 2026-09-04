@@ -2,8 +2,8 @@
 
 ## 2026-09-04
 
+- `/estate/plane/` admitted as the on-origin Estate OS control-plane hologram (hash router). PUBLIC_PARTIAL bake 2026-08-29T16:49:00Z. PROPOSE_ONLY minting. Λ remains Conjecture 1 and cannot be promoted. Not a live dashboard. Not product runtime. Not a fourth origin. Catalog hologram stays `/estate/os/`. Later keep-7 recapture stays `/estate.json` and is not overwritten. Linked from `/estate/`. Index, not nav, not the first fold. Does not clone `/verify`. Never a11oy.com.
 - `/immune-desk.json` admitted as SOFTWARE operational-rails RECORD for IMMUNE. SENTRA / YAWAR / HUKLLA / locked-8 / NEXUS organ are OPERATIONAL as in-process kernels. Frontier remains MODELED. Energy UNAVAILABLE. Actuation SIMULATED. Does not stamp `/models.json` operational true. Does not rewrite atlas keep-7. pause+private never delete. Never a11oy.com.
-
 
 ## 2026-08-31
 
