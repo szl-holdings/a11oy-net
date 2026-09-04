@@ -67,48 +67,65 @@ jobs:
               )
           PY
 
-      - name: Prove marker stability across every test module
+      - name: Diagnose exact pytest path identity
         shell: bash
         env:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: |
           set -euo pipefail
-          probe() {
-            python - "$1" <<'PY'
+          cat > conftest.py <<'PY'
+          from __future__ import annotations
+
           import hashlib
-          import pathlib
-          import sys
+          from pathlib import Path
 
-          label = sys.argv[1]
-          path = pathlib.Path("khipu/nan/index.html")
-          text = path.read_text(encoding="utf-8")
-          counts = {
-              "holo_style": text.count('data-szl-proof-holo-asset="style-v2"'),
-              "holo_script": text.count('data-szl-proof-holo-asset="script-v2"'),
-              "flow_style": text.count('data-szl-proof-flow-asset="style"'),
-              "flow_script": text.count('data-szl-proof-flow-asset="script"'),
-          }
-          print(label, hashlib.sha256(path.read_bytes()).hexdigest(), counts)
-          if counts != {"holo_style": 1, "holo_script": 1, "flow_style": 1, "flow_script": 1}:
-              raise SystemExit(f"marker drift at {label}: {counts}")
+
+          def _dump(item, phase: str) -> None:
+              if item.name != "test_rollout_state_enforces_exact_mode_when_active":
+                  return
+              module = item.module
+              root = Path(module.ROOT)
+              marker = module.SCRIPT_MARKER
+              print(f"DIAG phase={phase} module_file={module.__file__!r} root={str(root)!r} resolved_root={str(root.resolve())!r} marker={marker!r}")
+              state = module.HolographicProofV2Contract.state
+              for relative in state.get("bindings", []):
+                  if "nan" not in relative:
+                      continue
+                  path = root / relative
+                  payload = path.read_bytes()
+                  text = payload.decode("utf-8")
+                  print(
+                      "DIAG binding",
+                      repr(relative),
+                      repr(str(path)),
+                      repr(str(path.resolve())),
+                      path.exists(),
+                      hashlib.sha256(payload).hexdigest(),
+                      text.count(marker),
+                      text.count('data-szl-proof-flow-asset="script"'),
+                  )
+
+
+          def pytest_runtest_setup(item):
+              _dump(item, "setup")
+
+
+          def pytest_runtest_call(item):
+              _dump(item, "call")
           PY
-          }
-          probe after-rollout
-          python -m pytest --version
-          for test_file in tests/test_*.py; do
-            python -m pytest -q "$test_file"
-            probe "after-${test_file}"
-          done
-          python -m pytest -q tests
-          probe after-full-suite
+          trap 'rm -f conftest.py' EXIT
+          python -m pytest -s -vv tests/test_holographic_proof_v2.py
 
-      - name: Run standalone contracts and syntax checks
+      - name: Prove complete isolated contract suite
         shell: bash
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: |
           set -euo pipefail
-          python -m py_compile tools/rollout_holographic_proof_v2.py tools/rollout_proof_flow_shell.py tests/test_holographic_proof_v2.py tests/test_proof_flow_shell.py
+          python -m pytest -q tests
           python tests/test_holographic_proof_v2.py -v
           python tests/test_proof_flow_shell.py -v
+          python -m py_compile tools/rollout_holographic_proof_v2.py tools/rollout_proof_flow_shell.py tests/test_holographic_proof_v2.py tests/test_proof_flow_shell.py
           git diff --check
 
       - name: Commit durable repair and remove this controller
