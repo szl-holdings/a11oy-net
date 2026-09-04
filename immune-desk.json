@@ -1,0 +1,32 @@
+{
+  "contract": "1.0.0",
+  "kind": "RECORD",
+  "service": "IMMUNE",
+  "channel": "A",
+  "asOf": "2026-09-04T16:00:00Z",
+  "write_ready": true,
+  "read_ready": true,
+  "evidenceClass": "SOFTWARE",
+  "operational_models": false,
+  "energy": "UNAVAILABLE",
+  "actuation": "SIMULATED",
+  "frontier": "MODELED",
+  "conjecture1": "OPEN",
+  "kernelCommit": "c7c0ba17",
+  "lockedProven": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
+  "rails": {
+    "sentra": "OPERATIONAL",
+    "yawar": "OPERATIONAL",
+    "huklla": "OPERATIONAL",
+    "kernel": "OPERATIONAL",
+    "nexusOrgan": "OPERATIONAL",
+    "frontier": "MODELED",
+    "energy": "UNAVAILABLE",
+    "actuation": "MODELED"
+  },
+  "product": "https://a-11-oy.com/immune",
+  "source": "https://github.com/szl-holdings/immune",
+  "atlasKeep7Rewritten": false,
+  "unprivate_38": false,
+  "note": "SOFTWARE cycle runs in the operator desk. Hub model cards stay operational:false. Not an ATO."
+}
