@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Local browser kernel contract
+
+"on":
+  pull_request:
+    branches: [main]
+    paths:
+      - estate/alloy-os/**
+      - tests/local-kernel.test.cjs
+      - tests/local_kernel_browser.py
+      - tests/test_alloy_local_kernel.py
+      - .github/workflows/local-kernel-contract.yml
+  push:
+    branches: [main]
+    paths:
+      - estate/alloy-os/**
+      - tests/local-kernel.test.cjs
+      - tests/local_kernel_browser.py
+      - tests/test_alloy_local_kernel.py
+      - .github/workflows/local-kernel-contract.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: local-kernel-contract-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  crypto:
+    name: Real WebCrypto and fail-closed local state
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.0.0
+        with:
+          node-version: "22"
+      - name: Parse browser assets
+        run: node --check estate/alloy-os/kernel.js && node --check estate/alloy-os/app.js
+      - name: Exercise deterministic kernel contracts
+        run: node --test tests/local-kernel.test.cjs
+
+  browser:
+    name: Chromium persistence, concurrency and mobile delivery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.55.0-noble@sha256:640d578aae63cfb632461d1b0aecb01414e4e020864ac3dd45a868dc0eff3078
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Install exact browser-driver closure
+        run: python -m pip install --no-deps --disable-pip-version-check playwright==1.55.0 pyee==13.0.0 greenlet==3.2.4
+      - name: Exercise disposable loopback browser storage
+        run: python tests/local_kernel_browser.py

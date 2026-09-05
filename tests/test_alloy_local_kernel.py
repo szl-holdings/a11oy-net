@@ -13,37 +13,44 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "estate" / "alloy-os" / "index.html"
 APP = ROOT / "estate" / "alloy-os" / "app.js"
 KERNEL = ROOT / "estate" / "alloy-os" / "kernel.js"
+CSS = ROOT / "estate" / "alloy-os" / "alloy.css"
 SNAPSHOT = ROOT / "estate" / "alloy-os" / "live.json"
+NODE_TEST = ROOT / "tests" / "local-kernel.test.cjs"
+BROWSER_TEST = ROOT / "tests" / "local_kernel_browser.py"
+WORKFLOW = ROOT / ".github" / "workflows" / "local-kernel-contract.yml"
 
 
-def test_local_kernel_files_are_complete_and_ordered() -> None:
+def test_local_kernel_assets_are_complete_and_ordered() -> None:
     html = PAGE.read_text(encoding="utf-8")
-    assert KERNEL.is_file()
-    assert APP.is_file()
-    assert SNAPSHOT.is_file()
+    for path in (APP, KERNEL, CSS, SNAPSHOT, NODE_TEST, BROWSER_TEST, WORKFLOW):
+        assert path.is_file(), path
     assert html.count('src="./kernel.js"') == 1
     assert html.count('src="./app.js"') == 1
     assert html.index('src="./kernel.js"') < html.index('src="./app.js"')
+    assert "script-src 'self'" in html
+    assert "connect-src 'self'" in html
+    assert "cross-tab Web Locks" in html
+    assert "This page does not observe product runtime health" in html
 
 
-def test_kernel_is_browser_local_and_exposes_the_ui_contract() -> None:
+def test_kernel_is_local_bounded_and_fail_closed() -> None:
     source = KERNEL.read_text(encoding="utf-8")
     for required in (
-        'const ADAPTER_CURRENT = "alloy-local-v1"',
-        'name: "AES-GCM", length: 256',
-        'name: "ECDSA", namedCurve: "P-256"',
-        'crypto.subtle.digest("SHA-256"',
-        'indexedDB.open(DB_NAME, DB_VERSION)',
-        "subscribe(callback)",
-        "shortHex(value)",
-        "boot,",
-        "govern,",
-        "injectFault,",
-        "runWatchdog,",
-        "window.Alloy = Alloy",
+        "const ADAPTER = 'alloy-local-v1'",
+        "const MAX_RECEIPTS = 1024",
+        "const MAX_CAPSULES = 128",
+        "name: 'AES-GCM', length: 256",
+        "name: 'ECDSA', namedCurve: 'P-256'",
+        "crypto.subtle.digest('SHA-256'",
+        "root.indexedDB.open('szl-alloy-local-v1', 1)",
+        "root.navigator?.locks",
+        "extractable !== false",
+        "Local ledger capacity reached",
+        "Local capsule capacity reached",
+        "else root.Alloy = createKernel",
     ):
         assert required in source
-    for network_primitive in (
+    for prohibited in (
         "fetch(",
         "XMLHttpRequest",
         "WebSocket",
@@ -53,23 +60,29 @@ def test_kernel_is_browser_local_and_exposes_the_ui_contract() -> None:
         "localStorage",
         "sessionStorage",
         "eval(",
+        "new Function",
+        "setInterval",
     ):
-        assert network_primitive not in source
-    assert "privateJwk" not in source.split("return {", 1)[-1].split("};", 1)[0]
+        assert prohibited not in source
 
 
-def test_kernel_javascript_parses_when_node_is_available() -> None:
+def test_javascript_parses_and_node_contract_is_present() -> None:
     node = shutil.which("node")
     if node is None:
         pytest.skip("Node.js is unavailable on this runner")
-    result = subprocess.run(
-        [node, "--check", str(KERNEL)],
-        check=False,
-        capture_output=True,
-        text=True,
-        timeout=20,
-    )
-    assert result.returncode == 0, result.stderr
+    for path in (KERNEL, APP):
+        result = subprocess.run(
+            [node, "--check", str(path)],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=20,
+        )
+        assert result.returncode == 0, result.stderr
+    node_test = NODE_TEST.read_text(encoding="utf-8")
+    assert "two local instances serialize writes" in node_test
+    assert "missing Web Locks is unavailable" in node_test
+    assert "receipt tampering is rejected" in node_test
 
 
 def test_alignment_snapshot_is_measured_and_non_mutating() -> None:
@@ -99,12 +112,18 @@ def test_alignment_snapshot_is_measured_and_non_mutating() -> None:
     ]
 
 
-def test_ui_consumes_only_the_bounded_same_origin_snapshot() -> None:
+def test_ui_and_browser_contract_respect_csp_and_same_origin() -> None:
     source = APP.read_text(encoding="utf-8")
     assert 'loadJson("./live.json")' in source
-    assert 'loadJson("/estate.json")' not in source
-    assert 'loadJson("/spaces.json")' not in source
-    assert 'loadJson("/models.json")' not in source
-    assert 'credentials: "same-origin"' in source
+    for stale in ('loadJson("/estate.json")', 'loadJson("/spaces.json")', 'loadJson("/models.json")'):
+        assert stale not in source
+    assert 'credentials: "omit"' in source
     assert 'role="status" aria-live="polite"' in source
-    assert 'type="button" class="button" id="ktamper"' in source
+    assert 'maxlength="32768"' in source
+    browser = BROWSER_TEST.read_text(encoding="utf-8")
+    assert "wait_for_function" not in browser
+    assert "wait_until(page" in browser
+    workflow = WORKFLOW.read_text(encoding="utf-8")
+    assert "sha256:640d578aae63cfb632461d1b0aecb01414e4e020864ac3dd45a868dc0eff3078" in workflow
+    assert "node --test tests/local-kernel.test.cjs" in workflow
+    assert "python tests/local_kernel_browser.py" in workflow

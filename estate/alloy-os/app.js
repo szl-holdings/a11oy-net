@@ -29,7 +29,7 @@
   function safeHref(value) {
     try {
       const url = new URL(String(value), window.location.href);
-      return ["http:", "https:"].includes(url.protocol) ? url.href : "#";
+      return url.protocol === "https:" ? url.href : "#";
     } catch (_) {
       return "#";
     }
@@ -38,8 +38,9 @@
   async function loadJson(url) {
     const response = await fetch(url, {
       cache: "no-store",
-      credentials: "same-origin",
+      credentials: "omit",
       headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
     const value = await response.json();
@@ -58,19 +59,19 @@
     try {
       snapshot = await loadJson("./live.json");
     } catch (error) {
-      rail.innerHTML = "";
-      table.innerHTML = `<p class="bad" role="status">Alignment snapshot UNAVAILABLE — ${escapeHtml(error.message)}</p>`;
+      rail.textContent = "Alignment snapshot UNAVAILABLE.";
+      table.innerHTML = `<p class="bad" role="status">${escapeHtml(error instanceof Error ? error.message : String(error))}</p>`;
       return;
     }
 
     const inventory = snapshot.inventory || {};
     const rows = [
       ["Snapshot", snapshot.truth_label || "UNAVAILABLE", snapshot.capturedAt || "timestamp unavailable"],
-      ["GitHub repositories", inventory.github_public_repositories ?? "—", "public organization inventory"],
-      ["Hugging Face models", inventory.huggingface_models ?? "—", "public Hub listing"],
-      ["Hugging Face datasets", inventory.huggingface_datasets ?? "—", "public Hub listing"],
-      ["Hugging Face Spaces", inventory.huggingface_spaces ?? "—", "public Hub listing; reachability not inferred"],
-      ["Hub collections", inventory.huggingface_collections ?? "—", "public collection inventory"],
+      ["GitHub repositories", inventory.github_public_repositories ?? "UNAVAILABLE", "public organization inventory"],
+      ["Hugging Face models", inventory.huggingface_models ?? "UNAVAILABLE", "public Hub listing"],
+      ["Hugging Face datasets", inventory.huggingface_datasets ?? "UNAVAILABLE", "public Hub listing"],
+      ["Hugging Face Spaces", inventory.huggingface_spaces ?? "UNAVAILABLE", "public listing; reachability not inferred"],
+      ["Hub collections", inventory.huggingface_collections ?? "UNAVAILABLE", "public collection inventory"],
     ];
 
     rail.innerHTML = rows.map(([label, value, detail]) => (
@@ -79,12 +80,15 @@
 
     const alignment = Array.isArray(snapshot.alignment) ? snapshot.alignment : [];
     if (!alignment.length) {
-      table.innerHTML = '<p class="bad" role="status">No origin bindings were published in the snapshot.</p>';
+      table.innerHTML = '<p class="bad" role="status">No origin locations were published in the snapshot.</p>';
       return;
     }
-    table.innerHTML = `<div class="align-scroll" tabindex="0" aria-label="Origin alignment table"><table class="align"><thead><tr><th scope="col">Plane</th><th scope="col">Class</th><th scope="col">Bind</th></tr></thead><tbody>${alignment.map((row) => {
+    table.innerHTML = `<p>RECORD — measured public inventory and source locations, not live-service certification.</p><div class="align-scroll" tabindex="0" aria-label="Origin alignment table"><table class="align"><thead><tr><th scope="col">Plane</th><th scope="col">Class</th><th scope="col">Bind</th></tr></thead><tbody>${alignment.map((row) => {
       const href = safeHref(row.url);
-      return `<tr><td>${escapeHtml(row.plane)}<br><a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.url)}</a></td><td>${escapeHtml(row.class)}</td><td>${escapeHtml(row.note)}</td></tr>`;
+      const link = href === "#"
+        ? "UNAVAILABLE"
+        : `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.url)}</a>`;
+      return `<tr><td>${escapeHtml(row.plane)}<br>${link}</td><td>${escapeHtml(row.class)}</td><td>${escapeHtml(row.note)}</td></tr>`;
     }).join("")}</tbody></table></div>`;
   }
 
@@ -102,50 +106,51 @@
     const element = byId("kernel-app");
     if (!element) return;
     if (!kernelAvailable()) {
-      element.innerHTML = '<p class="bad" role="alert">Local kernel UNAVAILABLE — kernel.js did not initialize.</p>';
+      element.innerHTML = '<p class="bad" role="alert">UNAVAILABLE — the local kernel asset did not initialize. No data was stored.</p>';
       return;
     }
 
     const kernel = window.Alloy;
     state.adapter ||= kernel.ADAPTER_CURRENT;
-    const receipts = [...kernel.receipts].slice(-8).reverse().map((receipt) => (
+    const receipts = kernel.receipts.slice(-8).reverse().map((receipt) => (
       `<li>#${escapeHtml(receipt.seq)} <b>${escapeHtml(receipt.type)}</b> ${escapeHtml(receipt.note)} <span>${escapeHtml(kernel.shortHex(receipt.digest))}</span></li>`
     )).join("");
-    const capsules = [...kernel.capsules].slice(-6).reverse().map((capsule) => (
+    const capsules = kernel.capsules.slice(-6).reverse().map((capsule) => (
       `<li>${escapeHtml(capsule.title)} · ${escapeHtml(capsule.status)} · ${escapeHtml(kernel.shortHex(capsule.digest))}</li>`
     )).join("");
-    const disabled = state.busy || kernel.status === "UNAVAILABLE" ? " disabled" : "";
+    const disabled = state.busy || ["NOT_STARTED", "UNAVAILABLE"].includes(kernel.status)
+      ? " disabled"
+      : "";
 
     element.innerHTML = `<div class="kbox">
       <div class="kcard">
-        <p class="eyebrow">${escapeHtml(kernel.status)} · kid ${escapeHtml(kernel.identity?.kid || "booting")} · epoch ${escapeHtml(kernel.epoch)}</p>
-        <label for="ktitle">Title</label><input id="ktitle" maxlength="160" autocomplete="off" value="${escapeHtml(state.title)}"${disabled}>
-        <label for="kbody">Payload</label><textarea id="kbody" maxlength="20000"${disabled}>${escapeHtml(state.body)}</textarea>
+        <p class="eyebrow">${escapeHtml(kernel.status)} · kid ${escapeHtml(kernel.identity?.kid || "unavailable")} · epoch ${escapeHtml(kernel.epoch)}</p>
+        <label for="ktitle">Title — encrypted with payload</label><input id="ktitle" maxlength="200" autocomplete="off" value="${escapeHtml(state.title)}"${disabled}>
+        <label for="kbody">Payload — local only</label><textarea id="kbody" maxlength="32768"${disabled}>${escapeHtml(state.body)}</textarea>
         <label for="kadapter">Adapter</label>
         <select id="kadapter"${disabled}>
           <option value="${escapeHtml(kernel.ADAPTER_CURRENT)}"${state.adapter === kernel.ADAPTER_CURRENT ? " selected" : ""}>${escapeHtml(kernel.ADAPTER_CURRENT)} pinned</option>
-          <option value="alloy-local-v0"${state.adapter === "alloy-local-v0" ? " selected" : ""}>alloy-local-v0 stale</option>
+          <option value="alloy-local-v0"${state.adapter === "alloy-local-v0" ? " selected" : ""}>alloy-local-v0 stale — rejected</option>
         </select>
         <div class="kactions">
           <button type="button" class="button primary" id="ksubmit"${disabled}>Submit envelope</button>
-          <button type="button" class="button" id="ktamper"${disabled}>Tamper one byte</button>
-          <button type="button" class="button" id="kheal"${disabled}>Run healer</button>
+          <button type="button" class="button" id="ktamper"${disabled}>Test one-byte fault</button>
+          <button type="button" class="button" id="kheal"${disabled}>Verify and restore snapshot</button>
         </div>
         <p class="${escapeHtml(state.tone)}" role="status" aria-live="polite">${escapeHtml(state.busy ? "Working locally…" : state.message)}</p>
+        <p>Private keys remain nonextractable in this browser origin. Clearing browser data removes the local state.</p>
       </div>
       <div class="kcard">
-        <p class="eyebrow">Ledger ${escapeHtml(kernel.receipts.length)} · capsules ${escapeHtml(kernel.capsules.length)} · healed ${escapeHtml(kernel.health.healed)} · blocked ${escapeHtml(kernel.health.blocked)}</p>
-        <p>Replayable: ${kernel.health.ledgerReplayable ? "MEASURED" : "degraded"} · last verify ${escapeHtml(kernel.health.lastVerify || "—")}</p>
-        <ol class="klog">${receipts || "<li>No receipts yet.</li>"}</ol>
+        <p class="eyebrow">Local ledger ${escapeHtml(kernel.receipts.length)} · capsules ${escapeHtml(kernel.capsules.length)} · restored ${escapeHtml(kernel.health.healed)} · blocked ${escapeHtml(kernel.health.blocked)}</p>
+        <p>Local chain verified: ${kernel.health.ledgerReplayable ? "MEASURED" : "UNAVAILABLE"} · last verify ${escapeHtml(kernel.health.lastVerify || "—")}</p>
+        <ol class="klog">${receipts || "<li>No local receipts yet.</li>"}</ol>
         <p class="eyebrow">Capsules</p>
         <ol class="klog">${capsules || "<li>None.</li>"}</ol>
+        <p>Signatures establish local byte integrity, not semantic truth, external identity, or product readiness.</p>
       </div>
     </div>`;
 
-    const submit = byId("ksubmit");
-    const tamper = byId("ktamper");
-    const heal = byId("kheal");
-    if (submit) submit.addEventListener("click", () => runAction(async () => {
+    byId("ksubmit")?.addEventListener("click", () => runAction(async () => {
       captureForm();
       const outcome = await kernel.govern({
         title: state.title,
@@ -153,19 +158,19 @@
         policyClass: state.policy,
         adapter: state.adapter,
       });
-      state.message = `${outcome.decision} — ${outcome.reason} · receipt ${outcome.receipt.seq}`;
+      state.message = `${outcome.decision} — ${outcome.reason} · local receipt ${outcome.receipt.seq}`;
       state.tone = outcome.decision === "ALLOW" ? "ok" : "bad";
     }));
-    if (tamper) tamper.addEventListener("click", () => runAction(async () => {
+    byId("ktamper")?.addEventListener("click", () => runAction(async () => {
       captureForm();
       state.message = await kernel.injectFault();
       state.tone = "warn";
     }));
-    if (heal) heal.addEventListener("click", () => runAction(async () => {
+    byId("kheal")?.addEventListener("click", () => runAction(async () => {
       captureForm();
-      const health = await kernel.runWatchdog();
-      state.message = health.ledgerReplayable ? "Watchdog complete — local chain replayable." : "Watchdog complete — degraded state remains.";
-      state.tone = health.ledgerReplayable ? "ok" : "bad";
+      const outcome = await kernel.runWatchdog();
+      state.message = `Verified local chain; restored ${outcome.restored} authenticated ciphertext snapshot(s).`;
+      state.tone = outcome.verified ? "ok" : "bad";
     }));
   }
 
