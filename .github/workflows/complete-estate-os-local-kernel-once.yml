@@ -1,0 +1,549 @@
+name: Complete Estate OS local kernel once
+
+on:
+  push:
+    branches:
+      - estate-os-bake-231-20260904
+    paths:
+      - .github/workflows/complete-estate-os-local-kernel-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-estate-os-local-kernel-once
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout exact Estate OS branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: estate-os-bake-231-20260904
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Materialize the missing local kernel and align proof expectations
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > estate/alloy-os/kernel.js <<'JS'
+          (() => {
+            "use strict";
+
+            const DB_NAME = "a11oy-local-kernel-v1";
+            const DB_VERSION = 1;
+            const ADAPTER_CURRENT = "alloy-local-v1";
+            const enc = new TextEncoder();
+            const dec = new TextDecoder();
+            const listeners = new Set();
+            let db = null;
+            let aesKey = null;
+            let signKey = null;
+
+            const state = {
+              status: "BOOTING",
+              identity: null,
+              epoch: 1,
+              receipts: [],
+              capsules: [],
+              health: {
+                ledgerReplayable: false,
+                lastVerify: null,
+                healed: 0,
+                blocked: 0,
+              },
+            };
+
+            function canonical(value) {
+              if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+              if (value && typeof value === "object") {
+                return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonical(value[key])}`).join(",")}}`;
+              }
+              return JSON.stringify(value);
+            }
+
+            function bytesToHex(bytes) {
+              return Array.from(new Uint8Array(bytes), (value) => value.toString(16).padStart(2, "0")).join("");
+            }
+
+            function bytesToBase64(bytes) {
+              const view = new Uint8Array(bytes);
+              let binary = "";
+              for (let index = 0; index < view.length; index += 0x8000) {
+                binary += String.fromCharCode(...view.subarray(index, index + 0x8000));
+              }
+              return btoa(binary);
+            }
+
+            function base64ToBytes(value) {
+              const binary = atob(String(value));
+              const bytes = new Uint8Array(binary.length);
+              for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+              return bytes;
+            }
+
+            async function digest(value) {
+              const bytes = value instanceof Uint8Array ? value : enc.encode(String(value));
+              return bytesToHex(await crypto.subtle.digest("SHA-256", bytes));
+            }
+
+            function openDatabase() {
+              return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = () => {
+                  const database = request.result;
+                  if (!database.objectStoreNames.contains("meta")) database.createObjectStore("meta");
+                  if (!database.objectStoreNames.contains("capsules")) database.createObjectStore("capsules", { keyPath: "id" });
+                  if (!database.objectStoreNames.contains("receipts")) database.createObjectStore("receipts", { keyPath: "seq" });
+                  if (!database.objectStoreNames.contains("snapshots")) database.createObjectStore("snapshots", { keyPath: "id" });
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error("IndexedDB open failed"));
+              });
+            }
+
+            function transaction(storeNames, mode, operation) {
+              return new Promise((resolve, reject) => {
+                const tx = db.transaction(storeNames, mode);
+                let result;
+                try {
+                  result = operation(tx);
+                } catch (error) {
+                  tx.abort();
+                  reject(error);
+                  return;
+                }
+                tx.oncomplete = () => resolve(result);
+                tx.onerror = () => reject(tx.error || new Error("IndexedDB transaction failed"));
+                tx.onabort = () => reject(tx.error || new Error("IndexedDB transaction aborted"));
+              });
+            }
+
+            function getValue(store, key) {
+              return new Promise((resolve, reject) => {
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error("IndexedDB read failed"));
+              });
+            }
+
+            function getAll(store) {
+              return new Promise((resolve, reject) => {
+                const request = store.getAll();
+                request.onsuccess = () => resolve(request.result || []);
+                request.onerror = () => reject(request.error || new Error("IndexedDB list failed"));
+              });
+            }
+
+            async function loadOrCreateKeys() {
+              const tx = db.transaction(["meta"], "readonly");
+              const store = tx.objectStore("meta");
+              aesKey = await getValue(store, "aesKey");
+              signKey = await getValue(store, "signKey");
+
+              if (!aesKey) {
+                aesKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+              }
+              if (!signKey) {
+                signKey = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, false, ["sign", "verify"]);
+              }
+              const publicKey = await crypto.subtle.exportKey("raw", signKey.publicKey);
+              state.identity = { kid: `p256:${(await digest(new Uint8Array(publicKey))).slice(0, 20)}` };
+              await transaction(["meta"], "readwrite", (writeTx) => {
+                const target = writeTx.objectStore("meta");
+                target.put(aesKey, "aesKey");
+                target.put(signKey, "signKey");
+                target.put(state.epoch, "epoch");
+              });
+            }
+
+            async function loadState() {
+              const tx = db.transaction(["capsules", "receipts", "meta"], "readonly");
+              const capsules = await getAll(tx.objectStore("capsules"));
+              const receipts = await getAll(tx.objectStore("receipts"));
+              const storedEpoch = await getValue(tx.objectStore("meta"), "epoch");
+              state.capsules.splice(0, state.capsules.length, ...capsules.sort((a, b) => a.createdAt.localeCompare(b.createdAt)));
+              state.receipts.splice(0, state.receipts.length, ...receipts.sort((a, b) => a.seq - b.seq));
+              state.epoch = Number.isInteger(storedEpoch) && storedEpoch > 0 ? storedEpoch : 1;
+            }
+
+            function notify() {
+              for (const listener of listeners) {
+                try { listener(); } catch (_) { /* isolated UI observer */ }
+              }
+            }
+
+            async function appendReceipt(type, note, evidence = {}) {
+              const seq = state.receipts.length ? state.receipts[state.receipts.length - 1].seq + 1 : 1;
+              const prev = state.receipts.length ? state.receipts[state.receipts.length - 1].digest : "0".repeat(64);
+              const unsigned = {
+                schema: "szl.alloy-local-receipt/v1",
+                seq,
+                type,
+                note,
+                prev,
+                evidence,
+                epoch: state.epoch,
+                observedAt: new Date().toISOString(),
+                kid: state.identity.kid,
+              };
+              const receiptDigest = await digest(canonical(unsigned));
+              const signature = await crypto.subtle.sign(
+                { name: "ECDSA", hash: "SHA-256" },
+                signKey.privateKey,
+                enc.encode(receiptDigest),
+              );
+              const receipt = { ...unsigned, digest: receiptDigest, signature: bytesToBase64(signature) };
+              await transaction(["receipts"], "readwrite", (tx) => tx.objectStore("receipts").put(receipt));
+              state.receipts.push(receipt);
+              return receipt;
+            }
+
+            async function verifyLedger() {
+              let prev = "0".repeat(64);
+              for (const receipt of state.receipts) {
+                if (receipt.prev !== prev) return false;
+                const { digest: storedDigest, signature, ...unsigned } = receipt;
+                const observedDigest = await digest(canonical(unsigned));
+                if (observedDigest !== storedDigest) return false;
+                const valid = await crypto.subtle.verify(
+                  { name: "ECDSA", hash: "SHA-256" },
+                  signKey.publicKey,
+                  base64ToBytes(signature),
+                  enc.encode(storedDigest),
+                );
+                if (!valid) return false;
+                prev = storedDigest;
+              }
+              return true;
+            }
+
+            async function capsulePackageDigest(capsule) {
+              return digest(canonical({
+                id: capsule.id,
+                iv: capsule.iv,
+                ciphertext: capsule.ciphertext,
+                createdAt: capsule.createdAt,
+                adapter: capsule.adapter,
+              }));
+            }
+
+            async function verifyAndHealCapsules() {
+              let healed = 0;
+              for (const capsule of state.capsules) {
+                const observed = await capsulePackageDigest(capsule);
+                if (observed === capsule.digest) continue;
+                const snapshot = await transaction(["snapshots"], "readonly", (tx) => getValue(tx.objectStore("snapshots"), capsule.id));
+                if (!snapshot || (await capsulePackageDigest(snapshot)) !== snapshot.digest) {
+                  capsule.status = "QUARANTINED";
+                  state.health.blocked += 1;
+                  await transaction(["capsules"], "readwrite", (tx) => tx.objectStore("capsules").put(capsule));
+                  continue;
+                }
+                Object.assign(capsule, snapshot, { status: "HEALED" });
+                await transaction(["capsules"], "readwrite", (tx) => tx.objectStore("capsules").put(capsule));
+                healed += 1;
+              }
+              state.health.healed += healed;
+              return healed;
+            }
+
+            async function govern(envelope) {
+              if (state.status !== "READY") throw new Error("local kernel is not ready");
+              const title = String(envelope?.title || "").trim().slice(0, 160);
+              const body = String(envelope?.body || "").slice(0, 100000);
+              const policyClass = String(envelope?.policyClass || "private").slice(0, 64);
+              const adapter = String(envelope?.adapter || "");
+
+              if (adapter !== ADAPTER_CURRENT) {
+                state.health.blocked += 1;
+                const receipt = await appendReceipt("POLICY_DENY", "stale or unknown adapter blocked", {
+                  adapterDigest: await digest(adapter),
+                  expectedAdapter: ADAPTER_CURRENT,
+                });
+                notify();
+                return { decision: "DENY", reason: "adapter is not the pinned local policy", receipt };
+              }
+              if (!title || !body) {
+                state.health.blocked += 1;
+                const receipt = await appendReceipt("POLICY_DENY", "empty title or payload blocked", {});
+                notify();
+                return { decision: "DENY", reason: "title and payload are required", receipt };
+              }
+
+              const plaintext = enc.encode(canonical({ title, body, policyClass }));
+              const iv = crypto.getRandomValues(new Uint8Array(12));
+              const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, aesKey, plaintext);
+              const createdAt = new Date().toISOString();
+              const id = `capsule:${await digest(new Uint8Array(encrypted))}`;
+              const capsule = {
+                id,
+                title,
+                status: "SEALED",
+                adapter,
+                iv: bytesToBase64(iv),
+                ciphertext: bytesToBase64(encrypted),
+                createdAt,
+              };
+              capsule.digest = await capsulePackageDigest(capsule);
+              const snapshot = structuredClone(capsule);
+              await transaction(["capsules", "snapshots"], "readwrite", (tx) => {
+                tx.objectStore("capsules").put(capsule);
+                tx.objectStore("snapshots").put(snapshot);
+              });
+              state.capsules.push(capsule);
+              const receipt = await appendReceipt("CAPSULE_SEALED", "encrypted capsule admitted", {
+                capsuleId: id,
+                capsuleDigest: capsule.digest,
+                policyClass,
+              });
+              notify();
+              return { decision: "ALLOW", reason: "encrypted locally under pinned adapter", receipt };
+            }
+
+            async function injectFault() {
+              const capsule = state.capsules[state.capsules.length - 1];
+              if (!capsule) return "No capsule exists. Submit an envelope first.";
+              const bytes = base64ToBytes(capsule.ciphertext);
+              if (!bytes.length) return "Capsule ciphertext is empty; no fault injected.";
+              bytes[Math.min(7, bytes.length - 1)] ^= 0x01;
+              capsule.ciphertext = bytesToBase64(bytes);
+              capsule.status = "TAMPERED_TEST";
+              await transaction(["capsules"], "readwrite", (tx) => tx.objectStore("capsules").put(capsule));
+              await appendReceipt("FAULT_INJECTED", "one-byte local test fault injected", {
+                capsuleId: capsule.id,
+                mutation: "ONE_BYTE_TEST_ONLY",
+              });
+              notify();
+              return "One-byte test fault injected. Run healer to verify recovery.";
+            }
+
+            async function runWatchdog() {
+              const ledgerBefore = await verifyLedger();
+              const healed = await verifyAndHealCapsules();
+              const ledgerAfter = await verifyLedger();
+              state.health.ledgerReplayable = ledgerBefore && ledgerAfter;
+              state.health.lastVerify = new Date().toISOString();
+              await appendReceipt("WATCHDOG", "local integrity cycle completed", {
+                ledgerReplayable: state.health.ledgerReplayable,
+                healed,
+              });
+              notify();
+              return { ledgerReplayable: state.health.ledgerReplayable, healed };
+            }
+
+            async function boot() {
+              if (!window.isSecureContext || !window.crypto?.subtle || !window.indexedDB) {
+                state.status = "BLOCKED_UNSUPPORTED_BROWSER";
+                state.health.blocked += 1;
+                notify();
+                return;
+              }
+              try {
+                db = await openDatabase();
+                await loadOrCreateKeys();
+                await loadState();
+                state.status = "READY";
+                if (!state.receipts.length) {
+                  await appendReceipt("GENESIS", "local kernel initialized", {
+                    adapter: ADAPTER_CURRENT,
+                    storage: "INDEXEDDB_LOCAL_ONLY",
+                  });
+                }
+                await runWatchdog();
+              } catch (error) {
+                state.status = "BLOCKED_BOOT_FAILURE";
+                state.health.blocked += 1;
+                console.error("Local kernel boot failed", error instanceof Error ? error.name : "Error");
+              }
+              notify();
+            }
+
+            const Alloy = {
+              ADAPTER_CURRENT,
+              get status() { return state.status; },
+              get identity() { return state.identity; },
+              get epoch() { return state.epoch; },
+              get receipts() { return state.receipts; },
+              get capsules() { return state.capsules; },
+              get health() { return state.health; },
+              shortHex(value) { return String(value || "").slice(0, 12); },
+              subscribe(listener) {
+                if (typeof listener !== "function") throw new TypeError("listener must be a function");
+                listeners.add(listener);
+                return () => listeners.delete(listener);
+              },
+              boot,
+              govern,
+              injectFault,
+              runWatchdog,
+            };
+
+            Object.defineProperty(window, "Alloy", {
+              value: Object.freeze(Alloy),
+              writable: false,
+              configurable: false,
+            });
+          })();
+          JS
+
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/check_proof_surface.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''        "https://a11oy.net/estate/plane/",
+                  "https://a11oy.net/command/",
+          '''
+          new = '''        "https://a11oy.net/estate/plane/",
+                  "https://a11oy.net/estate/thread-ops/",
+                  "https://a11oy.net/command/",
+          '''
+          if text.count(old) != 1:
+              raise SystemExit("sitemap expectation anchor drifted")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8", newline="\n")
+          PY
+
+          cat > tests/test_alloy_local_kernel_contract.py <<'PY'
+          from __future__ import annotations
+
+          from pathlib import Path
+          import re
+
+          ROOT = Path(__file__).resolve().parents[1]
+          KERNEL = ROOT / "estate" / "alloy-os" / "kernel.js"
+          INDEX = ROOT / "estate" / "alloy-os" / "index.html"
+          APP = ROOT / "estate" / "alloy-os" / "app.js"
+
+
+          def test_kernel_exists_and_is_loaded_before_ui() -> None:
+              assert KERNEL.is_file()
+              index = INDEX.read_text(encoding="utf-8")
+              assert index.index('<script src="./kernel.js"></script>') < index.index(
+                  '<script src="./app.js"></script>'
+              )
+
+
+          def test_local_crypto_and_persistence_contract() -> None:
+              source = KERNEL.read_text(encoding="utf-8")
+              for marker in (
+                  'name: "AES-GCM", length: 256',
+                  'name: "ECDSA", namedCurve: "P-256"',
+                  'crypto.subtle.sign',
+                  'crypto.subtle.verify',
+                  'crypto.subtle.digest("SHA-256"',
+                  'indexedDB.open',
+                  'createObjectStore("capsules"',
+                  'createObjectStore("receipts"',
+                  'createObjectStore("snapshots"',
+                  'ONE_BYTE_TEST_ONLY',
+                  'BLOCKED_UNSUPPORTED_BROWSER',
+                  'alloy-local-v1',
+              ):
+                  assert marker in source
+
+
+          def test_kernel_has_no_network_or_dynamic_execution_authority() -> None:
+              source = KERNEL.read_text(encoding="utf-8")
+              forbidden = (
+                  "fetch(",
+                  "XMLHttpRequest",
+                  "WebSocket",
+                  "EventSource",
+                  "navigator.sendBeacon",
+                  "eval(",
+                  "new Function",
+                  "document.write",
+                  "localStorage",
+                  "sessionStorage",
+              )
+              for marker in forbidden:
+                  assert marker not in source
+              assert not re.search(r"https?://", source)
+
+
+          def test_ui_consumes_only_the_bounded_alloy_interface() -> None:
+              app = APP.read_text(encoding="utf-8")
+              for marker in (
+                  "Alloy.ADAPTER_CURRENT",
+                  "Alloy.govern",
+                  "Alloy.injectFault",
+                  "Alloy.runWatchdog",
+                  "Alloy.boot",
+                  "Alloy.subscribe",
+              ):
+                  assert marker in app
+          PY
+
+      - name: Prove JavaScript, local authority, links, and proof surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check estate/alloy-os/kernel.js
+          node --check estate/alloy-os/app.js
+          python -m py_compile \
+            scripts/check_proof_surface.py \
+            tests/test_alloy_local_kernel_contract.py
+          python -m pytest -q tests/test_alloy_local_kernel_contract.py
+          python tests/test_holographic_proof_v2.py
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse, unquote
+
+          root = Path('.').resolve()
+          errors = []
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.refs=[]
+              def handle_starttag(self, tag, attrs):
+                  data=dict(attrs)
+                  for key in ('href','src','poster'):
+                      if data.get(key): self.refs.append(data[key])
+          for html in sorted(root.rglob('*.html')):
+              if '.git' in html.relative_to(root).parts: continue
+              parser=Parser(); parser.feed(html.read_text(encoding='utf-8'))
+              for ref in parser.refs:
+                  parsed=urlparse(ref)
+                  if not ref or ref.startswith(('data:','mailto:','tel:','javascript:')): continue
+                  if parsed.netloc and parsed.netloc.lower() not in {'a11oy.net','www.a11oy.net'}: continue
+                  if parsed.scheme and parsed.scheme not in {'http','https'}: continue
+                  decoded=unquote(parsed.path)
+                  candidate=(root/decoded.lstrip('/')) if decoded.startswith('/') else (html.parent/decoded)
+                  candidates=[candidate]
+                  if decoded.endswith('/') or candidate.is_dir(): candidates.insert(0,candidate/'index.html')
+                  elif not candidate.suffix: candidates.extend((candidate.with_suffix('.html'),candidate/'index.html'))
+                  if not any(path.is_file() for path in candidates): errors.append(f'{html.relative_to(root)} -> {ref}')
+          if errors:
+              raise SystemExit('unresolved local assets:\n'+'\n'.join(errors))
+          print('All local links and assets resolve.')
+          PY
+          git diff --check
+
+      - name: Remove transport and push the completed branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm -f .github/workflows/complete-estate-os-local-kernel-once.yml
+          git add \
+            estate/alloy-os/kernel.js \
+            scripts/check_proof_surface.py \
+            tests/test_alloy_local_kernel_contract.py
+          git diff --cached --check
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git commit -s \
+            -m "fix(estate): complete the local WebCrypto kernel" \
+            -m "Implement the missing local-only AES-GCM/ECDSA/IndexedDB kernel, lock its no-network authority, and align the proof sitemap assertion with the committed route inventory."
+          git push origin HEAD:estate-os-bake-231-20260904
