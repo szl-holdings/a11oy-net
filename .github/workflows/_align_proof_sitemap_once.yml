@@ -1,0 +1,83 @@
+name: Align proof checker with the committed sitemap
+
+"on":
+  push:
+    branches:
+      - fix/proof-rollout-alloy-kernel-20260905
+    paths:
+      - .github/workflows/_align_proof_sitemap_once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: align-proof-sitemap-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  align:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/proof-rollout-alloy-kernel-20260905
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up exact Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12.10"
+
+      - name: Admit the existing thread-ops proof route into the exact sitemap contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/check_proof_surface.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''        "https://a11oy.net/estate/plane/",
+        "https://a11oy.net/command/",
+'''
+          new = '''        "https://a11oy.net/estate/plane/",
+        "https://a11oy.net/estate/thread-ops/",
+        "https://a11oy.net/command/",
+'''
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one sitemap contract insertion point, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
+      - name: Prove sitemap, proof registry, diligence, and full Python contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            pytest==8.4.2 ruff==0.12.12
+          python -m py_compile scripts/check_proof_surface.py
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          ruff check . --select E9,F
+          pytest -q tests
+          git diff --check
+
+      - name: Commit the durable checker repair and self-remove
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- scripts/check_proof_surface.py
+          git rm -- .github/workflows/_align_proof_sitemap_once.yml
+          git commit -s -m 'fix(proof): admit thread-ops into the sitemap contract'
+          git push origin HEAD:fix/proof-rollout-alloy-kernel-20260905
