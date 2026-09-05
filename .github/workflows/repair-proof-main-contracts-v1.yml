@@ -1,0 +1,86 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Repair proof main contracts v1
+
+on:
+  push:
+    branches:
+      - fix/proof-main-contracts-20260905
+    paths:
+      - .github/workflows/repair-proof-main-contracts-v1.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-proof-main-contracts-v1
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/proof-main-contracts-20260905
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Restore reviewed kernel and reconcile every proof document
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin f7636e99b19448b246df19a15ef6ab90316a2994
+          git show f7636e99b19448b246df19a15ef6ab90316a2994:estate/alloy-os/kernel.js > estate/alloy-os/kernel.js
+          python tools/rollout_proof_flow_shell.py --report /tmp/flow-apply.json
+          python tools/rollout_holographic_proof_v2.py --report /tmp/holo-apply.json
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/check_proof_surface.py')
+          source = path.read_text(encoding='utf-8')
+          old = '''        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/command/",'''
+          new = '''        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/estate/thread-ops/",\n        "https://a11oy.net/command/",'''
+          if old in source:
+              source = source.replace(old, new, 1)
+          elif new not in source:
+              raise SystemExit('exact sitemap contract anchor is missing')
+          path.write_text(source, encoding='utf-8')
+          PY
+
+      - name: Prove repository-wide closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1 ruff==0.16.6
+          node --check estate/alloy-os/kernel.js
+          python -m py_compile scripts/check_proof_surface.py tools/rollout_proof_flow_shell.py tools/rollout_holographic_proof_v2.py
+          python tools/rollout_proof_flow_shell.py --check --report /tmp/flow-check.json
+          python tools/rollout_holographic_proof_v2.py --check --report /tmp/holo-check.json
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          ruff check . --output-format github --select E9,F
+          pytest -q tests
+          git diff --check
+
+      - name: Commit only durable source and contract state
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/repair-proof-main-contracts-v1.yml
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No durable repair required."
+            exit 0
+          fi
+          git commit -s -m "fix(proof): restore kernel and reconcile proof contracts"
+          git push origin HEAD:fix/proof-main-contracts-20260905
