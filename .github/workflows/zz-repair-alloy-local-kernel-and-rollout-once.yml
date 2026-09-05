@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+# Retry 2: Ñan is now a complete HTML document admitted by both rollout controllers.
 name: Repair Alloy local kernel and rollout inventory once
 
 on:
