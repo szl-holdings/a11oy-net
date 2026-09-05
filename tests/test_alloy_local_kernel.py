@@ -31,6 +31,7 @@ def test_local_kernel_assets_are_complete_and_ordered() -> None:
     assert "connect-src 'self'" in html
     assert "cross-tab Web Locks" in html
     assert "This page does not observe product runtime health" in html
+    assert "not a fourth public origin" in html
 
 
 def test_kernel_is_local_bounded_and_fail_closed() -> None:
