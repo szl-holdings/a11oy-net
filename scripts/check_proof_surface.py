@@ -273,6 +273,7 @@ def check() -> None:
         "https://a11oy.net/estate/",
         "https://a11oy.net/estate/os/",
         "https://a11oy.net/estate/plane/",
+        "https://a11oy.net/estate/thread-ops/",
         "https://a11oy.net/command/",
         "https://a11oy.net/notes/",
         "https://a11oy.net/chat/",
