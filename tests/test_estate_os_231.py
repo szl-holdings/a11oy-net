@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+# The catalog is a source-bound public snapshot; runtime and private inventory are never inferred.
 from __future__ import annotations
 
 import hashlib
