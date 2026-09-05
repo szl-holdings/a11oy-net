@@ -1,0 +1,81 @@
+name: Complete exact proof bindings once
+on:
+  push:
+    branches: [fix/proof-local-kernel-delivery-20260905]
+    paths: [.github/workflows/repair-proof-bindings-once.yml]
+permissions:
+  contents: write
+concurrency:
+  group: proof-bindings-repair-once
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.repository == 'szl-holdings/a11oy-net' && github.ref == 'refs/heads/fix/proof-local-kernel-delivery-20260905'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - name: Complete real bindings and correct the local demonstration boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object tools/rollout_proof_flow_shell.py)" = 8c756450375b627fdee938eb339b15e508ec7fa2
+          test "$(git hash-object tools/rollout_holographic_proof_v2.py)" = 5e4f3ffe9d1154ab947fab7b11cc0390ce100045
+          test "$(git hash-object estate/alloy-os/index.html)" = d46681904863eab83f227ed647699fcecfd7d3eb
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('estate/alloy-os/index.html')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              'Origins · MEASURED bind': 'Origins · recorded source locations',
+              'Hugging Face Space create is UNAVAILABLE from this session (no Hub connector).': 'These saved source locations do not certify current Hub availability.',
+              'Keys never leave this origin. Reload keeps the estate. Signature proves origin of bytes, not semantic truth.': 'Keys stay in this browser origin. Reload preserves local IndexedDB state; clearing browser data removes it. Signatures prove local byte integrity, not semantic truth or independent product identity.'
+          }
+          for before, after in replacements.items():
+              if text.count(before) != 1:
+                  raise SystemExit('Boundary text changed; preserve concurrent work')
+              text = text.replace(before, after)
+          path.write_text(text, encoding='utf-8')
+          PY
+          python tools/rollout_proof_flow_shell.py
+          python tools/rollout_holographic_proof_v2.py
+          python tools/rollout_proof_flow_shell.py --check
+          python tools/rollout_holographic_proof_v2.py --check
+          python -m unittest discover -s tests -p test_proof_flow_shell.py -v
+          python -m unittest discover -s tests -p test_holographic_proof_v2.py -v
+          node --test tests/local-kernel.test.cjs
+          git diff --check
+          python - <<'PY'
+          import subprocess
+          allowed = {'estate/alloy-os/index.html','estate/frontier-2026-09-04/index.html','estate/szl-frontier/index.html','khipu/nan/index.html','status/index.html','frontend-flow-shell-state.json','holographic-experience-v2/rollout-state.json'}
+          changed = set(subprocess.check_output(['git','diff','--name-only'], text=True).splitlines())
+          if not changed or not changed.issubset(allowed):
+              raise SystemExit(f'Unexpected binding scope: {sorted(changed - allowed)}')
+          print('Verified source-only binding changes:', sorted(changed))
+          PY
+      - name: Commit only verified bindings to the unchanged isolated branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_HEAD: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch=fix/proof-local-kernel-delivery-20260905
+          test "$(git ls-remote origin refs/heads/$branch | cut -f1)" = "$EXPECTED_HEAD"
+          git add -- estate/alloy-os/index.html estate/frontier-2026-09-04/index.html estate/szl-frontier/index.html khipu/nan/index.html status/index.html frontend-flow-shell-state.json holographic-experience-v2/rollout-state.json
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix(proof): bind all five omitted proof documents to both existing shells'
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          echo "::add-mask::$auth"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin "HEAD:refs/heads/$branch"
