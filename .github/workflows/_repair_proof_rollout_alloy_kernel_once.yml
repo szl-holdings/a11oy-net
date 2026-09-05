@@ -61,10 +61,11 @@ jobs:
           python - <<'PY'
           import subprocess
 
+          # The two frontier documents are already bound on protected main; only
+          # their generated ledgers were stale. Ñan became a complete HTML
+          # document after the first run and is now admitted by both binders.
           expected = {
               "estate/alloy-os/index.html",
-              "estate/frontier-2026-09-04/index.html",
-              "estate/szl-frontier/index.html",
               "frontend-flow-shell-state.json",
               "holographic-experience-v2/rollout-state.json",
               "khipu/nan/index.html",
@@ -99,13 +100,15 @@ jobs:
           from pathlib import Path
 
           root = Path('.')
-          page = (root / 'estate/alloy-os/index.html').read_text(encoding='utf-8')
-          assert '<script src="./kernel.js"></script>' in page
+          alloy = (root / 'estate/alloy-os/index.html').read_text(encoding='utf-8')
+          nan = (root / 'khipu/nan/index.html').read_text(encoding='utf-8')
+          assert '<script src="./kernel.js"></script>' in alloy
           assert (root / 'estate/alloy-os/kernel.js').is_file()
-          assert page.count('data-szl-proof-flow-asset="style"') == 1
-          assert page.count('data-szl-proof-flow-asset="script"') == 1
-          assert page.count('data-szl-proof-holo-asset="style-v2"') == 1
-          assert page.count('data-szl-proof-holo-asset="script-v2"') == 1
+          for page in (alloy, nan):
+              assert page.count('data-szl-proof-flow-asset="style"') == 1
+              assert page.count('data-szl-proof-flow-asset="script"') == 1
+              assert page.count('data-szl-proof-holo-asset="style-v2"') == 1
+              assert page.count('data-szl-proof-holo-asset="script-v2"') == 1
           PY
           git diff --check
 
@@ -117,8 +120,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- \
             estate/alloy-os/index.html \
-            estate/frontier-2026-09-04/index.html \
-            estate/szl-frontier/index.html \
             frontend-flow-shell-state.json \
             holographic-experience-v2/rollout-state.json \
             khipu/nan/index.html \
