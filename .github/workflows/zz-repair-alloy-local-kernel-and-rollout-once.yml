@@ -1,0 +1,122 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Repair Alloy local kernel and rollout inventory once
+
+on:
+  push:
+    branches:
+      - fix/alloy-local-kernel-and-rollout-inventory-20260905
+    paths:
+      - .github/workflows/zz-repair-alloy-local-kernel-and-rollout-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-alloy-local-kernel-and-rollout-once
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    name: restore browser kernel and bind every current proof document
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/alloy-local-kernel-and-rollout-inventory-20260905
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12.10"
+
+      - name: Prove browser-kernel syntax and source contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check estate/alloy-os/kernel.js
+          python -m unittest tests.test_alloy_local_kernel -v
+
+      - name: Re-run the canonical proof-shell rollout controllers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/rollout_proof_flow_shell.py > /tmp/proof-flow-apply.json
+          python tools/rollout_holographic_proof_v2.py > /tmp/holographic-apply.json
+          python tools/rollout_proof_flow_shell.py --check > /tmp/proof-flow-check.json
+          python tools/rollout_holographic_proof_v2.py --check > /tmp/holographic-check.json
+
+      - name: Prove exact generated scope and all proof contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+          from pathlib import Path
+
+          expected = {
+              "estate/alloy-os/index.html",
+              "estate/frontier-2026-09-04/index.html",
+              "estate/szl-frontier/index.html",
+              "frontend-flow-shell-state.json",
+              "holographic-experience-v2/rollout-state.json",
+              "khipu/nan/index.html",
+              "status/index.html",
+          }
+          actual = {
+              line.strip()
+              for line in subprocess.check_output(
+                  ["git", "diff", "--name-only"], text=True
+              ).splitlines()
+              if line.strip()
+          }
+          if actual != expected:
+              raise SystemExit(
+                  "unexpected rollout scope: "
+                  f"missing={sorted(expected - actual)} extra={sorted(actual - expected)}"
+              )
+
+          kernel = Path("estate/alloy-os/kernel.js").read_text(encoding="utf-8")
+          index = Path("estate/alloy-os/index.html").read_text(encoding="utf-8")
+          assert '<script src="./kernel.js"></script>' in index
+          assert index.index('<script src="./kernel.js"></script>') < index.index(
+              '<script src="./app.js"></script>'
+          )
+          assert "crypto.subtle.encrypt(" in kernel
+          assert "crypto.subtle.sign(" in kernel
+          assert "indexedDB.open(" in kernel
+          assert "fetch(" not in kernel
+          PY
+          python -m unittest discover -s tests -t . -p "test_*.py" -v
+          git diff --check
+
+      - name: Commit only durable runtime, tests, and canonical rollout output
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/zz-repair-alloy-local-kernel-and-rollout-once.yml
+          git add \
+            estate/alloy-os/kernel.js \
+            tests/test_alloy_local_kernel.py \
+            estate/alloy-os/index.html \
+            estate/frontier-2026-09-04/index.html \
+            estate/szl-frontier/index.html \
+            frontend-flow-shell-state.json \
+            holographic-experience-v2/rollout-state.json \
+            khipu/nan/index.html \
+            status/index.html
+          git config user.name "SZL Proof Surface Recovery Controller"
+          git config user.email "stephenlutar2@gmail.com"
+          git commit \
+            -m "fix(proof): restore Alloy local kernel and rollout coverage" \
+            -m "Ship the missing non-networked WebCrypto/IndexedDB kernel and re-run both canonical proof-shell controllers so every current HTML surface is represented by the fail-closed rollout manifests." \
+            -m "Signed-off-by: Stephen Lutar <stephenlutar2@gmail.com>"
+          git push origin HEAD:fix/alloy-local-kernel-and-rollout-inventory-20260905
