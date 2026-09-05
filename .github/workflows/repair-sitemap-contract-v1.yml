@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Repair proof sitemap contract v1
+
+on:
+  push:
+    branches:
+      - estate-os-bake-231-20260904
+    paths:
+      - .github/workflows/repair-sitemap-contract-v1.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-proof-sitemap-contract-v1
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact PR branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: estate-os-bake-231-20260904
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Bind the published thread-ops route into the exact sitemap contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/check_proof_surface.py')
+          source = path.read_text(encoding='utf-8')
+          old = '''        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/command/",'''
+          new = '''        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/estate/thread-ops/",\n        "https://a11oy.net/command/",'''
+          if source.count(old) != 1:
+              raise SystemExit('sitemap assertion anchor was not unique')
+          path.write_text(source.replace(old, new), encoding='utf-8')
+          PY
+          node --check estate/alloy-os/kernel.js
+          python scripts/check_proof_surface.py
+          python tests/test_holographic_proof_v2.py
+          python tools/rollout_holographic_proof_v2.py --check --report /tmp/holo-check.json
+          python tools/rollout_proof_flow_shell.py --check --report /tmp/flow-check.json
+          git diff --check
+
+      - name: Commit the permanent contract repair only
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/repair-sitemap-contract-v1.yml
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No sitemap contract change required."
+            exit 0
+          fi
+          git commit -s -m "fix(proof): bind thread-ops into the sitemap contract"
+          git push origin HEAD:estate-os-bake-231-20260904
