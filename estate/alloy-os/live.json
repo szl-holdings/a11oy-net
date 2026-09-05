@@ -1,0 +1,49 @@
+{
+  "alignment": [
+    {
+      "class": "CANONICAL PRODUCT",
+      "note": "Interactive command, runtime health, and governed verification stay on the product origin.",
+      "plane": "Product",
+      "url": "https://a-11-oy.com"
+    },
+    {
+      "class": "CANONICAL PROOF",
+      "note": "Static records, diligence artifacts, and source-bound evidence pointers stay on the proof origin.",
+      "plane": "Proof",
+      "url": "https://a11oy.net"
+    },
+    {
+      "class": "SOURCE",
+      "note": "Public organization source inventory; repository visibility and code presence do not prove deployment.",
+      "plane": "GitHub",
+      "url": "https://github.com/szl-holdings"
+    },
+    {
+      "class": "ARTIFACT REGISTRY",
+      "note": "Public models, datasets, Spaces, and collections were counted. Reachability, quality, and deployment readiness were not inferred.",
+      "plane": "Hugging Face",
+      "url": "https://huggingface.co/SZLHOLDINGS"
+    }
+  ],
+  "capturedAt": "2026-09-05T00:44:54.127736Z",
+  "credential_values_recorded": false,
+  "inventory": {
+    "github_archived_repositories": 34,
+    "github_public_repositories": 117,
+    "huggingface_collections": 21,
+    "huggingface_datasets": 33,
+    "huggingface_models": 44,
+    "huggingface_spaces": 16,
+    "private_github_inventory": "UNAVAILABLE"
+  },
+  "lambda": "Conjecture 1 OPEN",
+  "product_runtime_probe": {
+    "reason": "This committed proof snapshot did not perform or cache a cross-origin product-runtime probe.",
+    "state": "UNAVAILABLE"
+  },
+  "provider_mutations_performed": false,
+  "runtime_probes_performed": false,
+  "schema": "szl.alloy-local-alignment/v1",
+  "scope": "PUBLIC_PARTIAL",
+  "truth_label": "MEASURED_PUBLIC_INVENTORY"
+}
