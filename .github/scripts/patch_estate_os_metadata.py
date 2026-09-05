@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Bind omitted temporary-manifest metadata from protected main."""
+"""Bind omitted metadata and compact repeated catalog prose."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -65,6 +65,21 @@ def main() -> int:
             '"priorBake": branch_manifest["priorBake"],',
             '"priorBake": prior_bake,',
             "prior bake binding",
+        ),
+        (
+            'return text[:280]',
+            'return text[:220]',
+            "description source budget",
+        ),
+        (
+            '"runtimeNote": "Repository inventory only. Runtime was not probed by this static bake.",',
+            '"runtimeNote": "Catalog only; runtime unprobed.",',
+            "GitHub runtime note compaction",
+        ),
+        (
+            '"runtimeNote": "Public Hub repository observed. Runtime and artifact quality were not inferred.",',
+            '"runtimeNote": "Catalog only; runtime unprobed.",',
+            "Hub runtime note compaction",
         ),
     ):
         text = replace_once(text, old, new, label=label)
