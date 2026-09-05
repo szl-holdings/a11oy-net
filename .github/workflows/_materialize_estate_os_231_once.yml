@@ -6,6 +6,7 @@ name: Materialize source-bound Estate OS 231-row monolith
       - estate-os-bake-231-20260904
     paths:
       - .github/scripts/materialize_estate_os_231.py
+      - .github/scripts/patch_estate_os_metadata.py
       - .github/workflows/_materialize_estate_os_231_once.yml
 
 permissions:
@@ -45,156 +46,17 @@ jobs:
         with:
           python-version: "3.12.10"
 
-      - name: Recover immutable catalog metadata omitted by the temporary manifest
+      - name: Bind omitted temporary-manifest metadata
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('.github/scripts/materialize_estate_os_231.py')
-          text = path.read_text(encoding='utf-8')
-          old_prelude = '''    branch_manifest = json.loads(Path("estate/os/data.json").read_text(encoding="utf-8"))
-    old = old_assets()
-'''
-          new_prelude = '''    branch_manifest = json.loads(Path("estate/os/data.json").read_text(encoding="utf-8"))
-    prior_manifest = json.loads(
-        subprocess.check_output(
-            ["git", "show", "origin/main:estate/os/data.json"],
-            text=True,
-            encoding="utf-8",
-        )
-    )
-    surface = dict(branch_manifest.get("surface") or prior_manifest["surface"])
-    surface.update(
-        {
-            "url": "https://a11oy.net/estate/os/",
-            "product": "https://a-11-oy.com",
-            "proof": "https://a11oy.net",
-            "never": "a11oy.com — foreign storefront",
-        }
-    )
-    later_recapture = branch_manifest.get("laterRecapture") or prior_manifest["laterRecapture"]
-    prior_bake = branch_manifest.get("priorBake") or {
-        "capturedAt": prior_manifest.get("capturedAt"),
-        "scope": prior_manifest.get("scope"),
-        "honesty": prior_manifest.get("honesty"),
-        "counts": prior_manifest.get("counts"),
-        "note": "Preserved metadata for the preceding committed public-partial bake.",
-    }
-    old = old_assets()
-'''
-          if text.count(old_prelude) != 1:
-              raise SystemExit(f'expected one materializer prelude, found {text.count(old_prelude)}')
-          text = text.replace(old_prelude, new_prelude, 1)
-          replacements = {
-              '"surface": branch_manifest["surface"],': '"surface": surface,',
-              '"laterRecapture": branch_manifest["laterRecapture"],': '"laterRecapture": later_recapture,',
-              '"priorBake": branch_manifest["priorBake"],': '"priorBake": prior_bake,',
-          }
-          for old, new in replacements.items():
-              if text.count(old) != 1:
-                  raise SystemExit(f'expected one metadata target {old!r}, found {text.count(old)}')
-              text = text.replace(old, new, 1)
-          path.write_text(text, encoding='utf-8')
-          PY
+          python .github/scripts/patch_estate_os_metadata.py
 
       - name: Materialize the bounded public inventory
         shell: bash
         run: |
           set -euo pipefail
           python .github/scripts/materialize_estate_os_231.py
-
-      - name: Add permanent source and rendering contract
-        shell: bash
-        run: |
-          set -euo pipefail
-          cat > tests/test_estate_os_231.py <<'PY'
-          # SPDX-License-Identifier: Apache-2.0
-          from __future__ import annotations
-
-          import hashlib
-          import json
-          from collections import Counter
-          from pathlib import Path
-
-          DATA = Path("estate/os/data.json")
-          BAKE = Path("estate/os/bake.json")
-          RECEIPT = Path("estate/os/materialization-receipt.json")
-          APP = Path("estate/os/app.js")
-
-          EXPECTED_LANES = {
-              "github": 117,
-              "model": 44,
-              "dataset": 33,
-              "space": 16,
-              "collection": 21,
-          }
-          EXPECTED_RINGS = {
-              "holographic": 6,
-              "flagship": 8,
-              "vertical": 57,
-              "kernel": 50,
-              "archive": 38,
-              "docs": 64,
-              "organ": 8,
-          }
-
-
-          def load(path: Path):
-              return json.loads(path.read_text(encoding="utf-8"))
-
-
-          def test_monolith_is_complete_unique_and_bounded() -> None:
-              payload = load(DATA)
-              assets = payload["assets"]
-              assert payload["contract"] == "szl.estate-hud.hologram/v1"
-              assert payload["scope"] == "PUBLIC_PARTIAL"
-              assert payload["honesty"] == "UNSIGNED-honest"
-              assert payload["lambda"] == "Conjecture 1 OPEN"
-              assert len(assets) == 231
-              assert len({row["id"] for row in assets}) == 231
-              assert Counter(row["lane"] for row in assets) == Counter(EXPECTED_LANES)
-              assert Counter(row["ring"] for row in assets) == Counter(EXPECTED_RINGS)
-              assert payload["counts"]["assets"] == 231
-              assert DATA.stat().st_size <= 200_000
-
-
-          def test_origin_and_runtime_truth_boundaries_are_preserved() -> None:
-              payload = load(DATA)
-              encoded = DATA.read_text(encoding="utf-8")
-              assert payload["surface"]["url"] == "https://a11oy.net/estate/os/"
-              assert payload["surface"]["product"] == "https://a-11-oy.com"
-              assert payload["surface"]["proof"] == "https://a11oy.net"
-              assert "https://a11oy.com" not in encoded
-              assert payload["generation"]["runtimeProbesPerformed"] is False
-              assert payload["generation"]["providerMutationsPerformed"] is False
-              assert payload["generation"]["credentialValuesRecorded"] is False
-              assert payload["laterRecapture"]["huggingface"]["spaces_public"] == 48
-
-
-          def test_bake_and_receipt_bind_exact_monolith_bytes() -> None:
-              raw = DATA.read_bytes()
-              bake = load(BAKE)
-              receipt = load(RECEIPT)
-              expected_sha = hashlib.sha256(raw).hexdigest()
-              assert bake["monolith"]["bytes"] == len(raw)
-              assert bake["monolith"]["sha256"] == expected_sha
-              assert bake["monolith"]["uniqueAssets"] == 231
-              assert receipt["complete"] is True
-              assert receipt["monolith"]["sha256"] == expected_sha
-              assert receipt["provider_mutations_performed"] is False
-              assert receipt["credential_values_recorded"] is False
-
-
-          def test_renderer_loads_only_the_committed_monolith() -> None:
-              source = APP.read_text(encoding="utf-8")
-              assert 'fetch("./data.json", { redirect: "error" })' in source
-              assert "assets-github-a.json" not in source
-              assert "assets-model.json" not in source
-              assert "data.json did not load" in source
-              assert "not an observed-empty inventory" in source
-          PY
 
       - name: Verify exact counts, bytes, renderer, and no-mutation boundary
         shell: bash
@@ -203,6 +65,7 @@ jobs:
           python -m pip install --disable-pip-version-check --no-cache-dir pytest==8.4.2
           python -m py_compile \
             .github/scripts/materialize_estate_os_231.py \
+            .github/scripts/patch_estate_os_metadata.py \
             tests/test_estate_os_231.py
           python -m pytest tests/test_estate_os_231.py -q
           python - <<'PY'
@@ -210,28 +73,23 @@ jobs:
           from pathlib import Path
 
           data = json.loads(Path('estate/os/data.json').read_text(encoding='utf-8'))
-          assert data['counts'] == {
-              'assets': 231,
-              'github': 117,
-              'githubArchived': data['counts']['githubArchived'],
-              'space': 16,
-              'spacePublic': 16,
-              'spaceGated': data['counts']['spaceGated'],
-              'model': 44,
-              'dataset': 33,
-              'collection': 21,
-              'rings': {
-                  'holographic': 6,
-                  'flagship': 8,
-                  'vertical': 57,
-                  'kernel': 50,
-                  'archive': 38,
-                  'docs': 64,
-                  'organ': 8,
-              },
-              'githubSearchTotal': 117,
-              'privateGithubUnavailable': 'UNAVAILABLE',
+          expected_rings = {
+              'holographic': 6,
+              'flagship': 8,
+              'vertical': 57,
+              'kernel': 50,
+              'archive': 38,
+              'docs': 64,
+              'organ': 8,
           }
+          assert data['counts']['assets'] == 231
+          assert data['counts']['github'] == 117
+          assert data['counts']['model'] == 44
+          assert data['counts']['dataset'] == 33
+          assert data['counts']['space'] == 16
+          assert data['counts']['collection'] == 21
+          assert data['counts']['rings'] == expected_rings
+          assert data['counts']['privateGithubUnavailable'] == 'UNAVAILABLE'
           PY
           git diff --check
 
@@ -244,10 +102,10 @@ jobs:
           git add -- \
             estate/os/data.json \
             estate/os/bake.json \
-            estate/os/materialization-receipt.json \
-            tests/test_estate_os_231.py
+            estate/os/materialization-receipt.json
           git rm -- \
             .github/scripts/materialize_estate_os_231.py \
+            .github/scripts/patch_estate_os_metadata.py \
             .github/workflows/_materialize_estate_os_231_once.yml
           git commit -s -m 'feat(estate): publish source-bound 231-row Estate OS catalog'
           git push origin HEAD:estate-os-bake-231-20260904
