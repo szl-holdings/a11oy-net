@@ -1,0 +1,113 @@
+name: Materialize proof release vector once
+
+"on":
+  push:
+    branches:
+      - feat/proof-release-vector-v1
+    paths:
+      - .github/workflows/materialize-proof-release-vector-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: materialize-proof-release-vector-once
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout exact materialization branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Merge current protected proof source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main
+          git config user.name 'Lutar, Stephen P.'
+          git config user.email 'stephenlutar2@gmail.com'
+          git merge --no-edit origin/main
+
+      - name: Bind the release vector into the existing Pages writer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          candidates = []
+          for path in Path('.github/workflows').glob('*.y*ml'):
+              if path.name == 'materialize-proof-release-vector-once.yml':
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if 'upload-pages-artifact' in text or 'deploy-pages' in text:
+                  candidates.append(path)
+          if len(candidates) != 1:
+              raise SystemExit(
+                  f'expected one canonical Pages workflow, found {[str(p) for p in candidates]}'
+              )
+          path = candidates[0]
+          text = path.read_text(encoding='utf-8')
+          marker = 'Build cross-plane release vector'
+          if marker not in text:
+              match = re.search(
+                  r'^(?P<indent>\s*)-\s+(?:name:\s+[^\n]*\n(?:(?P=indent)\s+[^\n]*\n)*?(?P=indent)\s+uses:\s+[^\n]*upload-pages-artifact|uses:\s+[^\n]*upload-pages-artifact)[^\n]*$',
+                  text,
+                  re.MULTILINE,
+              )
+              if not match:
+                  # Simpler exact-line fallback for standard Pages workflows.
+                  match = re.search(
+                      r'^(?P<indent>\s*)-\s+uses:\s+[^\n]*upload-pages-artifact[^\n]*$',
+                      text,
+                      re.MULTILINE,
+                  )
+              if not match:
+                  raise SystemExit(f'could not locate upload-pages-artifact step in {path}')
+              indent = match.group('indent')
+              block = (
+                  f'{indent}- name: Build cross-plane release vector\n'
+                  f'{indent}  env:\n'
+                  f'{indent}    GITHUB_TOKEN: ${{{{ github.token }}}}\n'
+                  f'{indent}  run: >-\n'
+                  f'{indent}    python3 scripts/build_estate_release_vector.py\n'
+                  f'{indent}    --proof-sha "${{{{ github.sha }}}}"\n'
+                  f'{indent}    --output estate/release-vector.json\n\n'
+              )
+              text = text[:match.start()] + block + text[match.start():]
+              path.write_text(text, encoding='utf-8')
+          Path('/tmp/pages-workflow-path.txt').write_text(str(path), encoding='utf-8')
+          PY
+
+      - name: Prove the generator, page, and workflow closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/build_estate_release_vector.py tests/test_estate_release_vector.py
+          python tests/test_estate_release_vector.py
+          workflow="$(cat /tmp/pages-workflow-path.txt)"
+          grep -F 'Build cross-plane release vector' "$workflow"
+          grep -F 'scripts/build_estate_release_vector.py' "$workflow"
+          test -s estate/alignment/index.html
+          git diff --check
+
+      - name: Remove materializer and commit durable proof source
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/materialize-proof-release-vector-once.yml
+          git add -A
+          git commit -m 'feat(proof): publish one cross-plane release vector' -m 'Generate an exact GitHub, Hugging Face, product-domain, and proof-source witness inside the existing Pages deployment and expose it through a mobile evidence surface.' -m 'Signed-off-by: Stephen Lutar <stephenlutar2@gmail.com>'
+          git push origin HEAD:feat/proof-release-vector-v1
