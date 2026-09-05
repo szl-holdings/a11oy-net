@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+"""Contracts for the browser-local kernel; none grants remote or provider authority."""
 from __future__ import annotations
 
 import json
