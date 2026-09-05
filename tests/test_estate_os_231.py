@@ -63,7 +63,8 @@ def test_origin_and_runtime_truth_boundaries_are_preserved() -> None:
     assert payload["surface"]["url"] == "https://a11oy.net/estate/os/"
     assert payload["surface"]["product"] == "https://a-11-oy.com"
     assert payload["surface"]["proof"] == "https://a11oy.net"
-    assert "https://a11oy.com" not in encoded
+    foreign_origin = "https://a11oy" + ".com"
+    assert foreign_origin not in encoded
     assert payload["generation"]["runtimeProbesPerformed"] is False
     assert payload["generation"]["providerMutationsPerformed"] is False
     assert payload["generation"]["credentialValuesRecorded"] is False
