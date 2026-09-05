@@ -1,0 +1,116 @@
+name: Repair proof base convergence once
+
+on:
+  push:
+    branches:
+      - fix/proof-base-convergence-20260905
+    paths:
+      - .github/workflows/repair-proof-base-convergence-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: proof-base-convergence-once
+  cancel-in-progress: false
+
+jobs:
+  materialize:
+    if: github.repository == 'szl-holdings/a11oy-net'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920
+        with:
+          egress-policy: audit
+
+      - name: Checkout exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: fix/proof-base-convergence-20260905
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+
+      - name: Assert bounded source and branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = 'fix/proof-base-convergence-20260905'
+          test -f estate/alloy-os/kernel.js
+          test -f tests/test_alloy_os_kernel.py
+          test -f tools/rollout_proof_flow_shell.py
+          test -f tools/rollout_holographic_proof_v2.py
+          test -f .github/workflows/repair-proof-base-convergence-once.yml
+
+      - name: Run deterministic proof-shell materializers
+        run: |
+          python tools/rollout_proof_flow_shell.py
+          python tools/rollout_holographic_proof_v2.py
+
+      - name: Verify generated shell and local-kernel contracts
+        run: |
+          python tools/rollout_proof_flow_shell.py --check
+          python tools/rollout_holographic_proof_v2.py --check
+          python -m unittest \
+            tests.test_proof_flow_shell \
+            tests.test_holographic_proof_v2 \
+            tests.test_alloy_os_kernel -v
+          node --check estate/alloy-os/kernel.js
+
+      - name: Remove this consumed controller
+        run: rm .github/workflows/repair-proof-base-convergence-once.yml
+
+      - name: Prove exact generated closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          python - <<'PY'
+          import subprocess
+
+          expected = {
+              '.github/workflows/repair-proof-base-convergence-once.yml',
+              'estate/alloy-os/index.html',
+              'estate/intel-panel/index.html',
+              'estate/living-anatomy/index.html',
+              'estate/neon-khipu/index.html',
+              'estate/observability-wall/index.html',
+              'frontend-flow-shell-state.json',
+              'holographic-experience-v2/rollout-state.json',
+          }
+          actual = set(
+              subprocess.check_output(
+                  ['git', 'diff', '--name-only', 'HEAD'], text=True
+              ).splitlines()
+          )
+          if actual != expected:
+              raise SystemExit(
+                  'unexpected generated closure\n'
+                  f'missing={sorted(expected - actual)}\n'
+                  f'extra={sorted(actual - expected)}'
+              )
+          print('exact generated closure:', *sorted(actual), sep='\n- ')
+          PY
+
+      - name: Commit generated closure to the repair branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all
+          git commit -m 'fix(proof): converge omitted shell bindings and local asset' \
+            -m 'Materialize both deterministic proof-shell contracts over the five omitted pages, retain the restored first-party Alloy local kernel, and remove the consumed one-shot controller.' \
+            -m 'Signed-off-by: Stephen Lutar <stephenlutar2@gmail.com>'
+          git push origin HEAD:fix/proof-base-convergence-20260905
