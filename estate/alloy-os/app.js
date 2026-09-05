@@ -163,9 +163,12 @@
     }));
     if (heal) heal.addEventListener("click", () => runAction(async () => {
       captureForm();
-      const health = await kernel.runWatchdog();
-      state.message = health.ledgerReplayable ? "Watchdog complete — local chain replayable." : "Watchdog complete — degraded state remains.";
-      state.tone = health.ledgerReplayable ? "ok" : "bad";
+      const outcome = await kernel.runWatchdog();
+      const verified = outcome.verified === true && kernel.health.ledgerReplayable === true;
+      state.message = verified
+        ? `Watchdog complete — restored ${outcome.restored} authenticated local snapshot(s).`
+        : "Watchdog complete — degraded state remains.";
+      state.tone = verified ? "ok" : "bad";
     }));
   }
 
