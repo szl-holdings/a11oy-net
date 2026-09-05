@@ -174,6 +174,7 @@
 
   async function runAction(operation) {
     if (state.busy) return;
+    captureForm();
     state.busy = true;
     renderKernel();
     try {
