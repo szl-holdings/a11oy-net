@@ -1,0 +1,213 @@
+name: Complete Estate OS local kernel once v2
+
+on:
+  push:
+    branches:
+      - estate-os-bake-231-20260904
+    paths:
+      - .github/workflows/complete-estate-os-local-kernel-once-v2.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: complete-estate-os-local-kernel-once-v2
+  cancel-in-progress: false
+
+jobs:
+  complete:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout exact Estate OS branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: estate-os-bake-231-20260904
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Materialize reviewed kernel and repair existing source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          transport = Path(".github/workflows/complete-estate-os-local-kernel-once.yml")
+          text = transport.read_text(encoding="utf-8")
+          begin = "          cat > estate/alloy-os/kernel.js <<'JS'\n"
+          end = "\n          JS\n"
+          if text.count(begin) != 1:
+              raise SystemExit("reviewed kernel payload start marker drifted")
+          start = text.index(begin) + len(begin)
+          stop = text.index(end, start)
+          raw = text[start:stop]
+          lines = []
+          for line in raw.splitlines():
+              if not line.startswith("          "):
+                  raise SystemExit("reviewed kernel payload indentation drifted")
+              lines.append(line[10:])
+          kernel = "\n".join(lines) + "\n"
+          Path("estate/alloy-os/kernel.js").write_text(
+              kernel,
+              encoding="utf-8",
+              newline="\n",
+          )
+
+          app_path = Path("estate/alloy-os/app.js")
+          app_lines = app_path.read_text(encoding="utf-8").splitlines()
+          if not app_lines or not app_lines[0].startswith("function esc(s)"):
+              raise SystemExit("Estate OS escape helper anchor drifted")
+          app_lines[0:1] = [
+              'const ESCAPE_HTML=Object.freeze({"&":"&amp;","<":"&lt;",">":"&gt;","\\\"":"&quot;","\'":"&#39;"});',
+              'function esc(s){return String(s??"").replace(/[&<>"\']/g,c=>ESCAPE_HTML[c]);}',
+          ]
+          app_path.write_text("\n".join(app_lines) + "\n", encoding="utf-8", newline="\n")
+
+          proof_path = Path("scripts/check_proof_surface.py")
+          proof = proof_path.read_text(encoding="utf-8")
+          old = '''        "https://a11oy.net/estate/plane/",
+                  "https://a11oy.net/command/",
+          '''
+          new = '''        "https://a11oy.net/estate/plane/",
+                  "https://a11oy.net/estate/thread-ops/",
+                  "https://a11oy.net/command/",
+          '''
+          if old in proof:
+              proof = proof.replace(old, new, 1)
+          elif '"https://a11oy.net/estate/thread-ops/"' not in proof:
+              raise SystemExit("sitemap expectation anchor drifted")
+          proof_path.write_text(proof, encoding="utf-8", newline="\n")
+          PY
+
+          cat > tests/test_alloy_local_kernel_contract.py <<'PY'
+          from __future__ import annotations
+
+          from pathlib import Path
+          import re
+
+          ROOT = Path(__file__).resolve().parents[1]
+          KERNEL = ROOT / "estate" / "alloy-os" / "kernel.js"
+          INDEX = ROOT / "estate" / "alloy-os" / "index.html"
+          APP = ROOT / "estate" / "alloy-os" / "app.js"
+
+
+          def test_kernel_exists_and_is_loaded_before_ui() -> None:
+              assert KERNEL.is_file()
+              index = INDEX.read_text(encoding="utf-8")
+              assert index.index('<script src="./kernel.js"></script>') < index.index(
+                  '<script src="./app.js"></script>'
+              )
+
+
+          def test_local_crypto_persistence_and_healing_contract() -> None:
+              source = KERNEL.read_text(encoding="utf-8")
+              for marker in (
+                  'name: "AES-GCM", length: 256',
+                  'name: "ECDSA", namedCurve: "P-256"',
+                  'crypto.subtle.sign',
+                  'crypto.subtle.verify',
+                  'crypto.subtle.digest("SHA-256"',
+                  'indexedDB.open',
+                  'createObjectStore("capsules"',
+                  'createObjectStore("receipts"',
+                  'createObjectStore("snapshots"',
+                  'ONE_BYTE_TEST_ONLY',
+                  'BLOCKED_UNSUPPORTED_BROWSER',
+                  'alloy-local-v1',
+              ):
+                  assert marker in source
+
+
+          def test_kernel_has_no_network_or_dynamic_execution_authority() -> None:
+              source = KERNEL.read_text(encoding="utf-8")
+              for marker in (
+                  "fetch(", "XMLHttpRequest", "WebSocket", "EventSource",
+                  "navigator.sendBeacon", "eval(", "new Function",
+                  "document.write", "localStorage", "sessionStorage",
+              ):
+                  assert marker not in source
+              assert not re.search(r"https?://", source)
+
+
+          def test_existing_ui_is_valid_and_uses_bounded_interface() -> None:
+              app = APP.read_text(encoding="utf-8")
+              assert "ESCAPE_HTML" in app
+              for marker in (
+                  "Alloy.ADAPTER_CURRENT", "Alloy.govern", "Alloy.injectFault",
+                  "Alloy.runWatchdog", "Alloy.boot", "Alloy.subscribe",
+              ):
+                  assert marker in app
+          PY
+
+      - name: Prove JavaScript, local authority, links, and proof surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check estate/alloy-os/kernel.js
+          node --check estate/alloy-os/app.js
+          python -m py_compile \
+            scripts/check_proof_surface.py \
+            tests/test_alloy_local_kernel_contract.py
+          python -m pytest -q tests/test_alloy_local_kernel_contract.py
+          python tests/test_holographic_proof_v2.py
+          python scripts/check_proof_surface.py
+          python scripts/check_diligence_surface.py
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse, unquote
+
+          root = Path('.').resolve()
+          errors = []
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.refs=[]
+              def handle_starttag(self, tag, attrs):
+                  data=dict(attrs)
+                  for key in ('href','src','poster'):
+                      if data.get(key): self.refs.append(data[key])
+          for html in sorted(root.rglob('*.html')):
+              if '.git' in html.relative_to(root).parts: continue
+              parser=Parser(); parser.feed(html.read_text(encoding='utf-8'))
+              for ref in parser.refs:
+                  parsed=urlparse(ref)
+                  if not ref or ref.startswith(('data:','mailto:','tel:','javascript:')): continue
+                  if parsed.netloc and parsed.netloc.lower() not in {'a11oy.net','www.a11oy.net'}: continue
+                  if parsed.scheme and parsed.scheme not in {'http','https'}: continue
+                  decoded=unquote(parsed.path)
+                  candidate=(root/decoded.lstrip('/')) if decoded.startswith('/') else (html.parent/decoded)
+                  candidates=[candidate]
+                  if decoded.endswith('/') or candidate.is_dir(): candidates.insert(0,candidate/'index.html')
+                  elif not candidate.suffix: candidates.extend((candidate.with_suffix('.html'),candidate/'index.html'))
+                  if not any(path.is_file() for path in candidates): errors.append(f'{html.relative_to(root)} -> {ref}')
+          if errors:
+              raise SystemExit('unresolved local assets:\n'+'\n'.join(errors))
+          print('All local links and assets resolve.')
+          PY
+          git diff --check
+
+      - name: Remove transports and push the completed branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm -f \
+            .github/workflows/complete-estate-os-local-kernel-once.yml \
+            .github/workflows/complete-estate-os-local-kernel-once-v2.yml
+          git add \
+            estate/alloy-os/kernel.js \
+            estate/alloy-os/app.js \
+            scripts/check_proof_surface.py \
+            tests/test_alloy_local_kernel_contract.py
+          git diff --cached --check
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git commit -s \
+            -m "fix(estate): complete the local WebCrypto kernel" \
+            -m "Implement the missing local-only AES-GCM/ECDSA/IndexedDB kernel, repair the existing UI syntax, lock its no-network authority, and align the proof sitemap assertion with the committed route inventory."
+          git push origin HEAD:estate-os-bake-231-20260904
