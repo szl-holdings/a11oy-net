@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="/assets/kanchay.css" />
   <link rel="stylesheet" href="/assets/diligence.css" />
   <link rel="stylesheet" href="./alloy.css" />
+  <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
+  <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
 </head>
 <body>
   <a class="skip" href="#main">Skip to local kernel</a>
@@ -58,15 +60,15 @@
     </header>
     <div class="wrap rail" id="bake-rail" aria-label="Baked counts"></div>
     <section class="wrap" id="alignment">
-      <p class="eyebrow">Origins · MEASURED bind</p>
+      <p class="eyebrow">Origins · recorded source locations</p>
       <h2>GitHub · Hub · product · proof</h2>
-      <p>Same-origin contracts are read here. Product and Hub URLs are location binds, not cloned runtimes. Hugging Face Space create is UNAVAILABLE from this session (no Hub connector).</p>
+      <p>Same-origin contracts are read here. Product and Hub URLs are location binds, not cloned runtimes. These saved source locations do not certify current Hub availability.</p>
       <div id="align-table"></div>
     </section>
     <section class="wrap" id="kernel">
       <p class="eyebrow">On-device kernel · Profile A Local Real</p>
       <h2>Compose · reuse · block · heal</h2>
-      <p>Keys never leave this origin. Reload keeps the estate. Signature proves origin of bytes, not semantic truth.</p>
+      <p>Keys stay in this browser origin. Reload preserves local IndexedDB state; clearing browser data removes it. Signatures prove local byte integrity, not semantic truth or independent product identity.</p>
       <div id="kernel-app">Booting local kernel…</div>
     </section>
   </main>
@@ -84,5 +86,7 @@
   </footer>
   <script src="./kernel.js"></script>
   <script src="./app.js"></script>
+  <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
+  <script src="/scripts/szl-holo-proof-v2.js" defer data-szl-proof-holo-asset="script-v2"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "examined_documents": 32,
+  "examined_documents": 37,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -13,10 +13,13 @@
     "counsel/index.html",
     "decision/index.html",
     "diligence/index.html",
+    "estate/alloy-os/index.html",
+    "estate/frontier-2026-09-04/index.html",
     "estate/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",
+    "estate/szl-frontier/index.html",
     "estate/thread-ops/index.html",
     "experiments/index.html",
     "factory/index.html",
@@ -24,6 +27,7 @@
     "frontiers/index.html",
     "index.html",
     "khipu/index.html",
+    "khipu/nan/index.html",
     "nexus/index.html",
     "notes/index.html",
     "origin/index.html",
@@ -31,6 +35,7 @@
     "puriq-markets/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",
+    "status/index.html",
     "terra/index.html",
     "vessels/index.html"
   ],
