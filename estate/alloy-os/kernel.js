@@ -1,390 +1,247 @@
 /* SPDX-License-Identifier: Apache-2.0
- * Alloy local kernel: browser-only encrypted capsules and signed receipt chain.
- * No network calls. No product authority. Keys remain scoped to this origin.
+ * Local-device demonstration only. Same-origin keys are not an independent
+ * trust anchor. Browser storage can be cleared; this is not a product ledger.
+ * Recovery restores only a verified local ciphertext snapshot, never evidence.
  */
-(() => {
-  "use strict";
-
-  const DB_NAME = "a11oy-alloy-local-kernel-v1";
-  const DB_VERSION = 1;
-  const ADAPTER_CURRENT = "alloy-local-v1";
-  const enc = new TextEncoder();
-  const dec = new TextDecoder();
-  const listeners = new Set();
-  let db = null;
-  let keys = null;
-
-  const Alloy = {
-    ADAPTER_CURRENT,
-    status: "BOOTING",
-    epoch: 0,
-    identity: null,
-    receipts: [],
-    capsules: [],
-    health: {
-      healed: 0,
-      blocked: 0,
-      ledgerReplayable: false,
-      lastVerify: null,
-    },
-    subscribe(callback) {
-      if (typeof callback === "function") listeners.add(callback);
-      return () => listeners.delete(callback);
-    },
-    shortHex(value) {
-      const text = String(value || "UNAVAILABLE");
-      return text.length > 16 ? `${text.slice(0, 8)}…${text.slice(-6)}` : text;
-    },
-    boot,
-    govern,
-    injectFault,
-    runWatchdog,
-  };
-  window.Alloy = Alloy;
-
-  function emit() {
-    for (const callback of listeners) {
-      try { callback(Alloy); } catch (_) { /* UI subscribers cannot alter kernel state. */ }
-    }
+(function (root) {
+  'use strict';
+  const ADAPTER = 'alloy-local-v1';
+  const SCHEMA = 'szl.local-capsule/v1';
+  const MAX_RECEIPTS = 1024;
+  const MAX_CAPSULES = 128;
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+  const HEX = /^[0-9a-f]{64}$/;
+  const encode = value => encoder.encode(JSON.stringify(value));
+  const hex = bytes => Array.from(new Uint8Array(bytes), b => b.toString(16).padStart(2, '0')).join('');
+  function unhex(value) {
+    if (typeof value !== 'string' || value.length % 2 || !/^[0-9a-f]*$/.test(value)) throw new Error('Invalid encoded bytes');
+    return Uint8Array.from(value.match(/../g) || [], byte => parseInt(byte, 16));
   }
-
-  function canonical(value) {
-    if (value === null || typeof value !== "object") return JSON.stringify(value);
-    if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
-    return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(",")}}`;
+  function fields(receipt) {
+    return { seq: receipt.seq, prev: receipt.prev, type: receipt.type, note: receipt.note,
+      capsuleDigest: receipt.capsuleDigest, encryptedDigest: receipt.encryptedDigest,
+      kid: receipt.kid, at: receipt.at };
   }
-
-  function toBase64(bytes) {
-    let binary = "";
-    const view = new Uint8Array(bytes);
-    for (let offset = 0; offset < view.length; offset += 0x8000) {
-      binary += String.fromCharCode(...view.subarray(offset, offset + 0x8000));
-    }
-    return btoa(binary);
-  }
-
-  function fromBase64(value) {
-    const binary = atob(value);
-    const bytes = new Uint8Array(binary.length);
-    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-    return bytes;
-  }
-
-  function hex(bytes) {
-    return [...new Uint8Array(bytes)].map(value => value.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function sha256(value) {
-    const bytes = value instanceof Uint8Array ? value : enc.encode(String(value));
-    return hex(await crypto.subtle.digest("SHA-256", bytes));
-  }
-
-  function requestResult(request) {
-    return new Promise((resolve, reject) => {
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error || new Error("IndexedDB request failed"));
-    });
-  }
-
-  function transactionDone(transaction) {
-    return new Promise((resolve, reject) => {
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => reject(transaction.error || new Error("IndexedDB transaction failed"));
-      transaction.onabort = () => reject(transaction.error || new Error("IndexedDB transaction aborted"));
-    });
-  }
-
-  function openDatabase() {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-      request.onupgradeneeded = () => {
-        const database = request.result;
-        if (!database.objectStoreNames.contains("meta")) database.createObjectStore("meta", { keyPath: "key" });
-        if (!database.objectStoreNames.contains("capsules")) database.createObjectStore("capsules", { keyPath: "id" });
-        if (!database.objectStoreNames.contains("receipts")) database.createObjectStore("receipts", { keyPath: "seq" });
-        if (!database.objectStoreNames.contains("snapshots")) {
-          const store = database.createObjectStore("snapshots", { keyPath: "id" });
-          store.createIndex("capsuleId", "capsuleId", { unique: false });
-        }
-      };
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error || new Error("IndexedDB open failed"));
-      request.onblocked = () => reject(new Error("IndexedDB upgrade blocked"));
-    });
-  }
-
-  async function get(store, key) {
-    const transaction = db.transaction(store, "readonly");
-    const result = await requestResult(transaction.objectStore(store).get(key));
-    await transactionDone(transaction);
-    return result;
-  }
-
-  async function all(store) {
-    const transaction = db.transaction(store, "readonly");
-    const result = await requestResult(transaction.objectStore(store).getAll());
-    await transactionDone(transaction);
-    return result;
-  }
-
-  async function put(store, value) {
-    const transaction = db.transaction(store, "readwrite");
-    transaction.objectStore(store).put(value);
-    await transactionDone(transaction);
-  }
-
-  async function createKeys() {
-    const encryptionKey = await crypto.subtle.generateKey(
-      { name: "AES-GCM", length: 256 },
-      false,
-      ["encrypt", "decrypt"],
-    );
-    const generated = await crypto.subtle.generateKey(
-      { name: "ECDSA", namedCurve: "P-256" },
-      true,
-      ["sign", "verify"],
-    );
-    const publicJwk = await crypto.subtle.exportKey("jwk", generated.publicKey);
-    const privateJwk = await crypto.subtle.exportKey("jwk", generated.privateKey);
-    const signPublicKey = await crypto.subtle.importKey(
-      "jwk",
-      publicJwk,
-      { name: "ECDSA", namedCurve: "P-256" },
-      true,
-      ["verify"],
-    );
-    const signPrivateKey = await crypto.subtle.importKey(
-      "jwk",
-      privateJwk,
-      { name: "ECDSA", namedCurve: "P-256" },
-      false,
-      ["sign"],
-    );
-    return {
-      encryptionKey,
-      signPublicKey,
-      signPrivateKey,
-      publicJwk,
-      kid: await sha256(canonical(publicJwk)),
-    };
-  }
-
-  async function ensureKeys() {
-    const stored = await get("meta", "keys");
-    if (stored?.value?.encryptionKey && stored?.value?.signPrivateKey && stored?.value?.signPublicKey) {
-      return stored.value;
-    }
-    const created = await createKeys();
-    await put("meta", { key: "keys", value: created });
-    return created;
-  }
-
-  async function addReceipt(type, note, payload = {}) {
-    const seq = Alloy.receipts.length ? Alloy.receipts[Alloy.receipts.length - 1].seq + 1 : 1;
-    const previous = Alloy.receipts.length ? Alloy.receipts[Alloy.receipts.length - 1].digest : "0".repeat(64);
-    const core = {
-      seq,
-      type,
-      note,
-      createdAt: new Date().toISOString(),
-      prevDigest: previous,
-      payloadDigest: await sha256(canonical(payload)),
-      kid: keys.kid,
-    };
-    const digest = await sha256(canonical(core));
-    const signature = toBase64(await crypto.subtle.sign(
-      { name: "ECDSA", hash: "SHA-256" },
-      keys.signPrivateKey,
-      enc.encode(digest),
-    ));
-    const receipt = { ...core, digest, signature };
-    await put("receipts", receipt);
-    Alloy.receipts.push(receipt);
-    return receipt;
-  }
-
-  async function verifyReceiptChain() {
-    let previous = "0".repeat(64);
-    for (let index = 0; index < Alloy.receipts.length; index += 1) {
-      const receipt = Alloy.receipts[index];
-      if (receipt.seq !== index + 1 || receipt.prevDigest !== previous || receipt.kid !== keys.kid) return false;
-      const { digest, signature, ...core } = receipt;
-      if (await sha256(canonical(core)) !== digest) return false;
-      const valid = await crypto.subtle.verify(
-        { name: "ECDSA", hash: "SHA-256" },
-        keys.signPublicKey,
-        fromBase64(signature),
-        enc.encode(digest),
-      );
-      if (!valid) return false;
-      previous = digest;
-    }
-    return true;
-  }
-
-  async function verifyCapsule(capsule) {
-    try {
-      const plaintext = await crypto.subtle.decrypt(
-        {
-          name: "AES-GCM",
-          iv: fromBase64(capsule.iv),
-          additionalData: enc.encode(capsule.digest),
-        },
-        keys.encryptionKey,
-        fromBase64(capsule.ciphertext),
-      );
-      const decoded = dec.decode(plaintext);
-      return (await sha256(decoded)) === capsule.digest;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  async function verifyAll() {
-    const capsulesValid = (await Promise.all(Alloy.capsules.map(verifyCapsule))).every(Boolean);
-    Alloy.health.ledgerReplayable = capsulesValid && await verifyReceiptChain();
-    Alloy.health.lastVerify = new Date().toISOString();
-    return Alloy.health.ledgerReplayable;
-  }
-
-  async function boot() {
-    if (!globalThis.crypto?.subtle || !globalThis.indexedDB) {
-      Alloy.status = "UNAVAILABLE";
-      Alloy.health.blocked += 1;
-      emit();
-      throw new Error("WebCrypto or IndexedDB unavailable");
-    }
-    try {
-      db = await openDatabase();
-      keys = await ensureKeys();
-      const epochRow = await get("meta", "epoch");
-      Alloy.epoch = Number(epochRow?.value || 0) + 1;
-      await put("meta", { key: "epoch", value: Alloy.epoch });
-      Alloy.identity = { kid: keys.kid, algorithm: "ECDSA-P256-SHA256", origin: location.origin };
-      Alloy.receipts = (await all("receipts")).sort((a, b) => a.seq - b.seq);
-      Alloy.capsules = (await all("capsules")).sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
-      if (!Alloy.receipts.length) await addReceipt("BOOT", "Local kernel initialized", { epoch: Alloy.epoch });
-      await verifyAll();
-      Alloy.status = Alloy.health.ledgerReplayable ? "READY" : "DEGRADED";
-    } catch (error) {
-      Alloy.status = "UNAVAILABLE";
-      Alloy.health.blocked += 1;
-      emit();
-      throw error;
-    }
-    emit();
-    return Alloy;
-  }
-
-  async function govern({ title, body, policyClass = "private", adapter = ADAPTER_CURRENT } = {}) {
-    if (!keys || Alloy.status === "BOOTING") throw new Error("kernel not booted");
-    const normalizedTitle = String(title || "Untitled").trim().slice(0, 160);
-    const normalizedBody = String(body || "").trim();
-    if (adapter !== ADAPTER_CURRENT) {
-      Alloy.health.blocked += 1;
-      const receipt = await addReceipt("BLOCK", "Adapter pin mismatch", { adapter, expected: ADAPTER_CURRENT });
-      emit();
-      return { decision: "BLOCK", reason: `adapter must equal ${ADAPTER_CURRENT}`, receipt };
-    }
-    if (policyClass !== "private" || !normalizedBody) {
-      Alloy.health.blocked += 1;
-      const receipt = await addReceipt("BLOCK", "Local policy rejected envelope", {
-        policyClass,
-        bodyPresent: Boolean(normalizedBody),
+  function browserStore() {
+    let promise;
+    function open() {
+      if (!root.indexedDB) return Promise.reject(new Error('IndexedDB is unavailable'));
+      if (!promise) promise = new Promise((resolve, reject) => {
+        const request = root.indexedDB.open('szl-alloy-local-v1', 1);
+        request.onupgradeneeded = () => request.result.createObjectStore('state');
+        request.onerror = () => reject(new Error('Local storage could not be opened'));
+        request.onblocked = () => reject(new Error('Close an older local-kernel tab before upgrading'));
+        request.onsuccess = () => {
+          const database = request.result;
+          database.onversionchange = () => { database.close(); promise = null; };
+          resolve(database);
+        };
       });
-      emit();
-      return { decision: "BLOCK", reason: "private non-empty envelopes only", receipt };
+      return promise;
     }
-
-    const plaintext = canonical({
-      adapter,
-      body: normalizedBody,
-      policyClass,
-      title: normalizedTitle,
-    });
-    const digest = await sha256(plaintext);
-    const existing = Alloy.capsules.find(capsule => capsule.digest === digest && capsule.status === "SEALED");
-    if (existing) {
-      const receipt = await addReceipt("REUSE", "Content-addressed capsule reused", { capsuleId: existing.id });
-      await verifyAll();
-      emit();
-      return { decision: "ALLOW", reason: "existing encrypted capsule reused", capsule: existing, receipt };
+    async function transact(mode, value) {
+      const database = await open();
+      return new Promise((resolve, reject) => {
+        const tx = database.transaction('state', mode);
+        const store = tx.objectStore('state');
+        const request = mode === 'readonly' ? store.get('kernel') : store.put(value, 'kernel');
+        let result;
+        request.onsuccess = () => { result = request.result; };
+        tx.oncomplete = () => resolve(result);
+        tx.onabort = tx.onerror = () => reject(new Error('Local storage transaction failed; no success is claimed'));
+      });
     }
-
-    const iv = crypto.getRandomValues(new Uint8Array(12));
-    const ciphertext = await crypto.subtle.encrypt(
-      { name: "AES-GCM", iv, additionalData: enc.encode(digest) },
-      keys.encryptionKey,
-      enc.encode(plaintext),
-    );
-    const capsule = {
-      id: digest,
-      title: normalizedTitle,
-      digest,
-      iv: toBase64(iv),
-      ciphertext: toBase64(ciphertext),
-      adapter,
-      policyClass,
-      createdAt: new Date().toISOString(),
-      status: "SEALED",
-    };
-    await put("capsules", capsule);
-    Alloy.capsules.push(capsule);
-    const receipt = await addReceipt("SEAL", "AES-256-GCM capsule committed", { capsuleId: capsule.id });
-    await verifyAll();
-    Alloy.status = Alloy.health.ledgerReplayable ? "READY" : "DEGRADED";
-    emit();
-    return { decision: "ALLOW", reason: "encrypted capsule committed locally", capsule, receipt };
+    return { load: () => transact('readonly'), save: value => transact('readwrite', value) };
   }
-
-  async function injectFault() {
-    const capsule = [...Alloy.capsules].reverse().find(item => item.status === "SEALED");
-    if (!capsule) return "No sealed capsule is available for the one-byte fault probe.";
-    const snapshot = {
-      id: `${capsule.id}:${Date.now()}`,
-      capsuleId: capsule.id,
-      createdAt: new Date().toISOString(),
-      capsule: structuredClone(capsule),
-    };
-    await put("snapshots", snapshot);
-    const bytes = fromBase64(capsule.ciphertext);
-    bytes[0] ^= 1;
-    capsule.ciphertext = toBase64(bytes);
-    capsule.status = "TAMPERED";
-    await put("capsules", capsule);
-    Alloy.health.blocked += 1;
-    await addReceipt("FAULT", "One-byte ciphertext fault injected and detected", { capsuleId: capsule.id });
-    await verifyAll();
-    Alloy.status = "DEGRADED";
-    emit();
-    return `One-byte tamper detected for ${Alloy.shortHex(capsule.id)}.`;
-  }
-
-  async function latestSnapshot(capsuleId) {
-    const rows = (await all("snapshots")).filter(row => row.capsuleId === capsuleId);
-    rows.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
-    return rows[0] || null;
-  }
-
-  async function runWatchdog() {
-    for (let index = 0; index < Alloy.capsules.length; index += 1) {
-      const capsule = Alloy.capsules[index];
-      if (await verifyCapsule(capsule)) continue;
-      const snapshot = await latestSnapshot(capsule.id);
-      if (!snapshot || !(await verifyCapsule(snapshot.capsule))) {
-        Alloy.health.blocked += 1;
-        await addReceipt("BLOCK", "Tampered capsule has no valid local snapshot", { capsuleId: capsule.id });
-        continue;
+  function createKernel(options) {
+    const crypto = options.crypto;
+    const store = options.store;
+    const lock = options.lock;
+    const now = options.now || (() => new Date().toISOString());
+    const listeners = new Set();
+    let queue = Promise.resolve();
+    let view = { status: 'NOT_STARTED', identity: null, epoch: 0, receipts: [], capsules: [],
+      health: { healed: 0, blocked: 0, ledgerReplayable: false, lastVerify: null } };
+    const hash = async value => hex(await crypto.subtle.digest('SHA-256', value));
+    const cipherHash = capsule => hash(encode({ iv: capsule.iv, ciphertext: capsule.ciphertext }));
+    const notify = () => { for (const fn of listeners) { try { fn(); } catch (_) { /* UI errors do not commit data. */ } } };
+    const snapshot = value => JSON.parse(JSON.stringify(value));
+    async function identity(keys) {
+      return (await hash(await crypto.subtle.exportKey('spki', keys.publicKey))).slice(0, 32);
+    }
+    async function fresh() {
+      const encryptionKey = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+      const keys = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign', 'verify']);
+      return { schema: SCHEMA, encryptionKey, keys, kid: await identity(keys), receipts: [], capsules: [], epoch: 0 };
+    }
+    async function decrypt(state, capsule) {
+      const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unhex(capsule.iv),
+        additionalData: encoder.encode(capsule.digest), tagLength: 128 }, state.encryptionKey, unhex(capsule.ciphertext));
+      if (await hash(plain) !== capsule.digest) throw new Error('Capsule content address mismatch');
+      const value = JSON.parse(decoder.decode(plain));
+      if (typeof value.title !== 'string' || typeof value.body !== 'string' || value.policyClass !== 'private') throw new Error('Invalid decrypted capsule');
+      return value;
+    }
+    async function verify(state) {
+      if (!state || state.schema !== SCHEMA || !Array.isArray(state.receipts) || !Array.isArray(state.capsules)
+        || state.receipts.length > MAX_RECEIPTS || state.capsules.length > MAX_CAPSULES
+        || state.epoch !== state.receipts.length || !state.keys || state.keys.privateKey.extractable !== false
+        || state.encryptionKey.extractable !== false || await identity(state.keys) !== state.kid) throw new Error('Local state or key identity is invalid; preserved without replacement');
+      let previous = '0'.repeat(64);
+      const seals = new Map();
+      for (let i = 0; i < state.receipts.length; i++) {
+        const receipt = state.receipts[i];
+        if (receipt.seq !== i + 1 || receipt.prev !== previous || receipt.kid !== state.kid
+          || !['SEAL', 'REUSE', 'DENY', 'FAULT_TEST', 'RESTORE'].includes(receipt.type)
+          || typeof receipt.note !== 'string' || receipt.note.length > 160
+          || typeof receipt.at !== 'string' || receipt.at.length > 40
+          || !HEX.test(receipt.capsuleDigest) || !HEX.test(receipt.encryptedDigest)
+          || !HEX.test(receipt.digest) || typeof receipt.signature !== 'string' || receipt.signature.length !== 128) throw new Error('Receipt structure or chain link is invalid');
+        const bytes = encode(fields(receipt));
+        if (await hash(bytes) !== receipt.digest || !await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' },
+          state.keys.publicKey, unhex(receipt.signature), bytes)) throw new Error('Local receipt verification failed');
+        if (receipt.type === 'SEAL') {
+          if (seals.has(receipt.capsuleDigest)) throw new Error('Duplicate capsule admission');
+          seals.set(receipt.capsuleDigest, receipt.encryptedDigest);
+        }
+        previous = receipt.digest;
       }
-      const restored = { ...snapshot.capsule, status: "SEALED", healedAt: new Date().toISOString() };
-      await put("capsules", restored);
-      Alloy.capsules[index] = restored;
-      Alloy.health.healed += 1;
-      await addReceipt("HEAL", "Encrypted capsule restored from IndexedDB snapshot", { capsuleId: restored.id });
+      if (seals.size !== state.capsules.length) throw new Error('Capsule inventory does not match signed admissions');
+      const seen = new Set();
+      const capsules = [];
+      for (const capsule of state.capsules) {
+        if (!HEX.test(capsule.digest) || seen.has(capsule.digest) || !seals.has(capsule.digest)) throw new Error('Capsule identity is invalid');
+        seen.add(capsule.digest);
+        let title = 'Encrypted capsule', status = 'CORRUPT';
+        try {
+          if (typeof capsule.iv !== 'string' || capsule.iv.length !== 24 || typeof capsule.ciphertext !== 'string'
+            || capsule.ciphertext.length > 140000 || await cipherHash(capsule) !== seals.get(capsule.digest)) throw new Error('Ciphertext integrity mismatch');
+          title = (await decrypt(state, capsule)).title;
+          status = 'VERIFIED';
+        } catch (_) { /* Preserve corrupt ciphertext; only a verified snapshot can restore it. */ }
+        capsules.push({ title, status, digest: capsule.digest });
+      }
+      return { capsules, seals };
     }
-    await verifyAll();
-    Alloy.status = Alloy.health.ledgerReplayable ? "READY" : "DEGRADED";
-    emit();
-    return Alloy.health;
+    function present(state, checked) {
+      view = { status: checked.capsules.some(c => c.status !== 'VERIFIED') ? 'DEGRADED' : 'LOCAL_READY',
+        identity: { kid: state.kid, scope: 'THIS_BROWSER_ORIGIN_ONLY' }, epoch: state.epoch,
+        receipts: state.receipts.map(r => ({ ...fields(r), digest: r.digest, signature: r.signature })),
+        capsules: checked.capsules, health: {
+          healed: state.receipts.filter(r => r.type === 'RESTORE').length,
+          blocked: state.receipts.filter(r => r.type === 'DENY').length,
+          ledgerReplayable: true, lastVerify: now() } };
+      notify();
+    }
+    async function append(state, type, note, capsuleDigest = '0'.repeat(64), encryptedDigest = '0'.repeat(64)) {
+      if (state.receipts.length >= MAX_RECEIPTS) throw new Error('Local ledger capacity reached; existing evidence is preserved');
+      const receipt = { seq: state.receipts.length + 1, prev: state.receipts.at(-1)?.digest || '0'.repeat(64),
+        type, note, capsuleDigest, encryptedDigest, kid: state.kid, at: now() };
+      const bytes = encode(fields(receipt));
+      receipt.digest = await hash(bytes);
+      receipt.signature = hex(await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, state.keys.privateKey, bytes));
+      state.receipts.push(receipt);
+      state.epoch = state.receipts.length;
+      return snapshot(receipt);
+    }
+    function exclusive(work) {
+      const task = queue.then(async () => {
+        if (!crypto?.subtle || typeof lock !== 'function') throw new Error('Secure WebCrypto and cross-tab Web Locks are required');
+        return lock(work);
+      });
+      queue = task.catch(() => {});
+      return task.catch(error => {
+        view = { ...view, status: 'UNAVAILABLE', health: { ...view.health, ledgerReplayable: false } };
+        notify();
+        throw error;
+      });
+    }
+    function change(operation) {
+      return exclusive(async () => {
+        const state = await store.load();
+        const before = await verify(state);
+        const result = await operation(state, before);
+        const after = await verify(state);
+        await store.save(state);
+        present(state, after);
+        return result;
+      });
+    }
+    return Object.freeze({
+      ADAPTER_CURRENT: ADAPTER,
+      get status() { return view.status; },
+      get identity() { return snapshot(view.identity); },
+      get epoch() { return view.epoch; },
+      get receipts() { return snapshot(view.receipts); },
+      get capsules() { return snapshot(view.capsules); },
+      get health() { return snapshot(view.health); },
+      shortHex: value => String(value || '').slice(0, 12),
+      subscribe(fn) { if (typeof fn !== 'function') throw new TypeError('Subscriber must be a function'); listeners.add(fn); return () => listeners.delete(fn); },
+      boot() {
+        return exclusive(async () => {
+          const existing = await store.load();
+          const state = existing === undefined ? await fresh() : existing;
+          const checked = await verify(state);
+          if (existing === undefined) await store.save(state);
+          present(state, checked);
+        });
+      },
+      govern(input) {
+        return change(async (state, checked) => {
+          if (checked.capsules.some(c => c.status !== 'VERIFIED')) throw new Error('Restore or inspect corrupted local capsules before admitting new data');
+          const valid = input && input.adapter === ADAPTER && input.policyClass === 'private'
+            && typeof input.title === 'string' && input.title.trim().length > 0 && input.title.length <= 200
+            && typeof input.body === 'string' && input.body.length <= 32768
+            && encode({ title: input.title, body: input.body, policyClass: 'private' }).length <= 32768;
+          if (!valid) return { decision: 'DENY', reason: 'Adapter, local-private policy, or input bounds rejected',
+            receipt: await append(state, 'DENY', 'Local input contract rejected') };
+          const plaintext = encode({ title: input.title, body: input.body, policyClass: 'private' });
+          const digest = await hash(plaintext);
+          const prior = state.capsules.find(c => c.digest === digest);
+          if (prior) return { decision: 'ALLOW', reason: 'Verified local capsule reused',
+            receipt: await append(state, 'REUSE', 'Verified local capsule reused', digest, checked.seals.get(digest)) };
+          if (state.capsules.length >= MAX_CAPSULES) throw new Error('Local capsule capacity reached; nothing was evicted');
+          const iv = crypto.getRandomValues(new Uint8Array(12));
+          const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: encoder.encode(digest), tagLength: 128 }, state.encryptionKey, plaintext);
+          const capsule = { digest, iv: hex(iv), ciphertext: hex(ciphertext) };
+          capsule.backup = { iv: capsule.iv, ciphertext: capsule.ciphertext };
+          state.capsules.push(capsule);
+          const receipt = await append(state, 'SEAL', 'Encrypted local capsule admitted', digest, await cipherHash(capsule));
+          return { decision: 'ALLOW', reason: 'Encrypted, signed, and committed to this browser only', receipt };
+        });
+      },
+      injectFault() {
+        return change(async (state, checked) => {
+          const capsule = state.capsules.at(-1);
+          if (!capsule) throw new Error('Create a local capsule before the one-byte fault test');
+          if (checked.capsules.some(c => c.status !== 'VERIFIED')) throw new Error('A fault is already present; no further corruption was applied');
+          const bytes = unhex(capsule.ciphertext); bytes[0] ^= 1; capsule.ciphertext = hex(bytes);
+          await append(state, 'FAULT_TEST', 'User-requested local one-byte fault test', capsule.digest, checked.seals.get(capsule.digest));
+          return 'One byte changed in the local working ciphertext. The signed snapshot remains available for verification.';
+        });
+      },
+      runWatchdog() {
+        return change(async (state, checked) => {
+          let restored = 0;
+          for (let i = 0; i < checked.capsules.length; i++) {
+            if (checked.capsules[i].status === 'VERIFIED') continue;
+            const capsule = state.capsules[i];
+            const backup = { ...capsule.backup, digest: capsule.digest };
+            if (!capsule.backup || typeof backup.iv !== 'string' || backup.iv.length !== 24
+              || typeof backup.ciphertext !== 'string' || backup.ciphertext.length > 140000
+              || await cipherHash(backup) !== checked.seals.get(capsule.digest)) throw new Error('No verified local snapshot exists; original bytes are preserved');
+            await decrypt(state, backup);
+            capsule.iv = backup.iv; capsule.ciphertext = backup.ciphertext;
+            await append(state, 'RESTORE', 'Restored only a verified local ciphertext snapshot', capsule.digest, checked.seals.get(capsule.digest));
+            restored += 1;
+          }
+          return { restored, verified: true, scope: 'LOCAL_CIPHERTEXT_ONLY' };
+        });
+      }
+    });
   }
-})();
+  if (typeof module === 'object' && module.exports) module.exports = { createKernel };
+  else root.Alloy = createKernel({ crypto: root.crypto, store: browserStore(),
+    lock: root.navigator?.locks ? work => root.navigator.locks.request('szl-alloy-local-v1-writer', { mode: 'exclusive' }, work) : null });
+})(globalThis);
