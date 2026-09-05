@@ -10,6 +10,8 @@ DATA = Path("estate/os/data.json")
 BAKE = Path("estate/os/bake.json")
 RECEIPT = Path("estate/os/materialization-receipt.json")
 APP = Path("estate/os/app.js")
+FLOW_STATE = Path("frontend-flow-shell-state.json")
+HOLO_STATE = Path("holographic-experience-v2/rollout-state.json")
 
 EXPECTED_LANES = {
     "github": 117,
@@ -26,6 +28,13 @@ EXPECTED_RINGS = {
     "archive": 38,
     "docs": 64,
     "organ": 8,
+}
+EXPECTED_NEW_PROOF_DOCUMENTS = {
+    "estate/frontier-2026-09-04/index.html",
+    "status/index.html",
+    "estate/alloy-os/index.html",
+    "estate/szl-frontier/index.html",
+    "khipu/nan/index.html",
 }
 
 
@@ -82,3 +91,14 @@ def test_renderer_loads_only_the_committed_monolith() -> None:
     assert "assets-model.json" not in source
     assert "data.json did not load" in source
     assert "not an observed-empty inventory" in source
+
+
+def test_new_proof_documents_are_registered_by_both_shells() -> None:
+    flow = load(FLOW_STATE)
+    holo = load(HOLO_STATE)
+    flow_documents = set(flow["injected_documents"])
+    holo_documents = set(holo["bindings"])
+    assert EXPECTED_NEW_PROOF_DOCUMENTS <= flow_documents
+    assert EXPECTED_NEW_PROOF_DOCUMENTS <= holo_documents
+    assert flow["examined_documents"] == len(flow_documents)
+    assert holo["bound_documents"] == len(holo_documents)
