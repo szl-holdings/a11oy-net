@@ -1,19 +1,23 @@
-.rail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin: 8px auto 28px; }
-.rail article { border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:14px 16px; }
+.rail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:8px auto 28px; }
+.rail article { min-width:0; overflow-wrap:anywhere; border:1px solid color-mix(in oklab,currentColor 16%,transparent); border-radius:12px; padding:14px 16px; }
 .rail span { display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
 .rail b { display:block; font-size:28px; margin:6px 0 4px; }
-.align { width:100%; border-collapse:collapse; font-size:14px; }
-.align th, .align td { text-align:left; padding:10px 8px; border-bottom:1px solid color-mix(in oklab, currentColor 12%, transparent); vertical-align:top; }
+#align-table { max-width:100%; overflow-x:auto; }
+.align { width:100%; table-layout:fixed; border-collapse:collapse; font-size:14px; }
+.align th,.align td { overflow-wrap:anywhere; text-align:left; padding:10px 8px; border-bottom:1px solid color-mix(in oklab,currentColor 12%,transparent); vertical-align:top; }
 .align a { color:inherit; }
-.kbox { display:grid; gap:16px; grid-template-columns:1.1fr .9fr; }
-.kcard { border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:16px; }
+.kbox { display:grid; gap:16px; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); }
+.kcard { min-width:0; overflow-wrap:anywhere; border:1px solid color-mix(in oklab,currentColor 16%,transparent); border-radius:12px; padding:16px; }
 .kcard label { display:block; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin:10px 0 6px; opacity:.75; }
-.kcard input, .kcard textarea, .kcard select { width:100%; background:transparent; color:inherit; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:10px; font:inherit; }
+.kcard input,.kcard textarea,.kcard select { box-sizing:border-box; min-width:0; width:100%; min-height:44px; background:transparent; color:inherit; border:1px solid color-mix(in oklab,currentColor 20%,transparent); border-radius:8px; padding:10px; font:inherit; }
 .kcard textarea { min-height:90px; }
 .kactions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.kactions .button { min-height:44px; min-width:44px; max-width:100%; white-space:normal; }
+.kcard :focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+.kcard button:disabled { opacity:.6; cursor:not-allowed; }
 .klog { list-style:none; padding:0; margin:0; font-family:ui-monospace,monospace; font-size:12px; }
 .klog li { margin:6px 0; }
 .ok { color:#7dba98; }
 .bad { color:#c46d5c; }
 .warn { color:#c4a15a; }
-@media (max-width: 900px) { .rail, .kbox { grid-template-columns:1fr; } }
+@media (max-width:900px) { .rail,.kbox { grid-template-columns:minmax(0,1fr); } }
