@@ -1,0 +1,37 @@
+{
+  "complete": true,
+  "counts": {
+    "assets": 231,
+    "collection": 21,
+    "dataset": 33,
+    "github": 117,
+    "githubArchived": 34,
+    "githubSearchTotal": 117,
+    "model": 44,
+    "privateGithubUnavailable": "UNAVAILABLE",
+    "rings": {
+      "archive": 38,
+      "docs": 64,
+      "flagship": 8,
+      "holographic": 6,
+      "kernel": 50,
+      "organ": 8,
+      "vertical": 57
+    },
+    "space": 16,
+    "spaceGated": 0,
+    "spacePublic": 16
+  },
+  "credential_values_recorded": false,
+  "generated_at": "2026-09-05T00:44:54.127736Z",
+  "monolith": {
+    "assetIdsSha256": "4f6897ad2ae9bcbcc165e3d543ee5fa160a6bbe7ab44d3a48652825328b8e0b5",
+    "bytes": 192811,
+    "file": "./data.json",
+    "sha256": "0d20d74f18e6a198e3468aa7298972c53252b6d5b208fd3705c22c109b2476f5",
+    "uniqueAssets": 231
+  },
+  "provider_mutations_performed": false,
+  "schema": "szl.estate-os-materialization/v1",
+  "source_revision": "8f413f92895e7b5ec03a14735428eab7eb9a8686"
+}
