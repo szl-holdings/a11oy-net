@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Repair Estate OS proof shell once
+
+on:
+  push:
+    branches:
+      - fix/estate-os-231-proof-shell-rollout-20260905
+    paths:
+      - .github/workflows/_repair_estate_os_proof_shell_once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-estate-os-proof-shell-once
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact repair branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: fix/estate-os-231-proof-shell-rollout-20260905
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Apply both existing proof-shell binders
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/rollout_proof_flow_shell.py --report /tmp/proof-flow-apply.json
+          python tools/rollout_holographic_proof_v2.py --report /tmp/holographic-proof-apply.json
+          python tools/rollout_proof_flow_shell.py --check --report /tmp/proof-flow-check.json
+          python tools/rollout_holographic_proof_v2.py --check --report /tmp/holographic-proof-check.json
+
+      - name: Prove complete proof and Estate OS contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir "pytest==9.1.1"
+          python -m pytest -q tests
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          data_path = Path("estate/os/data.json")
+          data = json.loads(data_path.read_text(encoding="utf-8"))
+          receipt = json.loads(
+              Path("estate/os/materialization-receipt.json").read_text(encoding="utf-8")
+          )
+          assert data["counts"]["assets"] == 231
+          assert len(data["assets"]) == 231
+          assert len({row["id"] for row in data["assets"]}) == 231
+          assert data["counts"]["github"] == 117
+          assert data["counts"]["model"] == 44
+          assert data["counts"]["dataset"] == 33
+          assert data["counts"]["space"] == 16
+          assert data["counts"]["collection"] == 21
+          digest = hashlib.sha256(data_path.read_bytes()).hexdigest()
+          assert digest == receipt["catalog"]["sha256"]
+          assert data_path.stat().st_size == receipt["catalog"]["bytes"]
+          PY
+          git diff --check
+
+      - name: Commit durable bindings and retire this controller
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/_repair_estate_os_proof_shell_once.yml
+          git add --all
+          git diff --cached --quiet && { echo "no proof-shell repair produced"; exit 1; }
+          git commit -s -m "fix(proof): bind the complete current Estate OS document set"
+          git push origin HEAD:fix/estate-os-231-proof-shell-rollout-20260905
