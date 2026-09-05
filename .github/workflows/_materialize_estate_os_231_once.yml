@@ -45,6 +45,60 @@ jobs:
         with:
           python-version: "3.12.10"
 
+      - name: Recover immutable catalog metadata omitted by the temporary manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('.github/scripts/materialize_estate_os_231.py')
+          text = path.read_text(encoding='utf-8')
+          old_prelude = '''    branch_manifest = json.loads(Path("estate/os/data.json").read_text(encoding="utf-8"))
+    old = old_assets()
+'''
+          new_prelude = '''    branch_manifest = json.loads(Path("estate/os/data.json").read_text(encoding="utf-8"))
+    prior_manifest = json.loads(
+        subprocess.check_output(
+            ["git", "show", "origin/main:estate/os/data.json"],
+            text=True,
+            encoding="utf-8",
+        )
+    )
+    surface = dict(branch_manifest.get("surface") or prior_manifest["surface"])
+    surface.update(
+        {
+            "url": "https://a11oy.net/estate/os/",
+            "product": "https://a-11-oy.com",
+            "proof": "https://a11oy.net",
+            "never": "a11oy.com — foreign storefront",
+        }
+    )
+    later_recapture = branch_manifest.get("laterRecapture") or prior_manifest["laterRecapture"]
+    prior_bake = branch_manifest.get("priorBake") or {
+        "capturedAt": prior_manifest.get("capturedAt"),
+        "scope": prior_manifest.get("scope"),
+        "honesty": prior_manifest.get("honesty"),
+        "counts": prior_manifest.get("counts"),
+        "note": "Preserved metadata for the preceding committed public-partial bake.",
+    }
+    old = old_assets()
+'''
+          if text.count(old_prelude) != 1:
+              raise SystemExit(f'expected one materializer prelude, found {text.count(old_prelude)}')
+          text = text.replace(old_prelude, new_prelude, 1)
+          replacements = {
+              '"surface": branch_manifest["surface"],': '"surface": surface,',
+              '"laterRecapture": branch_manifest["laterRecapture"],': '"laterRecapture": later_recapture,',
+              '"priorBake": branch_manifest["priorBake"],': '"priorBake": prior_bake,',
+          }
+          for old, new in replacements.items():
+              if text.count(old) != 1:
+                  raise SystemExit(f'expected one metadata target {old!r}, found {text.count(old)}')
+              text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
       - name: Materialize the bounded public inventory
         shell: bash
         run: |
