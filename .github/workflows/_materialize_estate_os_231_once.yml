@@ -103,7 +103,10 @@ jobs:
             estate/os/data.json \
             estate/os/bake.json \
             estate/os/materialization-receipt.json
-          git rm -- \
+          # The metadata binder intentionally modifies the temporary generator
+          # before execution. Force removal is confined to these branch-only,
+          # self-removing controller files after every product assertion passed.
+          git rm -f -- \
             .github/scripts/materialize_estate_os_231.py \
             .github/scripts/patch_estate_os_metadata.py \
             .github/workflows/_materialize_estate_os_231_once.yml
