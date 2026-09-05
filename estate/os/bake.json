@@ -1,1 +1,126 @@
-{"contract":"szl.estate-hud.hologram/v1","surface":{"name":"Estate catalog hologram","url":"https://a11oy.net/estate/os/","meaning":"Static GitHub Pages hologram of the public GitHub and Hugging Face catalog. READ-ONLY.","implementation":"Vanilla JS hash-router. connect-src 'self'. No live probes.","product":"https://a-11-oy.com","proof":"https://a11oy.net","never":"a11oy.com"},"capturedAt":"2026-09-04T23:34:45Z","scope":"PUBLIC_PARTIAL","honesty":"UNSIGNED-honest","lambda":"Conjecture 1 OPEN","githubOrg":"szl-holdings","hfOrg":"SZLHOLDINGS","sources":[{"id":"github.search.org:szl-holdings","honesty":"MEASURED","itemCount":117,"note":"Unauthenticated GitHub search. Private names withheld."},{"id":"huggingface.models.author=SZLHOLDINGS","honesty":"MEASURED","itemCount":44,"note":"Unauthenticated Hub author-list."},{"id":"huggingface.datasets.author=SZLHOLDINGS","honesty":"MEASURED","itemCount":33,"note":"Unauthenticated Hub author-list."},{"id":"huggingface.spaces.author=SZLHOLDINGS","honesty":"MEASURED","itemCount":16,"note":"Unauth author-list. estate.json org-auth spaces_public=48 is not overwritten."},{"id":"huggingface.collections.owner=SZLHOLDINGS","honesty":"MEASURED","itemCount":21,"note":"Unauthenticated Hub collections list."},{"id":"estate.json.keep-7","honesty":"MEASURED","itemCount":48,"note":"2026-08-31 org-auth spaces_public=48 labeled laterRecapture. Not rewritten."}],"counts":{"assets":231,"github":117,"githubArchived":34,"space":16,"spacePublic":16,"spaceGated":0,"model":44,"dataset":33,"collection":21,"rings":{"holographic":6,"flagship":8,"vertical":57,"kernel":50,"archive":38,"docs":64,"organ":8},"githubSearchTotal":117,"privateGithubUnavailable":"UNAVAILABLE"},"laterRecapture":{"source":"https://a11oy.net/estate.json","capturedAt":"2026-08-31T18:59:11Z","evidenceClass":"MEASURED","huggingface":{"spaces_public":48},"bound":"estate.json 2026-08-31 org-authenticated Hub view (48 public Spaces) is not overwritten. This file is a 2026-09-04 unauthenticated PUBLIC_PARTIAL bake."},"priorBake":{"capturedAt":"2026-08-29T17:35:39Z","assets":225,"github":93,"spacePublic":6,"spaceGated":37,"bound":"Previous hologram bake kept as drift label only."},"shards":[{"file":"./assets-github-a.json","count":58,"bytes":45775},{"file":"./assets-github-b.json","count":59,"bytes":46715},{"file":"./assets-model.json","count":44,"bytes":28596},{"file":"./assets-dataset.json","count":33,"bytes":28959},{"file":"./assets-space.json","count":16,"bytes":10405},{"file":"./assets-collection.json","count":21,"bytes":14781}],"assets":[],"shardContract":"szl.estate-hud.shards/v1"}
+{
+  "capturedAt": "2026-09-05T00:44:54.127736Z",
+  "contract": "szl.estate-hud.hologram/v1",
+  "counts": {
+    "assets": 231,
+    "collection": 21,
+    "dataset": 33,
+    "github": 117,
+    "githubArchived": 34,
+    "githubSearchTotal": 117,
+    "model": 44,
+    "privateGithubUnavailable": "UNAVAILABLE",
+    "rings": {
+      "archive": 38,
+      "docs": 64,
+      "flagship": 8,
+      "holographic": 6,
+      "kernel": 50,
+      "organ": 8,
+      "vertical": 57
+    },
+    "space": 16,
+    "spaceGated": 0,
+    "spacePublic": 16
+  },
+  "generation": {
+    "credentialValuesRecorded": false,
+    "providerMutationsPerformed": false,
+    "ringClassification": "DERIVED_DETERMINISTIC_QUOTA",
+    "runtimeProbesPerformed": false,
+    "state": "MEASURED_PUBLIC_INVENTORY"
+  },
+  "githubOrg": "szl-holdings",
+  "hfOrg": "SZLHOLDINGS",
+  "honesty": "UNSIGNED-honest",
+  "lambda": "Conjecture 1 OPEN",
+  "laterRecapture": {
+    "bound": "estate.json keep-7 spaces_public=48 is not overwritten.",
+    "huggingface": {
+      "spaces_public": 48
+    },
+    "source": "https://a11oy.net/estate.json"
+  },
+  "monolith": {
+    "assetIdsSha256": "4f6897ad2ae9bcbcc165e3d543ee5fa160a6bbe7ab44d3a48652825328b8e0b5",
+    "bytes": 192811,
+    "file": "./data.json",
+    "sha256": "0d20d74f18e6a198e3468aa7298972c53252b6d5b208fd3705c22c109b2476f5",
+    "uniqueAssets": 231
+  },
+  "priorBake": {
+    "capturedAt": "2026-08-29T17:35:39Z",
+    "counts": {
+      "assets": 225,
+      "authenticatedGithubTotal": 98,
+      "collection": 18,
+      "dataset": 28,
+      "github": 93,
+      "model": 43,
+      "privateGithubUnavailable": 5,
+      "rings": {
+        "archive": 36,
+        "docs": 55,
+        "flagship": 9,
+        "holographic": 15,
+        "kernel": 57,
+        "organ": 8,
+        "vertical": 45
+      },
+      "space": 43,
+      "spaceGated": 37,
+      "spacePublic": 6
+    },
+    "honesty": "UNSIGNED-honest",
+    "note": "Preserved metadata for the preceding committed public-partial bake.",
+    "scope": "PUBLIC_PARTIAL"
+  },
+  "scope": "PUBLIC_PARTIAL",
+  "sources": [
+    {
+      "honesty": "MEASURED",
+      "id": "github.search.org:szl-holdings",
+      "itemCount": 117,
+      "note": "Bounded public GitHub repository search; private names withheld."
+    },
+    {
+      "honesty": "MEASURED",
+      "id": "huggingface.models.author=SZLHOLDINGS",
+      "itemCount": 44,
+      "note": "Bounded public Hub listing; runtime and quality not inferred."
+    },
+    {
+      "honesty": "MEASURED",
+      "id": "huggingface.datasets.author=SZLHOLDINGS",
+      "itemCount": 33,
+      "note": "Bounded public Hub listing; runtime and quality not inferred."
+    },
+    {
+      "honesty": "MEASURED",
+      "id": "huggingface.spaces.author=SZLHOLDINGS",
+      "itemCount": 16,
+      "note": "Bounded public Hub listing; runtime and quality not inferred."
+    },
+    {
+      "honesty": "MEASURED",
+      "id": "huggingface.collections.owner=SZLHOLDINGS",
+      "itemCount": 21,
+      "note": "Bounded public Hub listing; runtime and quality not inferred."
+    },
+    {
+      "honesty": "MEASURED",
+      "id": "estate.json.keep-7",
+      "itemCount": 48,
+      "note": "The 2026-08-31 org-authenticated spaces_public=48 observation remains separately labeled and is not overwritten."
+    }
+  ],
+  "surface": {
+    "implementation": "static GitHub Pages SPA (hash router)",
+    "meaning": "On-origin static hologram of the public GitHub + Hugging Face catalog. READ-ONLY. Not product runtime. Not a live dashboard. Not a fourth origin. Not a mutation plane.",
+    "name": "Estate catalog hologram",
+    "never": "a11oy.com — foreign storefront",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "url": "https://a11oy.net/estate/os/"
+  }
+}
