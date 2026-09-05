@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-name: Repair Estate OS proof rollout v1 retry
+name: Repair Estate OS proof rollout v1 after base sync
 
 on:
   push:
