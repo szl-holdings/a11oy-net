@@ -1,0 +1,93 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Repair Estate OS proof rollout v1 retry
+
+on:
+  push:
+    branches:
+      - estate-os-bake-231-20260904
+    paths:
+      - .github/workflows/repair-estate-proof-rollout-v1.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-estate-proof-rollout-v1
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Check out exact PR branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: estate-os-bake-231-20260904
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Re-bind every proof document deterministically
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/rollout_proof_flow_shell.py --report /tmp/flow-apply.json
+          python tools/rollout_holographic_proof_v2.py --report /tmp/holo-apply.json
+          python tools/rollout_proof_flow_shell.py --check --report /tmp/flow-check.json
+          python tools/rollout_holographic_proof_v2.py --check --report /tmp/holo-check.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          flow = json.loads(Path('/tmp/flow-check.json').read_text(encoding='utf-8'))
+          holo = json.loads(Path('/tmp/holo-check.json').read_text(encoding='utf-8'))
+          required = {
+              'estate/frontier-2026-09-04/index.html',
+              'status/index.html',
+              'estate/alloy-os/index.html',
+              'estate/szl-frontier/index.html',
+              'khipu/nan/index.html',
+          }
+          flow_rows = {row['path']: row['result'] for row in flow['rows']}
+          holo_rows = {row['path']: row['result'] for row in holo['rows']}
+          missing = sorted(
+              path for path in required
+              if flow_rows.get(path) != 'present' or holo_rows.get(path) != 'present'
+          )
+          if missing:
+              raise SystemExit('new proof documents are not fully bound: ' + ', '.join(missing))
+          if any(result == 'missing' for result in flow_rows.values()):
+              raise SystemExit('flow-shell check still has missing documents')
+          if any(result == 'missing' for result in holo_rows.values()):
+              raise SystemExit('holographic check still has missing documents')
+          PY
+
+      - name: Run full proof test suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1 ruff==0.16.6
+          ruff check . --output-format github --select E9,F
+          pytest -q tests
+          git diff --check
+
+      - name: Commit permanent proof alignment only
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/repair-estate-proof-rollout-v1.yml
+          git config user.name "Lutar, Stephen P."
+          git config user.email "stephenlutar2@gmail.com"
+          git add -A
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No proof rollout change required."
+            exit 0
+          fi
+          git commit -s -m "fix(proof): bind new Estate OS documents to both shells"
+          git push origin HEAD:estate-os-bake-231-20260904
