@@ -1,78 +1,204 @@
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"":"&quot;","'":"&#39;"}[c]));}
-async function loadJSON(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok) throw new Error(url+" "+r.status);return r.json();}
+/* SPDX-License-Identifier: Apache-2.0 */
+(() => {
+  "use strict";
 
-async function bootAlignment(){
-  const rail=$("bake-rail"), table=$("align-table");
-  let live=null, estate=null, spaces=null, models=null;
-  try{ live=await loadJSON("./live.json"); }catch(e){ table.innerHTML="<p class='bad'>live.json UNAVAILABLE — "+esc(e.message)+"</p>"; }
-  try{ estate=await loadJSON("/estate.json"); }catch(_){}
-  try{ spaces=await loadJSON("/spaces.json"); }catch(_){}
-  try{ models=await loadJSON("/models.json"); }catch(_){}
-  const honest=live?.product_honest?.doctrine_lock||{};
-  const hf=live?.hf_unauth||{};
-  const rows=[
-    ["Doctrine", honest.state||"—", "v11 "+(honest.commit||"")],
-    ["Locked formulas", honest.locked_formula_count??"—", (honest.locked_formula_ids||[]).join(" ")],
-    ["Keep spaces", (live?.keep_spaces||[]).length, (live?.keep_spaces||[]).join(" · ")],
-    ["Hub spaces listed", hf.spaces?.length??"—", "unauth list API"],
-    ["Hub models / datasets", (hf.models_listed??"—")+" / "+(hf.datasets_listed??"—"), "unauth list API"],
-    ["Estate contract", estate?"loaded":"bake only", estate?.captured_at||live?.estate_capture?.captured_at||"—"],
-  ];
-  rail.innerHTML=rows.map(([k,v,d])=>`<article><span>${esc(k)}</span><b>${esc(v)}</b><p>${esc(d)}</p></article>`).join("");
-  const align=live?.alignment||[];
-  table.innerHTML=`<table class="align"><thead><tr><th>Plane</th><th>Class</th><th>Bind</th></tr></thead><tbody>${
-    align.map(a=>`<tr><td>${esc(a.plane)}<br><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.url)}</a></td><td>${esc(a.class)}</td><td>${esc(a.note)}</td></tr>`).join("")
-  }</tbody></table>`;
-}
-
-function $(id){return document.getElementById(id);}
-
-function renderKernel(){
-  const el=$("kernel-app");
-  if(!el||typeof Alloy==="undefined") return;
-  const c=window.__compose||{title:"Session note",body:"A thought sealed on this device.",adapter:Alloy.ADAPTER_CURRENT,policy:"private",msg:"",tone:""};
-  window.__compose=c;
-  const receipts=[...Alloy.receipts].slice(-8).reverse().map(r=>`<li>#${r.seq} <b>${esc(r.type)}</b> ${esc(r.note)} <span>${esc(Alloy.shortHex(r.digest))}</span></li>`).join("");
-  const caps=[...Alloy.capsules].slice(-6).reverse().map(x=>`<li>${esc(x.title)} · ${esc(x.status)} · ${esc(Alloy.shortHex(x.digest))}</li>`).join("");
-  el.innerHTML=`<div class="kbox">
-    <div class="kcard">
-      <p class="eyebrow">${esc(Alloy.status)} · kid ${esc(Alloy.identity?.kid||"booting")} · epoch ${Alloy.epoch}</p>
-      <label for="ktitle">Title</label><input id="ktitle" value="${esc(c.title)}">
-      <label for="kbody">Payload</label><textarea id="kbody">${esc(c.body)}</textarea>
-      <label for="kadapter">Adapter</label>
-      <select id="kadapter">
-        <option value="${Alloy.ADAPTER_CURRENT}">${Alloy.ADAPTER_CURRENT} pinned</option>
-        <option value="alloy-local-v0" ${c.adapter==="alloy-local-v0"?"selected":""}>alloy-local-v0 stale</option>
-      </select>
-      <div class="kactions">
-        <button class="button primary" id="ksubmit">Submit envelope</button>
-        <button class="button" id="ktamper">Tamper one byte</button>
-        <button class="button" id="kheal">Run healer</button>
-      </div>
-      ${c.msg?`<p class="${c.tone}">${esc(c.msg)}</p>`:""}
-    </div>
-    <div class="kcard">
-      <p class="eyebrow">Ledger ${Alloy.receipts.length} · capsules ${Alloy.capsules.length} · healed ${Alloy.health.healed} · blocked ${Alloy.health.blocked}</p>
-      <p>Replayable: ${Alloy.health.ledgerReplayable?"MEASURED":"degraded"} · last verify ${esc(Alloy.health.lastVerify||"—")}</p>
-      <ol class="klog">${receipts||"<li>No receipts yet.</li>"}</ol>
-      <p class="eyebrow">Capsules</p>
-      <ol class="klog">${caps||"<li>None.</li>"}</ol>
-    </div>
-  </div>`;
-  $("ksubmit").onclick=async()=>{
-    c.title=$("ktitle").value; c.body=$("kbody").value; c.adapter=$("kadapter").value;
-    const out=await Alloy.govern({title:c.title,body:c.body,policyClass:c.policy,adapter:c.adapter});
-    c.msg=out.decision+" — "+out.reason+" · receipt "+out.receipt.seq;
-    c.tone=out.decision==="ALLOW"?"ok":"bad";
-    renderKernel();
+  const state = {
+    title: "Session note",
+    body: "A thought sealed on this device.",
+    adapter: "alloy-local-v1",
+    policy: "private",
+    message: "",
+    tone: "",
+    busy: false,
   };
-  $("ktamper").onclick=async()=>{c.msg=await Alloy.injectFault(); c.tone="warn"; renderKernel();};
-  $("kheal").onclick=async()=>{await Alloy.runWatchdog(); c.msg="Watchdog complete."; c.tone="ok"; renderKernel();};
-}
 
-Alloy.subscribe(()=>renderKernel());
-void (async()=>{
-  await bootAlignment();
-  await Alloy.boot();
-  renderKernel();
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    })[character]);
+  }
+
+  function safeHref(value) {
+    try {
+      const url = new URL(String(value), window.location.href);
+      return ["http:", "https:"].includes(url.protocol) ? url.href : "#";
+    } catch (_) {
+      return "#";
+    }
+  }
+
+  async function loadJson(url) {
+    const response = await fetch(url, {
+      cache: "no-store",
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+    const value = await response.json();
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      throw new Error(`${url} did not return an object`);
+    }
+    return value;
+  }
+
+  async function bootAlignment() {
+    const rail = byId("bake-rail");
+    const table = byId("align-table");
+    if (!rail || !table) return;
+
+    let snapshot;
+    try {
+      snapshot = await loadJson("./live.json");
+    } catch (error) {
+      rail.innerHTML = "";
+      table.innerHTML = `<p class="bad" role="status">Alignment snapshot UNAVAILABLE — ${escapeHtml(error.message)}</p>`;
+      return;
+    }
+
+    const inventory = snapshot.inventory || {};
+    const rows = [
+      ["Snapshot", snapshot.truth_label || "UNAVAILABLE", snapshot.capturedAt || "timestamp unavailable"],
+      ["GitHub repositories", inventory.github_public_repositories ?? "—", "public organization inventory"],
+      ["Hugging Face models", inventory.huggingface_models ?? "—", "public Hub listing"],
+      ["Hugging Face datasets", inventory.huggingface_datasets ?? "—", "public Hub listing"],
+      ["Hugging Face Spaces", inventory.huggingface_spaces ?? "—", "public Hub listing; reachability not inferred"],
+      ["Hub collections", inventory.huggingface_collections ?? "—", "public collection inventory"],
+    ];
+
+    rail.innerHTML = rows.map(([label, value, detail]) => (
+      `<article><span>${escapeHtml(label)}</span><b>${escapeHtml(value)}</b><p>${escapeHtml(detail)}</p></article>`
+    )).join("");
+
+    const alignment = Array.isArray(snapshot.alignment) ? snapshot.alignment : [];
+    if (!alignment.length) {
+      table.innerHTML = '<p class="bad" role="status">No origin bindings were published in the snapshot.</p>';
+      return;
+    }
+    table.innerHTML = `<div class="align-scroll" tabindex="0" aria-label="Origin alignment table"><table class="align"><thead><tr><th scope="col">Plane</th><th scope="col">Class</th><th scope="col">Bind</th></tr></thead><tbody>${alignment.map((row) => {
+      const href = safeHref(row.url);
+      return `<tr><td>${escapeHtml(row.plane)}<br><a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.url)}</a></td><td>${escapeHtml(row.class)}</td><td>${escapeHtml(row.note)}</td></tr>`;
+    }).join("")}</tbody></table></div>`;
+  }
+
+  function captureForm() {
+    state.title = byId("ktitle")?.value ?? state.title;
+    state.body = byId("kbody")?.value ?? state.body;
+    state.adapter = byId("kadapter")?.value ?? state.adapter;
+  }
+
+  function kernelAvailable() {
+    return typeof window.Alloy === "object" && window.Alloy !== null;
+  }
+
+  function renderKernel() {
+    const element = byId("kernel-app");
+    if (!element) return;
+    if (!kernelAvailable()) {
+      element.innerHTML = '<p class="bad" role="alert">Local kernel UNAVAILABLE — kernel.js did not initialize.</p>';
+      return;
+    }
+
+    const kernel = window.Alloy;
+    state.adapter ||= kernel.ADAPTER_CURRENT;
+    const receipts = [...kernel.receipts].slice(-8).reverse().map((receipt) => (
+      `<li>#${escapeHtml(receipt.seq)} <b>${escapeHtml(receipt.type)}</b> ${escapeHtml(receipt.note)} <span>${escapeHtml(kernel.shortHex(receipt.digest))}</span></li>`
+    )).join("");
+    const capsules = [...kernel.capsules].slice(-6).reverse().map((capsule) => (
+      `<li>${escapeHtml(capsule.title)} · ${escapeHtml(capsule.status)} · ${escapeHtml(kernel.shortHex(capsule.digest))}</li>`
+    )).join("");
+    const disabled = state.busy || kernel.status === "UNAVAILABLE" ? " disabled" : "";
+
+    element.innerHTML = `<div class="kbox">
+      <div class="kcard">
+        <p class="eyebrow">${escapeHtml(kernel.status)} · kid ${escapeHtml(kernel.identity?.kid || "booting")} · epoch ${escapeHtml(kernel.epoch)}</p>
+        <label for="ktitle">Title</label><input id="ktitle" maxlength="160" autocomplete="off" value="${escapeHtml(state.title)}"${disabled}>
+        <label for="kbody">Payload</label><textarea id="kbody" maxlength="20000"${disabled}>${escapeHtml(state.body)}</textarea>
+        <label for="kadapter">Adapter</label>
+        <select id="kadapter"${disabled}>
+          <option value="${escapeHtml(kernel.ADAPTER_CURRENT)}"${state.adapter === kernel.ADAPTER_CURRENT ? " selected" : ""}>${escapeHtml(kernel.ADAPTER_CURRENT)} pinned</option>
+          <option value="alloy-local-v0"${state.adapter === "alloy-local-v0" ? " selected" : ""}>alloy-local-v0 stale</option>
+        </select>
+        <div class="kactions">
+          <button type="button" class="button primary" id="ksubmit"${disabled}>Submit envelope</button>
+          <button type="button" class="button" id="ktamper"${disabled}>Tamper one byte</button>
+          <button type="button" class="button" id="kheal"${disabled}>Run healer</button>
+        </div>
+        <p class="${escapeHtml(state.tone)}" role="status" aria-live="polite">${escapeHtml(state.busy ? "Working locally…" : state.message)}</p>
+      </div>
+      <div class="kcard">
+        <p class="eyebrow">Ledger ${escapeHtml(kernel.receipts.length)} · capsules ${escapeHtml(kernel.capsules.length)} · healed ${escapeHtml(kernel.health.healed)} · blocked ${escapeHtml(kernel.health.blocked)}</p>
+        <p>Replayable: ${kernel.health.ledgerReplayable ? "MEASURED" : "degraded"} · last verify ${escapeHtml(kernel.health.lastVerify || "—")}</p>
+        <ol class="klog">${receipts || "<li>No receipts yet.</li>"}</ol>
+        <p class="eyebrow">Capsules</p>
+        <ol class="klog">${capsules || "<li>None.</li>"}</ol>
+      </div>
+    </div>`;
+
+    const submit = byId("ksubmit");
+    const tamper = byId("ktamper");
+    const heal = byId("kheal");
+    if (submit) submit.addEventListener("click", () => runAction(async () => {
+      captureForm();
+      const outcome = await kernel.govern({
+        title: state.title,
+        body: state.body,
+        policyClass: state.policy,
+        adapter: state.adapter,
+      });
+      state.message = `${outcome.decision} — ${outcome.reason} · receipt ${outcome.receipt.seq}`;
+      state.tone = outcome.decision === "ALLOW" ? "ok" : "bad";
+    }));
+    if (tamper) tamper.addEventListener("click", () => runAction(async () => {
+      captureForm();
+      state.message = await kernel.injectFault();
+      state.tone = "warn";
+    }));
+    if (heal) heal.addEventListener("click", () => runAction(async () => {
+      captureForm();
+      const health = await kernel.runWatchdog();
+      state.message = health.ledgerReplayable ? "Watchdog complete — local chain replayable." : "Watchdog complete — degraded state remains.";
+      state.tone = health.ledgerReplayable ? "ok" : "bad";
+    }));
+  }
+
+  async function runAction(operation) {
+    if (state.busy) return;
+    state.busy = true;
+    renderKernel();
+    try {
+      await operation();
+    } catch (error) {
+      state.message = `UNAVAILABLE — ${error instanceof Error ? error.message : String(error)}`;
+      state.tone = "bad";
+    } finally {
+      state.busy = false;
+      renderKernel();
+    }
+  }
+
+  async function start() {
+    await bootAlignment();
+    if (!kernelAvailable()) {
+      renderKernel();
+      return;
+    }
+    window.Alloy.subscribe(renderKernel);
+    try {
+      await window.Alloy.boot();
+    } catch (error) {
+      state.message = `UNAVAILABLE — ${error instanceof Error ? error.message : String(error)}`;
+      state.tone = "bad";
+    }
+    renderKernel();
+  }
+
+  void start();
 })();
