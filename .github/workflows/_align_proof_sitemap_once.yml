@@ -46,13 +46,8 @@ jobs:
 
           path = Path('scripts/check_proof_surface.py')
           text = path.read_text(encoding='utf-8')
-          old = '''        "https://a11oy.net/estate/plane/",
-        "https://a11oy.net/command/",
-'''
-          new = '''        "https://a11oy.net/estate/plane/",
-        "https://a11oy.net/estate/thread-ops/",
-        "https://a11oy.net/command/",
-'''
+          old = '        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/command/",\n'
+          new = '        "https://a11oy.net/estate/plane/",\n        "https://a11oy.net/estate/thread-ops/",\n        "https://a11oy.net/command/",\n'
           if text.count(old) != 1:
               raise SystemExit(f'expected one sitemap contract insertion point, found {text.count(old)}')
           path.write_text(text.replace(old, new, 1), encoding='utf-8')
