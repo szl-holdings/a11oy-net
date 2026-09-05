@@ -21,13 +21,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def wait_for_js(page: Page, callback: str, *, timeout_seconds: float = 15.0) -> None:
-    """Poll a page-owned predicate without Playwright's CSP-blocked eval helper.
-
-    ``page.wait_for_function`` compiles its predicate inside the document and is
-    correctly refused by this page's ``script-src 'self'`` policy. Direct
-    DevTools evaluation does not alter that policy, so bounded polling preserves
-    the production CSP while still observing real browser state.
-    """
+    """Poll a page-owned predicate without weakening the document CSP."""
 
     deadline = time.monotonic() + timeout_seconds
     last_error: Exception | None = None
@@ -108,15 +102,25 @@ def main() -> None:
                 page,
                 "() => Alloy.status === 'LOCAL_READY' && Alloy.health.healed === 1 && !document.querySelector('#ksubmit').disabled",
             )
+
+            # Measure a real denial transition from the current verified state.
+            # The counter is cumulative by contract, so assuming an absolute
+            # starting value makes the browser test order-dependent.
+            blocked_before = int(page.evaluate("Alloy.health.blocked"))
+            receipts_before_denial = int(page.evaluate("Alloy.receipts.length"))
             page.locator("#kadapter").select_option("alloy-local-v0")
             page.locator("#ksubmit").click()
             wait_for_js(
                 page,
-                "() => Alloy.health.blocked === 1 && !document.querySelector('#ksubmit').disabled",
+                "() => !document.querySelector('#ksubmit').disabled",
             )
+            assert page.evaluate("Alloy.health.blocked") == blocked_before + 1
+            assert page.evaluate("Alloy.receipts.length") == receipts_before_denial + 1
+            assert page.evaluate("Alloy.receipts.at(-1).type") == "DENY"
             assert page.locator('#kernel-app [role="status"]').inner_text().startswith(
                 "DENY"
             )
+
             page.reload()
             wait_for_js(
                 page,
