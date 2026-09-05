@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-szl-public-experience-v3="true" data-szl-proof-release-vector="1.0.0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>SZL Estate Alignment</title>
+  <meta name="description" content="Read-only evidence showing whether protected GitHub source, the A11oy product edge, and the canonical Hugging Face runtime agree.">
+  <style>
+    :root{color-scheme:dark;--bg:#050607;--panel:#0b0d10;--ink:#f7f8fa;--muted:#a6adb7;--line:#272c34;--ok:#e8fff5;--warn:#fff5dc;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}body{margin:0;background:radial-gradient(circle at 75% 0,rgba(255,255,255,.09),transparent 32%),var(--bg);color:var(--ink);min-height:100vh}
+    main{width:min(100%,1080px);margin:auto;padding:max(28px,env(safe-area-inset-top)) 20px max(64px,env(safe-area-inset-bottom));min-width:0}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:72px}.brand{font-weight:800;letter-spacing:.14em}.back{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;color:inherit;text-decoration:none}
+    .eyebrow{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.12em;color:var(--muted)}h1{font-size:clamp(42px,9vw,92px);line-height:.92;letter-spacing:-.055em;margin:14px 0 22px;overflow-wrap:anywhere}.lede{max-width:760px;font-size:clamp(17px,2.4vw,21px);line-height:1.65;color:var(--muted)}
+    .state{display:inline-flex;align-items:center;gap:10px;min-height:48px;margin:32px 0 22px;padding:10px 15px;border:1px solid var(--line);border-radius:999px;font:13px ui-monospace,SFMono-Regular,Consolas,monospace}.dot{width:10px;height:10px;border-radius:50%;background:#77808c}.aligned .dot{background:var(--ok);box-shadow:0 0 18px rgba(232,255,245,.65)}.divergent .dot{background:var(--warn)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}.card{min-width:0;padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(11,13,16,.84)}.card h2{font-size:14px;margin:0 0 14px}.value{font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere;word-break:break-word}.wide{grid-column:1/-1}pre{max-width:100%;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted)}button{min-width:48px;min-height:48px;margin-top:18px;padding:10px 16px;border:1px solid #dadde3;border-radius:10px;background:#f3f5f8;color:#070809;font-weight:750;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
+    @media(max-width:680px){main{padding-inline:16px}nav{margin-bottom:48px}.grid{grid-template-columns:minmax(0,1fr)}.wide{grid-column:auto}.card{padding:16px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+    @media(forced-colors:active){.card,.state,.back{border:1px solid CanvasText}.dot{forced-color-adjust:none}}
+  </style>
+</head>
+<body>
+<main>
+  <nav><div class="brand">SZL HOLDINGS</div><a class="back" href="/">Proof home</a></nav>
+  <div class="eyebrow">CROSS-PLANE RELEASE EVIDENCE</div>
+  <h1>One estate.<br>One release vector.</h1>
+  <p class="lede">This page reports whether protected GitHub source, the A11oy product edge, the canonical Hugging Face runtime, and this proof artifact identify the same current release. It is evidence, not a production authorization.</p>
+  <div id="state" class="state"><span class="dot" aria-hidden="true"></span><span>OBSERVING</span></div>
+  <div class="grid">
+    <section class="card"><h2>Release ID</h2><div id="release" class="value">UNAVAILABLE</div></section>
+    <section class="card"><h2>Observed</h2><div id="observed" class="value">UNAVAILABLE</div></section>
+    <section class="card wide"><h2>Source vector</h2><pre id="vector">UNAVAILABLE</pre></section>
+    <section class="card wide"><h2>Blocking observations</h2><pre id="blockers">UNAVAILABLE</pre><button type="button" id="refresh">Refresh evidence</button></section>
+    <section class="card wide"><h2>Proof Chain</h2><div id="proof" class="value">UNAVAILABLE</div></section>
+  </div>
+</main>
+<script>
+const state=document.getElementById('state');
+function text(id,value){document.getElementById(id).textContent=value??'UNAVAILABLE'}
+async function load(){
+  state.className='state';state.children[1].textContent='OBSERVING';
+  try{
+    const response=await fetch('/estate/release-vector.json',{cache:'no-store'});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const data=await response.json();
+    const aligned=data.state==='ALIGNED';
+    state.className=`state ${aligned?'aligned':'divergent'}`;
+    state.children[1].textContent=data.state||'UNAVAILABLE';
+    text('release',data.release_id);text('observed',data.observed_at);
+    text('vector',JSON.stringify(data.source_vector??{},null,2));
+    text('blockers',(data.blockers??[]).length?data.blockers.join('\n'):'NONE');
+    text('proof',data.proof_chain_sha256);
+  }catch(error){state.className='state divergent';state.children[1].textContent='UNAVAILABLE';text('blockers',String(error))}
+}
+document.getElementById('refresh').addEventListener('click',load);load();
+</script>
+</body>
+</html>
