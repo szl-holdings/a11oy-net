@@ -1,8 +1,8 @@
 {
-  "contract": "1.5.1",
+  "contract": "1.5.2",
   "kind": "RECORD",
   "service": "IMMUNE",
-  "asOf": "2026-09-04T23:16:30Z",
+  "asOf": "2026-09-06T10:58:00Z",
   "githubOrg": "szl-holdings",
   "hubOrg": "SZLHOLDINGS",
   "canonical": {
@@ -11,15 +11,15 @@
     "github": "https://github.com/szl-holdings/immune",
     "space": "https://szlholdings-immune.hf.space",
     "lattice": "https://huggingface.co/spaces/SZLHOLDINGS/immune-lattice",
+    "nexusPlane": "https://szlholdings-immune.hf.space/nexus.html",
     "nexusOrgan": "https://github.com/szl-holdings/nexus"
   },
   "revision": {
-    "github": "572c0e3310c77ef2546c6b527d3d96d8c6ed397b",
-    "githubNote": "docs(ops) evolve map — not a cycle-runtime change",
-    "hubReadyz": "5914994e3ee7c013f05639779f7a5be46b8177db",
-    "hubNote": "docs(ops) thread closer already on Space image",
+    "github": "24308698ceeb1a133b9dc43d561785291035952b",
+    "hubReadyz": "24308698ceeb1a133b9dc43d561785291035952b",
     "runtimeFloor": "234472e742af6a39a5e77ff649ea6bf4653a031f",
-    "exactShaMatch": false,
+    "merge": "https://github.com/szl-holdings/immune/pull/129",
+    "exactShaMatch": true,
     "schemaAligned": true
   },
   "cut": { "keep": 6, "fold": 38, "models": 44, "trained": 13, "kernelSoftware": 16 },
@@ -29,14 +29,13 @@
     "hubKeys": ["hash", "payload", "prevHash", "seq", "ts"],
     "v2InPayload": ["estate", "poorest", "energyClass", "energy_j"],
     "evidenceClass": "MEASURED",
-    "measuredSeqFrom": 7,
-    "docsLag": "Hub trails GitHub HEAD by docs-only commits; cycle schema already v2"
+    "measuredSeqFrom": 7
   },
-  "productProbe": {
-    "kernel": "REACHABLE",
-    "latticeField": "UNAVAILABLE",
-    "latticeFieldPath": "/api/field",
-    "latticeSpace": "RUNNING"
+  "nexus": {
+    "state": "EXECUTABLE",
+    "role": "organ_inside_immune",
+    "truth_execution": "MEASURED_SOFTWARE_SIMULATION",
+    "separateSpace": false
   },
   "estate": "e7b04c982887ec1f",
   "poorest": "unmeasured",
@@ -49,5 +48,5 @@
   "ato": false,
   "unprivate_38": false,
   "alignment_state": "REVISION_UNAVAILABLE",
-  "hfPush": "Do not mint a new Space. Product a-11-oy.com/immune. Runtime SZLHOLDINGS/immune. Proof a11oy.net. Frozen ledger keys untouched."
+  "hfPush": "Exact SHA match 24308698. Do not mint SZLHOLDINGS/nexus or betterwithage flagship. Product a-11-oy.com/immune. Runtime SZLHOLDINGS/immune. Proof a11oy.net."
 }
