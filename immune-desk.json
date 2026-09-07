@@ -1,8 +1,8 @@
 {
-  "contract": "1.5.2",
+  "contract": "1.5.3",
   "kind": "RECORD",
   "service": "IMMUNE",
-  "asOf": "2026-09-06T10:58:00Z",
+  "asOf": "2026-09-07T12:12:00Z",
   "githubOrg": "szl-holdings",
   "hubOrg": "SZLHOLDINGS",
   "canonical": {
@@ -15,21 +15,19 @@
     "nexusOrgan": "https://github.com/szl-holdings/nexus"
   },
   "revision": {
-    "github": "24308698ceeb1a133b9dc43d561785291035952b",
-    "hubReadyz": "24308698ceeb1a133b9dc43d561785291035952b",
+    "github": "1dd652c8889e60c7cfcc1ca12c9d38c751d5c261",
+    "hubReadyz": "1dd652c8889e60c7cfcc1ca12c9d38c751d5c261",
     "runtimeFloor": "234472e742af6a39a5e77ff649ea6bf4653a031f",
-    "merge": "https://github.com/szl-holdings/immune/pull/129",
     "exactShaMatch": true,
     "schemaAligned": true
   },
-  "cut": { "keep": 6, "fold": 38, "models": 44, "trained": 13, "kernelSoftware": 16 },
+  "cut": { "keep": 6, "fold": 38 },
   "drift": {
     "aligned": true,
     "missingOnHub": [],
     "hubKeys": ["hash", "payload", "prevHash", "seq", "ts"],
     "v2InPayload": ["estate", "poorest", "energyClass", "energy_j"],
-    "evidenceClass": "MEASURED",
-    "measuredSeqFrom": 7
+    "evidenceClass": "MEASURED"
   },
   "nexus": {
     "state": "EXECUTABLE",
@@ -48,5 +46,5 @@
   "ato": false,
   "unprivate_38": false,
   "alignment_state": "REVISION_UNAVAILABLE",
-  "hfPush": "Exact SHA match 24308698. Do not mint SZLHOLDINGS/nexus or betterwithage flagship. Product a-11-oy.com/immune. Runtime SZLHOLDINGS/immune. Proof a11oy.net."
+  "hfPush": "Showcase is SZLHOLDINGS/immune + a-11-oy.com/immune. Channel B python/ kernel on immune-lattice. Do not mint betterwithage flagship."
 }
