@@ -1,8 +1,8 @@
 {
-  "contract": "1.5.3",
+  "contract": "1.5.4",
   "kind": "RECORD",
   "service": "IMMUNE",
-  "asOf": "2026-09-07T12:12:00Z",
+  "asOf": "2026-09-07T19:40:00Z",
   "githubOrg": "szl-holdings",
   "hubOrg": "SZLHOLDINGS",
   "canonical": {
@@ -15,10 +15,12 @@
     "nexusOrgan": "https://github.com/szl-holdings/nexus"
   },
   "revision": {
-    "github": "1dd652c8889e60c7cfcc1ca12c9d38c751d5c261",
-    "hubReadyz": "1dd652c8889e60c7cfcc1ca12c9d38c751d5c261",
+    "github": "c128844ff2d008a0a52f83612e22da2c4492817e",
+    "githubNote": "docs/README on main after Hub image",
+    "hubReadyz": "68fcbcb29ef0e3dc47cf036cef3afcbb24916e70",
+    "hubNote": "python kernel + HUD already on Space image",
     "runtimeFloor": "234472e742af6a39a5e77ff649ea6bf4653a031f",
-    "exactShaMatch": true,
+    "exactShaMatch": false,
     "schemaAligned": true
   },
   "cut": { "keep": 6, "fold": 38 },
@@ -46,5 +48,5 @@
   "ato": false,
   "unprivate_38": false,
   "alignment_state": "REVISION_UNAVAILABLE",
-  "hfPush": "Showcase is SZLHOLDINGS/immune + a-11-oy.com/immune. Channel B python/ kernel on immune-lattice. Do not mint betterwithage flagship."
+  "hfPush": "Showcase SZLHOLDINGS/immune + a-11-oy.com/immune. NEXUS is /nexus.html organ. Do not mint betterwithage flagship or SZLHOLDINGS/nexus Space."
 }
