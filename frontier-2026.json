@@ -1,0 +1,80 @@
+{
+  "contract": "frontier-2026.1",
+  "kind": "AUDIT",
+  "asOf": "2026-09-07T23:15:00Z",
+  "evidenceClass": "MEASURED_INVENTORY",
+  "githubOrg": "szl-holdings",
+  "hubOrg": "SZLHOLDINGS",
+  "counts": {
+    "githubReposIndexed": 123,
+    "hfSpacesListed": 18,
+    "hfModelsListed": 45,
+    "hfDatasetsListed": 34
+  },
+  "flagships": {
+    "product": "https://a-11-oy.com/immune",
+    "proof": "https://a11oy.net",
+    "immuneSource": "https://github.com/szl-holdings/immune",
+    "channelA": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
+    "channelB": "https://huggingface.co/spaces/SZLHOLDINGS/immune-lattice",
+    "nexusPlane": "https://szlholdings-immune.hf.space/nexus.html"
+  },
+  "doNotMint": ["SZLHOLDINGS/nexus", "betterwithage/immune", "holographic-unify-as-product"],
+  "kernelSuite": [
+    {"id": "SZLHOLDINGS/szl-kernels", "job": "hub UnifiedReceiptChain"},
+    {"id": "SZLHOLDINGS/szl-lambda-gate", "job": "advisory Lambda gate, Conjecture 1 OPEN"},
+    {"id": "SZLHOLDINGS/szl-energy-attest", "job": "canonical energy; MEASURED NVML or honest UNAVAILABLE"},
+    {"id": "SZLHOLDINGS/governed-inference-meter", "job": "DEPRECATED into szl-energy-attest"},
+    {"id": "SZLHOLDINGS/szl-govsign", "job": "DSSE / in-toto attestation"},
+    {"id": "SZLHOLDINGS/szl-provctl", "job": "provenance DAG + SLSA interop"},
+    {"id": "SZLHOLDINGS/szl-blocked", "job": "honest BLOCKED + Annex IV DRAFT"},
+    {"id": "SZLHOLDINGS/szl-governed-norm", "job": "norm + SHA3 receipts"},
+    {"id": "SZLHOLDINGS/szl-invariants", "job": "falsifiable invariant checks"}
+  ],
+  "trainedWeights": [
+    {"id": "SZLHOLDINGS/SZL-Khipu-1.5B", "stage": "CANDIDATE"},
+    {"id": "SZLHOLDINGS/SZL-Forge-1.5B-ReceiptAgent", "stage": "PROPOSAL_ONLY"},
+    {"id": "SZLHOLDINGS/SZL-Khipu-1.5B-GGUF", "stage": "QUANT"},
+    {"id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v2", "stage": "LORA"},
+    {"id": "SZLHOLDINGS/chaski-r2", "stage": "LORA"},
+    {"id": "SZLHOLDINGS/KHIPU-R2", "stage": "RESEARCH_ONLY"}
+  ],
+  "adoptedIntoImmune": [
+    {
+      "what": "energyClass + energy_j inside YAWAR payload",
+      "from": "szl-energy-attest / governed-inference-meter",
+      "state": "WIRED",
+      "honesty": "UNAVAILABLE on HF CPU; never fabricate joules"
+    },
+    {
+      "what": "SENTRA no.hack.persons + fail-closed BLOCKED",
+      "from": "szl-blocked + live SENTRA",
+      "state": "WIRED"
+    },
+    {
+      "what": "NEXUS Lorenz OP hashes on both channels",
+      "from": "python/immune/nexus.py",
+      "state": "WIRED",
+      "truth": "MEASURED_SOFTWARE_SIMULATION"
+    }
+  ],
+  "adjacentNotClaimed": [
+    {
+      "name": "Linux Foundation TRACE",
+      "job": "hardware-attested AI runtime Trust Records",
+      "adopt": "label only; YAWAR is software receipt, not TEE quote"
+    },
+    {
+      "name": "AFiR / IETF SPICE",
+      "job": "signed inference receipts without TEE",
+      "adopt": "already covered by Ed25519 YAWAR hashes; no chain anchor"
+    }
+  ],
+  "notImplementedHere": [
+    "NVIDIA confidential compute / NRAS",
+    "zkML proofs",
+    "unprivate fold-38",
+    "new Space on betterwithage",
+    "ATO stamp"
+  ]
+}
