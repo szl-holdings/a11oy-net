@@ -138,6 +138,9 @@ jobs:
       - name: Validate proof registry surface
         run: python3 scripts/check_proof_surface.py
 
+      - name: Validate SZL Frontier source/evidence record
+        run: python3 scripts/check_szl_frontier_record.py
+
       - name: Validate diligence and machine evidence surface
         run: python3 scripts/check_diligence_surface.py
 
