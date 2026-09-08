@@ -1,0 +1,68 @@
+{
+  "schema": "szl.proof.frontier-alignment.v1",
+  "recordedAt": "2026-09-08T02:12:00Z",
+  "authorityChain": [
+    "GitHub",
+    "Hugging Face",
+    "a-11-oy.com",
+    "a11oy.net"
+  ],
+  "source": {
+    "repository": "szl-holdings/szl-frontier",
+    "revision": "1bdad0f8a510afe24db6eb03fb8479e7f8330c6d",
+    "state": "EXACT"
+  },
+  "huggingFace": {
+    "space": "SZLHOLDINGS/szl-frontier",
+    "syncWorkflowRun": 34178621960,
+    "syncWorkflowUrl": "https://github.com/szl-holdings/szl-frontier/actions/runs/34178621960",
+    "expectedSourceRevision": "1bdad0f8a510afe24db6eb03fb8479e7f8330c6d",
+    "witness": "PASS",
+    "evidence": "GitHub hf-sync completed successfully; its contract verifies live deployment.json repository/revision against GITHUB_SHA."
+  },
+  "product": {
+    "origin": "https://a-11-oy.com",
+    "state": "NOT_WITNESSED_BY_THIS_RECORD",
+    "promotionEffect": "NONE",
+    "note": "This proof repair does not infer product runtime health or change a production model route."
+  },
+  "proof": {
+    "origin": "https://a11oy.net",
+    "ownerRepository": "szl-holdings/a11oy-net",
+    "page": "/estate/szl-frontier/",
+    "previousSourceRevision": "9a4ed6f",
+    "state": "SOURCE_AND_HF_ALIGNMENT_REPAIRED_IN_RECORD"
+  },
+  "measuredEvidence": {
+    "glm53FlashVsKhipu": {
+      "decision": "EVIDENCE_COMPLETE_REVIEW_REQUIRED",
+      "productionDisposition": "HOLD",
+      "promotionEffect": "NONE",
+      "forgeSource": "szl-holdings/szl-forge@225751bcf16372360df9ad04d63cba39fc8bc0ca",
+      "workflowRun": 34177931732,
+      "workflowJob": 101910979655,
+      "actionsArtifactSha256": "3966569cc96b5303b58ec81e0837fa87a4c6d4c725f3cb1921c933dad8de7961",
+      "huggingFaceReceiptCommit": "f2b30f160a7884149d3ac474d455ef25a35ac038",
+      "receiptSha256": "bdf6a0aac1af5b06f10ad0e7a9ee9d29e43d16b92654887f0c0b34f25071db46",
+      "candidateScore": 0.916667,
+      "baselineScore": 0.416667,
+      "scoreDelta": 0.5,
+      "candidateSchemaValidRate": 1.0,
+      "baselineSchemaValidRate": 0.5,
+      "candidateBaselineMeanLatencyRatio": 0.303195,
+      "limitations": [
+        "four-case synthetic suite",
+        "provider execution revision unavailable",
+        "provider hardware unavailable",
+        "provider runtime build unavailable",
+        "receipt unsigned",
+        "no long-context or multimodal qualification inferred"
+      ]
+    }
+  },
+  "overall": {
+    "state": "PARTIAL_ALIGNMENT_PRODUCT_NOT_WITNESSED",
+    "productionDisposition": "HOLD",
+    "automaticPromotion": false
+  }
+}
