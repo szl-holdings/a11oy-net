@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SZL Frontier | a11oy Proof Registry</title>
-  <meta name="description" content="Source-bound RECORD of SZL Frontier. Proof origin only; production authority remains on a-11-oy.com and model promotion remains fail-closed." />
+  <meta name="description" content="Source-bound record of SZL Frontier. Proof origin only; production authority remains on a-11-oy.com and model promotion remains fail-closed." />
   <link rel="canonical" href="https://a11oy.net/estate/szl-frontier/" />
   <style>
     body { font-family: ui-sans-serif, system-ui, sans-serif; background: #080c14; color: #e8edf5; margin: 0; }
@@ -27,40 +27,59 @@
   <p class="muted"><a href="/">a11oy.net</a> · <a href="/estate/">estate</a> · <a href="/frontiers/">frontiers</a> · szl-frontier</p>
   <h1>SZL Frontier — current source and evidence record</h1>
   <p>
-    This page is a proof pointer, not an inference authority. Source is
-    <a href="https://github.com/szl-holdings/szl-frontier"><code>szl-holdings/szl-frontier</code></a>
-    at exact revision <code>1bdad0f8a510afe24db6eb03fb8479e7f8330c6d</code>. The existing Hugging Face projection is
-    <a href="https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier">SZLHOLDINGS/szl-frontier</a>.
-    Product authority remains <a href="https://a-11-oy.com">a-11-oy.com</a>.
+    This page is a proof pointer, not an inference authority. Protected GitHub source was observed at
+    <a href="https://github.com/szl-holdings/szl-frontier/commit/3ee8d770f73306307b91359f3bfea39451e2efb2"><code>3ee8d770f73306307b91359f3bfea39451e2efb2</code></a>.
+    The live <a href="https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier">SZLHOLDINGS/szl-frontier</a>
+    runtime returned that same source through its public <a href="https://szlholdings-szl-frontier.hf.space/deployment.json">deployment record</a>.
+    Product authority remains <a href="https://a-11-oy.com">a-11-oy.com</a> and remains fail-closed.
   </p>
 
   <table>
     <tr><th>Role</th><th>Surface / evidence</th><th>Recorded state</th></tr>
     <tr>
       <td>GitHub source</td>
-      <td><a href="https://github.com/szl-holdings/szl-frontier/commit/1bdad0f8a510afe24db6eb03fb8479e7f8330c6d"><code>1bdad0f8a510afe24db6eb03fb8479e7f8330c6d</code></a></td>
-      <td>EXACT</td>
+      <td><a href="https://github.com/szl-holdings/szl-frontier/commit/3ee8d770f73306307b91359f3bfea39451e2efb2"><code>3ee8d770f73306307b91359f3bfea39451e2efb2</code></a></td>
+      <td>EXACT AT OBSERVATION</td>
     </tr>
     <tr>
       <td>Hugging Face projection</td>
-      <td><a href="https://github.com/szl-holdings/szl-frontier/actions/runs/34178621960">hf-sync run 34178621960</a></td>
-      <td>PASS — exact-source readback gate completed</td>
+      <td>
+        Space repo <code>66d14801b8950b8da5cfa15ad33adf3ed4c4d9fe</code><br />
+        runtime SHA-256 <code>cd43c9a18e4780691c770119a60ca93836b557d0c327c5aacfe7fd6b10f718a8</code><br />
+        <a href="https://github.com/szl-holdings/szl-frontier/actions/runs/34219011040">sync run 34219011040</a>
+      </td>
+      <td>PASS — source revision matched GitHub; Space runtime RUNNING</td>
     </tr>
     <tr>
       <td>Product</td>
-      <td><a href="https://a-11-oy.com">a-11-oy.com</a></td>
-      <td>NOT WITNESSED BY THIS RECORD · promotion effect NONE</td>
+      <td>
+        <a href="https://a-11-oy.com/api/a11oy/v1/frontier-now/summary">Frontier Now summary</a><br />
+        A11oy runtime source <code>573992a648a3d3ddb48470654841a89b1739d3e7</code><br />
+        summary SHA-256 <code>f0d20dd31c406166c8f84d48976cbfb26131228b68f854fc5b5c52056328362e</code>
+      </td>
+      <td>OBSERVE_ONLY · BLOCKED · equivalence UNAVAILABLE · claim gate FAILED_CLOSED · writes DISABLED · promotion NONE</td>
     </tr>
     <tr>
       <td>Proof</td>
       <td><a href="./alignment.json">machine-readable alignment record</a></td>
-      <td>Source/HF pointer repaired from historical <code>9a4ed6f</code></td>
+      <td>Advanced from previous Frontier source <code>979a8074772d11ab5c8d34d5c942577e1bee9eb6</code></td>
     </tr>
     <tr>
       <td>Production disposition</td>
       <td>Frontier model candidates and evidence lanes</td>
       <td class="hold">HOLD</td>
     </tr>
+  </table>
+
+  <h2>Current product observation</h2>
+  <table>
+    <tr><th>Field</th><th>Observed value</th></tr>
+    <tr><td>Observed / valid until</td><td><code>2026-09-08T11:20:21.781Z</code> / <code>2026-09-08T11:25:21.781Z</code></td></tr>
+    <tr><td>Observation</td><td><code>BLOCKED</code> — <code>github_inventory_unavailable</code></td></tr>
+    <tr><td>Enforcement</td><td><code>FAILED_CLOSED</code> · external writes <code>DISABLED</code> · automatic retries <code>0</code> · no effectors</td></tr>
+    <tr><td>Product source parity</td><td>A11oy runtime and GitHub default branch both reported <code>573992a648a3d3ddb48470654841a89b1739d3e7</code></td></tr>
+    <tr><td>Complete equivalence</td><td><code>UNAVAILABLE</code> — Hugging Face repository revision and runtime artifact digest were unavailable</td></tr>
+    <tr><td>Claim gate</td><td><code>FAILED_CLOSED</code> · public claim status <code>HELD</code> · promotion <code>NONE</code></td></tr>
   </table>
 
   <h2>Measured GLM-5.3 Flash evaluation</h2>
@@ -78,10 +97,12 @@
 
   <h2>Truth boundary</h2>
   <ul>
+    <li><code>RUNNING</code> refers only to the observed Frontier Space runtime, not a model, provider route, or production authorization.</li>
+    <li><code>573992a648a3d3ddb48470654841a89b1739d3e7</code> is the A11oy product runtime identity; it is not the SZL Frontier source revision.</li>
+    <li>The product summary reports <code>github_inventory_unavailable</code>; its claim gate correctly remains failed closed.</li>
     <li>The GLM result is a bounded four-case synthetic evaluation, not broad model qualification.</li>
     <li>Provider execution revision, provider hardware, and provider runtime build remain unavailable.</li>
     <li>The evaluation receipt is unsigned; no independent certification is claimed.</li>
-    <li>The fallback transport succeeded, but the Khipu fallback response missed the exact failover answer; a deterministic non-executing escalation envelope was selected.</li>
     <li>No long-context, multimodal, production-throughput, or production-authority claim is inferred.</li>
     <li>This record does not change a model route, rehost upstream weights, execute a tool, or promote a production default.</li>
   </ul>
@@ -94,8 +115,7 @@
   </ul>
   <p class="muted">
     GitHub Pages serving this HTML proves reachability of <code>/estate/szl-frontier/</code> only.
-    The machine-readable record deliberately leaves the product state unwitnessed and keeps production
-    disposition <code>HOLD</code>.
+    The product equivalence gap stays explicit and production disposition remains <code>HOLD</code>.
   </p>
 </main>
   <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
