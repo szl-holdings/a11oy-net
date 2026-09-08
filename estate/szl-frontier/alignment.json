@@ -1,6 +1,6 @@
 {
   "schema": "szl.proof.frontier-alignment.v1",
-  "recordedAt": "2026-09-08T07:58:18Z",
+  "recordedAt": "2026-09-08T11:20:42.349Z",
   "authorityChain": [
     "GitHub",
     "Hugging Face",
@@ -9,37 +9,58 @@
   ],
   "source": {
     "repository": "szl-holdings/szl-frontier",
-    "revision": "979a8074772d11ab5c8d34d5c942577e1bee9eb6",
-    "previousRevision": "1bdad0f8a510afe24db6eb03fb8479e7f8330c6d",
+    "revision": "3ee8d770f73306307b91359f3bfea39451e2efb2",
+    "previousRevision": "979a8074772d11ab5c8d34d5c942577e1bee9eb6",
     "state": "EXACT_AT_OBSERVATION"
   },
   "huggingFace": {
     "space": "SZLHOLDINGS/szl-frontier",
-    "spaceRepositoryRevision": "48a2b9f45d26b3c2919c81233d7cacb65f5e1fa4",
+    "spaceRepositoryRevision": "66d14801b8950b8da5cfa15ad33adf3ed4c4d9fe",
+    "spaceLastModified": "2026-09-08T11:07:29.000Z",
     "runtimeDeploymentUrl": "https://szlholdings-szl-frontier.hf.space/deployment.json",
-    "runtimeDeploymentSourceRevision": "979a8074772d11ab5c8d34d5c942577e1bee9eb6",
-    "runtimeDeploymentSha256": "54be4a3150b6f701a66fc9996cfbf6feb973d25a8d28abf54f1be07e21173a18",
+    "runtimeDeploymentSourceRevision": "3ee8d770f73306307b91359f3bfea39451e2efb2",
+    "runtimeDeploymentSha256": "cd43c9a18e4780691c770119a60ca93836b557d0c327c5aacfe7fd6b10f718a8",
     "runtimeStage": "RUNNING",
+    "syncWorkflowRun": 34219011040,
+    "syncWorkflowJob": 102037461401,
+    "independentWitnessJob": "6a9fef518e5f7b7fd14cb9f9",
     "witness": "PASS",
-    "evidence": "Direct public runtime readback returned protected GitHub source 979a8074772d11ab5c8d34d5c942577e1bee9eb6. RUNNING is recorded only for the Frontier Space runtime, not for a model or production route."
+    "evidence": "GitHub's protected-main sync and an independent Hugging Face CPU readback both returned protected GitHub source 3ee8d770f73306307b91359f3bfea39451e2efb2. RUNNING is recorded only for the Frontier Space runtime, not for a model, provider route, or production authorization."
   },
   "product": {
     "origin": "https://a-11-oy.com",
     "summary": "https://a-11-oy.com/api/a11oy/v1/frontier-now/summary",
-    "observedAt": "2026-09-08T07:58:17.991Z",
+    "summarySchema": "szl.frontier-now-summary/v1",
+    "summarySha256": "f0d20dd31c406166c8f84d48976cbfb26131228b68f854fc5b5c52056328362e",
+    "generatedAt": "2026-09-08T11:20:42.349Z",
+    "observedAt": "2026-09-08T11:20:21.781Z",
+    "validUntil": "2026-09-08T11:25:21.781Z",
+    "manifestDigest": "2f27e71c0aaa1edc96f0b0c1dffac9019603b412ca45cb54dd33e3899bbad55b",
     "operatingMode": "OBSERVE_ONLY",
-    "runtimeReportedSourceRevision": "64501a3367d8b725d808359d1a24f70f6d334fb5",
+    "observationState": "BLOCKED",
+    "runtimeReportedSourceRevision": "573992a648a3d3ddb48470654841a89b1739d3e7",
+    "githubDefaultBranchRevision": "573992a648a3d3ddb48470654841a89b1739d3e7",
+    "huggingFaceRepositoryRevision": null,
+    "runtimeArtifactDigest": null,
     "equivalenceState": "UNAVAILABLE",
+    "equivalenceReason": "GITHUB_MAIN_MATCHES_RUNTIME_HF_OVERLAY_AND_ARTIFACT_DIGEST_UNAVAILABLE",
     "claimGate": "FAILED_CLOSED",
-    "criticalFailures": ["github_inventory_unavailable"],
+    "claimGateReason": "EXACT_SOURCE_RUNTIME_BINDING_UNAVAILABLE",
+    "criticalFailures": [
+      "github_inventory_unavailable"
+    ],
+    "externalWrites": "DISABLED",
+    "automaticRetries": 0,
+    "effectors": [],
     "promotionEffect": "NONE",
-    "note": "The product surface is healthy enough to fail closed but does not currently bind its A11oy runtime source to the Frontier GitHub/HF overlay. No production capability is inferred."
+    "independentWitnessJob": "6a9fef85b012ba1d5b8f2a77",
+    "note": "The product revision is the A11oy product runtime identity, not the szl-frontier source revision. The product remains healthy enough to fail closed but does not currently bind its complete source/Hugging Face overlay/artifact equivalence. No production capability is inferred."
   },
   "proof": {
     "origin": "https://a11oy.net",
     "ownerRepository": "szl-holdings/a11oy-net",
     "page": "/estate/szl-frontier/",
-    "previousSourceRevision": "1bdad0f8a510afe24db6eb03fb8479e7f8330c6d",
+    "previousSourceRevision": "979a8074772d11ab5c8d34d5c942577e1bee9eb6",
     "state": "CURRENT_FRONTIER_SOURCE_AND_HF_RUNTIME_RECORDED"
   },
   "measuredEvidence": {
