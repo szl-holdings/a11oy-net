@@ -1,6 +1,6 @@
 {
   "schema": "szl.proof.frontier-alignment.v1",
-  "recordedAt": "2026-09-08T14:11:50.517Z",
+  "recordedAt": "2026-09-08T20:16:45.902Z",
   "authorityChain": [
     "GitHub",
     "Hugging Face",
@@ -9,41 +9,42 @@
   ],
   "source": {
     "repository": "szl-holdings/szl-frontier",
-    "revision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
-    "previousRevision": "3ee8d770f73306307b91359f3bfea39451e2efb2",
+    "revision": "0640258ccd63f40605a1811287322e99038836da",
+    "previousRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
     "state": "EXACT_AT_OBSERVATION"
   },
   "huggingFace": {
     "space": "SZLHOLDINGS/szl-frontier",
-    "spaceRepositoryRevision": "e736cc087805c8bbc915aee2dcd94db678095efe",
-    "spaceLastModified": "2026-09-08T14:09:44.000Z",
+    "spaceRepositoryRevision": "e71a9b32159e3964b8ed06ddb0603fe90a8d7f23",
+    "spaceLastModified": "2026-09-08T15:50:45.000Z",
     "runtimeDeploymentUrl": "https://szlholdings-szl-frontier.hf.space/deployment.json",
-    "runtimeDeploymentSourceRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
-    "runtimeDeploymentSha256": "5abc1febe85b1c6e9c741e5bacee95f80d52638de001bf2618001fdfd7b61940",
+    "runtimeDeploymentSourceRevision": "0640258ccd63f40605a1811287322e99038836da",
+    "runtimeDeploymentSha256": "0af84df5d380f4bd19bd5a14b24fb87520955dd020f87d064d45af9d89516033",
     "runtimeStage": "RUNNING",
-    "syncWorkflowRun": 34236458955,
-    "syncWorkflowJob": 102095318561,
-    "independentWitnessJob": "6aa0177f32d5d0c22c5ad971",
+    "syncWorkflowRun": 34247345227,
+    "syncWorkflowJob": 102132616561,
+    "independentWitnessJob": "6aa06d28900620b5c77e3a5c",
     "witness": "PASS",
-    "evidence": "The protected-main publisher completed successfully and its exact-source step passed. A separate read-only Hugging Face CPU witness then observed Space repository e736cc087805c8bbc915aee2dcd94db678095efe and deployment source 3590daaadce2d2b07950ba844afe8bd6d870fb12. RUNNING refers only to the Frontier Space runtime, not to a model, provider route, or production authorization."
+    "evidence": "The protected-main publisher completed successfully and its exact-source step passed. A separate read-only Hugging Face CPU witness observed Space repository e71a9b32159e3964b8ed06ddb0603fe90a8d7f23 and deployment source 0640258ccd63f40605a1811287322e99038836da. RUNNING refers only to the Frontier Space runtime, not to a model, provider route, or production authorization."
   },
   "product": {
     "origin": "https://a-11-oy.com",
     "summary": "https://a-11-oy.com/api/a11oy/v1/frontier-now/summary",
     "summarySchema": "szl.frontier-now-summary/v1",
-    "summarySha256": "fc51c9590bc92c019021b2882374a69ccdc0ac351f6fa9f0050df6f9674efc8e",
-    "generatedAt": "2026-09-08T14:11:48.981Z",
-    "observedAt": "2026-09-08T14:08:45.887Z",
-    "validUntil": "2026-09-08T14:13:45.887Z",
-    "manifestDigest": "17535f50e15594020fd2bed815e7a8c794fed33cfd49086010ce8fd5619e3394",
+    "summarySha256": "237cd3a48866bb8c26ed40cef2800d18223058abc7d16bbbc337f9180ecd6091",
+    "generatedAt": "2026-09-08T20:16:45.902Z",
+    "observedAt": "2026-09-08T20:12:57.508Z",
+    "validUntil": "2026-09-08T20:17:57.508Z",
+    "manifestDigest": "2d874a8a07e533f35c82dfeb8f83933849ca45b919e275d8f9e41a189a08b40e",
     "operatingMode": "OBSERVE_ONLY",
     "observationState": "BLOCKED",
-    "runtimeReportedSourceRevision": "8d59d6cea71f86605353be91dbda2bfa44fc731d",
-    "githubDefaultBranchRevision": "c0373bd53aed420bcd22c57dbb5dff585f200f91",
+    "runtimeReportedSourceRevision": "002cd0c2edc8f38b297ae0394ecf8da12c06cc60",
+    "githubDefaultBranchRevision": "002cd0c2edc8f38b297ae0394ecf8da12c06cc60",
     "huggingFaceRepositoryRevision": null,
     "runtimeArtifactDigest": null,
-    "equivalenceState": "DRIFT",
-    "equivalenceReason": "GITHUB_DEFAULT_BRANCH_DRIFTS_FROM_RUNTIME_REPORTED_REVISION",
+    "equivalenceState": "UNAVAILABLE",
+    "equivalenceReason": "GITHUB_MAIN_MATCHES_RUNTIME_HF_OVERLAY_AND_ARTIFACT_DIGEST_UNAVAILABLE",
+    "sourceRuntimeParity": "MATCH",
     "claimGate": "FAILED_CLOSED",
     "claimGateReason": "EXACT_SOURCE_RUNTIME_BINDING_UNAVAILABLE",
     "publicClaimStatus": "HELD",
@@ -64,15 +65,20 @@
       "buckets": 6,
       "kernels": 14
     },
-    "independentWitnessJob": "6aa0179f900620b5c77e26ad",
-    "note": "The A11oy product itself reports source drift: protected GitHub main c0373bd53aed420bcd22c57dbb5dff585f200f91 differs from runtime-reported source 8d59d6cea71f86605353be91dbda2bfa44fc731d. Neither identity is the szl-frontier source revision. The product remains OBSERVE_ONLY and fail-closed; no production capability is inferred."
+    "independentWitnessJob": "6aa06d28900620b5c77e3a5c",
+    "canonicalSyncWorkflowRun": 34243871980,
+    "canonicalDeployJob": 102120707626,
+    "canonicalReadinessJob": 102125540417,
+    "canonicalRelockJob": 102125773063,
+    "canonicalSyncConclusion": "PARTIAL_FAILURE_VERTICAL_FLAGSHIP_PUBLISH_ONLY",
+    "note": "The A11oy product now reports the same protected GitHub main and runtime source revision, so the earlier source drift is repaired. Complete equivalence remains unavailable because the product summary does not expose a Hugging Face repository revision or runtime artifact digest, and estate observation remains blocked by github_inventory_unavailable. The product stays OBSERVE_ONLY and fail-closed; no production capability is inferred."
   },
   "proof": {
     "origin": "https://a11oy.net",
     "ownerRepository": "szl-holdings/a11oy-net",
     "page": "/estate/szl-frontier/",
-    "previousSourceRevision": "3ee8d770f73306307b91359f3bfea39451e2efb2",
-    "state": "CURRENT_FRONTIER_SOURCE_HF_EXACT_AND_PRODUCT_DRIFT_RECORDED"
+    "previousSourceRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
+    "state": "CURRENT_FRONTIER_SOURCE_HF_EXACT_PRODUCT_SOURCE_MATCH_BINDING_UNAVAILABLE_RECORDED"
   },
   "measuredEvidence": {
     "glm53FlashVsKhipu": {
@@ -102,7 +108,7 @@
     }
   },
   "overall": {
-    "state": "SOURCE_HF_EXACT_PRODUCT_SOURCE_DRIFT_FAILED_CLOSED",
+    "state": "SOURCE_HF_EXACT_PRODUCT_SOURCE_MATCH_BINDING_UNAVAILABLE_FAILED_CLOSED",
     "productionDisposition": "HOLD",
     "automaticPromotion": false
   }
