@@ -1,0 +1,88 @@
+{
+  "schema": "szl.proof.frontier-estate-release-observation.v1",
+  "recordedAt": "2026-09-09T01:23:06.689111Z",
+  "authorityChain": [
+    "GitHub",
+    "Hugging Face",
+    "a-11-oy.com",
+    "a11oy.net"
+  ],
+  "frontier": {
+    "sourceRepository": "szl-holdings/szl-frontier",
+    "sourceRevision": "0640258ccd63f40605a1811287322e99038836da",
+    "huggingFaceSpace": "SZLHOLDINGS/szl-frontier",
+    "huggingFaceRepositoryRevision": "e71a9b32159e3964b8ed06ddb0603fe90a8d7f23",
+    "runtimeSourceRevision": "0640258ccd63f40605a1811287322e99038836da",
+    "runtimeSha256": "0af84df5d380f4bd19bd5a14b24fb87520955dd020f87d064d45af9d89516033",
+    "state": "EXACT_SOURCE"
+  },
+  "product": {
+    "sourceRepository": "szl-holdings/a11oy",
+    "sourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "huggingFaceSpace": "SZLHOLDINGS/a11oy",
+    "huggingFaceRepositoryRevision": "8eec9a696e838e6889bd968776d8f0279e188400",
+    "huggingFaceRuntimeSourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "domain": "https://a-11-oy.com",
+    "domainRuntimeSourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "semanticSha256": "7de4d4911c0fcbb556783523a2267422ae0ec4d23a9fef252f799bc9b95e0296",
+    "sourceRuntimeParity": "MATCH",
+    "semanticParity": "MATCH",
+    "artifactBinding": "NOT_REOBSERVED_BY_THIS_VERIFIER",
+    "claimBoundary": "This observation proves source/runtime and semantic parity only. It does not invent a fresh Frontier-now summary digest, Hugging Face artifact binding, model qualification, or production authorization."
+  },
+  "proof": {
+    "sourceRepository": "szl-holdings/a11oy-net",
+    "deployedRevision": "97f33143f50d2fb615f83323114a707463fd034b",
+    "priorFrontierRecordProductRevision": "002cd0c2edc8f38b297ae0394ecf8da12c06cc60",
+    "currentProductRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "priorSummaryWitnessDisposition": "HISTORICAL",
+    "state": "FRONTIER_RECORD_REQUIRES_SUCCESSOR_OBSERVATION"
+  },
+  "huggingFaceInventory": {
+    "profileRepository": "szl-holdings/.github",
+    "profileRevision": "8f0ab3c9b561f7b1845726c7a21b491fa8e60f56",
+    "declaredCounts": {
+      "models": 45,
+      "datasets": 34,
+      "spaces": 17
+    },
+    "manifestCounts": {
+      "models": 45,
+      "datasets": 34,
+      "spaces": 17
+    },
+    "observedCounts": {
+      "models": 46,
+      "datasets": 35,
+      "spaces": 21
+    },
+    "state": "MISMATCH"
+  },
+  "lyte": {
+    "sourceRepository": "szl-holdings/lyte-services",
+    "sourceRevision": "72560fd5eb68cab08c40565c3c489e42c8442e72",
+    "huggingFaceSpace": "SZLHOLDINGS/lyte",
+    "huggingFaceRepositoryRevision": "1ff1d239257a0166d784fef358b8a784f9309481",
+    "runtimeSourceRevision": "a6a653b0d93a0d150b868a044642ce4f5c71d766",
+    "state": "SOURCE_REVISION_MISMATCH",
+    "trackingIssue": "https://github.com/szl-holdings/lyte-services/issues/18"
+  },
+  "estateReleaseTrain": {
+    "repository": "szl-holdings/a11oy",
+    "run": 34297559945,
+    "job": 102297362728,
+    "headRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "releaseId": "d1b3d82e190549cefb0d87ce",
+    "actionsArtifactId": 10084191278,
+    "actionsArtifactSha256": "b5eed8c12736c1e28a076f5e73f48f51483703246251205f62b6a2976cc182f6",
+    "proofChainSha256": "b24aeefb2e6f92b93c027b85357f92ced2d3af28049a423ae1dc612f30c86fb5",
+    "providerWritesPerformed": false,
+    "state": "DIVERGENT",
+    "blockers": [
+      "HF_INVENTORY_COUNT_MISMATCH_OR_UNAVAILABLE",
+      "lyte:SOURCE_REVISION_MISMATCH"
+    ]
+  },
+  "productionDisposition": "HOLD",
+  "automaticPromotion": false
+}

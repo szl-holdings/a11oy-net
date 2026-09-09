@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SZL Frontier | a11oy Proof Registry</title>
-  <meta name="description" content="Source-bound SZL Frontier record. GitHub and Hugging Face are exact; A11oy source/runtime parity is repaired while complete runtime binding remains unavailable and fail-closed." />
+  <meta name="description" content="Source-bound SZL Frontier proof. Frontier GitHub/HF remains exact; the latest A11oy estate observation records e14 source/runtime and semantic parity while inventory and Lyte projection blockers keep production on HOLD." />
   <link rel="canonical" href="https://a11oy.net/estate/szl-frontier/" />
   <style>
     body { font-family: ui-sans-serif, system-ui, sans-serif; background: #080c14; color: #e8edf5; margin: 0; }
-    main { max-width: 58rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    main { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
     a { color: #8ec8ff; }
     .chip { display: inline-block; border: 1px solid #2a3a52; border-radius: 999px; padding: .15rem .6rem; font-size: .75rem; margin-right: .35rem; }
     h1 { font-size: 1.6rem; }
@@ -16,9 +16,9 @@
     td, th { border-bottom: 1px solid #1d2a3c; text-align: left; padding: .55rem .35rem .55rem 0; vertical-align: top; }
     code { color: #c9e4ff; overflow-wrap: anywhere; }
     .muted { color: #9aa8bb; }
-    .hold { color: #ffd78a; }
+    .hold, .unavailable { color: #ffd78a; }
     .match { color: #9fe4bb; }
-    .unavailable { color: #ffd78a; }
+    .drift { color: #ffb4a8; }
   </style>
   <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
   <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
@@ -29,42 +29,48 @@
   <p class="muted"><a href="/">a11oy.net</a> · <a href="/estate/">estate</a> · <a href="/frontiers/">frontiers</a> · szl-frontier</p>
   <h1>SZL Frontier — current source and evidence record</h1>
   <p>
-    This page is a proof pointer, not an inference authority. Protected Frontier source
+    This page is a proof pointer, not inference authority. Protected Frontier source
     <a href="https://github.com/szl-holdings/szl-frontier/commit/0640258ccd63f40605a1811287322e99038836da"><code>0640258ccd63f40605a1811287322e99038836da</code></a>
-    is exactly reflected by the live <a href="https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier">SZLHOLDINGS/szl-frontier</a>
-    <a href="https://szlholdings-szl-frontier.hf.space/deployment.json">deployment record</a>.
-    Product authority remains <a href="https://a-11-oy.com">a-11-oy.com</a>; its current summary now reports GitHub/runtime source <span class="match">MATCH</span>,
-    while complete Hugging Face/runtime-artifact equivalence remains <span class="unavailable">UNAVAILABLE</span> and claims remain failed closed.
+    remains exactly reflected by <a href="https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier">SZLHOLDINGS/szl-frontier</a>.
+    A newer immutable estate observation records protected A11oy source, its Hugging Face runtime, and <a href="https://a-11-oy.com">a-11-oy.com</a>
+    at <code>e14af70d8fd24306e449db56450ad01fb524a857</code> with source/runtime and semantic <span class="match">MATCH</span>.
+    Hugging Face inventory cardinality and Lyte source projection remain divergent, and complete Frontier-now artifact binding was not re-observed, so production remains <span class="hold">HOLD</span>.
   </p>
 
   <table>
     <tr><th>Role</th><th>Surface / evidence</th><th>Recorded state</th></tr>
-    <tr><td>GitHub source</td><td><code>0640258ccd63f40605a1811287322e99038836da</code></td><td>EXACT AT OBSERVATION</td></tr>
+    <tr><td>Frontier GitHub source</td><td><code>0640258ccd63f40605a1811287322e99038836da</code></td><td>EXACT AT OBSERVATION</td></tr>
+    <tr><td>Previous Frontier source</td><td><code>3590daaadce2d2b07950ba844afe8bd6d870fb12</code></td><td>HISTORICAL PREDECESSOR</td></tr>
     <tr>
-      <td>Hugging Face projection</td>
+      <td>Frontier HF projection</td>
       <td>Space repo <code>e71a9b32159e3964b8ed06ddb0603fe90a8d7f23</code><br />runtime SHA-256 <code>0af84df5d380f4bd19bd5a14b24fb87520955dd020f87d064d45af9d89516033</code><br /><a href="https://github.com/szl-holdings/szl-frontier/actions/runs/34247345227">sync run 34247345227</a></td>
       <td>PASS — exact Frontier source; Space runtime RUNNING</td>
     </tr>
     <tr>
-      <td>Product</td>
-      <td><a href="https://a-11-oy.com/api/a11oy/v1/frontier-now/summary">Frontier Now summary</a><br />GitHub main <code>002cd0c2edc8f38b297ae0394ecf8da12c06cc60</code><br />runtime-reported source <code>002cd0c2edc8f38b297ae0394ecf8da12c06cc60</code><br />summary SHA-256 <code>237cd3a48866bb8c26ed40cef2800d18223058abc7d16bbbc337f9180ecd6091</code><br /><a href="https://github.com/szl-holdings/a11oy/actions/runs/34243871980">canonical sync/relock run 34243871980</a></td>
-      <td>OBSERVE_ONLY · BLOCKED · source/runtime <span class="match">MATCH</span> · complete equivalence <span class="unavailable">UNAVAILABLE</span> · claim gate FAILED_CLOSED · writes DISABLED</td>
+      <td>A11oy current estate observation</td>
+      <td>GitHub/runtime/domain <code>e14af70d8fd24306e449db56450ad01fb524a857</code><br />HF Space repo <code>8eec9a696e838e6889bd968776d8f0279e188400</code><br />semantic SHA-256 <code>7de4d4911c0fcbb556783523a2267422ae0ec4d23a9fef252f799bc9b95e0296</code><br /><a href="https://github.com/szl-holdings/a11oy/actions/runs/34297559945">estate run 34297559945</a></td>
+      <td>source/runtime <span class="match">MATCH</span> · semantic <span class="match">MATCH</span> · estate <span class="drift">DIVERGENT</span></td>
     </tr>
-    <tr><td>Proof</td><td><a href="./alignment.json">machine-readable alignment record</a></td><td>Advanced from Frontier source <code>3590daaadce2d2b07950ba844afe8bd6d870fb12</code>; repaired product source parity recorded without overstating complete binding</td></tr>
+    <tr>
+      <td>Historical Frontier-now summary witness</td>
+      <td>Product source <code>002cd0c2edc8f38b297ae0394ecf8da12c06cc60</code><br />summary SHA-256 <code>237cd3a48866bb8c26ed40cef2800d18223058abc7d16bbbc337f9180ecd6091</code><br />manifest <code>2d874a8a07e533f35c82dfeb8f83933849ca45b919e275d8f9e41a189a08b40e</code></td>
+      <td>HISTORICAL · complete binding <span class="unavailable">UNAVAILABLE</span> · FAILED_CLOSED</td>
+    </tr>
+    <tr><td>Proof</td><td><a href="./alignment.json">alignment record</a> · <a href="./estate-release-train-34297559945.json">latest estate observation</a></td><td>Current estate observation recorded separately from historical summary witness</td></tr>
     <tr><td>Production disposition</td><td>Frontier model candidates and evidence lanes</td><td class="hold">HOLD · promotion NONE</td></tr>
   </table>
 
-  <h2>Current product observation</h2>
+  <h2>Latest estate observation</h2>
   <table>
     <tr><th>Field</th><th>Observed value</th></tr>
-    <tr><td>Observed / valid until</td><td><code>2026-09-08T20:12:57.508Z</code> / <code>2026-09-08T20:17:57.508Z</code></td></tr>
-    <tr><td>Observation</td><td><code>BLOCKED</code> — <code>github_inventory_unavailable</code></td></tr>
-    <tr><td>Enforcement</td><td><code>FAILED_CLOSED</code> · external writes <code>DISABLED</code> · automatic retries <code>0</code> · no effectors</td></tr>
-    <tr><td>Product source parity</td><td class="match"><code>MATCH</code> — GitHub and runtime both report <code>002cd0c2edc8f38b297ae0394ecf8da12c06cc60</code></td></tr>
-    <tr><td>Complete equivalence</td><td class="unavailable"><code>UNAVAILABLE</code> — the product still does not expose a Hugging Face repository revision or runtime artifact digest</td></tr>
-    <tr><td>Claim gate</td><td><code>FAILED_CLOSED</code> · public claim status <code>HELD</code></td></tr>
-    <tr><td>Canonical deploy evidence</td><td>Deploy/source-bind, readiness, and relock jobs passed in run <code>34243871980</code>; the run's separate six-vertical flagship publisher failed, so no whole-workflow success is claimed.</td></tr>
-    <tr><td>Last-known HF estate counts</td><td><code>46</code> models · <code>43</code> datasets · <code>26</code> Spaces · <code>21</code> collections · <code>6</code> buckets · <code>14</code> kernels; observation state remains BLOCKED</td></tr>
+    <tr><td>Observed</td><td><code>2026-09-09T01:23:06.689111Z</code></td></tr>
+    <tr><td>Release / evidence</td><td><code>d1b3d82e190549cefb0d87ce</code> · Actions artifact <code>10084191278</code> · artifact SHA-256 <code>b5eed8c12736c1e28a076f5e73f48f51483703246251205f62b6a2976cc182f6</code> · proof-chain SHA-256 <code>b24aeefb2e6f92b93c027b85357f92ced2d3af28049a423ae1dc612f30c86fb5</code></td></tr>
+    <tr><td>A11oy source parity</td><td class="match"><code>MATCH</code> — protected GitHub source, HF runtime and product domain all report <code>e14af70d8fd24306e449db56450ad01fb524a857</code></td></tr>
+    <tr><td>Semantic parity</td><td class="match"><code>MATCH</code> — HF Space and a-11-oy.com semantic SHA-256 <code>7de4d4911c0fcbb556783523a2267422ae0ec4d23a9fef252f799bc9b95e0296</code></td></tr>
+    <tr><td>HF inventory</td><td class="drift"><code>MISMATCH</code> — declared 45 models / 34 datasets / 17 Spaces; observed 46 / 35 / 21</td></tr>
+    <tr><td>Lyte</td><td class="drift"><code>SOURCE_REVISION_MISMATCH</code> — canonical <code>72560fd5eb68cab08c40565c3c489e42c8442e72</code>; runtime <code>a6a653b0d93a0d150b868a044642ce4f5c71d766</code>; HF repo <code>1ff1d239257a0166d784fef358b8a784f9309481</code></td></tr>
+    <tr><td>Provider writes</td><td><code>false</code> — this verifier observed only; no provider writer was executed</td></tr>
+    <tr><td>Artifact binding</td><td class="unavailable"><code>NOT_REOBSERVED_BY_THIS_VERIFIER</code> — no fresh Frontier-now HF repository/artifact binding is inferred</td></tr>
   </table>
 
   <h2>Measured GLM-5.3 Flash evaluation</h2>
@@ -74,24 +80,19 @@
     <tr><td>Candidate vs Khipu score</td><td><code>0.916667</code> vs <code>0.416667</code> · delta <code>+0.5</code></td></tr>
     <tr><td>Schema-valid rate</td><td><code>1.0</code> vs <code>0.5</code></td></tr>
     <tr><td>Mean-latency ratio</td><td><code>0.303195</code> candidate / baseline</td></tr>
-    <tr><td>Forge source</td><td><code>225751bcf16372360df9ad04d63cba39fc8bc0ca</code></td></tr>
-    <tr><td>HF receipt commit</td><td><code>f2b30f160a7884149d3ac474d455ef25a35ac038</code></td></tr>
     <tr><td>Receipt SHA-256</td><td><code>bdf6a0aac1af5b06f10ad0e7a9ee9d29e43d16b92654887f0c0b34f25071db46</code></td></tr>
     <tr><td>Disposition</td><td class="hold">HOLD · promotion NONE</td></tr>
   </table>
 
   <h2>Truth boundary</h2>
   <ul>
-    <li><code>RUNNING</code> refers only to the observed Frontier Space runtime, not a model, provider route, or production authorization.</li>
-    <li>The product now reports matching GitHub and runtime source revisions; the earlier product source drift is repaired.</li>
-    <li>Complete product equivalence remains <code>UNAVAILABLE</code> because the product summary lacks a Hugging Face repository revision and runtime artifact digest.</li>
-    <li>The product summary still reports <code>github_inventory_unavailable</code>; its public claim status is correctly <code>HELD</code>.</li>
-    <li>The A11oy canonical workflow's deploy/source-bind, readiness, and relock jobs passed; its separate vertical flagship publication job failed, so the workflow is not represented as fully green.</li>
-    <li>The GLM result is a bounded four-case synthetic evaluation, not broad model qualification.</li>
-    <li>Provider execution revision, provider hardware, and provider runtime build remain unavailable.</li>
-    <li>The evaluation receipt is unsigned; no independent certification is claimed.</li>
-    <li>No long-context, multimodal, production-throughput, or production-authority claim is inferred.</li>
-    <li>This record does not change a model route, rehost upstream weights, execute a tool, or promote a production default.</li>
+    <li><code>RUNNING</code> refers only to an observed Space runtime, not model qualification or production authorization.</li>
+    <li>The earlier <code>002cd0c2...</code> Frontier-now summary witness is preserved as historical evidence; it is no longer described as current A11oy product source.</li>
+    <li>The current estate observation establishes A11oy source/runtime and semantic parity at <code>e14af70d...</code>, but not a fresh Frontier-now immutable HF repository/artifact binding.</li>
+    <li><code>HF_INVENTORY_COUNT_MISMATCH_OR_UNAVAILABLE</code> and <code>lyte:SOURCE_REVISION_MISMATCH</code> remain active blockers.</li>
+    <li>The GLM result remains a bounded four-case synthetic evaluation, not broad model qualification.</li>
+    <li>Provider execution revision, provider hardware, and provider runtime build remain unavailable for that evaluation; the evaluation receipt is unsigned.</li>
+    <li>No long-context, multimodal, production-throughput, model-route, provider, weight-rehosting, policy, or autonomous-authority claim is inferred.</li>
   </ul>
 
   <h2>Frontier organ posture</h2>
@@ -100,7 +101,7 @@
     <li>Second Brain remains the canonical memory organ; this page does not fork it.</li>
     <li>Λ remains Conjecture 1. No ATO or autonomous production authority is granted here.</li>
   </ul>
-  <p class="muted">GitHub Pages serving this HTML proves reachability of <code>/estate/szl-frontier/</code> only. Source/runtime parity repair does not satisfy the missing complete-binding or estate-observation gates; production disposition remains <code>HOLD</code>.</p>
+  <p class="muted">GitHub Pages serving this HTML proves reachability of <code>/estate/szl-frontier/</code> only. Production disposition remains <code>HOLD</code>; automatic promotion is false.</p>
 </main>
 <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
 <script src="/scripts/szl-holo-proof-v2.js" defer data-szl-proof-holo-asset="script-v2"></script>

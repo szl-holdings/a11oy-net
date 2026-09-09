@@ -1,6 +1,6 @@
 {
   "schema": "szl.proof.frontier-alignment.v1",
-  "recordedAt": "2026-09-08T20:16:45.902Z",
+  "recordedAt": "2026-09-09T01:23:06.689111Z",
   "authorityChain": [
     "GitHub",
     "Hugging Face",
@@ -28,6 +28,8 @@
     "evidence": "The protected-main publisher completed successfully and its exact-source step passed. A separate read-only Hugging Face CPU witness observed Space repository e71a9b32159e3964b8ed06ddb0603fe90a8d7f23 and deployment source 0640258ccd63f40605a1811287322e99038836da. RUNNING refers only to the Frontier Space runtime, not to a model, provider route, or production authorization."
   },
   "product": {
+    "witnessScope": "HISTORICAL_FRONTIER_NOW_SUMMARY",
+    "supersededByEstateObservation": 34297559945,
     "origin": "https://a-11-oy.com",
     "summary": "https://a-11-oy.com/api/a11oy/v1/frontier-now/summary",
     "summarySchema": "szl.frontier-now-summary/v1",
@@ -71,14 +73,59 @@
     "canonicalReadinessJob": 102125540417,
     "canonicalRelockJob": 102125773063,
     "canonicalSyncConclusion": "PARTIAL_FAILURE_VERTICAL_FLAGSHIP_PUBLISH_ONLY",
-    "note": "The A11oy product now reports the same protected GitHub main and runtime source revision, so the earlier source drift is repaired. Complete equivalence remains unavailable because the product summary does not expose a Hugging Face repository revision or runtime artifact digest, and estate observation remains blocked by github_inventory_unavailable. The product stays OBSERVE_ONLY and fail-closed; no production capability is inferred."
+    "note": "This is a preserved historical Frontier-now summary witness from A11oy source 002cd0c2. It is no longer described as the current product source after estate run 34297559945 observed protected source, Hugging Face runtime and a-11-oy.com at e14af70d. Complete Frontier-now HF/runtime-artifact binding remains unproven until a dedicated fresh summary witness supplies it."
+  },
+  "latestEstateObservation": {
+    "record": "./estate-release-train-34297559945.json",
+    "observedAt": "2026-09-09T01:23:06.689111Z",
+    "sourceRepository": "szl-holdings/a11oy",
+    "sourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "huggingFaceSpace": "SZLHOLDINGS/a11oy",
+    "huggingFaceSpaceRepositoryRevision": "8eec9a696e838e6889bd968776d8f0279e188400",
+    "huggingFaceRuntimeSourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "domainRuntimeSourceRevision": "e14af70d8fd24306e449db56450ad01fb524a857",
+    "sourceRuntimeParity": "MATCH",
+    "semanticParity": "MATCH",
+    "semanticSha256": "7de4d4911c0fcbb556783523a2267422ae0ec4d23a9fef252f799bc9b95e0296",
+    "artifactBinding": "NOT_REOBSERVED_BY_THIS_VERIFIER",
+    "run": 34297559945,
+    "job": 102297362728,
+    "releaseId": "d1b3d82e190549cefb0d87ce",
+    "actionsArtifactId": 10084191278,
+    "actionsArtifactSha256": "b5eed8c12736c1e28a076f5e73f48f51483703246251205f62b6a2976cc182f6",
+    "proofChainSha256": "b24aeefb2e6f92b93c027b85357f92ced2d3af28049a423ae1dc612f30c86fb5",
+    "providerWritesPerformed": false,
+    "state": "SOURCE_RUNTIME_AND_SEMANTIC_PARITY_MATCH_WITH_ESTATE_BLOCKERS",
+    "blockers": [
+      "HF_INVENTORY_COUNT_MISMATCH_OR_UNAVAILABLE",
+      "lyte:SOURCE_REVISION_MISMATCH"
+    ],
+    "inventory": {
+      "declared": {
+        "models": 45,
+        "datasets": 34,
+        "spaces": 17
+      },
+      "observed": {
+        "models": 46,
+        "datasets": 35,
+        "spaces": 21
+      },
+      "state": "MISMATCH"
+    },
+    "lyte": {
+      "canonicalSourceRevision": "72560fd5eb68cab08c40565c3c489e42c8442e72",
+      "huggingFaceSpaceRepositoryRevision": "1ff1d239257a0166d784fef358b8a784f9309481",
+      "runtimeSourceRevision": "a6a653b0d93a0d150b868a044642ce4f5c71d766",
+      "state": "SOURCE_REVISION_MISMATCH"
+    }
   },
   "proof": {
     "origin": "https://a11oy.net",
     "ownerRepository": "szl-holdings/a11oy-net",
     "page": "/estate/szl-frontier/",
     "previousSourceRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
-    "state": "CURRENT_FRONTIER_SOURCE_HF_EXACT_PRODUCT_SOURCE_MATCH_BINDING_UNAVAILABLE_RECORDED"
+    "state": "CURRENT_FRONTIER_SOURCE_HF_EXACT_LATEST_PRODUCT_ESTATE_OBSERVATION_RECORDED_SUMMARY_BINDING_HISTORICAL"
   },
   "measuredEvidence": {
     "glm53FlashVsKhipu": {
@@ -108,7 +155,7 @@
     }
   },
   "overall": {
-    "state": "SOURCE_HF_EXACT_PRODUCT_SOURCE_MATCH_BINDING_UNAVAILABLE_FAILED_CLOSED",
+    "state": "SOURCE_HF_EXACT_PRODUCT_ESTATE_PARITY_MATCH_PROOF_ADVANCED_ESTATE_BLOCKERS_HOLD",
     "productionDisposition": "HOLD",
     "automaticPromotion": false
   }
