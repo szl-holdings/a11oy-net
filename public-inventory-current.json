@@ -1,0 +1,61 @@
+{
+  "schema": "szl.proof.public-hf-inventory-current/v1",
+  "evidence_class": "MEASURED",
+  "observation": {
+    "organization": "SZLHOLDINGS",
+    "observed_at": "2026-09-10T03:20:41Z",
+    "predicate": "hf-public-author-membership/v1",
+    "authentication": "none",
+    "visibility": "public-only",
+    "counts": {
+      "models": 46,
+      "datasets": 35,
+      "spaces": 21
+    },
+    "scope_sha256": "9060fa8d7edcd5c246b86bcfcf1916df44b18038253325336f2f46208f8001ae",
+    "source_repository": "szl-holdings/a11oy",
+    "source_revision": "4c6621b17ba452d5af7aa2460462fdfbe513509f",
+    "source_path": "docs/huggingface-ecosystem-manifest.json",
+    "source_sha256": "04dc30206d499f004fe8151cfdf63700c380db29c2afc3d97d2a213303421ca2",
+    "evidence_workflow_run": 34432937958,
+    "evidence_artifact": 10135145952,
+    "evidence_archive_sha256": "b9d88f328029fbf49437a5154abdaaae7de8b7823138e0eae69a27ace601b488",
+    "evidence_record_sha256": "3ed462ea005ccf273dd25813d239a892d5c49138246b5a32ba014612d6e1a0fb"
+  },
+  "github_profile_projection": {
+    "repository": "szl-holdings/.github",
+    "merge_revision": "a61cb238b71d1852d84ce6394a208d0ab0110796",
+    "binding_path": "profile/public-inventory.json",
+    "state": "MERGED_UNDER_NORMAL_CONTROLS"
+  },
+  "hugging_face_org_card_projection": {
+    "source_repository": "szl-holdings/.github",
+    "source_revision": "cc8c6d894e686ac4fcc788cd366140fb39e40b6c",
+    "source_path": "huggingface/org-card/README.md",
+    "target": "SZLHOLDINGS/README",
+    "publisher_workflow_run": 34456315383,
+    "publisher_job": 102803422755,
+    "hub_commit": "b244997b36b8a05223102d85e69d5a916a8e335f",
+    "live_source_revision": "cc8c6d894e686ac4fcc788cd366140fb39e40b6c",
+    "immutable_files_match": true,
+    "runtime_files_match": true,
+    "runtime_stage": "RUNNING",
+    "state": "VERIFIED",
+    "publication_evidence_artifact": 10143624686,
+    "publication_evidence_sha256": "f114363d516ad2be0d67814d6879213176965cb067ff7bd57fd064a1826c72a3"
+  },
+  "historical_detailed_inventory": {
+    "path": "public-inventory.json",
+    "observed_at": "2026-08-31T18:59:11Z",
+    "preserved": true,
+    "reason": "The prior file contains a detailed resource inventory under an older observation contract. It remains historical evidence and is not overwritten by this current counts-and-projection proof record."
+  },
+  "claim_boundaries": {
+    "authenticated_whole_organization_total": "NOT_CLAIMED",
+    "collections_and_buckets": "OUTSIDE_THIS_PREDICATE",
+    "model_quality": "NOT_INFERRED",
+    "runtime_readiness": "NOT_INFERRED_FROM_COUNTS",
+    "production_authorization": false,
+    "product_route_or_default_change": false
+  }
+}
