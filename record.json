@@ -128,6 +128,21 @@
       "deployment_success_attestation": "UNAVAILABLE",
       "production_model_admission": false,
       "scope": "Source tests, an actual synthetic challenger evaluation, and an earlier public baseline-runtime observation remain distinct. No current-source deployment success, calibrated accuracy, production SLO, signature verification, or execution authority is asserted. This note is not a live status feed."
+    },
+    {
+      "name": "Lyte Forecast Loom source-bound live deployment observation",
+      "url": "https://a11oy.net/notes/LYTE_FORECAST_DEPLOYMENT_2026-09-10.md",
+      "kind": "dated evidence-pointer note",
+      "evidence_class": "REPORTED",
+      "runtime_observed_at": "2026-09-10T01:21:21.371993Z",
+      "product_observed_at": "2026-09-10T01:23:21.757812Z",
+      "source_revision": "7cd4305014ee638f773d6e128f345ad6a545be58",
+      "hf_runtime_revision": "13ec4f8a4db71885bc2e6eef3a960976607474c9",
+      "publisher_revision": "bda66daa67aaa2c7bd9a94bb43537f22bc6c89d7",
+      "live_contract_observation": "PASS",
+      "production_model_admission": false,
+      "signature_attestation": "NOT_PERFORMED_BY_THIS_ORIGIN",
+      "scope": "Indexes actual source-bound public SAMPLE runtime verification, product-source identity, and the canonical workflow evidence. This is not a continuous health guarantee, production telemetry qualification, calibrated model accuracy, deployment SLO, native forecast UI claim, or execution authority. Historical observations remain dated and unchanged."
     }
   ]
 }
