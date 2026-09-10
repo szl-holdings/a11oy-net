@@ -117,5 +117,17 @@
       "url": "https://github.com/szl-holdings/governed-receipt-spec",
       "evidence_class": "REPORTED"
     }
+  ],
+  "evidence_notes": [
+    {
+      "name": "Lyte Forecast Loom source and evaluation boundaries",
+      "url": "https://a11oy.net/notes/LYTE_FORECAST_2026-09-10.md",
+      "kind": "dated evidence-pointer note",
+      "evidence_class": "REPORTED",
+      "observation_window_utc": "2026-09-10T00:21:00Z/2026-09-10T00:47:00Z",
+      "deployment_success_attestation": "UNAVAILABLE",
+      "production_model_admission": false,
+      "scope": "Source tests, an actual synthetic challenger evaluation, and an earlier public baseline-runtime observation remain distinct. No current-source deployment success, calibrated accuracy, production SLO, signature verification, or execution authority is asserted. This note is not a live status feed."
+    }
   ]
 }
