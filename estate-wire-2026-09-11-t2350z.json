@@ -1,0 +1,81 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2350Z",
+  "parent": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2322Z",
+  "captured_at": "2026-09-11T23:50:50Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1",
+  "doctrine": "v11",
+  "ready": false,
+  "production_authorized": false,
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "never": "garden storefront domain is not this origin"
+  },
+  "github": {
+    "a11oy_main": "1d1d8ace2be629fea9171f05774312c13137400a",
+    "szl_forge_main": "8befca224540cb811586e99bea676d98ca7ac4b0",
+    "a11oy_net_base": "f234944be2ca4178ff489bcc5c37d994ce44118c",
+    "szl_hf_frontier_main": "93341256eca1665f2343390898b869ec82723e36",
+    "dot_github_main": "e65afd6f3cffd83a19f4d07650c902c87a85c1e4",
+    "hf_sync_run": 1463,
+    "hf_sync_deploy_attest": "success",
+    "hf_sync_series_a_receipt": "in_progress",
+    "a11oy_2123": "merged",
+    "github_732": "merged",
+    "closes_224": false,
+    "closes_2087": false
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "1d1d8ace2be629fea9171f05774312c13137400a",
+    "github_product_sha_match": true,
+    "hub_runtime_sha": "1d1d8ace2be629fea9171f05774312c13137400a",
+    "hub_runtime_matches_github": true,
+    "match_scope": "flagship git_sha two-read plus Hub runtime SZL_GIT_SHA",
+    "healthz": "ok",
+    "lean_signer": "ABSENT",
+    "dsse_live_sibling": "DSSE-LIVE",
+    "signing_status": "REAL ECDSA-P256",
+    "product_line": ["a11oy", "killinchu", "immune"],
+    "space": "a11oy"
+  },
+  "hub": {
+    "space_git_object": "0e5d374cf5b3204e26189c9e603d0cf96fceb164",
+    "space_git_object_note": "Different git object type than GitHub commit. Runtime bind is SZL_GIT_SHA.",
+    "dockerfile_bytes": 46522,
+    "dockerfile_github_equals_hub": true
+  },
+  "hub_anonymous_inventory": {
+    "models": 46,
+    "datasets": 35,
+    "spaces": 21,
+    "predicate": "anonymous author membership via Hub API limit=100",
+    "note": "Kernel-kind is a different predicate. Do not merge with Series-A or org-page counts."
+  },
+  "python_kernels": {
+    "predicate": "Hub model git object is a different type than GitHub commit",
+    "szl_invariants_github": "a0a5f22d58f757a473f5db4f9d62d071cad1c2f7",
+    "szl_invariants_hub_object": "c218f1a7eed7ec1b8a06a2997e49ffe9e339a71c",
+    "comparable_as_sha_equality": false
+  },
+  "dated_zoom_out_on_proof": {
+    "url": "https://a11oy.net/estate/zoom-out-2026-09-11/receipt.json",
+    "observed_at": "2026-09-11T22:23:00Z",
+    "honest_git_sha": "0abde0c4114bdc8c603b984e884f657d74f9ab88",
+    "note": "RECORD snapshot, not live honesty. Live bind is product /honest."
+  },
+  "still_hold": [
+    "production promotion",
+    "GPU/vLLM measured comparison",
+    "Ghlore installed-daemon retrieval benchmark",
+    "exactInstalledSourceVerified",
+    "preflight secrets",
+    "www TLS",
+    "bound keyed inference route",
+    "four-plane immutable closure",
+    "lean healthz signer PRESENT"
+  ]
+}
