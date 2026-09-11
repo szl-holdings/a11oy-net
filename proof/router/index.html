@@ -29,17 +29,19 @@
   <p class="chip">PROOF</p>
   <p class="chip">INFERENCE FLAGSHIP</p>
   <p class="chip">NOT_VERIFIED</p>
-  <p class="muted"><a href="/">a11oy.net</a> · router proof · machine record <a href="latest.json">latest.json</a></p>
+  <p class="muted"><a href="/">a11oy.net</a> · router proof · machine record <a href="latest.json">latest.json</a> · historical <a href="2026-09-11T162300Z.json">2026-09-11T162300Z</a></p>
   <h1>SZL Router — exact revisions and known bounds</h1>
   <p class="muted">This page is a proof pointer, not inference authority. GitHub is the source of truth. Hugging Face is a projection. A11oy is the operator interface.</p>
   <table>
     <tr><th>Surface</th><th>Recorded value</th><th>State</th></tr>
-    <tr><td>GitHub source</td><td><code>szl-holdings/szl-router</code><br /><code>80f1d52a2a968617581cc8e7375913d30862fc6e</code></td><td>PROTECTED MAIN</td></tr>
-    <tr><td>HF repository SHA</td><td><code>775531a78dfeea14ee9ef6193cb6a74a4143afa5</code></td><td class="match">EQUALS RUNTIME</td></tr>
-    <tr><td>HF runtime SHA</td><td><code>775531a78dfeea14ee9ef6193cb6a74a4143afa5</code></td><td>RUNNING</td></tr>
-    <tr><td>Served source SHA</td><td><code>c5b42702f21c50091f887c5f550cdfbcb561eacc</code></td><td class="drift">STALE vs GitHub main</td></tr>
-    <tr><td>Product</td><td><a href="https://a-11-oy.com/code">https://a-11-oy.com/code</a></td><td>NOT_VERIFIED as router operator view</td></tr>
-    <tr><td>Public Space</td><td><a href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live">SZLHOLDINGS/llm-router-live</a></td><td>PUBLIC · RUNNING</td></tr>
+    <tr><td>GitHub source</td><td><code>szl-holdings/szl-router</code><br /><code>50b1d39b9f70f5c4323594411bd48611b35ae70c</code></td><td>PROTECTED MAIN</td></tr>
+    <tr><td>HF repository SHA</td><td><code>59103f0a06077e939de8b199e55d13126af1e331</code></td><td class="match">EQUALS RUNTIME</td></tr>
+    <tr><td>HF runtime SHA</td><td><code>59103f0a06077e939de8b199e55d13126af1e331</code></td><td>RUNNING</td></tr>
+    <tr><td>Served source SHA</td><td><code>50b1d39b9f70f5c4323594411bd48611b35ae70c</code></td><td class="match">EQUALS GITHUB MAIN</td></tr>
+    <tr><td>/health · /ready</td><td><code>200 · 200</code></td><td class="match">STATUS SURFACE READY</td></tr>
+    <tr><td>/inference/ready</td><td><code>503 OFFLINE_UNTIL_KEYED</code></td><td>PUBLIC SPACE NOT KEYED</td></tr>
+    <tr><td>Product</td><td><a href="https://a-11-oy.com/code">https://a-11-oy.com/code</a></td><td class="drift">NOT_VERIFIED as router operator view</td></tr>
+    <tr><td>Public Space</td><td><a href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live">SZLHOLDINGS/llm-router-live</a></td><td>PUBLIC · RUNNING_ALIGNED</td></tr>
   </table>
   <h2>Known bounds</h2>
   <ul>
@@ -49,7 +51,7 @@
     <li>Lambda uniqueness remains Conjecture 1 — open and advisory.</li>
     <li>A public Space may be RUNNING while inference is OFFLINE_UNTIL_KEYED.</li>
   </ul>
-  <p class="muted">Observed 2026-09-11T16:23:00Z. Do not treat this record as current after a later protected-main move without a new observation.</p>
+  <p class="muted">Observed 2026-09-11T16:37:00Z. Source/runtime equality is verified. Product /code has not yet been observed with the Router operator panel. Do not treat this record as current after a later protected-main move without a new observation.</p>
 </main>
 <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
 <script src="/scripts/szl-holo-proof-v2.js" defer data-szl-proof-holo-asset="script-v2"></script>

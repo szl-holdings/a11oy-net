@@ -31,9 +31,6 @@
     "inference_state": "OFFLINE_UNTIL_KEYED",
     "source_attestation": 200
   },
-  "historical": [
-    "2026-09-11T162300Z.json"
-  ],
   "evidence_bundle_sha256": null,
   "known_bounds": [
     "Provider-backed inference may be unavailable until credentials are configured.",
