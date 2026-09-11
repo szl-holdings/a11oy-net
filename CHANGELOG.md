@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-11
+
+- `/notes/LYTE_PUBLICATION_DRIFT_2026-09-11.md` admitted as a dated Lyte publication RECORD. 22:34Z recapture: GitHub producer tip, a11oy publisher pin, and Hugging Face Space runtime all `dd17d9f`. A same-day 22:23Z Space healthz of `9af99c9` is superseded, not current. Canonical Forecast Loom hashes ALIGNED. Hash alignment is not a source-revision match. INC-05 remains OPEN (`www.a-11-oy.com` TLS access denied). Product `/lyte` stays STRUCTURAL-ONLY. Proof `www.a11oy.net` 301s to `a11oy.net`, never onto the product host. Does not republish Hugging Face. Does not mint DNS. Never a11oy.com.
+
 ## 2026-09-04
 
 - `/estate/plane/` admitted as the on-origin Estate OS control-plane hologram (hash router). PUBLIC_PARTIAL bake 2026-08-29T16:49:00Z. PROPOSE_ONLY minting. Λ remains Conjecture 1 and cannot be promoted. Not a live dashboard. Not product runtime. Not a fourth origin. Catalog hologram stays `/estate/os/`. Later keep-7 recapture stays `/estate.json` and is not overwritten. Linked from `/estate/`. Index, not nav, not the first fold. Does not clone `/verify`. Never a11oy.com.

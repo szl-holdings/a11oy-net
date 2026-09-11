@@ -1,0 +1,51 @@
+{
+  "contract_version": "1.0.1",
+  "surface": {
+    "name": "Lyte publication drift RECORD",
+    "url": "https://a11oy.net/notes/LYTE_PUBLICATION_DRIFT_2026-09-11.md",
+    "publisher": "SZL Holdings",
+    "implementation": "static GitHub Pages document",
+    "meaning": "Dated MEASURED probe of GitHub producer tip vs Hugging Face Space revision vs Forecast Loom hashes vs product hologram vs proof registry. Not DNS control. Not a Hugging Face write. Not product runtime."
+  },
+  "observed_at_utc": "2026-09-11T22:34:00Z",
+  "evidence_class": "MEASURED",
+  "publication_order": ["github", "huggingface", "a-11-oy.com", "a11oy.net"],
+  "revision_gate": {
+    "verdict": "ALIGNED",
+    "producer_tip": "dd17d9f524b76c8f0e260d7ec1e084cc079dfc43",
+    "publisher_pin": "dd17d9f524b76c8f0e260d7ec1e084cc079dfc43",
+    "space_revision": "dd17d9f524b76c8f0e260d7ec1e084cc079dfc43",
+    "aligned": true,
+    "prior_space_revision_same_utc_day": "9af99c9fa92fe4bd2f5f3f7e61f4521eb692d2a7",
+    "prior_note": "22:23Z healthz reported 9af99c9. Superseded at 22:34Z. Do not cite as current."
+  },
+  "hash_gate": {
+    "verdict": "ALIGNED",
+    "contract": "szl.lyte.forecast-loom/v1",
+    "provider": "szl.robust-drift/v1",
+    "raw_input_sha256": "1311f370e7ecce72b3ed4547bc63d63f49e8c64ea7a579f3c1924e9ebaec2b9d",
+    "input_sha256": "a837772a02c8df0ecd3cadc7fff47574c7de654aa523c3e3d73106673146af17",
+    "output_sha256": "459a5dbfa0985e763cf6dc495c09fb811ff4cf6ee66aad761f84af19352e4bfa",
+    "live_space_matched": true,
+    "note": "A hash match is not a source-revision match."
+  },
+  "product": {
+    "healthz": 200,
+    "organ": "a11oy",
+    "signer": "ABSENT",
+    "lyte_path": "STRUCTURAL-ONLY BIND hologram",
+    "forecast_api": 405
+  },
+  "inc05": {
+    "verdict": "OPEN",
+    "www_a_11_oy_com": "tlsv1 alert access denied"
+  },
+  "proof_www": {
+    "status": 301,
+    "location": "https://a11oy.net/",
+    "redirects_to_product": false
+  },
+  "huggingface_write": "UNAVAILABLE",
+  "granite": "WITHHELD",
+  "execution_authority": "NONE"
+}
