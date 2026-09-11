@@ -8,15 +8,18 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated SNAPSHOT of named theatres Lyte + N1–N27. Not GPU. Not a product certificate. Not a rewrite of /factory/. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-08-29T19:30:00Z",
+  "observed_at_utc": "2026-09-11T23:25:17Z",
+  "prior_observed_at_utc": "2026-08-29T19:30:00Z",
   "evidence_class": "SNAPSHOT",
   "bind": "BIND_AS_A11OY_PACKAGE",
   "promotion": {
     "verdict": "BLOCKED",
     "honesty": "MEASURED",
-    "reason": "INC-05 open: www.a-11-oy.com is Cloudflare HTTP 404. Frontiers stay holograms. Do not stamp production LIVE.",
+    "reason": "INC-05 www-404 is CLOSED-as-MEASURED (www TLS OK + HTTP/2 301 to apex; HF custom-domain READY). Promotion stays BLOCKED because N1–N27 remain holograms, production_ready is false, signer is ABSENT, licensed AIS is CLOSED, and this origin does not stamp LIVE. A www 301 is not a production certificate.",
     "incident": "INC-05",
-    "origin_lock": "https://a11oy.net/origin/"
+    "incident_www_defect": "CLOSED_AS_MEASURED",
+    "origin_lock": "https://a11oy.net/origin/",
+    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md"
   },
   "related": {
     "factory_record": "https://a11oy.net/factory/",
@@ -27,13 +30,14 @@
     "a11oy_factory": "https://github.com/szl-holdings/a11oy-factory",
     "product": "https://a-11-oy.com/",
     "inc_05_issue": "https://github.com/szl-holdings/a11oy/issues/1497",
-    "origin_lock_pr": "https://github.com/szl-holdings/a11oy-net/pull/77",
+    "origin_lock_pr": "https://github.com/szl-holdings/a11oy-net/pull/183",
     "router_source": "https://github.com/szl-holdings/szl-router",
     "router_space": "https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live",
     "router_proof": "https://a11oy.net/proof/router/",
     "router_frontier_observation": "https://a11oy.net/estate/frontier-2026-09-11/",
     "litellm_recommendation": "https://a11oy.net/estate/frontier-2026-09-11-litellm/",
-    "litellm_pypi": "https://pypi.org/project/litellm/1.100.1/"
+    "litellm_pypi": "https://pypi.org/project/litellm/1.100.1/",
+    "inc05_recapture": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md"
   },
   "counts": {
     "named_n1_n25": 25,
