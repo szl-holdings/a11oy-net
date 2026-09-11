@@ -1,0 +1,51 @@
+{
+  "contract": "showcase-placement/1.0",
+  "asOf": "2026-09-11T15:40:00Z",
+  "evidenceClass": "MEASURED",
+  "recommendation": {
+    "product": "https://a-11-oy.com/immune",
+    "proof": "https://a11oy.net",
+    "hubFlagship": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
+    "nexusOrgan": "https://szlholdings-immune.hf.space/nexus.html",
+    "doNotShowcase": [
+      "huggingface.co/betterwithage",
+      "betterwithage/nexus",
+      "betterwithage/cosmos",
+      "SZLHOLDINGS/nexus",
+      "betterwithage/immune"
+    ]
+  },
+  "whyPersonalLooksBroken": {
+    "betterwithage/nexus": "HTTP 401 private — not a public product",
+    "betterwithage/immune": "HTTP 401 private",
+    "betterwithage/cosmos": "SLEEPING hologram",
+    "betterwithage/szl-command-centre": "card RUNNING, runtime URL 404",
+    "betterwithage/szl-bench-suite": "card RUNNING, runtime URL 404",
+    "betterwithage/anatomy": "RUNNING hologram, proof state offline/static",
+    "betterwithage/betterwithage": "stale founder card, no product links",
+    "profile": "personal login. Orgs not listed on public card. Not the flagship."
+  },
+  "immuneOperational": {
+    "hubA": "READY write_ready revision 68fcbcb",
+    "hubB": "READY immune-lattice",
+    "cycle": "PASS energyClass UNAVAILABLE estate e7b04c982887ec1f",
+    "nexusHtml": "LIVE organ plane, Lambda UNAVAILABLE honest",
+    "ato": false,
+    "unprivate_38": false
+  },
+  "orgPublicSpaces": {
+    "listed": 21,
+    "allRunningThisPass": true,
+    "keepProduct": ["SZLHOLDINGS/a11oy", "SZLHOLDINGS/immune", "SZLHOLDINGS/immune-lattice", "SZLHOLDINGS/killinchu", "SZLHOLDINGS/szl-khipu"],
+    "keepLab": ["szl-frontier", "szl-command-lab", "szl-model-inference-lab", "szl-atelier", "llm-router-live", "yarqa", "ayllu", "sentra", "lyte", "terra", "finance", "counsel", "vertical-services", "david-leads", "szl-constellation"],
+    "foldPointer": ["holographic-unify"],
+    "privateCorrect": ["SZLHOLDINGS/nexus"]
+  },
+  "operatorActions": [
+    "Pin SZLHOLDINGS/immune and a11oy on the org page. Unpin vertical holograms from the first row.",
+    "Rewrite betterwithage profile to one sentence: founder of SZLHOLDINGS. Product a-11-oy.com/immune.",
+    "Sleep or archive personal cosmos / command-centre / bench-suite. Do not rebuild them.",
+    "Leave betterwithage/nexus and SZLHOLDINGS/nexus private. Public NEXUS is /nexus.html inside immune.",
+    "Do not mint a new Space named nexus or betterwithage/immune."
+  ]
+}
