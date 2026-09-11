@@ -1,0 +1,91 @@
+{
+  "contract_version": "1.0.0",
+  "surface": {
+    "name": "Vessels Assurance RECORD",
+    "url": "https://a11oy.net/vessels/",
+    "receipt": "https://a11oy.net/vessels/receipt.json",
+    "publisher": "SZL Holdings",
+    "meaning": "Proof-origin stub of Packet 8 Vessels Assurance. Does not run the kernel. Evaluate on a-11-oy.com/vessels. Hub Space not required. Not a fifth flagship.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "permalinks": {
+    "proof_html": "https://a11oy.net/vessels/",
+    "proof_json": "https://a11oy.net/vessels.json",
+    "proof_receipt": "https://a11oy.net/vessels/receipt.json",
+    "product_desk": "https://a-11-oy.com/vessels",
+    "parent_proof": "https://a11oy.net/decision/",
+    "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals/vessels",
+    "kernel": "https://github.com/szl-holdings/a11oy/blob/main/verticals/_kernel/a11oy_kernel.py",
+    "ofac_sdn": "https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists"
+  },
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "formula_authority": "NONE",
+  "lambda": "Conjecture 1 / ADVISORY_CONJECTURAL",
+  "kernel_version": "8.0.0",
+  "kernel_schema": "szl.decision-integrity-kernel/v8",
+  "kernel_sha256": "be143acc1cbb52591a05b56da7b9ae362c315a65cd570087faba08966e339f85",
+  "runtime_claimed": false,
+  "hub_spaces_required": false,
+  "licensed_ais_admitted": false,
+  "production_ready": false,
+  "stamps_live": false,
+  "vertical": {
+    "id": "vessels",
+    "display_name": "Vessels Assurance",
+    "wedge": "Sanctions-to-Case Decision Assurance. Licensed AIS stays CLOSED.",
+    "role": "PARALLEL_ENTERPRISE_PROOF",
+    "case_count": 3,
+    "space": "none"
+  },
+  "cases": [
+    {
+      "eval_id": "VESSELS-E-ABSTAIN",
+      "expected_state": "ABSTAINED",
+      "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"
+    },
+    {
+      "eval_id": "VESSELS-E-AWAIT-01",
+      "expected_state": "AWAITING_APPROVAL",
+      "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"
+    },
+    {
+      "eval_id": "VESSELS-E-DENY-AIS",
+      "expected_state": "DENIED",
+      "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"
+    }
+  ],
+  "sample": {
+    "frozen_cases": 3,
+    "state_match": 3,
+    "reason_match": 3,
+    "replay_hold": 3,
+    "licensed_ais_queries": 0,
+    "honesty": "SAMPLE. Local stdlib replay of frozen payloads against kernel 8.0.0. Not a production certificate. Not a licensed-AIS TPR. Entity-resolution precision remains OUTSTANDING."
+  },
+  "ofac_sdn": {
+    "observed_at_utc": "2026-09-11T18:46:16Z",
+    "leader": "OFAC SDN",
+    "pattern": "named sanctions list, not a quality score",
+    "public_url": "https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists",
+    "csv_url": "https://www.treasury.gov/ofac/downloads/sdn.csv",
+    "html_http_status": 200,
+    "csv_http_status": 200,
+    "csv_content_type": "text/csv",
+    "csv_content_length_bytes": 5692851,
+    "csv_last_modified": "Thu, 10 Sep 2026 18:31:57 GMT",
+    "csv_etag": "7b8d1e512b838d3b39d0e7758e004dbe",
+    "honesty": "MEASURED reachability only. Not a quality score. Not a match. Not entity-resolution precision. Not a licensed-AIS feed. Signed redirect URLs are not stored."
+  },
+  "boundaries": {
+    "this_origin_does_not_run_the_kernel": true,
+    "this_origin_is_not_a_product_host": true,
+    "hub_spaces_required": false,
+    "fifth_flagship": false,
+    "stamps_live": false,
+    "licensed_ais_admitted": false,
+    "formula_grants_authority": false,
+    "lambda_uniqueness": "Conjecture 1 OPEN",
+    "never": "a11oy.com"
+  }
+}
