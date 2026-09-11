@@ -1,0 +1,88 @@
+{
+  "surface": {
+    "name": "Four-origin wire recapture 2026-09-11T22:35Z",
+    "url": "https://a11oy.net/estate-wire-2026-09-11-t2235z.json",
+    "meaning": "Dated proof copy of an independent GET-only probe after Forge #238 merge, product SHA catch-up, Hub 1.31 importlib readback, and Lyte live pin match. Not product runtime. Does not rewrite estate.json. Does not stamp LIVE.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "captured_at": "2026-09-11T22:35:00Z",
+  "evidence_class": "MEASURED",
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "never": "https://a11oy.com"
+  },
+  "github": {
+    "a11oy_main": "050f5c6674b7b820d2ad0708e4baeb132db30618",
+    "szl_forge_main": "66d533cdccfa30726407d833514609ab3b947ec1",
+    "lyte_services_main": "dd17d9f524b76c8f0e260d7ec1e084cc079dfc43",
+    "forge_238": "merged",
+    "asyncgrpo_strict_inputs": "EVALUATION_ONLY",
+    "closes_224": false
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "050f5c6674b7b820d2ad0708e4baeb132db30618",
+    "build_info_revision": "050f5c6674b7b820d2ad0708e4baeb132db30618",
+    "revision_source": "env:SZL_GIT_SHA",
+    "github_product_sha_match": true,
+    "healthz": "ok",
+    "preflight_overall": "DEGRADED",
+    "signer": "DSSE-LIVE",
+    "sovereign": "UNAVAILABLE",
+    "sovereign_reason": "NODE_UNREACHABLE_THIS_REQUEST",
+    "www_tls": "UNAVAILABLE",
+    "wire_d": "LIVE",
+    "lambda_uniqueness": "Conjecture 1 OPEN"
+  },
+  "hub_runtime_readback": {
+    "path": "/api/a11oy/v1/frontier-tooling",
+    "huggingface_hub": {
+      "evaluatedVersion": "1.31.0",
+      "installedVersion": "1.31.0",
+      "state": "VERSION_MATCH_ONLY",
+      "exactInstalledSourceVerified": false
+    },
+    "transformers": "NOT_INSTALLED",
+    "accelerate": "NOT_INSTALLED",
+    "trl": "NOT_INSTALLED",
+    "tau_ai": "NOT_INSTALLED",
+    "productionDisposition": "HOLD",
+    "sourceBinding": "RUNTIME_REPORTED_NOT_INDEPENDENTLY_ATTESTED",
+    "dockerfile_pin": "huggingface_hub==1.31.0 openai==2.43.0"
+  },
+  "huggingface_spaces": {
+    "a11oy_runtime_revision": "050f5c6674b7b820d2ad0708e4baeb132db30618",
+    "a11oy_space_object_sha": "237b04b19aec3ba0e62a5e43b0dca9cf04d417e1",
+    "a11oy_space_object_note": "HF Space git object is a different namespace from GitHub commit SHA. Do not require equality.",
+    "lyte_space_object_sha": "94734aeddcd326d4975abd1d17519a62a53a7c88",
+    "lyte_space_last_modified": "2026-09-11T22:24:51Z",
+    "lyte_live_source_revision": "dd17d9f524b76c8f0e260d7ec1e084cc079dfc43",
+    "lyte_bindings_agree": true,
+    "lyte_version": "4.0.0",
+    "lyte_healthz_ok": true,
+    "lyte_effectors_enabled": false,
+    "github_vs_hf_sha_namespaces": "distinct"
+  },
+  "in_flight": {
+    "hf_sync": "https://github.com/szl-holdings/a11oy/actions/runs/34653767846",
+    "vertical_flagships": "https://github.com/szl-holdings/a11oy/actions/runs/34653809703",
+    "vertical_receipt_complete": "UNKNOWN",
+    "note": "Live Lyte pin match is MEASURED. Publisher receipt complete=true is not yet observed."
+  },
+  "still_hold": [
+    "production promotion",
+    "GPU/vLLM AsyncGRPO (#224)",
+    "Ghlore 0.3.0 retrieval benchmark",
+    "Harbor/Tau/Repo2RLEnv runtime quality",
+    "rendered-browser WP23",
+    "sovereign node",
+    "preflight secrets",
+    "exactInstalledSourceVerified"
+  ],
+  "lambda_uniqueness": "Conjecture 1 OPEN",
+  "ready": false,
+  "production_authorized": false
+}
