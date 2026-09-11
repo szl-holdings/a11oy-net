@@ -1,0 +1,79 @@
+{
+  "schema": "szl.kernel-kind-observation/v1",
+  "observed_at": "2026-09-11T23:20:00Z",
+  "evidence_class": "LIVE_READBACK",
+  "disposition": "HOLD",
+  "class": "MEASURED",
+  "production_authorization": false,
+  "automatic_promotion_authorized": false,
+  "certified_production_ready": false,
+  "lambda": "Conjecture 1",
+  "takedown_starts": "2026-09-13T00:00:00Z",
+  "meaning": "First-class kernel-kind listing and revision binding. Not membership. Not inventory v3. Not a Hub write. Not a loader execution.",
+  "does_not_rewrite": ["public-membership.json", "public-inventory.json", "estate.json"],
+  "scope": {
+    "id": "hf-public-author-kernels/v1",
+    "method": "GET",
+    "url": "https://huggingface.co/api/kernels?author=SZLHOLDINGS",
+    "authentication": "none",
+    "comparable_to": []
+  },
+  "predicates_incomparable": [
+    "szl.public-profile-inventory/v1 46/35/21",
+    "szl.public-hf-inventory/v3 44/30/48",
+    "hf-public-author-kernels/v1 list 14",
+    "hf-public-author-kernels/v1 tag=kernel 9"
+  ],
+  "kernels_api": {
+    "list_count": 14,
+    "tagged_kernel_count": 9,
+    "untagged_in_kernels_api_count": 5,
+    "listed": ["SZLHOLDINGS/szl-govsign", "SZLHOLDINGS/szl-kernels", "SZLHOLDINGS/szl-lambda-gate", "SZLHOLDINGS/szl-governed-norm", "SZLHOLDINGS/governed-inference-meter", "SZLHOLDINGS/szl-blocked", "SZLHOLDINGS/szl-provctl", "SZLHOLDINGS/szl-invariants", "SZLHOLDINGS/szl-ouroboros", "SZLHOLDINGS/szl-formulas", "SZLHOLDINGS/szl-maskmod", "SZLHOLDINGS/szl-block-kv", "SZLHOLDINGS/szl-receipt-attn", "SZLHOLDINGS/YARQA-ATTN"],
+    "tagged_kernel": ["SZLHOLDINGS/szl-govsign", "SZLHOLDINGS/szl-kernels", "SZLHOLDINGS/szl-lambda-gate", "SZLHOLDINGS/szl-blocked", "SZLHOLDINGS/szl-provctl", "SZLHOLDINGS/szl-invariants", "SZLHOLDINGS/szl-ouroboros", "SZLHOLDINGS/szl-formulas", "SZLHOLDINGS/YARQA-ATTN"],
+    "untagged_in_kernels_api": ["SZLHOLDINGS/szl-governed-norm", "SZLHOLDINGS/governed-inference-meter", "SZLHOLDINGS/szl-maskmod", "SZLHOLDINGS/szl-block-kv", "SZLHOLDINGS/szl-receipt-attn"]
+  },
+  "model_search_kernel_hits": {
+    "scope_id": "hf-public-author-model-search-kernel/v1",
+    "url": "https://huggingface.co/api/models?author=SZLHOLDINGS&search=kernel",
+    "ids": ["SZLHOLDINGS/szl-kernels", "SZLHOLDINGS/szl-khipu-kernels"],
+    "model_search_only_not_in_kernels_api": ["SZLHOLDINGS/szl-khipu-kernels"]
+  },
+  "revision_binding": {
+    "branch_named_v1_count": 0,
+    "note": "Zero of the 14 kernels-API repositories expose a git branch named v1. A v1.0.0 tag is not a v1 branch. Floating main is HOLD at runtime.",
+    "no_v1_branch_and_no_v1_tag": [
+      {"id": "SZLHOLDINGS/szl-maskmod", "main": "cfb9bd9af615860921828ac04dd01afd20b2527a"},
+      {"id": "SZLHOLDINGS/szl-block-kv", "main": "7d186065363c0941634103f69b34a3bc649b9011"},
+      {"id": "SZLHOLDINGS/szl-receipt-attn", "main": "6bd7d6320b25e076d0c645045699d2b3c57a917c"},
+      {"id": "SZLHOLDINGS/YARQA-ATTN", "main": "f30b9225214cc468ff19856ed81cb60c552925f0"},
+      {"id": "SZLHOLDINGS/szl-formulas", "main": null},
+      {"id": "SZLHOLDINGS/szl-ouroboros", "main": null},
+      {"id": "SZLHOLDINGS/szl-invariants", "main": null}
+    ],
+    "tag_v1_0_0_only_no_branch_v1": ["SZLHOLDINGS/szl-govsign", "SZLHOLDINGS/szl-kernels", "SZLHOLDINGS/szl-lambda-gate", "SZLHOLDINGS/szl-blocked", "SZLHOLDINGS/szl-provctl", "SZLHOLDINGS/szl-governed-norm", "SZLHOLDINGS/governed-inference-meter"]
+  },
+  "loader": {
+    "package": "huggingface/kernels",
+    "version": "v0.16.1",
+    "revision": "1dc5c9d05683e8a594bb6d7a1ab18318b89e2caa",
+    "loads_model_type_kernels": false,
+    "executed_this_observation": false
+  },
+  "mirrors_deleted": false,
+  "runtime_loaded": false,
+  "item_level_membership_enumeration": "UNAVAILABLE",
+  "tracking": [
+    "https://github.com/szl-holdings/.github/issues/728",
+    "https://github.com/szl-holdings/.github/pull/732",
+    "https://github.com/szl-holdings/szl-forge/pull/235"
+  ],
+  "forbidden": [
+    "mix membership 46/35/21 with inventory 44/30/48",
+    "treat kernels API 14 as the membership model count",
+    "treat tag=kernel 9 as the kernels API list 14",
+    "treat a v1.0.0 tag as a v1 branch",
+    "delete Hub mirrors without AWAITING_DESTRUCTIVE_APPROVAL",
+    "claim first-class kernel kind is already in public-membership.json",
+    "treat Hub listing as runtime readiness or production admission"
+  ]
+}
