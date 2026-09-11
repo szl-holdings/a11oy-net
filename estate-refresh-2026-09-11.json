@@ -1,0 +1,84 @@
+{
+  "contract_version": "1.3.0",
+  "surface": {
+    "name": "Estate recapture 2026-09-11 OBSERVED",
+    "url": "https://a11oy.net/estate-refresh-2026-09-11.json",
+    "publisher": "SZL Holdings",
+    "meaning": "Dated proof copy of a live Series-A OBSERVED observation. Not product runtime. Not a live dashboard. Does not rewrite the 2026-08-31 estate.json snapshot.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "captured_at": "2026-09-11T18:56:52.888Z",
+  "evidence_class": "OBSERVED",
+  "series_a": {
+    "product_command": "https://a-11-oy.com/series-a",
+    "status_url": "https://a-11-oy.com/api/a11oy/v1/series-a/status",
+    "state": "OBSERVED",
+    "critical_failures": [],
+    "source_revision": "9dc70869694f72ba3fb4e632f86f96118ccb39ae",
+    "runtime_boot_id": "boot_916959d7341e48e7a0454594b4e0ceb1",
+    "manifest_digest": "e46ac2c9e42ec3e0cff63fbb370669e239c6c1729859785d5d476566a1523549",
+    "observed_at": "2026-09-11T18:56:52.888Z",
+    "signature_status": "SIGNED",
+    "signing_key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+    "counts": {
+      "github_repositories": 123,
+      "github_open_pull_requests": 13,
+      "spaces": 26,
+      "models": 46,
+      "datasets": 43,
+      "collections": 21,
+      "buckets": 6,
+      "kernels": 14
+    },
+    "storage": {
+      "receipt_count": 31014,
+      "last_receipt_sequence": 31014,
+      "chain_head": "9bfda1a6c656d68ed270c322192b97ea1e9d02b2598bfe9897622a54fac5079d"
+    }
+  },
+  "trust": {
+    "state": "OBSERVED",
+    "score_0_to_100": 67,
+    "total_evaluations": 3,
+    "counts": { "ALLOW": 2, "BLOCK": 1, "REQUIRE_APPROVAL": 0 },
+    "not_a_security_certification": true
+  },
+  "receipts": {
+    "latest_kind": "passport.outcome",
+    "latest_sequence": 31014,
+    "latest_receipt_hash": "9bfda1a6c656d68ed270c322192b97ea1e9d02b2598bfe9897622a54fac5079d",
+    "passport_digest": "78bfbe547af9bafbea72c21c00bf8b38d28469efeb68c05278071ef8bb23890e",
+    "estate_refresh_sequence": 31013,
+    "estate_refresh_receipt_hash": "6820decfac2e97f26e61aee2f0ae1b744370ec1b1aaa4504e4078dfb9a3c402d",
+    "estate_status_on_outcome": "OBSERVED",
+    "outcome_status": "SUCCEEDED"
+  },
+  "signing": {
+    "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+    "hmac_layer": "real",
+    "non_repudiation": true,
+    "healthz_signer": "DSSE-LIVE"
+  },
+  "huggingface": {
+    "org": "SZLHOLDINGS",
+    "evidence_class": "MEASURED",
+    "spaces_public": 21,
+    "series_a_status_spaces": 26,
+    "models": 46,
+    "datasets": 43,
+    "action": "pause+private, never delete",
+    "keep_7_2026_08_29": "historical RECORD"
+  },
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "product_command": "https://a-11-oy.com/series-a",
+    "proof": "https://a11oy.net/",
+    "never": "a11oy.com"
+  },
+  "boundaries": {
+    "spaces_deleted": false,
+    "live_dashboard_cloned": false,
+    "estate_json_history_rewritten": false,
+    "lambda_uniqueness": "Conjecture 1 OPEN"
+  }
+}
