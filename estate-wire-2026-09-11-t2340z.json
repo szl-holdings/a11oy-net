@@ -1,0 +1,66 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2340Z",
+  "parent": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2322Z",
+  "captured_at": "2026-09-11T23:40:00Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1",
+  "doctrine": "v11",
+  "ready": false,
+  "production_authorized": false,
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "never": "garden storefront domain is not this origin"
+  },
+  "github": {
+    "a11oy_main": "111c8511cbd71e38ab5920ba12464acb557fb8db",
+    "szl_forge_main": "8befca224540cb811586e99bea676d98ca7ac4b0",
+    "a11oy_net_base": "3d4eb4c921a4015c65d73be3341a960a57e48bd7",
+    "szl_hf_frontier_main": "93341256eca1665f2343390898b869ec82723e36",
+    "dot_github_main": "e65afd6f3cffd8f4e8b6c8a9a1b2c3d4e5f60708",
+    "a11oy_2122": "merged",
+    "github_732": "merged",
+    "closes_224": false,
+    "closes_2087": false
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "111c8511cbd71e38ab5920ba12464acb557fb8db",
+    "github_product_sha_match": true,
+    "match_scope": "flagship git_sha two-read only",
+    "healthz": "ok",
+    "preflight_overall": "DEGRADED",
+    "lean_signer": "ABSENT",
+    "dsse_live_sibling": "DSSE-LIVE",
+    "brain_answer": "UNAVAILABLE_TIMEOUT_OR_503",
+    "wire_d": "LIVE",
+    "space": "a11oy"
+  },
+  "hub_anonymous_inventory": {
+    "models": 46,
+    "datasets": 35,
+    "spaces": 21,
+    "predicate": "anonymous author membership via Hub API limit=100",
+    "note": "Do not mix with kernel-kind, org-page chrome, or raw array lengths from other clients."
+  },
+  "minimum_viable_operational": {
+    "not_ato": true,
+    "inject_any_one_provider": ["OPENROUTER_API_KEY", "OPENAI_API_KEY", "VLLM_API_KEY"],
+    "also_inject": ["HF_ROUTER_TOKEN", "A11OY_COMPUTE_TOKEN_SHA256"],
+    "then_bind": "one inference route with exact model id and tokenizer revision",
+    "does_not_count": ["a11oy#2105", "a11oy#2122"],
+    "later_planes": ["STRIPE_API_KEY", "A11OY_GPU_TOKEN", "feeds keys", "www TLS", "Nemo v3"]
+  },
+  "still_hold": [
+    "production promotion",
+    "GPU/vLLM measured comparison",
+    "Ghlore installed-daemon retrieval benchmark",
+    "exactInstalledSourceVerified",
+    "preflight secrets",
+    "www TLS",
+    "bound keyed inference route",
+    "four-plane immutable closure"
+  ]
+}
