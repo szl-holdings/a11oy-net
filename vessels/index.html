@@ -54,9 +54,12 @@ th{color:var(--dim);font-weight:500}
     <span class="chip mute">SAMPLE</span>
     <span class="chip mute">licensed AIS CLOSED</span>
     <span class="chip mute">Hub Spaces not required</span>
+    <span class="chip mute">Λ = Conjecture 1 OPEN</span>
   </div>
   <nav class="links" aria-label="Origins">
     <a href="https://a-11-oy.com/vessels">Evaluate on product · a-11-oy.com/vessels</a>
+    <a href="/vessels/receipt.json">Bound receipt · JSON</a>
+    <a href="/vessels.json">vessels.json</a>
     <a href="/decision/">Parent RECORD</a>
     <a href="/aegis/">Aegis → Killinchu RECORD</a>
     <a href="/">Proof home</a>
@@ -76,6 +79,64 @@ th{color:var(--dim);font-weight:500}
         <tr><td>VESSELS-E-ABSTAIN</td><td class="ABSTAINED">ABSTAINED</td></tr>
         <tr><td>VESSELS-E-AWAIT-01</td><td class="AWAITING_APPROVAL">AWAITING_APPROVAL</td></tr>
         <tr><td>VESSELS-E-DENY-AIS</td><td class="DENIED">DENIED</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Bound receipt</h2>
+    <p>Static bind of kernel 8.0.0 digest to the three expected states. This origin does not run evaluate. An outsider recomputes the same digest from <code>verticals/_kernel/a11oy_kernel.py</code> plus the frozen payloads. SAMPLE. Does not stamp LIVE.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>kernel</td><td>8.0.0 · szl.decision-integrity-kernel/v8</td></tr>
+        <tr><td>kernel_sha256</td><td>be143acc1cbb52591a05b56da7b9ae362c315a65cd570087faba08966e339f85</td></tr>
+        <tr><td>source_revision</td><td>9dc70869694f72ba3fb4e632f86f96118ccb39ae</td></tr>
+        <tr><td>formula authority</td><td>NONE</td></tr>
+        <tr><td>Λ</td><td>Conjecture 1 OPEN · ADVISORY_CONJECTURAL</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Case</th><th>Expected</th><th>Observed SAMPLE</th><th>Receipt digest</th><th>replay_hold</th></tr></thead>
+      <tbody>
+        <tr><td>VESSELS-E-ABSTAIN</td><td class="ABSTAINED">ABSTAINED</td><td class="ABSTAINED">ABSTAINED</td><td>ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458</td><td>true</td></tr>
+        <tr><td>VESSELS-E-AWAIT-01</td><td class="AWAITING_APPROVAL">AWAITING_APPROVAL</td><td class="AWAITING_APPROVAL">AWAITING_APPROVAL</td><td>ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be</td><td>true</td></tr>
+        <tr><td>VESSELS-E-DENY-AIS</td><td class="DENIED">DENIED</td><td class="DENIED">DENIED</td><td>0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275</td><td>true</td></tr>
+      </tbody>
+    </table>
+    <p>Machine copy: <a href="/vessels/receipt.json">/vessels/receipt.json</a>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Sanctions-to-case · public lists only</h2>
+    <p>One buyer, one wedge. Read-only OFAC SDN plus frozen demonstration identities. Licensed AIS stays CLOSED. No vessels Hub Space.</p>
+    <table>
+      <thead><tr><th>Step</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>1 Public list</td><td>OFAC SDN · MEASURED reachability 200 · CSV 5,692,851 bytes · last-modified 2026-09-10 18:31:57 GMT · not a quality score</td></tr>
+        <tr><td>2 Frozen identity</td><td>AURORA WAVE · demonstration entity · not a live prospect</td></tr>
+        <tr><td>3 AIS license gate</td><td>CLOSED without a live key · VESSELS-E-DENY-AIS = DENIED / PROHIBITED_ACTION</td></tr>
+        <tr><td>4 Human approval</td><td>VESSELS-E-AWAIT-01 = AWAITING_APPROVAL · Execute is not offered</td></tr>
+        <tr><td>5 Fail-closed stale</td><td>VESSELS-E-ABSTAIN = ABSTAINED / STALE_OR_UNAVAILABLE_SOURCE</td></tr>
+        <tr><td>6 Receipt</td><td>digest bound above · formula authority NONE</td></tr>
+      </tbody>
+    </table>
+    <p>Leader pattern: <a href="https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists">OFAC SDN human-readable lists</a>. CSV export: <a href="https://www.treasury.gov/ofac/downloads/sdn.csv">treasury.gov/ofac/downloads/sdn.csv</a>. Reachability is not quality.</p>
+  </section>
+
+  <section class="card">
+    <h2>SAMPLE numbers stay SAMPLE</h2>
+    <table>
+      <thead><tr><th>Measure</th><th>Class</th><th>In this RECORD</th></tr></thead>
+      <tbody>
+        <tr><td>Frozen case state match</td><td>SAMPLE</td><td>3 / 3</td></tr>
+        <tr><td>Reason-code match</td><td>SAMPLE</td><td>3 / 3</td></tr>
+        <tr><td>Receipt replay_hold</td><td>SAMPLE</td><td>3 / 3</td></tr>
+        <tr><td>Licensed AIS queries</td><td>SAMPLE</td><td>0</td></tr>
+        <tr><td>OFAC SDN CSV reachability</td><td>MEASURED</td><td>HTTP 200 · 5,692,851 bytes · not a match rate</td></tr>
+        <tr><td>VESSELS-E01 IMO/owner entity resolution</td><td>BLOCKING</td><td>OUTSTANDING</td></tr>
+        <tr><td>VESSELS-E02 sanctions match precision</td><td>BLOCKING</td><td>SEED POLICY</td></tr>
+        <tr><td>VESSELS-E03 licensed AIS true-positive rate</td><td>BLOCKING</td><td>OUTSTANDING · not claimed</td></tr>
       </tbody>
     </table>
   </section>
