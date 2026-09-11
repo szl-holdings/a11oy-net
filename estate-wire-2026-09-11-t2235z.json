@@ -12,7 +12,7 @@
     "proof": "https://a11oy.net",
     "source": "https://github.com/szl-holdings",
     "mirror": "https://huggingface.co/SZLHOLDINGS",
-    "never": "https://a11oy.com"
+    "never_host": "a11oy.com furniture-shop domain; not this origin"
   },
   "github": {
     "a11oy_main": "050f5c6674b7b820d2ad0708e4baeb132db30618",
