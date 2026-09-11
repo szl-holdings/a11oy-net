@@ -36,6 +36,7 @@ Authoritative public paths:
 - Counsel RECORD stub (evaluate at a-11-oy.com/counsel): https://a11oy.net/counsel/
 - Vessels RECORD stub (evaluate at a-11-oy.com/vessels; kernel is not run here; not a fifth flagship): https://a11oy.net/vessels/
 - Vessels bound receipt (static; kernel is not run here): https://a11oy.net/vessels/receipt.json
+- Vessels AIS standards (CITATION_ONLY; licensed AIS CLOSED; not conformance; E03 OUTSTANDING): https://a11oy.net/vessels/ais-standards.json
 - Vessels contract: https://a11oy.net/vessels.json
 - Five-space operator RECORD stub (evaluate at a-11-oy.com/five-space; not /console): https://a11oy.net/five-space/
 - Ayllu RECORD (counsel showcase; does not run the council): https://a11oy.net/ayllu/
