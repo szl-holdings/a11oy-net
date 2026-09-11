@@ -17,11 +17,12 @@ Authoritative public paths:
 - Models and kernels honesty RECORD: https://a11oy.net/models.json
 - Origin lock RECORD (INC-05 MEASURED public-identity-host probe; not DNS control; not a fourth origin): https://a11oy.net/origin/
 - Origin lock contract: https://a11oy.net/origin.json
-- INC-05 recapture 2026-09-11 (www TLS still OPEN; promotion BLOCKED): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11.md
+- INC-05 recapture 2026-09-11T23:25Z (www 301 + TLS OK CLOSED-as-MEASURED; HF domain READY; not LIVE): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md
+- INC-05 prior recapture 2026-09-11T19:04Z (www TLS was OPEN at that probe): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11.md
 - Frontier operator runbook 2026-09-11: https://a11oy.net/notes/FRONTIER_OPERATOR_2026-09-11.md
 - Factory organs RECORD (N1–N25; runtime a-11-oy.com/organs; this origin does not execute organs): https://a11oy.net/factory/
 - Factory organs contract: https://a11oy.net/factory.json
-- Named frontiers SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N27 holograms; promotion BLOCKED while INC-05 www Cloudflare 404; does not rewrite /factory/): https://a11oy.net/frontiers/
+- Named frontiers SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N27 holograms; www-404 CLOSED-as-MEASURED does not promote theatres; does not rewrite /factory/): https://a11oy.net/frontiers/
 - Named frontiers contract: https://a11oy.net/frontiers.json
 - Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
