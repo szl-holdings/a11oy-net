@@ -1,0 +1,105 @@
+{
+  "schema": "szl.kernel-operational/v1",
+  "measuredAt": "2026-09-11T16:20:00Z",
+  "ato": false,
+  "productDoor": "https://a-11-oy.com/immune",
+  "hubFlagship": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
+  "nexusOrgan": "https://szlholdings-immune.hf.space/nexus.html",
+  "proofOrigin": "https://a11oy.net",
+  "doNotMint": ["SZLHOLDINGS/nexus", "betterwithage flagship"],
+  "immune": {
+    "hubA": {
+      "url": "https://szlholdings-immune.hf.space/readyz",
+      "status": "READY",
+      "revision": "68fcbcb29ef0e3dc47cf036cef3afcbb24916e70",
+      "write_ready": true,
+      "receipts": 643,
+      "authority": "VERIFIED",
+      "runtime_hash_match": true
+    },
+    "githubHead": "c128844ff2d008a0a52f83612e22da2c4492817e",
+    "exactShaMatch": false,
+    "note": "Hub A is operational; GitHub HEAD is ahead of Hub revision. Deploy lag, not a down kernel."
+  },
+  "kernels": [
+    {
+      "id": "SZLHOLDINGS/szl-kernels",
+      "github": "szl-holdings/szl-kernels",
+      "class": "SOFTWARE",
+      "status": "import-LIVE-cpu",
+      "gpu": "UNAVAILABLE"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-invariants",
+      "github": "szl-holdings/szl-invariants",
+      "class": "SOFTWARE",
+      "status": "import-LIVE",
+      "gpu": "UNAVAILABLE"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-energy-attest",
+      "github": "szl-holdings/szl-energy-attest",
+      "class": "SOFTWARE",
+      "status": "operational-honest",
+      "energyClass": "UNAVAILABLE on HF CPU",
+      "neverFabricatesJoules": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-lambda-gate",
+      "github": "szl-holdings/szl-lambda-gate",
+      "class": "SOFTWARE",
+      "status": "import-LIVE",
+      "tests": "FAIL",
+      "surrogateWeights": "404-not-published",
+      "lambda": "Conjecture 1 OPEN"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-govsign",
+      "github": "szl-holdings/szl-govsign",
+      "class": "SOFTWARE",
+      "status": "published-mirror"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-provctl",
+      "github": "szl-holdings/szl-provctl",
+      "class": "SOFTWARE",
+      "status": "published-mirror"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-blocked",
+      "github": "szl-holdings/szl-blocked",
+      "class": "SOFTWARE",
+      "status": "published-mirror"
+    },
+    {
+      "id": "SZLHOLDINGS/governed-inference-meter",
+      "github": "szl-holdings/governed-inference-meter",
+      "class": "DEPRECATED",
+      "canonical": "szl-holdings/szl-energy-attest"
+    }
+  ],
+  "recommendations": {
+    "doneInProof": [
+      "SOFTWARE_RECEIPT label vs TRACE TEE",
+      "AIREP verb mapping kept on one YAWAR schema",
+      "energyClass honest UNAVAILABLE",
+      "NEXUS stays organ inside IMMUNE",
+      "kernel operational inventory published"
+    ],
+    "founderUiOnly": [
+      "Pin SZLHOLDINGS/immune next to a11oy on org page",
+      "Rewrite betterwithage profile to founder pointer",
+      "Sleep personal cosmos / command-centre / bench-suite"
+    ],
+    "metalOnly": [
+      "RAPL/NVML MEASURED joules via szl-energy-attest"
+    ],
+    "notDoneBecauseTheater": [
+      "Claim all 46 models ATO",
+      "Mint public SZLHOLDINGS/nexus",
+      "Unprivate fold-38",
+      "Invent joules",
+      "Upgrade every Space to production"
+    ]
+  }
+}
