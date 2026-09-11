@@ -1,7 +1,7 @@
 {
   "schema": "szl.estate-zoom-out/v1",
   "payload": "SZL-ESTATE-ZOOM-OUT-2026-09-11",
-  "observed_at": "2026-09-11T19:06:00Z",
+  "observed_at": "2026-09-11T22:23:00Z",
   "evidence_class": "MEASURED",
   "ready": false,
   "winner": null,
@@ -11,12 +11,20 @@
   "energy": "UNAVAILABLE",
   "doctrine": "v11 LOCKED 749/14/163 @ c7c0ba17",
   "locked_formula_ids": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
-  "honest_git_sha": "9dc70869694f72ba3fb4e632f86f96118ccb39ae",
+  "honest_git_sha": "0abde0c4114bdc8c603b984e884f657d74f9ab88",
+  "github_a11oy_main": "0abde0c4114bdc8c603b984e884f657d74f9ab88",
+  "product_matches_github_main": true,
+  "hf_space_a11oy_sha": "237b04b19aec3ba0e62a5e43b0dca9cf04d417e1",
+  "hf_space_dockerfile_equals_github": true,
+  "huggingface_hub_pin": "1.31.0",
+  "openai_pin": "2.43.0",
+  "substrate_sourceCommit": "2b3a3dd0254eb37c1a9b17a7c26c015696a18646",
+  "substrate_sourceCommit_equals_github_main": false,
   "healthz": {"status": "ok", "signer_status": "ABSENT", "signing_available": false, "scheme": "UNAVAILABLE"},
   "signing_status": {"claimed": "REAL ECDSA from SZL_COSIGN_PRIVATE_PEM", "keyid_prefix": "9926bf69", "equals_healthz": false},
   "hub_public_api": {"spaces": 21, "models": 46, "datasets": 35},
   "product_line": ["a11oy", "killinchu", "immune"],
-  "merge_this_hour": ["a11oy#2103", "a11oy#2104"],
-  "held_red_hf_parity": ["a11oy#2098", "a11oy#2105"],
-  "note": "HTTP 200 is reachability, not qualification."
+  "merged_this_session": ["a11oy-net#171", "a11oy-net#172", "szl-forge#234"],
+  "held_red_hf_parity": ["a11oy#2098", "a11oy#2105", "a11oy#2110", "a11oy#2111"],
+  "note": "HTTP 200 is reachability, not qualification. Space git object != GitHub commit object even when Dockerfile bytes match."
 }
