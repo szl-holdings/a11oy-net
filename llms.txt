@@ -31,6 +31,9 @@ Authoritative public paths:
 - Aegis → Killinchu consolidation RECORD (historical cases preserved; current authority SZLHOLDINGS/killinchu): https://a11oy.net/aegis/
 - Puriq Markets RECORD stub (evaluate at a-11-oy.com/puriq-markets): https://a11oy.net/puriq-markets/
 - Counsel RECORD stub (evaluate at a-11-oy.com/counsel): https://a11oy.net/counsel/
+- Vessels RECORD stub (evaluate at a-11-oy.com/vessels; kernel is not run here; not a fifth flagship): https://a11oy.net/vessels/
+- Vessels bound receipt (static; kernel is not run here): https://a11oy.net/vessels/receipt.json
+- Vessels contract: https://a11oy.net/vessels.json
 - Five-space operator RECORD stub (evaluate at a-11-oy.com/five-space; not /console): https://a11oy.net/five-space/
 - Ayllu RECORD (counsel showcase; does not run the council): https://a11oy.net/ayllu/
 - Wiñay · Huklla · IIT honesty RECORD (does not run the pulse): https://a11oy.net/ayllu/psyche/
