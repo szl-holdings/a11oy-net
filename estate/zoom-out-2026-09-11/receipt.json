@@ -1,0 +1,22 @@
+{
+  "schema": "szl.estate-zoom-out/v1",
+  "payload": "SZL-ESTATE-ZOOM-OUT-2026-09-11",
+  "observed_at": "2026-09-11T19:06:00Z",
+  "evidence_class": "MEASURED",
+  "ready": false,
+  "winner": null,
+  "hub_put": false,
+  "flagship": false,
+  "lambda": "Conjecture 1 OPEN",
+  "energy": "UNAVAILABLE",
+  "doctrine": "v11 LOCKED 749/14/163 @ c7c0ba17",
+  "locked_formula_ids": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
+  "honest_git_sha": "9dc70869694f72ba3fb4e632f86f96118ccb39ae",
+  "healthz": {"status": "ok", "signer_status": "ABSENT", "signing_available": false, "scheme": "UNAVAILABLE"},
+  "signing_status": {"claimed": "REAL ECDSA from SZL_COSIGN_PRIVATE_PEM", "keyid_prefix": "9926bf69", "equals_healthz": false},
+  "hub_public_api": {"spaces": 21, "models": 46, "datasets": 35},
+  "product_line": ["a11oy", "killinchu", "immune"],
+  "merge_this_hour": ["a11oy#2103", "a11oy#2104"],
+  "held_red_hf_parity": ["a11oy#2098", "a11oy#2105"],
+  "note": "HTTP 200 is reachability, not qualification."
+}
