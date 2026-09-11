@@ -1,0 +1,89 @@
+{
+  "contract_version": "1.3.0",
+  "surface": {
+    "name": "Estate recapture 2026-09-11",
+    "url": "https://a11oy.net/estate-refresh-2026-09-11.json",
+    "publisher": "SZL Holdings",
+    "meaning": "Dated MEASURED unauthenticated Hub author-list plus live Series-A posture. Not product runtime. Not a live dashboard. Does not rewrite the 2026-08-31 estate.json snapshot.",
+    "implementation": "static GitHub Pages JSON"
+  },
+  "captured_at": "2026-09-11T18:40:00Z",
+  "evidence_class": "MEASURED",
+  "reader_guide": "Unauthenticated GET /api/spaces?author=SZLHOLDINGS. README profile card is omitted by that API. Counts are not quality, safety, or readiness. Product remains a-11-oy.com. Proof remains a11oy.net. Never a11oy.com.",
+  "huggingface": {
+    "org": "SZLHOLDINGS",
+    "method": "Unauthenticated GET /api/spaces?author=SZLHOLDINGS&full=true",
+    "spaces_public": 21,
+    "public_spaces": [
+      "SZLHOLDINGS/a11oy",
+      "SZLHOLDINGS/ayllu",
+      "SZLHOLDINGS/counsel",
+      "SZLHOLDINGS/david-leads",
+      "SZLHOLDINGS/finance",
+      "SZLHOLDINGS/holographic-unify",
+      "SZLHOLDINGS/immune",
+      "SZLHOLDINGS/immune-lattice",
+      "SZLHOLDINGS/killinchu",
+      "SZLHOLDINGS/llm-router-live",
+      "SZLHOLDINGS/lyte",
+      "SZLHOLDINGS/sentra",
+      "SZLHOLDINGS/szl-atelier",
+      "SZLHOLDINGS/szl-command-lab",
+      "SZLHOLDINGS/szl-constellation",
+      "SZLHOLDINGS/szl-frontier",
+      "SZLHOLDINGS/szl-khipu",
+      "SZLHOLDINGS/szl-model-inference-lab",
+      "SZLHOLDINGS/terra",
+      "SZLHOLDINGS/vertical-services",
+      "SZLHOLDINGS/yarqa"
+    ],
+    "models": 46,
+    "datasets": 43,
+    "series_a_status_spaces": 26,
+    "action": "pause+private, never delete",
+    "keep_7_2026_08_29": "historical RECORD, superseded as the live public set",
+    "bound": "Live author-list 21 disagrees with product KEEP-6 copy and with series-a/status spaces=26. This file records the unauth MEASURED 21. Authenticated total remains UNAVAILABLE in this session."
+  },
+  "series_a": {
+    "product_command": "https://a-11-oy.com/series-a",
+    "status_url": "https://a-11-oy.com/api/a11oy/v1/series-a/status",
+    "state": "BLOCKED",
+    "critical_failures": ["github_inventory_unavailable"],
+    "source_revision": "a32d346b109d0343aa7e92e211c0c138d914e22b",
+    "signature_status": "SIGNED",
+    "github_repositories": null,
+    "github_open_pull_requests": null,
+    "signing_status": {
+      "key_source": "persistent:env:SZL_COSIGN_PRIVATE_PEM",
+      "hmac_layer": "real",
+      "non_repudiation": true
+    },
+    "healthz_signer": "ABSENT",
+    "passport_evaluate_unknown": {
+      "decision": "BLOCK",
+      "reason_codes": ["BOUNDED_REVERSIBLE_ACTION", "OBSERVED_SERVER_EVIDENCE_REQUIRED"],
+      "passport_digest_prefix": "eec4fc96f88af7ba"
+    }
+  },
+  "frontier": {
+    "product": "https://a-11-oy.com/frontier",
+    "space": "https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier",
+    "sealed_count_url": "https://huggingface.co/datasets/SZLHOLDINGS/szl-frontier-evaluation-receipts/resolve/main/runs/SEALED_COUNT.json",
+    "sealed_count": "UNAVAILABLE",
+    "bound": "Public SEALED_COUNT.json returned HTTP 404 at recapture time. Missing file stays UNAVAILABLE. Zero is not invented."
+  },
+  "origins": {
+    "product": "https://a-11-oy.com",
+    "product_command": "https://a-11-oy.com/series-a",
+    "proof": "https://a11oy.net/",
+    "proof_command_record": "https://a11oy.net/command/",
+    "hub": "https://huggingface.co/SZLHOLDINGS",
+    "never": "a11oy.com — foreign storefront"
+  },
+  "boundaries": {
+    "spaces_deleted": false,
+    "live_dashboard_cloned": false,
+    "fourth_public_origin": false,
+    "lambda_uniqueness": "Conjecture 1 OPEN"
+  }
+}
