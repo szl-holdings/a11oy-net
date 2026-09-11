@@ -1,0 +1,52 @@
+{
+  "schema": "szl.public-kernel-membership/v1",
+  "observed_at": "2026-09-11T19:15:00Z",
+  "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
+  "organization": "SZLHOLDINGS",
+  "production_authorization": false,
+  "runtime_readiness_inferred": false,
+  "projection_closure_inferred": false,
+  "model_quality_inferred": false,
+  "does_not_replace_membership_v1": true,
+  "does_not_replace_inventory_v3": true,
+  "does_not_replace_kernel_operational_v1": true,
+  "overlap_with_model_membership": "possible; do not subtract from membership models=46",
+  "legacy_model_type_cutoff": "2026-09-13T00:00:00Z",
+  "disposition": "HOLD",
+  "evidence_class": "LIVE_READBACK",
+  "endpoint": "https://huggingface.co/api/kernels?author=SZLHOLDINGS&limit=100",
+  "scope": {
+    "id": "hf-public-author-kernel-membership/v1",
+    "authentication": "none",
+    "visibility": "public-only",
+    "kinds": ["kernels"],
+    "kernel_policy": "first-class-kernel-repository-not-a-model",
+    "collections_and_buckets": "outside-kernel-membership-scope",
+    "models_datasets_spaces": "outside-this-predicate"
+  },
+  "counts": {
+    "kernels": 14
+  },
+  "resources": [
+    {"id": "SZLHOLDINGS/szl-govsign", "sha": "e498c5042c1f721a1bbd8a4b9fdaa3756001e78d", "last_modified": "2026-08-29T16:01:36.000Z"},
+    {"id": "SZLHOLDINGS/szl-kernels", "sha": "ba1ac6abdf82a281012f051d135004b7f1f5eceb", "last_modified": "2026-09-04T16:17:00.000Z"},
+    {"id": "SZLHOLDINGS/szl-lambda-gate", "sha": "8dc3955f8b898f1986ae6ce2257bddf79f33323c", "last_modified": "2026-08-29T16:00:29.000Z"},
+    {"id": "SZLHOLDINGS/szl-governed-norm", "sha": "3265120dfbbe764c6cfc9afcb204dcd1c216e8ab", "last_modified": "2026-08-30T18:22:13.000Z"},
+    {"id": "SZLHOLDINGS/governed-inference-meter", "sha": "86ad2ff763127e3400a7c5667003ed9cc9c43e6c", "last_modified": "2026-09-04T16:17:01.000Z"},
+    {"id": "SZLHOLDINGS/szl-blocked", "sha": "c944087ec4ea6b85dd7a44fd1ff8313b3b4511ed", "last_modified": "2026-08-29T16:01:35.000Z"},
+    {"id": "SZLHOLDINGS/szl-provctl", "sha": "424418b95e5d3403278c53189403e098662d4a3b", "last_modified": "2026-08-29T16:01:36.000Z"},
+    {"id": "SZLHOLDINGS/szl-invariants", "sha": "78d04afef253e526326d6b0f4e944fa3d4b1990c", "last_modified": "2026-08-29T16:01:34.000Z"},
+    {"id": "SZLHOLDINGS/szl-ouroboros", "sha": "194970667faa1292ce09c7ae5880a1918f5cddeb", "last_modified": "2026-08-29T16:01:35.000Z"},
+    {"id": "SZLHOLDINGS/szl-formulas", "sha": "636339753ea625bd27fd35a992699dba635c1cbb", "last_modified": "2026-08-29T16:01:33.000Z"},
+    {"id": "SZLHOLDINGS/szl-maskmod", "sha": "66107f821c597aef71555cd2a1d4014228f95f1b", "last_modified": "2026-08-29T16:03:38.000Z"},
+    {"id": "SZLHOLDINGS/szl-block-kv", "sha": "b5c514505f89f890474568091ad5cfc868e2b664", "last_modified": "2026-08-29T16:01:03.000Z"},
+    {"id": "SZLHOLDINGS/szl-receipt-attn", "sha": "013dc8a884faa3ae9ac6a0835c5233440132ca3a", "last_modified": "2026-08-29T16:00:55.000Z"},
+    {"id": "SZLHOLDINGS/YARQA-ATTN", "sha": "4e0828e517e84377d0024ab3f9d0cdab7d31520d", "last_modified": "2026-08-29T16:00:52.000Z"}
+  ],
+  "limitations": [
+    "Public GET only. No tokens. HTTP 200 is not source/artifact identity.",
+    "A kernel listing is not an installed-library receipt or GPU evaluation.",
+    "kernel-operational-2026.json remains a different operational predicate (8 rows, treatsKernelsAs models).",
+    "Do not create a first-class kernel repository by publishing a model repository as a bypass."
+  ]
+}
