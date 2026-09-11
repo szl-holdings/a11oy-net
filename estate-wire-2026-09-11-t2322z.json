@@ -1,0 +1,59 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2322Z",
+  "parent": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2253Z",
+  "captured_at": "2026-09-11T23:22:00Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1",
+  "doctrine": "v11",
+  "ready": false,
+  "production_authorized": false,
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "never": "garden storefront domain is not this origin"
+  },
+  "github": {
+    "a11oy_main": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
+    "szl_forge_main": "8befca224540cb811586e99bea676d98ca7ac4b0",
+    "a11oy_net_base": "50829911cc268e822cd4e8419041d88d77319c21",
+    "szl_hf_frontier_main": "93341256eca1665f2343390898b869ec82723e36",
+    "dot_github_main": "484fd67968732b0cbf6a8e7e92dc29869bb44748",
+    "hf_sync_run": 1461,
+    "closes_224": false,
+    "closes_2087": false
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
+    "github_product_sha_match": true,
+    "match_scope": "flagship git_sha two-read only",
+    "healthz": "ok",
+    "preflight_overall": "DEGRADED",
+    "lean_signer": "ABSENT",
+    "dsse_live_sibling": "DSSE-LIVE",
+    "dsse_live_v1_path": "404",
+    "signing_status": "REAL ECDSA-P256",
+    "brain_answer": "MODELED ABSTAINED",
+    "wire_d": "LIVE",
+    "space": "a11oy"
+  },
+  "hub_anonymous_inventory": {
+    "models": 46,
+    "datasets": 35,
+    "spaces": 21,
+    "predicate": "anonymous author membership via Hub API limit=100",
+    "note": "Kernel-kind is a different predicate. Do not merge with Series-A or org-page counts."
+  },
+  "still_hold": [
+    "production promotion",
+    "GPU/vLLM AsyncGRPO measured comparison",
+    "Ghlore installed-daemon retrieval benchmark",
+    "exactInstalledSourceVerified",
+    "preflight secrets",
+    "www TLS",
+    "bound keyed inference route",
+    "four-plane immutable closure"
+  ]
+}
