@@ -1,0 +1,19 @@
+{
+  "measured_at": "2026-09-11T19:07:22Z",
+  "product": "https://a-11-oy.com",
+  "proof": "https://a11oy.net",
+  "signer": {
+    "lean_healthz": "ABSENT_ON_PROBE",
+    "rollup": "DSSE-LIVE",
+    "mint": "POST /api/a11oy/khipu/sign",
+    "pubkey": "https://a-11-oy.com/cosign.pub",
+    "fingerprint": "9926bf69b799ea663fc5cf5a8c5d8f594d99d7b323700d6a20b803bd4c9f4e15",
+    "process_ledger": {"count": 0, "mint": false}
+  },
+  "khipu_lab": "READY",
+  "agent_loop": {"allow_at": 0.91, "halt_at": 0.05},
+  "killinchu_effector": "SIMULATED",
+  "hf_spaces_api": 16,
+  "hf_spaces_ui": 17,
+  "atlas_48": "STALE"
+}
