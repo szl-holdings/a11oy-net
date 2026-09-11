@@ -9,7 +9,7 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
   <title>Origin lock RECORD | a11oy Proof Registry</title>
-  <meta name="description" content="INC-05 MEASURED origin lock. Product apex is Cloudflare 200. www is Cloudflare 404. Proof is GitHub Pages. Hugging Face custom domain PENDING. This origin does not mint DNS." />
+  <meta name="description" content="INC-05 MEASURED origin lock. Product apex is Cloudflare 200. www is Cloudflare 301 to apex with TLS OK. Proof is GitHub Pages. Hugging Face custom domain READY. www-404 CLOSED-as-MEASURED. Not LIVE. This origin does not mint DNS." />
   <meta property="og:title" content="Origin lock RECORD · a11oy proof registry" />
   <meta property="og:description" content="Dated MEASURED public-identity-host probe. Not DNS control. Not a fourth origin. Never a furniture-shop canonical." />
   <meta property="og:type" content="website" />
@@ -46,7 +46,7 @@
   <main id="main" tabindex="-1">
     <header class="hero">
       <div class="wrap">
-        <p class="eyebrow">INC-05 · Origin lock · 2026-08-29T18:53:21Z</p>
+        <p class="eyebrow">INC-05 · Origin lock · recapture 2026-09-11T23:25:17Z</p>
         <h1>Public identity hosts, measured. DNS is not minted here.</h1>
         <p class="lede">This page is a static RECORD of a public probe. It does not change Cloudflare, Hugging Face, or GitHub Pages. Interactive runtime stays at <a href="https://a-11-oy.com/">https://a-11-oy.com/</a>. Factory theatres stay at <a href="/factory/">/factory/</a>. Never a furniture-shop canonical.</p>
         <div class="actions">
@@ -61,8 +61,8 @@
 
     <div class="wrap rail" aria-label="Origin counts">
       <article><span>Product apex</span><b>200</b><p>Cloudflare orange-cloud in front of Space SZLHOLDINGS/a11oy.</p></article>
-      <article><span>www</span><b>404</b><p>Same CF A records. Redirect Rule 301 www → apex still required.</p></article>
-      <article><span>HF domain</span><b>PENDING</b><p>szlholdings-a11oy.hf.space READY. a-11-oy.com PENDING.</p></article>
+      <article><span>www</span><b>301</b><p>TLS OK. HTTP/2 301 to https://a-11-oy.com/. www-404 CLOSED-as-MEASURED.</p></article>
+      <article><span>HF domain</span><b>READY</b><p>szlholdings-a11oy.hf.space READY. a-11-oy.com READY. Not production_ready.</p></article>
       <article><span>Proof DNS</span><b>PAGES</b><p>a11oy.net A records are GitHub Pages, not Cloudflare.</p></article>
     </div>
 
@@ -75,8 +75,8 @@
               <tr><th>Host</th><th>Front</th><th>Status</th><th>Class</th><th>Bound</th></tr>
             </thead>
             <tbody>
-              <tr><td>a-11-oy.com</td><td>Cloudflare</td><td>200</td><td><span class="cls cls-measured">MEASURED</span></td><td>Product origin reachable. HF custom domain is a separate PENDING row.</td></tr>
-              <tr><td>www.a-11-oy.com</td><td>Cloudflare</td><td>404</td><td><span class="cls cls-measured">MEASURED</span></td><td>UNAVAILABLE until Cloudflare 301 www → apex. Do not add a second HF custom domain.</td></tr>
+              <tr><td>a-11-oy.com</td><td>Cloudflare</td><td>200</td><td><span class="cls cls-measured">MEASURED</span></td><td>Product origin reachable. HF custom domain READY. git_sha 7253ccb1. Not LIVE.</td></tr>
+              <tr><td>www.a-11-oy.com</td><td>Cloudflare</td><td>301</td><td><span class="cls cls-measured">MEASURED</span></td><td>TLS OK. Location https://a-11-oy.com/. Do not add www as a second HF custom domain.</td></tr>
               <tr><td>a11oy.net</td><td>GitHub Pages</td><td>200</td><td><span class="cls cls-measured">MEASURED</span></td><td>Separate failure domain. Do not 301 onto the product.</td></tr>
               <tr><td>forbidden storefront</td><td>Other</td><td>200</td><td><span class="cls cls-measured">MEASURED</span></td><td>Not ours. Never canonical.</td></tr>
             </tbody>
@@ -89,10 +89,10 @@
       <div class="wrap">
         <div class="section-head"><span class="section-label">Operator</span><h2>What still requires the zone.</h2><p>This RECORD cannot mint DNS. Product source cannot mint DNS.</p></div>
         <ol class="lede">
-          <li>Cloudflare Redirect Rule: www.a-11-oy.com 301 to https://a-11-oy.com/. Same zone.</li>
-          <li>Keep orange-cloud on the product apex. Do not grey-cloud to satisfy Hugging Face PENDING.</li>
+          <li>Keep www as a Cloudflare 301 to apex. Measured this recapture. Do not add www as a second Hugging Face custom domain.</li>
+          <li>Keep orange-cloud on the product apex. HF custom-domain READY is already measured. Do not grey-cloud.</li>
+          <li>Do not stamp LIVE. Licensed AIS stays CLOSED. VESSELS-E03 stays OUTSTANDING.</li>
           <li>Optional later: _huggingface.a-11-oy.com TXT without dropping that proxy.</li>
-          <li>Optional: orange-cloud a11oy.net only if Cloudflare should sit in front of Pages. Live DNS is Pages today.</li>
         </ol>
       </div>
     </section>
