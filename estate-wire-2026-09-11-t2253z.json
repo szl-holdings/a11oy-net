@@ -1,0 +1,68 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2253Z",
+  "parent": "SZL-FOUR-ORIGIN-WIRE-2026-09-11",
+  "captured_at": "2026-09-11T22:53:00Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1",
+  "doctrine": "v11",
+  "ready": false,
+  "production_authorized": false,
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "never": "garden storefront domain is not this origin"
+  },
+  "github": {
+    "a11oy_main": "01c1bfcdae6eec4f1742a8dbb633a878ff6ffb92",
+    "szl_forge_main": "1777e12b06ddb798733f3902dc90aa4f05af91f0",
+    "a11oy_net_base": "6f5bab6abc784c12652da40113af0ee40bd466fc",
+    "szl_hf_frontier_main": "93341256eca1665f2343390898b869ec82723e36",
+    "dot_github_main": "484fd67968732b0cbf6a8e7e92dc29869bb44748",
+    "forge_238": "merged",
+    "forge_241": "merged",
+    "a11oy_2113": "merged",
+    "a11oy_2116": "merged",
+    "closes_224": false,
+    "closes_2087": false
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "329fb9acb0e9bdf253e9f598f738566383a75618",
+    "github_product_sha_match": false,
+    "lag": "GitHub 01c1bfcd vs served 329fb9ac after #2116",
+    "healthz": "ok",
+    "preflight_overall": "DEGRADED",
+    "signer": "DSSE-LIVE",
+    "signing_status": "REAL ECDSA-P256",
+    "sovereign": "UNAVAILABLE",
+    "sovereign_reason": "NODE_UNREACHABLE_THIS_REQUEST",
+    "wire_d": "LIVE",
+    "space": "a11oy"
+  },
+  "hub_anonymous_inventory": {
+    "models": 46,
+    "datasets": 35,
+    "spaces": 21,
+    "predicate": "anonymous author membership via Hub API limit=100",
+    "note": "Do not merge with Series-A or org-page counts."
+  },
+  "hub_runtime_readback": {
+    "huggingface_hub": "1.31.0",
+    "state": "VERSION_MATCH_ONLY",
+    "exactInstalledSourceVerified": false,
+    "productionDisposition": "HOLD"
+  },
+  "still_hold": [
+    "production promotion",
+    "GPU/vLLM AsyncGRPO measured comparison",
+    "Ghlore installed-daemon retrieval benchmark",
+    "exactInstalledSourceVerified",
+    "sovereign node",
+    "preflight secrets",
+    "www TLS",
+    "energy ledger forks",
+    "bound inference route"
+  ]
+}
