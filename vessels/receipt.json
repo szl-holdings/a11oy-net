@@ -26,12 +26,8 @@
       "expected_state": "ABSTAINED",
       "observed_state": "ABSTAINED",
       "match": true,
-      "expected_reason_codes": [
-        "STALE_OR_UNAVAILABLE_SOURCE"
-      ],
-      "observed_reason_codes": [
-        "STALE_OR_UNAVAILABLE_SOURCE"
-      ],
+      "expected_reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"],
+      "observed_reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"],
       "reason_match": true,
       "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458",
       "replay_hold": true,
@@ -44,12 +40,8 @@
       "expected_state": "AWAITING_APPROVAL",
       "observed_state": "AWAITING_APPROVAL",
       "match": true,
-      "expected_reason_codes": [
-        "HUMAN_APPROVAL_REQUIRED"
-      ],
-      "observed_reason_codes": [
-        "HUMAN_APPROVAL_REQUIRED"
-      ],
+      "expected_reason_codes": ["HUMAN_APPROVAL_REQUIRED"],
+      "observed_reason_codes": ["HUMAN_APPROVAL_REQUIRED"],
       "reason_match": true,
       "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be",
       "replay_hold": true,
@@ -62,12 +54,8 @@
       "expected_state": "DENIED",
       "observed_state": "DENIED",
       "match": true,
-      "expected_reason_codes": [
-        "PROHIBITED_ACTION"
-      ],
-      "observed_reason_codes": [
-        "PROHIBITED_ACTION"
-      ],
+      "expected_reason_codes": ["PROHIBITED_ACTION"],
+      "observed_reason_codes": ["PROHIBITED_ACTION"],
       "reason_match": true,
       "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275",
       "replay_hold": true,
@@ -97,43 +85,32 @@
     "csv_etag": "7b8d1e512b838d3b39d0e7758e004dbe",
     "honesty": "MEASURED reachability only. Not a quality score. Not a match. Not entity-resolution precision. Not a licensed-AIS feed. Signed redirect URLs are not stored."
   },
+  "ais_standards": {
+    "honesty": "CITATION_ONLY. Citing the instruments names the licensed-AIS gate. This origin is not Class A or Class B shipborne equipment. It does not transmit. It does not claim type approval, SOLAS V/19 carriage, AtoN service, or a licensed-AIS true-positive rate.",
+    "surface": "https://a11oy.net/vessels/ais-standards.json",
+    "licensed_ais_admitted": false,
+    "licensed_ais_queries": 0,
+    "ais_equipment_class": "NONE",
+    "ais_transmit": false,
+    "solas_v19_applies": false,
+    "aton_provider": false,
+    "vhf_data_link_occupied": false,
+    "vessels_e03_licensed_ais_tpr": "OUTSTANDING",
+    "fail_closed_eval": "VESSELS-E-DENY-AIS",
+    "instruments": ["ITU-R M.1371", "IEC 61993-2:2018", "IMO MSC.74(69) Annex 3", "IMO A.1106(29)", "IMO MSC.347(91)", "SOLAS V/19", "IALA G1082 Ed 2.1", "IALA A-126"]
+  },
   "pilot": {
     "scope": "public OFAC SDN plus frozen demonstration vessels. Licensed AIS remains CLOSED without a live key.",
-    "phases": [
-      "read-only public lists",
-      "case prioritization",
-      "draft sanctions case",
-      "approval"
-    ],
+    "phases": ["read-only public lists", "case prioritization", "draft sanctions case", "approval"],
     "buyer": "Maritime operators, trade-compliance officers, and sanctions desks who need a fail-closed case, not a live AIS feed they do not hold a license for.",
     "wedge": "Sanctions-to-Case Decision Assurance. Licensed AIS stays CLOSED.",
-    "success_metrics_named": [
-      "time from public list hit to evidence-complete case",
-      "licensed AIS remain CLOSED without a key",
-      "false priority rate",
-      "approval latency"
-    ],
+    "success_metrics_named": ["time from public list hit to evidence-complete case", "licensed AIS remain CLOSED without a key", "false priority rate", "approval latency"],
     "licensed_ais_queries": 0
   },
   "outstanding": [
-    {
-      "id": "VESSELS-E01",
-      "claim": "IMO/vessel/owner entity resolution",
-      "class": "BLOCKING",
-      "in_this_demo": "OUTSTANDING"
-    },
-    {
-      "id": "VESSELS-E02",
-      "claim": "sanctions match precision",
-      "class": "BLOCKING",
-      "in_this_demo": "SEED POLICY"
-    },
-    {
-      "id": "VESSELS-E03",
-      "claim": "licensed AIS true-positive rate",
-      "class": "BLOCKING",
-      "in_this_demo": "OUTSTANDING"
-    }
+    {"id": "VESSELS-E01", "claim": "IMO/vessel/owner entity resolution", "class": "BLOCKING", "in_this_demo": "OUTSTANDING"},
+    {"id": "VESSELS-E02", "claim": "sanctions match precision", "class": "BLOCKING", "in_this_demo": "SEED POLICY"},
+    {"id": "VESSELS-E03", "claim": "licensed AIS true-positive rate", "class": "BLOCKING", "in_this_demo": "OUTSTANDING"}
   ],
   "boundaries": {
     "this_origin_does_not_run_the_kernel": true,

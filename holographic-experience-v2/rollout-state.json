@@ -26,6 +26,7 @@
     "estate/plane/index.html",
     "estate/szl-frontier/index.html",
     "estate/thread-ops/index.html",
+    "estate/zoom-out-2026-09-11/index.html",
     "experiments/index.html",
     "factory/index.html",
     "five-space/index.html",
@@ -45,9 +46,9 @@
     "terra/index.html",
     "vessels/index.html"
   ],
-  "bound_documents": 40,
+  "bound_documents": 41,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 42,
+  "examined_documents": 43,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -61,6 +62,7 @@
     "estate/plane/index.html",
     "estate/szl-frontier/index.html",
     "estate/thread-ops/index.html",
+    "estate/zoom-out-2026-09-11/index.html",
     "experiments/index.html",
     "index.html",
     "khipu/index.html",

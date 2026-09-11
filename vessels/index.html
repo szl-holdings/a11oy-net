@@ -53,12 +53,14 @@ th{color:var(--dim);font-weight:500}
     <span class="chip mute">ROADMAP</span>
     <span class="chip mute">SAMPLE</span>
     <span class="chip mute">licensed AIS CLOSED</span>
+    <span class="chip mute">AIS standards CITATION_ONLY</span>
     <span class="chip mute">Hub Spaces not required</span>
     <span class="chip mute">Λ = Conjecture 1 OPEN</span>
   </div>
   <nav class="links" aria-label="Origins">
     <a href="https://a-11-oy.com/vessels">Evaluate on product · a-11-oy.com/vessels</a>
     <a href="/vessels/receipt.json">Bound receipt · JSON</a>
+    <a href="/vessels/ais-standards.json">AIS standards · JSON</a>
     <a href="/vessels.json">vessels.json</a>
     <a href="/decision/">Parent RECORD</a>
     <a href="/aegis/">Aegis → Killinchu RECORD</a>
@@ -108,6 +110,25 @@ th{color:var(--dim);font-weight:500}
   </section>
 
   <section class="card">
+    <h2>Maritime AIS standards · CLOSED without a key</h2>
+    <p>This desk is not Class A or Class B shipborne AIS equipment. It does not transmit on AIS1/AIS2. It does not hold a licensed AIS subscription. Citing the standards names the gate. It does not claim measured conformance, type approval, or a licensed-AIS true-positive rate. CITATION_ONLY.</p>
+    <table>
+      <thead><tr><th>Instrument</th><th>What it governs</th><th>Bound on this RECORD</th></tr></thead>
+      <tbody>
+        <tr><td>ITU-R M.1371</td><td>Technical characteristics for universal shipborne AIS using TDMA in the VHF maritime mobile band</td><td>CITATION_ONLY. No VHF radio. No TDMA slot map.</td></tr>
+        <tr><td>IEC 61993-2:2018</td><td>Class A shipborne AIS operational and performance requirements, methods of test</td><td>CITATION_ONLY. This origin is not Class A equipment.</td></tr>
+        <tr><td>IMO MSC.74(69) Annex 3</td><td>Performance standards for a universal shipborne AIS</td><td>CITATION_ONLY. Not type-approved equipment.</td></tr>
+        <tr><td>IMO A.1106(29)</td><td>Onboard operational use of AIS; AIS is an aid with limits</td><td>CITATION_ONLY. No bridge watch.</td></tr>
+        <tr><td>IMO MSC.347(91)</td><td>Protection of the AIS VHF data link</td><td>CITATION_ONLY. We do not transmit. Queries = 0.</td></tr>
+        <tr><td>SOLAS V/19</td><td>Carriage requirements for shipborne navigational systems</td><td>CITATION_ONLY. Does not apply to this software desk.</td></tr>
+        <tr><td>IALA G1082 Ed 2.1</td><td>An overview of AIS (June 2016)</td><td>CITATION_ONLY. Shore-authority overview. Not an AtoN manual.</td></tr>
+        <tr><td>IALA A-126</td><td>Use of AIS in Marine Aids to Navigation Services</td><td>CITATION_ONLY. This origin is not an AtoN provider.</td></tr>
+      </tbody>
+    </table>
+    <p>Fail-closed on kernel 8.0.0: licensed AIS query → DENIED / PROHIBITED_ACTION. Stale or missing source → ABSTAINED. VESSELS-E03 licensed AIS TPR stays OUTSTANDING and is not claimed. Public web AIS aggregators are not licensed shipborne AIS. Machine copy: <a href="/vessels/ais-standards.json">/vessels/ais-standards.json</a>.</p>
+  </section>
+
+  <section class="card">
     <h2>Sanctions-to-case · public lists only</h2>
     <p>One buyer, one wedge. Read-only OFAC SDN plus frozen demonstration identities. Licensed AIS stays CLOSED. No vessels Hub Space.</p>
     <table>
@@ -134,6 +155,7 @@ th{color:var(--dim);font-weight:500}
         <tr><td>Receipt replay_hold</td><td>SAMPLE</td><td>3 / 3</td></tr>
         <tr><td>Licensed AIS queries</td><td>SAMPLE</td><td>0</td></tr>
         <tr><td>OFAC SDN CSV reachability</td><td>MEASURED</td><td>HTTP 200 · 5,692,851 bytes · not a match rate</td></tr>
+        <tr><td>AIS standards bind</td><td>CITATION_ONLY</td><td>8 instruments named · not conformance</td></tr>
         <tr><td>VESSELS-E01 IMO/owner entity resolution</td><td>BLOCKING</td><td>OUTSTANDING</td></tr>
         <tr><td>VESSELS-E02 sanctions match precision</td><td>BLOCKING</td><td>SEED POLICY</td></tr>
         <tr><td>VESSELS-E03 licensed AIS true-positive rate</td><td>BLOCKING</td><td>OUTSTANDING · not claimed</td></tr>
@@ -147,6 +169,7 @@ th{color:var(--dim);font-weight:500}
       <li>Status ROADMAP. Data label SAMPLE. Does not stamp LIVE. Does not claim ATO.</li>
       <li>Formula authority NONE. Models, formulas and market signals never authorize.</li>
       <li>Licensed AIS is CLOSED on this RECORD. A live key is not present here and is not claimed.</li>
+      <li>AIS standards on this RECORD are CITATION_ONLY. This origin is not Class A or Class B equipment. SOLAS V/19 does not apply. Licensed AIS TPR is OUTSTANDING and is not claimed.</li>
       <li>Λ = Conjecture 1 / advisory. Not a theorem.</li>
       <li>This origin does not run evaluate, scan, or replay. That stays on a-11-oy.com/vessels.</li>
       <li>Not a fifth flagship. Not a Hub Space. Not legal advice. Not a Palantir clone.</li>
