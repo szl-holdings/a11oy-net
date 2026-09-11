@@ -1,6 +1,7 @@
 {
   "contract_version": "1.0.0",
   "incident": "INC-05",
+  "incident_www_defect": "CLOSED_AS_MEASURED",
   "surface": {
     "name": "Origin lock RECORD",
     "url": "https://a11oy.net/origin/",
@@ -9,9 +10,10 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-08-29T18:53:21Z",
+  "observed_at_utc": "2026-09-11T23:25:17Z",
+  "prior_observed_at_utc": "2026-08-29T18:53:21Z",
   "evidence_class": "MEASURED",
-  "observer": "Public HTTP HEAD/GET and A records from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
+  "observer": "Public HTTP HEAD/GET, TLS certificate read, and Hugging Face spaces runtime API from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
     {
       "id": "product",
@@ -20,25 +22,34 @@
       "status": 200,
       "front": "CLOUDFLARE",
       "a_records": ["104.21.27.230", "172.67.169.206"],
-      "server": "cloudflare",
+      "server": "szl",
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
+      "git_sha_honest": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain is a separate PENDING row."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate."
     },
     {
       "id": "www",
       "host": "www.a-11-oy.com",
       "role": "product www",
-      "status": 404,
+      "status": 301,
       "front": "CLOUDFLARE",
-      "a_records": ["104.21.27.230", "172.67.169.206"],
+      "location": "https://a-11-oy.com/",
+      "tls": {
+        "handshake": "OK",
+        "subject_cn": "a-11-oy.com",
+        "issuer": "Google Trust Services WE1",
+        "not_before": "2026-08-25T18:20:39Z",
+        "not_after": "2026-11-23T19:18:12Z"
+      },
+      "hsts": "max-age=63072000; includeSubDomains",
       "server": "cloudflare",
       "honesty": "MEASURED",
-      "verdict": "BLOCKED",
-      "note": "Same orange-cloud A records as apex. GET / is Cloudflare HTTP 404, not the Space. Needs a Cloudflare Redirect Rule 301 www to apex. Do not add www as a second Hugging Face custom domain. This RECORD does not mint DNS."
+      "verdict": "ADMIT",
+      "note": "Prior lock 2026-08-29 recorded Cloudflare HTTP 404. Prior recapture 2026-09-11T19:04Z recorded tlsv1 alert access denied. This probe: TLS OK, HTTP/2 301 to apex. Do not add www as a second Hugging Face custom domain. This RECORD does not mint DNS."
     },
     {
       "id": "proof",
@@ -66,27 +77,80 @@
   "huggingface": {
     "space": "SZLHOLDINGS/a11oy",
     "runtime_stage": "RUNNING",
+    "runtime_sha_reported": "3899a2ea6aff3b31761e9afdded13a99dae2d4e4",
+    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /api/a11oy/v1/honest git_sha 7253ccb1 matches GitHub szl-holdings/a11oy main. Do not treat the two SHAs as one identity.",
     "domains": [
       { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
-      { "domain": "a-11-oy.com", "stage": "PENDING" }
+      { "domain": "a-11-oy.com", "stage": "READY" }
     ],
-    "note": "Space RUNNING is not Hugging Face custom-domain READY. Do not grey-cloud the apex to make the provider row green. Public 200 on the proxied apex beats a green HF domain row. Optional later: _huggingface.a-11-oy.com TXT without dropping orange-cloud."
+    "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp."
   },
   "signer": {
     "healthz": "ABSENT",
     "scheme": "UNAVAILABLE",
     "note": "Only the rollup may stamp DSSE-LIVE when a live key is present. Do not copy LIVE from x-szl-wire-d."
   },
+  "vessels_packet8": {
+    "evaluate_path": "https://a-11-oy.com/api/a11oy/v1/decision/vessels/evaluate",
+    "match": "3/3",
+    "cases": [
+      {"eval_id": "VESSELS-E-ABSTAIN", "case_id": "vessels-stale-list", "state": "ABSTAINED", "reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"], "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"},
+      {"eval_id": "VESSELS-E-AWAIT-01", "case_id": "vessels-aurora-wave", "state": "AWAITING_APPROVAL", "reason_codes": ["HUMAN_APPROVAL_REQUIRED"], "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"},
+      {"eval_id": "VESSELS-E-DENY-AIS", "case_id": "vessels-licensed-ais", "state": "DENIED", "reason_codes": ["PROHIBITED_ACTION"], "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"}
+    ],
+    "licensed_ais_admitted": false,
+    "licensed_ais_queries": 0,
+    "ais_standards": "CITATION_ONLY",
+    "vessels_e03": "OUTSTANDING",
+    "formula_authority": "NONE",
+    "production_ready": false,
+    "stamps_live": false,
+    "note": "Evaluate MATCH is seed-policy replay. It does not close entity-resolution E01 or licensed-AIS TPR E03."
+  },
+  "defects": [],
+  "defects_closed": [
+    {
+      "id": "INC-05-WWW-404",
+      "host": "www.a-11-oy.com",
+      "prior": "Cloudflare HTTP 404 / later TLS access denied",
+      "now": "TLS OK + HTTP/2 301 to https://a-11-oy.com/",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-11T23:25:17Z"
+    },
+    {
+      "id": "INC-05-HF-DOMAIN-PENDING",
+      "host": "a-11-oy.com",
+      "prior": "Hugging Face runtime.domains stage PENDING",
+      "now": "READY",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-11T23:25:17Z"
+    }
+  ],
+  "holds": [
+    "VESSELS-E01 IMO/vessel/owner entity resolution OUTSTANDING",
+    "VESSELS-E03 licensed AIS true-positive rate OUTSTANDING",
+    "AEGIS-E01 asset/identity entity-resolution precision OUTSTANDING",
+    "licensed AIS CLOSED without a live key",
+    "signer ABSENT / scheme UNAVAILABLE",
+    "production_ready false",
+    "Lambda Conjecture 1 OPEN",
+    "formula authority NONE"
+  ],
   "operator_actions": [
-    "Cloudflare Redirect Rule: www.a-11-oy.com 301 to https://a-11-oy.com/. Same zone. Do not add www as a second Hugging Face custom domain.",
-    "Keep orange-cloud on the product apex. Do not grey-cloud to satisfy Hugging Face PENDING.",
+    "Keep www as a Cloudflare 301 to apex. Do not add www as a second Hugging Face custom domain.",
+    "Keep orange-cloud on the product apex. READY is already measured; do not grey-cloud.",
     "Optional: _huggingface.a-11-oy.com TXT without dropping that proxy.",
     "Optional: orange-cloud a11oy.net only if Cloudflare should sit in front of GitHub Pages. Live DNS is Pages today.",
+    "Do not stamp LIVE. Do not open a licensed AIS key from this RECORD.",
     "This proof origin does not change DNS. Product source does not change DNS."
   ],
   "related": {
     "factory_record": "https://a11oy.net/factory/",
     "product": "https://a-11-oy.com/",
+    "vessels_product": "https://a-11-oy.com/vessels",
+    "vessels_proof": "https://a11oy.net/vessels/",
+    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md",
+    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11.md",
     "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
     "incident": "INC-05"
   },
@@ -98,6 +162,8 @@
     "does_not_clone_verify": true,
     "grok_spa_not_published_here": true,
     "fourth_public_origin_published": false,
-    "http_response_proves_capability": false
+    "http_response_proves_capability": false,
+    "www_301_is_not_production_ready": true,
+    "evaluate_match_is_not_e03": true
   }
 }
