@@ -1,0 +1,30 @@
+{
+  "schema": "szl.router-proof/v1",
+  "observed_at": "2026-09-11T16:23:00Z",
+  "github": {
+    "repository": "szl-holdings/szl-router",
+    "revision": "80f1d52a2a968617581cc8e7375913d30862fc6e"
+  },
+  "hugging_face": {
+    "repo_id": "SZLHOLDINGS/llm-router-live",
+    "repository_revision": "775531a78dfeea14ee9ef6193cb6a74a4143afa5",
+    "runtime_revision": "775531a78dfeea14ee9ef6193cb6a74a4143afa5",
+    "stage": "RUNNING",
+    "public": true
+  },
+  "product": {
+    "url": "https://a-11-oy.com/code",
+    "status": "NOT_VERIFIED"
+  },
+  "alignment": "NOT_VERIFIED",
+  "alignment_reason": "Served Space source SHA c5b42702f21c50091f887c5f550cdfbcb561eacc does not equal current GitHub main 80f1d52a2a968617581cc8e7375913d30862fc6e. HF repository SHA equals HF runtime SHA.",
+  "evidence_bundle_sha256": null,
+  "known_bounds": [
+    "Provider-backed inference may be unavailable until credentials are configured.",
+    "Receipt integrity does not prove factual truth.",
+    "Model output does not create consequential authority.",
+    "Lambda uniqueness remains Conjecture 1.",
+    "Public Space /health /ready /inference/ready were missing at this observation; repair is in source, not yet published."
+  ],
+  "credential_value_recorded": false
+}
