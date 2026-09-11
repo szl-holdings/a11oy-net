@@ -23,7 +23,8 @@
     "source_killinchu": "https://github.com/szl-holdings/killinchu",
     "product_vessels": "https://a-11-oy.com/vessels",
     "proof_vessels": "https://a11oy.net/vessels/",
-    "proof_vessels_receipt": "https://a11oy.net/vessels/receipt.json"
+    "proof_vessels_receipt": "https://a11oy.net/vessels/receipt.json",
+    "proof_vessels_ais_standards": "https://a11oy.net/vessels/ais-standards.json"
   },
   "status": "ROADMAP",
   "data_label": "SAMPLE",
@@ -35,67 +36,17 @@
   "hub_spaces_required": false,
   "hub_create_cap": "Hugging Face 20 Space-creates/day. Adapters are optional. Do not wait on them for this desk.",
   "verticals": [
-    {
-      "id": "terra",
-      "display_name": "Terra Assurance",
-      "wedge": "NYC Property Risk-to-Committee Decision Assurance",
-      "case_count": 6
-    },
-    {
-      "id": "aegis",
-      "display_name": "Aegis \u2192 Killinchu Capability RECORD",
-      "wedge": "Exposure-to-Remediation assurance preserved inside Killinchu",
-      "case_count": 4,
-      "public_authority": "killinchu",
-      "runtime_claimed": false
-    },
-    {
-      "id": "puriq-markets",
-      "display_name": "Puriq Markets",
-      "wedge": "Event Definition-to-Decision Forecast Assurance",
-      "case_count": 4
-    },
-    {
-      "id": "counsel",
-      "display_name": "Counsel Assurance",
-      "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance",
-      "case_count": 4
-    },
-    {
-      "id": "vessels",
-      "display_name": "Vessels Assurance",
-      "wedge": "Sanctions-to-Case Decision Assurance. Licensed AIS stays CLOSED.",
-      "case_count": 3,
-      "space": "none",
-      "runtime_claimed": false
-    }
+    {"id": "terra", "display_name": "Terra Assurance", "wedge": "NYC Property Risk-to-Committee Decision Assurance", "case_count": 6},
+    {"id": "aegis", "display_name": "Aegis \u2192 Killinchu Capability RECORD", "wedge": "Exposure-to-Remediation assurance preserved inside Killinchu", "case_count": 4, "public_authority": "killinchu", "runtime_claimed": false},
+    {"id": "puriq-markets", "display_name": "Puriq Markets", "wedge": "Event Definition-to-Decision Forecast Assurance", "case_count": 4},
+    {"id": "counsel", "display_name": "Counsel Assurance", "wedge": "Matter Decision Record and Authority-Grounded Workflow Assurance", "case_count": 4},
+    {"id": "vessels", "display_name": "Vessels Assurance", "wedge": "Sanctions-to-Case Decision Assurance. Licensed AIS stays CLOSED.", "case_count": 3, "space": "none", "runtime_claimed": false}
   ],
   "adapters": [
-    {
-      "id": "terra-assurance",
-      "hub": "SZLHOLDINGS/terra-assurance",
-      "state": "exists-private",
-      "sink": "https://a-11-oy.com/terra"
-    },
-    {
-      "id": "aegis-assurance",
-      "hub": "SZLHOLDINGS/aegis-assurance",
-      "state": "legacy-space-retirement-authorized",
-      "sink": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
-      "consolidated_into": "SZLHOLDINGS/killinchu"
-    },
-    {
-      "id": "puriq-markets",
-      "hub": "SZLHOLDINGS/puriq-markets",
-      "state": "blocked-space-create-cap",
-      "sink": "https://a-11-oy.com/puriq-markets"
-    },
-    {
-      "id": "counsel-assurance",
-      "hub": "SZLHOLDINGS/counsel-assurance",
-      "state": "blocked-space-create-cap",
-      "sink": "https://a-11-oy.com/counsel"
-    }
+    {"id": "terra-assurance", "hub": "SZLHOLDINGS/terra-assurance", "state": "exists-private", "sink": "https://a-11-oy.com/terra"},
+    {"id": "aegis-assurance", "hub": "SZLHOLDINGS/aegis-assurance", "state": "legacy-space-retirement-authorized", "sink": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu", "consolidated_into": "SZLHOLDINGS/killinchu"},
+    {"id": "puriq-markets", "hub": "SZLHOLDINGS/puriq-markets", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/puriq-markets"},
+    {"id": "counsel-assurance", "hub": "SZLHOLDINGS/counsel-assurance", "state": "blocked-space-create-cap", "sink": "https://a-11-oy.com/counsel"}
   ],
   "boundaries": {
     "this_origin_does_not_run_the_kernel": true,
@@ -116,13 +67,7 @@
       "current_public_authority": "SZLHOLDINGS/killinchu",
       "current_product": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
       "current_source": "https://github.com/szl-holdings/killinchu",
-      "capability_planes": [
-        "aegis",
-        "sentra_defend",
-        "immune",
-        "vessels_maritime",
-        "counter_uas_airspace"
-      ],
+      "capability_planes": ["aegis", "sentra_defend", "immune", "vessels_maritime", "counter_uas_airspace"],
       "killinchu_revision": "928a6dace657f8f9e067773d23d5686fe3dcc716",
       "vertical_services_revision": "83edba5c5e730c91d8f5f0a6531213fb860677af",
       "runtime_readiness_claimed": false,
