@@ -1,0 +1,43 @@
+{
+  "schema": "szl.router-proof/v1",
+  "observed_at": "2026-09-11T16:37:00Z",
+  "github": {
+    "repository": "szl-holdings/szl-router",
+    "revision": "50b1d39b9f70f5c4323594411bd48611b35ae70c"
+  },
+  "hugging_face": {
+    "repo_id": "SZLHOLDINGS/llm-router-live",
+    "repository_revision": "59103f0a06077e939de8b199e55d13126af1e331",
+    "runtime_revision": "59103f0a06077e939de8b199e55d13126af1e331",
+    "stage": "RUNNING",
+    "public": true
+  },
+  "served_source": {
+    "repository": "szl-holdings/szl-router",
+    "commit": "50b1d39b9f70f5c4323594411bd48611b35ae70c",
+    "alignment": "VERIFIED"
+  },
+  "product": {
+    "url": "https://a-11-oy.com/code",
+    "status": "NOT_VERIFIED",
+    "reason": "Live /code HTML did not contain szl-router at observation time. a11oy merge a32d346b109d0343aa7e92e211c0c138d914e22b is on protected main; Hugging Face sync still publishing."
+  },
+  "alignment": "NOT_VERIFIED",
+  "alignment_reason": "GitHub main equals served Space source SHA and HF repository SHA equals HF runtime SHA (RUNNING_ALIGNED). Product operator panel not yet observed on https://a-11-oy.com/code. Proof record itself is this observation.",
+  "endpoints": {
+    "health": 200,
+    "ready": 200,
+    "inference_ready": 503,
+    "inference_state": "OFFLINE_UNTIL_KEYED",
+    "source_attestation": 200
+  },
+  "evidence_bundle_sha256": null,
+  "known_bounds": [
+    "Provider-backed inference may be unavailable until credentials are configured.",
+    "Receipt integrity does not prove factual truth.",
+    "Model output does not create consequential authority.",
+    "Lambda uniqueness remains Conjecture 1.",
+    "A public Space may be RUNNING while inference is OFFLINE_UNTIL_KEYED."
+  ],
+  "credential_value_recorded": false
+}

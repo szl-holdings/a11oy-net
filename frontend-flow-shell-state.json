@@ -1,5 +1,5 @@
 {
-  "examined_documents": 37,
+  "examined_documents": 38,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -32,6 +32,7 @@
     "notes/index.html",
     "origin/index.html",
     "pricing/index.html",
+    "proof/router/index.html",
     "puriq-markets/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",

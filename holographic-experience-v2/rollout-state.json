@@ -35,6 +35,7 @@
     "notes/index.html",
     "origin/index.html",
     "pricing/index.html",
+    "proof/router/index.html",
     "puriq-markets/index.html",
     "record/index.html",
     "spec/GovernedAction/v1/index.html",
@@ -42,9 +43,9 @@
     "terra/index.html",
     "vessels/index.html"
   ],
-  "bound_documents": 37,
+  "bound_documents": 38,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 39,
+  "examined_documents": 40,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -61,6 +62,7 @@
     "khipu/index.html",
     "khipu/nan/index.html",
     "pricing/index.html",
+    "proof/router/index.html",
     "spec/GovernedAction/v1/index.html",
     "status/index.html"
   ],
