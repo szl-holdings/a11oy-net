@@ -1,0 +1,32 @@
+{
+  "schema": "szl.origin-lock.recapture/v1",
+  "incident": "INC-05",
+  "captured_at": "2026-09-11T19:04:00Z",
+  "class": "MEASURED",
+  "promotion": "BLOCKED",
+  "meaning": "Public-identity-host probe. Not DNS control. Not a signer. Not a fourth origin.",
+  "www": {
+    "host": "www.a-11-oy.com",
+    "tls": "DENIED",
+    "error": "tlsv1 alert access denied",
+    "http_status": null
+  },
+  "apex_honest": {
+    "url": "https://a-11-oy.com/api/a11oy/v1/honest",
+    "http_status": 200,
+    "git_sha": "9dc70869694f72ba3fb4e632f86f96118ccb39ae",
+    "doctrine": "v11",
+    "lock": "749/14/163",
+    "kernel": "c7c0ba17",
+    "lambda": "Conjecture 1"
+  },
+  "apex_html": {"state": "TIMEOUT_THIS_PROBE"},
+  "healthz": {"state": "TIMEOUT_THIS_PROBE", "last_measured_signer": {"status": "ABSENT", "at": "2026-09-11T16:24:00Z"}},
+  "alloy_os_desk": {
+    "url": "https://a11oy.net/estate/alloy-os/",
+    "index": 200,
+    "kernel_js": 200,
+    "live_json": 200
+  },
+  "cannot_from_this_origin": ["cloudflare_dns", "www_certificate", "product_signer", "nvml_rapl", "hf_space_write"]
+}
