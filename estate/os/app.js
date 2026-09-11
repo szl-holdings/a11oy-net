@@ -1,13 +1,13 @@
 /* Estate catalog hologram. READ-ONLY. No mutations. Not a live dashboard. */
 const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
-const ESC = {
-  "&": "&" + "amp;",
-  "<": "&" + "lt;",
-  ">": "&" + "gt;",
-  '"': "&" + "quot;",
-};
-const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (ch) => ESC[ch]);
+const AMP = "\u0026";
+const esc = (s) =>
+  String(s ?? "")
+    .replaceAll(AMP, AMP + "amp;")
+    .replaceAll("<", AMP + "lt;")
+    .replaceAll(">", AMP + "gt;")
+    .replaceAll('"', AMP + "quot;");
 
 const VIEWS = ["lattice", "catalog", "ledger"];
 const LANES = ["all", "github", "space", "gated", "model", "dataset", "collection"];
@@ -38,6 +38,8 @@ let q = "";
 let lane = "all";
 let ring = "all";
 let selectedId = null;
+let caret = null;
+let boundRoot = false;
 
 function truth(t) {
   const k = String(t || "UNAVAILABLE").replace(/\s+/g, "-");
@@ -123,10 +125,11 @@ function renderLattice() {
   const groups = {};
   for (const r of RINGS.slice(1)) groups[r] = [];
   for (const a of rows) (groups[a.ring] || (groups[a.ring] = [])).push(a);
+  const c = DATA.counts || {};
   return `
     <p class="os-kicker">Lattice · ${esc(DATA.scope)} · ${esc(DATA.capturedAt)}</p>
-    <h2 class="os-h2">${DATA.counts.assets} public catalog rows. Runtime stays UNAVAILABLE.</h2>
-    <p class="os-lede">Unauthenticated bake. Later keep-7 recapture is labeled in /estate.json and is not overwritten. Private GitHub names are withheld. Λ remains Conjecture 1.</p>
+    <h2 class="os-h2">${c.assets} public catalog rows. Runtime stays UNAVAILABLE.</h2>
+    <p class="os-lede">Unauthenticated bake ${esc(DATA.capturedAt)}. GitHub search ${esc(c.githubSearchTotal)} public (${esc(c.githubArchived)} archived). Hub list ${esc(c.model)} / ${esc(c.dataset)} / ${esc(c.space)} spaces / ${esc(c.collection)} collections. estate.json 2026-08-31 org-auth Spaces=48 is labeled, not overwritten. Private GitHub names are withheld. Λ remains Conjecture 1.</p>
     ${controls()}
     ${flagships()}
     ${RINGS.slice(1).map((r) => {
@@ -135,16 +138,16 @@ function renderLattice() {
       return `
         <div class="os-ring-head"><span>${esc(RING_LABEL[r])}</span><b>${list.length}</b></div>
         <div class="os-grid flag">
-          ${list.slice(0, 200).map((a) => `
+          ${list.slice(0, 64).map((a) => `
             <button type="button" class="os-card ${a.id === selectedId ? "on" : ""}" data-id="${esc(a.id)}">
               <p class="os-kicker">${esc(a.lane)}${a.gated ? " · gated" : ""} · ${esc(rel(a.updatedAt))}</p>
               <h3>${esc(a.title)}</h3>
               <p>${esc(a.description)}</p>
             </button>`).join("")}
         </div>
-        ${list.length > 200 ? `<p class="muted">Showing 200 of ${list.length}. Switch to Catalog for the rest.</p>` : ""}`;
+        ${list.length > 64 ? `<p class="muted">Showing 64 of ${list.length}. Switch to Catalog for the rest.</p>` : ""}`;
     }).join("")}
-    <div class="handoff-line"><span class="os-kicker">Later recapture · do not overwrite</span>${esc(DATA.laterRecapture.bound)}</div>
+    <div class="handoff-line"><span class="os-kicker">Later recapture · do not overwrite</span>${esc((DATA.laterRecapture || {}).bound || "")}</div>
   `;
 }
 
@@ -153,7 +156,7 @@ function renderCatalog() {
   return `
     <p class="os-kicker">Catalog · MEASURED where labelled</p>
     <h2 class="os-h2">Every public row. Counts are not quality.</h2>
-    <p class="os-lede">Gated Spaces are HTTP 401, not deletions. Host 200 is reachability, not LIVE.</p>
+    <p class="os-lede">Host 200 is reachability, not LIVE. Gated means unauthenticated card UNAVAILABLE, not deleted.</p>
     ${controls()}
     <div class="os-table-wrap">
       <table class="os-table">
@@ -195,7 +198,7 @@ function renderLedger() {
         </tbody>
       </table>
     </div>
-    <div class="handoff-line">Product honesty remains <a href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener">a-11-oy.com/api/a11oy/v1/honest</a>. This origin does not clone /verify. Λ = Conjecture 1.</div>
+    <div class="handoff-line">Product honesty is <a href="https://a-11-oy.com/api/a11oy/v1/honest" target="_blank" rel="noopener">a-11-oy.com/api/a11oy/v1/honest</a>. This origin does not clone /verify. Λ = Conjecture 1.</div>
   `;
 }
 
@@ -234,30 +237,35 @@ function render() {
   else if (view === "ledger") app.innerHTML = renderLedger();
   else app.innerHTML = renderLattice();
   renderInspector();
-  bind();
+  restoreCaret();
 }
 
-let bound = false;
-function bind() {
-  if (bound) return;
-  bound = true;
-  const shell = document;
+function restoreCaret() {
+  const input = $("#q");
+  if (!input) return;
+  if (caret != null) {
+    input.focus();
+    const n = Math.min(caret, input.value.length);
+    input.setSelectionRange(n, n);
+    caret = null;
+  }
+}
+
+function bindOnce() {
+  if (boundRoot) return;
+  boundRoot = true;
+  const shell = document.querySelector(".os-shell") || document;
   shell.addEventListener("input", (e) => {
     if (e.target && e.target.id === "q") {
       q = e.target.value;
+      caret = e.target.selectionStart;
       render();
     }
   });
   shell.addEventListener("keydown", (e) => {
-    if (e.target && e.target.id === "q" && e.key === "Enter") {
-      e.preventDefault();
-      render();
-    }
+    if (e.target && e.target.id === "q" && e.key === "Enter") e.preventDefault();
   });
-  shell.addEventListener("search", (e) => {
-    if (e.target && e.target.id === "q") render();
-  });
-  shell.addEventListener("click", (e) => {
+  document.addEventListener("click", (e) => {
     const laneBtn = e.target.closest("[data-lane]");
     if (laneBtn) {
       lane = laneBtn.dataset.lane;
@@ -284,10 +292,28 @@ async function boot() {
     const res = await fetch("./data.json", { redirect: "error" });
     if (!res.ok) throw new Error(String(res.status));
     DATA = await res.json();
+    try {
+      const dres = await fetch("./data.delta.json", { redirect: "error" });
+      if (dres.ok) {
+        const delta = await dres.json();
+        if (Array.isArray(delta.assets) && delta.assets.length) {
+          const have = new Set((DATA.assets || []).map((a) => a.id));
+          DATA.assets = (DATA.assets || []).concat(delta.assets.filter((a) => a && a.id && !have.has(a.id)));
+        }
+        if (delta.counts) DATA.counts = delta.counts;
+        if (delta.capturedAt) DATA.capturedAt = delta.capturedAt;
+        if (delta.sources) DATA.sources = delta.sources;
+        if (delta.laterRecapture) DATA.laterRecapture = delta.laterRecapture;
+        if (delta.priorBake) DATA.priorBake = delta.priorBake;
+        if (delta.generation) DATA.generation = delta.generation;
+      }
+    } catch {}
+    if (!Array.isArray(DATA.assets)) DATA.assets = [];
   } catch {
     app.innerHTML = `<div class="empty-panel" data-kind="error"><span class="empty-kicker">UNAVAILABLE</span><b>data.json did not load. This is not an observed-empty inventory.</b></div>`;
     return;
   }
+  bindOnce();
   window.addEventListener("hashchange", route);
   route();
 }
