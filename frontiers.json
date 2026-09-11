@@ -27,7 +27,13 @@
     "a11oy_factory": "https://github.com/szl-holdings/a11oy-factory",
     "product": "https://a-11-oy.com/",
     "inc_05_issue": "https://github.com/szl-holdings/a11oy/issues/1497",
-    "origin_lock_pr": "https://github.com/szl-holdings/a11oy-net/pull/77"
+    "origin_lock_pr": "https://github.com/szl-holdings/a11oy-net/pull/77",
+    "router_source": "https://github.com/szl-holdings/szl-router",
+    "router_space": "https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live",
+    "router_proof": "https://a11oy.net/proof/router/",
+    "router_frontier_observation": "https://a11oy.net/estate/frontier-2026-09-11/",
+    "litellm_recommendation": "https://a11oy.net/estate/frontier-2026-09-11-litellm/",
+    "litellm_pypi": "https://pypi.org/project/litellm/1.100.1/"
   },
   "counts": {
     "named_n1_n25": 25,
@@ -57,7 +63,7 @@
     {"n": "N15", "title": "Memory", "job": "Governed memory plane", "honesty": "SOFTWARE", "admitted": false, "bound": "Deny-by-default. Approval cannot lift a hard deny.", "cite": "szl-frontier Memory Covenant"},
     {"n": "N16", "title": "Eval", "job": "Benchmark overlay", "honesty": "SOFTWARE", "admitted": false, "bound": "Scores are not a production certificate.", "cite": "RAGAS / HELM / LMSYS"},
     {"n": "N17", "title": "Mesh", "job": "Serve mesh", "honesty": "UNKNOWN", "admitted": false, "bound": "GPU UNAVAILABLE.", "cite": "NVIDIA Dynamo / Ray Serve / llm-d"},
-    {"n": "N18", "title": "Route", "job": "Model router", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a live broker.", "cite": "LiteLLM / OpenRouter / RouteLLM"},
+    {"n": "N18", "title": "Route", "job": "Model router", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a live broker. Source-owned flagship is szl-holdings/szl-router. Public Space SZLHOLDINGS/llm-router-live is a RUNNING status surface, OFFLINE_UNTIL_KEYED. LiteLLM mesh pin recommendation is ghcr.io/berriai/litellm:v1.100.1 / litellm[proxy]==1.100.1; main-stable is deprecated. See /proof/router/, /estate/frontier-2026-09-11/, and /estate/frontier-2026-09-11-litellm/.", "cite": "szl-holdings/szl-router / LiteLLM 1.100.1 pin"},
     {"n": "N19", "title": "Cache", "job": "KV / prompt cache", "honesty": "SOFTWARE", "admitted": false, "bound": "Not a rehost of LMCache.", "cite": "LMCache / Mooncake / GPTCache"},
     {"n": "N20", "title": "Voice", "job": "Realtime audio", "honesty": "SOFTWARE", "admitted": false, "bound": "No audio bytes in this RECORD.", "cite": "LiveKit / Cartesia / Deepgram"},
     {"n": "N21", "title": "Sandbox", "job": "Isolated exec", "honesty": "SOFTWARE", "admitted": false, "bound": "AST whitelist. Plan only.", "cite": "Daytona / E2B"},
