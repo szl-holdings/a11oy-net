@@ -39,7 +39,7 @@
     "2026-09-11T162300Z.json",
     "2026-09-11T163700Z.json"
   ],
-  "evidence_bundle_sha256": "53854d7aeacbd47a14aab647fa03330557ef5fbea284ef3006e3350167c04873",
+  "evidence_bundle_sha256": "d44dd1f21b34e72f4bfdf6452fc66d76e7c134c5d9ba314b41e51d22f59ec003",
   "known_bounds": [
     "Provider-backed inference may be unavailable until credentials are configured.",
     "Receipt integrity does not prove factual truth.",
