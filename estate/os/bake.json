@@ -46,6 +46,6 @@
     "dataset": 33,
     "bound": "Previous hologram bake 2026-09-05 PUBLIC_PARTIAL (231 rows, 117 GitHub, 16 Spaces, 44 models, 33 datasets) kept as drift label only. estate.json keep-7 is not overwritten."
   },
-  "catalogSha256": "1f406c1ff34c196524d5155b4e353b93222384854890ccb2ad1220c9edccfd08",
-  "catalogBytes": 199213
+  "catalogSha256": "4d31a5ba8bcf6eae11284936525be03b6510b7fef92bc796068c438d03f81f57",
+  "catalogBytes": 151610
 }

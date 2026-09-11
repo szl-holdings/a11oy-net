@@ -2,8 +2,8 @@
   "contract": "szl.estate-hud.materialization/v1",
   "surface": "https://a11oy.net/estate/os/",
   "capturedAt": "2026-09-11T18:42:46Z",
-  "bytes": 199213,
-  "sha256": "1f406c1ff34c196524d5155b4e353b93222384854890ccb2ad1220c9edccfd08",
+  "bytes": 151610,
+  "sha256": "4d31a5ba8bcf6eae11284936525be03b6510b7fef92bc796068c438d03f81f57",
   "assets": 240,
   "uniqueIds": 240,
   "added": [
