@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: Apache-2.0
+name: HF tooling proof pointers
+on:
+  pull_request:
+    paths:
+      - 'record.json'
+      - 'notes/HF_TOOLING_PRODUCT_2026-09-11.md'
+      - 'scripts/test_hf_tooling_record.py'
+      - '.github/workflows/hf-tooling-record.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'record.json'
+      - 'notes/HF_TOOLING_PRODUCT_2026-09-11.md'
+      - 'scripts/test_hf_tooling_record.py'
+      - '.github/workflows/hf-tooling-record.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dated-pointer-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - run: python scripts/test_hf_tooling_record.py -v
