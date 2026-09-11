@@ -1,0 +1,117 @@
+{
+  "contract": "leader-study-2026.1",
+  "asOf": "2026-09-11T15:55:00Z",
+  "method": "fashion-think: study public papers and public GitHub READMEs/licenses; adopt JOBS into existing organs; do not clone source",
+  "legalBound": "Apache-2.0 / MIT specs, arXiv abstracts and HTML, IETF drafts, our own Apache-2.0. No copyrighted source pasted into IMMUNE.",
+  "ourEstate": {
+    "github": {
+      "org": "szl-holdings",
+      "indexedRepos": 123,
+      "publicUiRepos": 117,
+      "followers": 5,
+      "starsAlmostZero": true,
+      "starredOne": ["a11oy", "hatun-mcp", "holographic-unify", "szl-khipu"],
+      "openIssuesHot": {"szl-forge": 28, "szl-frontier": 24, "a11oy": 22},
+      "todayActive": ["a11oy", "a11oy-net", "szl-forge", "szl-frontier"],
+      "flagships": ["a11oy", "immune", "killinchu", "a11oy-net", "governed-receipt-spec", "szl-energy-attest"]
+    },
+    "huggingface": {
+      "org": "SZLHOLDINGS",
+      "spacesListed": 21,
+      "modelsListed": 46,
+      "modelDownloads": 11665,
+      "datasetsListed": 35,
+      "datasetDownloads": 63581,
+      "pinnedNow": ["finance", "counsel", "sentra", "terra", "a11oy"],
+      "shouldPin": ["a11oy", "immune"],
+      "immuneReady": true
+    }
+  },
+  "leaders": [
+    {
+      "name": "TRACE v0.2",
+      "who": "Linux Foundation / OPAQUE / AMD / Intel / Microsoft / TII",
+      "public": "github.com/agentrust-io/trace-spec Apache-2.0; PyPI agentrust-trace",
+      "job": "hardware-attested Trust Record: workload + policy + data class + tools",
+      "ourTwin": "YAWAR software receipt",
+      "adopt": "label evidenceTier SOFTWARE_RECEIPT; never claim SEV/TDX/NRAS"
+    },
+    {
+      "name": "AIREP",
+      "who": "Abak / Phionyx",
+      "public": "arXiv:2608.21363; github.com/halvrenofviryel/ai-runtime-evidence-protocol",
+      "job": "closed verbs + hash-by-reference + scope-of-evidence + SHA-256 chain",
+      "ourTwin": "SENTRA verbs + YAWAR chain",
+      "adopt": "keep one receipt format; add scope honesty already present as energyClass/ato=false"
+    },
+    {
+      "name": "DCS R+2",
+      "who": "DCS Labs",
+      "public": "MIT github.com/DCS-LabsAI/r2-standard; Ed25519 + RFC 8785 JCS",
+      "job": "signed hash-chained agent action receipts, offline verify",
+      "ourTwin": "YAWAR Ed25519 + hash chain",
+      "adopt": "crosswalk citation only; no blockchain anchor"
+    },
+    {
+      "name": "AIR / IETF RATS",
+      "who": "IETF draft-tsyrulnikov-rats-attested-inference-receipt",
+      "public": "I-D COSE/CWT/EAT profile",
+      "job": "per-inference attested receipt",
+      "ourTwin": "governed-receipt-spec JSON+DSSE",
+      "adopt": "keep JSON; COSE envelope later, not tonight"
+    },
+    {
+      "name": "SLSA + in-toto + Sigstore",
+      "who": "OpenSSF",
+      "public": "standard",
+      "job": "build provenance and signing infrastructure",
+      "ourTwin": "szl-govsign + szl-provctl + slsa-l1 topic",
+      "adopt": "keep L1 honest; do not claim L3"
+    },
+    {
+      "name": "Right to History / PunkGo",
+      "who": "Jing Zhang",
+      "public": "arXiv:2602.20214 CC BY",
+      "job": "Merkle audit log + energy budget + human approval on own hardware",
+      "ourTwin": "YAWAR + energyClass + SENTRA",
+      "adopt": "energy budget already labeled UNAVAILABLE on HF CPU"
+    },
+    {
+      "name": "Notarized Agents / Sello",
+      "who": "arXiv:2606.04193",
+      "public": "paper",
+      "job": "receiver-attested receipts",
+      "ourTwin": "SENTRA is admission-side",
+      "adopt": "future organ; not this box"
+    },
+    {
+      "name": "CoSAI OMS model signing",
+      "who": "NVIDIA + OpenSSF",
+      "public": "model-signing Sigstore bundle",
+      "job": "signed model artifacts",
+      "ourTwin": "Forge + Khipu cards",
+      "adopt": "candidate weights stay CANDIDATE; sign later"
+    }
+  ],
+  "doNotClone": [
+    "NVIDIA confidential compute / NRAS",
+    "zkML proving stacks",
+    "Signet SDK vendor drop",
+    "TRACE TEE quote path",
+    "personal betterwithage holograms as flagship",
+    "new SZLHOLDINGS/nexus Space"
+  ],
+  "weAlreadyOwn": [
+    "fail-closed SENTRA",
+    "YAWAR SHA-256 chain + Ed25519 authority",
+    "honest energyClass MEASURED|UNAVAILABLE",
+    "NEXUS organ inside IMMUNE",
+    "Lean Lambda as Conjecture 1 OPEN",
+    "two-origin product vs proof"
+  ],
+  "nextRealBuild": [
+    "pin SZLHOLDINGS/immune next to a11oy",
+    "energy MEASURED only on metal via szl-energy-attest",
+    "optional adjacentStandards citation array on receipts — not a second schema"
+  ]
+}
