@@ -55,3 +55,14 @@ Pinned: 2026-09-04T22:47Z · org github.com/szl-holdings · HF huggingface.co/SZ
 - https://github.com/szl-holdings/.github/issues/523
 - Machine contract: /estate/thread-ops.json
 - Terminal payload: /SZL-GROK-PAYLOAD.md
+
+## Second-brain home
+
+Public fold stays https://a11oy.net/estate/thread-ops/ .
+Product retrieve pulse is https://a-11-oy.com/command/brain (handles or ABSTAIN).
+Product `/brain` is Hickok Dual-Stream. Do not overwrite it.
+Hub `SZLHOLDINGS/second-brain` stays ARCHIVE / family. No new Space.
+Live 2026-09-11T23:18Z: honest.git_sha `7253ccb1`, hf-sync 1461 SUCCESS.
+Capabilities overall remains PARTIALLY OPERATIONAL. Do not stamp OPERATIONAL=8.
+certified_production_ready false. Packet 4 freeze still binds.
+
