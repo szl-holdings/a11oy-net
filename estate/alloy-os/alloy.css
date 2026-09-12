@@ -17,3 +17,13 @@
 .bad { color:#c46d5c; }
 .warn { color:#c4a15a; }
 @media (max-width: 900px) { .rail, .kbox { grid-template-columns:1fr; } }
+.osdesk { display:flex; flex-direction:column; gap:12px; }
+.osdock { display:flex; flex-wrap:wrap; gap:6px; }
+.dock-key, .win-focus, .win-close, .palette button { font:inherit; color:inherit; background:transparent; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:6px 10px; cursor:pointer; }
+.dock-key.on { border-color: color-mix(in oklab, currentColor 55%, transparent); }
+.oswins { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+.oswin { border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:12px; }
+.oswin.active { border-color: color-mix(in oklab, currentColor 40%, transparent); }
+.oswin header { display:flex; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.win-body .stages li { display:inline-block; margin-right:8px; }
+.palette { display:flex; flex-wrap:wrap; gap:8px; padding:10px; border:1px dashed color-mix(in oklab, currentColor 24%, transparent); border-radius:12px; }

@@ -23,6 +23,15 @@
       capsuleDigest: receipt.capsuleDigest, encryptedDigest: receipt.encryptedDigest,
       kid: receipt.kid, at: receipt.at };
   }
+  function memoryStore() {
+    let value;
+    return {
+      kind: 'MEMORY',
+      durability: 'PARTIAL',
+      load: async () => value,
+      save: async next => { value = next; },
+    };
+  }
   function browserStore() {
     let promise;
     function open() {
@@ -52,7 +61,29 @@
         tx.onabort = tx.onerror = () => reject(new Error('Local storage transaction failed; no success is claimed'));
       });
     }
-    return { load: () => transact('readonly'), save: value => transact('readwrite', value) };
+    return {
+      kind: 'INDEXEDDB',
+      durability: 'MEASURED',
+      load: () => transact('readonly'),
+      save: value => transact('readwrite', value),
+    };
+  }
+  function resilientStore() {
+    const idb = browserStore();
+    const mem = memoryStore();
+    let active = idb;
+    return {
+      get kind() { return active.kind; },
+      get durability() { return active.durability; },
+      async load() {
+        try { return await active.load(); }
+        catch (_) { active = mem; return undefined; }
+      },
+      async save(value) {
+        try { await active.save(value); }
+        catch (_) { active = mem; await active.save(value); }
+      },
+    };
   }
   function createKernel(options) {
     const crypto = options.crypto;
@@ -61,8 +92,11 @@
     const now = options.now || (() => new Date().toISOString());
     const listeners = new Set();
     let queue = Promise.resolve();
+    const STAGES = ['encode', 'context', 'prefill', 'decode', 'plan', 'verify', 'tool', 'settle'];
     let view = { status: 'NOT_STARTED', identity: null, epoch: 0, receipts: [], capsules: [],
-      health: { healed: 0, blocked: 0, ledgerReplayable: false, lastVerify: null } };
+      health: { healed: 0, blocked: 0, ledgerReplayable: false, lastVerify: null },
+      stages: STAGES.map(name => ({ name, fired: false, at: null })),
+      energy: { label: 'MODELED', watts: 15, joules: null, note: 'CPU-time proxy @ 15 W — not RAPL/NVML' } };
     const hash = async value => hex(await crypto.subtle.digest('SHA-256', value));
     const cipherHash = capsule => hash(encode({ iv: capsule.iv, ciphertext: capsule.ciphertext }));
     const notify = () => { for (const fn of listeners) { try { fn(); } catch (_) { /* UI errors do not commit data. */ } } };
@@ -168,14 +202,32 @@
         return result;
       });
     }
+    function fireStages(names, started) {
+      const elapsed = Math.max(0, (root.performance ? performance.now() : Date.now()) - started) / 1000;
+      view.energy = {
+        label: 'MODELED',
+        watts: 15,
+        joules: Number((15 * elapsed).toFixed(4)),
+        note: 'CPU-time proxy @ 15 W — not RAPL/NVML',
+      };
+      view.stages = STAGES.map(name => ({
+        name,
+        fired: names.includes(name),
+        at: names.includes(name) ? now() : null,
+      }));
+    }
     return Object.freeze({
       ADAPTER_CURRENT: ADAPTER,
+      STAGES,
       get status() { return view.status; },
       get identity() { return snapshot(view.identity); },
       get epoch() { return view.epoch; },
       get receipts() { return snapshot(view.receipts); },
       get capsules() { return snapshot(view.capsules); },
       get health() { return snapshot(view.health); },
+      get stages() { return snapshot(view.stages); },
+      get energy() { return snapshot(view.energy); },
+      get storage() { return { kind: store.kind || 'UNKNOWN', durability: store.durability || 'UNKNOWN' }; },
       shortHex: value => String(value || '').slice(0, 12),
       subscribe(fn) { if (typeof fn !== 'function') throw new TypeError('Subscriber must be a function'); listeners.add(fn); return () => listeners.delete(fn); },
       boot() {
@@ -238,10 +290,36 @@
           }
           return { restored, verified: true, scope: 'LOCAL_CIPHERTEXT_ONLY' };
         });
-      }
+      },
+      async runLocalProof(input) {
+        const started = root.performance ? performance.now() : Date.now();
+        const payload = input || {
+          title: 'Genesis capsule',
+          body: 'Local-real kernel proof. Product origin is not required.',
+          policyClass: 'private',
+          adapter: ADAPTER,
+        };
+        fireStages(['encode', 'context', 'prefill', 'decode'], started);
+        const commit = await this.govern(payload);
+        fireStages(['encode', 'context', 'prefill', 'decode', 'plan', 'verify'], started);
+        const reuse = await this.govern(payload);
+        const blocked = await this.govern({ ...payload, adapter: 'alloy-local-v0' });
+        fireStages(['encode', 'context', 'prefill', 'decode', 'plan', 'verify', 'tool'], started);
+        let tamper = null;
+        if (commit.decision === 'ALLOW') tamper = await this.injectFault();
+        const heal = await this.runWatchdog();
+        fireStages(['encode', 'context', 'prefill', 'decode', 'plan', 'verify', 'tool', 'settle'], started);
+        notify();
+        return {
+          commit, reuse, blocked, tamper, heal,
+          stages: snapshot(view.stages),
+          energy: snapshot(view.energy),
+          storage: { kind: store.kind || 'UNKNOWN', durability: store.durability || 'UNKNOWN' },
+        };
+      },
     });
   }
   if (typeof module === 'object' && module.exports) module.exports = { createKernel };
-  else root.Alloy = createKernel({ crypto: root.crypto, store: browserStore(),
+  else root.Alloy = createKernel({ crypto: root.crypto, store: resilientStore(),
     lock: root.navigator?.locks ? work => root.navigator.locks.request('szl-alloy-local-v1-writer', { mode: 'exclusive' }, work) : null });
 })(globalThis);
