@@ -460,8 +460,10 @@ def check() -> None:
     models_contract = json.loads((ROOT / "models.json").read_text(encoding="utf-8"))
     assert models_contract["operational"] is False
     assert models_contract["trained_all"] is False
-    assert models_contract["hub"]["models"] == 44
-    assert len(models_contract["models"]) == 44
+    assert models_contract["hub"]["models"] == 46
+    assert models_contract["hub"]["datasets"] == 35
+    assert models_contract["hub"]["spaces"] == 21
+    assert len(models_contract["models"]) == 46
     assert models_contract["energy"] == "UNAVAILABLE"
     assert models_contract["boundaries"]["atlas_keep_7_not_rewritten"] is True
     assert not any(item.get("operational") for item in models_contract["models"])
