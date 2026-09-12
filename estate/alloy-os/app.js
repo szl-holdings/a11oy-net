@@ -311,10 +311,11 @@
     }));
     if (heal) heal.addEventListener("click", () => runAction(async () => {
       const outcome = await kernel.runWatchdog();
-      state.message = outcome.verified
+      const verified = outcome.verified === true && kernel.health.ledgerReplayable === true;
+      state.message = verified
         ? `Watchdog restored ${outcome.restored} snapshot(s).`
         : "Watchdog degraded.";
-      state.tone = outcome.verified ? "ok" : "bad";
+      state.tone = verified ? "ok" : "bad";
     }));
   }
 
