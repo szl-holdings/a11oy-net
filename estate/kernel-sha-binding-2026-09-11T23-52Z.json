@@ -1,0 +1,75 @@
+{
+  "schema": "szl.kernel-sha-binding/v1",
+  "observed_at": "2026-09-11T23:52:00Z",
+  "evidence_class": "LIVE_READBACK",
+  "disposition": "HOLD",
+  "class": "MEASURED",
+  "production_authorization": false,
+  "automatic_promotion_authorized": false,
+  "certified_production_ready": false,
+  "lambda": "Conjecture 1",
+  "takedown_starts": "2026-09-13T00:00:00Z",
+  "meaning": "Dated SHA predicates for the 14 kernels-API repositories. Does not create a v1 branch. Does not load weights. Does not rewrite kernel-kind-2026-09-11T23-20Z.json.",
+  "does_not_rewrite": [
+    "public-membership.json",
+    "public-inventory.json",
+    "estate.json",
+    "estate/kernel-kind-2026-09-11T23-20Z.json"
+  ],
+  "scope": {
+    "id": "hf-public-author-kernels/v1",
+    "authentication": "none",
+    "comparable_to": []
+  },
+  "predicates_incomparable": [
+    "kernels API object sha",
+    "models API object sha / refs/heads/main",
+    "git tag v1.0.0",
+    "named branch v1",
+    "szl.public-profile-inventory/v1 46/35/21",
+    "szl.public-hf-inventory/v3 44/30/48"
+  ],
+  "counts": {
+    "listed": 14,
+    "tagged_kernel": 9,
+    "untagged_in_kernels_api": 5,
+    "named_v1_branch": 0,
+    "kernel_sha_equals_model_sha": 0
+  },
+  "repositories": [
+    {"id": "SZLHOLDINGS/szl-govsign", "tagged_kernel": true, "kernel_sha": "e498c5042c1f721a1bbd8a4b9fdaa3756001e78d", "model_sha": "3b63e1fa4a84369cd83fb1f5d155575e5710a447", "tag_v1_0_0": "3b0111d8ed8bb66d908446469e639c096c3884c1", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-kernels", "tagged_kernel": true, "kernel_sha": "ba1ac6abdf82a281012f051d135004b7f1f5eceb", "model_sha": "f67a26a8141b1436ee2d1de64fb202c493981a2d", "tag_v1_0_0": "06fd850a99dd3b96ad560e6a222c629e4554200b", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-lambda-gate", "tagged_kernel": true, "kernel_sha": "8dc3955f8b898f1986ae6ce2257bddf79f33323c", "model_sha": "c9abda7882b0b4e79bbc9a50b359ff987db37494", "tag_v1_0_0": "5f01488af9e235531fd840f28df38e9a57d84d25", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-blocked", "tagged_kernel": true, "kernel_sha": "c944087ec4ea6b85dd7a44fd1ff8313b3b4511ed", "model_sha": "c5f2c03f2abfc1b63a2d66d2b7715f3b167acfb4", "tag_v1_0_0": "ebe28d154fc501d656c0e77595c28e033f2c77e9", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-provctl", "tagged_kernel": true, "kernel_sha": "424418b95e5d3403278c53189403e098662d4a3b", "model_sha": "c71443c62f7f03a2d1a6151d47194843843aed6a", "tag_v1_0_0": "fb18cb84ab3b47f86fb3db22125cd76fba8dc61e", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-invariants", "tagged_kernel": true, "kernel_sha": "78d04afef253e526326d6b0f4e944fa3d4b1990c", "model_sha": "c218f1a7eed7ec1b8a06a2997e49ffe9e339a71c", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-ouroboros", "tagged_kernel": true, "kernel_sha": "194970667faa1292ce09c7ae5880a1918f5cddeb", "model_sha": "40381c985b1eaebd5007626c0c58e25838d32389", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-formulas", "tagged_kernel": true, "kernel_sha": "636339753ea625bd27fd35a992699dba635c1cbb", "model_sha": "1edee3ad6aca1e5489d4e7dfd87ed2b2c7b1443f", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/YARQA-ATTN", "tagged_kernel": true, "kernel_sha": "4e0828e517e84377d0024ab3f9d0cdab7d31520d", "model_sha": "f30b9225214cc468ff19856ed81cb60c552925f0", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-governed-norm", "tagged_kernel": false, "kernel_sha": "3265120dfbbe764c6cfc9afcb204dcd1c216e8ab", "model_sha": "cc5fde2296369b43652d454072b63d49fc3241ad", "tag_v1_0_0": "b09e4f03ba3ff25cd7f1932707ddb03b2ae1fd3c", "v1_branch": false},
+    {"id": "SZLHOLDINGS/governed-inference-meter", "tagged_kernel": false, "kernel_sha": "86ad2ff763127e3400a7c5667003ed9cc9c43e6c", "model_sha": "9b602eda073db9628e0771253edeb66b50ac33e4", "tag_v1_0_0": "8c86d7d0742c213b9a8fc612261b38792ec8e25d", "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-maskmod", "tagged_kernel": false, "kernel_sha": "66107f821c597aef71555cd2a1d4014228f95f1b", "model_sha": "cfb9bd9af615860921828ac04dd01afd20b2527a", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-block-kv", "tagged_kernel": false, "kernel_sha": "b5c514505f89f890474568091ad5cfc868e2b664", "model_sha": "7d186065363c0941634103f69b34a3bc649b9011", "tag_v1_0_0": null, "v1_branch": false},
+    {"id": "SZLHOLDINGS/szl-receipt-attn", "tagged_kernel": false, "kernel_sha": "013dc8a884faa3ae9ac6a0835c5233440132ca3a", "model_sha": "6bd7d6320b25e076d0c645045699d2b3c57a917c", "tag_v1_0_0": null, "v1_branch": false}
+  ],
+  "loader": {
+    "package": "huggingface/kernels",
+    "version": "v0.16.1",
+    "revision": "1dc5c9d05683e8a594bb6d7a1ab18318b89e2caa",
+    "executed_this_observation": false
+  },
+  "mirrors_deleted": false,
+  "runtime_loaded": false,
+  "tracking": [
+    "https://github.com/szl-holdings/a11oy-net/pull/180",
+    "https://github.com/szl-holdings/szl-forge/pull/235",
+    "https://github.com/szl-holdings/.github/issues/728"
+  ],
+  "forbidden": [
+    "treat kernel sha as model sha",
+    "treat v1.0.0 tag as v1 branch",
+    "create Hub v1 branches from this record",
+    "delete mirrors without AWAITING_DESTRUCTIVE_APPROVAL",
+    "stamp LIVE"
+  ]
+}
