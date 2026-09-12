@@ -160,6 +160,7 @@
 
   function appBody(id) {
     const kernel = kernelAvailable() ? window.Alloy : null;
+    const disabled = state.busy || kernel?.status === "UNAVAILABLE" ? " disabled" : "";
     if (id === "command") {
       const stages = (kernel?.stages || []).map((stage) => (
         `<li class="${stage.fired ? "ok" : ""}">${escapeHtml(stage.name)}${stage.fired ? " · fired" : ""}</li>`
@@ -174,7 +175,7 @@
       ].map((line) => `<li>${escapeHtml(line)}</li>`).join("") : "<li>No local proof yet.</li>";
       return `<p class="eyebrow">${escapeHtml(kernel?.status || "UNAVAILABLE")} · kid ${escapeHtml(kernel?.identity?.kid || "booting")}</p>
         <p>This desk is the live fabric. Product origin can be down.</p>
-        <button type="button" class="button primary" id="kproof"${state.busy ? " disabled" : ""}>Run local proof</button>
+        <button type="button" class="button primary" id="kproof"${disabled}>Run local proof</button>
         <ol class="klog stages">${stages || "<li>Stages idle.</li>"}</ol>
         <p class="eyebrow">Five-step check</p>
         <ol class="klog">${proofLines}</ol>
@@ -185,7 +186,7 @@
         `<tr><td>${escapeHtml(row.plane)}</td><td>${escapeHtml(row.label)}</td><td class="${row.state === "MEASURED" ? "ok" : row.state === "UNAVAILABLE" ? "warn" : ""}">${escapeHtml(row.state)}</td><td>${escapeHtml(row.note || (row.plane === "local" ? "This browser." : "Observed fail-soft."))}</td></tr>`
       )).join("");
       return `<p>Local gates do not wait on a-11-oy.com. Remotes are observed, never blocking.</p>
-        <table class="align"><thead><tr><th>Plane</th><th>Gate</th><th>State</th><th>Note</th></tr></thead><tbody>${rows}</tbody></table>`;
+        <div class="align-scroll" tabindex="0" aria-label="Mesh gates"><table class="align"><thead><tr><th>Plane</th><th>Gate</th><th>State</th><th>Note</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (id === "ledger") {
       const receipts = (kernel?.receipts || []).slice(-12).reverse().map((receipt) => (
@@ -212,12 +213,17 @@
       const storage = kernel?.storage || {};
       return `<p>Storage ${escapeHtml(storage.kind || "UNKNOWN")} · durability ${escapeHtml(storage.durability || "UNKNOWN")}</p>
         <p>IndexedDB when the browser allows it. In-memory fallback is labeled PARTIAL, not durable.</p>
-        <label for="ktitle">Title</label><input id="ktitle" maxlength="160" value="${escapeHtml(state.title)}">
-        <label for="kbody">Payload</label><textarea id="kbody" maxlength="20000">${escapeHtml(state.body)}</textarea>
+        <label for="ktitle">Title</label><input id="ktitle" maxlength="160" value="${escapeHtml(state.title)}"${disabled}>
+        <label for="kbody">Payload</label><textarea id="kbody" maxlength="20000"${disabled}>${escapeHtml(state.body)}</textarea>
+        <label for="kadapter">Adapter</label>
+        <select id="kadapter"${disabled}>
+          <option value="${escapeHtml(kernel.ADAPTER_CURRENT)}"${state.adapter === kernel.ADAPTER_CURRENT ? " selected" : ""}>${escapeHtml(kernel.ADAPTER_CURRENT)} pinned</option>
+          <option value="alloy-local-v0"${state.adapter === "alloy-local-v0" ? " selected" : ""}>alloy-local-v0 stale</option>
+        </select>
         <div class="kactions">
-          <button type="button" class="button" id="ksubmit">Submit envelope</button>
-          <button type="button" class="button" id="ktamper">Tamper one byte</button>
-          <button type="button" class="button" id="kheal">Run healer</button>
+          <button type="button" class="button" id="ksubmit"${disabled}>Submit envelope</button>
+          <button type="button" class="button" id="ktamper"${disabled}>Tamper one byte</button>
+          <button type="button" class="button" id="kheal"${disabled}>Run healer</button>
         </div>`;
     }
     return `<ul class="klog">
@@ -232,6 +238,8 @@
   function renderDesk() {
     const element = byId("kernel-app");
     if (!element) return;
+    // Preserve drafts before actions, navigation or kernel notifications replace the DOM.
+    captureForm();
     if (!kernelAvailable()) {
       element.innerHTML = '<p class="bad" role="alert">Local kernel UNAVAILABLE — kernel.js did not initialize.</p>';
       return;
@@ -272,6 +280,7 @@
   function captureForm() {
     state.title = byId("ktitle")?.value ?? state.title;
     state.body = byId("kbody")?.value ?? state.body;
+    state.adapter = byId("kadapter")?.value ?? state.adapter;
   }
 
   function bindActions() {
@@ -295,12 +304,11 @@
       state.active = "command";
     }));
     if (submit) submit.addEventListener("click", () => runAction(async () => {
-      captureForm();
       const outcome = await kernel.govern({
         title: state.title,
         body: state.body,
         policyClass: state.policy,
-        adapter: kernel.ADAPTER_CURRENT,
+        adapter: state.adapter,
       });
       state.message = `${outcome.decision} — ${outcome.reason}`;
       state.tone = outcome.decision === "ALLOW" ? "ok" : "bad";

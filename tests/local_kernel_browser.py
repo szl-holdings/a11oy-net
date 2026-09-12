@@ -72,12 +72,19 @@ def main() -> None:
             page.goto(url)
             wait_for_js(
                 page,
-                "() => Boolean(globalThis.Alloy && Alloy.status === 'LOCAL_READY')",
+                "() => Boolean(globalThis.Alloy && Alloy.status === 'LOCAL_READY' && document.querySelector('#kproof'))",
             )
+            assert not errors, errors
+            page.locator('.osdock [data-open="kernel"]').click()
             page.locator("#ktitle").fill("Browser fixture")
             page.locator("#kbody").fill(
                 "Private browser fixture; never transmitted"
             )
+            # Navigation and the busy render must preserve the user's draft.
+            page.locator('.osdock [data-open="ledger"]').click()
+            page.locator('.osdock [data-open="kernel"]').click()
+            assert page.locator("#ktitle").input_value() == "Browser fixture"
+            assert page.locator("#kbody").input_value() == "Private browser fixture; never transmitted"
             page.locator("#ksubmit").click()
             wait_for_js(
                 page,
@@ -85,6 +92,7 @@ def main() -> None:
             )
             identity = page.evaluate("Alloy.identity.kid")
             assert page.evaluate("Alloy.capsules[0].status") == "VERIFIED"
+            assert page.evaluate("Alloy.capsules[0].title") == "Browser fixture"
             page.locator("#ksubmit").click()
             wait_for_js(
                 page,
@@ -109,6 +117,8 @@ def main() -> None:
             blocked_before = int(page.evaluate("Alloy.health.blocked"))
             receipts_before_denial = int(page.evaluate("Alloy.receipts.length"))
             page.locator("#kadapter").select_option("alloy-local-v0")
+            page.locator('.osdock [data-open="mesh"]').click()
+            assert page.locator("#kadapter").input_value() == "alloy-local-v0"
             page.locator("#ksubmit").click()
             wait_for_js(
                 page,
@@ -141,10 +151,18 @@ def main() -> None:
                     request.onerror=()=>reject(request.error);
                   });
                   db.close();
+                  const capsule = data.capsules[0];
+                  const unhex = value => Uint8Array.from(value.match(/../g), byte => parseInt(byte, 16));
+                  const plain = await crypto.subtle.decrypt({
+                    name:'AES-GCM', iv:unhex(capsule.iv),
+                    additionalData:new TextEncoder().encode(capsule.digest), tagLength:128
+                  }, data.encryptionKey, unhex(capsule.ciphertext));
+                  const payload = JSON.parse(new TextDecoder().decode(plain));
                   return {
                     privateExtractable:data.keys.privateKey.extractable,
                     aesExtractable:data.encryptionKey.extractable,
-                    plaintextStored:JSON.stringify(data).includes('Private browser fixture; never transmitted')
+                    plaintextStored:JSON.stringify(data).includes('Private browser fixture; never transmitted'),
+                    submittedPayloadPreserved:payload.title === 'Browser fixture' && payload.body === 'Private browser fixture; never transmitted'
                   };
                 }"""
             )
@@ -152,6 +170,7 @@ def main() -> None:
                 "privateExtractable": False,
                 "aesExtractable": False,
                 "plaintextStored": False,
+                "submittedPayloadPreserved": True,
             }
             evidence["storage"] = storage
             other = context.new_page()
@@ -182,6 +201,19 @@ def main() -> None:
             )
             assert page.evaluate("Alloy.receipts.length") == 7
             assert page.evaluate("Alloy.capsules.length") == 3
+            # Exercise the new Command path as well as individual kernel controls.
+            page.locator("#kproof").click()
+            wait_for_js(page, "() => Alloy.receipts.length === 12 && !document.querySelector('#kproof').disabled")
+            assert page.evaluate("Alloy.receipts.slice(-5).map(receipt => receipt.type)") == [
+                "SEAL", "REUSE", "DENY", "FAULT_TEST", "RESTORE"
+            ]
+            assert page.evaluate("Alloy.stages.length === 8 && Alloy.stages.every(stage => stage.fired)")
+            assert page.evaluate("Alloy.energy.label") == "MODELED"
+            assert page.evaluate("Alloy.status") == "LOCAL_READY"
+            evidence["command_proof_completed"] = True
+            # Measure every app's controls, including the new close buttons.
+            for app in ("ledger", "capsules", "energy", "alignment", "kernel", "honesty"):
+                page.locator(f'.osdock [data-open="{app}"]').click()
             measurements = []
             for width, height in ((320, 568), (375, 812), (768, 1024), (1440, 900)):
                 page.set_viewport_size({"width": width, "height": height})
@@ -189,6 +221,12 @@ def main() -> None:
                     """() => ({
                       width:innerWidth,
                       documentWidth:document.documentElement.scrollWidth,
+                      windows:[...document.querySelectorAll('.oswin')].map(element=>({
+                        left:element.getBoundingClientRect().left,
+                        right:element.getBoundingClientRect().right,
+                        clientWidth:element.clientWidth,
+                        scrollWidth:element.scrollWidth
+                      })),
                       touchTargets:[...document.querySelectorAll('#kernel-app button')].map(element=>({
                         width:element.getBoundingClientRect().width,
                         height:element.getBoundingClientRect().height
@@ -196,6 +234,11 @@ def main() -> None:
                     })"""
                 )
                 assert metrics["documentWidth"] <= width + 1, metrics
+                assert all(
+                    window["left"] >= -1 and window["right"] <= width + 1
+                    and window["scrollWidth"] <= window["clientWidth"] + 1
+                    for window in metrics["windows"]
+                ), metrics
                 assert all(
                     target["width"] >= 44 and target["height"] >= 44
                     for target in metrics["touchTargets"]

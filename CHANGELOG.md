@@ -2,6 +2,8 @@
 
 ## 2026-09-12
 
+- Repair the local Alloy desk's boot rendering, draft retention, adapter denial controls, strict watchdog verification, and mobile window sizing. Browser contract now opens the Kernel app, verifies the encrypted submitted payload, exercises Command proof, and measures all eight windows. Local verification uses disposable loopback storage; energy remains MODELED.
+
 - `/models.json` recapture MEASURED 2026-09-12T01:25:04Z: unauthenticated author-list 46 models / 35 datasets / 21 Spaces. Two new cards (`oac-system-health-v1`, `oac-clinical-transport-health-v1`) are CODE_OR_SCRIPTS (Python + JSON, no safetensors). `operational` stays false. Energy stays UNAVAILABLE. Atlas keep-7 not rewritten. `/public-inventory.json` 44/30/48 stays STALE. Does not stamp LIVE or READY. Never a11oy.com.
 
 ## 2026-09-11
