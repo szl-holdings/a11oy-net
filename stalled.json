@@ -1,6 +1,96 @@
 {
-  "asOf": "2026-09-04T21:03:00Z",
+  "asOf": "2026-09-12T00:19:31Z",
   "perplexityBrief": "https://github.com/szl-holdings/a11oy/blob/main/docs/PERPLEXITY_BRIEF.md",
+  "inventory": {
+    "schema": "szl.inventory.surfaces/v1",
+    "honesty": "MEASURED",
+    "certified": false,
+    "live_stamp": false,
+    "meaning": "One named predicate. Surfaces stay separate. Do not collapse author-list 46/35/21 with org-card 22 Spaces. KEEP-6/fold-38 is policy from /spaces.json, not Hub live count. This origin records /spaces.json. Not a second flock. index.html not rewritten. public-inventory.json 44/30/48 stays STALE.",
+    "keep6_policy": {
+      "authority": "https://a11oy.net/spaces.json",
+      "contract_version": "1.2.0",
+      "compiledAt": "2026-08-31T18:59:11Z",
+      "keep": 6,
+      "fold": 38,
+      "keep_ids": [
+        "a11oy",
+        "killinchu",
+        "immune",
+        "szl-khipu",
+        "szl-atelier",
+        "governed-receipt-verifier"
+      ]
+    },
+    "author_list_unauthenticated": {
+      "schema": "szl.public-profile-inventory/v1",
+      "endpoint": "https://huggingface.co/api/{models,datasets,spaces}?author=SZLHOLDINGS&limit=100",
+      "authentication": "none",
+      "measured_at": "2026-09-12T00:19:31Z",
+      "models": 46,
+      "datasets": 35,
+      "spaces": 21,
+      "collections": 21,
+      "record_on_this_origin": "https://a11oy.net/public-membership.json",
+      "space_ids": [
+        "SZLHOLDINGS/a11oy",
+        "SZLHOLDINGS/ayllu",
+        "SZLHOLDINGS/counsel",
+        "SZLHOLDINGS/david-leads",
+        "SZLHOLDINGS/finance",
+        "SZLHOLDINGS/holographic-unify",
+        "SZLHOLDINGS/immune",
+        "SZLHOLDINGS/immune-lattice",
+        "SZLHOLDINGS/killinchu",
+        "SZLHOLDINGS/llm-router-live",
+        "SZLHOLDINGS/lyte",
+        "SZLHOLDINGS/sentra",
+        "SZLHOLDINGS/szl-atelier",
+        "SZLHOLDINGS/szl-command-lab",
+        "SZLHOLDINGS/szl-constellation",
+        "SZLHOLDINGS/szl-frontier",
+        "SZLHOLDINGS/szl-khipu",
+        "SZLHOLDINGS/szl-model-inference-lab",
+        "SZLHOLDINGS/terra",
+        "SZLHOLDINGS/vertical-services",
+        "SZLHOLDINGS/yarqa"
+      ]
+    },
+    "org_card": {
+      "url": "https://huggingface.co/SZLHOLDINGS",
+      "measured_at": "2026-09-12T00:19:31Z",
+      "models": 46,
+      "datasets": 35,
+      "spaces": 22,
+      "kernels": 14,
+      "collections": 21,
+      "buckets": 1,
+      "note": "Org-card Spaces 22 stays separate from author-list Spaces 21. Do not collapse."
+    },
+    "atlas_snapshot_v3": {
+      "url": "https://a11oy.net/public-inventory.json",
+      "schema": "szl.public-hf-inventory/v3",
+      "observed_at": "2026-08-31T18:59:11Z",
+      "models": 44,
+      "datasets": 30,
+      "spaces": 48,
+      "state": "STALE",
+      "note": "Incomparable to author-list 46/35/21 and to org-card 22. Not overwritten."
+    },
+    "operator_health": {
+      "url": "https://a-11-oy.com/api/a11oy/v1/spaces/health",
+      "note": "Operator inventory, not Command Center.",
+      "state": "DEGRADED",
+      "canonical_count": 6,
+      "observed_count": 21,
+      "missing": ["governed-receipt-verifier"],
+      "fetchedAt": "2026-09-11T23:49:19Z"
+    },
+    "desk": {
+      "url": "https://a-11-oy.com/spaces",
+      "note": "Operator inventory desk. Not Command Center."
+    }
+  },
   "stalled": [
     {
       "id": "PERPLEXITY-MEMOS",
@@ -40,7 +130,14 @@
       "id": "HOLO-UNIFY",
       "state": "HOLOGRAM",
       "repo": "szl-holdings/holographic-unify",
-      "note": "Not a canonical public Hub product Space and not the flagship runtime. The canonical product origin remains a-11-oy.com."
+      "note": "Not a canonical public Hub product Space and not the flagship runtime. The canonical product origin remains a-11-oy.com. Do not create Space SZLHOLDINGS/unify."
+    },
+    {
+      "id": "INVENTORY-SURFACES",
+      "state": "MEASURED",
+      "predicate": "szl.inventory.surfaces/v1",
+      "measured_at": "2026-09-12T00:19:31Z",
+      "note": "Recapture is this named predicate. Author-list 46/35/21 stays separate from org-card 22 Spaces. KEEP-6/fold-38 is policy (spaces.json 1.2.0). public-inventory.json 44/30/48 remains STALE and is not rewritten. index.html not rewritten. public-membership.json 46/35/21 is not collapsed into 22."
     }
   ],
   "energy": "UNAVAILABLE",
