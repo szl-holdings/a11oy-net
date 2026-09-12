@@ -95,6 +95,43 @@ test('returned views cannot mutate the authoritative state', async () => {
   const rows=k.receipts; rows[0].note='changed view'; const caps=k.capsules; caps[0].status='invented';
   assert.notEqual(k.receipts[0].note,'changed view'); assert.equal(k.capsules[0].status,'VERIFIED');
 });
+test('boot and local-proof notifications preserve readable stages and modeled energy', async () => {
+  const f = fixture(), k = f.create(), observed = [], failures = [];
+  k.subscribe(() => {
+    // Subscriber exceptions are isolated by the kernel, so record them explicitly.
+    try {
+      observed.push({ stages: k.stages, energy: k.energy });
+    } catch (error) { failures.push(error.message); }
+  });
+  await k.boot();
+  assert.deepEqual(failures, []);
+  assert.equal(k.stages.length, 8);
+  assert.ok(k.stages.every(stage => stage.fired === false && stage.at === null));
+  assert.equal(k.energy.label, 'MODELED');
+  assert.equal(k.energy.watts, 15);
+  assert.equal(k.energy.joules, null);
+
+  const proof = await k.runLocalProof(input);
+  assert.equal(proof.commit.decision, 'ALLOW');
+  assert.equal(proof.reuse.receipt.type, 'REUSE');
+  assert.equal(proof.blocked.decision, 'DENY');
+  assert.ok(proof.tamper);
+  assert.equal(proof.heal.restored, 1);
+  assert.equal(proof.heal.verified, true);
+  assert.equal(k.status, 'LOCAL_READY');
+  assert.deepEqual(failures, []);
+  assert.ok(observed.length >= 7); // Boot, five persisted transitions, final proof view.
+  for (const view of observed) {
+    assert.deepEqual(Array.from(view.stages, stage => stage.name), Array.from(k.STAGES));
+    assert.equal(view.energy.label, 'MODELED');
+    assert.equal(view.energy.watts, 15);
+    assert.match(view.energy.note, /not RAPL\/NVML/);
+  }
+  assert.ok(proof.stages.every(stage => stage.fired && typeof stage.at === 'string'));
+  assert.ok(k.stages.every(stage => stage.fired));
+  assert.ok(Number.isFinite(proof.energy.joules) && proof.energy.joules >= 0);
+  assert.equal(k.energy.joules, proof.energy.joules);
+});
 test('kernel has no network, third-party loader, timers or string-code execution', () => {
   for (const token of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'eval(', 'new Function', 'setInterval', 'localStorage', 'sessionStorage']) assert.equal(source.includes(token), false, token);
 });
