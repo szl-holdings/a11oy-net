@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-12
+
+- `/models.json` recapture MEASURED 2026-09-12T01:25:04Z: unauthenticated author-list 46 models / 35 datasets / 21 Spaces. Two new cards (`oac-system-health-v1`, `oac-clinical-transport-health-v1`) are CODE_OR_SCRIPTS (Python + JSON, no safetensors). `operational` stays false. Energy stays UNAVAILABLE. Atlas keep-7 not rewritten. `/public-inventory.json` 44/30/48 stays STALE. Does not stamp LIVE or READY. Never a11oy.com.
+
 ## 2026-09-11
 
 - `/stalled.json` recapture under named predicate `szl.inventory.surfaces/v1` (MEASURED 2026-09-12T00:19:31Z). Author-list 46 models / 35 datasets / 21 Spaces stays separate from org-card 22 Spaces. KEEP-6 / fold-38 remains `/spaces.json` contract 1.2.0 policy, not Hub live count. `/public-inventory.json` 44/30/48 stays STALE. index.html not rewritten. Not a second flock. `certified=false`. Never a11oy.com.
