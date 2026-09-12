@@ -313,7 +313,7 @@
       const outcome = await kernel.runWatchdog();
       const verified = outcome.verified === true && kernel.health.ledgerReplayable === true;
       state.message = verified
-        ? `Watchdog restored ${outcome.restored} snapshot(s).`
+        ? `Watchdog restored ${outcome.restored} authenticated local snapshot(s).`
         : "Watchdog degraded.";
       state.tone = verified ? "ok" : "bad";
     }));
