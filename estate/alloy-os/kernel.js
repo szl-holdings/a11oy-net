@@ -159,7 +159,8 @@
       return { capsules, seals };
     }
     function present(state, checked) {
-      view = { status: checked.capsules.some(c => c.status !== 'VERIFIED') ? 'DEGRADED' : 'LOCAL_READY',
+      // Keep session stages and modeled energy readable through every persisted transition.
+      view = { ...view, status: checked.capsules.some(c => c.status !== 'VERIFIED') ? 'DEGRADED' : 'LOCAL_READY',
         identity: { kid: state.kid, scope: 'THIS_BROWSER_ORIGIN_ONLY' }, epoch: state.epoch,
         receipts: state.receipts.map(r => ({ ...fields(r), digest: r.digest, signature: r.signature })),
         capsules: checked.capsules, health: {

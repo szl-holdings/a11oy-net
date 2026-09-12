@@ -7,9 +7,9 @@
 .align a { color:inherit; }
 .kbox { display:grid; gap:16px; grid-template-columns:1.1fr .9fr; }
 .kcard { border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:16px; }
-.kcard label { display:block; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin:10px 0 6px; opacity:.75; }
-.kcard input, .kcard textarea, .kcard select { width:100%; background:transparent; color:inherit; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:10px; font:inherit; }
-.kcard textarea { min-height:90px; }
+.kcard label, .win-body label { display:block; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin:10px 0 6px; opacity:.75; }
+.kcard input, .kcard textarea, .kcard select, .win-body input, .win-body textarea, .win-body select { width:100%; min-width:0; background:transparent; color:inherit; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:10px; font:inherit; }
+.kcard textarea, .win-body textarea { min-height:90px; }
 .kactions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .klog { list-style:none; padding:0; margin:0; font-family:ui-monospace,monospace; font-size:12px; }
 .klog li { margin:6px 0; }
@@ -19,10 +19,11 @@
 @media (max-width: 900px) { .rail, .kbox { grid-template-columns:1fr; } }
 .osdesk { display:flex; flex-direction:column; gap:12px; }
 .osdock { display:flex; flex-wrap:wrap; gap:6px; }
-.dock-key, .win-focus, .win-close, .palette button { font:inherit; color:inherit; background:transparent; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:6px 10px; cursor:pointer; }
+.dock-key, .win-focus, .win-close, .palette button { min-width:44px; font:inherit; color:inherit; background:transparent; border:1px solid color-mix(in oklab, currentColor 20%, transparent); border-radius:8px; padding:6px 10px; cursor:pointer; }
 .dock-key.on { border-color: color-mix(in oklab, currentColor 55%, transparent); }
-.oswins { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
-.oswin { border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:12px; }
+.oswins { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); }
+.oswin { min-width:0; overflow-wrap:anywhere; border:1px solid color-mix(in oklab, currentColor 16%, transparent); border-radius:12px; padding:12px; }
+.align-scroll { max-width:100%; overflow-x:auto; }
 .oswin.active { border-color: color-mix(in oklab, currentColor 40%, transparent); }
 .oswin header { display:flex; justify-content:space-between; gap:8px; margin-bottom:8px; }
 .win-body .stages li { display:inline-block; margin-right:8px; }
