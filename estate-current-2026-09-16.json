@@ -1,0 +1,97 @@
+{
+  "schema": "szl.proof-estate-current/v1",
+  "captured_at": "2026-09-16T12:45:33Z",
+  "evidence_class": "MEASURED_WITH_KNOWN_BOUND",
+  "authority_chain": {
+    "github_source": {
+      "repository": "szl-holdings/a11oy",
+      "revision": "ebfd70f4c6915c2640cf82a97c7f22b6c62906eb",
+      "status": "SOURCE_AUTHORITY"
+    },
+    "product_runtime": {
+      "url": "https://a-11-oy.com/api/a11oy/v1/honest",
+      "observed_git_sha": "ebfd70f4c6915c2640cf82a97c7f22b6c62906eb",
+      "status": "SOURCE_PARITY_MEASURED"
+    },
+    "proof_origin": {
+      "url": "https://a11oy.net/models.json",
+      "historical_snapshot_captured_at": "2026-09-12T01:25:04Z",
+      "historical_models": 46,
+      "status": "HISTORICAL_SNAPSHOT_PRESERVED"
+    }
+  },
+  "hugging_face": {
+    "organization": "SZLHOLDINGS",
+    "public_file_census": {
+      "workflow_run": 34852822690,
+      "attempt": 2,
+      "job": 104798911243,
+      "artifact_id": 10446842998,
+      "artifact_sha256": "d9003db2b846561687ed448eb7c85786b418c832fc7ce8da033aaa59d78f17b4",
+      "models": {
+        "observed": 47,
+        "complete": 46,
+        "known_file_subtotal": 1025,
+        "complete_scope_file_count": null,
+        "blocker": {
+          "repo_id": "SZLHOLDINGS/SZL-Forge-1.5B-ReceiptAgent",
+          "code": "HF_LFS_IDENTITY",
+          "owner": "szl-holdings/szl-forge#332"
+        }
+      },
+      "datasets": {
+        "observed": 35,
+        "complete": 35,
+        "complete_scope_file_count": 1605
+      },
+      "spaces": {
+        "observed": 21,
+        "complete": 21,
+        "complete_scope_file_count": 3833
+      },
+      "kernels": {
+        "observed": 14,
+        "complete": 14,
+        "complete_scope_file_count": 225
+      },
+      "status": "PARTIAL_OR_UNAVAILABLE"
+    },
+    "authenticated_official_inventory": {
+      "scope": "authenticated organization inventory; do not merge with anonymous public-only scope",
+      "models": 47,
+      "datasets": 43,
+      "spaces": 26,
+      "kernels": 14,
+      "collections": 21,
+      "buckets": 6
+    }
+  },
+  "github_estate": {
+    "organization": "szl-holdings",
+    "authenticated_accessible_repositories": 128,
+    "observation": "100 repositories on page 1 plus 28 on page 2; page 3 empty",
+    "historical_123_receipts": "PRESERVE_AS_HISTORICAL_EVIDENCE",
+    "full_private_and_public_byte_audit": {
+      "status": "HOLD",
+      "owner": "szl-holdings/szl-org-health#64",
+      "reason": "terminal acceptance requires the repository-native validated cross-repository reader and byte verification, not a substituted public-only listing"
+    }
+  },
+  "disposition": {
+    "production_authorization": false,
+    "full_estate_aligned": false,
+    "automatic_promotion": false,
+    "reason": [
+      "public model file census incomplete for one admitted model",
+      "canonical models.json remains a historical 46-model classification snapshot",
+      "full organization byte audit has not reached its repository-native terminal condition"
+    ]
+  },
+  "boundaries": [
+    "This record is additive and does not rewrite the September 12 models.json snapshot.",
+    "Authenticated and anonymous Hugging Face inventory predicates remain distinct.",
+    "Reachability, publication, or collection membership is not model qualification.",
+    "No weights are rehosted or modified by this proof record.",
+    "No branch protection, test, provenance, licensing, receipt, rollback, fallback, or production route is weakened."
+  ]
+}
