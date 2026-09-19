@@ -1,0 +1,45 @@
+{
+  "schema": "szl.proof-estate-observation/v1",
+  "captured_at": "2026-09-19T14:48:19Z",
+  "collection_completed_at": "2026-09-19T16:57:46Z",
+  "scope": "public_repositories_only",
+  "evidence_class": "OBSERVED_SNAPSHOT",
+  "production_authorization": false,
+  "github": {
+    "organization": "szl-holdings",
+    "scope": "explicitly_public_repositories",
+    "repositories": 117,
+    "default_branch_files_enumerated": 27979,
+    "text_files_scanned": 25371,
+    "source": "https://api.github.com/orgs/szl-holdings/repos?type=public&per_page=100",
+    "method": "Paginated repository enumeration, immutable Git trees, and bounded source archive scans. Private repositories excluded from this public projection."
+  },
+  "hugging_face": {
+    "organization": "SZLHOLDINGS",
+    "scope": "anonymous_public_listing",
+    "models": 47,
+    "datasets": 35,
+    "spaces": 21,
+    "sources": [
+      "https://huggingface.co/api/models?author=SZLHOLDINGS",
+      "https://huggingface.co/api/datasets?author=SZLHOLDINGS",
+      "https://huggingface.co/api/spaces?author=SZLHOLDINGS"
+    ],
+    "readiness": "Inventory and file presence do not establish training quality, model qualification, or a usable application."
+  },
+  "product_readiness_observation": {
+    "source": "https://a-11-oy.com/api/a11oy/v1/readiness/tab-matrix?view=summary",
+    "observed_at": "2026-09-19T14:50:20Z",
+    "tabs": 141,
+    "endpoints": 100,
+    "probe_verdict_available": false,
+    "interpretation": "The route catalog was available; a fresh end-to-end probe verdict was not available in this response."
+  },
+  "limitations": [
+    "An observation window, not an atomic snapshot of every provider.",
+    "This is an operator observation, not a cryptographically authenticated audit attestation.",
+    "Source scans cover the recorded default-branch commits and eligible UTF-8 files up to 2 MiB; binary contents, Git history, other branches, and submodule contents are outside the scan.",
+    "No weights, complete dataset rows, training, inference, or production write operations were executed for this observation.",
+    "The September 4, September 12, and September 16 records retain their original counts and qualification limits."
+  ]
+}
