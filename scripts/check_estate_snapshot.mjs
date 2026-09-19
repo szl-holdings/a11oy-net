@@ -10,12 +10,15 @@ const pointer = {
   path: '/estate-observed-2026-09-19.json',
   sha256: digest,
   captured_at: '2026-09-19T14:48:19Z',
+  scope: 'public_repositories_only',
 };
 const record = {
   schema: 'szl.proof-estate-observation/v1',
   captured_at: pointer.captured_at,
   scope: 'public_repositories_only',
   production_authorization: false,
+  github: { scope: 'explicitly_public_repositories' },
+  hugging_face: { scope: 'anonymous_public_listing' },
 };
 assert.equal(policy.evaluate(pointer, record, digest, now).state, 'SNAPSHOT');
 assert.equal(policy.evaluate(pointer, record, digest, now + 86400000).state, 'STALE');
@@ -23,6 +26,11 @@ assert.equal(policy.evaluate(pointer, record, digest, NaN).state, 'UNAVAILABLE')
 assert.equal(policy.evaluate(pointer, record, 'b'.repeat(64), now).state, 'UNAVAILABLE');
 assert.equal(policy.evaluate(pointer, { ...record, production_authorization: true }, digest, now).state, 'UNAVAILABLE');
 assert.equal(policy.evaluate(pointer, { ...record, scope: 'authenticated' }, digest, now).state, 'UNAVAILABLE');
+assert.equal(policy.evaluate({ ...pointer, scope: 'authenticated' }, record, digest, now).state, 'UNAVAILABLE');
+assert.equal(policy.evaluate(pointer, { ...record, github: { scope: 'authenticated' } }, digest, now).state, 'UNAVAILABLE');
+assert.equal(policy.evaluate(pointer, { ...record, hugging_face: { scope: 'authenticated' } }, digest, now).state, 'UNAVAILABLE');
+assert.equal(policy.evaluate(pointer, { ...record, github: null }, digest, now).state, 'UNAVAILABLE');
+assert.equal(policy.evaluate(pointer, { ...record, hugging_face: null }, digest, now).state, 'UNAVAILABLE');
 assert.equal(policy.evaluate(pointer, { ...record, captured_at: '2026-09-19T15:00:00Z' }, digest, now).state, 'UNAVAILABLE');
 assert.equal(policy.evaluate(pointer, record, digest, now - 86400000).state, 'UNAVAILABLE');
 for (const path of ['https://example.org/record.json', '//example.org/record.json', '/../record.json', '/%2e%2e/record.json', '/estate-observed-2026-09-19.json?x=1']) {

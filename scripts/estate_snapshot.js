@@ -14,8 +14,11 @@
     const unavailable = { state: 'UNAVAILABLE', reason: 'Snapshot binding could not be verified.' };
     if (!pointer || !record || !safePath(pointer) || !Number.isFinite(now) ||
         pointer.schema !== 'szl.proof-snapshot-pointer/v1' ||
+        pointer.scope !== 'public_repositories_only' ||
         record.schema !== 'szl.proof-estate-observation/v1' ||
         record.scope !== 'public_repositories_only' || record.production_authorization !== false ||
+        !record.github || record.github.scope !== 'explicitly_public_repositories' ||
+        !record.hugging_face || record.hugging_face.scope !== 'anonymous_public_listing' ||
         !/^[a-f0-9]{64}$/.test(pointer.sha256 || '') || pointer.sha256 !== actualHash ||
         pointer.captured_at !== record.captured_at ||
         !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(record.captured_at || '')) return unavailable;
