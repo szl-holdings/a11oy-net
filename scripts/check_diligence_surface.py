@@ -297,6 +297,7 @@ def check() -> None:
         "hub_atlas",
         "estate_snapshot",
         "estate_contract",
+        "latest_estate_observation",
         "estate_os_hologram",
         "estate_os_plane",
         "origin_lock_record",

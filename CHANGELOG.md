@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-19
+
+- Add a public-only, dated estate observation and SHA-256-bound `/estate-current.json` pointer. `/status/` separates that observation from the preserved September 4 table, marks observations older than 24 hours STALE, and fails closed to UNAVAILABLE on fetch, scope, date, or digest errors. This is byte consistency, not a signature, live runtime health, or release authorization. The evidence index points to dated origin records without repeating a closed historical www incident as a current outage. CI checks the binding and failure paths.
+
 ## 2026-09-12
 
 - Repair the local Alloy desk's boot rendering, draft retention, adapter denial controls, strict watchdog verification, and mobile window sizing. Browser contract now opens the Kernel app, verifies the encrypted submitted payload, exercises Command proof, and measures all eight windows. Local verification uses disposable loopback storage; energy remains MODELED.

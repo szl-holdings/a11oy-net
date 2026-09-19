@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>a11oy.net / status — MEASURED pins</title>
-  <meta name="description" content="Proof-origin status. Not the product runtime. Counts are MEASURED this capture, not the stale 48-space atlas." />
+  <title>a11oy.net / status — dated estate observations</title>
+  <meta name="description" content="Dated estate observations with source, scope, and freshness. Product readiness is observed separately." />
   <style>
     :root { color-scheme: dark; }
     body { margin: 0; font: 16px/1.45 "IBM Plex Sans", ui-sans-serif, system-ui; background: #07080a; color: #e8e6e1; }
@@ -24,17 +24,24 @@
 <body>
 <main>
   <p class="kicker">Proof origin · a11oy.net · not the product runtime</p>
-  <h1>Status is MEASURED, or it is not shown.</h1>
+  <h1>Estate observations, with their dates and limits.</h1>
   <p>Product stays <a href="https://a-11-oy.com">a-11-oy.com</a>. Proof stays here. Do not merge the origins. HTTP 200 is reachability, not a production certificate.</p>
   <p>
     <span class="chip">Doctrine v11</span>
     <span class="chip">Λ = Conjecture 1</span>
-    <span class="chip">Signer ABSENT on apex</span>
-    <span class="chip">Effector SIMULATED</span>
+    <span class="chip">Runtime signing requires a current probe</span>
+    <span class="chip">Static proof surface</span>
     <span class="chip">No ATO</span>
   </p>
+  <div class="panel" aria-labelledby="latest-observation">
+    <h2 id="latest-observation">Latest indexed observation</h2>
+    <p id="estate-snapshot-state" role="status" data-state="UNAVAILABLE">UNAVAILABLE — snapshot verification pending. The dated records remain available below.</p>
+    <p><a href="/estate-current.json">Current record pointer</a> · <a href="/estate-observed-2026-09-19.json">September 19 public observation</a> · <a href="/estate-current-2026-09-16.json">September 16 qualification record</a> · <a href="/origin/">Dated origin evidence</a></p>
+    <p>The pointer binds exact record bytes. The browser marks records older than 24 hours as STALE. A matching digest verifies consistency, not a signature or release authorization. Inventory scopes and historical observations remain distinct.</p>
+    <noscript><p>JavaScript is disabled. Freshness is UNAVAILABLE; inspect each record's capture date directly.</p></noscript>
+  </div>
   <div class="panel">
-    <p class="kicker">Hub inventory · 2026-09-04T23:35Z</p>
+    <p class="kicker">Historical observation · Hub inventory · 2026-09-04T23:35Z</p>
     <table>
       <tr><th>Claim</th><th>Value</th><th>Class</th></tr>
       <tr><td>Hub Spaces (UI listing)</td><td>17</td><td>MEASURED</td></tr>
@@ -59,6 +66,7 @@
   </div>
   <p>This page is a static RECORD. It does not mint receipts and does not host a signer.</p>
 </main>
+  <script src="/scripts/estate_snapshot.js" defer></script>
   <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
   <script src="/scripts/szl-holo-proof-v2.js" defer data-szl-proof-holo-asset="script-v2"></script>
 </body>

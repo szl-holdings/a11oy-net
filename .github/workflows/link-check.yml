@@ -150,6 +150,9 @@ jobs:
       - name: Validate fail-closed browser observation policy
         run: node scripts/check_probe_policy.mjs
 
+      - name: Validate dated estate snapshot binding and freshness
+        run: node scripts/check_estate_snapshot.mjs
+
       - name: Validate kernel chips bind /honest locked_formula_count
         run: |
           python3 scripts/check_honest_kernel_bind.py
@@ -213,6 +216,8 @@ jobs:
             code/index.html \
             diligence/index.html \
             evidence.json \
+            estate-current.json \
+            estate-observed-2026-09-19.json \
             health.json \
             index.html \
             llms.txt \
@@ -226,6 +231,7 @@ jobs:
             robots.txt \
             scripts/atlas_policy.js \
             scripts/check_probe_policy.mjs \
+            scripts/estate_snapshot.js \
             scripts/honest_kernel_bind.js \
             scripts/probe_policy.js \
             site.webmanifest \
