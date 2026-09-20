@@ -15,7 +15,7 @@
       "Hickok /brain replacement"
     ]
   },
-  "captured_at": "2026-09-20T00:47:00Z",
+  "captured_at": "2026-09-20T11:25:00Z",
   "evidence_class": "REPORTED",
   "placement": {
     "source": "github.com/szl-holdings/a11oy-net",
@@ -47,8 +47,8 @@
     "hub_datasets": 35,
     "hub_spaces": 22,
     "hub_keep_public": 6,
-    "product_honest_git_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
-    "hf_sync_run": "35473126287 FAILED attest; runtime still a2244bde",
+    "product_honest_git_sha": "db9333c46804a584dad14ebc17ff4454f64f9c59",
+    "hf_sync_run": "35473126287 FAILED attest; runtime now db9333c4 MATCH GitHub tip a11oy#2209",
     "capabilities_overall": "PARTIALLY OPERATIONAL",
     "public_corpus": "SZLHOLDINGS/szl-second-brain-inrepo 575 DATA chunks"
   },
