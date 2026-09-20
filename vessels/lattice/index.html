@@ -1,20 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="robots" content="index,follow" />
-  <title>AIS message-type lattice — RECORD on a11oy.net</title>
-  <meta name="description" content="ITU-R M.1371 types treated as authority classes. Cite the catalog. Refuse the radio. Licensed AIS CLOSED. Not LIVE." />
-  <link rel="canonical" href="https://a11oy.net/vessels/lattice/" />
-  <link rel="stylesheet" href="/assets/kanchay.css" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="referrer" content="no-referrer"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests"/>
+<title>AIS message-type lattice - RECORD on a11oy.net</title>
+<meta name="description" content="ITU-R M.1371 types treated as authority classes. Cite the catalog. Refuse the radio. Licensed AIS CLOSED. Not LIVE."/>
+<link rel="canonical" href="https://a11oy.net/vessels/lattice/"/>
+<meta property="og:title" content="AIS message-type lattice - RECORD on a11oy.net"/>
+<meta property="og:description" content="Cite the 27 types. Refuse the decoder. Not a live AIS map."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://a11oy.net/vessels/lattice/"/>
+<meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png"/>
+<style>
+:root{--ink:#09090b;--panel:#121214;--line:#2a2a30;--paper:#f2efe8;--dim:#8a857a;--cord:#9a5a48;--ok:#7d9a7a;--wait:#c9a15b}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--paper);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+a{color:var(--paper)}
+a:hover{color:#fff}
+main{max-width:52rem;margin:0 auto;padding:2rem 1.25rem 5rem}
+.banner{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+h1{font-family:ui-serif,Georgia,serif;font-weight:500;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.03em;margin:.5rem 0}
+.lede{color:#c8c2b4;max-width:42rem}
+.row{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.1rem 0 1.4rem}
+.chip{display:inline-flex;align-items:center;min-height:32px;padding:0 .7rem;border-radius:999px;font:11px ui-monospace,monospace;background:var(--paper);color:var(--ink)}
+.chip.mute{background:transparent;color:var(--dim);box-shadow:0 0 0 1px var(--line)}
+nav.links{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1.6rem}
+nav.links a{min-height:44px;display:inline-flex;align-items:center;padding:0 1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-size:.9rem}
+nav.links a:hover{border-color:var(--cord)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.15rem;margin:0 0 .75rem}
+h2{font-family:ui-serif,Georgia,serif;font-weight:500;font-size:1.15rem;margin:0 0 .4rem}
+p,li{color:#c8c2b4}
+table{width:100%;border-collapse:collapse;font:13px/1.45 ui-monospace,monospace}
+th,td{text-align:left;padding:.35rem 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:500}
+.DENIED{color:#d46a4c}
+.AWAITING_APPROVAL,.ABSTAINED{color:var(--wait)}
+.atlas{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:.55rem;margin:.8rem 0}
+.tile{background:#0c0c0e;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;min-height:96px}
+.tile b{display:block;font:11px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.tile span{display:block;margin:.3rem 0 .15rem}
+.tile small{color:#c8c2b4;font-size:12px}
+.foot{margin-top:2rem;color:var(--dim);font-size:.8rem}
+</style>
+  <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
+  <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
 </head>
 <body>
-  <main class="wrap">
-    <p class="eyebrow">RECORD · CITATION_ONLY · queries = 0</p>
-    <h1>AIS types are authority classes, not a map.</h1>
-    <p class="lede">Every open AIS stack on the web decodes live NMEA or plots a paid feed. This page does the thing those products cannot: it names all 27 ITU-R M.1371 message types as a fail-closed gate and refuses to run a decoder. Citing a type is admitted. Querying a type is DENIED without a live key.</p>
-    <p><a href="/vessels/ais-lattice.json">Machine record</a> · <a href="/vessels/">Vessels proof</a> · <a href="https://a-11-oy.com/vessels">Product desk</a></p>
+<main>
+  <div class="banner">a11oy.net · RECORD · not a product host · Λ = Conjecture 1</div>
+  <h1>AIS types are authority classes, not a map.</h1>
+  <p class="lede">Every open AIS stack on the web decodes live NMEA or plots a paid feed. This page names all 27 ITU-R M.1371 message types as a fail-closed gate and refuses to run a decoder. Citing a type is admitted. Querying a type is DENIED without a live key.</p>
+  <div class="row">
+    <span class="chip">27 types</span>
+    <span class="chip mute">CITATION_ONLY</span>
+    <span class="chip mute">queries = 0</span>
+    <span class="chip mute">codecs refused</span>
+    <span class="chip mute">Not LIVE</span>
+  </div>
+  <nav class="links" aria-label="Origins">
+    <a href="https://a-11-oy.com/vessels">Evaluate on product</a>
+    <a href="/vessels/">Vessels proof</a>
+    <a href="/vessels/ais-lattice.json">AIS lattice JSON</a>
+    <a href="/vessels/world/">World clocks</a>
+    <a href="/vessels/joint-freshness.json">Joint freshness</a>
+    <a href="/vessels/receipt.json">Receipt</a>
+  </nav>
+  <section class="card">
     <h2>Self-check (stdlib, no codec, no radio)</h2>
     <ul>
       <li>licensed AIS query → DENIED / VESSELS-E-DENY-AIS</li>
@@ -23,11 +76,35 @@
       <li>cite ITU-R M.1371 type catalog → CITATION_ADMITTED</li>
       <li>read OFAC SDN public CSV → PUBLIC_LIST_ADMITTED</li>
     </ul>
+  </section>
+  <section class="card">
     <h2>What was scraped and refused</h2>
-    <p>pyais, libais, aiscat/AIS-catcher, gpsd AIVDM, MAGI SDR: existence cited, runtime refused. Hugging Face kernels <code>szl-blocked</code>, <code>szl-lambda-gate</code>, <code>szl-provctl</code>, <code>szl-govsign</code> are advisory mirrors. They do not grant authority and do not open AIS.</p>
-    <h2>Public lists measured this recapture</h2>
-    <p>OFAC SDN CSV HTTP 200 · 5,695,725 bytes · last-modified 2026-09-18. OpenSanctions maritime CSV HTTP 200 · 5,058,119 bytes · 2026-09-19. Reachability only. E01 and E03 stay OUTSTANDING.</p>
-    <p><strong>Not LIVE. Not production_ready. Formula authority NONE. Λ = Conjecture 1. PACKET8 unchanged. No fifth flagship.</strong></p>
-  </main>
+    <p>pyais, libais, aiscat/AIS-catcher, gpsd AIVDM, MAGI SDR: existence cited, runtime refused. Hugging Face kernels szl-blocked, szl-lambda-gate, szl-provctl, szl-govsign are advisory mirrors. They do not grant authority and do not open AIS.</p>
+  </section>
+  <section class="card">
+    <h2>Honesty</h2>
+    <ul>
+      <li>Status ROADMAP. Data label SAMPLE. Does not stamp LIVE.</li>
+      <li>AIS lattice digest f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457 unchanged.</li>
+      <li>Lattice classify is not the Packet 8 kernel. E01 and E03 stay OUTSTANDING.</li>
+      <li>Never a11oy.com. Not a fifth flagship. Formula authority NONE.</li>
+    </ul>
+  </section>
+  <p class="foot">Canonical source: github.com/szl-holdings/a11oy/verticals/vessels · Product origin a-11-oy.com · Proof origin a11oy.net · Apache-2.0 · Doctrine v11</p>
+</main>
+  <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
+  <nav class="szl-proof-static-rail" aria-label="A11oy proof journeys" data-szl-proof-holo-adopted="true" data-szl-proof-holo-static="v2">
+    <div class="szl-proof-origin"><span>Evidence Vault</span></div>
+    <div class="szl-proof-links">
+      <a class="szl-proof-link" href="https://a11oy.net/">Start</a>
+      <a class="szl-proof-link" href="https://a-11-oy.com/">Products</a>
+      <a class="szl-proof-link" href="https://a11oy.net/estate/">Models</a>
+      <a class="szl-proof-link" href="https://a11oy.net/khipu/">Kernels</a>
+      <a class="szl-proof-link" href="https://a11oy.net/record/" aria-current="page">Proof</a>
+    </div>
+    <div class="szl-proof-actions">
+      <a class="szl-proof-switch" href="https://a-11-oy.com/"><span>Open</span><strong>Product</strong></a>
+    </div>
+  </nav>
 </body>
 </html>
