@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <title>AIS message-type lattice — RECORD on a11oy.net</title>
+  <meta name="description" content="ITU-R M.1371 types treated as authority classes. Cite the catalog. Refuse the radio. Licensed AIS CLOSED. Not LIVE." />
+  <link rel="canonical" href="https://a11oy.net/vessels/lattice/" />
+  <link rel="stylesheet" href="/assets/kanchay.css" />
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">RECORD · CITATION_ONLY · queries = 0</p>
+    <h1>AIS types are authority classes, not a map.</h1>
+    <p class="lede">Every open AIS stack on the web decodes live NMEA or plots a paid feed. This page does the thing those products cannot: it names all 27 ITU-R M.1371 message types as a fail-closed gate and refuses to run a decoder. Citing a type is admitted. Querying a type is DENIED without a live key.</p>
+    <p><a href="/vessels/ais-lattice.json">Machine record</a> · <a href="/vessels/">Vessels proof</a> · <a href="https://a-11-oy.com/vessels">Product desk</a></p>
+    <h2>Self-check (stdlib, no codec, no radio)</h2>
+    <ul>
+      <li>licensed AIS query → DENIED / VESSELS-E-DENY-AIS</li>
+      <li>decode !AIVDM live stream → DENIED</li>
+      <li>RTL-SDR AIS-catcher → DENIED</li>
+      <li>cite ITU-R M.1371 type catalog → CITATION_ADMITTED</li>
+      <li>read OFAC SDN public CSV → PUBLIC_LIST_ADMITTED</li>
+    </ul>
+    <h2>What was scraped and refused</h2>
+    <p>pyais, libais, aiscat/AIS-catcher, gpsd AIVDM, MAGI SDR: existence cited, runtime refused. Hugging Face kernels <code>szl-blocked</code>, <code>szl-lambda-gate</code>, <code>szl-provctl</code>, <code>szl-govsign</code> are advisory mirrors. They do not grant authority and do not open AIS.</p>
+    <h2>Public lists measured this recapture</h2>
+    <p>OFAC SDN CSV HTTP 200 · 5,695,725 bytes · last-modified 2026-09-18. OpenSanctions maritime CSV HTTP 200 · 5,058,119 bytes · 2026-09-19. Reachability only. E01 and E03 stay OUTSTANDING.</p>
+    <p><strong>Not LIVE. Not production_ready. Formula authority NONE. Λ = Conjecture 1. PACKET8 unchanged. No fifth flagship.</strong></p>
+  </main>
+</body>
+</html>
