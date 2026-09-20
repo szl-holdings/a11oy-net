@@ -14,6 +14,8 @@ contribution to this repository:
    in code, docs, config, or fixtures; the `forbidden-domain` CI gate is
    release-blocking.
 
+This is a solo-build. DCO / `Signed-off-by` trailers are not required.
+
 ## Branch model
 
 - Branch from the default branch as `szl/<change>` —
@@ -25,8 +27,7 @@ contribution to this repository:
 
 - [Conventional Commits](https://www.conventionalcommits.org):
   `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`, `ci:` …
-- Sign off every commit (`git commit -s`): the `Signed-off-by:` trailer
-  certifies you have the right to submit the change (DCO style).
+- No `Signed-off-by` trailer is required.
 
 ## Pull requests
 
