@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.1",
+  "contract_version": "1.1.2",
   "surface": {
     "name": "Hub atlas",
     "url": "https://a11oy.net/#atlas",
@@ -9,21 +9,50 @@
   "status": {
     "state": "CURRENT",
     "evidence_class": "MEASURED",
-    "probed_at": "2026-09-04T16:00:00Z",
-    "probe_note": "Live HEAD of szlholdings-*.hf.space. Product a11oy + killinchu 200. immune Hub Space 404. Static holograms 404 at root."
+    "probed_at": "2026-09-20T15:21:00Z",
+    "probe_note": "Public author-list 21 Spaces / 47 models / 35 datasets. Authenticated org-admin totals 27 / 47 / 43 include private rows and are not the public card. SZLHOLDINGS/five-space HTTP 404 ABSENT. Product five-space remains BIND_AS_A11OY_PACKAGE on a-11-oy.com. Energy UNAVAILABLE. Do not stamp LIVE."
   },
   "hub_snapshot": {
-    "observed_at": "2026-08-31T18:59:11Z",
+    "observed_at": "2026-09-20T15:16:00Z",
     "evidence_class": "MEASURED",
-    "method": "Unauthenticated Hugging Face API public author-list recapture 2026-08-31; totals from org-authenticated view same day",
+    "method": "Authenticated Hugging Face whoami + author-list 2026-09-20; public card predicate hf-public-author-membership/v1",
+    "spaces_total_authenticated": 27,
+    "spaces_public": 21,
+    "spaces_private": 5,
+    "spaces_readme_profile": 1,
+    "models": 47,
+    "datasets_public": 35,
+    "datasets_authenticated": 43,
+    "collections_canonical": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
+    "org": "https://huggingface.co/SZLHOLDINGS",
+    "five_space": {
+      "id": "SZLHOLDINGS/five-space",
+      "http": 404,
+      "state": "ABSENT",
+      "mint": false
+    },
+    "drift_from_2026_09_10_ci_binding": {
+      "prior": {"spaces": 21, "models": 46, "datasets": 35, "observed_at": "2026-09-10T03:20:41Z"},
+      "models": "+1",
+      "added_public_model": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v2-merged",
+      "issue": "szl-holdings/a11oy#2010"
+    },
+    "historical_estate_alignment_v1": {
+      "label": "HISTORICAL",
+      "portfolio_spaces": 16,
+      "models": 45,
+      "datasets": 34
+    },
+    "bound": "Public card stays 21/47/35. Do not print authenticated 27/47/43 as public membership. HISTORICAL 16/45/34 retained. Last CI binding profile/public-inventory.json remains 21/46/35 @ 2026-09-10 and is not forged here."
+  },
+  "prior_snapshot_retained": {
+    "observed_at": "2026-08-31T18:59:11Z",
+    "evidence_class": "HISTORICAL",
     "spaces_total": 49,
     "spaces_public": 48,
     "spaces_private": 1,
     "models": 44,
-    "datasets": 38,
-    "collections_canonical": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
-    "org": "https://huggingface.co/SZLHOLDINGS",
-    "bound": "Unauthenticated Hub author-list recapture 2026-08-31: 44 models, 30 public datasets, 47 Space rows. Org-authenticated REPORTED 44 models / 38 datasets / 49 Spaces; 48 publicly readable including the README profile card, 1 not publicly listed. Public visibility expanded from the 2026-08-29 keep-7 (45 total / 7 public / 38 private) off this runtime; nothing deleted. The seven below are the curated canonical set, not the exhaustive public list."
+    "datasets": 38
   },
   "public_spaces": [
     {
@@ -31,21 +60,23 @@
       "url": "https://a-11-oy.com",
       "role": "Product Command Center",
       "evidence_class": "MEASURED",
-      "http_root": 200
+      "http_root": 200,
+      "hub": "https://huggingface.co/spaces/SZLHOLDINGS/a11oy",
+      "note": "Hub runtime_stage RUNNING is a Hub predicate, not a product LIVE stamp. Product bind BIND_AS_A11OY_PACKAGE."
     },
     {
       "name": "killinchu",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
       "role": "Defense vertical",
       "evidence_class": "MEASURED",
-      "http_root": 200
+      "http_root": 200,
+      "note": "Public effectors SIMULATED."
     },
     {
       "name": "david-leads",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/david-leads",
       "role": "Insurance vertical",
-      "evidence_class": "REPORTED",
-      "note": "pause+private policy. Not re-probed as public runtime."
+      "evidence_class": "REPORTED"
     },
     {
       "name": "anatomy",
@@ -58,10 +89,9 @@
       "name": "immune",
       "url": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
       "role": "Safety kernel",
-      "evidence_class": "UNAVAILABLE",
-      "http_root": 404,
+      "evidence_class": "MEASURED",
       "canonical_product": "https://a-11-oy.com/immune",
-      "note": "Hub Space root 404 on 2026-09-04. Source remains github.com/szl-holdings/immune. Preserve, do not delete."
+      "note": "Hub Space present in 2026-09-20 author-list. Product path remains a-11-oy.com/immune. 2026-09-04 root 404 retained as HISTORICAL probe."
     },
     {
       "name": "szl-real-estate",
@@ -133,6 +163,8 @@
   "boundaries": {
     "http_response_proves_capability": false,
     "reachability_is_not_quality": true,
-    "spaces_deleted": false
+    "spaces_deleted": false,
+    "authenticated_totals_are_not_public_card": true,
+    "five_space_mint_refused": true
   }
 }
