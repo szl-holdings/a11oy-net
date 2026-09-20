@@ -1,5 +1,5 @@
 {
-  "examined_documents": 41,
+  "examined_documents": 43,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -15,8 +15,8 @@
     "diligence/index.html",
     "estate/alloy-os/index.html",
     "estate/frontier-2026-09-04/index.html",
-    "estate/frontier-2026-09-11/index.html",
     "estate/frontier-2026-09-11-litellm/index.html",
+    "estate/frontier-2026-09-11/index.html",
     "estate/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
@@ -41,7 +41,9 @@
     "spec/GovernedAction/v1/index.html",
     "status/index.html",
     "terra/index.html",
-    "vessels/index.html"
+    "vessels/index.html",
+    "vessels/lattice/index.html",
+    "vessels/world/index.html"
   ],
   "product_origin": "https://a-11-oy.com",
   "proof_origin": "https://a11oy.net",
