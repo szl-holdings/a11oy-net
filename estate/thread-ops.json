@@ -15,7 +15,7 @@
       "Hickok /brain replacement"
     ]
   },
-  "captured_at": "2026-09-11T23:22:00Z",
+  "captured_at": "2026-09-20T00:17:00Z",
   "evidence_class": "REPORTED",
   "placement": {
     "source": "github.com/szl-holdings/a11oy-net",
@@ -47,8 +47,8 @@
     "hub_datasets": 28,
     "hub_spaces": 43,
     "hub_keep_public": 6,
-    "product_honest_git_sha": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
-    "hf_sync_run": "34656716997",
+    "product_honest_git_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "hf_sync_run": "35473126287 FAILED attest; runtime still a2244bde",
     "capabilities_overall": "PARTIALLY OPERATIONAL"
   },
   "undreamed": "Guardian for the SOW sits between CRM and PSA. Overlay. Do not replace.",
