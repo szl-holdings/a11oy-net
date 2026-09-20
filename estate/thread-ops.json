@@ -15,7 +15,7 @@
       "Hickok /brain replacement"
     ]
   },
-  "captured_at": "2026-09-20T00:17:00Z",
+  "captured_at": "2026-09-20T00:47:00Z",
   "evidence_class": "REPORTED",
   "placement": {
     "source": "github.com/szl-holdings/a11oy-net",
@@ -43,15 +43,16 @@
     "github_authenticated": 95,
     "github_public_search": 90,
     "packet_registry": 76,
-    "hub_models": 42,
-    "hub_datasets": 28,
-    "hub_spaces": 43,
+    "hub_models": 47,
+    "hub_datasets": 35,
+    "hub_spaces": 22,
     "hub_keep_public": 6,
     "product_honest_git_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
     "hf_sync_run": "35473126287 FAILED attest; runtime still a2244bde",
-    "capabilities_overall": "PARTIALLY OPERATIONAL"
+    "capabilities_overall": "PARTIALLY OPERATIONAL",
+    "public_corpus": "SZLHOLDINGS/szl-second-brain-inrepo 575 DATA chunks"
   },
-  "undreamed": "Guardian for the SOW sits between CRM and PSA. Overlay. Do not replace.",
+  "undreamed": "Guardian for the SOW is a four-station membrane SOW|STAFF|EXCEPTION|INVOICE. Retrieve-or-abstain handles. Overlay on incumbent PSA. Cite Common Paper / ASARS / AskLedger / Openterms / PSA MCP back doors as REPORTED. Do not replace. Do not mint.",
   "honesty": {
     "certified_production_ready": false,
     "graph_9000": "UNAVAILABLE",
