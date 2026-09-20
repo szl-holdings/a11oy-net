@@ -4,7 +4,7 @@
 **Not product.** Do not publish this on https://a-11-oy.com.
 **Not a Hugging Face Space.** Operator runbook is not a hologram.
 
-Pinned: 2026-09-20T00:47Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
+Pinned: 2026-09-20T11:25Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
 
 ## Placement decision
 
@@ -28,7 +28,8 @@ Pinned: 2026-09-20T00:47Z · org github.com/szl-holdings · HF huggingface.co/SZ
 
 - a11oy-net#199 MERGED — thread-ops.json recapture to honest.git_sha a2244bde
 - a11oy-net#198 MERGED — flagship SHA MATCH record
-- a11oy-net#200 MERGED — live HTML + THREAD-OPS.md paint a2244bde
+- a11oy-net#202 MERGED — open membrane atlas
+- a11oy-net#195/#196 remain draft HOLD pointers. Do not merge as production.
 - Merge queue on a11oy / .github / platform / immune / killinchu / forge / kernels: empty at last probe
 
 ## Live HTTP at last probe
@@ -37,7 +38,7 @@ Pinned: 2026-09-20T00:47Z · org github.com/szl-holdings · HF huggingface.co/SZ
 |---|---|
 | a-11-oy.com | 200 |
 | a-11-oy.com/command/brain | 200 retrieve pulse |
-| a-11-oy.com/api/a11oy/v1/honest | 200 git_sha a2244bde |
+| a-11-oy.com/api/a11oy/v1/honest | 200 git_sha db9333c4 MATCH a11oy#2209 |
 | a11oy.net/estate/thread-ops/ | 200 proof fold |
 | holdings.a-11-oy.com/brain/ | 200 hologram; not the public home |
 | huggingface.co/datasets/SZLHOLDINGS/szl-second-brain-inrepo | 575 DATA chunks, BM25, not a model |
@@ -78,6 +79,6 @@ Public fold stays https://a11oy.net/estate/thread-ops/ .
 Product retrieve pulse is https://a-11-oy.com/command/brain (handles or ABSTAIN).
 Product `/brain` is Hickok Dual-Stream. Do not overwrite it.
 Hub `SZLHOLDINGS/second-brain` stays ARCHIVE / family. No new Space.
-Live 2026-09-20T00:47Z: honest.git_sha `a2244bde`, hf-sync 35473126287 FAILED attest; runtime still a2244bde.
+Live 2026-09-20T11:25Z: honest.git_sha `db9333c4` MATCH GitHub a11oy tip (a11oy#2209). Prior hf-sync 35473126287 FAILED attest.
 Capabilities overall remains PARTIALLY OPERATIONAL. Do not stamp OPERATIONAL=8.
 certified_production_ready false. Packet 4 freeze still binds.
