@@ -10,8 +10,8 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-20T15:48:00Z",
-  "prior_observed_at_utc": "2026-09-20T02:30:00Z",
+  "observed_at_utc": "2026-09-20T16:16:00Z",
+  "prior_observed_at_utc": "2026-09-20T15:48:00Z",
   "evidence_class": "MEASURED",
   "observer": "Public HTTP HEAD/GET, TLS certificate read, and Hugging Face spaces runtime API from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
@@ -29,10 +29,10 @@
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "e48278b048797548252dda831daa0c5025c6eaac",
+      "git_sha_honest": "65b631e8a5073249b274d62f78051ea509be337d",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main e48278b0 (DCO checkbox drop after lattice echo)."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. HTTP 200 is reachability, not a production certificate. honest.git_sha 65b631e8 MEASURED. GitHub szl-holdings/a11oy main is 3ee1b9b9 (joint_freshness echo). HF image lag is named, not hidden. Joint echo is not yet on evaluate."
     },
     {
       "id": "www",
@@ -210,10 +210,23 @@
       "surface": "https://a11oy.net/vessels/joint-freshness.json",
       "html": "https://a11oy.net/vessels/world/",
       "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898",
-      "note": "Min-link over current official clocks. Coverage holes named. Winner not picked. SAMPLE miss is not clearance. Product echo lands on a separate a11oy PR."
+      "proof_http": 200,
+      "product_echo_live": false,
+      "product_github_main": "3ee1b9b936026395f2780810e7fdcf116a4d90d0",
+      "honest_git_sha": "65b631e8a5073249b274d62f78051ea509be337d",
+      "note": "Proof JSON is live. Product evaluate echo waits for the HF image that contains 3ee1b9b9. Miss is not clearance."
     }
   },
-  "defects": [],
+  "defects": [
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG-4",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest e48278b0 while product honest moved through c98ca99 / 65b631e8; GitHub main is 3ee1b9b9",
+      "now": "OPEN. honest.git_sha MEASURED 65b631e8. GitHub main 3ee1b9b9 not yet in the Space image. Do not claim MATCH.",
+      "class": "MEASURED",
+      "opened_at_utc": "2026-09-20T16:16:00Z"
+    }
+  ],
   "defects_closed": [
     {
       "id": "INC-05-WWW-404",
@@ -251,7 +264,7 @@
       "id": "VESSELS-LATTICE-RECEIPT-UNBOUND",
       "host": "a11oy.net/vessels/receipt.json",
       "prior": "ais-lattice.json published; vessels.json permalink present; receipt.json and vessels/index.html did not bind the digest",
-      "now": "receipt and human page bind lattice digest f931b485\u2026 \u00b7 27 types \u00b7 CITATION_ONLY",
+      "now": "receipt and human page bind lattice digest f931b485… · 27 types · CITATION_ONLY",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T02:30:00Z"
     },
@@ -267,7 +280,7 @@
       "id": "VESSELS-WORLD-CLOCKS-UNBOUND",
       "host": "a11oy.net/vessels/",
       "prior": "CN/KR/UA JSON live; world clocks authored on a branch; human vessels page only showed OFAC",
-      "now": "world clocks + public-list authority lattice bound. digest 70fd1918\u2026 / b2d23ac6\u2026 \u00b7 AIS lattice f931b485\u2026 unchanged",
+      "now": "world clocks + public-list authority lattice bound. digest 70fd1918… / b2d23ac6… · AIS lattice f931b485… unchanged",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T15:48:00Z"
     },
@@ -275,7 +288,7 @@
       "id": "VESSELS-FLOW-SHELL-WORLD-UNBOUND",
       "host": "a11oy.net/vessels/world/",
       "prior": "vessels/world/index.html and vessels/lattice/index.html existed; frontend-flow-shell-state and holographic v2 rollout-state omitted them",
-      "now": "both bound. min-link joint-freshness digest 1cb5b117\u2026 published. world digest 70fd1918\u2026 and AIS lattice f931b485\u2026 unchanged",
+      "now": "both bound. min-link joint-freshness digest 1cb5b117… published. world digest 70fd1918… and AIS lattice f931b485… unchanged",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T16:05:00Z"
     }
