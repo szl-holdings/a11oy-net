@@ -57,6 +57,7 @@ th{color:var(--dim);font-weight:500}
     <span class="chip mute">AIS lattice 27 types</span>
     <span class="chip mute">world clocks 50</span>
     <span class="chip mute">public-list lattice 7 classes</span>
+    <span class="chip mute">min-link joint freshness</span>
     <span class="chip mute">Hub Spaces not required</span>
     <span class="chip mute">Λ = Conjecture 1 OPEN</span>
   </div>
@@ -70,6 +71,7 @@ th{color:var(--dim);font-weight:500}
     <a href="/vessels/public-list-lattice.json">Public-list lattice · JSON</a>
     <a href="/vessels/world/">World clocks · human</a>
     <a href="/vessels/public-lists-cn-kr-ua.json">CN/KR/UA clocks · JSON</a>
+    <a href="/vessels/joint-freshness.json">Joint freshness · JSON</a>
     <a href="/vessels.json">vessels.json</a>
     <a href="/decision/">Parent RECORD</a>
     <a href="/aegis/">Aegis → Killinchu RECORD</a>
@@ -194,7 +196,25 @@ th{color:var(--dim);font-weight:500}
         <tr><td>MarineTraffic / VesselFinder</td><td>—</td><td class="DENIED">REFUSED</td><td>Commercial AIS map. DENIED.</td></tr>
       </tbody>
     </table>
-    <p>World digest 70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5. Authority lattice digest b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d. 50 clocks · 45 measured 200-or-206 · 7 authority classes. Typed judgment is stdlib exact-string SAMPLE over AURORA WAVE → SAMPLE_TEXT_MISS. Miss is not clearance. E01 stays OUTSTANDING. Machine copies: <a href="/vessels/public-lists-world.json">world JSON</a> · <a href="/vessels/public-list-lattice.json">authority lattice</a> · <a href="/vessels/world/">human</a>.</p>
+    <p>World digest 70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5. Authority lattice digest b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d. Joint-freshness digest 1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898. 50 clocks · 45 measured 200-or-206 · 7 authority classes. Min-link joint freshness does not pick a silent winner. Typed judgment is stdlib exact-string SAMPLE over AURORA WAVE → SAMPLE_TEXT_MISS. Miss is not clearance. E01 stays OUTSTANDING. Machine copies: <a href="/vessels/public-lists-world.json">world JSON</a> · <a href="/vessels/public-list-lattice.json">authority lattice</a> · <a href="/vessels/joint-freshness.json">joint freshness</a> · <a href="/vessels/world/">human</a>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Min-link joint freshness</h2>
+    <p>Inside an authority class, joint freshness is the weakest current official clock. A stale twin is a disagreement object, not a silent winner. A compilation is never promoted to official. Coverage holes are named cells. A SAMPLE miss is not clearance.</p>
+    <table>
+      <thead><tr><th>Class</th><th>Freshness</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>OFAC-vessel</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>UN-1718-vessel</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>UK-specified-ship</td><td>REACHABLE_FRESH</td><td>FCDO current · OFSI stale twin named</td></tr>
+        <tr><td>UA-GUR-ship</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>KR-MOFA-vessel</td><td class="ABSTAINED">REPORTED</td><td>coverage hole · ABSTAIN</td></tr>
+        <tr><td>IUU-RFMO</td><td class="ABSTAINED">PAGE_CITE</td><td>coverage hole · no bulk clock</td></tr>
+        <tr><td>Paris-banned</td><td class="ABSTAINED">PAGE_CITE</td><td class="DENIED">rows not stored</td></tr>
+      </tbody>
+    </table>
+    <p>Asia-Pacific official joint is mute (KR REPORTED, CN no vessel class, AU timeout, SG stale). Machine copy: <a href="/vessels/joint-freshness.json">joint-freshness.json</a>.</p>
   </section>
 
   <section class="card">
@@ -211,6 +231,7 @@ th{color:var(--dim);font-weight:500}
         <tr><td>AIS lattice bind</td><td>CITATION_ONLY</td><td>27 types · digest f931b485… · not a decoder</td></tr>
         <tr><td>World public-list clocks</td><td>MEASURED</td><td>50 clocks · 45 reachable · digest 70fd1918… · not a match rate</td></tr>
         <tr><td>Public-list authority lattice</td><td>CITATION_ONLY</td><td>7 classes · digest b2d23ac6… · not entity resolution</td></tr>
+        <tr><td>Min-link joint freshness</td><td>CITATION_ONLY</td><td>digest 1cb5b117… · winner not picked · holes named</td></tr>
         <tr><td>Typed judgment SAMPLE AURORA WAVE</td><td>SAMPLE</td><td>SAMPLE_TEXT_MISS · miss is not clearance</td></tr>
         <tr><td>VESSELS-E01 IMO/owner entity resolution</td><td>BLOCKING</td><td>OUTSTANDING</td></tr>
         <tr><td>VESSELS-E02 sanctions match precision</td><td>BLOCKING</td><td>SEED POLICY</td></tr>
@@ -228,6 +249,7 @@ th{color:var(--dim);font-weight:500}
       <li>AIS standards on this RECORD are CITATION_ONLY. This origin is not Class A or Class B equipment. SOLAS V/19 does not apply. Licensed AIS TPR is OUTSTANDING and is not claimed.</li>
       <li>AIS lattice on this RECORD is CITATION_ONLY. Types are authority classes, not a live feed. Codecs stay refused. Queries stay 0.</li>
       <li>World public-list clocks are MEASURED reachability. Authority classes cite admitted. Live AIS DENIED. OpenSanctions is citation only. Paris/Tokyo rows are not stored.</li>
+      <li>Min-link joint freshness names coverage holes and disagreements. It does not pick a silent winner. A SAMPLE miss is not clearance.</li>
       <li>Typed judgment on this RECORD is stdlib exact-string SAMPLE. It is not TypeSafe Jev. It is not E01.</li>
       <li>Λ = Conjecture 1 / advisory. Not a theorem.</li>
       <li>This origin does not run evaluate, scan, or replay. That stays on a-11-oy.com/vessels.</li>

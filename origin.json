@@ -204,6 +204,13 @@
       "surface": "https://a11oy.net/vessels/public-list-lattice.json",
       "digest": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
       "authority_classes": 7
+    },
+    "joint_freshness": {
+      "honesty": "CITATION_ONLY",
+      "surface": "https://a11oy.net/vessels/joint-freshness.json",
+      "html": "https://a11oy.net/vessels/world/",
+      "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898",
+      "note": "Min-link over current official clocks. Coverage holes named. Winner not picked. SAMPLE miss is not clearance. Product echo lands on a separate a11oy PR."
     }
   },
   "defects": [],
@@ -263,6 +270,14 @@
       "now": "world clocks + public-list authority lattice bound. digest 70fd1918\u2026 / b2d23ac6\u2026 \u00b7 AIS lattice f931b485\u2026 unchanged",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T15:48:00Z"
+    },
+    {
+      "id": "VESSELS-FLOW-SHELL-WORLD-UNBOUND",
+      "host": "a11oy.net/vessels/world/",
+      "prior": "vessels/world/index.html and vessels/lattice/index.html existed; frontend-flow-shell-state and holographic v2 rollout-state omitted them",
+      "now": "both bound. min-link joint-freshness digest 1cb5b117\u2026 published. world digest 70fd1918\u2026 and AIS lattice f931b485\u2026 unchanged",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T16:05:00Z"
     }
   ],
   "holds": [
@@ -296,7 +311,8 @@
     "incident": "INC-05",
     "vessels_world": "https://a11oy.net/vessels/public-lists-world.json",
     "vessels_world_html": "https://a11oy.net/vessels/world/",
-    "vessels_public_list_lattice": "https://a11oy.net/vessels/public-list-lattice.json"
+    "vessels_public_list_lattice": "https://a11oy.net/vessels/public-list-lattice.json",
+    "vessels_joint_freshness": "https://a11oy.net/vessels/joint-freshness.json"
   },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
