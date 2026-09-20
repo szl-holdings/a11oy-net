@@ -1,0 +1,48 @@
+{
+  "schema": "szl.vessels-public-lists-world/v8",
+  "surface": "https://a11oy.net/vessels/public-lists-world.json",
+  "parent": "https://a11oy.net/vessels/",
+  "product_desk": "https://a-11-oy.com/vessels",
+  "cn_kr_ua_pack": "https://a11oy.net/vessels/public-lists-cn-kr-ua.json",
+  "observed_at_utc": "2026-09-20T15:33:00Z",
+  "evidence_class": "MEASURED",
+  "honesty": "CITATION_ONLY. Reachability of public official pages and openly published compilations. Not entity-resolution precision. Not licensed AIS. Not live MMSI. Not LIVE.",
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "formula_authority": "NONE",
+  "licensed_ais_admitted": false,
+  "licensed_ais_queries": 0,
+  "production_ready": false,
+  "stamps_live": false,
+  "vessels_e01": "OUTSTANDING",
+  "vessels_e03": "OUTSTANDING",
+  "does_not_mutate_lattice_digest": true,
+  "lattice_digest_unchanged": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
+  "counts": {
+    "lists": 50,
+    "measured_200_or_206": 42,
+    "unavailable_or_forbidden": 8,
+    "opensanctions_compilations": 18,
+    "psc_official_pages": 13,
+    "official_bulk": 3
+  },
+  "official_bulk_measured": [
+    {"id": "EU_FSF_OFFICIAL", "http": 200, "bytes": 25766640, "last_modified": "Wed, 05 Aug 2026 14:50:10 GMT"},
+    {"id": "UK_OFSI_CSV", "http": 200, "bytes": 16641139, "last_modified": "Wed, 03 Jun 2026 11:01:26 GMT"},
+    {"id": "UN_XML", "http": 200, "bytes": 2176957, "last_modified": "Sat, 19 Sep 2026 23:02:27 GMT"}
+  ],
+  "fail_closed": {
+    "licensed_ais_query": "DENIED / PROHIBITED_ACTION",
+    "decode_nmea": "DENIED / PROHIBITED_ACTION",
+    "claim_e01_from_bytes": "DENIED",
+    "stamp_live": "DENIED",
+    "republish_paris_tokyo_rows": "DENIED"
+  },
+  "holds": [
+    "VESSELS-E01 OUTSTANDING",
+    "VESSELS-E03 OUTSTANDING",
+    "licensed AIS CLOSED",
+    "formula authority NONE",
+    "production_ready false"
+  ]
+}
