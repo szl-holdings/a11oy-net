@@ -1,5 +1,5 @@
 {
-  "examined_documents": 41,
+  "examined_documents": 42,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -41,7 +41,8 @@
     "spec/GovernedAction/v1/index.html",
     "status/index.html",
     "terra/index.html",
-    "vessels/index.html"
+    "vessels/index.html",
+    "vessels/lattice/index.html"
   ],
   "product_origin": "https://a-11-oy.com",
   "proof_origin": "https://a11oy.net",
@@ -54,6 +55,7 @@
     "code/index.html",
     "diligence/index.html",
     "notes/index.html",
-    "record/index.html"
+    "record/index.html",
+    "vessels/lattice/index.html"
   ]
 }
