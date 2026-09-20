@@ -1,0 +1,75 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-20T0016Z",
+  "parent": "SZL-FOUR-ORIGIN-OPS-2026-09-11T2350Z",
+  "captured_at": "2026-09-20T00:16:10Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1",
+  "doctrine": "v11",
+  "ready": false,
+  "production_authorized": false,
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net",
+    "never": "garden storefront domain is not this origin"
+  },
+  "github": {
+    "a11oy_main": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "a11oy_2201": "merged",
+    "szl_forge_347": "merged",
+    "a11oy_net_base": "6899094a23342f2e69c2a4b709454db87219a763",
+    "hf_sync_run": 1489,
+    "hf_sync_deploy_attest": "success",
+    "hf_sync_series_a_receipt": "UNSIGNED_ATOMIC",
+    "hf_sync_verdict_publish": "failure",
+    "hf_sync_verdict_publish_reason": "compact source-bound verdict Hub PUT failed; DEV-A freshness UNAVAILABLE without timestamp (a11oy#2143)"
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "github_product_sha_match": true,
+    "match_scope": "flagship git_sha two-read plus Hub runtime SZL_GIT_SHA",
+    "healthz": "ok",
+    "lean_signer": "ABSENT",
+    "dsse_live_sibling": "DSSE-LIVE",
+    "signing_status": "REAL ECDSA-P256",
+    "space": "a11oy"
+  },
+  "hub": {
+    "runtime_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "runtime_sha_source": "env:SZL_GIT_SHA",
+    "dockerfile_bytes": 46543,
+    "dockerfile_equals_github": true,
+    "anonymous_inventory": {
+      "spaces": 21,
+      "models": 47,
+      "datasets": 35,
+      "predicate": "anonymous author membership via Hub API limit=100"
+    },
+    "org_page_inventory": "different predicate — do not mix",
+    "kernel_kind": {
+      "state": "HOLD",
+      "github_branch_v1": false,
+      "hub_tag_v1_0_0": "different predicate than branch v1",
+      "hub_kernels_api_count": 14,
+      "note": "Do not flip HOLD. a11oy-net#195 stays draft."
+    }
+  },
+  "energy": {
+    "status": "UNAVAILABLE",
+    "series_a_across_restart": "UNSIGNED_ATOMIC",
+    "joule": null,
+    "note": "Series-A job succeeded as persistence of an unsigned receipt. That is not a measured joule. A11OY_GPU_TOKEN remains owner work."
+  },
+  "still_hold": [
+    "production promotion",
+    "measured joule / A11OY_GPU_TOKEN",
+    "lean healthz signer PRESENT (PEM)",
+    "bound keyed inference route",
+    "Hub PUT of compact verdict",
+    "kernel-kind first-class v1 qualification",
+    "www TLS promotion",
+    "four-plane immutable closure"
+  ]
+}
