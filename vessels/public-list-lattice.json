@@ -1,0 +1,204 @@
+{
+  "schema": "szl.vessels-public-list-authority-lattice/v8",
+  "surface": "https://a11oy.net/vessels/public-list-lattice.json",
+  "parent": "https://a11oy.net/vessels/",
+  "world_pack": "https://a11oy.net/vessels/public-lists-world.json",
+  "product_desk": "https://a-11-oy.com/vessels",
+  "observed_at_utc": "2026-09-20T15:48:00Z",
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "honesty": "CITATION_ONLY. Official-list names are authority classes, not a world AIS map. Cite a class: admitted. Query a radio or a commercial map: DENIED. Typed judgment is stdlib exact-string SAMPLE over frozen demonstration identities. Miss is not clearance. E01 stays OUTSTANDING.",
+  "formula_authority": "NONE",
+  "licensed_ais_admitted": false,
+  "licensed_ais_queries": 0,
+  "production_ready": false,
+  "stamps_live": false,
+  "vessels_e01": "OUTSTANDING",
+  "vessels_e03": "OUTSTANDING",
+  "does_not_mutate_ais_lattice_digest": true,
+  "ais_lattice_digest_unchanged": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
+  "thesis": "Commercial screening products hide stale sources and plot ships. This lattice classifies the SOURCE. REACHABLE_FRESH is admitted as a clock. STALE_OR_THIN and UNAVAILABLE force ABSTAIN. REFUSED forces DENY. That is operational visibility a sanctions desk can defend.",
+  "authority_classes": [
+    {
+      "id": "OFAC-vessel",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "REACHABLE_FRESH",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "Named vessel or owner on OFAC SDN/CONS. Cite the public file. Do not decode radio."
+    },
+    {
+      "id": "UN-1718-vessel",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "REACHABLE_FRESH",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "UN Security Council 1718 (DPRK) designations. Official XML."
+    },
+    {
+      "id": "UK-specified-ship",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "REACHABLE_FRESH",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "UK Sanctions List specified ships after the 28 Jan 2026 single-list move."
+    },
+    {
+      "id": "UA-GUR-ship",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "REACHABLE_FRESH",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "Ukraine GUR War and Sanctions public ships page. Official HTML. Not AIS."
+    },
+    {
+      "id": "KR-MOFA-vessel",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "REPORTED",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "Korea MOFA autonomous DPRK designated vessels by IMO. Page REPORTED this observer. Do not invent a CSV."
+    },
+    {
+      "id": "IUU-RFMO",
+      "cite": "ADMITTED",
+      "live_query": "DENIED",
+      "freshness_gate": "PAGE_CITE",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "note": "Regional fisheries IUU vessel lists. Cite the official RFMO page. Not a decoder."
+    },
+    {
+      "id": "Paris-banned",
+      "cite": "PAGE_CITE",
+      "live_query": "DENIED",
+      "freshness_gate": "PAGE_CITE",
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS",
+      "store_rows": "DENIED",
+      "note": "Paris MoU banned/detention rows may not be stored. Cite the page only."
+    }
+  ],
+  "freshness_classes": [
+    {
+      "id": "REACHABLE_FRESH",
+      "kernel": null,
+      "meaning": "Official or compilation file returned 200/206 with non-collapsed bytes this recapture."
+    },
+    {
+      "id": "STALE_OR_THIN",
+      "kernel": "VESSELS-E-ABSTAIN",
+      "meaning": "HTTP 200 but last-modified too old or bytes collapse. Fail-closed ABSTAIN. Never invent a hit."
+    },
+    {
+      "id": "PAGE_CITE",
+      "kernel": null,
+      "meaning": "Official HTML reachable. Rows may not be stored. Citation of the page is admitted."
+    },
+    {
+      "id": "REPORTED",
+      "kernel": null,
+      "meaning": "Page is known to exist from a named official source. This observer could not complete GET. Do not invent bytes."
+    },
+    {
+      "id": "UNAVAILABLE",
+      "kernel": "VESSELS-E-ABSTAIN",
+      "meaning": "Timeout, 403, 404, NXDOMAIN, redirect loop. Source is missing. ABSTAIN."
+    },
+    {
+      "id": "REFUSED",
+      "kernel": "VESSELS-E-DENY-AIS",
+      "meaning": "Licensed AIS, commercial map, codec, or ToS-forbidden dump. DENIED / PROHIBITED_ACTION."
+    }
+  ],
+  "typed_judgment": {
+    "engine": "stdlib exact-string SAMPLE",
+    "not_typesafe_jev_call": true,
+    "not_e01": true,
+    "frozen_identity": "AURORA WAVE",
+    "against": "cached demonstration names only. Never a scraped wanted-persons dump. Never a live AIS track.",
+    "result": "SAMPLE_TEXT_MISS",
+    "miss_is_not_clearance": true,
+    "hit_would_not_authorize": true,
+    "honesty": "Demonstration identity is SAMPLE. A miss is not clearance. A hit would still require human approval. Formula authority NONE."
+  },
+  "selfcheck": {
+    "engine": "stdlib classifier, no network, no codec import, no TypeSafe call",
+    "probes": [
+      {
+        "action": "licensed AIS query for AURORA WAVE",
+        "lattice": "REFUSED",
+        "reason": "PROHIBITED_ACTION",
+        "maps_to_eval": "VESSELS-E-DENY-AIS"
+      },
+      {
+        "action": "MarineTraffic plot",
+        "lattice": "REFUSED",
+        "reason": "PROHIBITED_ACTION",
+        "maps_to_eval": "VESSELS-E-DENY-AIS"
+      },
+      {
+        "action": "use UK OFSI ConList.csv as sole current source",
+        "lattice": "STALE_OR_THIN",
+        "reason": "STALE_OR_UNAVAILABLE_SOURCE",
+        "maps_to_eval": "VESSELS-E-ABSTAIN"
+      },
+      {
+        "action": "KR MOFA redirect loop",
+        "lattice": "REPORTED",
+        "reason": "STALE_OR_UNAVAILABLE_SOURCE",
+        "maps_to_eval": "VESSELS-E-ABSTAIN"
+      },
+      {
+        "action": "cite OFAC SDN public CSV",
+        "lattice": "REACHABLE_FRESH",
+        "reason": "CITATION_ONLY",
+        "maps_to_eval": null
+      },
+      {
+        "action": "exact-string SAMPLE AURORA WAVE vs demonstration names",
+        "lattice": "SAMPLE_TEXT_MISS",
+        "reason": "SAMPLE",
+        "maps_to_eval": null
+      },
+      {
+        "action": "store Paris MoU detention rows",
+        "lattice": "REFUSED",
+        "reason": "PROHIBITED_ACTION",
+        "maps_to_eval": "VESSELS-E-DENY-AIS"
+      }
+    ],
+    "note": "Lattice classify is not the Packet 8 kernel. Frozen kernel MATCH remains 3/3 on inner payloads."
+  },
+  "fail_closed": {
+    "licensed_ais_query": "DENIED / PROHIBITED_ACTION",
+    "commercial_ais_map": "DENIED / PROHIBITED_ACTION",
+    "stale_or_unavailable": "ABSTAINED / STALE_OR_UNAVAILABLE_SOURCE",
+    "paris_tokyo_row_store": "DENIED",
+    "claim_e01": "DENIED",
+    "stamp_production": "DENIED"
+  },
+  "holds": [
+    "VESSELS-E01 OUTSTANDING",
+    "VESSELS-E03 OUTSTANDING",
+    "licensed AIS CLOSED",
+    "formula authority NONE",
+    "Lambda Conjecture 1 OPEN",
+    "production_ready false"
+  ],
+  "boundaries": {
+    "fifth_flagship": false,
+    "never": "a11oy.com",
+    "does_not_stamp_live": true,
+    "packet8_unchanged": true,
+    "ais_lattice_digest_not_rewritten": true,
+    "lattice_is_not_the_kernel": true
+  },
+  "digest": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
+  "world_digest": "70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5"
+}

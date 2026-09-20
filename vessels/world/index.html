@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>World public-list clocks — RECORD on a11oy.net</title>
+  <meta name="description" content="Official public lists as reachability clocks and authority classes. Cite admitted. Live AIS DENIED. Not LIVE." />
+  <link rel="canonical" href="https://a11oy.net/vessels/world/" />
+  <link rel="stylesheet" href="/assets/kanchay.css" />
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">RECORD · CITATION_ONLY · queries = 0</p>
+    <h1>The world clock classifies the source, not the ship.</h1>
+    <p class="lede">Every other maritime product plots a globe. This page does the thing those products cannot: it names official public lists as fail-closed authority classes and refuses to query a radio. REACHABLE_FRESH is a clock. STALE_OR_THIN and UNAVAILABLE force ABSTAIN. REFUSED forces DENY. A SAMPLE miss on AURORA WAVE is not clearance.</p>
+    <p><a href="/vessels/public-lists-world.json">World clocks JSON</a> · <a href="/vessels/public-list-lattice.json">Authority lattice JSON</a> · <a href="/vessels/public-lists-cn-kr-ua.json">CN/KR/UA pack</a> · <a href="/vessels/">Vessels proof</a> · <a href="https://a-11-oy.com/vessels">Product desk</a></p>
+    <h2>Self-check (stdlib, no codec, no radio, no TypeSafe call)</h2>
+    <ul>
+      <li>licensed AIS query → DENIED / VESSELS-E-DENY-AIS</li>
+      <li>MarineTraffic plot → DENIED</li>
+      <li>UK OFSI ConList.csv as sole current source → STALE_OR_THIN / ABSTAIN</li>
+      <li>KR MOFA redirect loop → REPORTED / ABSTAIN if used as sole source</li>
+      <li>cite OFAC SDN public CSV → REACHABLE_FRESH / CITATION_ADMITTED</li>
+      <li>exact-string SAMPLE AURORA WAVE → SAMPLE_TEXT_MISS · miss is not clearance</li>
+      <li>store Paris MoU detention rows → DENIED</li>
+    </ul>
+    <h2>Authority classes</h2>
+    <p>OFAC-vessel · UN-1718-vessel · UK-specified-ship · UA-GUR-ship · KR-MOFA-vessel · IUU-RFMO · Paris-banned (page cite only).</p>
+    <h2>Measured this recapture</h2>
+    <p>50 clocks. 45 HTTP 200-or-206. 31 REACHABLE_FRESH. 2 STALE_OR_THIN. 12 PAGE_CITE. 3 UNAVAILABLE. 2 REFUSED. World digest 70fd1918… · authority lattice digest b2d23ac6… · AIS lattice digest f931b485… unchanged. E01 and E03 stay OUTSTANDING.</p>
+    <p><strong>Not production_ready. Formula authority NONE. Λ = Conjecture 1. PACKET8 unchanged. No fifth flagship. Never a11oy.com.</strong></p>
+  </main>
+</body>
+</html>
