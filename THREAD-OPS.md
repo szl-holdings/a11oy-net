@@ -4,7 +4,7 @@
 **Not product.** Do not publish this on https://a-11-oy.com.
 **Not a Hugging Face Space.** Operator runbook is not a hologram.
 
-Pinned: 2026-09-20T11:25Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
+Pinned: 2026-09-20T11:40Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
 
 ## Placement decision
 
@@ -29,6 +29,8 @@ Pinned: 2026-09-20T11:25Z · org github.com/szl-holdings · HF huggingface.co/SZ
 - a11oy-net#199 MERGED — thread-ops.json recapture to honest.git_sha a2244bde
 - a11oy-net#198 MERGED — flagship SHA MATCH record
 - a11oy-net#202 MERGED — open membrane atlas
+- a11oy-net#206 MERGED — production-path scrape
+- a11oy-net China OSS fold — this landing
 - a11oy-net#195/#196 remain draft HOLD pointers. Do not merge as production.
 - Merge queue on a11oy / .github / platform / immune / killinchu / forge / kernels: empty at last probe
 
@@ -60,6 +62,19 @@ Unowned gap: generate-SOW tools mint documents; PSA MCP servers write the record
 
 Public retrieve corpus stays `SZLHOLDINGS/szl-second-brain-inrepo` (575 chunks). Hub `second-brain` Space stays ARCHIVE. `szl-receiptagent-qwen35-0.8b-v3` stays C1 quarantine. Do not mint a wrapper. Overlay. Do not replace.
 
+## China OSS · REPORTED · cite only
+
+PRC open source independently assembled the four stations as isolated skills. Same unowned gap: no membrane binds them.
+
+| Station | Cite | Disposition |
+|---|---|---|
+| SOW | qwertyzhu/openlawkit Apache-2.0 (Word comments, no body mutation); Hongbin-Xiao/PEAT-LLM4LCR-TOOL MIT; zzz303999-debug/contract-sense MIT; pa1nrui1/legal-skills | Cite. Not a signed SOW store. |
+| STAFF | 7836246/lumos labor-law worker lens; jurismind-dev/LawClaw desktop skills | Cite. Not a staff directory. |
+| EXCEPTION | openlawkit legal-deadline-extractor (no fact → no deadline); Inupedia/tender-extract (rules first, LLM on conflict) | Closest public ABSTAIN analog. Do not run here. |
+| INVOICE | stone16/Invoice-Manager MIT VAT dual-source; intsig-textin/xparse-sample-projects | Cite. Not a billing host. |
+| Map | lilialla/awesome-legal-ai-zh | Catalog, not partners. |
+| Graph HOLD | yifanfeng97/Hyper-Extract; HKUDS LightRAG; XMUDeepLIT/LegalGraphRAG; Fan-Luo/Legal-RAG | Cite. Do not stand up a 9000-node graph. |
+
 ## Owner-only (do not fake COMPLETE)
 
 1. HF org write token — restore root index.html on 404 static Spaces
@@ -80,5 +95,6 @@ Product retrieve pulse is https://a-11-oy.com/command/brain (handles or ABSTAIN)
 Product `/brain` is Hickok Dual-Stream. Do not overwrite it.
 Hub `SZLHOLDINGS/second-brain` stays ARCHIVE / family. No new Space.
 Live 2026-09-20T11:25Z: honest.git_sha `db9333c4` MATCH GitHub a11oy tip (a11oy#2209). Prior hf-sync 35473126287 FAILED attest.
+China OSS scrape 2026-09-20T11:40Z folded as REPORTED handles only.
 Capabilities overall remains PARTIALLY OPERATIONAL. Do not stamp OPERATIONAL=8.
 certified_production_ready false. Packet 4 freeze still binds.
