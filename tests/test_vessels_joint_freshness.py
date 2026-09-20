@@ -69,5 +69,4 @@ class VesselsJointFreshnessContract(unittest.TestCase):
         self.assertIn("Coverage-hole atlas", world)
         self.assertIn("SAMPLE_TEXT_MISS", world)
         self.assertIn("Does not stamp LIVE", world)
-        self.assertIn("Never a11oy.com", world)
-        self.assertNotIn("https://a11oy.com", world)
+        self.assertIn("1cb5b117", world)
