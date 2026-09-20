@@ -1,0 +1,144 @@
+{
+  "schema": "szl.vessels-public-lists/v8",
+  "surface": "https://a11oy.net/vessels/public-lists-cn-kr-ua.json",
+  "parent": "https://a11oy.net/vessels/",
+  "product_desk": "https://a-11-oy.com/vessels",
+  "observed_at_utc": "2026-09-20T15:27:00Z",
+  "evidence_class": "MEASURED",
+  "honesty": "CITATION_ONLY. Reachability of public lists. Not entity-resolution precision. Not licensed AIS. Not LIVE.",
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "formula_authority": "NONE",
+  "licensed_ais_admitted": false,
+  "licensed_ais_queries": 0,
+  "production_ready": false,
+  "stamps_live": false,
+  "vessels_e01": "OUTSTANDING",
+  "vessels_e03": "OUTSTANDING",
+  "does_not_mutate_lattice_digest": true,
+  "lattice_digest_unchanged": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
+  "lists": [
+    {
+      "id": "UA_NSDC_API",
+      "jurisdiction": "Ukraine",
+      "official": "https://api-drs.nsdc.gov.ua",
+      "human": "https://drs.nsdc.gov.ua/export",
+      "http": 200,
+      "class": "MEASURED",
+      "note": "Official NSDC API reachable. HTML export path 403 from this observer. Register advertises a ships table. Not a match score."
+    },
+    {
+      "id": "UA_GUR_WAR_SANCTIONS_SHIPS",
+      "jurisdiction": "Ukraine",
+      "official": "https://war-sanctions.gur.gov.ua/en/transport/ships",
+      "http": 200,
+      "class": "MEASURED",
+      "note": "Official GUR War and Sanctions ships HTML 200. Page copy reports a ship inventory. Not AIS. Not E01."
+    },
+    {
+      "id": "UA_OS_NSDC_CSV",
+      "jurisdiction": "Ukraine",
+      "url": "https://data.opensanctions.org/datasets/latest/ua_nsdc_sanctions/targets.simple.csv",
+      "http": 200,
+      "bytes": 20181951,
+      "last_modified": "Sun, 20 Sep 2026 08:26:35 GMT",
+      "class": "MEASURED",
+      "note": "Third-party compilation of the NSDC register. Citation only."
+    },
+    {
+      "id": "UA_OS_WAR_CSV",
+      "jurisdiction": "Ukraine",
+      "url": "https://data.opensanctions.org/datasets/latest/ua_war_sanctions/targets.simple.csv",
+      "http": 200,
+      "bytes": 3613081,
+      "last_modified": "Sun, 20 Sep 2026 07:44:27 GMT",
+      "class": "MEASURED",
+      "note": "Third-party compilation including marine assets. Citation only."
+    },
+    {
+      "id": "KR_MOFA_DPRK_AUTONOMOUS",
+      "jurisdiction": "Republic of Korea",
+      "official": "https://www.mofa.go.kr/www/wpge/m_25834/contents.do",
+      "http": "UNAVAILABLE",
+      "class": "REPORTED",
+      "note": "Official MOFA autonomous DPRK sanctions page exists and lists designated vessels by IMO. This observer hit a redirect loop. Do not invent a CSV. Not a live AIS query."
+    },
+    {
+      "id": "CN_MFA_AFSL",
+      "jurisdiction": "China",
+      "official": "https://www.mfa.gov.cn/web/wjb_673085/zfxxgk_674865/gknrlb/fzcqdcs",
+      "http": 200,
+      "class": "MEASURED",
+      "note": "MFA Anti-Foreign Sanctions List page reachable as HTML. China does not publish a structured bulk vessel CSV. Not a match score."
+    },
+    {
+      "id": "CN_MOFCOM_UEL",
+      "jurisdiction": "China",
+      "official": "https://aqygzj.mofcom.gov.cn/flzc/gzjgfxwj/index.html",
+      "http": 206,
+      "last_modified": "Wed, 12 Aug 2026 06:32:27 GMT",
+      "class": "MEASURED",
+      "note": "MOFCOM Unreliable Entity List page reachable. HTML, not a vessel feed."
+    },
+    {
+      "id": "CN_OS_SANCTIONS_CSV",
+      "jurisdiction": "China",
+      "url": "https://data.opensanctions.org/datasets/latest/cn_sanctions/targets.simple.csv",
+      "http": 200,
+      "bytes": 124729,
+      "last_modified": "Sun, 20 Sep 2026 06:47:41 GMT",
+      "class": "MEASURED",
+      "note": "Research compilation. OpenSanctions itself says China does not publish structured designation data. Citation only."
+    },
+    {
+      "id": "UN_CONSOLIDATED_XML",
+      "jurisdiction": "UN",
+      "official": "https://scsanctions.un.org/resources/xml/en/consolidated.xml",
+      "http": 206,
+      "last_modified": "Sat, 19 Sep 2026 23:02:27 GMT",
+      "class": "MEASURED",
+      "note": "UN Security Council consolidated list XML reachable. Includes 1718 DPRK designations. Not AIS."
+    },
+    {
+      "id": "OFAC_SDN_CSV",
+      "jurisdiction": "United States",
+      "official": "https://www.treasury.gov/ofac/downloads/sdn.csv",
+      "http": 200,
+      "bytes": 5695725,
+      "last_modified": "Fri, 18 Sep 2026 14:02:00 GMT",
+      "class": "MEASURED",
+      "note": "Prior clock still reachable."
+    },
+    {
+      "id": "OS_MARITIME_CSV",
+      "jurisdiction": "multi",
+      "url": "https://data.opensanctions.org/datasets/latest/maritime/maritime.csv",
+      "http": 200,
+      "bytes": 5063543,
+      "last_modified": "Sun, 20 Sep 2026 15:04:14 GMT",
+      "class": "MEASURED",
+      "note": "Prior maritime compilation clock. Bytes moved vs 19 Sep."
+    }
+  ],
+  "fail_closed": {
+    "licensed_ais_query": "DENIED / PROHIBITED_ACTION",
+    "decode_nmea": "DENIED / PROHIBITED_ACTION",
+    "claim_e01_from_bytes": "DENIED",
+    "stamp_live": "DENIED"
+  },
+  "holds": [
+    "VESSELS-E01 OUTSTANDING",
+    "VESSELS-E03 OUTSTANDING",
+    "licensed AIS CLOSED",
+    "formula authority NONE",
+    "production_ready false",
+    "Lambda Conjecture 1 OPEN"
+  ],
+  "boundaries": {
+    "fifth_flagship": false,
+    "never": "a11oy.com",
+    "does_not_stamp_live": true,
+    "does_not_vendor_ais_codec": true,
+    "lattice_digest_not_rewritten": true
+  }
+}
