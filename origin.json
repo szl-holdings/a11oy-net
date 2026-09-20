@@ -10,8 +10,8 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-20T02:30:00Z",
-  "prior_observed_at_utc": "2026-09-20T00:30:00Z",
+  "observed_at_utc": "2026-09-20T15:48:00Z",
+  "prior_observed_at_utc": "2026-09-20T02:30:00Z",
   "evidence_class": "MEASURED",
   "observer": "Public HTTP HEAD/GET, TLS certificate read, and Hugging Face spaces runtime API from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
@@ -21,15 +21,18 @@
       "role": "product apex",
       "status": 200,
       "front": "CLOUDFLARE",
-      "a_records": ["104.21.27.230", "172.67.169.206"],
+      "a_records": [
+        "104.21.27.230",
+        "172.67.169.206"
+      ],
       "server": "szl",
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "db9333c46804a584dad14ebc17ff4454f64f9c59",
+      "git_sha_honest": "e48278b048797548252dda831daa0c5025c6eaac",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main db9333c4 (#2209 evaluate unwrap)."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main e48278b0 (DCO checkbox drop after lattice echo)."
     },
     {
       "id": "www",
@@ -57,7 +60,12 @@
       "role": "proof registry",
       "status": 200,
       "front": "GITHUB_PAGES",
-      "a_records": ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"],
+      "a_records": [
+        "185.199.108.153",
+        "185.199.109.153",
+        "185.199.110.153",
+        "185.199.111.153"
+      ],
       "server": "GitHub.com",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
@@ -82,8 +90,14 @@
     "spaces_author_api_count": 21,
     "spaces_sampled_running": 21,
     "domains": [
-      { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
-      { "domain": "a-11-oy.com", "stage": "READY" }
+      {
+        "domain": "szlholdings-a11oy.hf.space",
+        "stage": "READY"
+      },
+      {
+        "domain": "a-11-oy.com",
+        "stage": "READY"
+      }
     ],
     "packet8_assurance_spaces": {
       "ids": [
@@ -106,9 +120,33 @@
     "evaluate_path": "https://a-11-oy.com/api/a11oy/v1/decision/vessels/evaluate",
     "match": "3/3",
     "cases": [
-      {"eval_id": "VESSELS-E-ABSTAIN", "case_id": "vessels-stale-list", "state": "ABSTAINED", "reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"], "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"},
-      {"eval_id": "VESSELS-E-AWAIT-01", "case_id": "vessels-aurora-wave", "state": "AWAITING_APPROVAL", "reason_codes": ["HUMAN_APPROVAL_REQUIRED"], "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"},
-      {"eval_id": "VESSELS-E-DENY-AIS", "case_id": "vessels-licensed-ais", "state": "DENIED", "reason_codes": ["PROHIBITED_ACTION"], "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"}
+      {
+        "eval_id": "VESSELS-E-ABSTAIN",
+        "case_id": "vessels-stale-list",
+        "state": "ABSTAINED",
+        "reason_codes": [
+          "STALE_OR_UNAVAILABLE_SOURCE"
+        ],
+        "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"
+      },
+      {
+        "eval_id": "VESSELS-E-AWAIT-01",
+        "case_id": "vessels-aurora-wave",
+        "state": "AWAITING_APPROVAL",
+        "reason_codes": [
+          "HUMAN_APPROVAL_REQUIRED"
+        ],
+        "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"
+      },
+      {
+        "eval_id": "VESSELS-E-DENY-AIS",
+        "case_id": "vessels-licensed-ais",
+        "state": "DENIED",
+        "reason_codes": [
+          "PROHIBITED_ACTION"
+        ],
+        "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"
+      }
     ],
     "licensed_ais_admitted": false,
     "licensed_ais_queries": 0,
@@ -135,14 +173,38 @@
       "bind": "inner frozen payload"
     },
     "eval_id_only_probe": {
-      "posted": {"eval_id": "VESSELS-E-DENY-AIS"},
+      "posted": {
+        "eval_id": "VESSELS-E-DENY-AIS"
+      },
       "state": "DENIED",
-      "reason_codes": ["PROHIBITED_ACTION"],
+      "reason_codes": [
+        "PROHIBITED_ACTION"
+      ],
       "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275",
-      "empty_json": {"state": "UNKNOWN", "reason_codes": ["EMPTY_KERNEL_BIND"]},
+      "empty_json": {
+        "state": "UNKNOWN",
+        "reason_codes": [
+          "EMPTY_KERNEL_BIND"
+        ]
+      },
       "note": "Product #2209 unwrap is live on a-11-oy.com. Wrapper-only empty POST stays UNKNOWN."
     },
-    "note": "Evaluate MATCH is seed-policy replay of the inner frozen payload. It does not close entity-resolution E01 or licensed-AIS TPR E03. Wrapper-only POST without payload is not the eval contract."
+    "note": "Evaluate MATCH is seed-policy replay of the inner frozen payload. It does not close entity-resolution E01 or licensed-AIS TPR E03. Wrapper-only POST without payload is not the eval contract.",
+    "public_lists_world": {
+      "honesty": "CITATION_ONLY",
+      "surface": "https://a11oy.net/vessels/public-lists-world.json",
+      "html": "https://a11oy.net/vessels/world/",
+      "digest": "70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5",
+      "lists": 50,
+      "measured_200_or_206": 45,
+      "note": "Proof-origin clocks. Product public_lists_echo lands on a separate a11oy PR. HTTP 200 is reachability, not E01."
+    },
+    "public_list_lattice": {
+      "honesty": "CITATION_ONLY",
+      "surface": "https://a11oy.net/vessels/public-list-lattice.json",
+      "digest": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
+      "authority_classes": 7
+    }
   },
   "defects": [],
   "defects_closed": [
@@ -182,9 +244,25 @@
       "id": "VESSELS-LATTICE-RECEIPT-UNBOUND",
       "host": "a11oy.net/vessels/receipt.json",
       "prior": "ais-lattice.json published; vessels.json permalink present; receipt.json and vessels/index.html did not bind the digest",
-      "now": "receipt and human page bind lattice digest f931b485… · 27 types · CITATION_ONLY",
+      "now": "receipt and human page bind lattice digest f931b485\u2026 \u00b7 27 types \u00b7 CITATION_ONLY",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T02:30:00Z"
+    },
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG-3",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest db9333c4 while product honest moved through 4e4a0c66 to e48278b0",
+      "now": "git_sha_honest e48278b0 MATCH product /honest and GitHub main",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T15:48:00Z"
+    },
+    {
+      "id": "VESSELS-WORLD-CLOCKS-UNBOUND",
+      "host": "a11oy.net/vessels/",
+      "prior": "CN/KR/UA JSON live; world clocks authored on a branch; human vessels page only showed OFAC",
+      "now": "world clocks + public-list authority lattice bound. digest 70fd1918\u2026 / b2d23ac6\u2026 \u00b7 AIS lattice f931b485\u2026 unchanged",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T15:48:00Z"
     }
   ],
   "holds": [
@@ -212,10 +290,13 @@
     "vessels_proof": "https://a11oy.net/vessels/",
     "vessels_lattice": "https://a11oy.net/vessels/ais-lattice.json",
     "vessels_lattice_html": "https://a11oy.net/vessels/lattice/",
-    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0230.md",
-    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0030.md",
+    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-1548.md",
+    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0230.md",
     "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
-    "incident": "INC-05"
+    "incident": "INC-05",
+    "vessels_world": "https://a11oy.net/vessels/public-lists-world.json",
+    "vessels_world_html": "https://a11oy.net/vessels/world/",
+    "vessels_public_list_lattice": "https://a11oy.net/vessels/public-list-lattice.json"
   },
   "boundaries": {
     "this_origin_is_not_a_product_host": true,
