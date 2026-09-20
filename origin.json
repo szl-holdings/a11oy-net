@@ -10,8 +10,8 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-20T00:30:00Z",
-  "prior_observed_at_utc": "2026-09-11T23:25:17Z",
+  "observed_at_utc": "2026-09-20T02:30:00Z",
+  "prior_observed_at_utc": "2026-09-20T00:30:00Z",
   "evidence_class": "MEASURED",
   "observer": "Public HTTP HEAD/GET, TLS certificate read, and Hugging Face spaces runtime API from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
@@ -26,10 +26,10 @@
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+      "git_sha_honest": "db9333c46804a584dad14ebc17ff4454f64f9c59",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main a2244bde."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main db9333c4 (#2209 evaluate unwrap)."
     },
     {
       "id": "www",
@@ -77,8 +77,8 @@
   "huggingface": {
     "space": "SZLHOLDINGS/a11oy",
     "runtime_stage": "RUNNING",
-    "runtime_sha_reported": "2fc725fa695e781b3137f8cdd6cc192502c65975",
-    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /api/a11oy/v1/honest git_sha a2244bde matches GitHub szl-holdings/a11oy main. Do not treat the two SHAs as one identity.",
+    "runtime_sha_reported": "26d66c37080fae22ea682ea7768c6e3d19cb09b5",
+    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /api/a11oy/v1/honest git_sha db9333c4 matches GitHub szl-holdings/a11oy main. Do not treat the two SHAs as one identity.",
     "spaces_author_api_count": 21,
     "spaces_sampled_running": 21,
     "domains": [
@@ -113,6 +113,14 @@
     "licensed_ais_admitted": false,
     "licensed_ais_queries": 0,
     "ais_standards": "CITATION_ONLY",
+    "ais_lattice": {
+      "honesty": "CITATION_ONLY",
+      "surface": "https://a11oy.net/vessels/ais-lattice.json",
+      "html": "https://a11oy.net/vessels/lattice/",
+      "digest": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
+      "message_types": 27,
+      "note": "Types are authority classes. Cite admitted. Live query DENIED. Lattice classify is not the Packet 8 kernel."
+    },
     "vessels_e03": "OUTSTANDING",
     "formula_authority": "NONE",
     "production_ready": false,
@@ -125,6 +133,14 @@
       "vessels": "3/3",
       "total": "21/21",
       "bind": "inner frozen payload"
+    },
+    "eval_id_only_probe": {
+      "posted": {"eval_id": "VESSELS-E-DENY-AIS"},
+      "state": "DENIED",
+      "reason_codes": ["PROHIBITED_ACTION"],
+      "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275",
+      "empty_json": {"state": "UNKNOWN", "reason_codes": ["EMPTY_KERNEL_BIND"]},
+      "note": "Product #2209 unwrap is live on a-11-oy.com. Wrapper-only empty POST stays UNKNOWN."
     },
     "note": "Evaluate MATCH is seed-policy replay of the inner frozen payload. It does not close entity-resolution E01 or licensed-AIS TPR E03. Wrapper-only POST without payload is not the eval contract."
   },
@@ -150,9 +166,25 @@
       "id": "INC-05-ORIGIN-SHA-LAG",
       "host": "a11oy.net/origin.json",
       "prior": "git_sha_honest 7253ccb1 while product honest a2244bde",
-      "now": "git_sha_honest a2244bde MATCH product and GitHub main",
+      "now": "closed then reopened when product moved to db9333c4",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T00:30:00Z"
+    },
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG-2",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest a2244bde while product honest db9333c4",
+      "now": "git_sha_honest db9333c4 MATCH product and GitHub main",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T02:30:00Z"
+    },
+    {
+      "id": "VESSELS-LATTICE-RECEIPT-UNBOUND",
+      "host": "a11oy.net/vessels/receipt.json",
+      "prior": "ais-lattice.json published; vessels.json permalink present; receipt.json and vessels/index.html did not bind the digest",
+      "now": "receipt and human page bind lattice digest f931b485… · 27 types · CITATION_ONLY",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T02:30:00Z"
     }
   ],
   "holds": [
@@ -178,8 +210,10 @@
     "product": "https://a-11-oy.com/",
     "vessels_product": "https://a-11-oy.com/vessels",
     "vessels_proof": "https://a11oy.net/vessels/",
-    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0030.md",
-    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md",
+    "vessels_lattice": "https://a11oy.net/vessels/ais-lattice.json",
+    "vessels_lattice_html": "https://a11oy.net/vessels/lattice/",
+    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0230.md",
+    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0030.md",
     "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
     "incident": "INC-05"
   },
@@ -193,6 +227,7 @@
     "fourth_public_origin_published": false,
     "http_response_proves_capability": false,
     "www_301_is_not_production_ready": true,
-    "evaluate_match_is_not_e03": true
+    "evaluate_match_is_not_e03": true,
+    "lattice_is_not_the_kernel": true
   }
 }
