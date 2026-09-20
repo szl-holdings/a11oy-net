@@ -54,6 +54,7 @@ th{color:var(--dim);font-weight:500}
     <span class="chip mute">SAMPLE</span>
     <span class="chip mute">licensed AIS CLOSED</span>
     <span class="chip mute">AIS standards CITATION_ONLY</span>
+    <span class="chip mute">AIS lattice 27 types</span>
     <span class="chip mute">Hub Spaces not required</span>
     <span class="chip mute">Λ = Conjecture 1 OPEN</span>
   </div>
@@ -61,6 +62,8 @@ th{color:var(--dim);font-weight:500}
     <a href="https://a-11-oy.com/vessels">Evaluate on product · a-11-oy.com/vessels</a>
     <a href="/vessels/receipt.json">Bound receipt · JSON</a>
     <a href="/vessels/ais-standards.json">AIS standards · JSON</a>
+    <a href="/vessels/ais-lattice.json">AIS lattice · JSON</a>
+    <a href="/vessels/lattice/">AIS lattice · human</a>
     <a href="/vessels.json">vessels.json</a>
     <a href="/decision/">Parent RECORD</a>
     <a href="/aegis/">Aegis → Killinchu RECORD</a>
@@ -96,6 +99,8 @@ th{color:var(--dim);font-weight:500}
         <tr><td>source_revision</td><td>9dc70869694f72ba3fb4e632f86f96118ccb39ae</td></tr>
         <tr><td>formula authority</td><td>NONE</td></tr>
         <tr><td>Λ</td><td>Conjecture 1 OPEN · ADVISORY_CONJECTURAL</td></tr>
+        <tr><td>ais_lattice_digest</td><td>f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457</td></tr>
+        <tr><td>ais_lattice</td><td>27 ITU-R M.1371 types as authority classes · CITATION_ONLY</td></tr>
       </tbody>
     </table>
     <table>
@@ -129,6 +134,23 @@ th{color:var(--dim);font-weight:500}
   </section>
 
   <section class="card">
+    <h2>AIS message-type authority lattice</h2>
+    <p>Commercial AIS products treat ITU-R M.1371 types 1–27 as telemetry. This RECORD treats them as authority classes. Citing a type is admitted. Querying a type on the radio, an SDR, or a paid feed is DENIED without a live key. pyais, libais, AIS-catcher, gpsd AIVDM, and MAGI-System are named and refused. Hugging Face SZL kernels are advisory mirrors only. Lattice classify is not the Packet 8 kernel.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>digest</td><td>f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457</td></tr>
+        <tr><td>message types</td><td>27 · CITATION_ONLY</td></tr>
+        <tr><td>cite type catalog</td><td>CITATION_ADMITTED</td></tr>
+        <tr><td>live query / decode / VHF / SDR</td><td class="DENIED">DENIED / PROHIBITED_ACTION</td></tr>
+        <tr><td>maps to eval</td><td>VESSELS-E-DENY-AIS</td></tr>
+        <tr><td>licensed AIS queries</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>Machine copy: <a href="/vessels/ais-lattice.json">/vessels/ais-lattice.json</a>. Human page: <a href="/vessels/lattice/">/vessels/lattice/</a>.</p>
+  </section>
+
+  <section class="card">
     <h2>Sanctions-to-case · public lists only</h2>
     <p>One buyer, one wedge. Read-only OFAC SDN plus frozen demonstration identities. Licensed AIS stays CLOSED. No vessels Hub Space.</p>
     <table>
@@ -156,6 +178,7 @@ th{color:var(--dim);font-weight:500}
         <tr><td>Licensed AIS queries</td><td>SAMPLE</td><td>0</td></tr>
         <tr><td>OFAC SDN CSV reachability</td><td>MEASURED</td><td>HTTP 200 · 5,692,851 bytes · not a match rate</td></tr>
         <tr><td>AIS standards bind</td><td>CITATION_ONLY</td><td>8 instruments named · not conformance</td></tr>
+        <tr><td>AIS lattice bind</td><td>CITATION_ONLY</td><td>27 types · digest f931b485… · not a decoder</td></tr>
         <tr><td>VESSELS-E01 IMO/owner entity resolution</td><td>BLOCKING</td><td>OUTSTANDING</td></tr>
         <tr><td>VESSELS-E02 sanctions match precision</td><td>BLOCKING</td><td>SEED POLICY</td></tr>
         <tr><td>VESSELS-E03 licensed AIS true-positive rate</td><td>BLOCKING</td><td>OUTSTANDING · not claimed</td></tr>
@@ -170,6 +193,7 @@ th{color:var(--dim);font-weight:500}
       <li>Formula authority NONE. Models, formulas and market signals never authorize.</li>
       <li>Licensed AIS is CLOSED on this RECORD. A live key is not present here and is not claimed.</li>
       <li>AIS standards on this RECORD are CITATION_ONLY. This origin is not Class A or Class B equipment. SOLAS V/19 does not apply. Licensed AIS TPR is OUTSTANDING and is not claimed.</li>
+      <li>AIS lattice on this RECORD is CITATION_ONLY. Types are authority classes, not a live feed. Codecs stay refused. Queries stay 0.</li>
       <li>Λ = Conjecture 1 / advisory. Not a theorem.</li>
       <li>This origin does not run evaluate, scan, or replay. That stays on a-11-oy.com/vessels.</li>
       <li>Not a fifth flagship. Not a Hub Space. Not legal advice. Not a Palantir clone.</li>
