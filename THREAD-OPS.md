@@ -4,7 +4,7 @@
 **Not product.** Do not publish this on https://a-11-oy.com.
 **Not a Hugging Face Space.** Operator runbook is not a hologram.
 
-Pinned: 2026-09-04T22:47Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
+Pinned: 2026-09-20T00:24Z · org github.com/szl-holdings · HF huggingface.co/SZLHOLDINGS
 
 ## Placement decision
 
@@ -26,22 +26,20 @@ Pinned: 2026-09-04T22:47Z · org github.com/szl-holdings · HF huggingface.co/SZ
 
 ## GitHub lane (measured this sweep)
 
-- a11oy-net open PRs before this landing: 0
+- a11oy-net#199 MERGED — thread-ops.json recapture to honest.git_sha a2244bde
+- a11oy-net#198 flagship SHA MATCH record (same SHA)
 - Merge queue on a11oy / .github / platform / immune / killinchu / forge / kernels: empty at last probe
-- szl-kernels#30 merged; #29 closed as duplicate
-- szl-forge#123 merged
 
 ## Live HTTP at last probe
 
 | Surface | Status |
 |---|---|
 | a-11-oy.com | 200 |
-| www.a-11-oy.com | FAIL (edge / cert) |
-| a11oy.net + health.json + public-inventory.json | 200 |
+| a-11-oy.com/command/brain | 200 retrieve pulse |
+| a-11-oy.com/api/a11oy/v1/honest | 200 git_sha a2244bde |
+| a11oy.net/estate/thread-ops/ | 200 proof fold |
+| holdings.a-11-oy.com/brain/ | 200 hologram; not the public home |
 | szlholdings-a11oy.hf.space | 200 |
-| szlholdings-killinchu.hf.space | 200 |
-| szlholdings-immune.hf.space | 200 (regressed earlier; re-probe) |
-| static hologram roots listed in atlas.json | 404 |
 
 ## Owner-only (do not fake COMPLETE)
 
@@ -62,7 +60,6 @@ Public fold stays https://a11oy.net/estate/thread-ops/ .
 Product retrieve pulse is https://a-11-oy.com/command/brain (handles or ABSTAIN).
 Product `/brain` is Hickok Dual-Stream. Do not overwrite it.
 Hub `SZLHOLDINGS/second-brain` stays ARCHIVE / family. No new Space.
-Live 2026-09-11T23:18Z: honest.git_sha `7253ccb1`, hf-sync 1461 SUCCESS.
+Live 2026-09-20T00:24Z: honest.git_sha `a2244bde`, hf-sync 35473126287 FAILED attest; runtime still a2244bde.
 Capabilities overall remains PARTIALLY OPERATIONAL. Do not stamp OPERATIONAL=8.
 certified_production_ready false. Packet 4 freeze still binds.
-
