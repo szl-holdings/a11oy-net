@@ -10,8 +10,8 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-11T23:25:17Z",
-  "prior_observed_at_utc": "2026-08-29T18:53:21Z",
+  "observed_at_utc": "2026-09-20T00:30:00Z",
+  "prior_observed_at_utc": "2026-09-11T23:25:17Z",
   "evidence_class": "MEASURED",
   "observer": "Public HTTP HEAD/GET, TLS certificate read, and Hugging Face spaces runtime API from a stephenlutar2-hash GitHub session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
@@ -26,10 +26,10 @@
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
+      "git_sha_honest": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. Hugging Face custom domain READY is a separate measured row. HTTP 200 is reachability, not a production certificate. honest.git_sha MATCHES GitHub szl-holdings/a11oy main a2244bde."
     },
     {
       "id": "www",
@@ -77,12 +77,24 @@
   "huggingface": {
     "space": "SZLHOLDINGS/a11oy",
     "runtime_stage": "RUNNING",
-    "runtime_sha_reported": "3899a2ea6aff3b31761e9afdded13a99dae2d4e4",
-    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /api/a11oy/v1/honest git_sha 7253ccb1 matches GitHub szl-holdings/a11oy main. Do not treat the two SHAs as one identity.",
+    "runtime_sha_reported": "2fc725fa695e781b3137f8cdd6cc192502c65975",
+    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /api/a11oy/v1/honest git_sha a2244bde matches GitHub szl-holdings/a11oy main. Do not treat the two SHAs as one identity.",
+    "spaces_author_api_count": 21,
+    "spaces_sampled_running": 21,
     "domains": [
       { "domain": "szlholdings-a11oy.hf.space", "stage": "READY" },
       { "domain": "a-11-oy.com", "stage": "READY" }
     ],
+    "packet8_assurance_spaces": {
+      "ids": [
+        "SZLHOLDINGS/terra-assurance",
+        "SZLHOLDINGS/aegis-assurance",
+        "SZLHOLDINGS/puriq-markets",
+        "SZLHOLDINGS/counsel-assurance"
+      ],
+      "public_probe": "HTTP 401",
+      "note": "PACKET8.json initial_spaces_are_nonpublic true. 401 is the published contract, not a missing product desk. Product desks remain a-11-oy.com/{terra,aegis,puriq-markets,counsel,vessels}."
+    },
     "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp."
   },
   "signer": {
@@ -105,7 +117,16 @@
     "formula_authority": "NONE",
     "production_ready": false,
     "stamps_live": false,
-    "note": "Evaluate MATCH is seed-policy replay. It does not close entity-resolution E01 or licensed-AIS TPR E03."
+    "vertical_live_match": {
+      "terra": "6/6",
+      "aegis": "4/4",
+      "puriq-markets": "4/4",
+      "counsel": "4/4",
+      "vessels": "3/3",
+      "total": "21/21",
+      "bind": "inner frozen payload"
+    },
+    "note": "Evaluate MATCH is seed-policy replay of the inner frozen payload. It does not close entity-resolution E01 or licensed-AIS TPR E03. Wrapper-only POST without payload is not the eval contract."
   },
   "defects": [],
   "defects_closed": [
@@ -124,6 +145,14 @@
       "now": "READY",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-11T23:25:17Z"
+    },
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest 7253ccb1 while product honest a2244bde",
+      "now": "git_sha_honest a2244bde MATCH product and GitHub main",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-20T00:30:00Z"
     }
   ],
   "holds": [
@@ -149,8 +178,8 @@
     "product": "https://a-11-oy.com/",
     "vessels_product": "https://a-11-oy.com/vessels",
     "vessels_proof": "https://a11oy.net/vessels/",
-    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md",
-    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11.md",
+    "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0030.md",
+    "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md",
     "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
     "incident": "INC-05"
   },
