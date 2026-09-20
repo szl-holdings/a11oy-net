@@ -1,0 +1,46 @@
+{
+  "payload": "SZL-FOUR-ORIGIN-OPS-2026-09-20T1535Z",
+  "parent": "SZL-FOUR-ORIGIN-OPS-2026-09-20T0016Z",
+  "supersedes": ["SZL-FOUR-ORIGIN-OPS-2026-09-20T1500Z", "a11oy-net#208"],
+  "captured_at": "2026-09-20T15:35:00Z",
+  "evidence_class": "MEASURED",
+  "lambda": "Conjecture 1 OPEN",
+  "doctrine": "v11 LOCKED 749/14/163 @ c7c0ba17",
+  "ready": false,
+  "production_authorized": false,
+  "energy": "UNAVAILABLE",
+  "joule": null,
+  "kernel_kind": "HOLD",
+  "series_a": "UNSIGNED_ATOMIC",
+  "lean_signer": "ABSENT",
+  "rollup_signer": "DSSE-LIVE",
+  "dsse_pubkey_fingerprint": "9926bf69b799ea663fc5cf5a8c5d8f594d99d7b323700d6a20b803bd4c9f4e15",
+  "locked_formula_ids": ["F1", "F4", "F7", "F11", "F12", "F18", "F19", "F22"],
+  "origins": {
+    "source": "https://github.com/szl-holdings",
+    "mirror": "https://huggingface.co/SZLHOLDINGS",
+    "product": "https://a-11-oy.com",
+    "proof": "https://a11oy.net"
+  },
+  "product": {
+    "apex": "REACHABLE",
+    "honest_git_sha": "4e4a0c66213da14eae37798bdb5a23673d0a5c46",
+    "hub_honest_git_sha": "4e4a0c66213da14eae37798bdb5a23673d0a5c46",
+    "product_hub_match": true,
+    "commit_message": "fix(console): probe failure paints UNAVAILABLE, not UP (#2218)",
+    "healthz": "ok",
+    "lean_signer": "ABSENT",
+    "dsse_live_sibling": "DSSE-LIVE"
+  },
+  "historical_sha": {
+    "a2244bde": "t0016z wire",
+    "db9333c4": "t1500z / a11oy-net#208 — do not merge as current"
+  },
+  "public_line": ["a11oy", "killinchu", "immune"],
+  "khipu_holo": {
+    "tests": "11/11",
+    "disposition": "EVALUATION_HOLD",
+    "merge": "szl-frontier#188 b3aee644"
+  },
+  "note": "HTTP 200 is reachability, not qualification. Dated wire only. Does not rewrite estate.json. Does not stamp LIVE."
+}
