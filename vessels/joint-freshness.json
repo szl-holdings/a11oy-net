@@ -1,0 +1,421 @@
+{
+  "schema": "szl.vessels-joint-freshness/v8",
+  "surface": "https://a11oy.net/vessels/joint-freshness.json",
+  "parent": "https://a11oy.net/vessels/",
+  "html": "https://a11oy.net/vessels/world/",
+  "world_pack": "https://a11oy.net/vessels/public-lists-world.json",
+  "authority_lattice": "https://a11oy.net/vessels/public-list-lattice.json",
+  "product_desk": "https://a-11-oy.com/vessels",
+  "observed_at_utc": "2026-09-20T15:48:00Z",
+  "status": "ROADMAP",
+  "data_label": "SAMPLE",
+  "evidence_class": "MEASURED",
+  "honesty": "CITATION_ONLY. Min-link joint freshness over official public-list clocks. Disagreement is a first-class object. A coverage hole is a named cell, not missing data. SAMPLE miss is not clearance. Not a world AIS map. Does not stamp LIVE. E01 stays OUTSTANDING.",
+  "formula_authority": "NONE",
+  "licensed_ais_admitted": false,
+  "licensed_ais_queries": 0,
+  "production_ready": false,
+  "stamps_live": false,
+  "vessels_e01": "OUTSTANDING",
+  "vessels_e03": "OUTSTANDING",
+  "does_not_mutate_ais_lattice_digest": true,
+  "does_not_mutate_world_digest": true,
+  "ais_lattice_digest_unchanged": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
+  "world_digest_unchanged": "70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5",
+  "authority_lattice_digest_unchanged": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
+  "thesis": "Every other maritime screen either plots a globe or silently drops a stale source. This object names where the control plane is structurally mute, keeps disagreement visible, and refuses to treat a SAMPLE miss as clearance.",
+  "rule": {
+    "name": "min-link joint freshness",
+    "statement": "Inside an authority class, joint freshness is the weakest CURRENT official clock. A stale twin is a disagreement object, not a silent winner. A compilation is never promoted to official. REFUSED anywhere in the action maps to DENY. STALE_OR_THIN, UNAVAILABLE, REPORTED, or PAGE_CITE-without-rows maps to ABSTAIN. A SAMPLE miss is not clearance.",
+    "rank": {
+      "REACHABLE_FRESH": 0,
+      "PAGE_CITE": 1,
+      "REPORTED": 2,
+      "STALE_OR_THIN": 3,
+      "UNAVAILABLE": 4,
+      "REFUSED": 5
+    },
+    "maps": {
+      "REACHABLE_FRESH": null,
+      "PAGE_CITE": "VESSELS-E-ABSTAIN",
+      "REPORTED": "VESSELS-E-ABSTAIN",
+      "STALE_OR_THIN": "VESSELS-E-ABSTAIN",
+      "UNAVAILABLE": "VESSELS-E-ABSTAIN",
+      "REFUSED": "VESSELS-E-DENY-AIS"
+    },
+    "does_not_pick_winners": true,
+    "does_not_run_the_kernel": true
+  },
+  "authority_classes": [
+    {
+      "id": "OFAC-vessel",
+      "current_official": [
+        "OFAC_SDN_CSV",
+        "OFAC_SLS_SDN"
+      ],
+      "can_constrain_cite": true,
+      "can_match_rows": false,
+      "maps_to": null,
+      "hole": false,
+      "note": "Current official SDN twins are REACHABLE_FRESH. Cite admitted. E01 still OUTSTANDING so a clock is not a match.",
+      "freshness": "REACHABLE_FRESH",
+      "clocks": [
+        {
+          "id": "OFAC_SDN_CSV",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": "Fri, 18 Sep 2026 14:02:00 GMT",
+          "bytes": 5695725
+        },
+        {
+          "id": "OFAC_SLS_SDN",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": "Fri, 18 Sep 2026 14:01:54 GMT",
+          "bytes": null
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "UN-1718-vessel",
+      "current_official": [
+        "UN_SC_XML"
+      ],
+      "can_constrain_cite": true,
+      "can_match_rows": false,
+      "maps_to": null,
+      "hole": false,
+      "note": "Official UN 1718 XML is REACHABLE_FRESH. Cite admitted. Not AIS.",
+      "freshness": "REACHABLE_FRESH",
+      "clocks": [
+        {
+          "id": "UN_SC_XML",
+          "http": 206,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": "Sat, 19 Sep 2026 23:02:27 GMT",
+          "bytes": 2176957
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "UK-specified-ship",
+      "current_official": [
+        "UK_FCDO_CSV",
+        "UK_FCDO_XML"
+      ],
+      "can_constrain_cite": true,
+      "can_match_rows": false,
+      "maps_to": null,
+      "hole": false,
+      "note": "Current official is FCDO after the 28 Jan 2026 single-list move. OFSI ConList.csv is a stale twin, not a silent winner.",
+      "freshness": "REACHABLE_FRESH",
+      "clocks": [
+        {
+          "id": "UK_FCDO_CSV",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": "Fri, 11 Sep 2026 14:02:07 GMT",
+          "bytes": 49928338
+        },
+        {
+          "id": "UK_FCDO_XML",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": "Fri, 11 Sep 2026 14:00:24 GMT",
+          "bytes": 21780935
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "UA-GUR-ship",
+      "current_official": [
+        "UA_GUR_SHIPS",
+        "UA_NSDC_API"
+      ],
+      "can_constrain_cite": true,
+      "can_match_rows": false,
+      "maps_to": null,
+      "hole": false,
+      "note": "Official GUR ships HTML and NSDC API are REACHABLE_FRESH. Not AIS. Not E01.",
+      "freshness": "REACHABLE_FRESH",
+      "clocks": [
+        {
+          "id": "UA_GUR_SHIPS",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": null,
+          "bytes": null
+        },
+        {
+          "id": "UA_NSDC_API",
+          "http": 200,
+          "freshness": "REACHABLE_FRESH",
+          "class": "MEASURED",
+          "last_modified": null,
+          "bytes": null
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "KR-MOFA-vessel",
+      "current_official": [
+        "KR_MOFA_DPRK"
+      ],
+      "can_constrain_cite": false,
+      "can_match_rows": false,
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "hole": true,
+      "note": "Official MOFA page exists. This observer hit a redirect loop. Class is REPORTED. The control plane is mute. Do not invent a CSV.",
+      "freshness": "REPORTED",
+      "clocks": [
+        {
+          "id": "KR_MOFA_DPRK",
+          "http": "UNAVAILABLE",
+          "freshness": "REPORTED",
+          "class": "REPORTED",
+          "last_modified": null,
+          "bytes": null
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "IUU-RFMO",
+      "current_official": [],
+      "freshness": "PAGE_CITE",
+      "can_constrain_cite": false,
+      "can_match_rows": false,
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "hole": true,
+      "note": "No dedicated RFMO IUU bulk clock is in the 50. Class stays PAGE_CITE. Cite a named RFMO page. Do not decode radio.",
+      "clocks": [],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "Paris-banned",
+      "current_official": [
+        "PARIS_DETENTIONS"
+      ],
+      "can_constrain_cite": true,
+      "can_match_rows": false,
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "hole": true,
+      "store_rows": "DENIED",
+      "note": "Paris MoU page is reachable. Publisher forbids storing detention rows. Cite the page. Matching is a hole.",
+      "freshness": "PAGE_CITE",
+      "clocks": [
+        {
+          "id": "PARIS_DETENTIONS",
+          "http": 200,
+          "freshness": "PAGE_CITE",
+          "class": "MEASURED",
+          "last_modified": null,
+          "bytes": null
+        }
+      ],
+      "maps_stale_to": "VESSELS-E-ABSTAIN",
+      "maps_ais_to": "VESSELS-E-DENY-AIS"
+    }
+  ],
+  "disagreements": [
+    {
+      "id": "UK-FCDO-vs-OFSI",
+      "jurisdiction": "United Kingdom",
+      "authority_class": "UK-specified-ship",
+      "current_official": {
+        "id": "UK_FCDO_CSV",
+        "freshness": "REACHABLE_FRESH",
+        "last_modified": "Fri, 11 Sep 2026 14:02:07 GMT"
+      },
+      "stale_twin": {
+        "id": "UK_OFSI_CONLIST",
+        "freshness": "STALE_OR_THIN",
+        "last_modified": "Wed, 03 Jun 2026 11:01:26 GMT"
+      },
+      "kind": "DISAGREE_FRESHNESS",
+      "winner_not_picked": true,
+      "using_stale_as_sole_source": "VESSELS-E-ABSTAIN",
+      "using_current_official": "cite admitted; not a match; E01 OUTSTANDING",
+      "note": "Sanctions products hide the dated path. This control plane names the disagreement and refuses to pick a silent winner."
+    },
+    {
+      "id": "AU-official-vs-compilation",
+      "jurisdiction": "Australia",
+      "authority_class": null,
+      "current_official": {
+        "id": "AU_DFAT_PAGE",
+        "freshness": "UNAVAILABLE"
+      },
+      "compilation": {
+        "id": "OS_AU_DFAT",
+        "freshness": "REACHABLE_FRESH",
+        "honesty": "CITATION_ONLY"
+      },
+      "kind": "DISAGREE_OFFICIAL_VS_COMPILATION",
+      "winner_not_picked": true,
+      "using_compilation_as_official": "DENIED",
+      "using_unavailable_official_as_sole_source": "VESSELS-E-ABSTAIN",
+      "note": "Official DFAT timed out. OpenSanctions compilation is REACHABLE_FRESH and citation-only. A compilation is not the official list."
+    },
+    {
+      "id": "EU-FSF-dual-observer",
+      "jurisdiction": "European Union",
+      "authority_class": null,
+      "kind": "DISAGREE_OBSERVER",
+      "winner_not_picked": true,
+      "note": "Official EU FSF XML measured 200 by a second observer this hour. This observer also saw 403 on the same path. Dual-observer is recorded. Not a match score."
+    }
+  ],
+  "coverage_holes": [
+    {
+      "id": "KR-MOFA-vessel",
+      "kind": "CLASS_REPORTED",
+      "freshness": "REPORTED",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "meaning": "Korea publishes designated vessels by IMO. This observer could not complete GET. Mute, not green."
+    },
+    {
+      "id": "IUU-RFMO",
+      "kind": "CLASS_WITHOUT_BULK_CLOCK",
+      "freshness": "PAGE_CITE",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "meaning": "No RFMO IUU bulk file is in the 50. The class exists so the hole is named."
+    },
+    {
+      "id": "Paris-banned",
+      "kind": "STORE_ROWS_DENIED",
+      "freshness": "PAGE_CITE",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "meaning": "Page cite admitted. Row store DENIED. Matching is a hole."
+    },
+    {
+      "id": "CN-no-vessel-class",
+      "kind": "JURISDICTION_WITHOUT_CLASS",
+      "freshness": "PAGE_CITE",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "clocks": [
+        "CN_MFA_AFSL",
+        "CN_MOFCOM_UEL"
+      ],
+      "meaning": "China notice pages are reachable. China does not publish a structured bulk vessel CSV. There is no CN-vessel authority class. That absence is the atlas cell."
+    },
+    {
+      "id": "AU-DFAT-timeout",
+      "kind": "OFFICIAL_UNAVAILABLE",
+      "freshness": "UNAVAILABLE",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "meaning": "DFAT XLSX is advertised. This observer timed out. Do not invent bytes. Compilation is not a substitute official."
+    },
+    {
+      "id": "SG-MAS-stale",
+      "kind": "OFFICIAL_STALE",
+      "freshness": "STALE_OR_THIN",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "meaning": "MAS page last-modified 2024. HTTP 200 is not freshness."
+    },
+    {
+      "id": "APAC-official-joint",
+      "kind": "REGION_MIN_LINK",
+      "freshness": "REPORTED",
+      "maps_to": "VESSELS-E-ABSTAIN",
+      "members": [
+        "KR-MOFA-vessel",
+        "CN-no-vessel-class",
+        "AU-DFAT-timeout",
+        "SG-MAS-stale"
+      ],
+      "meaning": "Min-link over Asia-Pacific official clocks is mute. A globe that paints APAC green from a commercial AIS tile is lying."
+    }
+  ],
+  "negative_evidence": {
+    "engine": "stdlib exact-string SAMPLE",
+    "not_typesafe_jev_call": true,
+    "not_e01": true,
+    "frozen_identity": "AURORA WAVE",
+    "against": "cached demonstration names only. Never a scraped wanted-persons dump. Never a live AIS track. Never the 50-list bytes.",
+    "result": "SAMPLE_TEXT_MISS",
+    "miss_is_not_clearance": true,
+    "hit_would_not_authorize": true,
+    "is_clearance": false,
+    "maps_to": null,
+    "honesty": "A miss is a named verdict, not a green light. A hit would still require human approval. Formula authority NONE."
+  },
+  "refused_surfaces": [
+    {
+      "id": "MARINETRAFFIC",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "VESSELFINDER",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "licensed-AIS-query",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "pyais",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "libais",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    },
+    {
+      "id": "aiscat",
+      "freshness": "REFUSED",
+      "maps_to": "VESSELS-E-DENY-AIS"
+    }
+  ],
+  "fail_closed": {
+    "licensed_ais_query": "DENIED / PROHIBITED_ACTION",
+    "commercial_ais_map": "DENIED / PROHIBITED_ACTION",
+    "stale_twin_as_sole_source": "ABSTAINED / STALE_OR_UNAVAILABLE_SOURCE",
+    "compilation_as_official": "DENIED",
+    "coverage_hole_as_clearance": "DENIED",
+    "sample_miss_as_clearance": "DENIED",
+    "claim_e01": "DENIED",
+    "stamp_production": "DENIED"
+  },
+  "holds": [
+    "VESSELS-E01 OUTSTANDING",
+    "VESSELS-E03 OUTSTANDING",
+    "licensed AIS CLOSED",
+    "formula authority NONE",
+    "Lambda Conjecture 1 OPEN",
+    "production_ready false"
+  ],
+  "boundaries": {
+    "fifth_flagship": false,
+    "never": "a11oy.com",
+    "does_not_stamp_live": true,
+    "packet8_unchanged": true,
+    "ais_lattice_digest_not_rewritten": true,
+    "world_digest_not_rewritten": true,
+    "lattice_is_not_the_kernel": true,
+    "joint_freshness_is_not_the_kernel": true,
+    "typesafe_jev_advisory_only": true
+  },
+  "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898"
+}

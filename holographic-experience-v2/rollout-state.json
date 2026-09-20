@@ -72,8 +72,7 @@
     "pricing/index.html",
     "proof/router/index.html",
     "spec/GovernedAction/v1/index.html",
-    "status/index.html",
-    "vessels/lattice/index.html"
+    "status/index.html"
   ],
   "opt_out_documents": [
     "api/build-info/index.html",
@@ -105,6 +104,7 @@
     "record/index.html",
     "terra/index.html",
     "vessels/index.html",
+    "vessels/lattice/index.html",
     "vessels/world/index.html"
   ]
 }

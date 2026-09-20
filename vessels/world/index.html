@@ -1,39 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="robots" content="index,follow" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests" />
-  <title>World public-list clocks — RECORD on a11oy.net</title>
-  <meta name="description" content="Official public lists as reachability clocks and authority classes. Cite admitted. Live AIS DENIED. Not LIVE." />
-  <link rel="canonical" href="https://a11oy.net/vessels/world/" />
-  <link rel="stylesheet" href="/assets/kanchay.css" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="referrer" content="no-referrer"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests"/>
+<title>World public-list clocks - RECORD on a11oy.net</title>
+<meta name="description" content="Official public lists as reachability clocks, min-link joint freshness, and a coverage-hole atlas. Cite admitted. Live AIS DENIED. Not LIVE. SAMPLE miss is not clearance."/>
+<link rel="canonical" href="https://a11oy.net/vessels/world/"/>
+<meta property="og:title" content="World public-list clocks - RECORD on a11oy.net"/>
+<meta property="og:description" content="The control plane maps where it is structurally mute. Not a live AIS globe."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://a11oy.net/vessels/world/"/>
+<meta property="og:image" content="https://a11oy.net/assets/a11oy-net-social.png"/>
+<style>
+:root{--ink:#09090b;--panel:#121214;--line:#2a2a30;--paper:#f2efe8;--dim:#8a857a;--cord:#9a5a48;--ok:#7d9a7a;--wait:#c9a15b}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--paper);font:16px/1.5 ui-sans-serif,system-ui,sans-serif}
+a{color:var(--paper)}
+a:hover{color:#fff}
+main{max-width:52rem;margin:0 auto;padding:2rem 1.25rem 5rem}
+.banner{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+h1{font-family:ui-serif,Georgia,serif;font-weight:500;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.03em;margin:.5rem 0}
+.lede{color:#c8c2b4;max-width:42rem}
+.row{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.1rem 0 1.4rem}
+.chip{display:inline-flex;align-items:center;min-height:32px;padding:0 .7rem;border-radius:999px;font:11px ui-monospace,monospace;background:var(--paper);color:var(--ink)}
+.chip.mute{background:transparent;color:var(--dim);box-shadow:0 0 0 1px var(--line)}
+nav.links{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1.6rem}
+nav.links a{min-height:44px;display:inline-flex;align-items:center;padding:0 1rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-size:.9rem}
+nav.links a:hover{border-color:var(--cord)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.15rem;margin:0 0 .75rem}
+h2{font-family:ui-serif,Georgia,serif;font-weight:500;font-size:1.15rem;margin:0 0 .4rem}
+p,li{color:#c8c2b4}
+table{width:100%;border-collapse:collapse;font:13px/1.45 ui-monospace,monospace}
+th,td{text-align:left;padding:.35rem 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:500}
+.DENIED{color:#d46a4c}
+.AWAITING_APPROVAL,.ABSTAINED{color:var(--wait)}
+.atlas{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:.55rem;margin:.8rem 0}
+.tile{background:#0c0c0e;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;min-height:96px}
+.tile b{display:block;font:11px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.tile span{display:block;margin:.3rem 0 .15rem}
+.tile small{color:#c8c2b4;font-size:12px}
+.foot{margin-top:2rem;color:var(--dim);font-size:.8rem}
+</style>
   <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
   <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
 </head>
 <body>
-  <main class="wrap">
-    <p class="eyebrow">RECORD · CITATION_ONLY · queries = 0</p>
-    <h1>The world clock classifies the source, not the ship.</h1>
-    <p class="lede">Every other maritime product plots a globe. This page does the thing those products cannot: it names official public lists as fail-closed authority classes and refuses to query a radio. REACHABLE_FRESH is a clock. STALE_OR_THIN and UNAVAILABLE force ABSTAIN. REFUSED forces DENY. A SAMPLE miss on AURORA WAVE is not clearance.</p>
-    <p><a href="/vessels/public-lists-world.json">World clocks JSON</a> · <a href="/vessels/public-list-lattice.json">Authority lattice JSON</a> · <a href="/vessels/public-lists-cn-kr-ua.json">CN/KR/UA pack</a> · <a href="/vessels/">Vessels proof</a> · <a href="https://a-11-oy.com/vessels">Product desk</a></p>
+<main>
+  <div class="banner">a11oy.net · RECORD · not a product host · Λ = Conjecture 1</div>
+  <h1>The world clock classifies the source, not the ship.</h1>
+  <p class="lede">Every other maritime product plots a globe. This page names official public lists as fail-closed authority classes, keeps disagreement visible, and maps the cells where the control plane is structurally mute. REACHABLE_FRESH is a clock. A SAMPLE miss on AURORA WAVE is not clearance. Licensed AIS stays CLOSED.</p>
+  <div class="row">
+    <span class="chip">50 clocks</span>
+    <span class="chip">7 classes</span>
+    <span class="chip mute">min-link joint freshness</span>
+    <span class="chip mute">winner not picked</span>
+    <span class="chip mute">SAMPLE_TEXT_MISS</span>
+    <span class="chip mute">licensed AIS CLOSED</span>
+    <span class="chip mute">Not LIVE</span>
+  </div>
+  <nav class="links" aria-label="Origins">
+    <a href="https://a-11-oy.com/vessels">Evaluate on product</a>
+    <a href="/vessels/">Vessels proof</a>
+    <a href="/vessels/public-lists-world.json">World clocks JSON</a>
+    <a href="/vessels/public-list-lattice.json">Authority lattice JSON</a>
+    <a href="/vessels/joint-freshness.json">Joint freshness JSON</a>
+    <a href="/vessels/lattice/">AIS lattice</a>
+    <a href="/vessels/receipt.json">Receipt</a>
+  </nav>
+  <section class="card">
+    <h2>Coverage-hole atlas</h2>
+    <p>A sanctions desk that cannot name its holes will paint them green. Min-link joint freshness does the opposite: KR REPORTED, CN with no vessel class, Paris rows unstorable, AU official timed out, Singapore stale. The Asia-Pacific official joint is mute. That mute cell is the product.</p>
+    <div class="atlas"><div class="tile"><b>OFAC-vessel</b><span class="">REACHABLE_FRESH</span><small>cite admitted · not a match</small></div><div class="tile"><b>UN-1718-vessel</b><span class="">REACHABLE_FRESH</span><small>cite admitted · not a match</small></div><div class="tile"><b>UK-specified-ship</b><span class="">REACHABLE_FRESH</span><small>cite admitted · not a match</small></div><div class="tile"><b>UA-GUR-ship</b><span class="">REACHABLE_FRESH</span><small>cite admitted · not a match</small></div><div class="tile"><b>KR-MOFA-vessel</b><span class="ABSTAINED">REPORTED</span><small>coverage hole · ABSTAIN</small></div><div class="tile"><b>IUU-RFMO</b><span class="ABSTAINED">PAGE_CITE</span><small>coverage hole · ABSTAIN</small></div><div class="tile"><b>Paris-banned</b><span class="ABSTAINED">PAGE_CITE</span><small>coverage hole · ABSTAIN</small></div></div>
+    <div class="atlas"><div class="tile"><b>KR-MOFA-vessel</b><span class="ABSTAINED">CLASS_REPORTED</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>IUU-RFMO</b><span class="ABSTAINED">CLASS_WITHOUT_BULK_CLOCK</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>Paris-banned</b><span class="ABSTAINED">STORE_ROWS_DENIED</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>CN-no-vessel-class</b><span class="ABSTAINED">JURISDICTION_WITHOUT_CLASS</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>AU-DFAT-timeout</b><span class="ABSTAINED">OFFICIAL_UNAVAILABLE</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>SG-MAS-stale</b><span class="ABSTAINED">OFFICIAL_STALE</span><small>VESSELS-E-ABSTAIN</small></div><div class="tile"><b>APAC-official-joint</b><span class="ABSTAINED">REGION_MIN_LINK</span><small>VESSELS-E-ABSTAIN</small></div></div>
+  </section>
+  <section class="card">
+    <h2>Disagreement is a verdict, not missing data</h2>
+    <p>UK FCDO CSV is REACHABLE_FRESH (11 Sep 2026). UK OFSI ConList.csv is STALE_OR_THIN (3 Jun 2026). Using the dated path as the sole current source maps to ABSTAIN. The current official is not silently substituted for the stale twin. Winner not picked.</p>
+    <p>Australia DFAT official timed out; the OpenSanctions compilation is REACHABLE_FRESH and citation-only. A compilation is never promoted to official. EU FSF is dual-observer (200 and 403 on the same path). Recorded, not averaged.</p>
+  </section>
+  <section class="card">
+    <h2>Negative evidence is named</h2>
+    <p>Frozen identity AURORA WAVE · stdlib exact-string SAMPLE against demonstration names · result SAMPLE_TEXT_MISS. Miss is not clearance. Hit would not authorize. Not TypeSafe Jev. Not E01. Formula authority NONE.</p>
+  </section>
+  <section class="card">
     <h2>Self-check (stdlib, no codec, no radio, no TypeSafe call)</h2>
     <ul>
       <li>licensed AIS query → DENIED / VESSELS-E-DENY-AIS</li>
       <li>MarineTraffic plot → DENIED</li>
       <li>UK OFSI ConList.csv as sole current source → STALE_OR_THIN / ABSTAIN</li>
-      <li>KR MOFA redirect loop → REPORTED / ABSTAIN if used as sole source</li>
+      <li>KR MOFA redirect loop → REPORTED / ABSTAIN</li>
       <li>cite OFAC SDN public CSV → REACHABLE_FRESH / CITATION_ADMITTED</li>
       <li>exact-string SAMPLE AURORA WAVE → SAMPLE_TEXT_MISS · miss is not clearance</li>
       <li>store Paris MoU detention rows → DENIED</li>
+      <li>treat a coverage hole as clearance → DENIED</li>
     </ul>
-    <h2>Authority classes</h2>
-    <p>OFAC-vessel · UN-1718-vessel · UK-specified-ship · UA-GUR-ship · KR-MOFA-vessel · IUU-RFMO · Paris-banned (page cite only).</p>
-    <h2>Measured this recapture</h2>
-    <p>50 clocks. 45 HTTP 200-or-206. 31 REACHABLE_FRESH. 2 STALE_OR_THIN. 12 PAGE_CITE. 3 UNAVAILABLE. 2 REFUSED. World digest 70fd1918… · authority lattice digest b2d23ac6… · AIS lattice digest f931b485… unchanged. E01 and E03 stay OUTSTANDING.</p>
-    <p><strong>Not production_ready. Formula authority NONE. Λ = Conjecture 1. PACKET8 unchanged. No fifth flagship. Never a11oy.com.</strong></p>
-  </main>
+  </section>
+  <section class="card">
+    <h2>Fifty clocks this recapture</h2>
+    <p>45 HTTP 200-or-206. 31 REACHABLE_FRESH. 2 STALE_OR_THIN. 12 PAGE_CITE. 3 UNAVAILABLE. 2 REFUSED. World digest 70fd1918 unchanged. Authority lattice digest b2d23ac6 unchanged. AIS lattice digest f931b485 unchanged. Joint-freshness digest 1cb5b117.</p>
+    <table>
+      <thead><tr><th>Clock</th><th>Jurisdiction</th><th>HTTP</th><th>Freshness</th><th>Last-modified</th></tr></thead>
+      <tbody>
+        <tr><td>OFAC_SDN_CSV</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Fri, 18 Sep 2026 14:02:00 GMT</td></tr><tr><td>OFAC_SLS_SDN</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Fri, 18 Sep 2026 14:01:54 GMT</td></tr><tr><td>UK_FCDO_CSV</td><td>United Kingdom</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Fri, 11 Sep 2026 14:02:07 GMT</td></tr><tr><td>UK_FCDO_XML</td><td>United Kingdom</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Fri, 11 Sep 2026 14:00:24 GMT</td></tr><tr><td>UK_OFSI_CONLIST</td><td>United Kingdom</td><td>200</td><td class="ABSTAINED">STALE_OR_THIN</td><td>Wed, 03 Jun 2026 11:01:26 GMT</td></tr><tr><td>UN_SC_XML</td><td>UN</td><td>206</td><td class="">REACHABLE_FRESH</td><td>Sat, 19 Sep 2026 23:02:27 GMT</td></tr><tr><td>EU_FSF_OFFICIAL</td><td>European Union</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Wed, 05 Aug 2026 14:50:10 GMT</td></tr><tr><td>EU_SANCTIONS_MAP</td><td>European Union</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>Wed, 29 Jul 2026 13:50:15 GMT</td></tr><tr><td>CA_SEMA_PAGE</td><td>Canada</td><td>200</td><td class="">REACHABLE_FRESH</td><td>—</td></tr><tr><td>CH_SECO_PAGE</td><td>Switzerland</td><td>200</td><td class="">REACHABLE_FRESH</td><td>—</td></tr><tr><td>SG_MAS_PAGE</td><td>Singapore</td><td>200</td><td class="ABSTAINED">STALE_OR_THIN</td><td>Fri, 22 Mar 2024 13:50:41 GMT</td></tr><tr><td>US_CSL_PAGE</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Fri, 18 Sep 2026 16:18:07 GMT</td></tr><tr><td>BIS_DPL_PAGE</td><td>United States</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>UFLPA_PAGE</td><td>United States</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>UA_NSDC_API</td><td>Ukraine</td><td>200</td><td class="">REACHABLE_FRESH</td><td>—</td></tr><tr><td>UA_GUR_SHIPS</td><td>Ukraine</td><td>200</td><td class="">REACHABLE_FRESH</td><td>—</td></tr><tr><td>CN_MFA_AFSL</td><td>China</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>CN_MOFCOM_UEL</td><td>China</td><td>206</td><td class="ABSTAINED">PAGE_CITE</td><td>Wed, 12 Aug 2026 06:32:27 GMT</td></tr><tr><td>KR_MOFA_DPRK</td><td>Republic of Korea</td><td>UNAVAILABLE</td><td class="ABSTAINED">REPORTED</td><td>—</td></tr><tr><td>AU_DFAT_PAGE</td><td>Australia</td><td>UNAVAILABLE</td><td class="ABSTAINED">UNAVAILABLE</td><td>—</td></tr><tr><td>PARIS_DETENTIONS</td><td>Paris MoU</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>TOKYO_DETENTION_LIST</td><td>Tokyo MoU</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>USCG_PSIX</td><td>United States</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>EQUASIS_HOME</td><td>multi</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>IMO_GISIS</td><td>IMO</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>INTERPOL_RED_NOTICES</td><td>Interpol</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>ICIJ_OFFSHORE</td><td>multi</td><td>200</td><td class="ABSTAINED">PAGE_CITE</td><td>—</td></tr><tr><td>OS_MARITIME</td><td>multi</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 15:04:14 GMT</td></tr><tr><td>OS_SANCTIONS</td><td>multi</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 13:50:33 GMT</td></tr><tr><td>OS_AU_DFAT</td><td>Australia</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 14:03:26 GMT</td></tr><tr><td>OS_CA_SEMA</td><td>Canada</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 12:48:30 GMT</td></tr><tr><td>OS_CH_SECO</td><td>Switzerland</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 14:12:37 GMT</td></tr><tr><td>OS_UK_FCDO</td><td>United Kingdom</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 14:42:17 GMT</td></tr><tr><td>OS_EU_FSF</td><td>European Union</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 14:58:19 GMT</td></tr><tr><td>OS_JP_MOF</td><td>Japan</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 12:39:12 GMT</td></tr><tr><td>OS_UN_SC</td><td>UN</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 12:02:30 GMT</td></tr><tr><td>OS_PARIS_BANNED</td><td>Paris MoU</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sat, 19 Sep 2026 16:28:39 GMT</td></tr><tr><td>OS_TOKYO_DET</td><td>Tokyo MoU</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 14:04:33 GMT</td></tr><tr><td>OS_US_CSL</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 12:53:53 GMT</td></tr><tr><td>OS_US_BIS</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 08:57:44 GMT</td></tr><tr><td>OS_UFLPA</td><td>United States</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 12:57:52 GMT</td></tr><tr><td>OS_NZ</td><td>New Zealand</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 08:59:13 GMT</td></tr><tr><td>OS_IN_MHA</td><td>India</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sat, 19 Sep 2026 20:08:36 GMT</td></tr><tr><td>OS_TR_FCIB</td><td>Turkiye</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 10:10:56 GMT</td></tr><tr><td>UA_OS_NSDC</td><td>Ukraine</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 08:26:35 GMT</td></tr><tr><td>UA_OS_WAR</td><td>Ukraine</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 07:44:27 GMT</td></tr><tr><td>CN_OS_SANCTIONS</td><td>China</td><td>200</td><td class="">REACHABLE_FRESH</td><td>Sun, 20 Sep 2026 06:47:41 GMT</td></tr><tr><td>FATF_BLACK</td><td>FATF</td><td>UNAVAILABLE</td><td class="ABSTAINED">UNAVAILABLE</td><td>—</td></tr><tr><td>MARINETRAFFIC</td><td>commercial</td><td>—</td><td class="DENIED">REFUSED</td><td>—</td></tr><tr><td>VESSELFINDER</td><td>commercial</td><td>—</td><td class="DENIED">REFUSED</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Honesty</h2>
+    <ul>
+      <li>Status ROADMAP. Data label SAMPLE. Does not stamp LIVE. Does not claim ATO.</li>
+      <li>Formula authority NONE. Joint freshness is not the Packet 8 kernel.</li>
+      <li>Licensed AIS is CLOSED. Queries stay 0. Codecs stay refused.</li>
+      <li>Typed judgment is stdlib exact-string SAMPLE. It is not TypeSafe Jev. It is not E01.</li>
+      <li>OpenSanctions is citation only. Paris/Tokyo rows are not stored.</li>
+      <li>E01 and E03 stay OUTSTANDING. Λ = Conjecture 1 / advisory.</li>
+      <li>Never a11oy.com. Not a fifth flagship. Not legal advice.</li>
+    </ul>
+  </section>
+  <p class="foot">Canonical source: github.com/szl-holdings/a11oy/verticals/vessels · Product origin a-11-oy.com · Proof origin a11oy.net · Apache-2.0 · Doctrine v11</p>
+</main>
   <script src="/scripts/szl-flow-proof.js" defer data-szl-proof-flow-asset="script"></script>
   <nav class="szl-proof-static-rail" aria-label="A11oy proof journeys" data-szl-proof-holo-adopted="true" data-szl-proof-holo-static="v2">
     <div class="szl-proof-origin"><span>Evidence Vault</span></div>

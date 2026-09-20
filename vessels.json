@@ -23,6 +23,7 @@
     "public_lists_world": "https://a11oy.net/vessels/public-lists-world.json",
     "public_list_lattice": "https://a11oy.net/vessels/public-list-lattice.json",
     "world_html": "https://a11oy.net/vessels/world/",
+    "joint_freshness": "https://a11oy.net/vessels/joint-freshness.json",
     "cn_kr_ua": "https://a11oy.net/vessels/public-lists-cn-kr-ua.json"
   },
   "status": "ROADMAP",
@@ -101,5 +102,13 @@
     "honesty": "CITATION_ONLY",
     "digest": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
     "authority_classes": 7
+  },
+  "joint_freshness": {
+    "honesty": "CITATION_ONLY",
+    "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898",
+    "rule": "min-link",
+    "winner_not_picked": true,
+    "negative_evidence": "SAMPLE_TEXT_MISS",
+    "miss_is_not_clearance": true
   }
 }
