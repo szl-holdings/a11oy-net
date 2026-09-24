@@ -15,6 +15,9 @@ on:
 permissions:
   contents: read
 
+env:
+  SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+
 jobs:
   link-check:
     # This exact name is a required protected-branch context.
@@ -26,8 +29,21 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: Checkout
+      - name: Checkout exact event source
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ env.SOURCE_REVISION }}
+          persist-credentials: false
+
+      - name: Prove exact event source
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          if [ "${actual}" != "${SOURCE_REVISION}" ]; then
+            echo "Expected source ${SOURCE_REVISION}, got ${actual}" >&2
+            exit 1
+          fi
 
       - name: Check HTML parses + local links/assets resolve
         run: |
@@ -175,23 +191,39 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: Checkout
+      - name: Checkout exact event source
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ env.SOURCE_REVISION }}
+          persist-credentials: false
+
+      - name: Prove exact event source
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          if [ "${actual}" != "${SOURCE_REVISION}" ]; then
+            echo "Expected source ${SOURCE_REVISION}, got ${actual}" >&2
+            exit 1
+          fi
 
       - name: Stamp health.json sha onto the Pages artifact
         run: |
           set -euo pipefail
+          # Preserve the established stamp contract while binding its value to
+          # the exact source revision already proven above.
+          GITHUB_SHA="${SOURCE_REVISION}"
           python3 scripts/stamp_health_sha.py --sha "${GITHUB_SHA}"
           python3 - <<'PY'
           import json, os, pathlib
           health = json.loads(pathlib.Path("health.json").read_text(encoding="utf-8"))
           assert health["signer"] == "unavailable"
-          assert health["sha"] == os.environ["GITHUB_SHA"].strip().lower()
+          assert health["sha"] == os.environ["SOURCE_REVISION"].strip().lower()
           assert len(health["sha"]) == 40
           assert health["uptime"] == "NOT_MEASURED"
           assert health["probe_contract"] == "STATIC_DOCUMENT"
           assert health["dsse_live"] == "NOT_CLAIMED"
-          print("OK: Pages artifact health.json sha matches GITHUB_SHA; signer remains unavailable.")
+          print("OK: Pages artifact health.json sha matches SOURCE_REVISION; signer remains unavailable.")
           PY
 
       - name: Build and inspect raw Pages artifact
