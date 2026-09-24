@@ -224,7 +224,14 @@
       "prior": "git_sha_honest e48278b0 while product honest moved through c98ca99 / 65b631e8; GitHub main is 3ee1b9b9",
       "now": "OPEN. honest.git_sha MEASURED 65b631e8. GitHub main 3ee1b9b9 not yet in the Space image. Do not claim MATCH.",
       "class": "MEASURED",
-      "opened_at_utc": "2026-09-20T16:16:00Z"
+      "opened_at_utc": "2026-09-20T16:16:00Z",
+      "state": "CLOSED_VERIFIED",
+      "closed_at": "2026-09-24",
+      "closure_basis": "a-11-oy.com/honest git_sha equals GitHub a11oy main; HF a11oy runtime sha equals HF repo sha",
+      "closure_evidence": [
+        "https://huggingface.co/datasets/SZLHOLDINGS/szl-lake/blob/main/receipts/2026-09-24/inc05-disposition-20260924T215434Z.json",
+        "https://github.com/szl-holdings/a11oy/issues/2251"
+      ]
     }
   ],
   "defects_closed": [
