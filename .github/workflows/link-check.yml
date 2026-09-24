@@ -210,7 +210,10 @@ jobs:
       - name: Stamp health.json sha onto the Pages artifact
         run: |
           set -euo pipefail
-          python3 scripts/stamp_health_sha.py --sha "${SOURCE_REVISION}"
+          # Preserve the established stamp contract while binding its value to
+          # the exact source revision already proven above.
+          GITHUB_SHA="${SOURCE_REVISION}"
+          python3 scripts/stamp_health_sha.py --sha "${GITHUB_SHA}"
           python3 - <<'PY'
           import json, os, pathlib
           health = json.loads(pathlib.Path("health.json").read_text(encoding="utf-8"))
