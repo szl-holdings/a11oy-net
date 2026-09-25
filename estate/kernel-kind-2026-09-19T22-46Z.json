@@ -1,0 +1,104 @@
+{
+  "schema": "szl.kernel-kind-observation/v1",
+  "observed_at": "2026-09-19T22:46:00Z",
+  "evidence_class": "SOURCE_CODE",
+  "disposition": "HOLD",
+  "class": "MEASURED",
+  "cutoff_status": "OVERDUE",
+  "takedown_starts": "2026-09-13T00:00:00Z",
+  "days_overdue_at_observation": 6,
+  "production_authorization": false,
+  "automatic_promotion_authorized": false,
+  "certified_production_ready": false,
+  "lambda": "Conjecture 1",
+  "meaning": "Post-cutoff compiled-kernel v1 presence check. A missing v1 branch is not repaired by creating an empty ref. Not membership. Not inventory v3. Not a Hub write. Not a loader execution. Not ALL_DONE.",
+  "does_not_rewrite": ["public-membership.json", "public-inventory.json", "estate.json"],
+  "prior_record": {
+    "path": "estate/kernel-kind-2026-09-11T23-20Z.json",
+    "honesty": "SNAPSHOT",
+    "observed_at": "2026-09-11T23:20:00Z"
+  },
+  "scope": {
+    "id": "github-compiled-kernel-candidate-v1-presence/v1",
+    "method": "LIST_BRANCHES",
+    "authentication": "github-app",
+    "repos": [
+      "szl-holdings/szl-maskmod",
+      "szl-holdings/szl-block-kv",
+      "szl-holdings/szl-receipt-attn",
+      "szl-holdings/YARQA-ATTN"
+    ],
+    "comparable_to": []
+  },
+  "hf_kernels_api_this_session": {
+    "url": "https://huggingface.co/api/kernels?author=SZLHOLDINGS",
+    "authentication": "none",
+    "list_count": 14,
+    "honesty": "LIVE_READBACK",
+    "note": "Cardinality only. Item-level Hub ids were not re-bound in this record."
+  },
+  "revision_binding": {
+    "branch_named_v1_count": 0,
+    "note": "None of the four compiled-kernel-candidate GitHub repositories expose a branch named v1. A v1.0.0 tag is not a v1 branch. Empty v1 refs were not created. Floating main remains HOLD at runtime.",
+    "compiled_candidates_no_v1_branch": [
+      {
+        "id": "SZLHOLDINGS/szl-maskmod",
+        "github": "szl-holdings/szl-maskmod",
+        "main": "06723e5894ad34fa4de9a63188a643808cce8ecc",
+        "branches_observed": ["cursor/kernel-smoke-maskmod-e0eb", "cursor/szl-maskmod-flex-cut-22cf", "kernel/v0-original", "main"],
+        "v1": "missing"
+      },
+      {
+        "id": "SZLHOLDINGS/szl-block-kv",
+        "github": "szl-holdings/szl-block-kv",
+        "main": "7aa9c2483d9f5fb157ec3205985e5a0c0d3dd6e8",
+        "v1": "missing",
+        "note": "Branches include main, kernel/v0-original, and fix/* — no v1."
+      },
+      {
+        "id": "SZLHOLDINGS/szl-receipt-attn",
+        "github": "szl-holdings/szl-receipt-attn",
+        "main": "dd0b8c8f08b236cae323a41028e159e63e6b3d3a",
+        "v1": "missing"
+      },
+      {
+        "id": "SZLHOLDINGS/YARQA-ATTN",
+        "github": "szl-holdings/YARQA-ATTN",
+        "main": "bb15b7da92ada2541e5deff0a276a2e51c17f1e2",
+        "v1": "missing"
+      }
+    ]
+  },
+  "research_candidate": {
+    "repo": "szl-holdings/szl-kernels",
+    "pr": 36,
+    "title": "feat(frontier): evidence-bounded checked RMSNorm research candidate",
+    "state": "draft",
+    "production_adoption_requested": false,
+    "honesty": "REPORTED"
+  },
+  "loader": {
+    "package": "huggingface/kernels",
+    "version": "v0.16.1",
+    "loads_model_type_kernels": false,
+    "executed_this_observation": false
+  },
+  "mirrors_deleted": false,
+  "runtime_loaded": false,
+  "empty_v1_branch_created": false,
+  "item_level_membership_enumeration": "UNAVAILABLE",
+  "tracking": [
+    "https://github.com/szl-holdings/a11oy-net/pull/180",
+    "https://github.com/szl-holdings/szl-kernels/pull/36",
+    "https://github.com/szl-holdings/.github/issues/728"
+  ],
+  "forbidden": [
+    "create an empty v1 branch to close the cutoff",
+    "treat HTTP 200 as LIVE",
+    "treat HF kernels API 14 as qualified assets",
+    "merge szl-kernels#36 as production",
+    "delete Hub mirrors without AWAITING_DESTRUCTIVE_APPROVAL",
+    "stamp ALL_DONE over missing v1 refs",
+    "treat a v1.0.0 tag as a v1 branch"
+  ]
+}
