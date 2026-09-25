@@ -5,58 +5,51 @@
     "url": "https://a11oy.net/estate/thread-ops/",
     "publisher": "szl-holdings/a11oy-net",
     "meaning": "Public proof fold of the grown second-brain thread. Handles only. Not product runtime.",
-    "not": [
-      "product runtime",
-      "huggingface space",
-      "signed receipt",
-      "COMPLETE closeout",
-      "9000-node graph",
-      "new Hub brand",
-      "Hickok /brain replacement"
-    ]
+    "not": ["product runtime", "huggingface space", "signed receipt", "COMPLETE closeout", "9000-node graph", "new Hub brand", "Hickok /brain replacement"]
   },
-  "captured_at": "2026-09-11T23:22:00Z",
-  "evidence_class": "REPORTED",
+  "captured_at": "2026-09-20T15:20:00Z",
+  "evidence_class": "MEASURED",
   "placement": {
     "source": "github.com/szl-holdings/a11oy-net",
-    "source_docs": "https://github.com/szl-holdings/.github/blob/main/docs/SECOND_BRAIN_GROWN.md",
     "proof": "https://a11oy.net/estate/thread-ops/",
     "product": "https://a-11-oy.com",
     "product_brain": "https://a-11-oy.com/brain",
     "product_brain_is": "Hickok Dual-Stream receipts. Do not overwrite.",
-    "product_hosts_this": false,
-    "hf_space_hosts_this": false,
-    "hub_second_brain": "ARCHIVE / family. Not a flagship.",
     "product_command_brain": "https://a-11-oy.com/command/brain",
-    "product_command_brain_is": "Retrieve-or-abstain UI. Handles only. Not Hickok /brain."
+    "product_membrane_route": "https://a-11-oy.com/api/a11oy/v1/brain/membrane"
   },
   "github_lane": {
-    "open_prs_a11oy_net_before_landing": 0,
-    "merge_queue_core_repos_last_probe": "empty"
+    "a11oy_2214": "MERGED squash 30d7021423d4d593642f2d5350c57bf4f1440f2f",
+    "payload5_f1_b1": "LANDED source"
   },
-  "blocked_external_authority": [
-    "HF org write token for static Space index.html restore",
-    "Cloudflare API for www cert and gdw tunnel",
-    "Org CodeQL app or SZL_GITHUB_TOKEN for .github#158"
-  ],
   "recapture": {
-    "github_authenticated": 95,
-    "github_public_search": 90,
+    "github_authenticated": 124,
+    "github_public_org_page": 117,
     "packet_registry": 76,
-    "hub_models": 42,
-    "hub_datasets": 28,
-    "hub_spaces": 43,
-    "hub_keep_public": 6,
-    "product_honest_git_sha": "7253ccb1f6ef888f87fcd9299baabde239a0ced0",
-    "hf_sync_run": "34656716997",
-    "capabilities_overall": "PARTIALLY OPERATIONAL"
+    "hub_models": 47,
+    "hub_datasets": 35,
+    "hub_spaces_api": 21,
+    "hub_spaces_org_card": 22,
+    "product_source_git_sha": "30d7021423d4d593642f2d5350c57bf4f1440f2f",
+    "product_honest_git_sha_prior": "db9333c46804a584dad14ebc17ff4454f64f9c59",
+    "capabilities_overall": "PARTIALLY OPERATIONAL",
+    "membrane_source": "LANDED a11oy#2214",
+    "pins_status": "DRIFT owner-only"
   },
-  "undreamed": "Guardian for the SOW sits between CRM and PSA. Overlay. Do not replace.",
   "honesty": {
     "certified_production_ready": false,
-    "graph_9000": "UNAVAILABLE",
     "minting": "DENY",
-    "lambda": "Conjecture 1 OPEN"
+    "lambda": "Conjecture 1 OPEN",
+    "hickok_untouched": true,
+    "sitemap_locs_changed": false,
+    "proof_flow_holo_tags": 4
+  },
+  "waves": {
+    "F1": "MERGED a11oy#2214",
+    "B1": "MERGED a11oy#2214",
+    "F2": "THIS recapture 30d70214",
+    "F3": "PINS DRIFT owner-only",
+    "F4": "Hub KEEP recorded; no new Space"
   },
   "tracking": "https://github.com/szl-holdings/.github/issues/523"
 }

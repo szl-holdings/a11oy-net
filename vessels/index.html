@@ -54,6 +54,10 @@ th{color:var(--dim);font-weight:500}
     <span class="chip mute">SAMPLE</span>
     <span class="chip mute">licensed AIS CLOSED</span>
     <span class="chip mute">AIS standards CITATION_ONLY</span>
+    <span class="chip mute">AIS lattice 27 types</span>
+    <span class="chip mute">world clocks 50</span>
+    <span class="chip mute">public-list lattice 7 classes</span>
+    <span class="chip mute">min-link joint freshness</span>
     <span class="chip mute">Hub Spaces not required</span>
     <span class="chip mute">Λ = Conjecture 1 OPEN</span>
   </div>
@@ -61,6 +65,13 @@ th{color:var(--dim);font-weight:500}
     <a href="https://a-11-oy.com/vessels">Evaluate on product · a-11-oy.com/vessels</a>
     <a href="/vessels/receipt.json">Bound receipt · JSON</a>
     <a href="/vessels/ais-standards.json">AIS standards · JSON</a>
+    <a href="/vessels/ais-lattice.json">AIS lattice · JSON</a>
+    <a href="/vessels/lattice/">AIS lattice · human</a>
+    <a href="/vessels/public-lists-world.json">World clocks · JSON</a>
+    <a href="/vessels/public-list-lattice.json">Public-list lattice · JSON</a>
+    <a href="/vessels/world/">World clocks · human</a>
+    <a href="/vessels/public-lists-cn-kr-ua.json">CN/KR/UA clocks · JSON</a>
+    <a href="/vessels/joint-freshness.json">Joint freshness · JSON</a>
     <a href="/vessels.json">vessels.json</a>
     <a href="/decision/">Parent RECORD</a>
     <a href="/aegis/">Aegis → Killinchu RECORD</a>
@@ -96,6 +107,8 @@ th{color:var(--dim);font-weight:500}
         <tr><td>source_revision</td><td>9dc70869694f72ba3fb4e632f86f96118ccb39ae</td></tr>
         <tr><td>formula authority</td><td>NONE</td></tr>
         <tr><td>Λ</td><td>Conjecture 1 OPEN · ADVISORY_CONJECTURAL</td></tr>
+        <tr><td>ais_lattice_digest</td><td>f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457</td></tr>
+        <tr><td>ais_lattice</td><td>27 ITU-R M.1371 types as authority classes · CITATION_ONLY</td></tr>
       </tbody>
     </table>
     <table>
@@ -129,6 +142,23 @@ th{color:var(--dim);font-weight:500}
   </section>
 
   <section class="card">
+    <h2>AIS message-type authority lattice</h2>
+    <p>Commercial AIS products treat ITU-R M.1371 types 1–27 as telemetry. This RECORD treats them as authority classes. Citing a type is admitted. Querying a type on the radio, an SDR, or a paid feed is DENIED without a live key. pyais, libais, AIS-catcher, gpsd AIVDM, and MAGI-System are named and refused. Hugging Face SZL kernels are advisory mirrors only. Lattice classify is not the Packet 8 kernel.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>digest</td><td>f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457</td></tr>
+        <tr><td>message types</td><td>27 · CITATION_ONLY</td></tr>
+        <tr><td>cite type catalog</td><td>CITATION_ADMITTED</td></tr>
+        <tr><td>live query / decode / VHF / SDR</td><td class="DENIED">DENIED / PROHIBITED_ACTION</td></tr>
+        <tr><td>maps to eval</td><td>VESSELS-E-DENY-AIS</td></tr>
+        <tr><td>licensed AIS queries</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>Machine copy: <a href="/vessels/ais-lattice.json">/vessels/ais-lattice.json</a>. Human page: <a href="/vessels/lattice/">/vessels/lattice/</a>.</p>
+  </section>
+
+  <section class="card">
     <h2>Sanctions-to-case · public lists only</h2>
     <p>One buyer, one wedge. Read-only OFAC SDN plus frozen demonstration identities. Licensed AIS stays CLOSED. No vessels Hub Space.</p>
     <table>
@@ -145,6 +175,48 @@ th{color:var(--dim);font-weight:500}
     <p>Leader pattern: <a href="https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists">OFAC SDN human-readable lists</a>. CSV export: <a href="https://www.treasury.gov/ofac/downloads/sdn.csv">treasury.gov/ofac/downloads/sdn.csv</a>. Reachability is not quality.</p>
   </section>
 
+
+  <section class="card">
+    <h2>World public-list clocks · MEASURED</h2>
+    <p>Official lists are authority classes. Citing a class is admitted. Querying a radio or a commercial map is DENIED. HTTP 200 is reachability, not a match. STALE_OR_THIN and UNAVAILABLE map to ABSTAIN. Paris/Tokyo detention rows are not stored. OpenSanctions is citation only. AIS lattice digest f931b485 stays unchanged.</p>
+    <table>
+      <thead><tr><th>Clock</th><th>HTTP</th><th>Freshness</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>OFAC SDN CSV</td><td>200</td><td>REACHABLE_FRESH</td><td>5,695,725 B · 18 Sep 14:02 GMT</td></tr>
+        <tr><td>UK FCDO Sanctions List CSV</td><td>200</td><td>REACHABLE_FRESH</td><td>49,928,338 B · 11 Sep 14:02 GMT</td></tr>
+        <tr><td>UK OFSI ConList.csv</td><td>200</td><td class="ABSTAINED">STALE_OR_THIN</td><td>16,641,139 B · 3 Jun 2026 · do not treat as current</td></tr>
+        <tr><td>UN SC consolidated XML</td><td>206</td><td>REACHABLE_FRESH</td><td>2,176,957 B · 19 Sep 23:02 GMT</td></tr>
+        <tr><td>EU FSF XML</td><td>200</td><td>REACHABLE_FRESH</td><td>25,766,640 B · dual-observer (this desk also saw 403)</td></tr>
+        <tr><td>UA NSDC API</td><td>200</td><td>REACHABLE_FRESH</td><td>Official. Export HTML 403.</td></tr>
+        <tr><td>UA GUR ships</td><td>200</td><td>REACHABLE_FRESH</td><td>Official public ship inventory HTML.</td></tr>
+        <tr><td>CN MFA AFSL / MOFCOM UEL</td><td>200/206</td><td>PAGE_CITE</td><td>Notice pages. No structured vessel CSV.</td></tr>
+        <tr><td>KR MOFA DPRK</td><td>—</td><td class="ABSTAINED">REPORTED</td><td>Redirect loop this observer. Do not invent a CSV.</td></tr>
+        <tr><td>OpenSanctions maritime.csv</td><td>200</td><td>REACHABLE_FRESH</td><td>5,063,543 B · 20 Sep 15:04 GMT · citation only</td></tr>
+        <tr><td>Paris MoU detentions</td><td>200</td><td>PAGE_CITE</td><td class="DENIED">Rows not stored</td></tr>
+        <tr><td>MarineTraffic / VesselFinder</td><td>—</td><td class="DENIED">REFUSED</td><td>Commercial AIS map. DENIED.</td></tr>
+      </tbody>
+    </table>
+    <p>World digest 70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5. Authority lattice digest b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d. Joint-freshness digest 1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898. 50 clocks · 45 measured 200-or-206 · 7 authority classes. Min-link joint freshness does not pick a silent winner. Typed judgment is stdlib exact-string SAMPLE over AURORA WAVE → SAMPLE_TEXT_MISS. Miss is not clearance. E01 stays OUTSTANDING. Machine copies: <a href="/vessels/public-lists-world.json">world JSON</a> · <a href="/vessels/public-list-lattice.json">authority lattice</a> · <a href="/vessels/joint-freshness.json">joint freshness</a> · <a href="/vessels/world/">human</a>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Min-link joint freshness</h2>
+    <p>Inside an authority class, joint freshness is the weakest current official clock. A stale twin is a disagreement object, not a silent winner. A compilation is never promoted to official. Coverage holes are named cells. A SAMPLE miss is not clearance.</p>
+    <table>
+      <thead><tr><th>Class</th><th>Freshness</th><th>Bound</th></tr></thead>
+      <tbody>
+        <tr><td>OFAC-vessel</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>UN-1718-vessel</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>UK-specified-ship</td><td>REACHABLE_FRESH</td><td>FCDO current · OFSI stale twin named</td></tr>
+        <tr><td>UA-GUR-ship</td><td>REACHABLE_FRESH</td><td>cite admitted · not a match</td></tr>
+        <tr><td>KR-MOFA-vessel</td><td class="ABSTAINED">REPORTED</td><td>coverage hole · ABSTAIN</td></tr>
+        <tr><td>IUU-RFMO</td><td class="ABSTAINED">PAGE_CITE</td><td>coverage hole · no bulk clock</td></tr>
+        <tr><td>Paris-banned</td><td class="ABSTAINED">PAGE_CITE</td><td class="DENIED">rows not stored</td></tr>
+      </tbody>
+    </table>
+    <p>Asia-Pacific official joint is mute (KR REPORTED, CN no vessel class, AU timeout, SG stale). Machine copy: <a href="/vessels/joint-freshness.json">joint-freshness.json</a>.</p>
+  </section>
+
   <section class="card">
     <h2>SAMPLE numbers stay SAMPLE</h2>
     <table>
@@ -156,6 +228,11 @@ th{color:var(--dim);font-weight:500}
         <tr><td>Licensed AIS queries</td><td>SAMPLE</td><td>0</td></tr>
         <tr><td>OFAC SDN CSV reachability</td><td>MEASURED</td><td>HTTP 200 · 5,692,851 bytes · not a match rate</td></tr>
         <tr><td>AIS standards bind</td><td>CITATION_ONLY</td><td>8 instruments named · not conformance</td></tr>
+        <tr><td>AIS lattice bind</td><td>CITATION_ONLY</td><td>27 types · digest f931b485… · not a decoder</td></tr>
+        <tr><td>World public-list clocks</td><td>MEASURED</td><td>50 clocks · 45 reachable · digest 70fd1918… · not a match rate</td></tr>
+        <tr><td>Public-list authority lattice</td><td>CITATION_ONLY</td><td>7 classes · digest b2d23ac6… · not entity resolution</td></tr>
+        <tr><td>Min-link joint freshness</td><td>CITATION_ONLY</td><td>digest 1cb5b117… · winner not picked · holes named</td></tr>
+        <tr><td>Typed judgment SAMPLE AURORA WAVE</td><td>SAMPLE</td><td>SAMPLE_TEXT_MISS · miss is not clearance</td></tr>
         <tr><td>VESSELS-E01 IMO/owner entity resolution</td><td>BLOCKING</td><td>OUTSTANDING</td></tr>
         <tr><td>VESSELS-E02 sanctions match precision</td><td>BLOCKING</td><td>SEED POLICY</td></tr>
         <tr><td>VESSELS-E03 licensed AIS true-positive rate</td><td>BLOCKING</td><td>OUTSTANDING · not claimed</td></tr>
@@ -170,6 +247,10 @@ th{color:var(--dim);font-weight:500}
       <li>Formula authority NONE. Models, formulas and market signals never authorize.</li>
       <li>Licensed AIS is CLOSED on this RECORD. A live key is not present here and is not claimed.</li>
       <li>AIS standards on this RECORD are CITATION_ONLY. This origin is not Class A or Class B equipment. SOLAS V/19 does not apply. Licensed AIS TPR is OUTSTANDING and is not claimed.</li>
+      <li>AIS lattice on this RECORD is CITATION_ONLY. Types are authority classes, not a live feed. Codecs stay refused. Queries stay 0.</li>
+      <li>World public-list clocks are MEASURED reachability. Authority classes cite admitted. Live AIS DENIED. OpenSanctions is citation only. Paris/Tokyo rows are not stored.</li>
+      <li>Min-link joint freshness names coverage holes and disagreements. It does not pick a silent winner. A SAMPLE miss is not clearance.</li>
+      <li>Typed judgment on this RECORD is stdlib exact-string SAMPLE. It is not TypeSafe Jev. It is not E01.</li>
       <li>Λ = Conjecture 1 / advisory. Not a theorem.</li>
       <li>This origin does not run evaluate, scan, or replay. That stays on a-11-oy.com/vessels.</li>
       <li>Not a fifth flagship. Not a Hub Space. Not legal advice. Not a Palantir clone.</li>

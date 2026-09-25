@@ -1,0 +1,9 @@
+{
+  "schema": "szl.proof-snapshot-pointer/v1",
+  "path": "/kernel-hold-2026-09-19.json",
+  "captured_at": "2026-09-20T00:12:00Z",
+  "scope": "kernel-kind-disposition",
+  "meaning": "Public HOLD pointer. Does not authorize promotion, delete assets, or rewrite membership.",
+  "disposition": "HOLD",
+  "production_authorization": false
+}

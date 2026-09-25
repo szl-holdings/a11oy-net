@@ -17,7 +17,14 @@
     "source": "https://github.com/szl-holdings/a11oy/tree/main/verticals/vessels",
     "kernel": "https://github.com/szl-holdings/a11oy/blob/main/verticals/_kernel/a11oy_kernel.py",
     "ofac_sdn": "https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists",
-    "ais_standards": "https://a11oy.net/vessels/ais-standards.json"
+    "ais_standards": "https://a11oy.net/vessels/ais-standards.json",
+    "ais_lattice": "https://a11oy.net/vessels/ais-lattice.json",
+    "ais_lattice_html": "https://a11oy.net/vessels/lattice/",
+    "public_lists_world": "https://a11oy.net/vessels/public-lists-world.json",
+    "public_list_lattice": "https://a11oy.net/vessels/public-list-lattice.json",
+    "world_html": "https://a11oy.net/vessels/world/",
+    "joint_freshness": "https://a11oy.net/vessels/joint-freshness.json",
+    "cn_kr_ua": "https://a11oy.net/vessels/public-lists-cn-kr-ua.json"
   },
   "status": "ROADMAP",
   "data_label": "SAMPLE",
@@ -40,9 +47,21 @@
     "space": "none"
   },
   "cases": [
-    {"eval_id": "VESSELS-E-ABSTAIN", "expected_state": "ABSTAINED", "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"},
-    {"eval_id": "VESSELS-E-AWAIT-01", "expected_state": "AWAITING_APPROVAL", "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"},
-    {"eval_id": "VESSELS-E-DENY-AIS", "expected_state": "DENIED", "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"}
+    {
+      "eval_id": "VESSELS-E-ABSTAIN",
+      "expected_state": "ABSTAINED",
+      "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"
+    },
+    {
+      "eval_id": "VESSELS-E-AWAIT-01",
+      "expected_state": "AWAITING_APPROVAL",
+      "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"
+    },
+    {
+      "eval_id": "VESSELS-E-DENY-AIS",
+      "expected_state": "DENIED",
+      "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"
+    }
   ],
   "sample": {
     "frozen_cases": 3,
@@ -52,30 +71,14 @@
     "licensed_ais_queries": 0,
     "honesty": "SAMPLE. Local stdlib replay of frozen payloads against kernel 8.0.0. Not a production certificate. Not a licensed-AIS TPR. Entity-resolution precision remains OUTSTANDING."
   },
-  "ofac_sdn": {
-    "observed_at_utc": "2026-09-11T18:46:16Z",
-    "leader": "OFAC SDN",
-    "pattern": "named sanctions list, not a quality score",
-    "public_url": "https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists",
-    "csv_url": "https://www.treasury.gov/ofac/downloads/sdn.csv",
-    "html_http_status": 200,
-    "csv_http_status": 200,
-    "csv_content_type": "text/csv",
-    "csv_content_length_bytes": 5692851,
-    "csv_last_modified": "Thu, 10 Sep 2026 18:31:57 GMT",
-    "csv_etag": "7b8d1e512b838d3b39d0e7758e004dbe",
-    "honesty": "MEASURED reachability only. Not a quality score. Not a match. Not entity-resolution precision. Not a licensed-AIS feed. Signed redirect URLs are not stored."
-  },
-  "ais_standards": {
+  "ais_lattice": {
     "honesty": "CITATION_ONLY",
-    "surface": "https://a11oy.net/vessels/ais-standards.json",
+    "surface": "https://a11oy.net/vessels/ais-lattice.json",
+    "html": "https://a11oy.net/vessels/lattice/",
+    "digest": "f931b48544bcf70b1ca0d1c03b38b6c8e9dbf1933adfb8128316324e82eeb457",
     "licensed_ais_queries": 0,
-    "ais_equipment_class": "NONE",
-    "ais_transmit": false,
-    "solas_v19_applies": false,
-    "aton_provider": false,
-    "vessels_e03_licensed_ais_tpr": "OUTSTANDING",
-    "instruments": ["ITU-R M.1371", "IEC 61993-2:2018", "IMO MSC.74(69) Annex 3", "IMO A.1106(29)", "IMO MSC.347(91)", "SOLAS V/19", "IALA G1082 Ed 2.1", "IALA A-126"]
+    "message_types": 27,
+    "note": "Types are authority classes. Cite admitted. Live query DENIED."
   },
   "boundaries": {
     "this_origin_does_not_run_the_kernel": true,
@@ -87,5 +90,25 @@
     "formula_grants_authority": false,
     "lambda_uniqueness": "Conjecture 1 OPEN",
     "never": "a11oy.com"
+  },
+  "public_lists_world": {
+    "honesty": "CITATION_ONLY",
+    "digest": "70fd1918fb38791159cfa2c520dc989f32125e4e0de4104b59d0a26fa48e1cb5",
+    "lists": 50,
+    "licensed_ais_queries": 0,
+    "note": "Clocks are reachability. Cite admitted. Live query DENIED."
+  },
+  "public_list_lattice": {
+    "honesty": "CITATION_ONLY",
+    "digest": "b2d23ac69631667c09a8e3c4715d9a7caabda23edc9739b74d743fe6d9f88c1d",
+    "authority_classes": 7
+  },
+  "joint_freshness": {
+    "honesty": "CITATION_ONLY",
+    "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898",
+    "rule": "min-link",
+    "winner_not_picked": true,
+    "negative_evidence": "SAMPLE_TEXT_MISS",
+    "miss_is_not_clearance": true
   }
 }
