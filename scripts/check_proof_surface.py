@@ -452,6 +452,12 @@ def check() -> None:
         "governed-receipt-verifier",
     ]
     assert spaces_contract["cut"]["keep"] == 6
+    # 2026-09-25: KEEP-6 is policy, not Hub state. The verifier Space id stays
+    # in the cut but is recorded NOT_FOUND on the Hub (401 public, 404 to an
+    # org-authenticated read); it must not be described as a live Hub app.
+    verifier = next(item for item in spaces_contract["keep"] if item["id"] == "governed-receipt-verifier")
+    assert verifier.get("hub_status") == "NOT_FOUND"
+    assert "Public Hub application KEEP" not in verifier["why"]
     assert "david-leads" not in keep_ids
     assert "anatomy" not in keep_ids
     assert "szl-real-estate" not in keep_ids
@@ -941,6 +947,11 @@ def check() -> None:
     assert '["atlasTotal","atlasModels","atlasDatasets","atlasCollections","atlasBuckets"]' in source
     assert "Inventory unavailable; this is not an observed-empty result." in source
     assert 'aria-label="A11oy public evidence dossier"' in source
+    # 2026-09-25: the dossier verifier row points at product-origin /verify,
+    # never the Perplexity sidecar (origin-drift-2026-09-02.json marks
+    # a11oy-verify.pplx.app NOT_PRODUCT_ORIGIN).
+    assert "pplx.app" not in source
+    assert 'href="https://a-11-oy.com/verify"' in source
     assert "The dated static registry snapshot remains visible" in source
     assert 'data-static-snapshot="2026-08-31"' in source
     # audit 2026-08-30: static fallbacks are honest em-dashes (the same state a

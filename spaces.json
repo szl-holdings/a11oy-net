@@ -65,7 +65,11 @@
       "id": "governed-receipt-verifier",
       "dest": "https://a11oy.net/record/",
       "sdk": "static",
-      "why": "Public Hub application KEEP. Interactive /verify stays on product. Proof holds the RECORD index only."
+      "why": "KEEP id stays in the 2026-08-31 policy cut. Not a live Hub application: the Space is NOT FOUND on the Hub (see hub_status). Interactive /verify stays on product at https://a-11-oy.com/verify. Proof holds the RECORD index only.",
+      "honesty": "KEEP (policy) · Hub NOT FOUND",
+      "hub_status": "NOT_FOUND",
+      "hub_status_observed_at": "2026-09-25T20:09:45Z",
+      "hub_status_note": "Unauthenticated GET https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier and /api/spaces/SZLHOLDINGS/governed-receipt-verifier returned HTTP 401. The id is absent from the unauthenticated author-list (22 Spaces). An SZLHOLDINGS org-admin authenticated space_info returned 404 RepositoryNotFound and the id is absent from the admin-authenticated Space listing. The Space does not exist; it is not merely private."
     }
   ],
   "fold": [
