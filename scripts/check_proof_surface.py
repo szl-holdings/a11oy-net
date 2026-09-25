@@ -826,7 +826,13 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 14
+    # 2026-09-25: anatomy and holographic Hub Spaces answer HTTP 401 to the
+    # public; their cards drop REPORTED (14 -> 12) and carry no link.
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 12
+    assert source.count('<span class="stack-truth">RETIRED/PRIVATE</span>') == 2
+    for retired in ("anatomy", "holographic", "governed-receipt-verifier"):
+        assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in source
+    assert 'href="https://github.com/szl-holdings/szl-experiments"' not in source
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
         "and availability are not checked in this section." in source
