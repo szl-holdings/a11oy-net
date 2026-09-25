@@ -87,8 +87,10 @@
     "runtime_stage": "RUNNING",
     "runtime_sha_reported": "26d66c37080fae22ea682ea7768c6e3d19cb09b5",
     "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /honest git_sha 15313677 is MEASURED. GitHub main 192dbcf1 is ahead. Do not treat the two SHAs as one identity.",
-    "spaces_author_api_count": 21,
+    "spaces_author_api_count": 22,
+    "spaces_author_api_observed_at": "2026-09-25T16:26:12Z",
     "spaces_sampled_running": 21,
+    "spaces_sampled_running_note": "21 RUNNING was not re-sampled on 2026-09-25. Author-list is 22. Do not infer the 22nd is RUNNING.",
     "domains": [
       {
         "domain": "szlholdings-a11oy.hf.space",
@@ -109,7 +111,7 @@
       "public_probe": "HTTP 401",
       "note": "PACKET8.json initial_spaces_are_nonpublic true. 401 is the published contract, not a missing product desk. Product desks remain a-11-oy.com/{terra,aegis,puriq-markets,counsel,vessels}."
     },
-    "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp."
+    "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp. Unauthenticated author-list 2026-09-25T16:26:12Z is 22 Spaces / 49 models / 35 datasets. Prior origin stamp 21 Spaces is superseded for the list count only."
   },
   "signer": {
     "healthz": "ABSENT",

@@ -1,5 +1,5 @@
 {
-  "examined_documents": 43,
+  "examined_documents": 44,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -18,6 +18,7 @@
     "estate/frontier-2026-09-11-litellm/index.html",
     "estate/frontier-2026-09-11/index.html",
     "estate/index.html",
+    "estate/operational-2026-09-20-t1500z/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",

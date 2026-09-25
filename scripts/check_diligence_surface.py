@@ -368,12 +368,18 @@ def check() -> None:
     assert record_contract["status"]["receipt_ids"] == []
     assert record_contract["status"]["receipt_ids_class"] == "UNAVAILABLE"
     atlas_contract = json.loads(ATLAS_JSON.read_text(encoding="utf-8"))
-    # 2026-08-31 recapture: 49 Spaces total, 48 publicly readable (47 list rows + README),
-    # 1 not publicly listed. Prior keep-7 pin (2026-08-29T18:05Z, 45/7/38) superseded.
-    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-08-31T18:59:11Z"
-    assert atlas_contract["hub_snapshot"]["spaces_public"] == 48
-    assert atlas_contract["hub_snapshot"]["spaces_private"] == 1
-    assert atlas_contract["hub_snapshot"]["spaces_total"] == 49
+    # 2026-09-25 recapture: unauthenticated public author-list 49/35/22.
+    # 2026-08-31 44/38/49 retained as prior_snapshot_retained HISTORICAL.
+    # Curated keep-7 is not the exhaustive public list.
+    assert atlas_contract["hub_snapshot"]["observed_at"] == "2026-09-25T16:26:12Z"
+    assert atlas_contract["hub_snapshot"]["spaces_public"] == 22
+    assert atlas_contract["hub_snapshot"]["models"] == 49
+    assert atlas_contract["hub_snapshot"]["datasets"] == 35
+    assert atlas_contract["hub_snapshot"]["authenticated_totals"] == "UNAVAILABLE"
+    assert atlas_contract["prior_snapshot_retained"]["observed_at"] == "2026-08-31T18:59:11Z"
+    assert atlas_contract["prior_snapshot_retained"]["spaces_public"] == 48
+    assert atlas_contract["prior_snapshot_retained"]["models"] == 44
+    assert atlas_contract["hub_snapshot"]["five_space"]["mint"] is False
     assert len(atlas_contract["public_spaces"]) == 7  # curated canonical set, not exhaustive
     assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
     assert atlas_contract["boundaries"]["spaces_deleted"] is False

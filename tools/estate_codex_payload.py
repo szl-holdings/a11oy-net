@@ -22,7 +22,6 @@ import datetime as dt
 import hashlib
 import json
 import math
-import os
 import sys
 import urllib.parse
 import urllib.request
