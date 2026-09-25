@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-25
+
+- `/pricing/` no longer publishes a price list. It is a noindex pointer to the product origin's pricing, linked as `https://a-11-oy.com/pricing` without a trailing slash (`/pricing/` returned 404 there when checked on 2026-09-25/26 UTC). The 2026-08-30 hypothesis list (Verify / Control / Assurance-Sovereign tiers, with the "80% conversion target" and "Signed receipt per consequential action" bullets) is withdrawn. The page labels it as history and links to `64c1c9a`. `/contact/` no longer calls those tiers "the actual SKUs" or advertises six-month pilots; its pilot and pricing cards link to the product site. The `/contact/` and `/spec/GovernedAction/v1/` navs, and the `/contact/` footer, drop their Pricing item instead of gaining an off-origin link (`FRONT_DOOR.md` nav rules). This origin creates no financial claim, matching `/diligence/`. It does not set or confirm any price, and it does not change the product site. Never a11oy.com.
+
 ## 2026-09-19
 
 - Add a public-only, dated estate observation and SHA-256-bound `/estate-current.json` pointer. `/status/` separates that observation from the preserved September 4 table, marks observations older than 24 hours STALE, and fails closed to UNAVAILABLE on fetch, scope, date, or digest errors. This is byte consistency, not a signature, live runtime health, or release authorization. The evidence index points to dated origin records without repeating a closed historical www incident as a current outage. CI checks the binding and failure paths.
