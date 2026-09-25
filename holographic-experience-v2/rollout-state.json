@@ -21,6 +21,7 @@
     "estate/frontier-2026-09-11/index.html",
     "estate/frontier-2026-09-11-litellm/index.html",
     "estate/index.html",
+    "estate/operational-2026-09-20-t1500z/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",
@@ -48,9 +49,9 @@
     "vessels/lattice/index.html",
     "vessels/world/index.html"
   ],
-  "bound_documents": 43,
+  "bound_documents": 44,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 45,
+  "examined_documents": 46,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -59,6 +60,7 @@
     "estate/frontier-2026-09-04/index.html",
     "estate/frontier-2026-09-11-litellm/index.html",
     "estate/frontier-2026-09-11/index.html",
+    "estate/operational-2026-09-20-t1500z/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
     "estate/plane/index.html",
