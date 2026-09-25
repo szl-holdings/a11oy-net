@@ -1,0 +1,29 @@
+{
+  "schema": "szl.kernel-kind-observation/v1",
+  "record_class": "PROOF",
+  "captured_at": "2026-09-20T00:12:00Z",
+  "disposition": "HOLD",
+  "cutoff": "2026-09-13T00:00:00Z",
+  "cutoff_status": "OVERDUE",
+  "production_authorization": false,
+  "automatic_promotion_authorized": false,
+  "certified_production_ready": false,
+  "mirrors_deleted": false,
+  "empty_v1_branch_created": false,
+  "related_draft": {"pr": 195, "state": "DRAFT", "do_not_merge_as_is": true},
+  "kernels_api": {"list_count": 14, "note": "List-only. Not a v1-pin proof."},
+  "product_two_read": {
+    "honest_source_sha": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "build_info_revision": "a2244bde2a79fb9a831b537d8d2d096400516a7f",
+    "receipt_minted": false,
+    "lambda": "Conjecture 1",
+    "sha_equality": true
+  },
+  "limitations": [
+    "Does not rewrite membership, inventory, or estate.json.",
+    "Does not stamp LIVE.",
+    "Does not delete Hub mirrors.",
+    "Does not create an empty v1 branch.",
+    "AGI remains UNAVAILABLE."
+  ]
+}
