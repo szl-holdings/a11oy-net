@@ -10,10 +10,10 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-26T01:10:00Z",
-  "prior_observed_at_utc": "2026-09-25T16:20:00Z",
+  "observed_at_utc": "2026-09-26T01:52:00Z",
+  "prior_observed_at_utc": "2026-09-26T01:10:00Z",
   "evidence_class": "MEASURED",
-  "observer": "Public HTTP GET of /honest, /api/a11oy/v1/jev/status, /api/a11oy/v1/decision/vessels, a11oy.net/vessels/joint-freshness.json, and GitHub main from a stephenlutar2-hash session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
+  "observer": "Public HTTP GET of /honest, /api/a11oy/v1/honest, a11oy.net/origin.json, and GitHub main from a stephenlutar2-hash session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
     {
       "id": "product",
@@ -29,10 +29,10 @@
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "28acdc52f6f7f29c59216a64b9748f5f8a7aa72d",
+      "git_sha_honest": "c1fa227e0c7c26d47c2f3c5ecaca7bfebb66dd64",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. HTTP 200 is reachability, not a production certificate. honest.git_sha 28acdc52 MATCH GitHub szl-holdings/a11oy main 28acdc52. Jev /status live: engine UNAVAILABLE, promotion denied. Do not stamp LIVE."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. HTTP 200 is reachability, not a production certificate. honest.git_sha c1fa227e MATCH this origin recapture. Does NOT MATCH GitHub szl-holdings/a11oy main 99df882c (LAG-6, 1 commit). Jev /status not re-probed in this recapture. Do not stamp LIVE. MATCH is not LIVE."
     },
     {
       "id": "www",
@@ -86,7 +86,7 @@
     "space": "SZLHOLDINGS/a11oy",
     "runtime_stage": "RUNNING",
     "runtime_sha_reported": "26d66c37080fae22ea682ea7768c6e3d19cb09b5",
-    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /honest git_sha 28acdc52 MATCH GitHub main 28acdc52. Do not treat the provider runtime SHA as the product identity.",
+    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /honest git_sha c1fa227e does not match GitHub main 99df882c. Do not treat the provider runtime SHA as the product identity.",
     "spaces_author_api_count": 22,
     "spaces_author_api_observed_at": "2026-09-25T16:26:12Z",
     "spaces_sampled_running": 21,
@@ -137,21 +137,27 @@
         "eval_id": "VESSELS-E-ABSTAIN",
         "case_id": "vessels-stale-list",
         "state": "ABSTAINED",
-        "reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"],
+        "reason_codes": [
+          "STALE_OR_UNAVAILABLE_SOURCE"
+        ],
         "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"
       },
       {
         "eval_id": "VESSELS-E-AWAIT-01",
         "case_id": "vessels-aurora-wave",
         "state": "AWAITING_APPROVAL",
-        "reason_codes": ["HUMAN_APPROVAL_REQUIRED"],
+        "reason_codes": [
+          "HUMAN_APPROVAL_REQUIRED"
+        ],
         "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"
       },
       {
         "eval_id": "VESSELS-E-DENY-AIS",
         "case_id": "vessels-licensed-ais",
         "state": "DENIED",
-        "reason_codes": ["PROHIBITED_ACTION"],
+        "reason_codes": [
+          "PROHIBITED_ACTION"
+        ],
         "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"
       }
     ],
@@ -180,13 +186,19 @@
       "bind": "inner frozen payload"
     },
     "eval_id_only_probe": {
-      "posted": {"eval_id": "VESSELS-E-DENY-AIS"},
+      "posted": {
+        "eval_id": "VESSELS-E-DENY-AIS"
+      },
       "state": "DENIED",
-      "reason_codes": ["PROHIBITED_ACTION"],
+      "reason_codes": [
+        "PROHIBITED_ACTION"
+      ],
       "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275",
       "empty_json": {
         "state": "UNKNOWN",
-        "reason_codes": ["EMPTY_KERNEL_BIND"]
+        "reason_codes": [
+          "EMPTY_KERNEL_BIND"
+        ]
       },
       "note": "Product #2209 unwrap is live on a-11-oy.com. Wrapper-only empty POST stays UNKNOWN."
     },
@@ -218,7 +230,16 @@
       "note": "Proof JSON is live. Product evaluate echo is MEASURED. Product /honest MATCH GitHub main 28acdc52. Miss is not clearance."
     }
   },
-  "defects": [],
+  "defects": [
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG-6",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest 28acdc52 MATCH main 28acdc52 at 2026-09-26T01:10:00Z",
+      "now": "product /honest c1fa227e is merge #2277 on the Space. GitHub main is 99df882c (label overclaim fallback). This recapture matches honest, not main. Pages HTTP 200 is reachability.",
+      "class": "MEASURED",
+      "closed_at_utc": null
+    }
+  ],
   "defects_closed": [
     {
       "id": "INC-05-WWW-404",
