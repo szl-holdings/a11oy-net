@@ -7,7 +7,7 @@
     "meaning": "Canonical public receipt-record index on a11oy.net. Pointers only. Not a receipt database. Not an interactive verifier.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "The signed RECORD index lives at https://a11oy.net/record/. The tool that checks a record is https://a-11-oy.com/verify. They are different hosts and must not be merged. This repository has no receipt store. Live receipts are on the product Space (Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts). This file lists those locations. receipt_ids is empty and UNAVAILABLE: that is not a measured zero, and no receipt identifiers are invented here. Never a11oy.com.",
+  "reader_guide": "The RECORD index lives at https://a11oy.net/record/. The tool that checks a record is https://a-11-oy.com/verify. They are different hosts and must not be merged. This repository has no receipt store. Live receipts are on the product Space (Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts). This file lists those locations. receipt_ids is empty and UNAVAILABLE: that is not a measured zero, and no receipt identifiers are invented here. Never a11oy.com.",
   "permalinks": {
     "record_html": "https://a11oy.net/record/",
     "record_json": "https://a11oy.net/record.json",
@@ -19,10 +19,79 @@
     "scope": "Interactive /verify stays on the product origin. This origin links to it and does not clone the tool."
   },
   "public_key": {
-    "url": "https://github.com/szl-holdings/.github/blob/main/cosign.pub",
-    "raw_url": "https://raw.githubusercontent.com/szl-holdings/.github/main/cosign.pub",
-    "evidence_class": "REPORTED",
-    "scope": "Org-published cosign public key listing. This file does not re-verify signatures."
+    "url": "https://a-11-oy.com/cosign.pub",
+    "raw_url": "https://a-11-oy.com/cosign.pub",
+    "keyid": "9926bf69",
+    "fingerprint_sha256": "9926bf69b799ea663fc5cf5a8c5d8f594d99d7b323700d6a20b803bd4c9f4e15",
+    "spki_der_sha256": "8e2d106c6995e11dbf7cbedfa9e5800bb50c82a635756e40dcd330364f6ea8ba",
+    "served_file_sha256": "c8b73461c1bb1235393ac1cbe0cc02fd7d8d93e6a6d932f95141a4f82c30a62e",
+    "fingerprint_method": "Three hashes of one key; compare the one that matches how you hash. fingerprint_sha256 is the SHA-256 of the PEM text with leading and trailing whitespace removed (for the served file, its bytes without the final newline). It is the value the product reports as dsse_keyid, keyid is its first 8 hex characters, and it changes with PEM line wrapping. spki_der_sha256 is the SHA-256 of the DER SubjectPublicKeyInfo (openssl pkey -pubin -outform DER | sha256sum) and does not depend on wrapping. served_file_sha256 is plain sha256sum of the served bytes; it changes if the file's line endings or trailing newline change.",
+    "evidence_class": "MEASURED",
+    "observed_at": "2026-09-26T02:37:38Z",
+    "observations": [
+      {
+        "observed_at": "2026-08-29T18:00:00Z",
+        "evidence_class": "REPORTED",
+        "keyid_reported": "9926bf69",
+        "what": "estate.json records that the closeout DSSE from POST /api/a11oy/khipu/sign verified against the key served at the a11oy Space /cosign.pub URL (matches_live_closeout true), and gives that key as keyid_reported 9926bf69 (estate.json). This entry restates estate.json, so it is REPORTED here, as org_keys[0] is. estate.json recorded no PEM hash for the Space key at the closeout, and its bound says the fingerprint is not re-hashed after the ceremony, so which key that URL served on 2026-08-29 rests on keyid_reported. estate.json's keyid_reported does not always identify the key at its URL: for keys/cosign.pub it gives d3028f8a, which is not that file's key (org_keys[0]). The MEASURED identity of the key at this URL is the 2026-09-26 fetch below.",
+        "source": "https://a11oy.net/estate/#keys (estate.json keys.a11oy_space_cosign_pub)"
+      },
+      {
+        "observed_at": "2026-09-26T02:37:38Z",
+        "evidence_class": "MEASURED",
+        "what": "GET https://a-11-oy.com/cosign.pub and GET https://szlholdings-a11oy.hf.space/cosign.pub returned the same 178 bytes, with the fingerprint_sha256, spki_der_sha256 and served_file_sha256 above."
+      },
+      {
+        "observed_at": "2026-09-26T02:37:38Z",
+        "evidence_class": "REPORTED",
+        "what": "GET https://szlholdings-a11oy.hf.space/api/a11oy/v1/signing-status returned dsse_keyid 9926bf69b799ea66 and key_source persistent:env:SZL_COSIGN_PRIVATE_PEM. This is the product's report about its own signer; nothing was signed for this observation."
+      }
+    ],
+    "other_copies": [
+      {
+        "url": "https://github.com/szl-holdings/a11oy/blob/0d3a2d4c20fb15988ede6a7e772184dff2ca07ca/ayllu/keys/council-runtime-2026-07-21.pub",
+        "repository": "szl-holdings/a11oy",
+        "path": "ayllu/keys/council-runtime-2026-07-21.pub",
+        "added_in_commit": "0d3a2d4c20fb15988ede6a7e772184dff2ca07ca",
+        "added_at": "2026-07-21T03:35:55Z",
+        "spki_der_sha256": "8e2d106c6995e11dbf7cbedfa9e5800bb50c82a635756e40dcd330364f6ea8ba",
+        "stripped_pem_sha256": "75dc678af81c48e43368387a801455d01b658c018ab119a45c9fa2179c6c6dfb",
+        "evidence_class": "MEASURED",
+        "observed_at": "2026-09-26T02:40:46Z",
+        "basis": "The same public key (same spki_der_sha256), committed in the product's own repository, not in szl-holdings/.github. The file is wrapped at 76 columns instead of 64, so its stripped-PEM hash is 75dc678a, not 9926bf69; compare spki_der_sha256. The file has one commit in its history (0d3a2d4c) and the same blob at a11oy main bc3c37c8 when read at observed_at. The repository's ayllu/keys/README.md says the key was recovered by ECDSA public-key recovery from two live council signatures."
+      }
+    ],
+    "trust_bound": "This key is served by the same product origin that signs. As of 2026-09-26 it is not published in szl-holdings/.github, where the org cosign.pub files are. The product's own repository has a git-dated copy, committed 2026-07-21 and unchanged on 2026-09-26 (other_copies), on a different host from the signing origin. That copy was recovered from the product's own signatures by ECDSA public-key recovery: it shows which key signed those receipts, not that an org key holder published the key. The product derives /cosign.pub from its runtime signer, so a signer rotation changes the served key. The product source also has a fallback: at szl-holdings/a11oy@bc3c37c8, a non-strict runtime with no configured persistent key uses a process-local ephemeral key (a11oy_signing_key.py:147; serve.py:9640-9643), and /cosign.pub serves whatever key was loaded (serve.py:9789-9801), so in that state it would serve an ephemeral key. The fingerprints here are dated observations committed to this repository, not a live pin: before relying on the file you fetch, compare the hash that matches your method (fingerprint_method).",
+    "scope": "Public key served by the product origin. estate.json records that the 2026-08-29 closeout matched the a11oy Space /cosign.pub, recorded as keyid 9926bf69 (REPORTED, observations[0]), and did not match the org key URL it recorded (org_keys). This file does not re-verify signatures.",
+    "org_keys": [
+      {
+        "url": "https://github.com/szl-holdings/.github/blob/main/keys/cosign.pub",
+        "raw_url": "https://raw.githubusercontent.com/szl-holdings/.github/main/keys/cosign.pub",
+        "keyid": "421a1422",
+        "fingerprint_sha256": "421a1422ebb2516aaf08358e5c4b75aed4f5e1ecd76ac9e2a2e7a9879c067e1e",
+        "spki_der_sha256": "fc7e0c26b91ca8cae14bf773c3dd8da7cdfe2aa99432abd6604abd67a7b53567",
+        "keyid_evidence_class": "MEASURED",
+        "keyid_observed_at": "2026-09-26T02:37:38Z",
+        "matched_live_closeout": false,
+        "match_evidence_class": "REPORTED",
+        "match_observed_at": "2026-08-29T18:16:00Z",
+        "match_source": "https://a11oy.net/estate.json keys.org_github_cosign_pub",
+        "basis": "match_evidence_class is REPORTED, not MEASURED: this entry restates estate.json, which records this URL with pem_sha256 31b8c7f1, matches_live_closeout false and observed_at 18:16Z. 31b8c7f1 is the SHA-256 of this key's PEM with one trailing newline. estate.json also labels the entry keyid_reported d3028f8a. That label does not identify the key at this URL or the recorded PEM hash: d3028f8a is the root cosign.pub key, and where the label came from was not recorded. estate.json does not record which org PEM its 18:00Z verify loaded, so the entry does not show a verify run against this file. The mismatch can also be derived as for the root key (MODELED, org_keys[1]): the closeout signature verified under the Space /cosign.pub key, recorded as keyid 9926bf69, a different key from this one. The keyid and spki_der_sha256 were measured at keyid_observed_at."
+      },
+      {
+        "url": "https://github.com/szl-holdings/.github/blob/main/cosign.pub",
+        "raw_url": "https://raw.githubusercontent.com/szl-holdings/.github/main/cosign.pub",
+        "keyid": "d3028f8a",
+        "fingerprint_sha256": "d3028f8aecd0841f684e1c7fd7b06de7a211dc6fc09c34163003798b391bcf71",
+        "spki_der_sha256": "580ed9a9bd9f7c9f4f49ec9564b81ba8b3d80f3f21d0e5200c38514be94ad3a8",
+        "keyid_evidence_class": "MEASURED",
+        "keyid_observed_at": "2026-09-26T02:37:38Z",
+        "matched_live_closeout": false,
+        "match_evidence_class": "MODELED",
+        "basis": "Only the keyid and spki_der_sha256 are measured (GET of raw_url at keyid_observed_at). matched_live_closeout is MODELED, an analytical derivation, not a measurement: this URL was not recorded as fetched at the 2026-08-29 closeout, and no verify against it was recorded. Premises: estate.json records that the closeout signature verified under the key at the Space /cosign.pub, recorded as keyid 9926bf69 (REPORTED, observations[0]); the PEM text whose keyid is 9926bf69 has spki_der_sha256 8e2d106c (MEASURED at 2026-09-26T02:37:38Z, public_key), while this file measured as spki_der_sha256 580ed9a9, so they are different keys; and an ECDSA P-256 signature that verifies under one key does not verify under a different, honestly generated key. The derivation holds only as far as keyid_reported 9926bf69 identifies the key the closeout verify used. The a11oy Space /khipu/pubkey.pem served this same key at keyid_observed_at; the closeout recorded that URL as a mismatch at 18:00Z but not which key it served."
+      }
+    ],
+    "owner_action": "As of 2026-09-26, publishing one org key that verifies product receipts is a pending owner key ceremony."
   },
   "status": {
     "state": "PARTIAL",
