@@ -1,0 +1,127 @@
+{
+  "schema": "szl.live-align/v1",
+  "organization": "SZLHOLDINGS",
+  "observed_at": "2026-09-26T22:13:46+00:00",
+  "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
+  "endpoints": {
+    "models": "https://huggingface.co/api/models?author=SZLHOLDINGS",
+    "datasets": "https://huggingface.co/api/datasets?author=SZLHOLDINGS",
+    "spaces": "https://huggingface.co/api/spaces?author=SZLHOLDINGS"
+  },
+  "counts": {
+    "models": 49,
+    "datasets": 35,
+    "spaces": 23,
+    "kernels": 15
+  },
+  "spaces_by_runtime_stage": {
+    "BUILD_ERROR": 1,
+    "RUNNING": 22
+  },
+  "running_spaces": [
+    "SZLHOLDINGS/ayllu",
+    "SZLHOLDINGS/counsel",
+    "SZLHOLDINGS/david-leads",
+    "SZLHOLDINGS/finance",
+    "SZLHOLDINGS/holographic-unify",
+    "SZLHOLDINGS/immune",
+    "SZLHOLDINGS/immune-lattice",
+    "SZLHOLDINGS/killinchu",
+    "SZLHOLDINGS/llm-router-live",
+    "SZLHOLDINGS/lyte",
+    "SZLHOLDINGS/sentra",
+    "SZLHOLDINGS/szl-atelier",
+    "SZLHOLDINGS/szl-command-lab",
+    "SZLHOLDINGS/szl-constellation",
+    "SZLHOLDINGS/szl-constellation-staging",
+    "SZLHOLDINGS/szl-frontier",
+    "SZLHOLDINGS/szl-khipu",
+    "SZLHOLDINGS/szl-model-inference-lab",
+    "SZLHOLDINGS/terra",
+    "SZLHOLDINGS/the-grid",
+    "SZLHOLDINGS/vertical-services",
+    "SZLHOLDINGS/yarqa"
+  ],
+  "kernel_ids": [
+    "SZLHOLDINGS/YARQA-ATTN",
+    "SZLHOLDINGS/governed-inference-meter",
+    "SZLHOLDINGS/szl-block-kv",
+    "SZLHOLDINGS/szl-blocked",
+    "SZLHOLDINGS/szl-formulas",
+    "SZLHOLDINGS/szl-governed-norm",
+    "SZLHOLDINGS/szl-govsign",
+    "SZLHOLDINGS/szl-invariants",
+    "SZLHOLDINGS/szl-kernels",
+    "SZLHOLDINGS/szl-khipu-kernels",
+    "SZLHOLDINGS/szl-lambda-gate",
+    "SZLHOLDINGS/szl-maskmod",
+    "SZLHOLDINGS/szl-ouroboros",
+    "SZLHOLDINGS/szl-provctl",
+    "SZLHOLDINGS/szl-receipt-attn"
+  ],
+  "assets_missing_license": [
+    "dataset:SZLHOLDINGS/david-leads-data",
+    "dataset:SZLHOLDINGS/release-assets"
+  ],
+  "github": {
+    "org": "szl-holdings",
+    "public_repositories": 118
+  },
+  "drift_vs_committed_snapshots": [
+    {
+      "source": "estate.json",
+      "field": "models",
+      "site": 44,
+      "live_public": 49,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "estate.json",
+      "field": "datasets",
+      "site": 38,
+      "live_public": 35,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "estate.json",
+      "field": "spaces",
+      "site": 48,
+      "live_public": 23,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "estate.json",
+      "field": "github_public",
+      "site": 95,
+      "live_public": 118,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "public-inventory.json",
+      "field": "models",
+      "site": 44,
+      "live_public": 49,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "public-inventory.json",
+      "field": "datasets",
+      "site": 30,
+      "live_public": 35,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    },
+    {
+      "source": "public-inventory.json",
+      "field": "spaces",
+      "site": 48,
+      "live_public": 23,
+      "site_captured_at": "2026-08-31T18:59:11Z"
+    }
+  ],
+  "claim_boundaries": {
+    "private_assets": "NOT_OBSERVED",
+    "estate_json": "NOT_MODIFIED (carries a signing block; regenerate through its own pipeline)",
+    "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE",
+    "license": "HUB_TAG_OR_CARD_METADATA_ONLY_NOT_LEGAL_REVIEW"
+  }
+}
