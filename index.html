@@ -538,6 +538,7 @@ footer{background:var(--bg-soft,#0a0a0b);border-top:1px solid var(--line)}
 /* ---- published-inventory cards (real values from this origin's JSON) ---- */
 .inv-shell{border:1px solid var(--line2);border-radius:16px;background:var(--panel);padding:clamp(14px,3vw,22px)}
 .inv-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-bottom:18px}
+#invSnapshotState{max-width:100%;white-space:normal}
 .inv-stat{border:1px solid var(--line);border-radius:12px;padding:14px;background:#000}
 .inv-stat span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--t3);text-transform:uppercase}
 .inv-stat b{display:block}
@@ -1009,10 +1010,11 @@ footer{padding-top:var(--break)}
 </div></section>
 
 <section id="inventory" style="padding-top:0"><div class="wrap">
-  <div class="sec-head"><div class="kicker">Published inventory</div><h2>Every public artifact this origin already publishes, as cards.</h2>
-  <p>These cards are rendered in your browser from the JSON documents committed to this repository — <a href="/public-inventory.json">/public-inventory.json</a> (dated unauthenticated public Hugging Face API snapshot) and <a href="/models.json">/models.json</a> (dated MEASURED classification). Counts, hashes, licences, dates, stages, and object totals are read fields, never typed here. A missing field renders UNAVAILABLE. Killinchu-named resources are withheld from this front door.</p></div>
+  <div class="sec-head"><div class="kicker">Published inventory · dated snapshot</div><h2>A dated public Hub snapshot, as cards. Not a live count.</h2>
+  <p>These cards are rendered in your browser from the JSON documents committed to this repository — <a href="/public-inventory.json">/public-inventory.json</a> (dated unauthenticated public Hugging Face API snapshot) and <a href="/models.json">/models.json</a> (dated MEASURED classification). Counts, hashes, licences, dates, stages, and object totals are read fields, never typed here. Every count in this section is read from one of these dated documents at that document's own observation time; none is re-read from the Hub when this page loads, so none should be taken as today's inventory. The count bar and the badge above it come from /public-inventory.json. Model, dataset, collection, and bucket listing counts read by this browser session render in the <a href="#atlas">browser-read registry</a> below when that read succeeds; that registry has no Spaces count. A missing field renders UNAVAILABLE. Killinchu-named resources are withheld from the cards on this front door, but the snapshot's own totals in the count bar still include them, so a card group can list fewer cards than the matching bar count.</p></div>
   <div class="inv-shell">
-    <!-- inventory counts render from the committed public-inventory.json snapshot; static fallbacks stay honest em-dashes -->
+    <div class="atlas-summary"><div><span class="atlas-summary-label">DATED SNAPSHOT · NOT A LIVE COUNT</span><h3>Committed public Hub inventory</h3></div><span class="status-badge" id="invSnapshotState" data-state="unavailable">SNAPSHOT DATE UNREAD</span></div>
+    <!-- inventory counts render from the committed public-inventory.json snapshot; static fallbacks stay honest em-dashes; the badge above renders the snapshot's observed_at and marks it STALE after 24 hours -->
     <div class="inv-bar">
       <div class="inv-stat"><b id="invTotal">—</b><span>PUBLIC RESOURCES</span></div>
       <div class="inv-stat"><b id="invModels">—</b><span>MODELS</span></div>

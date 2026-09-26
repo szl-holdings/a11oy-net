@@ -10,12 +10,22 @@
 // Nothing is hand-typed, interpolated, or estimated. If a document, a field, or
 // a whole fetch is missing, the card or count renders the honest label
 // (UNAVAILABLE / STRUCTURAL-ONLY) instead of a number. Killinchu-named
-// resources are withheld from this front door by standing policy.
+// resources are withheld from the cards on this front door by standing policy;
+// the snapshot's own totals in the count bar still include those rows.
+//
+// The count bar shows the snapshot's own counts at its observed_at. They are
+// never presented as today's inventory: #invSnapshotState renders the
+// observation date and turns STALE once the snapshot is older than 24 hours.
+// The date check and the 24-hour rule match /scripts/estate_snapshot.js (the
+// /status record pointer): a date that is not a real UTC second, or that lies
+// in the future, renders DATE UNAVAILABLE.
 (function () {
   "use strict";
 
   var root = document.getElementById("inventory-cards");
   if (!root) return;
+
+  var DAY_MS = 24 * 60 * 60 * 1000;
 
   var COUNT_IDS = {
     total: "invTotal",
@@ -251,6 +261,42 @@
       });
   }
 
+  function setSnapshotState(state, label) {
+    var badge = document.getElementById("invSnapshotState");
+    if (!badge) return;
+    badge.dataset.state = state;
+    badge.textContent = label;
+  }
+
+  function renderSnapshotAge(inventory, now) {
+    var observed = inventory && typeof inventory.observed_at === "string"
+      ? inventory.observed_at
+      : "";
+    var captured = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(observed)
+      ? Date.parse(observed)
+      : NaN;
+    // Date.parse rolls impossible calendar dates forward (2026-02-30 becomes
+    // 2026-03-02), so require an exact round trip, as estate_snapshot.js does.
+    if (isFinite(captured) &&
+        new Date(captured).toISOString() !== observed.replace("Z", ".000Z")) {
+      captured = NaN;
+    }
+    if (!isFinite(captured) || !isFinite(now) || captured > now) {
+      setSnapshotState("unavailable", "DATE UNAVAILABLE · not current");
+      return;
+    }
+    var age = now - captured;
+    var days = Math.floor(age / DAY_MS);
+    if (age > DAY_MS) {
+      setSnapshotState(
+        "partial",
+        "STALE · " + observed.slice(0, 10) + " · " + days + " day" + (days === 1 ? "" : "s") + " old"
+      );
+      return;
+    }
+    setSnapshotState("snapshot", "SNAPSHOT · " + observed.slice(0, 10) + " · not live");
+  }
+
   function renderProvenance(inventory, contract) {
     var line = document.getElementById("invProvenance");
     if (!line) return;
@@ -278,6 +324,7 @@
     setText(COUNT_IDS.spaces, counts.spaces);
     setText(COUNT_IDS.collections, counts.collections);
     setText(COUNT_IDS.buckets, counts.buckets);
+    renderSnapshotAge(inventory, Date.now());
 
     root.textContent = "";
     root.appendChild(group(
@@ -305,6 +352,7 @@
 
   function fail(message) {
     Object.keys(COUNT_IDS).forEach(function (key) { setText(COUNT_IDS[key], null); });
+    setSnapshotState("unavailable", "UNAVAILABLE · snapshot not read");
     root.textContent = "";
     root.appendChild(emptyPanel(message));
     var line = document.getElementById("invProvenance");

@@ -806,6 +806,34 @@ def check() -> None:
             assert item.get("aria-live") is None
             assert item.get("role") != "status"
 
+    # The #inventory count bar renders the frozen 2026-08-31 snapshot in
+    # /public-inventory.json (pinned HISTORICAL by
+    # tests/test_current_hf_membership_binding.py). It must stay labelled as a
+    # dated snapshot, with the observed_at badge above the counts that
+    # scripts/inventory_cards.js marks STALE after 24 hours.
+    snapshot_badges = [
+        item for _, item in surface.elements if item.get("id") == "invSnapshotState"
+    ]
+    assert len(snapshot_badges) == 1, (
+        "the inventory count bar must carry exactly one dated-snapshot badge"
+    )
+    assert snapshot_badges[0].get("data-state") == "unavailable"
+    assert "SNAPSHOT DATE UNREAD" in source
+    assert "A dated public Hub snapshot, as cards. Not a live count." in source
+    assert "Every public artifact this origin already publishes" not in source, (
+        "the frozen inventory snapshot must not return to a present-tense heading"
+    )
+    inventory_at = source.index('id="inventory"')
+    snapshot_badge_at = source.index('id="invSnapshotState"')
+    assert inventory_at < snapshot_badge_at < source.index('id="invTotal"'), (
+        "the snapshot badge must sit inside #inventory, above the count bar it dates"
+    )
+    inventory_cards = (ROOT / "scripts" / "inventory_cards.js").read_text(
+        encoding="utf-8"
+    )
+    assert "renderSnapshotAge(inventory, Date.now());" in inventory_cards
+    assert "age > DAY_MS" in inventory_cards
+
     proof_ids = {
         str(anchor["data-proof"])
         for anchor in surface.anchors
