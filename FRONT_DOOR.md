@@ -69,7 +69,7 @@ Proof scopes, in words. Kernel: live `/honest` `locked_formula_count` (Lean
 (`https://a-11-oy.com/api/a11oy/v1/genome` `count`). Catalog
 `LOCKED-PROVEN=25`: catalog rows with that tag, 17 distinct ids, each kernel
 formula listed twice (Q1 and Q2). Counted from `szl-holdings/a11oy`
-`data/genome.json` at `28acdc5` (2026-09-25).
+`data/genome.json` at `bc3c37c` (2026-09-26).
 
 Formulas never grant authority. Missing evidence is UNKNOWN or FAIL, never PASS.
 A listed URL is location only. Reachability, if observed, is REACHABLE only —
