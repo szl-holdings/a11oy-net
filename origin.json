@@ -10,10 +10,10 @@
     "implementation": "static GitHub Pages document",
     "meaning": "Dated MEASURED public-identity-host probe. Not DNS control. Not a Cloudflare API. Not product runtime. Not a fourth origin. A Grok working copy is not published here."
   },
-  "observed_at_utc": "2026-09-25T16:20:00Z",
-  "prior_observed_at_utc": "2026-09-20T16:16:00Z",
+  "observed_at_utc": "2026-09-26T01:10:00Z",
+  "prior_observed_at_utc": "2026-09-25T16:20:00Z",
   "evidence_class": "MEASURED",
-  "observer": "Public HTTP GET of /honest, /api/a11oy/v1/decision/vessels, a11oy.net/vessels/joint-freshness.json, and GitHub main from a stephenlutar2-hash session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
+  "observer": "Public HTTP GET of /honest, /api/a11oy/v1/jev/status, /api/a11oy/v1/decision/vessels, a11oy.net/vessels/joint-freshness.json, and GitHub main from a stephenlutar2-hash session. Cloudflare API UNAVAILABLE. Operator computer UNAVAILABLE.",
   "hosts": [
     {
       "id": "product",
@@ -29,10 +29,10 @@
       "x_szl_space": "a11oy",
       "x_szl_wire_d": "LIVE",
       "wire_d_meaning": "Provenance hop from szl_provenance. Not domain LIVE. Do not conflate.",
-      "git_sha_honest": "153136774392b2f14f75406e66f77f34c28a4b03",
+      "git_sha_honest": "28acdc52f6f7f29c59216a64b9748f5f8a7aa72d",
       "honesty": "MEASURED",
       "verdict": "ADMIT",
-      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. HTTP 200 is reachability, not a production certificate. honest.git_sha 15313677 MEASURED. GitHub szl-holdings/a11oy main is 192dbcf1 (ahead). Joint-freshness echo is live on evaluate. Do not claim MATCH."
+      "note": "Orange-cloud in front of Space SZLHOLDINGS/a11oy. Apex reachable. HTTP 200 is reachability, not a production certificate. honest.git_sha 28acdc52 MATCH GitHub szl-holdings/a11oy main 28acdc52. Jev /status live: engine UNAVAILABLE, promotion denied. Do not stamp LIVE."
     },
     {
       "id": "www",
@@ -86,11 +86,11 @@
     "space": "SZLHOLDINGS/a11oy",
     "runtime_stage": "RUNNING",
     "runtime_sha_reported": "26d66c37080fae22ea682ea7768c6e3d19cb09b5",
-    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /honest git_sha 15313677 is MEASURED. GitHub main 192dbcf1 is ahead. Do not treat the two SHAs as one identity.",
+    "runtime_sha_note": "Hugging Face spaces runtime SHA is a provider object. Product /honest git_sha 28acdc52 MATCH GitHub main 28acdc52. Do not treat the provider runtime SHA as the product identity.",
     "spaces_author_api_count": 22,
     "spaces_author_api_observed_at": "2026-09-25T16:26:12Z",
     "spaces_sampled_running": 21,
-    "spaces_sampled_running_note": "21 RUNNING was not re-sampled on 2026-09-25. Author-list is 22. Do not infer the 22nd is RUNNING.",
+    "spaces_sampled_running_note": "21 RUNNING was not re-sampled on 2026-09-26. Author-list is 22. Do not infer the 22nd is RUNNING.",
     "domains": [
       {
         "domain": "szlholdings-a11oy.hf.space",
@@ -111,12 +111,23 @@
       "public_probe": "HTTP 401",
       "note": "PACKET8.json initial_spaces_are_nonpublic true. 401 is the published contract, not a missing product desk. Product desks remain a-11-oy.com/{terra,aegis,puriq-markets,counsel,vessels}."
     },
-    "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp. Unauthenticated author-list 2026-09-25T16:26:12Z is 22 Spaces / 49 models / 35 datasets. Prior origin stamp 21 Spaces is superseded for the list count only."
+    "note": "Space RUNNING and custom-domain READY are reachability. They are not production_ready and not a LIVE stamp. Unauthenticated author-list 2026-09-25T16:26:12Z is 22 Spaces / 49 models / 35 datasets."
   },
   "signer": {
     "healthz": "ABSENT",
     "scheme": "UNAVAILABLE",
     "note": "Only the rollup may stamp DSSE-LIVE when a live key is present. Do not copy LIVE from x-szl-wire-d."
+  },
+  "jev_gate": {
+    "status_path": "https://a-11-oy.com/api/a11oy/v1/jev/status",
+    "schema": "szl.jev_gate/v1",
+    "engine_bound": false,
+    "engine_honesty": "UNAVAILABLE",
+    "promotion": "denied",
+    "estate_gate": "HOLD",
+    "agi_claim": false,
+    "trust_ceiling": 0.97,
+    "note": "Jev routes landed with a11oy#2272. TYPESAFE_API_KEY unset. SOFTWARE fallback. Code owns promotion. HTTP 200 is not LIVE."
   },
   "vessels_packet8": {
     "evaluate_path": "https://a-11-oy.com/api/a11oy/v1/decision/vessels/evaluate",
@@ -126,27 +137,21 @@
         "eval_id": "VESSELS-E-ABSTAIN",
         "case_id": "vessels-stale-list",
         "state": "ABSTAINED",
-        "reason_codes": [
-          "STALE_OR_UNAVAILABLE_SOURCE"
-        ],
+        "reason_codes": ["STALE_OR_UNAVAILABLE_SOURCE"],
         "receipt_digest": "ec8868f29dea05cd9fe94c74fd765a1914d6545c0f11db7f48c3752f9eb86458"
       },
       {
         "eval_id": "VESSELS-E-AWAIT-01",
         "case_id": "vessels-aurora-wave",
         "state": "AWAITING_APPROVAL",
-        "reason_codes": [
-          "HUMAN_APPROVAL_REQUIRED"
-        ],
+        "reason_codes": ["HUMAN_APPROVAL_REQUIRED"],
         "receipt_digest": "ae6e3fc7fdc6fb28e62040926d474848b729f31ef3fda7a4253575880638e5be"
       },
       {
         "eval_id": "VESSELS-E-DENY-AIS",
         "case_id": "vessels-licensed-ais",
         "state": "DENIED",
-        "reason_codes": [
-          "PROHIBITED_ACTION"
-        ],
+        "reason_codes": ["PROHIBITED_ACTION"],
         "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275"
       }
     ],
@@ -175,19 +180,13 @@
       "bind": "inner frozen payload"
     },
     "eval_id_only_probe": {
-      "posted": {
-        "eval_id": "VESSELS-E-DENY-AIS"
-      },
+      "posted": {"eval_id": "VESSELS-E-DENY-AIS"},
       "state": "DENIED",
-      "reason_codes": [
-        "PROHIBITED_ACTION"
-      ],
+      "reason_codes": ["PROHIBITED_ACTION"],
       "receipt_digest": "0829bcbcd01154d383dca25ff996a8a4704e3183bbce00b393e0426a91bd9275",
       "empty_json": {
         "state": "UNKNOWN",
-        "reason_codes": [
-          "EMPTY_KERNEL_BIND"
-        ]
+        "reason_codes": ["EMPTY_KERNEL_BIND"]
       },
       "note": "Product #2209 unwrap is live on a-11-oy.com. Wrapper-only empty POST stays UNKNOWN."
     },
@@ -214,22 +213,12 @@
       "digest": "1cb5b1178b7cda2327443eb7b8e33703aae26a23b4102a0d5f91291cff149898",
       "proof_http": 200,
       "product_echo_live": true,
-      "product_github_main": "192dbcf1c269c21b21c8f9f945ef18084738bacd",
-      "honest_git_sha": "153136774392b2f14f75406e66f77f34c28a4b03",
-      "note": "Proof JSON is live. Product evaluate echo is MEASURED on honest 15313677. GitHub main 192dbcf1 is ahead. Miss is not clearance."
+      "product_github_main": "28acdc52f6f7f29c59216a64b9748f5f8a7aa72d",
+      "honest_git_sha": "28acdc52f6f7f29c59216a64b9748f5f8a7aa72d",
+      "note": "Proof JSON is live. Product evaluate echo is MEASURED. Product /honest MATCH GitHub main 28acdc52. Miss is not clearance."
     }
   },
-  "defects": [
-    {
-      "id": "INC-05-ORIGIN-SHA-LAG-5",
-      "host": "a11oy.net/origin.json",
-      "prior": "git_sha_honest 65b631e8 while product honest moved to 15313677 and GitHub main to 192dbcf1",
-      "now": "OPEN. honest.git_sha MEASURED 15313677. GitHub main 192dbcf1 is ahead. Do not claim MATCH.",
-      "class": "MEASURED",
-      "opened_at_utc": "2026-09-25T16:20:00Z",
-      "state": "OPEN"
-    }
-  ],
+  "defects": [],
   "defects_closed": [
     {
       "id": "INC-05-WWW-404",
@@ -267,7 +256,7 @@
       "id": "VESSELS-LATTICE-RECEIPT-UNBOUND",
       "host": "a11oy.net/vessels/receipt.json",
       "prior": "ais-lattice.json published; vessels.json permalink present; receipt.json and vessels/index.html did not bind the digest",
-      "now": "receipt and human page bind lattice digest f931b485\u2026 \u00b7 27 types \u00b7 CITATION_ONLY",
+      "now": "receipt and human page bind lattice digest f931b485… · 27 types · CITATION_ONLY",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T02:30:00Z"
     },
@@ -283,7 +272,7 @@
       "id": "VESSELS-WORLD-CLOCKS-UNBOUND",
       "host": "a11oy.net/vessels/",
       "prior": "CN/KR/UA JSON live; world clocks authored on a branch; human vessels page only showed OFAC",
-      "now": "world clocks + public-list authority lattice bound. digest 70fd1918\u2026 / b2d23ac6\u2026 \u00b7 AIS lattice f931b485\u2026 unchanged",
+      "now": "world clocks + public-list authority lattice bound. digest 70fd1918… / b2d23ac6… · AIS lattice f931b485… unchanged",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T15:48:00Z"
     },
@@ -291,7 +280,7 @@
       "id": "VESSELS-FLOW-SHELL-WORLD-UNBOUND",
       "host": "a11oy.net/vessels/world/",
       "prior": "vessels/world/index.html and vessels/lattice/index.html existed; frontend-flow-shell-state and holographic v2 rollout-state omitted them",
-      "now": "both bound. min-link joint-freshness digest 1cb5b117\u2026 published. world digest 70fd1918\u2026 and AIS lattice f931b485\u2026 unchanged",
+      "now": "both bound. min-link joint-freshness digest 1cb5b117… published. world digest 70fd1918… and AIS lattice f931b485… unchanged",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-20T16:05:00Z"
     },
@@ -302,6 +291,14 @@
       "now": "CLOSED_VERIFIED 2026-09-24 when honest briefly matched main. Recapture 2026-09-25 measures a new lag.",
       "class": "MEASURED",
       "closed_at_utc": "2026-09-24T21:54:34Z"
+    },
+    {
+      "id": "INC-05-ORIGIN-SHA-LAG-5",
+      "host": "a11oy.net/origin.json",
+      "prior": "git_sha_honest 15313677 while GitHub main was named 192dbcf1",
+      "now": "CLOSED_VERIFIED. honest.git_sha 28acdc52 MATCH GitHub main 28acdc52. Jev routes live. Do not stamp LIVE.",
+      "class": "MEASURED",
+      "closed_at_utc": "2026-09-26T01:10:00Z"
     }
   ],
   "holds": [
@@ -329,6 +326,7 @@
     "vessels_proof": "https://a11oy.net/vessels/",
     "vessels_lattice": "https://a11oy.net/vessels/ais-lattice.json",
     "vessels_lattice_html": "https://a11oy.net/vessels/lattice/",
+    "jev_status": "https://a-11-oy.com/api/a11oy/v1/jev/status",
     "recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-1548.md",
     "prior_recapture_note": "https://a11oy.net/notes/INC05_RECAPTURE_2026-09-20-0230.md",
     "runbook": "https://github.com/szl-holdings/a11oy/blob/main/docs/runbook.md",
@@ -349,6 +347,7 @@
     "http_response_proves_capability": false,
     "www_301_is_not_production_ready": true,
     "evaluate_match_is_not_e03": true,
-    "lattice_is_not_the_kernel": true
+    "lattice_is_not_the_kernel": true,
+    "jev_is_not_authority": true
   }
 }
