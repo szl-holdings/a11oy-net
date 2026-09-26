@@ -142,6 +142,21 @@ not the kernel. Lean-8 ≠ genome-144. Lambda uniqueness remains
 **Conjecture 1**, advisory and not a theorem. The trust ceiling is `0.97`,
 never 100%.
 
+### Proof scopes
+
+"Lean-8 ≠ genome-144" is shorthand for three different counts:
+
+| Scope | What it counts | Source |
+| --- | --- | --- |
+| Kernel | Lean locked-proven formulas. Painted only from the live field; otherwise **N/A**. | `https://a-11-oy.com/api/a11oy/v1/honest` `locked_formula_count`; Lean theorem `locked_count_eight` in `szl-holdings/lutar-lean` `Lutar/Wave11/AxiomDisclosure.lean` |
+| Genome catalog (144) | Entries (rows) in the genome catalog. Not theorems. | `https://a-11-oy.com/api/a11oy/v1/genome` `count` |
+| Catalog `LOCKED-PROVEN` (25) | Catalog rows with that tag. 17 distinct ids: each kernel formula is listed twice (quadrants Q1 and Q2), plus 9 other ids. Not the kernel. | same endpoint, `tier_counts.LOCKED-PROVEN` |
+
+144, 25 and 17 were counted from `szl-holdings/a11oy` `data/genome.json` at
+`28acdc5` (2026-09-25) and match a GET of the genome endpoint at
+2026-09-26T01:26Z. They are static figures on this origin; the endpoint is
+the source.
+
 ## Local verification
 
 The repository has no build step. Run the dependency-free contracts from the

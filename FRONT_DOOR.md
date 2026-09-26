@@ -64,6 +64,13 @@ kernel, never green. Kernel chips bind live
 only when that field is exactly 8; otherwise **N/A** / **UNAVAILABLE**. Never
 hardcode 8 on this origin.
 
+Proof scopes, in words. Kernel: live `/honest` `locked_formula_count` (Lean
+`locked_count_eight`). genome-144: the 144 entries of the genome catalog
+(`https://a-11-oy.com/api/a11oy/v1/genome` `count`). Catalog
+`LOCKED-PROVEN=25`: catalog rows with that tag, 17 distinct ids, each kernel
+formula listed twice (Q1 and Q2). Counted from `szl-holdings/a11oy`
+`data/genome.json` at `28acdc5` (2026-09-25).
+
 Formulas never grant authority. Missing evidence is UNKNOWN or FAIL, never PASS.
 A listed URL is location only. Reachability, if observed, is REACHABLE only —
 never quality, safety, capability, or uptime. Hub `RUNNING` is transport
