@@ -144,7 +144,8 @@ never 100%.
 
 ### Proof scopes
 
-"Lean-8 ≠ genome-144" is shorthand for three different counts:
+"Lean-8 ≠ genome-144" is shorthand for "the kernel is not the genome
+catalog". Three different counts sit behind it:
 
 | Scope | What it counts | Source |
 | --- | --- | --- |
