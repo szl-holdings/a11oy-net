@@ -90,7 +90,7 @@
               <tr><td>Hub Space git is a distinct object</td><td><span class="cls cls-measured">MEASURED</span></td><td>HfApi.space_info SZLHOLDINGS/a11oy sha 505fab44</td><td>Not a GitHub commit. Matching GitHub and honest is not a deploy claim.</td></tr>
               <tr><td>Λ uniqueness</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>Conjecture 1</td><td>Never a theorem. Never green. proven_trust=false.</td></tr>
               <tr><td>Private keys in public git = 0</td><td><span class="cls cls-measured">MEASURED</span></td><td>Public git scan · 2026-08-29T18:00Z</td><td>Key lives as Space secret SZL_COSIGN_PRIVATE_PEM. Do not mint a replacement.</td></tr>
-              <tr><td>Four published P-256 keys diverge</td><td><span class="cls cls-measured">MEASURED</span></td><td>Live pubkey fetch + Node ECDSA verify · 18:00Z</td><td>Closeout MATCH only vs a11oy Space /cosign.pub (keyid 9926bf69). Org GitHub key d3028f8a did not produce the signature.</td></tr>
+              <tr><td>Four published P-256 keys diverge</td><td><span class="cls cls-measured">MEASURED</span></td><td>Live pubkey fetch + Node ECDSA verify · 18:00Z</td><td>Closeout MATCH only vs a11oy Space /cosign.pub (keyid 9926bf69). The org GitHub URL recorded, .github/keys/cosign.pub, did not match. Until 2026-09-26 this row named that key d3028f8a; see the key hunt correction.</td></tr>
               <tr><td>Live organ signed a closeout DSSE</td><td><span class="cls cls-measured">MEASURED</span></td><td>POST /api/a11oy/khipu/sign then local verify · 18:00Z</td><td>REAL ECDSA. Not ALLOW. Envelope is not stored on this origin. Honesty later UNAVAILABLE at 18:23Z.</td></tr>
               <tr><td>HMAC non-repudiation</td><td><span class="cls cls-measured">MEASURED</span></td><td>/api/a11oy/v1/signing-status · 18:00Z</td><td>hmac_layer=placeholder. non_repudiation=false. A11OY_HMAC_KEY is not in public git.</td></tr>
               <tr><td>Unauth Hub author-list</td><td><span class="cls cls-measured">MEASURED</span></td><td>GET /api/spaces?author=SZLHOLDINGS · 18:37Z</td><td>Six public. README omitted from unauth list. Not a rewrite of atlas keep-7 (18:05Z).</td></tr>
@@ -111,15 +111,15 @@
               <tr><th>Published key</th><th>Class</th><th>Identity</th><th>Closeout match</th></tr>
             </thead>
             <tbody>
-              <tr><td>GitHub <a href="https://github.com/szl-holdings/.github/blob/main/keys/cosign.pub">.github/keys/cosign.pub</a></td><td><span class="cls cls-measured">MEASURED</span></td><td>PEM SHA-256 31b8c7f1… · keyid d3028f8a</td><td>mismatch</td></tr>
+              <tr><td>GitHub <a href="https://github.com/szl-holdings/.github/blob/main/keys/cosign.pub">.github/keys/cosign.pub</a></td><td><span class="cls cls-measured">MEASURED</span></td><td>keyid 421a1422, measured 2026-09-26 (estate.json labels this entry d3028f8a, the root key) · PEM SHA-256 31b8c7f1…</td><td>mismatch</td></tr>
               <tr><td>a11oy Space /cosign.pub</td><td><span class="cls cls-measured">MEASURED</span></td><td>keyid 9926bf69 · persistent SZL_COSIGN_PRIVATE_PEM</td><td>MATCH at 18:00Z</td></tr>
-              <tr><td>a11oy /khipu/pubkey.pem</td><td><span class="cls cls-measured">MEASURED</span></td><td>Distinct P-256 key</td><td>mismatch</td></tr>
+              <tr><td>a11oy /khipu/pubkey.pem</td><td><span class="cls cls-measured">MEASURED</span></td><td>Distinct from Space /cosign.pub at 18:00Z; which key it served then was not recorded. At 2026-09-26T02:37Z it served the .github root cosign.pub key (keyid d3028f8a).</td><td>mismatch</td></tr>
               <tr><td>killinchu Space /cosign.pub</td><td><span class="cls cls-measured">MEASURED</span></td><td>Distinct P-256 key</td><td>mismatch</td></tr>
               <tr><td>A11OY_HMAC_KEY</td><td><span class="cls cls-measured">MEASURED</span></td><td>Not in public git</td><td>placeholder</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="boundary">PEM SHA-256 for the org GitHub key was re-hashed at 18:16Z. Space GETs timed out after the ceremony; Space match remains the 18:00Z observation. Product honesty timed out at 18:23Z. This page does not embed private material and does not host a signer.</p>
+        <p class="boundary">Correction 2026-09-26: the keys/cosign.pub row said keyid d3028f8a. That is the root <a href="https://github.com/szl-holdings/.github/blob/main/cosign.pub">.github/cosign.pub</a>. keys/cosign.pub is keyid 421a1422: measured 2026-09-26, and unchanged in git since 2026-06-09. 31b8c7f1 is the SHA-256 of that key's PEM with one trailing newline; the served file has an extra blank line. estate.json records the keys/cosign.pub URL for the org file, with pem_sha256 31b8c7f1 re-hashed at 18:16Z, keyid_reported d3028f8a and no match. It does not record keyid 421a1422, and which org PEM the 18:00Z verify loaded was not recorded. The root cosign.pub was not recorded as fetched; that it did not match is inferred (MODELED in record.json): the signature verified under the Space /cosign.pub key, which estate.json gives as keyid_reported 9926bf69, a different key. The a11oy Space /cosign.pub row's keyid 9926bf69 is also estate.json's keyid_reported: estate.json recorded no PEM hash for that key, and its fingerprint was not re-hashed after the ceremony. That URL served keyid 9926bf69 when fetched 2026-09-26 (record.json public_key). Observations are otherwise unchanged. PEM SHA-256 for the org GitHub key was re-hashed at 18:16Z. Space GETs timed out after the ceremony; Space match remains the 18:00Z observation. Product honesty timed out at 18:23Z. This page does not embed private material and does not host a signer.</p>
       </div>
     </section>
 
@@ -140,7 +140,7 @@
             <h3>What this is not</h3>
             <ul>
               <li>Not ALLOW. Not a production certificate. Trust stays UNAVAILABLE.</li>
-              <li>Not org-key match. Published GitHub cosign.pub did not produce the signature.</li>
+              <li>Not org-key match. The signature verified under the Space /cosign.pub key (recorded as keyid 9926bf69), not under szl-holdings/.github keys/cosign.pub (421a1422; mismatch recorded). The root cosign.pub (d3028f8a) mismatch is inferred.</li>
               <li>Not HMAC non-repudiation. <code>hmac_layer=placeholder</code>.</li>
               <li>Not live honesty at 18:23Z. Custom domain PENDING. Space HTTP timeout.</li>
               <li>Envelope is not stored here. RECORD is pointers. No <code>*.dsse.json</code> on this origin.</li>

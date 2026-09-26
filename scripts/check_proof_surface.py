@@ -579,7 +579,29 @@ def check() -> None:
     assert "Origin health document" in source
     assert "healthz is not published" in source.lower()
     assert "https://a11oy.net/record/" in source
-    assert "The signed RECORD index lives at" in source
+    assert "The RECORD index lives at" in source
+    # record.json carries no signature field; no RECORD surface may call the index signed.
+    for record_surface in (INDEX, ROOT / "record" / "index.html", ROOT / "record.json"):
+        assert "signed RECORD" not in record_surface.read_text(encoding="utf-8"), (
+            f"{record_surface.relative_to(ROOT)} must not call the RECORD index signed"
+        )
+    # record.json public_key labels stay in the SZL evidence vocabulary
+    # (szl-holdings/.github docs/PUBLIC_EXPERIENCE_FRONTIER_V4.md).
+    szl_evidence_classes = {
+        "MEASURED", "REPORTED", "MODELED", "UNAVAILABLE", "UNSIGNED", "CONJECTURE",
+    }
+    pending = [json.loads((ROOT / "record.json").read_text(encoding="utf-8"))["public_key"]]
+    while pending:
+        node = pending.pop()
+        if isinstance(node, list):
+            pending.extend(node)
+        elif isinstance(node, dict):
+            for key, value in node.items():
+                if key.endswith("evidence_class"):
+                    assert value in szl_evidence_classes, (
+                        f"record.json public_key {key}={value!r} is outside the SZL evidence vocabulary"
+                    )
+                pending.append(value)
     assert "https://a-11-oy.com/verify" in source
     assert "Receipt store on this origin" in source
     assert "api/lake" not in source, (
