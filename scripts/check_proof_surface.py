@@ -452,6 +452,21 @@ def check() -> None:
         "governed-receipt-verifier",
     ]
     assert spaces_contract["cut"]["keep"] == 6
+    # 2026-09-25: KEEP-6 is policy, not Hub state. The verifier Space id stays
+    # in the cut but is recorded NOT_FOUND on the Hub (401 public, 404 to an
+    # org-authenticated read); it must not be described as a live Hub app.
+    # The anatomy and holographic fold entries carry the same Hub record, and
+    # anatomy no longer claims the Space was re-privatized. The 404 is an
+    # org-authenticated read, so the class is REPORTED, not MEASURED.
+    verifier = next(item for item in spaces_contract["keep"] if item["id"] == "governed-receipt-verifier")
+    assert "Public Hub application KEEP" not in verifier["why"]
+    fold_by_id = {item["id"]: item for item in spaces_contract["fold"]}
+    for hub_entry in (verifier, fold_by_id["anatomy"], fold_by_id["holographic"]):
+        assert hub_entry.get("hub_status") == "NOT_FOUND", hub_entry["id"]
+        assert hub_entry.get("hub_status_evidence_class") == "REPORTED", hub_entry["id"]
+    assert fold_by_id["anatomy"]["dest"] == "https://a-11-oy.com/anatomy-v5"
+    assert fold_by_id["holographic"]["dest"] == "https://a-11-oy.com/anatomy-v5"
+    assert "re-privatized" not in fold_by_id["anatomy"]["why"]
     assert "david-leads" not in keep_ids
     assert "anatomy" not in keep_ids
     assert "szl-real-estate" not in keep_ids
@@ -579,7 +594,29 @@ def check() -> None:
     assert "Origin health document" in source
     assert "healthz is not published" in source.lower()
     assert "https://a11oy.net/record/" in source
-    assert "The signed RECORD index lives at" in source
+    assert "The RECORD index lives at" in source
+    # record.json carries no signature field; no RECORD surface may call the index signed.
+    for record_surface in (INDEX, ROOT / "record" / "index.html", ROOT / "record.json"):
+        assert "signed RECORD" not in record_surface.read_text(encoding="utf-8"), (
+            f"{record_surface.relative_to(ROOT)} must not call the RECORD index signed"
+        )
+    # record.json public_key labels stay in the SZL evidence vocabulary
+    # (szl-holdings/.github docs/PUBLIC_EXPERIENCE_FRONTIER_V4.md).
+    szl_evidence_classes = {
+        "MEASURED", "REPORTED", "MODELED", "UNAVAILABLE", "UNSIGNED", "CONJECTURE",
+    }
+    pending = [json.loads((ROOT / "record.json").read_text(encoding="utf-8"))["public_key"]]
+    while pending:
+        node = pending.pop()
+        if isinstance(node, list):
+            pending.extend(node)
+        elif isinstance(node, dict):
+            for key, value in node.items():
+                if key.endswith("evidence_class"):
+                    assert value in szl_evidence_classes, (
+                        f"record.json public_key {key}={value!r} is outside the SZL evidence vocabulary"
+                    )
+                pending.append(value)
     assert "https://a-11-oy.com/verify" in source
     assert "Receipt store on this origin" in source
     assert "api/lake" not in source, (
@@ -856,8 +893,18 @@ def check() -> None:
     assert "RUNTIME CHECK BELOW" not in source
     # 2026-09-25: anatomy and holographic Hub Spaces answer HTTP 401 to the
     # public; their cards drop REPORTED (14 -> 12) and carry no link.
+    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returns 404 for
+    # anatomy, holographic and governed-receipt-verifier, so they are NOT FOUND,
+    # not private. Row 07 and both cards say so.
     assert source.count('<span class="stack-truth">REPORTED</span>') == 12
-    assert source.count('<span class="stack-truth">RETIRED/PRIVATE</span>') == 2
+    assert source.count('<span class="stack-truth">NOT FOUND</span>') == 2
+    assert "RETIRED/PRIVATE" not in source
+    assert (
+        '<div class="dossier-row"><span class="dossier-index">07</span><span><b>Verifier Space</b>'
+        "<small>Hub Space SZLHOLDINGS/governed-receipt-verifier · HTTP 401 to the public, 404 to an "
+        "authenticated org-admin read (checked 2026-09-26 UTC) · link removed</small></span>"
+        '<span class="dossier-action">NOT FOUND</span></div>' in source
+    ), "dossier row 07 must be an unlinked row with a NOT FOUND action chip"
     for retired in ("anatomy", "holographic", "governed-receipt-verifier"):
         assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in source
     assert 'href="https://github.com/szl-holdings/szl-experiments"' not in source
@@ -975,6 +1022,14 @@ def check() -> None:
     assert '["atlasTotal","atlasModels","atlasDatasets","atlasCollections","atlasBuckets"]' in source
     assert "Inventory unavailable; this is not an observed-empty result." in source
     assert 'aria-label="A11oy public evidence dossier"' in source
+    # 2026-09-25: the dossier verifier row points at product-origin /verify,
+    # never the Perplexity sidecar (origin-drift-2026-09-02.json marks
+    # a11oy-verify.pplx.app NOT_PRODUCT_ORIGIN).
+    assert "pplx.app" not in source
+    assert (
+        '<a class="dossier-row" href="https://a-11-oy.com/verify" target="_blank" '
+        'rel="noopener"><span class="dossier-index">05</span>' in source
+    ), "dossier row 05 must link product-origin /verify"
     assert "The dated static registry snapshot remains visible" in source
     assert 'data-static-snapshot="2026-08-31"' in source
     # audit 2026-08-30: static fallbacks are honest em-dashes (the same state a
