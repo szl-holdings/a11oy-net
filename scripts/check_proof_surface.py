@@ -594,7 +594,29 @@ def check() -> None:
     assert "Origin health document" in source
     assert "healthz is not published" in source.lower()
     assert "https://a11oy.net/record/" in source
-    assert "The signed RECORD index lives at" in source
+    assert "The RECORD index lives at" in source
+    # record.json carries no signature field; no RECORD surface may call the index signed.
+    for record_surface in (INDEX, ROOT / "record" / "index.html", ROOT / "record.json"):
+        assert "signed RECORD" not in record_surface.read_text(encoding="utf-8"), (
+            f"{record_surface.relative_to(ROOT)} must not call the RECORD index signed"
+        )
+    # record.json public_key labels stay in the SZL evidence vocabulary
+    # (szl-holdings/.github docs/PUBLIC_EXPERIENCE_FRONTIER_V4.md).
+    szl_evidence_classes = {
+        "MEASURED", "REPORTED", "MODELED", "UNAVAILABLE", "UNSIGNED", "CONJECTURE",
+    }
+    pending = [json.loads((ROOT / "record.json").read_text(encoding="utf-8"))["public_key"]]
+    while pending:
+        node = pending.pop()
+        if isinstance(node, list):
+            pending.extend(node)
+        elif isinstance(node, dict):
+            for key, value in node.items():
+                if key.endswith("evidence_class"):
+                    assert value in szl_evidence_classes, (
+                        f"record.json public_key {key}={value!r} is outside the SZL evidence vocabulary"
+                    )
+                pending.append(value)
     assert "https://a-11-oy.com/verify" in source
     assert "Receipt store on this origin" in source
     assert "api/lake" not in source, (
@@ -820,6 +842,34 @@ def check() -> None:
         }:
             assert item.get("aria-live") is None
             assert item.get("role") != "status"
+
+    # The #inventory count bar renders the frozen 2026-08-31 snapshot in
+    # /public-inventory.json (pinned HISTORICAL by
+    # tests/test_current_hf_membership_binding.py). It must stay labelled as a
+    # dated snapshot, with the observed_at badge above the counts that
+    # scripts/inventory_cards.js marks STALE after 24 hours.
+    snapshot_badges = [
+        item for _, item in surface.elements if item.get("id") == "invSnapshotState"
+    ]
+    assert len(snapshot_badges) == 1, (
+        "the inventory count bar must carry exactly one dated-snapshot badge"
+    )
+    assert snapshot_badges[0].get("data-state") == "unavailable"
+    assert "SNAPSHOT DATE UNREAD" in source
+    assert "A dated public Hub snapshot, as cards. Not a live count." in source
+    assert "Every public artifact this origin already publishes" not in source, (
+        "the frozen inventory snapshot must not return to a present-tense heading"
+    )
+    inventory_at = source.index('id="inventory"')
+    snapshot_badge_at = source.index('id="invSnapshotState"')
+    assert inventory_at < snapshot_badge_at < source.index('id="invTotal"'), (
+        "the snapshot badge must sit inside #inventory, above the count bar it dates"
+    )
+    inventory_cards = (ROOT / "scripts" / "inventory_cards.js").read_text(
+        encoding="utf-8"
+    )
+    assert "renderSnapshotAge(inventory, Date.now());" in inventory_cards
+    assert "age > DAY_MS" in inventory_cards
 
     proof_ids = {
         str(anchor["data-proof"])
