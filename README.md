@@ -179,7 +179,7 @@ The checks validate:
 | `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
 | `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
-| `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates `public-inventory.json`, `estate/hf-current.json`, `live-align/hf_live_inventory.json`, the `models.json` hub block and the `spaces.json` `hub_presence` block from the unauthenticated Hub API; the workflow reruns it daily and proposes a reviewed PR. No Hugging Face token. |
+| `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates `public-inventory.json`, `estate/hf-current.json`, `live-align/hf_live_inventory.json`, the `models.json` hub block and the `spaces.json` `hub_presence` block from the unauthenticated Hub API; the workflow reruns it daily and proposes a reviewed PR whose commit GitHub signs (`scripts/verified_commit_payload.py`). No Hugging Face token. |
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
 | `health.json` | Only health document: committed static JSON; `signer=unavailable`; `sha` is last published main; not runtime, not DSSE-LIVE, not uptime. |

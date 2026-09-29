@@ -223,8 +223,11 @@ class GeneratorTest(unittest.TestCase):
         self.assertNotRegex(text, r"secrets\.(HF_|HUGGING|HUB_)")
         self.assertNotIn("gh pr merge", text)
         self.assertNotIn("--admin", text)
-        self.assertNotRegex(text, r"git push[^\n]*(--force|-f\b)")
-        self.assertRegex(text, r'git push origin "HEAD:refs/heads/\$\{branch\}"')
+        # main requires verified signatures: the refresh commit is created
+        # through GraphQL createCommitOnBranch (GitHub-signed), never pushed.
+        self.assertNotRegex(text, r"(?m)^\s*git (commit|push)\b")
+        self.assertIn("python3 scripts/verified_commit_payload.py", text)
+        self.assertIn("gh api graphql --input", text)
         self.assertIn('branch="bot/hf-inventory-', text)
         for line in text.splitlines():
             if "uses:" in line and not line.lstrip().startswith("#"):
