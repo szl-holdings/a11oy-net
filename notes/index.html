@@ -55,6 +55,8 @@
         <p class="eyebrow">Dated notes · status pointer</p>
         <h1>What changed on this origin.</h1>
         <p class="lede">These notes track the public proof registry. They are not a product changelog, not a runtime health feed, and not an eval leaderboard.</p>
+        <!-- generated: the values below are written by scripts/generate_hf_inventory.py from estate/hf-current.json; do not type counts here -->
+        <p>Current public Hub listing, generated from the unauthenticated Hub API and observed <span data-hf-current="observed_at">2026-09-29T15:05:00Z</span>: <span data-hf-current="counts.models">49</span> models, <span data-hf-current="counts.datasets_public">34</span> public datasets, <span data-hf-current="counts.spaces_public">24</span> public Spaces, <span data-hf-current="counts.kernels">14</span> kernels. Private assets are NOT_OBSERVED. Source <a href="/estate/hf-current.json">/estate/hf-current.json</a>. Counts in the dated notes below are the observations of their own dates and are not rewritten.</p>
         <div class="actions">
           <a class="button primary" href="/CHANGELOG.md">Read CHANGELOG.md</a>
           <a class="button" href="/record/">Open RECORD</a>
@@ -62,6 +64,20 @@
         </div>
       </div>
     </header>
+
+    <section id="2026-09-29">
+      <div class="wrap">
+        <div class="section-head"><span class="section-label">2026-09-29</span><h2>Hub inventory is generated, not typed.</h2><p>One committed generator reads the unauthenticated Hub API. Dated snapshots stay historical.</p></div>
+        <article class="panel">
+          <ul>
+            <li><code>scripts/generate_hf_inventory.py</code> writes <a href="/public-inventory.json">/public-inventory.json</a>, <a href="/estate/hf-current.json">/estate/hf-current.json</a>, <a href="/live-align/hf_live_inventory.json">/live-align/hf_live_inventory.json</a>, the hub block and model classification in <a href="/models.json">/models.json</a>, and the Hub presence block in <a href="/spaces.json">/spaces.json</a>. The pages print its counts beside their observation time.</li>
+            <li><code>.github/workflows/hf-inventory-refresh.yml</code> reruns it daily and on dispatch, and proposes a reviewed pull request only when the output changes. It holds no Hugging Face token, so it cannot write to the Hub. Private assets are NOT_OBSERVED, never counted as zero.</li>
+            <li>The 2026-08-31 capture is kept byte-identical at <a href="/public-inventory-2026-08-31.json">/public-inventory-2026-08-31.json</a>, and <a href="/estate.json">/estate.json</a> stays the dated 2026-08-31 snapshot. Space rows the public listing no longer returns are gone from the current inventory, not from the dated files.</li>
+            <li>The home page no longer reads the absent Spaces <code>szl-estate-live</code> and <code>receipt-chain-live</code>. Its Hugging Face rows are the <a href="/spaces.json">/spaces.json</a> KEEP Spaces that the public listing still returns. The estate hologram bake keeps its rows and records which Hub links were retired.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section id="2026-09-11">
       <div class="wrap">

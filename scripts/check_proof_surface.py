@@ -33,6 +33,10 @@ READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
 STAMP_HEALTH_SHA = ROOT / "scripts" / "stamp_health_sha.py"
+GENERATOR = ROOT / "scripts" / "generate_hf_inventory.py"
+HF_INVENTORY = ROOT / "public-inventory.json"
+HF_CURRENT = ROOT / "estate" / "hf-current.json"
+HF_LIVE_ALIGN = ROOT / "live-align" / "hf_live_inventory.json"
 LAST_PUBLISHED_MAIN_SHA = "82ad0481753ddd0043e3b55352704e187be14a08"
 ALLOWED_HEALTH_SIGNERS = ("DSSE-LIVE", "UNSIGNED-LOCAL", "unavailable")
 EXPECTED_PROOFS = {
@@ -99,6 +103,182 @@ class Surface(HTMLParser):
             self.mains.append(item)
         elif tag == "script":
             self.scripts.append(item)
+
+
+def load_generator():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("generate_hf_inventory", GENERATOR)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+HUB_LINK = re.compile(
+    r"https://huggingface\.co/(?:(datasets|spaces|kernels)/)?(SZLHOLDINGS/[A-Za-z0-9._-]+)"
+)
+HUB_SPACE_API = re.compile(r"https://huggingface\.co/api/spaces/(SZLHOLDINGS/[A-Za-z0-9._-]+)")
+SPACE_HOST = re.compile(r"https://([a-z0-9-]+\.(?:static\.)?hf\.space)\b")
+
+
+def check_generated_hf_inventory() -> None:
+    """Generated Hub inventory: schema, self-consistency, links, freshness.
+
+    No count is typed here. Every count must equal the length of the id list
+    it summarizes in the same generated document, every derived document must
+    equal what the generator derives from public-inventory.json, and every
+    page must be exactly what the generator renders from estate/hf-current.json.
+    """
+    from collections import Counter
+    from datetime import datetime, timedelta, timezone
+
+    gen = load_generator()
+    inventory = json.loads(HF_INVENTORY.read_text(encoding="utf-8"))
+    current = json.loads(HF_CURRENT.read_text(encoding="utf-8"))
+    live_align = json.loads(HF_LIVE_ALIGN.read_text(encoding="utf-8"))
+    models = json.loads((ROOT / "models.json").read_text(encoding="utf-8"))
+    spaces = json.loads((ROOT / "spaces.json").read_text(encoding="utf-8"))
+
+    # (a) schema and observation mode
+    assert inventory["schema"] == gen.SCHEMA_INVENTORY
+    assert current["schema"] == gen.SCHEMA_CURRENT
+    assert live_align["schema"] == gen.SCHEMA_LIVE_ALIGN
+    for document in (inventory, current, live_align):
+        assert document["organization"] == "SZLHOLDINGS"
+        assert document["observation_mode"] == "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT"
+        assert document["generated_by"] == "scripts/generate_hf_inventory.py"
+    assert inventory["private_assets"] == current["private_assets"] == "NOT_OBSERVED"
+    assert inventory["claim_boundaries"]["private_assets"] == "NOT_OBSERVED"
+    assert inventory["content_sha256"] == gen.inventory_content_sha(inventory), (
+        "public-inventory.json was edited by hand; rerun scripts/generate_hf_inventory.py"
+    )
+    assert current["source_content_sha256"] == inventory["content_sha256"]
+
+    # (b) self-consistency: every count is the length of its own id list
+    resources = inventory["resources"]
+    counts = inventory["counts"]
+    for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
+        ids = [row.get("id") or row.get("slug") for row in resources[kind]]
+        assert counts[kind] == len(ids) == len(set(ids)), kind
+        assert ids == sorted(ids), f"{kind} ids must be sorted"
+    assert counts["spaces"] == counts["spaces_list_api_rows"] + counts["special_spaces_added"]
+    assert counts["hub_artifacts_total"] == sum(
+        counts[kind] for kind in ("models", "datasets", "spaces", "kernels", "collections")
+    )
+    assert counts["public_resources_total"] == counts["hub_artifacts_total"] + counts["buckets"]
+    stages = Counter(row["runtime"]["stage"] or "NOT_REPORTED" for row in resources["spaces"])
+    assert inventory["spaces_by_runtime_stage"] == dict(sorted(stages.items()))
+    for row in resources["collections"]:
+        assert row["item_count"] == len(row["items"]), row["slug"]
+    for row in resources["buckets"]:
+        assert isinstance(row["observed_object_count"], int), row["id"]
+    assert current["counts"] == {
+        "buckets": counts["buckets"],
+        "collections": counts["collections"],
+        "datasets_public": counts["datasets"],
+        "kernels": counts["kernels"],
+        "models": counts["models"],
+        "public_resources_total": counts["public_resources_total"],
+        "spaces_public": counts["spaces"],
+    }
+    assert current == gen.build_current(inventory, spaces, gen.historical_rows(ROOT)), (
+        "estate/hf-current.json is not what the generator derives; rerun it"
+    )
+    assert live_align == gen.build_live_align(inventory, ROOT), (
+        "live-align/hf_live_inventory.json is not what the generator derives; rerun it"
+    )
+    assert spaces["hub_presence"] == gen.build_spaces_contract(spaces, inventory)["hub_presence"]
+    hub = models["hub"]
+    assert (hub["models"], hub["datasets"], hub["spaces"], hub["kernels"]) == (
+        counts["models"],
+        counts["datasets"],
+        counts["spaces"],
+        counts["kernels"],
+    )
+    assert hub["private"] == "NOT_OBSERVED"
+    assert models["captured_at"] == inventory["observed_at"]
+    assert [row["id"] for row in models["models"]] == [row["id"] for row in resources["models"]]
+    assert len(models["models"]) == hub["models"]
+    class_counts = Counter(row["class"] for row in models["models"])
+    assert models["counts"] == {name: class_counts.get(name, 0) for name in models["counts"]}
+    assert set(models["counts"]) == set(models["classes"]) >= set(class_counts)
+    assert sum(models["counts"].values()) == len(models["models"])
+    for row in models["models"]:
+        assert row["trained"] is (row["class"] in ("TRAINED_WEIGHTS", "NANO_SYNTHETIC")), row["id"]
+    assert not re.search(r"\b\d+ (public )?(Hub )?(models|datasets|Spaces)\b", models["reader_guide"]), (
+        "models.json prose must not type Hub counts"
+    )
+
+    # observed_at is a real UTC second, not in the future
+    observed_at = inventory["observed_at"]
+    assert gen.valid_timestamp(observed_at)
+    assert current["observed_at"] == live_align["observed_at"] == observed_at
+    assert current["observed_date"] == observed_at[:10]
+    observed = datetime.strptime(observed_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    now = datetime.now(timezone.utc)
+    assert observed <= now + timedelta(minutes=5), "observed_at lies in the future"
+    if now - observed > timedelta(days=8):
+        # Not a failure: every page prints observed_at beside its counts and the
+        # home badge turns STALE, so an old observation is labelled, not hidden.
+        print(
+            f"WARNING: generated Hub inventory observed {observed_at} is more than 8 days old; "
+            "run .github/workflows/hf-inventory-refresh.yml"
+        )
+
+    # pages render exactly what the generator writes from estate/hf-current.json
+    for page in gen.PAGES:
+        text = (ROOT / page).read_text(encoding="utf-8")
+        assert gen.render_page(text, current) == text, (
+            f"{page}: generated regions are stale; run scripts/generate_hf_inventory.py"
+        )
+        keys = {key for key, _ in gen.page_fields(text)}
+        assert keys, f"{page} must render its counts from estate/hf-current.json"
+        if any(key.startswith("counts.") for key in keys):
+            assert keys & {"observed_at", "observed_date"}, (
+                f"{page} prints generated counts without their observation date"
+            )
+
+    # (c) every Hub asset or Space host these surfaces link is publicly listed
+    pools = {
+        "": {row["id"] for row in resources["models"]},
+        "datasets": {row["id"] for row in resources["datasets"]},
+        "spaces": {row["id"] for row in resources["spaces"]},
+        "kernels": {row["id"] for row in resources["kernels"]},
+    }
+    hosts = {urlparse(row["canonical_live_url"]).netloc for row in resources["spaces"]}
+    for relative in (*gen.PAGES, "estate/os/data.json", "estate/os/data.delta.json"):
+        text = (ROOT / relative).read_text(encoding="utf-8")
+        for kind, ident in HUB_LINK.findall(text):
+            assert ident in pools[kind], f"{relative} links absent Hub asset {kind or 'models'}/{ident}"
+        for ident in HUB_SPACE_API.findall(text):
+            assert ident in pools["spaces"], f"{relative} reads absent Space API {ident}"
+        for host in SPACE_HOST.findall(text):
+            assert host in hosts, f"{relative} links absent Space host {host}"
+
+    # The dated hologram bake keeps its rows; a Hub link it no longer may print
+    # is nulled and named in linkRetirements, never silently dropped.
+    bake = json.loads((ROOT / "estate" / "os" / "data.json").read_text(encoding="utf-8"))
+    retirements = bake.get("linkRetirements")
+    if retirements is not None:
+        assert gen.valid_timestamp(retirements["retiredAt"])
+        assert retirements["source"] == "/estate/hf-current.json"
+        rows = {row["id"]: row for row in bake["assets"]}
+        for entry in retirements["retired"]:
+            field = entry["field"]
+            assert field.startswith("urls."), entry
+            assert rows[entry["asset"]]["urls"][field.split(".", 1)[1]] is None, entry
+
+    # live Space rows: spaces.json KEEP policy, publicly listed, front-door withheld excluded
+    cards = current["live_space_cards"]
+    assert [card["id"] for card in cards] == [
+        f"SZLHOLDINGS/{item['id']}"
+        for item in spaces["keep"]
+        if f"SZLHOLDINGS/{item['id']}" in pools["spaces"] and "killinchu" not in item["id"].lower()
+    ]
+    for card in cards:
+        assert card["api"] == f"https://huggingface.co/api/spaces/{card['id']}"
+        assert card["href"] == f"https://huggingface.co/spaces/{card['id']}"
 
 
 def check() -> None:
@@ -377,70 +557,19 @@ def check() -> None:
     assert "cdn." not in command_source
     assert "https://a11oy.com" not in command_source
     estate_contract = json.loads((ROOT / "estate.json").read_text(encoding="utf-8"))
-    # 2026-08-31 recapture: public Hub surface expanded 7 -> 48 (47 list-API rows + README
-    # profile card). Visibility change made off this runtime; nothing deleted. Keep-7 below
-    # is retained in comments as the 2026-08-29 curated set.
-    assert estate_contract["huggingface"]["spaces_public"] == 48
-    public_spaces = estate_contract["huggingface"]["public_spaces"]
-    assert public_spaces == [
-            "SZLHOLDINGS/README",
-            "SZLHOLDINGS/a11oy",
-            "SZLHOLDINGS/a11oy-factory",
-            "SZLHOLDINGS/anatomy",
-            "SZLHOLDINGS/ayllu",
-            "SZLHOLDINGS/cosmos",
-            "SZLHOLDINGS/counsel",
-            "SZLHOLDINGS/david-leads",
-            "SZLHOLDINGS/energy-attest-holo",
-            "SZLHOLDINGS/energy-attested-runs",
-            "SZLHOLDINGS/evidence-studio",
-            "SZLHOLDINGS/experiments",
-            "SZLHOLDINGS/governed-agent-bench",
-            "SZLHOLDINGS/governed-norm-holo",
-            "SZLHOLDINGS/governed-receipt-verifier",
-            "SZLHOLDINGS/guardrail-receipt",
-            "SZLHOLDINGS/hatun-mcp",
-            "SZLHOLDINGS/holographic",
-            "SZLHOLDINGS/immune",
-            "SZLHOLDINGS/immune-lattice",
-            "SZLHOLDINGS/khipu-lab",
-            "SZLHOLDINGS/killinchu",
-            "SZLHOLDINGS/lambda-gate-holo",
-            "SZLHOLDINGS/llm-router-live",
-            "SZLHOLDINGS/lyte-services",
-            "SZLHOLDINGS/nexus",
-            "SZLHOLDINGS/probe-test-connector",
-            "SZLHOLDINGS/prove-it",
-            "SZLHOLDINGS/receipt-chain-live",
-            "SZLHOLDINGS/sda",
-            "SZLHOLDINGS/second-brain",
-            "SZLHOLDINGS/szl-atelier",
-            "SZLHOLDINGS/szl-blocked-live",
-            "SZLHOLDINGS/szl-command-lab",
-            "SZLHOLDINGS/szl-estate-live",
-            "SZLHOLDINGS/szl-experiments",
-            "SZLHOLDINGS/szl-forge-lab",
-            "SZLHOLDINGS/szl-frontier",
-            "SZLHOLDINGS/szl-govsign-live",
-            "SZLHOLDINGS/szl-kernels-live",
-            "SZLHOLDINGS/szl-khipu",
-            "SZLHOLDINGS/szl-model-inference-lab",
-            "SZLHOLDINGS/szl-provctl-live",
-            "SZLHOLDINGS/szl-quant-live",
-            "SZLHOLDINGS/szl-real-estate",
-            "SZLHOLDINGS/szl-sovereign-os",
-            "SZLHOLDINGS/terra-assurance",
-            "SZLHOLDINGS/yarqa"
-    ]
+    # estate.json is the dated 2026-08-31 snapshot. It is kept historical and
+    # internally consistent; it is never the current count. Current counts are
+    # generated into estate/hf-current.json (check_generated_hf_inventory).
+    hub_snapshot = estate_contract["huggingface"]
+    public_spaces = hub_snapshot["public_spaces"]
+    assert hub_snapshot["spaces_public"] == len(public_spaces) == len(set(public_spaces))
+    assert public_spaces == sorted(public_spaces)
+    assert all(space.startswith("SZLHOLDINGS/") for space in public_spaces)
+    assert estate_contract["reader_guide"].startswith("HISTORICAL:"), (
+        "estate.json must say it is the dated historical snapshot"
+    )
+    assert "/estate/hf-current.json" in estate_contract["reader_guide"]
     assert estate_contract["origins"]["product"] == "https://a-11-oy.com"
-    # 2026-08-31: david-leads, anatomy, and szl-real-estate are publicly listed on the Hub
-    # (measured in the unauth author-list). The 2026-08-30 PAUSED+PRIVATE fold policy in
-    # spaces.json is a destination plan, not current Hub privacy. No exclusion asserted.
-    recapture = estate_contract["recapture_2026_08_30"]
-    assert recapture["spaces_json_keep"] == 6
-    assert recapture["atlas_keep_7_rewritten"] is False
-    assert recapture["unprivate_38"] is False
-    assert recapture["operational"] is False
     spaces_contract = json.loads((ROOT / "spaces.json").read_text(encoding="utf-8"))
     keep_ids = [item["id"] for item in spaces_contract["keep"]]
     assert keep_ids == [
@@ -451,7 +580,12 @@ def check() -> None:
         "szl-atelier",
         "governed-receipt-verifier",
     ]
-    assert spaces_contract["cut"]["keep"] == 6
+    assert spaces_contract["cut"]["keep"] == len(keep_ids)
+    recapture = estate_contract["recapture_2026_08_30"]
+    assert recapture["spaces_json_keep"] == len(keep_ids)
+    assert recapture["atlas_keep_7_rewritten"] is False
+    assert recapture["unprivate_38"] is False
+    assert recapture["operational"] is False
     # 2026-09-25: KEEP-6 is policy, not Hub state. The verifier Space id stays
     # in the cut but is recorded NOT_FOUND on the Hub (401 public, 404 to an
     # org-authenticated read); it must not be described as a live Hub app.
@@ -474,14 +608,13 @@ def check() -> None:
     assert nexus["dest"] == "https://a-11-oy.com/nexus"
     models_contract = json.loads((ROOT / "models.json").read_text(encoding="utf-8"))
     assert models_contract["operational"] is False
-    assert models_contract["trained_all"] is False
-    assert models_contract["hub"]["models"] == 46
-    assert models_contract["hub"]["datasets"] == 35
-    assert models_contract["hub"]["spaces"] == 21
-    assert len(models_contract["models"]) == 46
+    assert models_contract["trained_all"] is all(
+        item["trained"] for item in models_contract["models"]
+    )
     assert models_contract["energy"] == "UNAVAILABLE"
     assert models_contract["boundaries"]["atlas_keep_7_not_rewritten"] is True
     assert not any(item.get("operational") for item in models_contract["models"])
+    check_generated_hf_inventory()
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
@@ -843,10 +976,10 @@ def check() -> None:
             assert item.get("aria-live") is None
             assert item.get("role") != "status"
 
-    # The #inventory count bar renders the frozen 2026-08-31 snapshot in
-    # /public-inventory.json (pinned HISTORICAL by
-    # tests/test_current_hf_membership_binding.py). It must stay labelled as a
-    # dated snapshot, with the observed_at badge above the counts that
+    # The #inventory count bar renders /public-inventory.json, generated by
+    # scripts/generate_hf_inventory.py (the 2026-08-31 capture is kept as
+    # public-inventory-2026-08-31.json). It must stay labelled as a dated
+    # snapshot, with the observed_at badge above the counts that
     # scripts/inventory_cards.js marks STALE after 24 hours.
     snapshot_badges = [
         item for _, item in surface.elements if item.get("id") == "invSnapshotState"
@@ -918,16 +1051,15 @@ def check() -> None:
     assert source.count("NOT PROBED · UNKNOWN") == 5, (
         "four product rows and the explanatory boundary must remain explicit"
     )
-    assert source.count('data-space="SZLHOLDINGS/') == 2
+    # The browser-read Hub Space rows are generated from
+    # estate/hf-current.json live_space_cards (the /spaces.json KEEP ids the
+    # public listing still returns); the inline script reads the same file for
+    # its bindings, so no Space id is typed in this check or in the script.
+    live_cards = json.loads(HF_CURRENT.read_text(encoding="utf-8"))["live_space_cards"]
+    assert live_cards, "at least one KEEP Space must be publicly listed to render a live row"
+    assert source.count('data-space="SZLHOLDINGS/') == len(live_cards)
     expected_space_bindings = {
-        "SZLHOLDINGS/szl-estate-live": (
-            "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-estate-live",
-            "https://szlholdings-szl-estate-live.static.hf.space",
-        ),
-        "SZLHOLDINGS/receipt-chain-live": (
-            "https://huggingface.co/api/spaces/SZLHOLDINGS/receipt-chain-live",
-            "https://szlholdings-receipt-chain-live.static.hf.space",
-        ),
+        card["id"]: (card["api"], card["href"]) for card in live_cards
     }
     observed_space_bindings = [
         (
@@ -944,8 +1076,14 @@ def check() -> None:
     } == expected_space_bindings, (
         "each browser-read Space must retain its exact repository/API/link binding"
     )
-    assert source.count("NOT OBSERVED · UNAVAILABLE") == 3, (
-        "two HF fallbacks and the no-script explanation must fail closed"
+    assert 'fetchJson(new URL("/estate/hf-current.json",window.location.href).href)' in source
+    assert "current.live_space_cards" in source
+    assert 'probePolicy.classifyFailure("SPACE_BINDINGS_UNAVAILABLE")' in source
+    assert "szl-estate-live" not in source and "receipt-chain-live" not in source, (
+        "absent Hub Spaces must not be probed or linked from the front door"
+    )
+    assert source.count("NOT OBSERVED · UNAVAILABLE") == len(live_cards) + 1, (
+        "every HF fallback and the no-script explanation must fail closed"
     )
     assert "data-probe=" not in source, (
         "product routes are public links only and must not be browser-probed"
@@ -1031,19 +1169,20 @@ def check() -> None:
         'rel="noopener"><span class="dossier-index">05</span>' in source
     ), "dossier row 05 must link product-origin /verify"
     assert "The dated static registry snapshot remains visible" in source
-    assert 'data-static-snapshot="2026-08-31"' in source
+    assert 'data-static-snapshot="hf-current"' in source
     # audit 2026-08-30: static fallbacks are honest em-dashes (the same state a
     # failed live read renders), never hand-typed estate counts; the browser
-    # refresh still fills live numbers, and every count zone carries the
-    # estate.json manifest placeholder comment.
+    # refresh still fills live numbers, and every count zone points at the
+    # generated estate/hf-current.json (the dated estate.json is historical).
     assert '<b id="atlasTotal">—</b>' in source
     assert '<b id="atlasModels">—</b>' in source
     assert '<b id="atlasDatasets">—</b>' in source
     assert '<b id="atlasCollections">—</b>' in source
     assert '<b id="atlasBuckets">—</b>' in source
-    assert "estate counts render from estate.json manifest" in source, (
-        "count placeholders must point at the estate.json manifest"
+    assert "estate counts render from estate/hf-current.json" in source, (
+        "count placeholders must point at the generated estate/hf-current.json"
     )
+    assert "estate counts render from estate.json manifest" not in source
     assert not re.search(r'id="atlas\w+">\d+<', source), (
         "no atlas stat may carry a hand-typed numeric fallback"
     )

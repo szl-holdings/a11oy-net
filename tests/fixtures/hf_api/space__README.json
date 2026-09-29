@@ -1,0 +1,18 @@
+{
+  "cardData": {
+    "license": "apache-2.0",
+    "sdk": "static",
+    "title": "SZL \u2014 Governed AI Command Fabric"
+  },
+  "id": "SZLHOLDINGS/README",
+  "lastModified": "2026-09-22T05:54:29.000Z",
+  "private": false,
+  "runtime": {
+    "hardware": {
+      "current": null
+    },
+    "stage": "RUNNING"
+  },
+  "sdk": "static",
+  "sha": "ffffffffffffffffffffffffffffffffffffffff"
+}

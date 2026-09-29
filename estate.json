@@ -7,9 +7,9 @@
     "meaning": "Dated MEASURED public inventory snapshot on the proof origin, plus a closeout recapture. Not product runtime. Not a live dashboard. Not a receipt store. This origin does not host a DSSE signer.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "captured_at is this file's own bake time. huggingface block is the org-authenticated REPORTED view (44 models / 38 datasets / 49 Spaces, 48 publicly readable including README). unauth_author_list is the unauthenticated MEASURED view (44 models / 30 datasets / 47 Spaces). Prior dated snapshots (2026-08-28: 17/27; 2026-08-29: 43/36 keep-7; recapture_2026_08_30) are historical and not rewritten. Counts are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
+  "reader_guide": "HISTORICAL: this file is the dated 2026-08-31 snapshot and is not rewritten. Current public Hub counts are generated from the unauthenticated Hub API at /estate/hf-current.json (full detail: /public-inventory.json; generator scripts/generate_hf_inventory.py). captured_at is this file's own bake time. huggingface block is the org-authenticated REPORTED view (44 models / 38 datasets / 49 Spaces, 48 publicly readable including README). unauth_author_list is the unauthenticated MEASURED view (44 models / 30 datasets / 47 Spaces). Prior dated snapshots (2026-08-28: 17/27; 2026-08-29: 43/36 keep-7; recapture_2026_08_30) are historical and not rewritten. Counts are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
   "captured_at": "2026-08-31T18:59:11Z",
-  "evidence_class": "MEASURED",
+  "evidence_class": "MEASURED (historical)",
   "github": {
     "org": "szl-holdings",
     "repositories_search_total": 103,
