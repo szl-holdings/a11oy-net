@@ -123,8 +123,14 @@ class GenerationError(RuntimeError):
 # --------------------------------------------------------------------------
 
 
+# Page sizes requested from the listing endpoints. A listing that comes back
+# this full may have been cut by the page size, so it is refused rather than
+# published as a complete count.
+LISTING_LIMIT = {"models": 1000, "datasets": 1000, "spaces": 1000, "kernels": 1000, "collections": 100}
+
+
 def list_url(kind: str) -> str:
-    query = [("author", ORG), ("limit", "1000")]
+    query = [("author", ORG), ("limit", str(LISTING_LIMIT[kind]))]
     query += [("expand[]", field) for field in EXPAND[kind]]
     return f"{API}/{kind}?" + urllib.parse.urlencode(query)
 
@@ -132,7 +138,7 @@ def list_url(kind: str) -> str:
 def public_list_url(kind: str) -> str:
     """The plain URL a reader can open to repeat the observation."""
     if kind == "collections":
-        return f"{API}/collections?owner={ORG}&limit=100"
+        return f"{API}/collections?owner={ORG}&limit={LISTING_LIMIT['collections']}"
     if kind == "buckets":
         return f"{API}/buckets/{ORG}"
     return f"{API}/{kind}?author={ORG}"
@@ -165,7 +171,7 @@ class LiveSource:
 
     def listing(self, kind: str) -> list[dict[str, Any]]:
         if kind == "collections":
-            payload = self._get(f"{API}/collections?owner={ORG}&limit=100")
+            payload = self._get(public_list_url("collections"))
         elif kind == "buckets":
             payload = self._get(f"{API}/buckets/{ORG}")
         else:
@@ -217,6 +223,11 @@ def collect(source: Any) -> dict[str, Any]:
     raw: dict[str, Any] = {}
     for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
         raw[kind] = source.listing(kind)
+        limit = LISTING_LIMIT.get(kind)
+        if limit is not None and len(raw[kind]) >= limit:
+            raise GenerationError(
+                f"{kind} listing returned {len(raw[kind])} rows, the page size; it may be truncated"
+            )
     raw["special_spaces"] = {name: source.space(name) for name in SPECIAL_SPACES}
     raw["collection_detail"] = {
         str(item["slug"]): source.collection(str(item["slug"]))

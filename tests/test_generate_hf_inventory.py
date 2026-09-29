@@ -193,6 +193,18 @@ class GeneratorTest(unittest.TestCase):
         with self.assertRaises(gen.GenerationError):
             gen.generate(self.site.root, raw, "2026-02-30T00:00:00Z")
 
+    def test_refuses_a_listing_that_may_be_truncated(self) -> None:
+        class FullPage(gen.FixtureSource):
+            def listing(self, kind: str):
+                rows = super().listing(kind)
+                if kind == "collections":
+                    return [dict(rows[0], slug=f"{rows[0]['slug']}-{i}") for i in range(gen.LISTING_LIMIT[kind])]
+                return rows
+
+        with self.assertRaises(gen.GenerationError):
+            gen.collect(FullPage(FIXTURE))
+        self.assertIsInstance(gen.collect(gen.FixtureSource(FIXTURE)), dict)
+
     def test_generator_holds_no_token_and_no_write_path(self) -> None:
         source = (ROOT / "scripts" / "generate_hf_inventory.py").read_text(encoding="utf-8")
         for forbidden in ("HF_TOKEN", "Authorization", "os.environ", "upload_", "create_commit", "method=\"POST\""):
