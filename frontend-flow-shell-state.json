@@ -1,5 +1,5 @@
 {
-  "examined_documents": 44,
+  "examined_documents": 45,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -25,6 +25,7 @@
     "estate/szl-frontier/index.html",
     "estate/thread-ops/index.html",
     "estate/zoom-out-2026-09-11/index.html",
+    "experiments/confirmation/index.html",
     "experiments/index.html",
     "factory/index.html",
     "five-space/index.html",

@@ -180,5 +180,18 @@
   },
   "scientific_overall_gate": "FAILED",
   "surface_role": "STATIC_RECORDED_EVIDENCE_REPLAY",
-  "model_inference_performed": false
+  "model_inference_performed": false,
+  "proof_origin_integration": {
+    "canonical_document": "source-index.html",
+    "served_document": "index.html",
+    "served_document_sha256": "4b920a01037890ef7bf0537d8933b3ab2af513c87fd05434f74a0d17683210de",
+    "integration": "Existing first-party Holographic Proof v2 and Flow Shell assets only.",
+    "managed_assets": [
+      "/assets/szl-holo-proof-v2.css",
+      "/scripts/szl-holo-proof-v2.js",
+      "/assets/szl-flow-proof.css",
+      "/scripts/szl-flow-proof.js"
+    ],
+    "experiment_data_modified": false
+  }
 }
