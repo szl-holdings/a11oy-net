@@ -2,6 +2,11 @@
 
 ## 2026-09-29
 
+- Start the browser-local Alloy experiment independently of the dated inventory read, with a five-second header/body deadline and visible invalid-snapshot failures. Mark unprobed remote systems NOT_PROBED and retain independent signer uncertainty. Report proof completion only after admission, reuse, adapter denial, a fault, verified restoration, and ledger replay. Product readiness and authorization are not established by this local experiment.
+
+
+## 2026-09-29
+
 - Hub counts on this origin are generated, not typed. `scripts/generate_hf_inventory.py` reads the unauthenticated Hub API (models, datasets, Spaces with runtime stage, kernels, collections, buckets, and the README profile Space) and writes `/public-inventory.json` (schema v4), `/estate/hf-current.json`, `/live-align/hf_live_inventory.json`, the hub block and file-presence classification of `/models.json`, the `hub_presence` block of `/spaces.json`, and the marked count fields on `/`, `/estate/`, `/estate/os/`, `/atelier/` and `/notes/`. Output is sorted and deterministic; unchanged Hub content keeps its first `observed_at`. Private assets are NOT_OBSERVED, never zero. `.github/workflows/hf-inventory-refresh.yml` reruns it daily and on dispatch and proposes a reviewed pull request only when the output changes; it holds no Hugging Face token and cannot write to the Hub.
 - The 2026-08-31 capture is kept byte-identical at `/public-inventory-2026-08-31.json`; the regenerated `/public-inventory.json` no longer lists the 32 Space rows the public listing stopped returning. `/estate.json` stays the dated 2026-08-31 snapshot (`evidence_class` `MEASURED (historical)`, reader guide points at `/estate/hf-current.json`).
 - The home page no longer probes the absent Spaces `szl-estate-live` and `receipt-chain-live`. Its Hugging Face rows and their probe bindings are generated from `/estate/hf-current.json`: the `/spaces.json` KEEP Spaces the public listing still returns, Killinchu withheld. The `/estate/os/` bake keeps its rows and records nine retired Hub links in `linkRetirements`.
