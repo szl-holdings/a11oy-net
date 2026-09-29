@@ -418,5 +418,68 @@
     "current_public_authority": "SZLHOLDINGS/killinchu",
     "killinchu_revision": "928a6dace657f8f9e067773d23d5686fe3dcc716",
     "runtime_readiness_claimed": false
+  },
+  "hub_presence": {
+    "evidence_class": "MEASURED",
+    "fold": {
+      "listed": [
+        "ayllu",
+        "counsel",
+        "david-leads",
+        "immune-lattice",
+        "llm-router-live",
+        "szl-command-lab",
+        "szl-forge-lab",
+        "szl-model-inference-lab",
+        "yarqa"
+      ],
+      "not_listed": [
+        "a11oy-factory",
+        "anatomy",
+        "cosmos",
+        "energy-attest-holo",
+        "energy-attested-runs",
+        "evidence-studio",
+        "experiments",
+        "governed-agent-bench",
+        "governed-norm-holo",
+        "guardrail-receipt",
+        "hatun-mcp",
+        "holographic",
+        "khipu-lab",
+        "lambda-gate-holo",
+        "lyte-lattice",
+        "lyte-services",
+        "nexus",
+        "receipt-chain-live",
+        "sda",
+        "szl-blocked-live",
+        "szl-estate-live",
+        "szl-experiments",
+        "szl-govsign-live",
+        "szl-kernels-live",
+        "szl-provctl-live",
+        "szl-quant-live",
+        "szl-real-estate",
+        "szl-sovereign-os",
+        "terra-assurance"
+      ]
+    },
+    "generated_by": "scripts/generate_hf_inventory.py",
+    "interpretation": "NOT_LISTED means the Space id is absent from the unauthenticated public listing at observed_at: deleted, renamed, or private. The keep and fold rows are policy and are not rewritten by this block.",
+    "keep": {
+      "listed": [
+        "a11oy",
+        "immune",
+        "killinchu",
+        "szl-atelier",
+        "szl-khipu"
+      ],
+      "not_listed": [
+        "governed-receipt-verifier"
+      ]
+    },
+    "observed_at": "2026-09-29T15:05:00Z",
+    "source": "/public-inventory.json"
   }
 }

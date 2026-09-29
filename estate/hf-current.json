@@ -1,0 +1,82 @@
+{
+  "claim_boundaries": {
+    "counts": "PUBLIC_LISTING_ONLY_NOT_QUALITY_SAFETY_OR_READINESS",
+    "private_assets": "NOT_OBSERVED",
+    "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
+  },
+  "counts": {
+    "buckets": 1,
+    "collections": 21,
+    "datasets_public": 34,
+    "kernels": 14,
+    "models": 49,
+    "public_resources_total": 143,
+    "spaces_public": 24
+  },
+  "evidence_class": "MEASURED",
+  "freshness": {
+    "badge_stale_after_hours": 24,
+    "refresh_workflow": ".github/workflows/hf-inventory-refresh.yml",
+    "rule": "observed_at is when this exact content was first observed; a later observation of identical content keeps it. Pages print it beside every count"
+  },
+  "generated_by": "scripts/generate_hf_inventory.py",
+  "historical_snapshots": [
+    {
+      "captured_at": "2026-08-31T18:59:11Z",
+      "evidence_class": "MEASURED (historical)",
+      "path": "/estate.json",
+      "role": "dated estate snapshot; historical, not rewritten"
+    },
+    {
+      "captured_at": "2026-08-31T18:59:11Z",
+      "evidence_class": "MEASURED",
+      "path": "/public-inventory-2026-08-31.json",
+      "role": "prior public-inventory.json (szl.public-hf-inventory/v3); historical, not rewritten"
+    }
+  ],
+  "live_space_cards": [
+    {
+      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/a11oy",
+      "href": "https://huggingface.co/spaces/SZLHOLDINGS/a11oy",
+      "id": "SZLHOLDINGS/a11oy",
+      "policy": "spaces.json keep",
+      "sdk": "docker",
+      "title": "a11oy \u2014 Command Center"
+    },
+    {
+      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/immune",
+      "href": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
+      "id": "SZLHOLDINGS/immune",
+      "policy": "spaces.json keep",
+      "sdk": "docker",
+      "title": "IMMUNE \u2014 Verifiable AI Defense Matrix"
+    },
+    {
+      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-khipu",
+      "href": "https://huggingface.co/spaces/SZLHOLDINGS/szl-khipu",
+      "id": "SZLHOLDINGS/szl-khipu",
+      "policy": "spaces.json keep",
+      "sdk": "docker",
+      "title": "SZL KHIPU"
+    },
+    {
+      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-atelier",
+      "href": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
+      "id": "SZLHOLDINGS/szl-atelier",
+      "policy": "spaces.json keep",
+      "sdk": "docker",
+      "title": "SZL Atelier"
+    }
+  ],
+  "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
+  "observed_at": "2026-09-29T15:05:00Z",
+  "observed_date": "2026-09-29",
+  "organization": "SZLHOLDINGS",
+  "private_assets": "NOT_OBSERVED",
+  "schema": "szl.hf-current/v1",
+  "source": "/public-inventory.json",
+  "source_content_sha256": "c2e4395f1107efadab8b0ef20840017de2b7fbc147f42553612f857b8639f8a0",
+  "spaces_by_runtime_stage": {
+    "RUNNING": 24
+  }
+}

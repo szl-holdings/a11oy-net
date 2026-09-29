@@ -1,0 +1,29 @@
+[
+  {
+    "gated": false,
+    "id": "SZLHOLDINGS/szl-maskmod",
+    "lastModified": "2026-08-29T00:00:00.000Z",
+    "private": false,
+    "sha": "9999999999999999999999999999999999999999",
+    "supportedDriverFamilies": [
+      "cpu"
+    ],
+    "tags": [
+      "kernel",
+      "license:apache-2.0"
+    ]
+  },
+  {
+    "gated": false,
+    "id": "SZLHOLDINGS/szl-block-kv",
+    "lastModified": "2026-08-29T00:00:00.000Z",
+    "private": false,
+    "sha": "8888888888888888888888888888888888888888",
+    "supportedDriverFamilies": [
+      "cpu"
+    ],
+    "tags": [
+      "kernel"
+    ]
+  }
+]

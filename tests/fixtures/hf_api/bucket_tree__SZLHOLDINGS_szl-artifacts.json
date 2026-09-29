@@ -1,0 +1,16 @@
+[
+  {
+    "path": "MANIFEST.json",
+    "size": 2048,
+    "type": "file"
+  },
+  {
+    "path": "README.md",
+    "size": 730,
+    "type": "file"
+  },
+  {
+    "path": "logs",
+    "type": "directory"
+  }
+]

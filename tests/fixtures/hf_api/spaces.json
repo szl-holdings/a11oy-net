@@ -1,0 +1,82 @@
+[
+  {
+    "cardData": {
+      "license": "apache-2.0",
+      "sdk": "docker",
+      "title": "SZL Atelier"
+    },
+    "id": "SZLHOLDINGS/szl-atelier",
+    "lastModified": "2026-09-25T00:00:00.000Z",
+    "private": false,
+    "runtime": {
+      "hardware": {
+        "current": "cpu-basic"
+      },
+      "sha": "dddddddddddddddddddddddddddddddddddddddd",
+      "stage": "RUNNING"
+    },
+    "sdk": "docker",
+    "sha": "dddddddddddddddddddddddddddddddddddddddd",
+    "subdomain": "szlholdings-szl-atelier"
+  },
+  {
+    "cardData": {
+      "license": "apache-2.0",
+      "sdk": "docker",
+      "title": "a11oy \u2014 Command Center"
+    },
+    "id": "SZLHOLDINGS/a11oy",
+    "lastModified": "2026-09-25T00:00:00.000Z",
+    "private": false,
+    "runtime": {
+      "hardware": {
+        "current": "cpu-basic"
+      },
+      "sha": "dddddddddddddddddddddddddddddddddddddddd",
+      "stage": "RUNNING"
+    },
+    "sdk": "docker",
+    "sha": "dddddddddddddddddddddddddddddddddddddddd",
+    "subdomain": "szlholdings-a11oy"
+  },
+  {
+    "cardData": {
+      "license": "apache-2.0",
+      "sdk": "docker",
+      "title": "killinchu"
+    },
+    "id": "SZLHOLDINGS/killinchu",
+    "lastModified": "2026-09-25T00:00:00.000Z",
+    "private": false,
+    "runtime": {
+      "hardware": {
+        "current": "cpu-basic"
+      },
+      "sha": "dddddddddddddddddddddddddddddddddddddddd",
+      "stage": "RUNNING"
+    },
+    "sdk": "docker",
+    "sha": "dddddddddddddddddddddddddddddddddddddddd",
+    "subdomain": "szlholdings-killinchu"
+  },
+  {
+    "cardData": {
+      "license": "apache-2.0",
+      "sdk": "docker",
+      "title": "the-grid"
+    },
+    "id": "SZLHOLDINGS/the-grid",
+    "lastModified": "2026-09-25T00:00:00.000Z",
+    "private": false,
+    "runtime": {
+      "hardware": {
+        "current": "cpu-basic"
+      },
+      "sha": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "stage": "BUILD_ERROR"
+    },
+    "sdk": "docker",
+    "sha": "dddddddddddddddddddddddddddddddddddddddd",
+    "subdomain": "szlholdings-the-grid"
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "cardData": {
+      "license": "apache-2.0"
+    },
+    "gated": false,
+    "id": "SZLHOLDINGS/szl-lake",
+    "lastModified": "2026-09-20T00:00:00.000Z",
+    "private": false,
+    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "tags": []
+  },
+  {
+    "gated": "auto",
+    "id": "SZLHOLDINGS/governed-receipts-bench",
+    "lastModified": "2026-09-21T00:00:00.000Z",
+    "private": false,
+    "sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "tags": [
+      "license:cc-by-4.0"
+    ]
+  },
+  {
+    "gated": false,
+    "id": "SZLHOLDINGS/release-assets",
+    "lastModified": "2026-09-22T00:00:00.000Z",
+    "private": false,
+    "sha": "cccccccccccccccccccccccccccccccccccccccc",
+    "tags": []
+  }
+]

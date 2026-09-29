@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": "SZLHOLDINGS/a11oy",
+      "position": 0,
+      "type": "space"
+    },
+    {
+      "id": "SZLHOLDINGS/chaski",
+      "position": 1,
+      "type": "model"
+    },
+    {
+      "id": "SZLHOLDINGS/szl-lake",
+      "position": 2,
+      "type": "dataset"
+    }
+  ],
+  "lastUpdated": "2026-09-04T01:03:58.229Z",
+  "slug": "SZLHOLDINGS/flagship-6a950feebb81ea67131af898",
+  "title": "Flagship"
+}

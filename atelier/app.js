@@ -74,7 +74,7 @@ function renderWalk() {
     <section class="row" style="justify-content:space-between;align-items:flex-end">
       <div>
         <p class="kicker">SZL Holdings · Hugging Face</p>
-        <h1 class="hero">Forty models. Walk them.</h1>
+        <h1 class="hero">${n} models. Walk them.</h1>
         <p class="lede">${n} Hub ids. ${playable} playable here. Silhouette from Anthropic, NVIDIA, Unsloth — cut is original SZL.</p>
       </div>
       <div class="row">
@@ -229,7 +229,7 @@ function renderGrid() {
     groups.set(m.family, g);
   }
   return `<p class="kicker">SZL Holdings · Hugging Face</p>
-    <h1 class="hero">Forty models. Grid.</h1>
+    <h1 class="hero">${DATA.models.length} models. Grid.</h1>
     ${[...groups.entries()]
       .map(
         ([fam, list]) => `
