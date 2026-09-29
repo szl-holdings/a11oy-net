@@ -2,6 +2,11 @@
 import hashlib
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools import rollout_holographic_proof_v2 as holo
+from tools import rollout_proof_flow_shell as flow
 
 ROOT = Path(__file__).resolve().parents[1] / 'experiments/confirmation'
 
@@ -32,8 +37,20 @@ def test_publication_record_is_source_bound_and_preserves_provider_scope():
     assert len(files) == 20
     assert len({entry['path'] for entry in files}) == 20
     for entry in files:
-        data = (ROOT / entry['path']).read_bytes()
+        path = 'source-index.html' if entry['path'] == 'index.html' else entry['path']
+        data = (ROOT / path).read_bytes()
         assert hashlib.sha256(data).hexdigest() == entry['source_sha256'], entry['path']
+    source = (ROOT / 'source-index.html').read_bytes().decode('utf-8')
+    expected = holo.add_before(source, '</head>', '  ' + holo.STYLE + '\n')
+    expected = holo.add_before(expected, '</body>', '  ' + holo.SCRIPT + '\n')
+    expected = holo.add_before(expected, '</head>', '  ' + flow.STYLE + '\n')
+    expected = holo.add_before(expected, '</body>', '  ' + flow.SCRIPT + '\n')
+    served = (ROOT / 'index.html').read_bytes()
+    assert served.decode('utf-8') == expected
+    integration = record['proof_origin_integration']
+    assert integration['canonical_document'] == 'source-index.html'
+    assert integration['served_document_sha256'] == hashlib.sha256(served).hexdigest()
+    assert integration['experiment_data_modified'] is False
 
 
 if __name__ == '__main__':
