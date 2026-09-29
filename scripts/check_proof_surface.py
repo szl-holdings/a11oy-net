@@ -471,6 +471,7 @@ def check() -> None:
         "https://a11oy.net/factory/",
         "https://a11oy.net/origin/",
         "https://a11oy.net/frontiers/",
+        "https://a11oy.net/experiments/confirmation/",
     ]
     assert "healthz" not in SITEMAP.read_text(encoding="utf-8")
     assert "readyz" not in SITEMAP.read_text(encoding="utf-8")
