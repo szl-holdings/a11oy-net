@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-30 — current estate pointer and explicit deployment limits
+
+- Add the immutable `/estate-observed-2026-09-30.json` public-only observation and move `/estate-current.json` to its exact SHA-256. The record separates the 120-repository GitHub public listing, the generated 49-model / 34-dataset / 26-author-API-Space plus one profile-row Hub view, and the exact `a11oy` source/runtime match.
+- Preserve the proof-origin gaps in the current record instead of promoting reachability: legacy Pages source-to-deployment equivalence is `UNAVAILABLE`, the static health SHA did not match current source, live security headers were absent, and GitHub reported the custom-domain certificate as `bad_authz` with HTTPS enforcement disabled. Cloudflare's HTTP-to-HTTPS redirect was observed separately and is not treated as a GitHub certificate repair.
+- Keep all earlier estate observations immutable and linked as historical evidence. No model, dataset, Space, kernel, DNS, certificate, runtime, or provider setting was changed by this pointer refresh.
+
 ## 2026-09-29
 
 - `/experiments/` adds a TypeSafe Triage software-lab RECORD with canonical GitHub source, Hub source, demo location, the current `/readyz` version/source binding, and the product lab manifest. The source contract declares Python deterministic triage and `model_loaded=false`; promotion remains HOLD, production admission false, and runtime NOT_PROBED on this origin. It is source evidence only.
