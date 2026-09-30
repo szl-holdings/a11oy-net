@@ -35,6 +35,7 @@ REQUIRED_FILES = (
     "code/index.html",
     "diligence/index.html",
     "estate-current.json",
+    "estate-observed-2026-09-30.json",
     "estate-observed-2026-09-19.json",
     "evidence.json",
     "health.json",
