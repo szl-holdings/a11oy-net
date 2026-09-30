@@ -51,9 +51,22 @@ const hash = createHash('sha256').update(bytes).digest('hex');
 assert.equal(policy.evaluate(shippedPointer, shippedRecord, hash, Date.parse(shippedRecord.captured_at)).state, 'SNAPSHOT');
 assert.equal(shippedRecord.hugging_face.scope, 'anonymous_public_listing');
 assert.equal(shippedRecord.github.scope, 'explicitly_public_repositories');
+assert.equal(shippedPointer.path, '/estate-observed-2026-09-30.json');
+assert.equal(shippedRecord.github.repositories, 120);
+assert.equal(shippedRecord.hugging_face.models, 49);
+assert.equal(shippedRecord.hugging_face.datasets, 34);
+assert.equal(shippedRecord.hugging_face.spaces_author_api, 26);
+assert.equal(shippedRecord.hugging_face.organization_profile_space_rows, 1);
+assert.equal(shippedRecord.hugging_face.kernels, 14);
+assert.equal(shippedRecord.product_readiness_observation.source_revision_matches_runtime, true);
+assert.equal(shippedRecord.product_readiness_observation.probe_verdict_available, false);
+assert.equal(shippedRecord.proof_origin_observation.source_to_deployment_equivalence, 'UNAVAILABLE');
+assert.equal(shippedRecord.proof_origin_observation.live_static_health_matches_current_source, false);
+assert.equal(shippedRecord.proof_origin_observation.github_pages_certificate_state, 'bad_authz');
 const html = readFileSync(new URL('status/index.html', root), 'utf8');
 assert.ok(html.includes('id="estate-snapshot-state"'));
 assert.ok(html.includes('/estate-current.json'));
+assert.ok(html.includes('/estate-observed-2026-09-30.json'));
 assert.ok(html.includes('Historical observation'));
 const evidence = JSON.parse(readFileSync(new URL('evidence.json', root), 'utf8'));
 assert.ok(evidence.entrypoints.some(x => x.name === 'latest_estate_observation' && x.url === 'https://a11oy.net/estate-current.json'));
@@ -66,9 +79,10 @@ const fetchSnapshot = async (url, options) => {
   assert.ok(options.signal instanceof AbortSignal);
   return jsonResponse(url === '/estate-current.json' ? JSON.stringify(shippedPointer) : bytes);
 };
-assert.equal((await policy.load(fetchSnapshot, webcrypto, now)).state, 'SNAPSHOT');
-assert.equal((await policy.load(fetchSnapshot, webcrypto, now + 86400000)).state, 'STALE');
-assert.equal((await policy.load(fetchSnapshot, null, now)).state, 'UNAVAILABLE');
+const shippedNow = Date.parse(shippedRecord.captured_at);
+assert.equal((await policy.load(fetchSnapshot, webcrypto, shippedNow)).state, 'SNAPSHOT');
+assert.equal((await policy.load(fetchSnapshot, webcrypto, shippedNow + 86400001)).state, 'STALE');
+assert.equal((await policy.load(fetchSnapshot, null, shippedNow)).state, 'UNAVAILABLE');
 for (const fetcher of [
   async () => { throw new Error('offline'); },
   async () => new Response('missing', { status: 404 }),
@@ -79,6 +93,6 @@ for (const fetcher of [
   async url => jsonResponse(url === '/estate-current.json' ? JSON.stringify(shippedPointer) : JSON.stringify({ ...shippedRecord, altered: true })),
   async () => jsonResponse(new Uint8Array([0xff])),
 ]) {
-  assert.equal((await policy.load(fetcher, webcrypto, now)).state, 'UNAVAILABLE');
+  assert.equal((await policy.load(fetcher, webcrypto, shippedNow)).state, 'UNAVAILABLE');
 }
 console.log('PASS: snapshot digest, scope, age, future-date, path confinement, and published-page contracts');

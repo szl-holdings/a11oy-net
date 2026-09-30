@@ -252,6 +252,7 @@ jobs:
             diligence/index.html \
             evidence.json \
             estate-current.json \
+            estate-observed-2026-09-30.json \
             estate-observed-2026-09-19.json \
             health.json \
             index.html \
