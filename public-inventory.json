@@ -23,10 +23,11 @@
         "SZLHOLDINGS/release-assets",
         "SZLHOLDINGS/szl-estate-graph",
         "SZLHOLDINGS/szl-frontier-covenant",
-        "SZLHOLDINGS/szl-frontier-evaluation-receipts"
+        "SZLHOLDINGS/szl-frontier-evaluation-receipts",
+        "SZLHOLDINGS/szl-marketing-factbase"
       ],
       "state": "PARTIAL",
-      "total": 34
+      "total": 35
     },
     "models": {
       "covered": 39,
@@ -56,20 +57,25 @@
         "SZLHOLDINGS/counsel",
         "SZLHOLDINGS/david-leads",
         "SZLHOLDINGS/finance",
+        "SZLHOLDINGS/gdw-frontier",
         "SZLHOLDINGS/holographic-unify",
         "SZLHOLDINGS/immune",
         "SZLHOLDINGS/immune-lattice",
         "SZLHOLDINGS/llm-router-live",
         "SZLHOLDINGS/lyte",
         "SZLHOLDINGS/oac-system-health-lab",
+        "SZLHOLDINGS/prove-it",
         "SZLHOLDINGS/sentra",
         "SZLHOLDINGS/szl-atelier",
         "SZLHOLDINGS/szl-bench-suite",
+        "SZLHOLDINGS/szl-brand-campaign",
         "SZLHOLDINGS/szl-command-lab",
         "SZLHOLDINGS/szl-constellation",
         "SZLHOLDINGS/szl-forge-lab",
+        "SZLHOLDINGS/szl-foundation-confirmation",
         "SZLHOLDINGS/szl-frontier",
         "SZLHOLDINGS/szl-khipu",
+        "SZLHOLDINGS/szl-marketing-1.1",
         "SZLHOLDINGS/szl-model-inference-lab",
         "SZLHOLDINGS/szl-typesafe-triage",
         "SZLHOLDINGS/terra",
@@ -78,20 +84,20 @@
         "SZLHOLDINGS/yarqa"
       ],
       "state": "PARTIAL",
-      "total": 27
+      "total": 32
     }
   },
-  "content_sha256": "ea0ac42c9ec577d1c3ffda9878f0c64c4cb1de2f26dc9fcf9ec0bc80d58e1266",
+  "content_sha256": "5b5acae95dab0c8431d65fd43e2234786754248e898049d0477d8a17571c0de9",
   "counts": {
     "buckets": 1,
     "collections": 21,
-    "datasets": 34,
-    "hub_artifacts_total": 146,
+    "datasets": 35,
+    "hub_artifacts_total": 152,
     "kernels": 14,
     "models": 50,
-    "public_resources_total": 147,
-    "spaces": 27,
-    "spaces_list_api_rows": 26,
+    "public_resources_total": 153,
+    "spaces": 32,
+    "spaces_list_api_rows": 31,
     "special_spaces_added": 1
   },
   "endpoints": {
@@ -114,7 +120,7 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T07:54:17Z",
+  "observed_at": "2026-09-30T21:39:41Z",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "resources": {
@@ -1188,9 +1194,9 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/killinchu-osint-corpus",
-        "last_modified": "2026-09-30T07:53:22.000Z",
+        "last_modified": "2026-09-30T21:37:01.000Z",
         "license": "other",
-        "repository_sha": "b1f25615f79a2df3ceff6ad3a914e67d15b9dd0f",
+        "repository_sha": "521dba3b20b47d38b28867c8a3c5705d7fda0371",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1244,9 +1250,9 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/readiness-runs",
-        "last_modified": "2026-09-28T17:01:51.000Z",
+        "last_modified": "2026-09-30T21:35:11.000Z",
         "license": "apache-2.0",
-        "repository_sha": "32d3bdddaba30f2f749704f84470a2a6cf50d792",
+        "repository_sha": "f223835c12adb85d3b80b948b45f8fcff39c2de4",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1308,9 +1314,17 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-lake",
-        "last_modified": "2026-09-29T18:28:11.000Z",
+        "last_modified": "2026-09-30T12:37:04.000Z",
         "license": "cc-by-4.0",
-        "repository_sha": "bdf238294cd938fec97a4de5472e53764f5b262e",
+        "repository_sha": "4dd520c761d96917c8477ffcb8459e45c9233b3d",
+        "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
+      },
+      {
+        "gated": false,
+        "id": "SZLHOLDINGS/szl-marketing-factbase",
+        "last_modified": "2026-09-30T19:46:02.000Z",
+        "license": "apache-2.0",
+        "repository_sha": "0274f3cb0941a67dc24f8b9030076d8327e07031",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1570,11 +1584,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/KHIPU-R2",
-        "last_modified": "2026-09-28T21:01:46.000Z",
+        "last_modified": "2026-09-30T21:32:25.000Z",
         "library_name": "peft",
         "license": "apache-2.0",
         "pipeline_tag": "text-generation",
-        "repository_sha": "9fc2f7bebeaf4b3d6d26f7a2a1788a27f8c9ed52",
+        "repository_sha": "64b8fafd53a64052687f4fb7bed789a2e0b49c2a",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1590,31 +1604,31 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/MiniEmbed-Nano",
-        "last_modified": "2026-09-12T10:24:16.000Z",
+        "last_modified": "2026-09-30T20:43:29.000Z",
         "library_name": "numpy",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "01e82f36ff722528233f76daf899c18f8cb5aaa2",
+        "repository_sha": "70557d12b91ca556939e559e540b70fb3c2c9e5b",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/Moons-Nano",
-        "last_modified": "2026-09-12T10:24:14.000Z",
+        "last_modified": "2026-09-30T20:43:28.000Z",
         "library_name": "numpy",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "77d002f9314dc0c86cd0f14e63fff60364929652",
+        "repository_sha": "4631d0fb54ad90423c3ae76f812ff4d0e80fbfdf",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/ReceiptAgent-Nano",
-        "last_modified": "2026-09-29T02:07:35.000Z",
+        "last_modified": "2026-09-30T20:43:28.000Z",
         "library_name": "numpy",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "463df555fee339b776b938846238327100f573ab",
+        "repository_sha": "c139299d88d25d34d2ae53b95399b872d9f47a73",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1630,11 +1644,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/SZL-Khipu-1.5B",
-        "last_modified": "2026-09-29T15:29:53.000Z",
+        "last_modified": "2026-09-30T21:32:23.000Z",
         "library_name": "transformers",
         "license": "apache-2.0",
         "pipeline_tag": "text-generation",
-        "repository_sha": "724d251459cc987f33985c5799f5f3a9e02f4cd2",
+        "repository_sha": "d1ec6185133721488a3dbef05906eac46f6075a9",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1670,11 +1684,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/TinyKhipu-Nano",
-        "last_modified": "2026-09-29T02:07:32.000Z",
+        "last_modified": "2026-09-30T20:43:27.000Z",
         "library_name": "numpy",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "d890010f874ecafd3f2f1ef4066d84b810ba775e",
+        "repository_sha": "b89f5c50ef09d21c695e7a97e73161572daabc39",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1730,31 +1744,31 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/chaski",
-        "last_modified": "2026-09-29T15:27:43.000Z",
+        "last_modified": "2026-09-30T21:32:25.000Z",
         "library_name": "transformers",
         "license": "apache-2.0",
         "pipeline_tag": "text-generation",
-        "repository_sha": "90b99063731a8c9e7d4567bfa44231b081ba2932",
+        "repository_sha": "70a125a0f9e554c40481a663d562caa4fe83c18f",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/chaski-5050",
-        "last_modified": "2026-09-29T15:28:13.000Z",
+        "last_modified": "2026-09-30T21:32:53.000Z",
         "library_name": "peft",
         "license": "apache-2.0",
         "pipeline_tag": "text-generation",
-        "repository_sha": "8c9d4782b76e55377e00fba249c6938000dca423",
+        "repository_sha": "2ee3338e53557ffcdfdcac63343b54d36c3d6a0d",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/chaski-r2",
-        "last_modified": "2026-09-29T15:28:47.000Z",
+        "last_modified": "2026-09-30T21:33:22.000Z",
         "library_name": "peft",
         "license": "apache-2.0",
         "pipeline_tag": "text-generation",
-        "repository_sha": "a5fbffcccabcc77ae87bf3740358a02f91a7c27b",
+        "repository_sha": "07eb6b0cf39070013c18f36b77a6af3c8e880aa4",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1820,11 +1834,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-blocked",
-        "last_modified": "2026-09-30T04:14:07.000Z",
+        "last_modified": "2026-09-30T21:35:12.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "f3c0f37eb1dc6e724a242942939eb2de663329b2",
+        "repository_sha": "74caaabb4a001fb3d2e8a346c1114008ad9c4f5d",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1840,11 +1854,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-formulas",
-        "last_modified": "2026-09-30T03:22:15.000Z",
+        "last_modified": "2026-09-30T21:35:39.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "8bfdf0f62dd9415d95231769ddbfee9a7b427a03",
+        "repository_sha": "937c8460ed1a77bb817be41cd8a1c39369ffb8bd",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1860,21 +1874,21 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-govsign",
-        "last_modified": "2026-09-30T02:53:40.000Z",
+        "last_modified": "2026-09-30T21:36:06.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "8cf56667bcf3613e7ea8317338a71a1004ac9acb",
+        "repository_sha": "52576849d074aa7d251219241fe12888b02f1edd",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-invariants",
-        "last_modified": "2026-09-30T02:53:42.000Z",
+        "last_modified": "2026-09-30T21:36:35.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "6a1178954b5d60bd3936f1b34a187ba1f513ef4d",
+        "repository_sha": "11001d7f7451bf624489a61693cb9fa3bb0b9eea",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1890,21 +1904,21 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-khipu",
-        "last_modified": "2026-09-29T21:35:30.000Z",
+        "last_modified": "2026-09-30T20:43:30.000Z",
         "library_name": "numpy",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "885610f8461d1166cc998f2d5fdefbabf8adaf33",
+        "repository_sha": "3e392359ccae7deabefdb1621d6e08849f2df83a",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-khipu-kernels",
-        "last_modified": "2026-09-02T00:15:06.000Z",
+        "last_modified": "2026-09-30T13:26:41.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "de8cb70313269b135cf6ea2a9a842d3a39426dd0",
+        "repository_sha": "594bc58eb0f691f53f8493fa032be9ee8aab9ff3",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1940,11 +1954,11 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-ouroboros",
-        "last_modified": "2026-09-30T02:53:45.000Z",
+        "last_modified": "2026-09-30T21:37:04.000Z",
         "library_name": "kernels",
         "license": "apache-2.0",
         "pipeline_tag": null,
-        "repository_sha": "7dee9c9c31735cef2935397bf0a6f464b565344b",
+        "repository_sha": "ea49dcae37ea15e155b77f837f21a668871c6673",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -2063,10 +2077,10 @@
         "canonical_live_url": "https://szlholdings-readme.static.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/README",
         "id": "SZLHOLDINGS/README",
-        "last_modified": "2026-09-29T20:14:19.000Z",
+        "last_modified": "2026-09-30T08:37:19.000Z",
         "license": "apache-2.0",
         "listing": "SPECIAL_SPACE_OUTSIDE_LIST_API",
-        "repository_sha": "8f6de3d682fe1caf03e60444ede54fb1bef89ae7",
+        "repository_sha": "69aaaaac3863db8d6f2e525034bc5ec3c1dae328",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/README",
           "hardware": null,
@@ -2103,17 +2117,17 @@
         "canonical_live_url": "https://szlholdings-ayllu.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/ayllu",
         "id": "SZLHOLDINGS/ayllu",
-        "last_modified": "2026-09-29T16:13:33.000Z",
+        "last_modified": "2026-09-30T20:40:45.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "4111317e25861a72ed9377148219b562daaa5c2d",
+        "repository_sha": "f37b5e9a96116d66bb5e08827b3fdf54ca7257a4",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/ayllu",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "4111317e25861a72ed9377148219b562daaa5c2d",
+          "runtime_sha": "f37b5e9a96116d66bb5e08827b3fdf54ca7257a4",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -2180,6 +2194,26 @@
         "title": "PURIQ Finance"
       },
       {
+        "canonical_live_url": "https://szlholdings-gdw-frontier.hf.space/",
+        "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/gdw-frontier",
+        "id": "SZLHOLDINGS/gdw-frontier",
+        "last_modified": "2026-09-30T20:38:29.000Z",
+        "license": "apache-2.0",
+        "listing": "AUTHOR_LIST_API",
+        "repository_sha": "e296dad2966a19580b4dc206b32fb016a9715575",
+        "runtime": {
+          "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/gdw-frontier",
+          "hardware": "cpu-basic",
+          "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
+          "observation_state": "SPACE_API_OBSERVED",
+          "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
+          "runtime_sha": "e296dad2966a19580b4dc206b32fb016a9715575",
+          "stage": "RUNNING"
+        },
+        "sdk": "docker",
+        "title": "gdw-frontier"
+      },
+      {
         "canonical_live_url": "https://szlholdings-holographic-unify.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/holographic-unify",
         "id": "SZLHOLDINGS/holographic-unify",
@@ -2243,17 +2277,17 @@
         "canonical_live_url": "https://szlholdings-killinchu.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
         "id": "SZLHOLDINGS/killinchu",
-        "last_modified": "2026-09-30T04:55:39.000Z",
+        "last_modified": "2026-09-30T21:10:34.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "6ca6a10a829d8ffedc96a760d56bd9fad1f0293d",
+        "repository_sha": "ee3c8b9603c04876192af49bcdcf70215e7c3991",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/killinchu",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "6ca6a10a829d8ffedc96a760d56bd9fad1f0293d",
+          "runtime_sha": "ee3c8b9603c04876192af49bcdcf70215e7c3991",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -2263,17 +2297,17 @@
         "canonical_live_url": "https://szlholdings-llm-router-live.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live",
         "id": "SZLHOLDINGS/llm-router-live",
-        "last_modified": "2026-09-29T15:25:00.000Z",
+        "last_modified": "2026-09-30T20:55:46.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "14b9a225c8bdcc46a02f3236fb3f4674e9e9103a",
+        "repository_sha": "507274d6d390360957ad8ed9ee7672cb9ab64038",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/llm-router-live",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "14b9a225c8bdcc46a02f3236fb3f4674e9e9103a",
+          "runtime_sha": "507274d6d390360957ad8ed9ee7672cb9ab64038",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -2303,21 +2337,41 @@
         "canonical_live_url": "https://szlholdings-oac-system-health-lab.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/oac-system-health-lab",
         "id": "SZLHOLDINGS/oac-system-health-lab",
-        "last_modified": "2026-09-30T02:59:02.000Z",
+        "last_modified": "2026-09-30T21:35:00.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "332ad01ebd55256ebb91f01ba424d33cdc38f488",
+        "repository_sha": "bdc6a4d5fa6313e2c530e763a2713e33486df174",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/oac-system-health-lab",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "332ad01ebd55256ebb91f01ba424d33cdc38f488",
+          "runtime_sha": "bdc6a4d5fa6313e2c530e763a2713e33486df174",
           "stage": "RUNNING"
         },
         "sdk": "docker",
         "title": "OAC System Health Lab"
+      },
+      {
+        "canonical_live_url": "https://szlholdings-prove-it.static.hf.space/",
+        "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/prove-it",
+        "id": "SZLHOLDINGS/prove-it",
+        "last_modified": "2026-09-30T20:11:15.000Z",
+        "license": "apache-2.0",
+        "listing": "AUTHOR_LIST_API",
+        "repository_sha": "4c43d85d03bd42828b93cf45adb274f7e5213ec5",
+        "runtime": {
+          "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/prove-it",
+          "hardware": null,
+          "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
+          "observation_state": "SPACE_API_OBSERVED",
+          "repository_revision_state": "RUNTIME_SHA_NOT_REPORTED",
+          "runtime_sha": null,
+          "stage": "RUNNING"
+        },
+        "sdk": "static",
+        "title": "Prove It"
       },
       {
         "canonical_live_url": "https://szlholdings-sentra.hf.space/",
@@ -2343,17 +2397,17 @@
         "canonical_live_url": "https://szlholdings-szl-atelier.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
         "id": "SZLHOLDINGS/szl-atelier",
-        "last_modified": "2026-09-30T01:18:59.000Z",
+        "last_modified": "2026-09-30T20:55:56.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "f8b606e3aea51e14ad367d4acc893113a0b0a355",
+        "repository_sha": "80eb13c8330b5fa697909f87244b9cc039847256",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-atelier",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "f8b606e3aea51e14ad367d4acc893113a0b0a355",
+          "runtime_sha": "80eb13c8330b5fa697909f87244b9cc039847256",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -2380,20 +2434,40 @@
         "title": "SZL Bench Suite"
       },
       {
+        "canonical_live_url": "https://szlholdings-szl-brand-campaign.static.hf.space/",
+        "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-brand-campaign",
+        "id": "SZLHOLDINGS/szl-brand-campaign",
+        "last_modified": "2026-09-30T20:12:15.000Z",
+        "license": "mit",
+        "listing": "AUTHOR_LIST_API",
+        "repository_sha": "c0094515e1d12ba2e7103572b633cbf7d907d993",
+        "runtime": {
+          "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-brand-campaign",
+          "hardware": null,
+          "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
+          "observation_state": "SPACE_API_OBSERVED",
+          "repository_revision_state": "RUNTIME_SHA_NOT_REPORTED",
+          "runtime_sha": null,
+          "stage": "RUNNING"
+        },
+        "sdk": "static",
+        "title": "SZL Brand Campaign"
+      },
+      {
         "canonical_live_url": "https://szlholdings-szl-command-lab.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-command-lab",
         "id": "SZLHOLDINGS/szl-command-lab",
-        "last_modified": "2026-09-29T15:49:01.000Z",
+        "last_modified": "2026-09-30T20:42:06.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "0d6dedcf9b1d56bc0c9f00bbaa6900da9ba28c40",
+        "repository_sha": "477dd12f84b4e92f93b95afe0cb3543da379f2b0",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-command-lab",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "0d6dedcf9b1d56bc0c9f00bbaa6900da9ba28c40",
+          "runtime_sha": "477dd12f84b4e92f93b95afe0cb3543da379f2b0",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -2440,6 +2514,26 @@
         "title": "SZL Forge Lab"
       },
       {
+        "canonical_live_url": "https://szlholdings-szl-foundation-confirmation.hf.space/",
+        "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-foundation-confirmation",
+        "id": "SZLHOLDINGS/szl-foundation-confirmation",
+        "last_modified": "2026-09-30T21:32:58.000Z",
+        "license": "apache-2.0",
+        "listing": "AUTHOR_LIST_API",
+        "repository_sha": "03588e3deabe03d91799b614252c49d3a4e68b33",
+        "runtime": {
+          "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-foundation-confirmation",
+          "hardware": null,
+          "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
+          "observation_state": "SPACE_API_OBSERVED",
+          "repository_revision_state": "RUNTIME_SHA_NOT_REPORTED",
+          "runtime_sha": null,
+          "stage": "BUILD_ERROR"
+        },
+        "sdk": "docker",
+        "title": "Foundation Confirmation Workbench"
+      },
+      {
         "canonical_live_url": "https://szlholdings-szl-frontier.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-frontier",
         "id": "SZLHOLDINGS/szl-frontier",
@@ -2463,21 +2557,41 @@
         "canonical_live_url": "https://szlholdings-szl-khipu.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-khipu",
         "id": "SZLHOLDINGS/szl-khipu",
-        "last_modified": "2026-09-29T21:35:47.000Z",
+        "last_modified": "2026-09-30T20:43:36.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "bbdd7ca5c64f52da5716c13576fe4256572ec969",
+        "repository_sha": "d2e3cf53be99374b0ea452d6be3a08ab751b9416",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-khipu",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "bbdd7ca5c64f52da5716c13576fe4256572ec969",
+          "runtime_sha": "d2e3cf53be99374b0ea452d6be3a08ab751b9416",
           "stage": "RUNNING"
         },
         "sdk": "docker",
         "title": "SZL KHIPU"
+      },
+      {
+        "canonical_live_url": "https://szlholdings-szl-marketing-1-1.hf.space/",
+        "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/szl-marketing-1.1",
+        "id": "SZLHOLDINGS/szl-marketing-1.1",
+        "last_modified": "2026-09-30T19:40:16.000Z",
+        "license": "apache-2.0",
+        "listing": "AUTHOR_LIST_API",
+        "repository_sha": "77b3e70533e0116ba6b6b434c18e34e322ef3b3b",
+        "runtime": {
+          "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-marketing-1.1",
+          "hardware": "cpu-basic",
+          "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
+          "observation_state": "SPACE_API_OBSERVED",
+          "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
+          "runtime_sha": "77b3e70533e0116ba6b6b434c18e34e322ef3b3b",
+          "stage": "RUNNING"
+        },
+        "sdk": "gradio",
+        "title": "SZL-MARKETING-1.1 Governed Fact Factory"
       },
       {
         "canonical_live_url": "https://szlholdings-szl-model-inference-lab.hf.space/",
@@ -2603,7 +2717,8 @@
   },
   "schema": "szl.public-hf-inventory/v4",
   "spaces_by_runtime_stage": {
-    "RUNNING": 27
+    "BUILD_ERROR": 1,
+    "RUNNING": 31
   },
   "special_spaces": [
     "SZLHOLDINGS/README"
