@@ -13,10 +13,10 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 34,
+    "datasets": 35,
     "kernels": 14,
     "models": 50,
-    "spaces": 27
+    "spaces": 32
   },
   "drift_vs_committed_snapshots": [
     {
@@ -28,14 +28,14 @@
     },
     {
       "field": "datasets",
-      "live_public": 34,
+      "live_public": 35,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "spaces_public",
-      "live_public": 27,
+      "live_public": 32,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -49,14 +49,14 @@
     },
     {
       "field": "datasets",
-      "live_public": 34,
+      "live_public": 35,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "spaces",
-      "live_public": 27,
+      "live_public": 32,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -91,7 +91,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T07:54:17Z",
+  "observed_at": "2026-09-30T21:39:41Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
@@ -100,6 +100,7 @@
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/david-leads",
     "SZLHOLDINGS/finance",
+    "SZLHOLDINGS/gdw-frontier",
     "SZLHOLDINGS/holographic-unify",
     "SZLHOLDINGS/immune",
     "SZLHOLDINGS/immune-lattice",
@@ -107,14 +108,17 @@
     "SZLHOLDINGS/llm-router-live",
     "SZLHOLDINGS/lyte",
     "SZLHOLDINGS/oac-system-health-lab",
+    "SZLHOLDINGS/prove-it",
     "SZLHOLDINGS/sentra",
     "SZLHOLDINGS/szl-atelier",
     "SZLHOLDINGS/szl-bench-suite",
+    "SZLHOLDINGS/szl-brand-campaign",
     "SZLHOLDINGS/szl-command-lab",
     "SZLHOLDINGS/szl-constellation",
     "SZLHOLDINGS/szl-forge-lab",
     "SZLHOLDINGS/szl-frontier",
     "SZLHOLDINGS/szl-khipu",
+    "SZLHOLDINGS/szl-marketing-1.1",
     "SZLHOLDINGS/szl-model-inference-lab",
     "SZLHOLDINGS/szl-typesafe-triage",
     "SZLHOLDINGS/terra",
@@ -125,6 +129,7 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 27
+    "BUILD_ERROR": 1,
+    "RUNNING": 31
   }
 }

@@ -7,11 +7,11 @@
   "counts": {
     "buckets": 1,
     "collections": 21,
-    "datasets_public": 34,
+    "datasets_public": 35,
     "kernels": 14,
     "models": 50,
-    "public_resources_total": 147,
-    "spaces_public": 27
+    "public_resources_total": 153,
+    "spaces_public": 32
   },
   "evidence_class": "MEASURED",
   "freshness": {
@@ -69,14 +69,15 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T07:54:17Z",
+  "observed_at": "2026-09-30T21:39:41Z",
   "observed_date": "2026-09-30",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v1",
   "source": "/public-inventory.json",
-  "source_content_sha256": "ea0ac42c9ec577d1c3ffda9878f0c64c4cb1de2f26dc9fcf9ec0bc80d58e1266",
+  "source_content_sha256": "5b5acae95dab0c8431d65fd43e2234786754248e898049d0477d8a17571c0de9",
   "spaces_by_runtime_stage": {
-    "RUNNING": 27
+    "BUILD_ERROR": 1,
+    "RUNNING": 31
   }
 }
