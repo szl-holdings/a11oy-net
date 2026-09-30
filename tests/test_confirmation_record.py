@@ -42,14 +42,20 @@ def test_publication_record_is_source_bound_and_preserves_provider_scope():
         assert hashlib.sha256(data).hexdigest() == entry['source_sha256'], entry['path']
     source = (ROOT / 'source-index.html').read_bytes().decode('utf-8')
     expected = holo.add_before(source, '</head>', '  ' + holo.STYLE + '\n')
-    expected = holo.add_before(expected, '</body>', '  ' + holo.SCRIPT + '\n')
     expected = holo.add_before(expected, '</head>', '  ' + flow.STYLE + '\n')
     expected = holo.add_before(expected, '</body>', '  ' + flow.SCRIPT + '\n')
+    expected = holo.add_before(expected, '</body>', '  ' + holo.SCRIPT + '\n')
+    expected = holo.add_before(expected, '</head>', '  <link rel="stylesheet" href="proof-origin.css" />\n')
+    assert expected.count('<body>') == 1
+    expected = expected.replace('<body>', '<body class="foundation-confirmation">')
     served = (ROOT / 'index.html').read_bytes()
     assert served.decode('utf-8') == expected
     integration = record['proof_origin_integration']
     assert integration['canonical_document'] == 'source-index.html'
     assert integration['served_document_sha256'] == hashlib.sha256(served).hexdigest()
+    assert integration['script_order'] == ['/scripts/szl-flow-proof.js', '/scripts/szl-holo-proof-v2.js']
+    assert integration['page_stylesheet'] == 'proof-origin.css'
+    assert integration['page_stylesheet_sha256'] == hashlib.sha256((ROOT / 'proof-origin.css').read_bytes()).hexdigest()
     assert integration['experiment_data_modified'] is False
 
 
