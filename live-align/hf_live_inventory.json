@@ -15,13 +15,13 @@
   "counts": {
     "datasets": 34,
     "kernels": 14,
-    "models": 49,
+    "models": 50,
     "spaces": 27
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 49,
+      "live_public": 50,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -42,7 +42,7 @@
     },
     {
       "field": "models",
-      "live_public": 49,
+      "live_public": 50,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -91,7 +91,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T02:43:27Z",
+  "observed_at": "2026-09-30T03:34:12Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
@@ -124,7 +124,7 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "APP_STARTING": 1,
-    "RUNNING": 26
+    "RUNNING": 26,
+    "RUNNING_APP_STARTING": 1
   }
 }
