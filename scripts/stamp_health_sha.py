@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 """Rewrite health.json sha to a git object id.
 
-Live GitHub Pages for this origin is still legacy branch deploy, so the
-committed file cannot contain a future merge SHA. CI may stamp GITHUB_SHA
-onto a Pages *artifact* without inventing uptime or claiming DSSE-LIVE.
+The committed file cannot contain its own future merge SHA. CI stamps the
+proven source revision onto an isolated Pages *artifact* without rewriting the
+checkout, inventing uptime, or claiming DSSE-LIVE.
 This origin has no DSSE signer and no local key: signer stays unavailable.
 ÑAWI owns the locked-proven formula count; this document does not.
 """
