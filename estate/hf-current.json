@@ -69,15 +69,14 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T03:34:12Z",
+  "observed_at": "2026-09-30T07:54:17Z",
   "observed_date": "2026-09-30",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v1",
   "source": "/public-inventory.json",
-  "source_content_sha256": "6fbb34b5701d31c99c66ba244f3a4d22be86a5916ee5f9cda226ed338dc38a08",
+  "source_content_sha256": "ea0ac42c9ec577d1c3ffda9878f0c64c4cb1de2f26dc9fcf9ec0bc80d58e1266",
   "spaces_by_runtime_stage": {
-    "RUNNING": 26,
-    "RUNNING_APP_STARTING": 1
+    "RUNNING": 27
   }
 }
