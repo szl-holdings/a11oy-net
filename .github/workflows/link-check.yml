@@ -157,6 +157,9 @@ jobs:
       - name: Validate SZL Frontier source/evidence record
         run: python3 scripts/check_szl_frontier_record.py
 
+      - name: Validate frozen confirmation evidence and canonical publication binding
+        run: python3 tests/test_confirmation_record.py
+
       - name: Validate diligence and machine evidence surface
         run: python3 scripts/check_diligence_surface.py
 
