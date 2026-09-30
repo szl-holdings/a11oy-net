@@ -2,6 +2,7 @@
 
 ## 2026-09-29
 
+- `/experiments/` adds a TypeSafe Triage software-lab RECORD with canonical GitHub source, Hub source, demo location, the current `/readyz` version/source binding, and the product lab manifest. The source contract declares Python deterministic triage and `model_loaded=false`; promotion remains HOLD, production admission false, and runtime NOT_PROBED on this origin. It is source evidence only.
 - Start the browser-local Alloy experiment independently of the dated inventory read, with a five-second header/body deadline and visible invalid-snapshot failures. Mark unprobed remote systems NOT_PROBED and retain independent signer uncertainty. Report proof completion only after admission, reuse, adapter denial, a fault, verified restoration, and ledger replay. Product readiness and authorization are not established by this local experiment.
 
 
