@@ -3,7 +3,8 @@
     "kernel:SZLHOLDINGS/governed-inference-meter",
     "kernel:SZLHOLDINGS/szl-block-kv",
     "kernel:SZLHOLDINGS/szl-governed-norm",
-    "kernel:SZLHOLDINGS/szl-receipt-attn"
+    "kernel:SZLHOLDINGS/szl-receipt-attn",
+    "space:SZLHOLDINGS/szl-bench-suite"
   ],
   "claim_boundaries": {
     "estate_json": "HISTORICAL_NOT_MODIFIED",
@@ -15,7 +16,7 @@
     "datasets": 34,
     "kernels": 14,
     "models": 49,
-    "spaces": 24
+    "spaces": 27
   },
   "drift_vs_committed_snapshots": [
     {
@@ -34,7 +35,7 @@
     },
     {
       "field": "spaces_public",
-      "live_public": 24,
+      "live_public": 27,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -55,7 +56,7 @@
     },
     {
       "field": "spaces",
-      "live_public": 24,
+      "live_public": 27,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -90,11 +91,10 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T01:56:59Z",
+  "observed_at": "2026-09-30T02:43:27Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
-    "SZLHOLDINGS/a11oy",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/david-leads",
@@ -105,14 +105,17 @@
     "SZLHOLDINGS/killinchu",
     "SZLHOLDINGS/llm-router-live",
     "SZLHOLDINGS/lyte",
+    "SZLHOLDINGS/oac-system-health-lab",
     "SZLHOLDINGS/sentra",
     "SZLHOLDINGS/szl-atelier",
+    "SZLHOLDINGS/szl-bench-suite",
     "SZLHOLDINGS/szl-command-lab",
     "SZLHOLDINGS/szl-constellation",
     "SZLHOLDINGS/szl-forge-lab",
     "SZLHOLDINGS/szl-frontier",
     "SZLHOLDINGS/szl-khipu",
     "SZLHOLDINGS/szl-model-inference-lab",
+    "SZLHOLDINGS/szl-typesafe-triage",
     "SZLHOLDINGS/terra",
     "SZLHOLDINGS/the-grid",
     "SZLHOLDINGS/vertical-services",
@@ -121,6 +124,7 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 24
+    "APP_STARTING": 1,
+    "RUNNING": 26
   }
 }
