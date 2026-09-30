@@ -33,6 +33,7 @@ READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
 STAMP_HEALTH_SHA = ROOT / "scripts" / "stamp_health_sha.py"
+PAGES_ARTIFACT_BUILDER = ROOT / "scripts" / "build_pages_artifact.py"
 GENERATOR = ROOT / "scripts" / "generate_hf_inventory.py"
 HF_INVENTORY = ROOT / "public-inventory.json"
 HF_CURRENT = ROOT / "estate" / "hf-current.json"
@@ -299,15 +300,36 @@ def check() -> None:
     assert re.search(
         r"^    name: pages build and deployment$", workflow, re.MULTILINE
     )
-    assert '.well-known/security.txt' in workflow
+    assert "if: github.event_name == 'pull_request'" in workflow
     assert 'root.rglob("*.html")' in workflow
     assert "python3 scripts/check_diligence_surface.py" in workflow
     assert "node scripts/check_probe_policy.mjs" in workflow
-    assert "python3 scripts/stamp_health_sha.py --sha \"${GITHUB_SHA}\"" in workflow
     assert STAMP_HEALTH_SHA.is_file(), "Pages artifact stamp for health.json sha must exist"
+    assert PAGES_ARTIFACT_BUILDER.is_file(), "isolated Pages artifact builder must exist"
+    assert "python3 scripts/build_pages_artifact.py" in workflow
+    assert "--source-revision \"${SOURCE_REVISION}\"" in workflow
+    assert "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d" in workflow
+    assert "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" in workflow
+    assert "actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346" in workflow
+    assert "include-hidden-files: true" in workflow
+    assert "enablement: false" in workflow
+    assert "github.ref == 'refs/heads/main'" in workflow
+    assert "git ls-remote \"https://github.com/${GITHUB_REPOSITORY}.git\" refs/heads/main" in workflow
+    assert "pages: write" in workflow and "id-token: write" in workflow
+    assert "cancel-in-progress: false" in workflow
+    assert "Unsupported Pages build_type" in workflow
+    assert "gh api \"repos/${GITHUB_REPOSITORY}/pages\" --jq '.build_type'" in workflow
+    assert "-X PUT" not in workflow and "-X POST" not in workflow
     assert "python3 scripts/check_honest_kernel_bind.py" in workflow
     assert "node scripts/check_honest_kernel_bind.mjs" in workflow
+    builder = PAGES_ARTIFACT_BUILDER.read_text(encoding="utf-8")
+    assert 'EXCLUDED_TOP_LEVEL = {".git", ".github"}' in builder
+    assert '_git(root, "ls-tree", "-rz", "--full-tree", source_revision)' in builder
+    assert '("git", "-C", str(root), "cat-file", "--batch")' in builder
+    assert 'stamp(output / "health.json", source_revision)' in builder
+    assert 'artifact output must be outside the source tree' in builder
     for protected_artifact in (
+        ".well-known/security.txt",
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
@@ -326,7 +348,7 @@ def check() -> None:
         "scripts/honest_kernel_bind.js",
         "scripts/probe_policy.js",
     ):
-        assert protected_artifact in workflow
+        assert protected_artifact in builder
     assert PROBE_POLICY.is_file() and PROBE_POLICY_CHECK.is_file(), (
         "shared fail-closed browser observation policy and regression check are required"
     )

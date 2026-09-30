@@ -207,6 +207,54 @@ Changes ship through a protected pull request. The exact reviewed head must
 pass the link, asset, proof-surface, admission-policy, and doctrine guards
 before normal merge.
 
+### GitHub Pages exact-source deployment
+
+The repository carries a pinned GitHub Actions Pages pipeline in
+`.github/workflows/link-check.yml`. The protected PR context named
+`pages build and deployment` remains a candidate-only build: it never deploys
+a pull request. It copies only files tracked by the exact checked-out commit
+into an isolated staging directory, excludes `.git` and `.github`, and stamps
+`health.json` only in that staging copy. The committed source file is not
+rewritten. The artifact preserves `.nojekyll` and `.well-known/security.txt`.
+
+The provider is intentionally still `build_type=legacy` while this change is
+reviewed. In that mode, pushes read the provider setting and skip the Actions
+deployment without changing it. After the provider is migrated to
+`build_type=workflow`, a main-branch push builds and deploys automatically; an
+operator may also explicitly dispatch the workflow with `deploy=true`. Both
+paths check out `github.sha`, prove the local checkout is that exact revision,
+and re-read protected `main` immediately before deployment. If `main` moved,
+deployment fails closed rather than publishing a stale artifact.
+
+The pipeline uses immutable action revisions, keeps source build permissions
+separate from deployment permissions, and grants `pages: write` plus
+`id-token: write` only to the deploy job. The deployment establishes an exact
+static-source binding only. It does not prove runtime health, signing, uptime,
+or live response headers.
+
+Post-merge provider sequence:
+
+1. Confirm the merged revision is the current protected `main` head and both
+   required PR contexts passed for that exact reviewed head.
+2. Confirm the merge-triggered workflow reports `build_type=legacy` and did
+   not run the Actions deploy job. Preserve the existing branch deployment.
+3. In repository Pages settings, change the source to **GitHub Actions**. Do
+   not change `CNAME`, custom-domain, or HTTPS settings in this operation.
+4. Dispatch **Link & Asset Check** from `main` with `deploy=true`. A dispatch
+   from any other ref is ineligible, and a moved `main` is refused at final
+   reauthorization.
+5. Retain the successful workflow URL and deployed `page_url`, then read back
+   `/health.json` and require its `sha` to equal the dispatched protected-main
+   revision. Preserve `signer=unavailable`, `probe_contract=STATIC_DOCUMENT`,
+   `uptime=NOT_MEASURED`, and `dsse_live=NOT_CLAIMED`.
+
+Rollback is provider-first and reviewable: switch Pages back to branch
+deployment from `main` at `/`, then revert a bad source revision through a
+normal protected pull request. Verify the restored public files against that
+known revision. Do not hand-edit the committed `health.json` to impersonate a
+deployment, and do not treat rollback reachability as runtime-health or
+header-deployment evidence.
+
 `_headers` is a versioned edge-security contract, not a live-header receipt. Its
 live deployment state remains **UNKNOWN** on this candidate:
 `live_edge_security_headers_deployment_proven=false` records only that no proof
