@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
- * Local-real Alloy OS desk. Remotes are observed fail-soft. Product origin is
+ * Browser-local Alloy experiment. Remote systems are not probed. Product origin is
  * not required. connect-src 'self' — do not fetch a-11-oy.com from this page.
  */
 (() => {
@@ -54,17 +54,40 @@
   }
 
   async function loadJson(url) {
-    const response = await fetch(url, {
-      cache: "no-store",
-      credentials: "same-origin",
-      headers: { Accept: "application/json" },
-    });
-    if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
-    const value = await response.json();
-    if (!value || typeof value !== "object" || Array.isArray(value)) {
-      throw new Error(`${url} did not return an object`);
+    const controller = new AbortController();
+    let timer;
+    try {
+      return await Promise.race([
+        (async () => {
+          const response = await fetch(url, {
+            cache: "no-store", credentials: "same-origin",
+            headers: { Accept: "application/json" }, signal: controller.signal,
+          });
+          if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+          const value = await response.json();
+          if (!value || typeof value !== "object" || Array.isArray(value) ||
+              typeof value.capturedAt !== "string" || !Number.isFinite(Date.parse(value.capturedAt)) ||
+              !value.inventory || typeof value.inventory !== "object" || Array.isArray(value.inventory) ||
+              !Array.isArray(value.alignment) || value.alignment.some((row) => !row ||
+                typeof row !== "object" || ["plane", "url", "class", "note"].some((key) => typeof row[key] !== "string"))) {
+            throw new Error(`${url} did not return a dated inventory snapshot`);
+          }
+          const countKeys = ["github_public_repositories", "huggingface_models", "huggingface_datasets", "huggingface_spaces", "huggingface_collections"];
+          if (countKeys.some((key) => value.inventory[key] != null && (!Number.isSafeInteger(value.inventory[key]) || value.inventory[key] < 0))) {
+            throw new Error(`${url} has invalid inventory counts`);
+          }
+          return value;
+        })(),
+        new Promise((_, reject) => {
+          timer = setTimeout(() => {
+            controller.abort();
+            reject(new Error("Snapshot read timed out after 5 seconds"));
+          }, 5000);
+        }),
+      ]);
+    } finally {
+      clearTimeout(timer);
     }
-    return value;
   }
 
   async function bootAlignment() {
@@ -83,7 +106,7 @@
 
     const inventory = snapshot.inventory || {};
     const rows = [
-      ["Snapshot", snapshot.truth_label || "UNAVAILABLE", snapshot.capturedAt || "timestamp unavailable"],
+      ["Evidence class", "SNAPSHOT", `Captured ${snapshot.capturedAt}; not a current measurement`],
       ["GitHub repositories", inventory.github_public_repositories ?? "—", "public organization inventory"],
       ["Hugging Face models", inventory.huggingface_models ?? "—", "public Hub listing"],
       ["Hugging Face datasets", inventory.huggingface_datasets ?? "—", "public Hub listing"],
@@ -122,7 +145,7 @@
     const kernel = window.Alloy;
     const ready = kernel.status === "READY" || kernel.health.ledgerReplayable;
     return [
-      { id: "signer", plane: "local", label: "Device signer", state: kernel.identity?.kid ? "MEASURED" : "UNAVAILABLE" },
+      { id: "signer", plane: "local", label: "Device signer", state: "UNAVAILABLE", note: kernel.identity?.kid ? "Local key identifier present; this view does not independently verify signer evidence or trusted identity." : "No local key identifier available." },
       { id: "lake", plane: "local", label: "Local lake", state: ready ? "MEASURED" : "PARTIAL" },
       { id: "ledger", plane: "local", label: "Hash-chained ledger", state: kernel.health.ledgerReplayable ? "MEASURED" : "PARTIAL" },
       { id: "fabric", plane: "local", label: "Capsule fabric", state: ready ? "MEASURED" : "PARTIAL" },
@@ -131,10 +154,10 @@
 
   function remoteMesh() {
     return [
-      { id: "product-signer", plane: "remote", label: "Product signer", state: "UNAVAILABLE", note: "Observed fail-soft. connect-src 'self' does not fetch a-11-oy.com." },
-      { id: "rapl", plane: "remote", label: "RAPL joules", state: "UNAVAILABLE", note: "Energy here is a MODELED 15 W CPU-time proxy, not RAPL/NVML." },
-      { id: "www", plane: "remote", label: "www identity", state: "UNAVAILABLE", note: "Owner-metal. This desk does not mutate Cloudflare." },
-      { id: "lake-remote", plane: "remote", label: "Product lake", state: "UNAVAILABLE", note: "Receipts stay on the product origin. This kernel does not clone them." },
+      { id: "product-signer", plane: "remote", label: "Product signer", state: "NOT_PROBED", note: "Signer evidence UNAVAILABLE; no product request is made by this experiment." },
+      { id: "rapl", plane: "remote", label: "RAPL joules", state: "NOT_PROBED", note: "Meter evidence UNAVAILABLE. Local energy is a MODELED 15 W CPU-time proxy." },
+      { id: "www", plane: "remote", label: "www identity", state: "NOT_PROBED", note: "No identity probe; this desk does not mutate Cloudflare." },
+      { id: "lake-remote", plane: "remote", label: "Product lake", state: "NOT_PROBED", note: "No product ledger read. Local experiment receipts are separate." },
     ];
   }
 
@@ -174,7 +197,7 @@
         `heal restored ${proof.heal?.restored ?? "—"}`,
       ].map((line) => `<li>${escapeHtml(line)}</li>`).join("") : "<li>No local proof yet.</li>";
       return `<p class="eyebrow">${escapeHtml(kernel?.status || "UNAVAILABLE")} · kid ${escapeHtml(kernel?.identity?.kid || "booting")}</p>
-        <p>This desk is the live fabric. Product origin can be down.</p>
+        <p>Browser-local experiment. Its receipts and keys do not establish product readiness.</p>
         <button type="button" class="button primary" id="kproof"${disabled}>Run local proof</button>
         <ol class="klog stages">${stages || "<li>Stages idle.</li>"}</ol>
         <p class="eyebrow">Five-step check</p>
@@ -183,9 +206,9 @@
     }
     if (id === "mesh") {
       const rows = [...localMesh(), ...remoteMesh()].map((row) => (
-        `<tr><td>${escapeHtml(row.plane)}</td><td>${escapeHtml(row.label)}</td><td class="${row.state === "MEASURED" ? "ok" : row.state === "UNAVAILABLE" ? "warn" : ""}">${escapeHtml(row.state)}</td><td>${escapeHtml(row.note || (row.plane === "local" ? "This browser." : "Observed fail-soft."))}</td></tr>`
+        `<tr><td>${escapeHtml(row.plane)}</td><td>${escapeHtml(row.label)}</td><td class="${row.state === "MEASURED" ? "ok" : row.state === "UNAVAILABLE" ? "warn" : ""}">${escapeHtml(row.state)}</td><td>${escapeHtml(row.note || (row.plane === "local" ? "This browser only." : "No remote probe performed."))}</td></tr>`
       )).join("");
-      return `<p>Local gates do not wait on a-11-oy.com. Remotes are observed, never blocking.</p>
+      return `<p>Local experiment gates run independently. Remote systems are NOT_PROBED.</p>
         <div class="align-scroll" tabindex="0" aria-label="Mesh gates"><table class="align"><thead><tr><th>Plane</th><th>Gate</th><th>State</th><th>Note</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (id === "ledger") {
@@ -227,7 +250,7 @@
         </div>`;
     }
     return `<ul class="klog">
-      <li>Product signer / RAPL joules / www identity — observed, often UNAVAILABLE</li>
+      <li>Product signer / RAPL joules / www identity — NOT_PROBED; evidence UNAVAILABLE</li>
       <li>Λ uniqueness — Conjecture 1</li>
       <li>Post-quantum KEM — ROADMAP</li>
       <li>Hugging Face / Cloudflare writes — not from this desk</li>
@@ -296,11 +319,14 @@
         policyClass: state.policy,
         adapter: kernel.ADAPTER_CURRENT,
       });
-      const blocked = state.proof.blocked?.decision === "DENY";
-      state.message = blocked
+      const complete = state.proof.commit?.decision === "ALLOW" && state.proof.reuse?.decision === "ALLOW" &&
+        state.proof.blocked?.decision === "DENY" && typeof state.proof.tamper === "string" && state.proof.tamper.length > 0 &&
+        state.proof.heal?.verified === true && Number.isSafeInteger(state.proof.heal.restored) &&
+        state.proof.heal.restored > 0 && kernel.health.ledgerReplayable === true;
+      state.message = complete
         ? "Local proof complete — commit, reuse, adapter BLOCKED, tamper, heal."
-        : "Local proof ran; adapter block did not fire.";
-      state.tone = blocked ? "ok" : "warn";
+        : "Local proof incomplete — inspect each decision and verified recovery.";
+      state.tone = complete ? "ok" : "warn";
       state.active = "command";
     }));
     if (submit) submit.addEventListener("click", () => runAction(async () => {
@@ -360,7 +386,9 @@
   }
 
   async function start() {
-    await bootAlignment();
+    // A dated record is independent of local execution and keyboard setup.
+    window.addEventListener("keydown", onKey);
+    void bootAlignment();
     if (!kernelAvailable()) {
       renderDesk();
       return;
@@ -368,14 +396,13 @@
     window.Alloy.subscribe(renderDesk);
     try {
       await window.Alloy.boot();
-      state.message = `${window.Alloy.status} · local fabric. Remotes fail-soft.`;
+      state.message = `${window.Alloy.status} · browser-local experiment. Remotes NOT_PROBED.`;
       state.tone = "ok";
     } catch (error) {
       state.message = `UNAVAILABLE — ${error instanceof Error ? error.message : String(error)}`;
       state.tone = "bad";
     }
     renderDesk();
-    window.addEventListener("keydown", onKey);
   }
 
   void start();
