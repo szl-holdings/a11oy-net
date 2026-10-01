@@ -1,11 +1,7 @@
 /* Estate OS control-plane hologram. PROPOSE_ONLY. No mutations. Not a live dashboard. */
 const $ = (sel, el = document) => el.querySelector(sel);
-const esc = (s) =>
-  String(s ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ESC[c]);
 
 const VIEWS = ["overview", "github", "hub", "queue", "fabric", "passports", "frontiers"];
 
