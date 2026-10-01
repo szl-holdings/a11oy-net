@@ -24,8 +24,9 @@
       "fail-closed release gate before publish",
       "PEP 740 attestations on every upload"
     ],
-    "documentation": "https://github.com/szl-holdings/szl-org-health/blob/main/docs/PYPI_RELEASE_PATH.md",
-    "manifest": "https://github.com/szl-holdings/szl-org-health/blob/main/governance/pypi/pypi-packages.v1.json"
+    "documentation": "https://github.com/szl-holdings/szlholdings.com/blob/main/pypi/release-path.md",
+    "manifest": "https://github.com/szl-holdings/szlholdings.com/blob/main/pypi/pypi-packages.v1.json",
+    "public_mirror_note": "Governance artifacts are mirrored byte-for-byte from the private szl-org-health repository into szl-holdings/szlholdings.com/pypi/ (MIRROR.json records the source commit); https://szlholdings.com/pypi/ serves the same files."
   },
   "counts": {
     "published": 20,
