@@ -5,13 +5,13 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "buckets": 1,
+    "buckets": 2,
     "collections": 21,
     "datasets_public": 35,
     "kernels": 14,
     "models": 50,
-    "public_resources_total": 153,
-    "spaces_public": 32
+    "public_resources_total": 156,
+    "spaces_public": 34
   },
   "evidence_class": "MEASURED",
   "freshness": {
@@ -66,18 +66,25 @@
       "policy": "spaces.json keep",
       "sdk": "docker",
       "title": "SZL Atelier"
+    },
+    {
+      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/governed-receipt-verifier",
+      "href": "https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier",
+      "id": "SZLHOLDINGS/governed-receipt-verifier",
+      "policy": "spaces.json keep",
+      "sdk": "static",
+      "title": "governed-receipt-verifier"
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T21:39:41Z",
-  "observed_date": "2026-09-30",
+  "observed_at": "2026-10-01T05:33:33Z",
+  "observed_date": "2026-10-01",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v1",
   "source": "/public-inventory.json",
-  "source_content_sha256": "5b5acae95dab0c8431d65fd43e2234786754248e898049d0477d8a17571c0de9",
+  "source_content_sha256": "3b5de94f5748de2751d0857667f767278ba3e07cc03aca0f89d6521856ac82d0",
   "spaces_by_runtime_stage": {
-    "BUILD_ERROR": 1,
-    "RUNNING": 31
+    "RUNNING": 34
   }
 }

@@ -470,16 +470,15 @@
     "keep": {
       "listed": [
         "a11oy",
+        "governed-receipt-verifier",
         "immune",
         "killinchu",
         "szl-atelier",
         "szl-khipu"
       ],
-      "not_listed": [
-        "governed-receipt-verifier"
-      ]
+      "not_listed": []
     },
-    "observed_at": "2026-09-30T21:39:41Z",
+    "observed_at": "2026-10-01T05:33:33Z",
     "source": "/public-inventory.json"
   }
 }
