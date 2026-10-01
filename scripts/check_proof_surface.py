@@ -51,6 +51,15 @@ EXPECTED_PROOFS = {
 }
 
 
+
+def _links_to_host(html: str, host: str) -> bool:
+    """True when some absolute URL in ``html`` resolves to exactly ``host`` (hostname-exact, not substring)."""
+    from urllib.parse import urlsplit
+    for url in re.findall(r"https?://[^\s\"'<>]+", html):
+        if (urlsplit(url).hostname or "").lower() == host:
+            return True
+    return False
+
 def relative_luminance(hex_color: str) -> float:
     channels = [
         int(hex_color[index : index + 2], 16) / 255
@@ -870,8 +879,8 @@ def check() -> None:
     assert "/health.json" in readyz_html
     assert "healthz" in readyz_html.lower()
     assert "not published" in readyz_html.lower()
-    assert (
-        "a-11-oy.com" in readyz_html.lower()
+    assert _links_to_host(
+        readyz_html, "a-11-oy.com"
     ), "readiness route must link to the runtime source explicitly"
     assert (
         "static build info surface" in build_info_html.lower()
