@@ -215,7 +215,7 @@ def parse_headers(path: pathlib.Path) -> dict[str, str]:
 
 def inline_script_hashes(html: str) -> set[str]:
     hashes: set[str] = set()
-    pattern = re.compile(r"<script(?P<attrs>[^>]*)>(?P<body>.*?)</script\s*>", re.I | re.S)
+    pattern = re.compile(r"<script(?P<attrs>[^>]*)>(?P<body>.*?)</script\b[^>]*>", re.I | re.S)
     for match in pattern.finditer(html):
         if re.search(r"\bsrc\s*=", match.group("attrs"), re.I):
             continue
