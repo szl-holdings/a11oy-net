@@ -44,6 +44,15 @@ CATALOG_LABEL = re.compile(
 )
 
 
+
+def _links_to_host(html: str, host: str) -> bool:
+    """True when some absolute URL in ``html`` resolves to exactly ``host`` (hostname-exact, not substring)."""
+    from urllib.parse import urlsplit
+    for url in re.findall(r"https?://[^\s\"'<>]+", html):
+        if (urlsplit(url).hostname or "").lower() == host:
+            return True
+    return False
+
 def neutral_semantic_style(source: str, selector: str) -> bool:
     """Require semantic chips to remain neutral, never proof/live colored.
 
@@ -83,7 +92,7 @@ def check() -> None:
     assert ">N/A<" in index
     assert HONEST_BIND.search(index)
     assert 'src="scripts/honest_kernel_bind.js"' in index
-    assert "https://a-11-oy.com" in index
+    assert _links_to_host(index, "a-11-oy.com"), "index must link to the product runtime host"
     assert CATALOG_LABEL.search(index), "catalog LOCKED-PROVEN=25 must stay labelled"
     assert "catalog LOCKED-PROVEN" in index
     catalog = re.search(
