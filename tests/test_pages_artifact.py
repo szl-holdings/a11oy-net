@@ -43,6 +43,8 @@ class PagesArtifactTests(unittest.TestCase):
             self.assertFalse((output / ".github").exists())
             self.assertTrue((output / ".well-known" / "security.txt").is_file())
             self.assertTrue((output / ".nojekyll").is_file())
+            self.assertTrue((output / "oac" / "index.html").is_file())
+            self.assertTrue((output / "oac" / "release.json").is_file())
             committed_index = subprocess.check_output(
                 ("git", "-C", str(ROOT), "show", f"{source_revision}:index.html")
             )

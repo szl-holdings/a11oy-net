@@ -481,6 +481,7 @@ def check() -> None:
         "https://a11oy.net/experiments/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
+        "https://a11oy.net/oac/",
         "https://a11oy.net/estate/",
         "https://a11oy.net/estate/os/",
         "https://a11oy.net/estate/plane/",

@@ -26,6 +26,7 @@ NO_SCRIPT_DOCUMENTS = {
     "code/index.html",
     "diligence/index.html",
     "notes/index.html",
+    "oac/index.html",
     "record/index.html",
 }
 
@@ -45,6 +46,7 @@ STATIC_THEMES = {
     "code/index.html": "weave-mono",
     "diligence/index.html": "dossier",
     "notes/index.html": "notebook",
+    "oac/index.html": "forensic",
     "record/index.html": "forensic",
 }
 STATIC_CURRENT = {
@@ -53,6 +55,7 @@ STATIC_CURRENT = {
     "code/index.html": "products",
     "diligence/index.html": "proofs",
     "notes/index.html": "proofs",
+    "oac/index.html": "proofs",
     "record/index.html": "proofs",
 }
 JOURNEYS = (

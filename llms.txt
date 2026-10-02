@@ -6,6 +6,8 @@ Authoritative public paths:
 - Evidence homepage (RECORD, Hub atlas, ROADMAP): https://a11oy.net/
 - Investor and developer diligence room: https://a11oy.net/diligence/
 - Canonical receipt RECORD index (pointers only; no receipt store here): https://a11oy.net/record/
+- OAC release RECORD (dated, synthetic-only; static page does not probe current provider state): https://a11oy.net/oac/
+- OAC release contract: https://a11oy.net/oac/release.json
 - RECORD contract: https://a11oy.net/record.json
 - Hub atlas contract: https://a11oy.net/atlas.json
 - Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/

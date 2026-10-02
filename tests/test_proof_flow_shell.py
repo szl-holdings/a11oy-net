@@ -24,6 +24,7 @@ NO_SCRIPT_DOCUMENTS = {
     "code/index.html",
     "diligence/index.html",
     "notes/index.html",
+    "oac/index.html",
     "record/index.html",
 }
 # Gateways whose reviewed meta CSP is default-src 'none' with inline style only:
