@@ -31,6 +31,7 @@ ZERO_JAVASCRIPT = {
     "code/index.html",
     "diligence/index.html",
     "notes/index.html",
+    "oac/index.html",
     "record/index.html",
 }
 JOURNEYS = (
@@ -46,6 +47,7 @@ CURRENT = {
     "code/index.html": "Products",
     "diligence/index.html": "Proof",
     "notes/index.html": "Proof",
+    "oac/index.html": "Proof",
     "record/index.html": "Proof",
 }
 

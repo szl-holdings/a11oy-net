@@ -44,6 +44,7 @@ equivalence.
 - **Use the product:** open [a-11-oy.com](https://a-11-oy.com).
 - **Read RECORD:** open [a11oy.net/record/](https://a11oy.net/record/).
 - **Decision Integrity RECORD:** open [a11oy.net/decision/](https://a11oy.net/decision/). Evaluate on [a-11-oy.com/decision](https://a-11-oy.com/decision) and vanity paths `/terra` `/aegis` `/puriq-markets` `/counsel`. Kernel is not run here. Hub Spaces are not required.
+- **OAC release RECORD:** open [a11oy.net/oac/](https://a11oy.net/oac/) for a dated, synthetic-only source/Hub/CI snapshot. This static page does not probe the current provider or handle patient data.
 - **Verify a receipt interactively:** use
   [https://a-11-oy.com/verify](https://a-11-oy.com/verify). Do not clone that tool here.
 - **Inspect source:** begin with the
@@ -177,6 +178,7 @@ The checks validate:
 | `index.html` | Accessible product narrative, 90-second table, RECORD, live reads, and registry UI. |
 | `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths, 90-second table, and print-safe presentation. |
 | `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
+| `oac/index.html`, `oac/release.json` | Dated OAC synthetic release record; no scoring runtime, live probe, or clinical result path. |
 | `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates `public-inventory.json`, `estate/hf-current.json`, `live-align/hf_live_inventory.json`, the `models.json` hub block and the `spaces.json` `hub_presence` block from the unauthenticated Hub API; the workflow reruns it daily and proposes a reviewed PR whose commit GitHub signs (`scripts/verified_commit_payload.py`). No Hugging Face token. |

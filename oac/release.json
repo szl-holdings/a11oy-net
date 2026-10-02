@@ -1,0 +1,93 @@
+{
+  "schema": "szl.oac.release-snapshot.v1",
+  "kind": "STATIC_DOCUMENT",
+  "name": "OAC System Health Lab",
+  "canonical_url": "https://a11oy.net/oac/",
+  "product_url": "https://a-11-oy.com/oac",
+  "release_kind": "SNAPSHOT",
+  "evidence_class": "REPORTED",
+  "provenance": "RELEASE_HANDOFF",
+  "snapshot_date": "2026-10-02",
+  "currentness": "NOT_PROBED_BY_STATIC_PAGE",
+  "provider_live_verification": false,
+  "production_operational": false,
+  "source": {
+    "repository": "szl-holdings/szl-forge",
+    "revision": "234a2dfb4c511318febfd20ca2f695fa9cb2ea8c",
+    "url": "https://github.com/szl-holdings/szl-forge/tree/234a2dfb4c511318febfd20ca2f695fa9cb2ea8c",
+    "signature_verification": "VERIFIED_IN_HANDOFF_NOT_REPLAYED_HERE"
+  },
+  "hub": {
+    "repository": "SZLHOLDINGS/oac-system-health-lab",
+    "type": "space",
+    "revision": "4bf4d94161c0d135af6b5a3bc25f45b06f6e3979",
+    "url": "https://huggingface.co/spaces/SZLHOLDINGS/oac-system-health-lab/tree/4bf4d94161c0d135af6b5a3bc25f45b06f6e3979",
+    "source_parity": "20_PAYLOAD_FILES_BYTE_MATCHED_IN_HANDOFF"
+  },
+  "model": {
+    "repository": "SZLHOLDINGS/oac-system-health-v1",
+    "revision": "dd7d109813abcd90c5250106dc2eabd2804e7ac3",
+    "url": "https://huggingface.co/SZLHOLDINGS/oac-system-health-v1/tree/dd7d109813abcd90c5250106dc2eabd2804e7ac3",
+    "qualification": "SYNTHETIC_ONLY"
+  },
+  "dataset": {
+    "repository": "SZLHOLDINGS/oac-clinical-transport-observability-synthetic",
+    "revision": "f7ab6170bf78138b187b8cb707d374a25ad85375",
+    "url": "https://huggingface.co/datasets/SZLHOLDINGS/oac-clinical-transport-observability-synthetic/tree/f7ab6170bf78138b187b8cb707d374a25ad85375",
+    "contents": "SYNTHETIC_ONLY"
+  },
+  "demo": {
+    "url": "https://szlholdings-oac-system-health-lab.hf.space",
+    "mutable": true,
+    "pinned_release": false,
+    "embedded": false,
+    "current_status": "NOT_PROBED_BY_STATIC_PAGE"
+  },
+  "ci": {
+    "run_id": 36966679696,
+    "url": "https://github.com/szl-holdings/szl-forge/actions/runs/36966679696",
+    "status": "PASS_REPORTED_FROM_EXACT_SOURCE_HANDOFF",
+    "scope": "OAC_PUBLICATION_AND_SYNTHETIC_WITNESS"
+  },
+  "artifact": {
+    "id": 11209469462,
+    "url": "https://github.com/szl-holdings/szl-forge/actions/runs/36966679696/artifacts/11209469462",
+    "sha256": "7555d5ab6f6f1c56f7304ba365904479b7fde8819b0b183b8455a3f71f61a4b3",
+    "digest_provenance": "GITHUB_API_REPORTED",
+    "bytes_verified_here": false,
+    "availability": "NOT_PROBED",
+    "access_note": "GitHub authentication may be required; artifact retention is not guaranteed."
+  },
+  "synthetic_witness": {
+    "date": "2026-10-02",
+    "status": "PASS_REPORTED_IN_HANDOFF",
+    "runtime_source_revision": "234a2dfb4c511318febfd20ca2f695fa9cb2ea8c",
+    "readyz": "READY_REPORTED_IN_HANDOFF",
+    "scope": "SYNTHETIC_CASES_ONLY",
+    "continuous_monitoring": false,
+    "independently_replayed_here": false
+  },
+  "scope": {
+    "input": "synthetic numeric telemetry",
+    "input_evidence_class": "SAMPLE",
+    "function": "bounded telemetry scoring preview",
+    "clinical": false,
+    "device_control": false,
+    "patient_data": false,
+    "new_training": false,
+    "production_authorization": "NOT_CLAIMED"
+  },
+  "local_verification": {
+    "scope": "STATIC_CONTRACT_ONLY",
+    "provider_evidence_verified": false,
+    "meaning": "Local tests check identities, labels, assets, and the non-executing page contract; they do not replay provider observations."
+  },
+  "limits": [
+    "This proof origin is a static record, not runtime and not a receipt database.",
+    "The named source, Hub and runtime observations were handed off; current provider state is not probed by this page.",
+    "The mutable demo must not be represented as the pinned release.",
+    "The displayed SHA-256 was reported by GitHub, not independently recomputed here.",
+    "Synthetic checks do not establish clinical validity, device safety, production readiness, uptime, or performance on customer data.",
+    "Clinical Roche HL7/POCT1-A and patient-result workflows require separate private laboratory-approved integration and validation."
+  ]
+}
