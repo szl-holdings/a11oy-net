@@ -729,7 +729,7 @@ def historical_rows(root: Path) -> list[dict[str, Any]]:
         },
         {
             "captured_at": old.get("observed_at"),
-            "evidence_class": "MEASURED",
+            "evidence_class": "SNAPSHOT",
             "path": "/" + HISTORICAL_INVENTORY_PATH,
             "role": "prior public-inventory.json (" + str(old.get("schema")) + "); historical, not rewritten",
         },

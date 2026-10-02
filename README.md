@@ -21,8 +21,8 @@ this origin is the RECORD. Hub atlas and ROADMAP live here, not on `.com`.
 Interactive `/verify` stays on
 [a-11-oy.com/verify](https://a-11-oy.com/verify) and is not cloned. There is no `/investor` route;
 investor review is [`/diligence/#investors`](https://a11oy.net/diligence/#investors).
-This origin remains independently reachable if a-11-oy.com or the Hugging Face
-Space is down.
+This origin is a separate failure domain from a-11-oy.com and its Hugging Face
+Space; independent reachability requires a fresh host readback.
 
 Header on both origins: **Product | Proof**. Product ↗ → `https://a-11-oy.com`.
 Proof is the current surface here.
@@ -57,7 +57,7 @@ equivalence.
 - **Evidence registry:** [`/`](https://a11oy.net/) is the RECORD: Hub atlas,
   ROADMAP cards, 90-second diligence table, and browser-observed metadata live here.
 - **Investor diligence:** [`/diligence/#summary`](https://a11oy.net/diligence/#summary)
-  is the 90-second MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
+  is the 90-second SNAPSHOT / MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
   and boundaries. There is no `/investor` route.
 - **RECORD:** [`/record/`](https://a11oy.net/record/) is the canonical receipt
   **index** on this origin — pointers, not a receipt database. This repository
@@ -98,10 +98,10 @@ equivalence.
 
 ## Architecture
 
-The registry is a dependency-light static site served by GitHub Pages behind
-Cloudflare DNS. The committed `CNAME` file is `a11oy.net`. Live DNS for
-a11oy.net currently resolves to GitHub Pages, so this proof registry is
-independently reachable. Product source (`a11oy_canonical_domain.py`) may
+The registry is a dependency-light static site configured for GitHub Pages.
+The committed `CNAME` file is `a11oy.net`; prior public DNS observations pointed
+to GitHub Pages. Recheck current DNS and response bytes before asserting live
+reachability. Product source (`a11oy_canonical_domain.py`) may
 SUNSET-301 `a11oy.net` → `a-11-oy.com` only when that Host header is routed
 into the product app. Do not assume this origin is a product host, and do
 not add product routes such as `/api/lake` here.
@@ -128,6 +128,7 @@ claims.
 
 | Label | Meaning on this surface |
 | --- | --- |
+| `SNAPSHOT` | A dated historical observation or catalog copy; not a live readback or current state. |
 | `MEASURED` | Direct observation with a disclosed source and context. |
 | `REPORTED` | Public upstream metadata; not independently measured here. |
 | `MODELED` | Simulated or analytically derived. |
@@ -137,6 +138,15 @@ claims.
 
 Operational status is separate from evidence class. Hub `RUNNING` state is
 transport metadata and does not establish end-to-end capability.
+
+The historical machine contracts `/evidence.json`, `/atlas.json`, `/estate.json`,
+and `/origin.json` are checked by `scripts/check_evidence_bindings.py`: a
+`MEASURED` claim in them needs a same-object `evidence_uri` and SHA-256
+`evidence_digest` resolving to exact published witness bytes. Their older
+unwitnessed probes are therefore `SNAPSHOT`, not a current measurement. This is
+not a whole-registry certification: the generated public Hub contracts and the
+dated PyPI provenance record still need their own raw-response or attestation
+witness binding review. `/evidence.json` keeps those exceptions explicit.
 
 The kernel chip binds live `/api/a11oy/v1/honest` `locked_formula_count` and
 paints **8** only when that field is exactly 8; otherwise **N/A** /

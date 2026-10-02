@@ -23,13 +23,13 @@
   "historical_snapshots": [
     {
       "captured_at": "2026-08-31T18:59:11Z",
-      "evidence_class": "MEASURED (historical)",
+      "evidence_class": "SNAPSHOT",
       "path": "/estate.json",
       "role": "dated estate snapshot; historical, not rewritten"
     },
     {
       "captured_at": "2026-08-31T18:59:11Z",
-      "evidence_class": "MEASURED",
+      "evidence_class": "SNAPSHOT",
       "path": "/public-inventory-2026-08-31.json",
       "role": "prior public-inventory.json (szl.public-hf-inventory/v3); historical, not rewritten"
     }

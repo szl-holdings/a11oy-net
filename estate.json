@@ -4,16 +4,21 @@
     "name": "Estate snapshot",
     "url": "https://a11oy.net/estate/",
     "publisher": "SZL Holdings",
-    "meaning": "Dated MEASURED public inventory snapshot on the proof origin, plus a closeout recapture. Not product runtime. Not a live dashboard. Not a receipt store. This origin does not host a DSSE signer.",
+    "meaning": "Dated historical public inventory snapshot on the proof origin, plus a closeout recapture. Underlying probe transcripts are not attached here. Not product runtime. Not a live dashboard. Not a receipt store. This origin does not host a DSSE signer.",
     "implementation": "static GitHub Pages JSON"
   },
-  "reader_guide": "HISTORICAL: this file is the dated 2026-08-31 snapshot and is not rewritten. Current public Hub counts are generated from the unauthenticated Hub API at /estate/hf-current.json (full detail: /public-inventory.json; generator scripts/generate_hf_inventory.py). captured_at is this file's own bake time. huggingface block is the org-authenticated REPORTED view (44 models / 38 datasets / 49 Spaces, 48 publicly readable including README). unauth_author_list is the unauthenticated MEASURED view (44 models / 30 datasets / 47 Spaces). Prior dated snapshots (2026-08-28: 17/27; 2026-08-29: 43/36 keep-7; recapture_2026_08_30) are historical and not rewritten. Counts are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
+  "reader_guide": "HISTORICAL: this file is the dated 2026-08-31 snapshot and is not rewritten. The newer public Hub counts are generated from the unauthenticated Hub API at /estate/hf-current.json (full detail: /public-inventory.json; generator scripts/generate_hf_inventory.py); inspect their observed_at before calling them current. captured_at is this file's own bake time. huggingface block is the org-authenticated REPORTED view (44 models / 38 datasets / 49 Spaces, 48 publicly readable including README). unauth_author_list is a dated unauthenticated SNAPSHOT (44 models / 30 datasets / 47 Spaces), without attached probe transcripts. Prior dated snapshots (2026-08-28: 17/27; 2026-08-29: 43/36 keep-7; recapture_2026_08_30) are historical and not rewritten. Counts are not quality, safety, or readiness. a-11-oy.com remains the product. This origin remains RECORD. Never a11oy.com.",
   "captured_at": "2026-08-31T18:59:11Z",
-  "evidence_class": "MEASURED (historical)",
+  "evidence_class": "SNAPSHOT",
+  "status": {
+    "state": "HISTORICAL",
+    "current_state": "UNKNOWN",
+    "authenticated_state": "AUTH_REQUIRED"
+  },
   "github": {
     "org": "szl-holdings",
     "repositories_search_total": 103,
-    "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash REPORTED 103 on 2026-08-31 (includes archived). Unauthenticated search MEASURED 95 public. 8 private.",
+    "bound": "GitHub search org:szl-holdings authenticated as stephenlutar2-hash REPORTED 103 on 2026-08-31 (includes archived). Dated unauthenticated snapshot reported 95 public. 8 private in the then-authenticated view; current membership requires a new observation.",
     "public_search_total": 95
   },
   "huggingface": {
@@ -75,11 +80,11 @@
     ],
     "action": "pause+private, never delete",
     "collection": "https://huggingface.co/collections/SZLHOLDINGS/canonical-public-spaces-7-6a9315ac72207f841dff230d",
-    "bound": "Org-authenticated Hub view 2026-08-31 as org admin betterwithage: 44 models, 38 datasets, 49 Spaces. 48 Spaces publicly readable (47 list-API rows plus the README profile card, which the list API omits); 1 not publicly listed. Visibility expanded 7 -> 48 public between 2026-08-30 and this recapture, off this runtime. pause+private, never delete stands as policy; nothing was deleted."
+    "bound": "Org-authenticated Hub view 2026-08-31 as org admin betterwithage: 44 models, 38 datasets, 49 Spaces. 48 Spaces publicly readable (47 list-API rows plus the README profile card, which the list API omits); 1 not publicly listed. Visibility expanded 7 -> 48 public between 2026-08-30 and this recapture, off this runtime. pause+private, never delete stands as policy, not proof of current deletion state."
   },
   "unauth_author_list": {
     "observed_at": "2026-08-31T18:59:11Z",
-    "evidence_class": "MEASURED",
+    "evidence_class": "SNAPSHOT",
     "method": "Unauthenticated Hugging Face API GET /api/spaces?author=SZLHOLDINGS&limit=100",
     "spaces_public": 47,
     "public_spaces": [
@@ -149,7 +154,8 @@
     "live_dashboard_cloned": false,
     "verify_cloned": false,
     "receipt_database_hosted_here": false,
-    "spaces_deleted": false,
+    "spaces_deleted": null,
+    "current_spaces_deleted": "AUTH_REQUIRED",
     "fourth_public_origin": false,
     "lambda_uniqueness": "Conjecture 1 OPEN",
     "dsse_signer_hosted_here": false,
@@ -161,11 +167,14 @@
   },
   "closeout_recapture_at": "2026-08-29T18:00:00Z",
   "keys": {
-    "evidence_class": "MEASURED",
-    "private_keys_in_public_git": 0,
-    "hmac_keys_in_public_git": 0,
+    "evidence_class": "SNAPSHOT",
+    "private_keys_in_public_git": null,
+    "hmac_keys_in_public_git": null,
+    "private_keys_found_in_scanned_sources": 0,
+    "hmac_keys_found_in_scanned_sources": 0,
+    "complete_public_git_scan": false,
     "observed_at": "2026-08-29T18:00:00Z",
-    "note": "Deep public scan of szl-receipt, szl-govsign, a11oy, killinchu, .github/keys, developers/VERIFY.md, and szl-lake. Private key is never committed. It lives as HF Space secret SZL_COSIGN_PRIVATE_PEM. HMAC key A11OY_HMAC_KEY is not in public git. Do not mint a replacement identity.",
+    "note": "Dated scan of szl-receipt, szl-govsign, a11oy, killinchu, .github/keys, developers/VERIFY.md, and szl-lake found no private or HMAC key in those sources. This was not a complete public-git or secret-store audit; the source-bound scan transcript is not attached. The product was reported to use HF Space secret SZL_COSIGN_PRIVATE_PEM. Do not mint a replacement identity.",
     "org_github_cosign_pub": {
       "url": "https://raw.githubusercontent.com/szl-holdings/.github/main/keys/cosign.pub",
       "pem_sha256": "31b8c7f11a57c05986c6ee8b7f21aefef4af1072c11e8058ce79c0f11502e0ad",
@@ -212,6 +221,8 @@
   "closeout": {
     "state": "BLOCKED_EXTERNAL_AUTHORITY",
     "evidence_class": "REPORTED",
+    "state_as_of": "2026-08-31T18:59:11Z",
+    "current_state": "UNKNOWN",
     "reason": "Live organ produced a verifiable closeout DSSE earlier this date. Exact-SHA deploy, HMAC non-repudiation, and org-key match remain outside this surface. At 18:23Z product honesty is UNAVAILABLE. GPU train is UNAVAILABLE. Open P0 findings remain. Trust stays UNAVAILABLE."
   },
   "findings": [
@@ -226,14 +237,14 @@
       "id": "P0-PROD-LAG",
       "severity": "P0",
       "status": "open",
-      "evidence": "MEASURED",
+      "evidence": "SNAPSHOT",
       "title": "Production honesty UNAVAILABLE; prior ceremony SHA lagged GitHub main"
     },
     {
       "id": "P0-UNSIGNED",
       "severity": "P0",
       "status": "open",
-      "evidence": "MEASURED",
+      "evidence": "SNAPSHOT",
       "title": "Assurance pack is unsigned"
     },
     {
@@ -247,14 +258,14 @@
       "id": "P1-KEY-DIVERGE",
       "severity": "P1",
       "status": "open",
-      "evidence": "MEASURED",
+      "evidence": "SNAPSHOT",
       "title": "Published cosign keys diverge across organs"
     },
     {
       "id": "P1-HMAC",
       "severity": "P1",
       "status": "blocked",
-      "evidence": "MEASURED",
+      "evidence": "SNAPSHOT",
       "title": "HMAC non-repudiation layer is placeholder"
     },
     {
@@ -377,7 +388,7 @@
   },
   "recapture_2026_08_30": {
     "observed_at": "2026-08-30T16:15:00Z",
-    "evidence_class": "MEASURED",
+    "evidence_class": "SNAPSHOT",
     "spaces_json_keep": 6,
     "spaces_json_fold": 38,
     "unauth_application_spaces": [
@@ -397,7 +408,7 @@
     "gpu_train": "UNAVAILABLE",
     "energy": "UNAVAILABLE",
     "operational": false,
-    "bound": "Unauthenticated Hub author-list recapture 2026-08-30. Application KEEP is the six public Spaces. README remains a profile card. anatomy, david-leads, and szl-real-estate stay PAUSED+PRIVATE (pause+private, never delete). No Hub write token in this runtime. Atlas keep-7 at 18:05Z is not rewritten. Product remains a-11-oy.com. Proof remains a11oy.net. Never a11oy.com."
+    "bound": "Unauthenticated Hub author-list recapture 2026-08-30. Application KEEP was six public Spaces then. README was a profile card. anatomy, david-leads, and szl-real-estate were recorded PAUSED+PRIVATE then; current visibility requires a fresh authenticated read. pause+private, never delete is policy, not a deletion readback. No Hub write token in this runtime. Atlas keep-7 at 18:05Z is not rewritten. Product remains a-11-oy.com. Proof remains a11oy.net. Never a11oy.com."
   },
   "hologram_plane": {
     "url": "https://a11oy.net/estate/plane/",
