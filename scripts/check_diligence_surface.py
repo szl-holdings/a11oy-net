@@ -382,7 +382,8 @@ def check() -> None:
     assert atlas_contract["hub_snapshot"]["five_space"]["mint"] is False
     assert len(atlas_contract["public_spaces"]) == 7  # curated canonical set, not exhaustive
     assert atlas_contract["boundaries"]["reachability_is_not_quality"] is True
-    assert atlas_contract["boundaries"]["spaces_deleted"] is False
+    assert atlas_contract["boundaries"]["spaces_deleted"] is None
+    assert atlas_contract["boundaries"]["current_spaces_deleted"] == "AUTH_REQUIRED"
     assert {s["name"] for s in atlas_contract["public_spaces"]} == {
         "a11oy",
         "killinchu",

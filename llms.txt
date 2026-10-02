@@ -10,21 +10,21 @@ Authoritative public paths:
 - OAC release contract: https://a11oy.net/oac/release.json
 - RECORD contract: https://a11oy.net/record.json
 - Hub atlas contract: https://a11oy.net/atlas.json
-- Estate snapshot (dated MEASURED inventory and closeout recapture; not a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
+- Estate snapshot (historical 2026-08-29 inventory and closeout recapture; newer generated Hub listing is separately date-stamped; neither is a live dashboard; this origin does not host a signer): https://a11oy.net/estate/
 - Estate catalog hologram (static on-origin catalog; READ-ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/os/
 - Estate OS control-plane hologram (static on-origin operator surface; PROPOSE_ONLY; not a live dashboard; not a fourth origin): https://a11oy.net/estate/plane/
 - Estate local kernel RECORD (on-device WebCrypto kernel; not product runtime; not a fourth origin): https://a11oy.net/estate/alloy-os/
 - Estate contract: https://a11oy.net/estate.json
 - Hub Space consolidation contract: https://a11oy.net/spaces.json
 - Models and kernels honesty RECORD: https://a11oy.net/models.json
-- Origin lock RECORD (INC-05 MEASURED public-identity-host probe; not DNS control; not a fourth origin): https://a11oy.net/origin/
+- Origin lock RECORD (historical INC-05 public-identity-host probe at 2026-09-26T01:52Z; current host state UNKNOWN here; not DNS control or a fourth origin): https://a11oy.net/origin/
 - Origin lock contract: https://a11oy.net/origin.json
-- INC-05 recapture 2026-09-11T23:25Z (www 301 + TLS OK CLOSED-as-MEASURED; HF domain READY; not LIVE): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md
+- INC-05 historical recapture 2026-09-11T23:25Z (www 301 + TLS OK recorded then; HF domain READY was provider state then, not LIVE or current host health): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11-2325.md
 - INC-05 prior recapture 2026-09-11T19:04Z (www TLS was OPEN at that probe): https://a11oy.net/notes/INC05_RECAPTURE_2026-09-11.md
 - Frontier operator runbook 2026-09-11: https://a11oy.net/notes/FRONTIER_OPERATOR_2026-09-11.md
 - Factory organs RECORD (N1–N25; runtime a-11-oy.com/organs; this origin does not execute organs): https://a11oy.net/factory/
 - Factory organs contract: https://a11oy.net/factory.json
-- Named frontiers SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N27 holograms; www-404 CLOSED-as-MEASURED does not promote theatres; does not rewrite /factory/): https://a11oy.net/frontiers/
+- Named frontiers SNAPSHOT (Lyte STRUCTURAL-ONLY; N1–N27 holograms; dated www-404 closure does not promote theatres or establish current host state; does not rewrite /factory/): https://a11oy.net/frontiers/
 - Named frontiers contract: https://a11oy.net/frontiers.json
 - Dated notes: https://a11oy.net/notes/
 - Governed product console gateway: https://a11oy.net/chat/
@@ -61,11 +61,11 @@ Truth boundary:
 - This static site's availability does not establish A11oy product-runtime readiness.
 - A link or HTTP response does not prove capability, safety, quality, or uptime.
 - Public Hugging Face metadata is not an authenticated private inventory.
-- Preserve MEASURED, REPORTED, MODELED, HEURISTIC, UNKNOWN, and UNAVAILABLE labels.
+- Preserve SNAPSHOT, MEASURED, REPORTED, MODELED, HEURISTIC, UNKNOWN, and UNAVAILABLE labels. Dated snapshots do not establish current host or runtime state.
 - Product runtime and receipt-verifier state must be observed at their own live sources.
 - The /chat/ and /code/ pages are static Diligence handoffs, not product-runtime execution surfaces.
 - There is no /investor route. There is no local /verify clone.
 - RECORD on this origin is an index of pointers, not a receipt database. This repository has no receipt store. Live receipts stay on the product Space (Khipu + /data SZLHOLDINGS/szl-evidence + /api/lake/v1/receipts on a-11-oy.com). Interactive /verify is not cloned here.
-- CNAME is a11oy.net. Live DNS is GitHub Pages. Product code may 301 a11oy.net to a-11-oy.com only if that Host is routed into the product app. This origin is not a product host.
+- CNAME is a11oy.net. Prior DNS observations pointed to GitHub Pages; current DNS and reachability require fresh readback. Product code may 301 a11oy.net to a-11-oy.com only if that Host is routed into the product app. This origin is not a product host.
 - Canonical, og:url, and sameAs for these pages are https://a11oy.net/... never a11oy.com, never a Hugging Face Space as page canonical.
 - _headers is policy intent. GitHub Pages does not apply it. live_edge_security_headers_deployment_proven=false.

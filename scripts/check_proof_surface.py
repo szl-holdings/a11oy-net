@@ -529,6 +529,9 @@ def check() -> None:
     assert "https://a11oy.com" not in origin_src
     origin_contract = json.loads((ROOT / "origin.json").read_text(encoding="utf-8"))
     assert origin_contract["incident"] == "INC-05"
+    assert origin_contract["observed_at_utc"] in origin_src, (
+        "origin human page must display the latest machine-record probe timestamp"
+    )
     assert origin_contract["boundaries"]["does_not_change_dns"] is True
     assert origin_contract["boundaries"]["grok_spa_not_published_here"] is True
     assert (ROOT / "frontiers" / "index.html").is_file(), "named frontiers SNAPSHOT HTML must exist"
