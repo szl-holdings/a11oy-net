@@ -67,7 +67,9 @@ equivalence.
   Interactive verify stays at
   [https://a-11-oy.com/verify](https://a-11-oy.com/verify).
 - **Hub atlas:** [`/#atlas`](https://a11oy.net/#atlas) inventories public HF and
-  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is fetchable.
+  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is a fetchable
+  historical September 25 observation; the newer generated public Hub inventory
+  is [`/public-inventory.json`](https://a11oy.net/public-inventory.json).
 - **Dated notes:** [`/notes/`](https://a11oy.net/notes/) and
   [`CHANGELOG.md`](https://a11oy.net/CHANGELOG.md).
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
