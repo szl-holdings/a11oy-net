@@ -3,6 +3,7 @@
     "kernel:SZLHOLDINGS/governed-inference-meter",
     "kernel:SZLHOLDINGS/szl-block-kv",
     "kernel:SZLHOLDINGS/szl-governed-norm",
+    "kernel:SZLHOLDINGS/szl-kernels",
     "kernel:SZLHOLDINGS/szl-receipt-attn",
     "space:SZLHOLDINGS/szl-bench-suite"
   ],
@@ -13,7 +14,7 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 35,
+    "datasets": 36,
     "kernels": 14,
     "models": 46,
     "spaces": 34
@@ -28,7 +29,7 @@
     },
     {
       "field": "datasets",
-      "live_public": 35,
+      "live_public": 36,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -49,7 +50,7 @@
     },
     {
       "field": "datasets",
-      "live_public": 35,
+      "live_public": 36,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -91,7 +92,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-02T01:39:26Z",
+  "observed_at": "2026-10-02T23:10:20Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
