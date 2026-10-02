@@ -1,13 +1,8 @@
 /* Estate catalog hologram. READ-ONLY. No mutations. Not a live dashboard. */
 const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
-const AMP = "\u0026";
-const esc = (s) =>
-  String(s ?? "")
-    .replaceAll(AMP, AMP + "amp;")
-    .replaceAll("<", AMP + "lt;")
-    .replaceAll(">", AMP + "gt;")
-    .replaceAll('"', AMP + "quot;");
+const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ESC[c]);
 
 const VIEWS = ["lattice", "catalog", "ledger"];
 const LANES = ["all", "github", "space", "gated", "model", "dataset", "collection"];

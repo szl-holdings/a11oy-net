@@ -1,0 +1,501 @@
+{
+  "schema": "szl.pypi-provenance-record/v1",
+  "captured_at": "2026-10-01T03:10:05Z",
+  "evidence_class": "MEASURED",
+  "meaning": "Each row is read from PyPI's provenance API (PEP 740 attestation bundles; Sigstore certificate extension 1.3.6.1.4.1.57264.1.13 Source Repository Digest) and from GitHub tag refs. It records publisher identity and source digest per release. It is not a code-quality, security, or deployment claim, and an installable package is not a running product.",
+  "owner": {
+    "pypi_account": "betterwithage",
+    "pypi_organization": {
+      "name": "szl-holdings",
+      "state": "REQUEST_PENDING",
+      "url": "https://pypi.org/org/szl-holdings/"
+    },
+    "github_organization": "szl-holdings"
+  },
+  "release_path": {
+    "contract": "szl.pypi-release.v2",
+    "credential": "GitHub OIDC Trusted Publishing only; no API tokens",
+    "trigger": "GitHub Release on tag v<version> (or <package>-v<version>)",
+    "controls": [
+      "environment pypi restricted to release tags",
+      "tag ruleset refs/tags/v* (repository admins only)",
+      "fail-closed release gate before publish",
+      "PEP 740 attestations on every upload"
+    ],
+    "documentation": "https://github.com/szl-holdings/szl-org-health/blob/main/docs/PYPI_RELEASE_PATH.md",
+    "manifest": "https://github.com/szl-holdings/szl-org-health/blob/main/governance/pypi/pypi-packages.v1.json"
+  },
+  "counts": {
+    "published": 20,
+    "queued": 16,
+    "hold": 6,
+    "internal_or_never_marked_private": 62
+  },
+  "known_bounds": [
+    "verified_source_url_on_pypi is false for every row: the 20 live releases predate [project.urls]; PyPI verifies the GitHub Source link only at upload time, so it appears with each package's next release.",
+    "All 20 live releases were uploaded from refs/heads/main via workflow_dispatch before the tag-bound path existed; release tags were created afterwards at the attested commits and are marked as backfilled in their tag messages.",
+    "szl-openshell-receipts v0.3.0 tag sits on the version-bump commit; the attested commit is its child, whose only change is the publish workflow."
+  ],
+  "records": [
+    {
+      "project": "khipu-x1",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/khipu-x1/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/khipu-x1",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "8ded64615116332e955b1939a8fe9164b50500bb",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/khipu-x1/actions/runs/36793353230/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "8ded64615116332e955b1939a8fe9164b50500bb",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/khipu-x1/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/khipu-x1",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-calibration",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-calibration/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-calibration",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "7de9ea5f9038e090ecd45fce2268cc116d626331",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-calibration/actions/runs/36794217033/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "7de9ea5f9038e090ecd45fce2268cc116d626331",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-calibration/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-calibration",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-ci-witness",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-ci-witness/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-ci-witness",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "470673f48604046f428c4a83e2082fef245b5651",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-ci-witness/actions/runs/36793044539/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "470673f48604046f428c4a83e2082fef245b5651",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-ci-witness/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-ci-witness",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-crosscheck",
+      "version": "0.3.0",
+      "pypi": "https://pypi.org/project/szl-crosscheck/0.3.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-crosscheck",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "410775267a22a3fcf9b29ebb77817c5ecee1c2a9",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-crosscheck/actions/runs/36792500317/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.0",
+        "commit": "410775267a22a3fcf9b29ebb77817c5ecee1c2a9",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-crosscheck/releases/tag/v0.3.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-crosscheck",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-eclipse",
+      "version": "0.2.0",
+      "pypi": "https://pypi.org/project/szl-eclipse/0.2.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-eclipse",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "25e6d3a8cd3477d629c0099a0b9934d912e076dd",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-eclipse/actions/runs/36792503561/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.2.0",
+        "commit": "25e6d3a8cd3477d629c0099a0b9934d912e076dd",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-eclipse/releases/tag/v0.2.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-eclipse",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-energy-attest",
+      "version": "0.3.0",
+      "pypi": "https://pypi.org/project/szl-energy-attest/0.3.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-energy-attest",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "3a843289047c57ead19731d0f430d487895c35b7",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-energy-attest/actions/runs/36794211765/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.0",
+        "commit": "3a843289047c57ead19731d0f430d487895c35b7",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-energy-attest/releases/tag/v0.3.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-energy-attest",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-engine-bench",
+      "version": "0.3.0",
+      "pypi": "https://pypi.org/project/szl-engine-bench/0.3.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-engine-bench",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "f70b0e392cddfc47a3bcd95ea66bb5f0915c57c9",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-engine-bench/actions/runs/36793047418/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.0",
+        "commit": "f70b0e392cddfc47a3bcd95ea66bb5f0915c57c9",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-engine-bench/releases/tag/v0.3.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-engine-bench",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-evidence-litellm",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-evidence-litellm/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-evidence-litellm",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi-litellm"
+      },
+      "attested_source_digest": "358c131863fab80c74f335bac1aabd6c7320f2b5",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-evidence-litellm/actions/runs/36782693380/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "szl-evidence-litellm-v0.1.0",
+        "commit": "358c131863fab80c74f335bac1aabd6c7320f2b5",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-evidence-litellm/releases/tag/szl-evidence-litellm-v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-evidence-litellm",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-evidence-mandate",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-evidence-mandate/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-evidence-mandate",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "7d5dcfd7b6331ddca1f09d6182d8553d967f7f7b",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-evidence-mandate/actions/runs/36793358879/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "7d5dcfd7b6331ddca1f09d6182d8553d967f7f7b",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-evidence-mandate/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-evidence-mandate",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-guardrail-receipt",
+      "version": "0.1.1",
+      "pypi": "https://pypi.org/project/szl-guardrail-receipt/0.1.1/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-guardrail-receipt",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "eb2810ac546e9b6d467169b0b4381a2463fdd1d8",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-guardrail-receipt/actions/runs/36798897979/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.1",
+        "commit": "eb2810ac546e9b6d467169b0b4381a2463fdd1d8",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-guardrail-receipt/releases/tag/v0.1.1"
+      },
+      "source": "https://github.com/szl-holdings/szl-guardrail-receipt",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-invariants",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-invariants/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-invariants",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "07af476c6236b2329ec2594593f29b4f05f2f270",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-invariants/actions/runs/36794647451/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "07af476c6236b2329ec2594593f29b4f05f2f270",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-invariants/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-invariants",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-nemo",
+      "version": "0.4.1",
+      "pypi": "https://pypi.org/project/szl-nemo/0.4.1/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-nemo",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "7d6a20e72e316de178d0c2636bd0e9c9ddca3232",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-nemo/actions/runs/36798905096/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.4.1",
+        "commit": "7d6a20e72e316de178d0c2636bd0e9c9ddca3232",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-nemo/releases/tag/v0.4.1"
+      },
+      "source": "https://github.com/szl-holdings/szl-nemo",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-openshell-receipts",
+      "version": "0.3.0",
+      "pypi": "https://pypi.org/project/szl-openshell-receipts/0.3.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-openshell-receipts",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "2ef765d575d81572b3774a0bc0a79cd7c43576a9",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-openshell-receipts/actions/runs/36794650301/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.0",
+        "commit": "31cef01f95cbdb862372be354818915b27c34fe4",
+        "binding": "PARENT_COMMIT_RECORDED_EXCEPTION",
+        "url": "https://github.com/szl-holdings/szl-openshell-receipts/releases/tag/v0.3.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-openshell-receipts",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-pin",
+      "version": "0.1.0",
+      "pypi": "https://pypi.org/project/szl-pin/0.1.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-pin",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "07f1a6fbe9cde64f028097e40b9b5d422fa36083",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-pin/actions/runs/36794653031/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.0",
+        "commit": "07f1a6fbe9cde64f028097e40b9b5d422fa36083",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-pin/releases/tag/v0.1.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-pin",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-quant-bench",
+      "version": "0.2.0",
+      "pypi": "https://pypi.org/project/szl-quant-bench/0.2.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-quant-bench",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "1a7cd8b9b04a0e2154c23fa6af49f291406886a0",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-quant-bench/actions/runs/36793050773/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.2.0",
+        "commit": "1a7cd8b9b04a0e2154c23fa6af49f291406886a0",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-quant-bench/releases/tag/v0.2.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-quant-bench",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-receipt-dsse",
+      "version": "0.3.1",
+      "pypi": "https://pypi.org/project/szl-receipt-dsse/0.3.1/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-receipt",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "eb423dc3f62507bcf98f2a9d787d355011f67999",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-receipt/actions/runs/36798900183/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.1",
+        "commit": "eb423dc3f62507bcf98f2a9d787d355011f67999",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-receipt/releases/tag/v0.3.1"
+      },
+      "source": "https://github.com/szl-holdings/szl-receipt",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-receipts",
+      "version": "14.0.0",
+      "pypi": "https://pypi.org/project/szl-receipts/14.0.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-evidence-litellm",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "358c131863fab80c74f335bac1aabd6c7320f2b5",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-evidence-litellm/actions/runs/36782693380/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "szl-receipts-v14.0.0",
+        "commit": "358c131863fab80c74f335bac1aabd6c7320f2b5",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-evidence-litellm/releases/tag/szl-receipts-v14.0.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-evidence-litellm",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-retrieval-bench",
+      "version": "0.3.0",
+      "pypi": "https://pypi.org/project/szl-retrieval-bench/0.3.0/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-retrieval-bench",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "81c14d8562a1241409da39f61d689d9e0c218d56",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-retrieval-bench/actions/runs/36792506331/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.3.0",
+        "commit": "81c14d8562a1241409da39f61d689d9e0c218d56",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-retrieval-bench/releases/tag/v0.3.0"
+      },
+      "source": "https://github.com/szl-holdings/szl-retrieval-bench",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "szl-triage",
+      "version": "0.5.1",
+      "pypi": "https://pypi.org/project/szl-triage/0.5.1/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/szl-typesafe-triage",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "fd697205c75248cf9f9ba04ea1b1d8989c546584",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/szl-typesafe-triage/actions/runs/36793355957/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.5.1",
+        "commit": "fd697205c75248cf9f9ba04ea1b1d8989c546584",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/szl-typesafe-triage/releases/tag/v0.5.1"
+      },
+      "source": "https://github.com/szl-holdings/szl-typesafe-triage",
+      "verified_source_url_on_pypi": false
+    },
+    {
+      "project": "vsp-otel",
+      "version": "0.1.1",
+      "pypi": "https://pypi.org/project/vsp-otel/0.1.1/",
+      "publisher": {
+        "kind": "GitHub",
+        "repository": "szl-holdings/vsp-otel",
+        "workflow": "publish-pypi.yml",
+        "environment": "pypi"
+      },
+      "attested_source_digest": "5da73f9a072c633bb08669233daf48ef5668f916",
+      "attested_source_ref": "refs/heads/main",
+      "attestation_run": "https://github.com/szl-holdings/vsp-otel/actions/runs/36798902655/attempts/1",
+      "files_attested": 2,
+      "release_tag": {
+        "name": "v0.1.1",
+        "commit": "5da73f9a072c633bb08669233daf48ef5668f916",
+        "binding": "EXACT_ATTESTED_COMMIT",
+        "url": "https://github.com/szl-holdings/vsp-otel/releases/tag/v0.1.1"
+      },
+      "source": "https://github.com/szl-holdings/vsp-otel",
+      "verified_source_url_on_pypi": false
+    }
+  ]
+}

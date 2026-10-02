@@ -43,6 +43,8 @@ REQUIRED_FILES = (
     "llms.txt",
     "manifest.webmanifest",
     "notes/index.html",
+    "pypi-provenance-2026-10-01.json",
+    "pypi-provenance-2026-10-01-release-wave.json",
     "readyz/index.html",
     "record.json",
     "record/index.html",
