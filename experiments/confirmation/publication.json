@@ -184,7 +184,7 @@
   "proof_origin_integration": {
     "canonical_document": "source-index.html",
     "served_document": "index.html",
-    "served_document_sha256": "7cb0f40b6094d4caf751ba58bc384f345a64e3d51cecd7137f748891a975f35e",
+    "served_document_sha256": "ab387d88baf8bfc7988dd1c2428977563d95ef22a433cf03af3f9fd3fc59d4a3",
     "integration": "Existing first-party Holographic Proof v2 and Flow Shell assets, with explorer-scoped light-panel and adopted-navigation presentation.",
     "managed_assets": [
       "/assets/szl-holo-proof-v2.css",
@@ -198,6 +198,14 @@
       "/scripts/szl-holo-proof-v2.js"
     ],
     "page_stylesheet": "proof-origin.css",
-    "page_stylesheet_sha256": "9d2bd8dc34992e9058032eb5cdf8a62e8bfc0885fb09ecea88dbd4b2f7ee3774"
+    "page_stylesheet_sha256": "9d2bd8dc34992e9058032eb5cdf8a62e8bfc0885fb09ecea88dbd4b2f7ee3774",
+    "exploratory_workbench_handoff": {
+      "url": "https://szlholdings-szl-foundation-confirmation.hf.space",
+      "html_sha256": "fbe7aeef88978146691c620e63303fb3706a19b2c63b4dbde25351f75d99516e",
+      "role": "OFF_ORIGIN_EXPLORATORY_WORKBENCH_LOCATION",
+      "location_only": true,
+      "execution_on_proof_origin": false,
+      "new_trials_modify_registered_benchmark": false
+    }
   }
 }
