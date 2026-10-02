@@ -652,6 +652,14 @@ def check() -> None:
     assert not any(item.get("operational") for item in models_contract["models"])
     check_generated_hf_inventory()
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
+    atlas_contract = json.loads((ROOT / "atlas.json").read_text(encoding="utf-8"))
+    assert atlas_contract["status"]["state"] == "HISTORICAL", (
+        "dated atlas.json observations must not claim CURRENT"
+    )
+    assert atlas_contract["status"]["current_public_inventory"] == "/public-inventory.json"
+    assert atlas_contract["status"]["probed_at"] == atlas_contract["hub_snapshot"]["observed_at"]
+    current_public = json.loads(HF_INVENTORY.read_text(encoding="utf-8"))
+    assert atlas_contract["hub_snapshot"]["observed_at"] < current_public["observed_at"]
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
     assert (ROOT / "khipu" / "index.html").is_file(), "khipu RECORD must exist"

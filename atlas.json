@@ -7,10 +7,11 @@
     "meaning": "Inventory of public Hugging Face and GitHub surfaces for a11oy. A listed URL is location only. Reachability is not quality, safety, or capability."
   },
   "status": {
-    "state": "CURRENT",
+    "state": "HISTORICAL",
     "evidence_class": "MEASURED",
     "probed_at": "2026-09-25T16:26:12Z",
-    "probe_note": "Unauthenticated Hub author-list 49 models / 35 datasets / 22 Spaces. immune Hub Space HTTP 200. anatomy and szl-real-estate HTTP 401, not on the public list. SZLHOLDINGS/five-space HTTP 401, not minted. Energy UNAVAILABLE. Do not stamp LIVE."
+    "probe_note": "Historical 2026-09-25 observation: unauthenticated Hub author-list 49 models / 35 datasets / 22 Spaces. immune Hub Space HTTP 200. anatomy and szl-real-estate HTTP 401, not on the public list. SZLHOLDINGS/five-space HTTP 401, not minted. Energy UNAVAILABLE. Do not stamp LIVE.",
+    "current_public_inventory": "/public-inventory.json"
   },
   "hub_snapshot": {
     "observed_at": "2026-09-25T16:26:12Z",
