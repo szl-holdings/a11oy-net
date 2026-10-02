@@ -618,16 +618,19 @@ def check() -> None:
     assert recapture["atlas_keep_7_rewritten"] is False
     assert recapture["unprivate_38"] is False
     assert recapture["operational"] is False
-    # 2026-09-25: KEEP-6 is policy, not Hub state. The verifier Space id stays
-    # in the cut but is recorded NOT_FOUND on the Hub (401 public, 404 to an
-    # org-authenticated read); it must not be described as a live Hub app.
-    # The anatomy and holographic fold entries carry the same Hub record, and
-    # anatomy no longer claims the Space was re-privatized. The 404 is an
-    # org-authenticated read, so the class is REPORTED, not MEASURED.
+    # KEEP-6 is policy, not Hub state. The verifier's 2026-09-26 NOT_FOUND
+    # result remains a dated historical check; the generated hub_presence
+    # is authoritative for the current public listing. Its runtime is not
+    # inferred. Anatomy and holographic still carry the old Hub record.
     verifier = next(item for item in spaces_contract["keep"] if item["id"] == "governed-receipt-verifier")
     assert "Public Hub application KEEP" not in verifier["why"]
+    assert "historical" in verifier["why"] and "hub_presence" in verifier["why"]
+    assert "hub_status" not in verifier
+    assert verifier["historical_hub_status"] == "NOT_FOUND"
+    assert verifier["historical_hub_status_evidence_class"] == "REPORTED"
+    assert verifier["historical_hub_status_observed_at"] == "2026-09-26T01:52:53Z"
     fold_by_id = {item["id"]: item for item in spaces_contract["fold"]}
-    for hub_entry in (verifier, fold_by_id["anatomy"], fold_by_id["holographic"]):
+    for hub_entry in (fold_by_id["anatomy"], fold_by_id["holographic"]):
         assert hub_entry.get("hub_status") == "NOT_FOUND", hub_entry["id"]
         assert hub_entry.get("hub_status_evidence_class") == "REPORTED", hub_entry["id"]
     assert fold_by_id["anatomy"]["dest"] == "https://a-11-oy.com/anatomy-v5"
