@@ -65,12 +65,12 @@
       "id": "governed-receipt-verifier",
       "dest": "https://a11oy.net/record/",
       "sdk": "static",
-      "why": "KEEP id stays in the 2026-08-31 policy cut. Not a live Hub application: the Space is NOT FOUND on the Hub (see hub_status). Interactive /verify stays on product at https://a-11-oy.com/verify. Proof holds the RECORD index only.",
-      "honesty": "KEEP (policy) · Hub NOT FOUND (REPORTED)",
-      "hub_status": "NOT_FOUND",
-      "hub_status_evidence_class": "REPORTED",
-      "hub_status_observed_at": "2026-09-26T01:52:53Z",
-      "hub_status_note": "MEASURED (unauthenticated, 2026-09-26T01:52Z): GET https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier and /api/spaces/SZLHOLDINGS/governed-receipt-verifier returned HTTP 401, and the id is absent from the unauthenticated author-list (22 Spaces). A 401 alone cannot tell private from absent. REPORTED (SZLHOLDINGS org-admin credential, at hub_status_observed_at): space_info returned 404 RepositoryNotFound while the same call found a private SZLHOLDINGS control Space, and the id is absent from the org-authenticated Space listing (28 Spaces). NOT FOUND under SZLHOLDINGS, not merely private. estate.json lists it as a public Space on 2026-08-31; whether it was deleted, renamed or transferred since is NOT MEASURED. First observed 2026-09-25."
+      "why": "KEEP id stays in the 2026-08-31 policy cut. The 2026-09-26 NOT_FOUND check is historical; use generated hub_presence for the current public listing. Runtime is not inferred. Interactive /verify stays on the product at https://a-11-oy.com/verify. Proof holds the RECORD index only.",
+      "honesty": "KEEP (policy) · historical NOT_FOUND (REPORTED); current listing in hub_presence",
+      "historical_hub_status": "NOT_FOUND",
+      "historical_hub_status_evidence_class": "REPORTED",
+      "historical_hub_status_observed_at": "2026-09-26T01:52:53Z",
+      "historical_hub_status_note": "HISTORICAL CHECK ONLY. MEASURED (unauthenticated, 2026-09-26T01:52Z): GET https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier and /api/spaces/SZLHOLDINGS/governed-receipt-verifier returned HTTP 401, and the id is absent from the unauthenticated author-list (22 Spaces). A 401 alone cannot tell private from absent. REPORTED (SZLHOLDINGS org-admin credential, at hub_status_observed_at): space_info returned 404 RepositoryNotFound while the same call found a private SZLHOLDINGS control Space, and the id is absent from the org-authenticated Space listing (28 Spaces). NOT FOUND under SZLHOLDINGS, not merely private. estate.json lists it as a public Space on 2026-08-31; whether it was deleted, renamed or transferred since is NOT MEASURED. First observed 2026-09-25. Current public listing is recorded separately in generated hub_presence; this note does not assert present-day absence or runtime state."
     }
   ],
   "fold": [
@@ -470,16 +470,15 @@
     "keep": {
       "listed": [
         "a11oy",
+        "governed-receipt-verifier",
         "immune",
         "killinchu",
         "szl-atelier",
         "szl-khipu"
       ],
-      "not_listed": [
-        "governed-receipt-verifier"
-      ]
+      "not_listed": []
     },
-    "observed_at": "2026-09-30T21:39:41Z",
+    "observed_at": "2026-10-02T01:39:26Z",
     "source": "/public-inventory.json"
   }
 }
