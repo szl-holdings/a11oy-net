@@ -1058,20 +1058,24 @@ def check() -> None:
     assert "RUNTIME CHECK BELOW" not in source
     # 2026-09-25: anatomy and holographic Hub Spaces answer HTTP 401 to the
     # public; their cards drop REPORTED (14 -> 12) and carry no link.
-    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returns 404 for
-    # anatomy, holographic and governed-receipt-verifier, so they are NOT FOUND,
-    # not private. Row 07 and both cards say so.
+    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returned 404 for
+    # anatomy, holographic and governed-receipt-verifier. The verifier later
+    # reappeared in the generated public listing, while the dated row remains
+    # historical. The two curated missing cards stay unlinked.
     assert source.count('<span class="stack-truth">REPORTED</span>') == 12
     assert source.count('<span class="stack-truth">NOT FOUND</span>') == 2
     assert "RETIRED/PRIVATE" not in source
     assert (
         '<div class="dossier-row"><span class="dossier-index">07</span><span><b>Verifier Space</b>'
-        "<small>Hub Space SZLHOLDINGS/governed-receipt-verifier · HTTP 401 to the public, 404 to an "
-        "authenticated org-admin read (checked 2026-09-26 UTC) · link removed</small></span>"
-        '<span class="dossier-action">NOT FOUND</span></div>' in source
-    ), "dossier row 07 must be an unlinked row with a NOT FOUND action chip"
+        '<small>Historical check: SZLHOLDINGS/governed-receipt-verifier returned HTTP 401 '
+        'to the public and 404 to an authenticated org-admin read on 2026-09-26. '
+        'Current public listings appear in the generated rows below; runtime remains '
+        'unverified.</small></span><span class="dossier-action">HISTORICAL</span></div>' in source
+    ), "dossier row 07 must distinguish its historical check from the current listing"
+    curated, marker, _ = source.partition("<!-- hf-current:live-space-rows begin")
+    assert marker, "current live-space rows marker is required"
     for retired in ("anatomy", "holographic", "governed-receipt-verifier"):
-        assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in source
+        assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in curated
     assert 'href="https://github.com/szl-holdings/szl-experiments"' not in source
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
@@ -1233,10 +1237,11 @@ def check() -> None:
     assert "YARQA-ATTN" in source
     assert "A11OY-MINI" in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/chaski"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/qantu"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
+    for model in ("qantu", "waman", "chakana", "tinku"):
+        assert f'href="https://huggingface.co/SZLHOLDINGS/{model}"' not in source
+        card = next((line for line in source.splitlines() if f"<h3>{model}</h3>" in line), None)
+        assert card is not None and '<div class="stack-card">' in card
+        assert "No public Hub card" in card and "ROADMAP" in card
     assert source.count('href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN"') == 1, (
         "YARQA-ATTN stays one KERNEL-owned cutting card, not a fourth Triton stack"
     )
