@@ -5,6 +5,7 @@
     "kernel:SZLHOLDINGS/szl-governed-norm",
     "kernel:SZLHOLDINGS/szl-kernels",
     "kernel:SZLHOLDINGS/szl-receipt-attn",
+    "model:SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3-authenticated",
     "space:SZLHOLDINGS/szl-bench-suite"
   ],
   "claim_boundaries": {
@@ -16,13 +17,13 @@
   "counts": {
     "datasets": 36,
     "kernels": 14,
-    "models": 46,
+    "models": 47,
     "spaces": 34
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 46,
+      "live_public": 47,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -43,7 +44,7 @@
     },
     {
       "field": "models",
-      "live_public": 46,
+      "live_public": 47,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -92,7 +93,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-02T23:10:20Z",
+  "observed_at": "2026-10-03T00:19:02Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
