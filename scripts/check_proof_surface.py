@@ -173,9 +173,14 @@ def check_generated_hf_inventory() -> None:
         assert counts[kind] == len(ids) == len(set(ids)), kind
         assert ids == sorted(ids), f"{kind} ids must be sorted"
     assert counts["spaces"] == counts["spaces_list_api_rows"] + counts["special_spaces_added"]
-    assert counts["hub_artifacts_total"] == sum(
-        counts[kind] for kind in ("models", "datasets", "spaces", "kernels", "collections")
+    model_ids = {row["id"] for row in resources["models"]}
+    assert {row["id"] for row in resources["kernels"]} <= model_ids, (
+        "kernel repositories must be a subset of model membership"
     )
+    assert counts["repository_membership_total"] == sum(
+        counts[kind] for kind in ("models", "datasets", "spaces")
+    )
+    assert counts["hub_artifacts_total"] == counts["repository_membership_total"] + counts["collections"]
     assert counts["public_resources_total"] == counts["hub_artifacts_total"] + counts["buckets"]
     stages = Counter(row["runtime"]["stage"] or "NOT_REPORTED" for row in resources["spaces"])
     assert inventory["spaces_by_runtime_stage"] == dict(sorted(stages.items()))
@@ -190,8 +195,21 @@ def check_generated_hf_inventory() -> None:
         "kernels": counts["kernels"],
         "models": counts["models"],
         "public_resources_total": counts["public_resources_total"],
+        "repository_membership_total": counts["repository_membership_total"],
         "spaces_public": counts["spaces"],
     }
+    membership = gen.strict_json((ROOT / gen.MEMBERSHIP_PATH).read_bytes())
+    source = gen.canonical_source(
+        (ROOT / gen.CANONICAL_COPY_PATH).read_bytes(),
+        membership["source_revision"], membership["source_git_blob"],
+    )
+    assert membership == source["record"] == inventory["canonical_membership_source"], (
+        "primary membership must bind the retained exact canonical GitHub source"
+    )
+    for kind in ("models", "datasets", "spaces"):
+        assert source["ids"][kind] == [row["id"] for row in resources[kind]], (
+            f"{kind} membership differs from the bound canonical GitHub source"
+        )
     assert current == gen.build_current(inventory, spaces, gen.historical_rows(ROOT)), (
         "estate/hf-current.json is not what the generator derives; rerun it"
     )

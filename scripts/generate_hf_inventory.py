@@ -10,6 +10,8 @@ as NOT_OBSERVED, never as zero.
 Outputs (all deterministic for a given API observation):
 
   public-inventory.json               szl.public-hf-inventory/v4, full detail
+  public-membership.json              canonical GitHub-bound public membership
+  estate/canonical-hf-manifest.json    exact immutable canonical manifest bytes
   estate/hf-current.json              szl.hf-current/v1, the compact current
                                       counts that pages render
   live-align/hf_live_inventory.json   szl.live-align/v2, drift against the
@@ -60,6 +62,19 @@ SCHEMA_CURRENT = "szl.hf-current/v1"
 SCHEMA_LIVE_ALIGN = "szl.live-align/v2"
 OBSERVATION_MODE = "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT"
 SPECIAL_SPACES = ("README",)
+CANONICAL_REPOSITORY = "szl-holdings/a11oy"
+CANONICAL_PATH = "docs/huggingface-ecosystem-manifest.json"
+MEMBERSHIP_PATH = "public-membership.json"
+CANONICAL_COPY_PATH = "estate/canonical-hf-manifest.json"
+PUBLIC_SCOPE = {
+    "id": "hf-public-author-membership/v1", "authentication": "none",
+    "visibility": "public-only", "kinds": ["models", "datasets", "spaces"],
+    "include_gated_metadata": True, "include_disabled_metadata": True,
+    "include_reserved_readme_if_public": True,
+    "kernel_policy": "count-once-as-model-repository-not-a-fourth-kind",
+    "collections_and_buckets": "outside-repository-membership-scope",
+    "portfolio_and_operational_policy": False,
+}
 
 INVENTORY_PATH = "public-inventory.json"
 CURRENT_PATH = "estate/hf-current.json"
@@ -151,7 +166,7 @@ class LiveSource:
         self.attempts = attempts
         self.timeout = timeout
 
-    def _get(self, url: str) -> Any:
+    def _bytes(self, url: str) -> bytes:
         last: Exception | None = None
         for attempt in range(self.attempts):
             request = urllib.request.Request(
@@ -163,11 +178,35 @@ class LiveSource:
             )
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                    return json.loads(response.read().decode("utf-8"))
+                    return response.read()
             except Exception as exc:  # retried, then surfaced
                 last = exc
                 time.sleep(2 * (attempt + 1))
         raise GenerationError(f"GET {url} failed: {last}")
+
+    def _get(self, url: str) -> Any:
+        return strict_json(self._bytes(url))
+
+    def canonical_source(self) -> dict[str, Any]:
+        commit = self._get(f"https://api.github.com/repos/{CANONICAL_REPOSITORY}/commits/main")
+        revision = commit.get("sha") if isinstance(commit, dict) else None
+        detail = commit.get("commit") if isinstance(commit, dict) else None
+        verification = detail.get("verification") if isinstance(detail, dict) else None
+        if (not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision)
+                or not isinstance(verification, dict) or verification.get("verified") is not True):
+            raise GenerationError("canonical main revision or valid commit signature unavailable")
+        metadata = self._get(
+            f"https://api.github.com/repos/{CANONICAL_REPOSITORY}/contents/{CANONICAL_PATH}?ref={revision}"
+        )
+        if not isinstance(metadata, dict) or metadata.get("type") != "file" or metadata.get("path") != CANONICAL_PATH:
+            raise GenerationError("canonical manifest Git blob metadata unavailable")
+        raw = self._bytes(f"https://raw.githubusercontent.com/{CANONICAL_REPOSITORY}/{revision}/{CANONICAL_PATH}")
+        return canonical_source(raw, revision, metadata.get("sha"))
+
+    def validate_source_head(self, revision: str) -> None:
+        current = self._get(f"https://api.github.com/repos/{CANONICAL_REPOSITORY}/commits/main")
+        if not isinstance(current, dict) or current.get("sha") != revision:
+            raise GenerationError("canonical main advanced during the public observation")
 
     def listing(self, kind: str) -> list[dict[str, Any]]:
         if kind == "collections":
@@ -218,9 +257,20 @@ class FixtureSource:
     def bucket_tree(self, bucket_id: str) -> list[dict[str, Any]]:
         return self._read(fixture_name("bucket_tree", bucket_id))
 
+    def canonical_source(self) -> dict[str, Any]:
+        metadata = self._read("canonical_source.json")
+        return canonical_source(
+            (self.directory / "canonical_manifest.json").read_bytes(),
+            metadata.get("source_revision"), metadata.get("source_git_blob"),
+        )
+
+    def validate_source_head(self, revision: str) -> None:
+        if self._read("canonical_source.json").get("source_revision") != revision:
+            raise GenerationError("fixture source advanced during the public observation")
+
 
 def collect(source: Any) -> dict[str, Any]:
-    raw: dict[str, Any] = {}
+    raw: dict[str, Any] = {"canonical_source": source.canonical_source()}
     for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
         raw[kind] = source.listing(kind)
         limit = LISTING_LIMIT.get(kind)
@@ -236,6 +286,7 @@ def collect(source: Any) -> dict[str, Any]:
     raw["bucket_tree"] = {
         str(item["id"]): source.bucket_tree(str(item["id"])) for item in raw["buckets"]
     }
+    source.validate_source_head(raw["canonical_source"]["record"]["source_revision"])
     return raw
 
 
@@ -290,15 +341,83 @@ def by_id(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
             raise GenerationError(f"listing row outside {ORG}: {ident!r}")
         if ident in seen:
             raise GenerationError(f"duplicate listing row: {ident}")
-        if item.get("private") is True:
-            raise GenerationError(f"unauthenticated listing returned a private row: {ident}")
+        if item.get("private") is not False:
+            raise GenerationError("unauthenticated listing lacks an explicit public disposition")
         seen.add(ident)
         ordered.append(item)
     return ordered
 
 
 def canonical(value: Any) -> bytes:
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode("utf-8")
+
+
+def strict_json(raw: bytes) -> Any:
+    """Reject ambiguous keys and nonfinite numbers before validating a record."""
+    def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        value: dict[str, Any] = {}
+        for key, item in pairs:
+            if key in value:
+                raise GenerationError("duplicate JSON record key")
+            value[key] = item
+        return value
+
+    def nonfinite(_value: str) -> Any:
+        raise GenerationError("nonfinite JSON record value")
+
+    try:
+        value = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object, parse_constant=nonfinite)
+        canonical(value)  # Reject numeric overflow as well as NaN/Infinity literals.
+        return value
+    except (UnicodeError, ValueError) as exc:
+        raise GenerationError("JSON record is unavailable or malformed") from exc
+
+
+def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
+    """Bind exact GitHub bytes; ambiguity, privacy, or malformed scope denies output."""
+
+    if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise GenerationError("canonical source revision must be an immutable Git SHA")
+    actual_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+    if not isinstance(blob, str) or blob != actual_blob:
+        raise GenerationError("canonical source Git blob does not bind the retained bytes")
+    manifest = strict_json(raw)
+    text = raw.decode("utf-8")
+    scope = manifest.get("inventoryScope") if isinstance(manifest, dict) else None
+    counts = manifest.get("counts") if isinstance(manifest, dict) else None
+    inventory = manifest.get("inventory") if isinstance(manifest, dict) else None
+    if not (
+        isinstance(manifest, dict) and manifest.get("schemaVersion") == 2
+        and manifest.get("org") == ORG and isinstance(scope, dict)
+        and scope.get("visibility") == "public-only"
+        and scope.get("authenticated") is False and scope.get("privateAssetsIncluded") is False
+        and isinstance(counts, dict) and set(counts) == set(PUBLIC_SCOPE["kinds"])
+        and all(type(counts[kind]) is int and counts[kind] >= 0 for kind in PUBLIC_SCOPE["kinds"])
+        and isinstance(inventory, dict) and valid_timestamp(manifest.get("observedAt", ""))
+    ):
+        raise GenerationError("canonical public membership schema or scope is unavailable")
+    ids: dict[str, list[str]] = {}
+    for kind in PUBLIC_SCOPE["kinds"]:
+        rows = inventory.get(kind)
+        if not isinstance(rows, list) or any(not isinstance(row, dict) or row.get("private") is not False for row in rows):
+            raise GenerationError(f"canonical {kind} public disposition unavailable")
+        ids[kind] = [row["id"] for row in by_id(rows)]
+        if counts[kind] != len(ids[kind]):
+            raise GenerationError(f"canonical {kind} count does not bind its complete membership")
+    record = {
+        "schema": "szl.public-profile-inventory/v1", "scope": PUBLIC_SCOPE,
+        "scope_sha256": hashlib.sha256(canonical(PUBLIC_SCOPE)).hexdigest(),
+        "counts": counts, "observed_at": manifest["observedAt"],
+        "source_repository": CANONICAL_REPOSITORY, "source_path": CANONICAL_PATH,
+        "source_revision": revision, "source_git_blob": blob,
+        "source_sha256": hashlib.sha256(raw).hexdigest(),
+        "production_authorization": False, "runtime_readiness_inferred": False,
+        "model_quality_inferred": False, "historical_portfolio_contract_replaced": False,
+        "retained_source_path": "/" + CANONICAL_COPY_PATH,
+        "historical_snapshots": [{"path": "/public-membership.observed-2026-09-10.json",
+                                  "observed_at": "2026-09-10T03:20:41Z"}],
+    }
+    return {"record": record, "ids": ids, "manifest_text": text}
 
 
 def space_live_url(ident: str, sdk: str | None, subdomain: str | None) -> str:
@@ -446,8 +565,12 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     specials = []
     for name, payload in sorted(raw["special_spaces"].items()):
         ident = f"{ORG}/{name}"
+        if not isinstance(payload, dict) or payload.get("id") != ident:
+            raise GenerationError("reserved Space metadata does not bind the requested repository")
         if ident in listed_ids or payload.get("private") is True:
             continue
+        if payload.get("private") is not False:
+            raise GenerationError("reserved Space public disposition unavailable")
         specials.append(payload)
     spaces = sorted(
         [space_row(item, False) for item in listed_spaces]
@@ -455,6 +578,15 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         key=lambda row: row["id"],
     )
     kernels = [kernel_row(item) for item in by_id(raw["kernels"])]
+    model_ids = {row["id"] for row in models}
+    if {row["id"] for row in kernels} - model_ids:
+        raise GenerationError("kernel subset has repositories absent from the public model membership")
+    binding = raw.get("canonical_source")
+    if not isinstance(binding, dict) or not isinstance(binding.get("record"), dict):
+        raise GenerationError("canonical public membership source binding unavailable")
+    for kind, rows in (("models", models), ("datasets", datasets), ("spaces", spaces)):
+        if sorted(row["id"] for row in rows) != binding.get("ids", {}).get(kind):
+            raise GenerationError(f"observed {kind} membership differs from immutable canonical GitHub source")
     collections = sorted(
         (
             collection_row(item, raw["collection_detail"].get(str(item["slug"]), item))
@@ -476,7 +608,8 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         for entry in row["items"]:
             if entry["type"] in members:
                 members[entry["type"]].add(entry["id"])
-    hub_artifacts = len(models) + len(datasets) + len(spaces) + len(kernels) + len(collections)
+    repository_membership = len(models) + len(datasets) + len(spaces)
+    hub_artifacts = repository_membership + len(collections)
     counts = {
         "buckets": len(buckets),
         "collections": len(collections),
@@ -485,6 +618,7 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         "kernels": len(kernels),
         "models": len(models),
         "public_resources_total": hub_artifacts + len(buckets),
+        "repository_membership_total": repository_membership,
         "spaces": len(spaces),
         "spaces_list_api_rows": len(listed_spaces),
         "special_spaces_added": len(specials),
@@ -492,7 +626,9 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     stages = Counter(row["runtime"]["stage"] or "NOT_REPORTED" for row in spaces)
     inventory = {
         "claim_boundaries": {
-            "github_alignment": "NOT_EVALUATED",
+            "github_alignment": "EXACT_IMMUTABLE_MANIFEST_MEMBERSHIP_ONLY_NOT_RUNTIME_PARITY",
+            "kernel_membership": "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS",
+            "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
             "license": "HUB_CARD_OR_TAG_METADATA_ONLY_NOT_LEGAL_REVIEW",
             "private_assets": "NOT_OBSERVED",
             "runtime_quality": "NOT_INFERRED_FROM_STAGE",
@@ -531,6 +667,7 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
             "spaces": spaces,
         },
         "schema": SCHEMA_INVENTORY,
+        "canonical_membership_source": binding["record"],
         "spaces_by_runtime_stage": dict(sorted(stages.items())),
         "special_spaces": sorted(row["id"] for row in spaces if row["listing"] != "AUTHOR_LIST_API"),
     }
@@ -747,6 +884,8 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
     return {
         "claim_boundaries": {
             "counts": "PUBLIC_LISTING_ONLY_NOT_QUALITY_SAFETY_OR_READINESS",
+            "kernel_membership": "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS",
+            "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
             "private_assets": "NOT_OBSERVED",
             "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE",
         },
@@ -757,6 +896,7 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
             "kernels": counts["kernels"],
             "models": counts["models"],
             "public_resources_total": counts["public_resources_total"],
+            "repository_membership_total": counts["repository_membership_total"],
             "spaces_public": counts["spaces"],
         },
         "evidence_class": "SNAPSHOT",
@@ -779,6 +919,7 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
         "schema": SCHEMA_CURRENT,
         "source": "/" + INVENTORY_PATH,
         "source_content_sha256": inventory["content_sha256"],
+        "canonical_membership_source": inventory["canonical_membership_source"],
         "spaces_by_runtime_stage": inventory["spaces_by_runtime_stage"],
     }
 
@@ -903,7 +1044,7 @@ def utc_now() -> str:
 
 
 def valid_timestamp(value: str) -> bool:
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value or ""):
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value):
         return False
     try:
         datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
@@ -933,6 +1074,8 @@ def generate(root: Path, raw: dict[str, Any], observed_at: str) -> dict[str, str
     current = build_current(inventory, spaces_prior, historical_rows(root))
     outputs = {
         INVENTORY_PATH: dump(inventory),
+        MEMBERSHIP_PATH: dump(raw["canonical_source"]["record"]),
+        CANONICAL_COPY_PATH: raw["canonical_source"]["manifest_text"],
         CURRENT_PATH: dump(current),
         LIVE_ALIGN_PATH: dump(build_live_align(inventory, root)),
         MODELS_PATH: dump(build_models_contract(models_prior, raw["models"], inventory), sort_keys=False),
@@ -948,14 +1091,14 @@ def write(root: Path, outputs: dict[str, str], dry_run: bool, log: Callable[[str
     changed = []
     for relative, text in sorted(outputs.items()):
         path = root / relative
-        before = path.read_text(encoding="utf-8") if path.is_file() else None
-        if before == text:
+        content = text.encode("utf-8")
+        before = path.read_bytes() if path.is_file() else None
+        if before == content:
             continue
         changed.append(relative)
         if not dry_run:
             path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("w", encoding="utf-8", newline="\n") as handle:
-                handle.write(text)
+            path.write_bytes(content)
     log(("would change: " if dry_run else "changed: ") + (", ".join(changed) or "nothing"))
     return changed
 
