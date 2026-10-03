@@ -1050,6 +1050,11 @@ def check() -> None:
     )
     assert "renderSnapshotAge(inventory, Date.now());" in inventory_cards
     assert "age > DAY_MS" in inventory_cards
+    assert "committed SNAPSHOT classification" in inventory_cards
+    assert "committed MEASURED classification" not in inventory_cards
+    assert 'label: typeof item.observed_object_count === "number" ? "SNAPSHOT" : "UNAVAILABLE"' in inventory_cards, (
+        "unwitnessed bucket-tree counts must render as SNAPSHOT, not MEASURED"
+    )
 
     proof_ids = {
         str(anchor["data-proof"])

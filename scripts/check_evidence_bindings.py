@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Fail closed on unbound measurement labels in the historical proof records.
+"""Fail closed on unbound measurement labels in published proof records.
 
 This checks publication integrity, not whether an external probe was honest.
 Only a reviewed source-bound witness can support a future MEASURED label.
@@ -17,7 +17,17 @@ from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCUMENTS = ("evidence.json", "atlas.json", "estate.json", "origin.json")
+DOCUMENTS = (
+    "evidence.json",
+    "atlas.json",
+    "estate.json",
+    "origin.json",
+    "estate/hf-current.json",
+    "models.json",
+    "spaces.json",
+    "pypi-provenance-2026-10-01.json",
+    "pypi-provenance-2026-10-01-release-wave.json",
+)
 LABEL_KEYS = frozenset({"evidence_class", "honesty", "class", "evidence"})
 DIGEST = re.compile(r"sha256:[0-9a-f]{64}\Z")
 
@@ -54,9 +64,7 @@ def _witness_path(root: Path, uri: str) -> Path | None:
 
 def validate_binding(root: Path, node: dict[str, Any], path: str) -> list[str]:
     labels = [node.get(key) for key in LABEL_KEYS]
-    measured = any(
-        isinstance(value, str) and value.startswith("MEASURED") for value in labels
-    )
+    measured = any(isinstance(value, str) and value.startswith("MEASURED") for value in labels)
     uri = node.get("evidence_uri")
     digest = node.get("evidence_digest")
     if not measured and uri is None and digest is None:
@@ -76,23 +84,31 @@ def validate_binding(root: Path, node: dict[str, Any], path: str) -> list[str]:
 
 def validate_documents(root: Path = ROOT) -> list[str]:
     errors: list[str] = []
-    docs = {
-        name: json.loads((root / name).read_text(encoding="utf-8"))
-        for name in DOCUMENTS
-    }
+    docs = {name: json.loads((root / name).read_text(encoding="utf-8")) for name in DOCUMENTS}
     for name, doc in docs.items():
         for path, node in _walk(doc):
             errors.extend(validate_binding(root, node, f"{name}{path[1:]}"))
 
-    evidence, atlas, estate, origin = (docs[name] for name in DOCUMENTS)
+    evidence, atlas, estate, origin = (docs[name] for name in ("evidence.json", "atlas.json", "estate.json", "origin.json"))
     binding_status = evidence["measurement_binding"]
     if binding_status["state"] != "PARTIAL" or not binding_status["known_exceptions"]:
         errors.append("evidence.json: uncovered measurement surfaces must remain explicit")
+    if binding_status["covered_contracts"] != ["/" + name for name in DOCUMENTS]:
+        errors.append("evidence.json: covered contracts must match the validator inventory")
     entrypoints = {item["name"]: item for item in evidence["entrypoints"]}
-    for name in ("estate_snapshot", "estate_contract", "origin_lock_record", "origin_lock_contract"):
+    for name in (
+        "estate_snapshot",
+        "estate_contract",
+        "origin_lock_record",
+        "origin_lock_contract",
+    ):
         if entrypoints[name]["evidence_class"] != "SNAPSHOT":
             errors.append(f"evidence.json: {name} must advertise the dated SNAPSHOT")
-    for name, doc in (("atlas.json", atlas), ("estate.json", estate), ("origin.json", origin)):
+    for name, doc in (
+        ("atlas.json", atlas),
+        ("estate.json", estate),
+        ("origin.json", origin),
+    ):
         if doc["status"]["state"] != "HISTORICAL" or doc["status"]["current_state"] != "UNKNOWN":
             errors.append(f"{name}: old observation must be HISTORICAL with current_state UNKNOWN")
     if atlas["status"]["authenticated_state"] != "AUTH_REQUIRED":
@@ -109,6 +125,21 @@ def validate_documents(root: Path = ROOT) -> list[str]:
     for name in ("private_keys_in_public_git", "hmac_keys_in_public_git"):
         if estate["keys"][name] is not None:
             errors.append(f"estate.json: {name} cannot claim an estate-wide zero")
+    spaces = docs["spaces.json"]
+    if (
+        spaces["cut"].get("hubArchive") != "SNAPSHOT"
+        or "measured" in spaces["cut"]
+        or not isinstance(spaces["cut"].get("snapshot_total"), int)
+        or isinstance(spaces["cut"]["snapshot_total"], bool)
+    ):
+        errors.append("spaces.json: old Hub cut must remain a dated SNAPSHOT")
+    homepage = (root / "index.html") if (root / "index.html").is_file() else None
+    if homepage is not None:
+        page = homepage.read_text(encoding="utf-8")
+        if "PyPI provenance</a> — SNAPSHOT RECORD" not in page:
+            errors.append("index.html: PyPI provenance must retain SNAPSHOT label")
+        if 'Public Hub listing at its observation time</td><td><span class="cls cls-reported">SNAPSHOT</span>' not in page:
+            errors.append("index.html: public Hub listing must retain SNAPSHOT label")
     origin_html = (root / "origin" / "index.html") if (root / "origin" / "index.html").is_file() else None
     if origin_html is not None:
         page = origin_html.read_text(encoding="utf-8")
@@ -138,7 +169,7 @@ def main() -> int:
         for error in errors:
             print(f" - {error}")
         return 1
-    print("OK: historical evidence labels are bounded; MEASURED requires exact witness bytes.")
+    print("OK: covered proof labels are bounded; MEASURED requires exact witness bytes.")
     return 0
 
 

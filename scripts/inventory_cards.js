@@ -8,7 +8,7 @@
 //                            scripts/generate_hf_inventory.py, schema v4; v4
 //                            does not probe Space roots, so root_observation is
 //                            absent and no root metric renders)
-//   /models.json            (dated MEASURED classification of the public model
+//   /models.json            (dated SNAPSHOT classification of the public model
 //                            cards)
 // Nothing is hand-typed, interpolated, or estimated. If a document, a field, or
 // a whole fetch is missing, the card or count renders the honest label
@@ -258,7 +258,7 @@
           title: shortName(item.id),
           description: "Object counts and byte totals were walked from the public bucket tree endpoint in this snapshot.",
           metrics: metrics,
-          label: typeof item.observed_object_count === "number" ? "MEASURED" : "UNAVAILABLE",
+          label: typeof item.observed_object_count === "number" ? "SNAPSHOT" : "UNAVAILABLE",
           href: hubUrl("BUCKET", item.id)
         });
       });
@@ -332,7 +332,7 @@
     root.textContent = "";
     root.appendChild(group(
       "Models",
-      "Class and file counts come from the committed MEASURED classification; a card with no stated class renders UNAVAILABLE.",
+      "Class and file counts come from the committed SNAPSHOT classification; a card with no stated class renders UNAVAILABLE.",
       modelCards(inventory, contract)
     ));
     root.appendChild(group(

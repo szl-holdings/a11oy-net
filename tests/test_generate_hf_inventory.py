@@ -39,7 +39,12 @@ class SiteCopy:
     def __init__(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
-        for relative in ("spaces.json", "models.json", "estate.json", "public-inventory-2026-08-31.json"):
+        for relative in (
+            "spaces.json",
+            "models.json",
+            "estate.json",
+            "public-inventory-2026-08-31.json",
+        ):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
@@ -147,17 +152,29 @@ class GeneratorTest(unittest.TestCase):
         self.assertEqual(contract["hub"]["private"], "NOT_OBSERVED")
         # Same class and the bench source file is still listed: carried forward.
         self.assertEqual(rows["SZLHOLDINGS/chaski"]["bench"]["source"], "eval_measured.json")
+        self.assertEqual(rows["SZLHOLDINGS/chaski"]["bench"]["evidence_class"], "REPORTED")
         # Class changed since the curated record (weights now present): not carried.
         self.assertIsNone(rows["SZLHOLDINGS/SZL-Khipu-1.5B-abstain"]["bench"])
         self.assertIs(contract["trained_all"], False)
         self.assertFalse(any(row["operational"] for row in rows.values()))
+
+    def test_unwitnessed_generated_contracts_remain_snapshots(self) -> None:
+        self.site.run(T1)
+        self.assertEqual(self.site.read(gen.CURRENT_PATH)["evidence_class"], "SNAPSHOT")
+        models = self.site.read(gen.MODELS_PATH)
+        self.assertEqual(models["evidence_class"], "SNAPSHOT")
+        self.assertTrue(all(row["bench"]["evidence_class"] == "REPORTED" for row in models["models"] if row["bench"]))
+        self.assertEqual(self.site.read("spaces.json")["hub_presence"]["evidence_class"], "SNAPSHOT")
 
     def test_live_space_cards_follow_keep_policy_and_withhold_killinchu(self) -> None:
         self.site.run(T1)
         cards = self.site.read(gen.CURRENT_PATH)["live_space_cards"]
         keep = [f"SZLHOLDINGS/{row['id']}" for row in self.site.read("spaces.json")["keep"]]
         ids = [card["id"] for card in cards]
-        self.assertEqual(ids, [i for i in keep if i in ("SZLHOLDINGS/a11oy", "SZLHOLDINGS/szl-atelier")])
+        self.assertEqual(
+            ids,
+            [i for i in keep if i in ("SZLHOLDINGS/a11oy", "SZLHOLDINGS/szl-atelier")],
+        )
         self.assertNotIn("SZLHOLDINGS/killinchu", ids)
         presence = self.site.read("spaces.json")["hub_presence"]
         self.assertIn("killinchu", presence["keep"]["listed"])
@@ -207,15 +224,27 @@ class GeneratorTest(unittest.TestCase):
 
     def test_generator_holds_no_token_and_no_write_path(self) -> None:
         source = (ROOT / "scripts" / "generate_hf_inventory.py").read_text(encoding="utf-8")
-        for forbidden in ("HF_TOKEN", "Authorization", "os.environ", "upload_", "create_commit", "method=\"POST\""):
+        for forbidden in (
+            "HF_TOKEN",
+            "Authorization",
+            "os.environ",
+            "upload_",
+            "create_commit",
+            'method="POST"',
+        ):
             self.assertNotIn(forbidden, source)
 
-    def test_refresh_workflow_is_scheduled_locked_tokenless_and_never_merges(self) -> None:
+    def test_refresh_workflow_is_scheduled_locked_tokenless_and_never_merges(
+        self,
+    ) -> None:
         text = (ROOT / gen.REFRESH_WORKFLOW).read_text(encoding="utf-8")
         self.assertRegex(text, r"(?m)^  schedule:\n    - cron: \"[0-9*/ ,-]+\"$")
         self.assertRegex(text, r"(?m)^  workflow_dispatch:$")
         # One lock for every trigger: never keyed by event name.
-        self.assertRegex(text, r"(?m)^concurrency:\n  group: hf-inventory-refresh\n  cancel-in-progress: false$")
+        self.assertRegex(
+            text,
+            r"(?m)^concurrency:\n  group: hf-inventory-refresh\n  cancel-in-progress: false$",
+        )
         self.assertNotIn("event_name }}", text.split("jobs:", 1)[0])
         self.assertIn("python3 scripts/generate_hf_inventory.py", text)
         self.assertIn("python3 scripts/check_proof_surface.py", text)

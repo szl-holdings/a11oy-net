@@ -7,9 +7,9 @@
     "meaning": "Generated file-presence classification of every public Hub model card. TRAINED means weight files exist. KERNEL-SOFTWARE means source/tests, not a LoRA. ROADMAP means an empty or roadmap-tagged card. NANO means synthetic npz. A listed URL is location only. Reachability is never quality. This origin does not train, bench, or serve weights.",
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
-  "reader_guide": "Every public Hub model card is classified here by scripts/generate_hf_inventory.py from the unauthenticated author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated record only while its source file is still listed and the class is unchanged; otherwise it is null. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards.",
+  "reader_guide": "Every public Hub model card is classified here by scripts/generate_hf_inventory.py from the unauthenticated author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated record only while its source file is still listed and the class is unchanged; otherwise it is null and remains REPORTED without the benchmark bytes. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards.",
   "captured_at": "2026-10-02T23:10:20Z",
-  "evidence_class": "MEASURED",
+  "evidence_class": "SNAPSHOT",
   "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS with expanded sibling file lists; class rules in scripts/generate_hf_inventory.py classify_model(). File presence only: no weight is downloaded, loaded, or evaluated.",
   "operational": false,
   "trained_all": false,
@@ -160,7 +160,7 @@
         "planValid": "11/11",
         "groundingCorrect": "4/5",
         "abstainCorrect": "2/6",
-        "evidence_class": "MEASURED"
+        "evidence_class": "REPORTED"
       },
       "operational": false,
       "trained": true
@@ -295,7 +295,7 @@
         "json_draft": "0/5",
         "adversarial_refusal": "2/6",
         "publication_eligible": false,
-        "evidence_class": "MEASURED"
+        "evidence_class": "REPORTED"
       },
       "operational": false,
       "trained": true
@@ -522,7 +522,7 @@
         "source": "BENCH.laptop-blackwell.json",
         "tests": "29 passed in 2.59s",
         "weights_trained": false,
-        "evidence_class": "MEASURED"
+        "evidence_class": "REPORTED"
       },
       "operational": false,
       "trained": false
@@ -798,7 +798,7 @@
     "tests": {
       "passed": 51,
       "failed": 0,
-      "evidence_class": "MEASURED",
+      "evidence_class": "REPORTED",
       "host": "grok-build-sandbox",
       "observed_at": "2026-08-30T16:15:00Z"
     },
