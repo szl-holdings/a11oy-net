@@ -29,6 +29,7 @@ import urllib.request
 from typing import Any, Callable
 
 import check_security_headers
+from no_redirect_http import open_no_redirect
 from stamp_source_witness import SHA_RE, validate_contract
 
 
@@ -94,7 +95,7 @@ def fetch_json(
         headers["X-GitHub-Api-Version"] = "2022-11-28"
     request = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(request, timeout=20) as response:
+        with open_no_redirect(request, timeout=20) as response:
             status = response.status
             final_url = response.geturl()
             content_type = response.headers.get("Content-Type", "")

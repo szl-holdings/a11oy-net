@@ -13,6 +13,8 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
+from no_redirect_http import open_no_redirect
+
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REQUIRED_HEADERS = {
@@ -486,7 +488,7 @@ def validate_live(url: str, expected: dict[str, str]) -> list[str]:
         headers={"User-Agent": "a11oy-edge-security-readback/1.0"},
     )
     try:
-        with urllib.request.urlopen(request, timeout=20) as response:
+        with open_no_redirect(request, timeout=20) as response:
             observed = {key.lower(): value for key, value in response.headers.items()}
             final_url = response.geturl()
             status = response.status

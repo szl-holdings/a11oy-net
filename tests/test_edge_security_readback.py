@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import copy
+import http.server
 import importlib.util
 import json
 import pathlib
 import sys
 import tempfile
+import threading
 import unittest
 from unittest import mock
 
@@ -357,6 +359,67 @@ class EdgeReadbackTests(unittest.TestCase):
     def test_duplicate_readback_json_fails_closed(self) -> None:
         with self.assertRaisesRegex(edge.ProbeError, "duplicate JSON key"):
             edge.decode_json(b'{"AD":true,"AD":false}', source="fixture")
+
+    def test_credentialed_json_redirect_is_not_followed(self) -> None:
+        target_requests: list[dict[str, str]] = []
+
+        class TargetHandler(http.server.BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                target_requests.append(dict(self.headers.items()))
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(b"{}")
+
+            def log_message(self, format: str, *args: object) -> None:
+                return
+
+        target = http.server.ThreadingHTTPServer(("127.0.0.1", 0), TargetHandler)
+        target_thread = threading.Thread(target=target.serve_forever, daemon=True)
+        target_thread.start()
+        target_url = f"http://127.0.0.1:{target.server_port}/private-target"
+
+        class RedirectHandler(http.server.BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                self.send_response(302)
+                self.send_header("Location", target_url)
+                self.end_headers()
+
+            def log_message(self, format: str, *args: object) -> None:
+                return
+
+        source = http.server.ThreadingHTTPServer(("127.0.0.1", 0), RedirectHandler)
+        source_thread = threading.Thread(target=source.serve_forever, daemon=True)
+        source_thread.start()
+        source_url = f"http://127.0.0.1:{source.server_port}/source"
+        try:
+            with self.assertRaisesRegex(edge.ProbeError, "HTTP Error 302"):
+                edge.fetch_json(source_url, token="fixture-bearer-secret")
+        finally:
+            source.shutdown()
+            target.shutdown()
+            source.server_close()
+            target.server_close()
+            source_thread.join(timeout=2)
+            target_thread.join(timeout=2)
+
+        self.assertEqual(target_requests, [])
+
+    def test_live_header_probe_uses_no_redirect_opener(self) -> None:
+        with mock.patch.object(
+            edge.check_security_headers,
+            "open_no_redirect",
+            side_effect=RuntimeError("no-redirect sentinel"),
+        ) as opener:
+            errors = edge.check_security_headers.validate_live(
+                "https://a11oy.net/",
+                {},
+            )
+        opener.assert_called_once()
+        self.assertEqual(
+            errors,
+            ["https://a11oy.net/: live readback failed: no-redirect sentinel"],
+        )
 
 
 class WorkflowContractTests(unittest.TestCase):
