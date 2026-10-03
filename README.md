@@ -168,12 +168,14 @@ repository root:
 
 ```bash
 python scripts/check_proof_surface.py
+python scripts/check_evidence_bindings.py
 python scripts/check_diligence_surface.py
 python scripts/check_security_headers.py
 python scripts/check_honest_kernel_bind.py
 node scripts/check_atlas_policy.mjs
 node scripts/check_probe_policy.mjs
 node scripts/check_honest_kernel_bind.mjs
+python -m unittest tests.test_evidence_bindings tests.test_generate_hf_inventory
 ```
 
 The checks validate:
@@ -237,14 +239,17 @@ into an isolated staging directory, excludes `.git` and `.github`, and stamps
 `health.json` only in that staging copy. The committed source file is not
 rewritten. The artifact preserves `.nojekyll` and `.well-known/security.txt`.
 
-The provider is intentionally still `build_type=legacy` while this change is
-reviewed. In that mode, pushes read the provider setting and skip the Actions
-deployment without changing it. After the provider is migrated to
-`build_type=workflow`, a main-branch push builds and deploys automatically; an
-operator may also explicitly dispatch the workflow with `deploy=true`. Both
-paths check out `github.sha`, prove the local checkout is that exact revision,
-and re-read protected `main` immediately before deployment. If `main` moved,
-deployment fails closed rather than publishing a stale artifact.
+The Pages provider was observed as `build_type=workflow` on 2026-10-03 UTC. A
+main-branch push builds and deploys automatically; an operator may also
+explicitly dispatch the workflow from `main` with `deploy=true`. Both paths
+check out `github.sha`, prove the local checkout is that exact revision, and
+re-read protected `main` immediately before deployment. If `main` moved,
+deployment fails closed rather than publishing a stale artifact. The
+[October 3 main run](https://github.com/szl-holdings/a11oy-net/actions/runs/37080908308)
+completed successfully for `68ec09e303d215eebdc5c6268519406820025f9d`;
+a cache-busted public
+`/health.json` read returned that SHA with `signer=unavailable` and
+`uptime=NOT_MEASURED`. That dated result is not a promise about later revisions.
 
 The pipeline uses immutable action revisions, keeps source build permissions
 separate from deployment permissions, and grants `pages: write` plus
@@ -252,27 +257,37 @@ separate from deployment permissions, and grants `pages: write` plus
 static-source binding only. It does not prove runtime health, signing, uptime,
 or live response headers.
 
-Post-merge provider sequence:
+During the 2026-10-02/03 UTC readbacks, public HTTPS through Cloudflare and a
+direct TLS read of the GitHub Pages origin both worked, but the Pages API reported
+`https_certificate.state=bad_authz` and `https_enforced=false`. The observed
+origin certificate expires on 2026-10-14. This is an origin-renewal risk, not
+evidence of a public outage. Inspect the Cloudflare SSL mode and underlying
+proxied DNS targets with provider access, diagnose Pages ACME authorization,
+then require a renewed `approved` origin certificate and read back both origin
+and edge HTTPS before closing that risk. A Cloudflare edge response alone
+does not establish end-to-end TLS.
+
+Post-merge verification sequence:
 
 1. Confirm the merged revision is the current protected `main` head and both
    required PR contexts passed for that exact reviewed head.
-2. Confirm the merge-triggered workflow reports `build_type=legacy` and did
-   not run the Actions deploy job. Preserve the existing branch deployment.
-3. In repository Pages settings, change the source to **GitHub Actions**. Do
-   not change `CNAME`, custom-domain, or HTTPS settings in this operation.
-4. Dispatch **Link & Asset Check** from `main` with `deploy=true`. A dispatch
-   from any other ref is ineligible, and a moved `main` is refused at final
+2. Re-read the Pages provider setting and require `build_type=workflow` for an
+   Actions deployment. Investigate any changed setting before publication.
+3. Confirm the merge-triggered **Link & Asset Check** build and deploy jobs
+   succeeded for that protected-main revision. If a separate dispatch is
+   needed, use `main` with `deploy=true`; a moved `main` is refused at final
    reauthorization.
-5. Retain the successful workflow URL and deployed `page_url`, then read back
-   `/health.json` and require its `sha` to equal the dispatched protected-main
+4. Retain the successful workflow URL and deployed `page_url`, then read back
+   `/health.json` and require its `sha` to equal the deployed protected-main
    revision. Preserve `signer=unavailable`, `probe_contract=STATIC_DOCUMENT`,
    `uptime=NOT_MEASURED`, and `dsse_live=NOT_CLAIMED`.
 
-Rollback is provider-first and reviewable: switch Pages back to branch
-deployment from `main` at `/`, then revert a bad source revision through a
-normal protected pull request. Verify the restored public files against that
-known revision. Do not hand-edit the committed `health.json` to impersonate a
-deployment, and do not treat rollback reachability as runtime-health or
+Rollback is reviewable: revert a bad source revision through a normal
+protected pull request, then verify the resulting Pages deployment and public
+files against that known revision. A provider-setting change needs its own
+current-state review; do not assume the earlier branch-deployment mode is
+still configured. Do not hand-edit the committed `health.json` to impersonate
+a deployment, and do not treat rollback reachability as runtime-health or
 header-deployment evidence.
 
 `_headers` is a versioned edge-security contract, not a live-header receipt. Its

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03 — close visible Hub label drift and update the Pages runbook
+
+- After protected merge #263, align the Estate OS public-Hub count card and three dated unauthenticated Space-status notes with the `SNAPSHOT` machine contracts. Retain the separate authenticated `REPORTED` status and the limits of an HTTP 401. Counts, observation times, Hub visibility, and provider resources are unchanged.
+- Replace the obsolete Pages `legacy` migration instructions with the observed Actions deployment state. Protected main `68ec09e303d215eebdc5c6268519406820025f9d` passed its merge-triggered Pages run and the public static health readback carried that SHA.
+- Record the distinct Pages origin-certificate renewal risk observed October 2–3 UTC: GitHub reports `bad_authz`, HTTPS enforcement off, and an October 14 origin expiry while the Cloudflare public edge still serves HTTPS. Provider diagnostics and renewal verification remain open.
+
 ## 2026-09-30 — current estate pointer and explicit deployment limits
 
 - Add the immutable `/estate-observed-2026-09-30.json` public-only observation and move `/estate-current.json` to its exact SHA-256. The record separates the 120-repository GitHub public listing, the generated 49-model / 34-dataset / 26-author-API-Space plus one profile-row Hub view, and the exact `a11oy` source/runtime match.
