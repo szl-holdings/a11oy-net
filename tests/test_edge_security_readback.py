@@ -10,8 +10,7 @@ import pathlib
 import sys
 import tempfile
 import threading
-import unittest
-from unittest import mock
+from unittest import TestCase, main, mock
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -33,7 +32,7 @@ edge = load_module("edge_security_readback")
 source_witness = load_module("stamp_source_witness")
 
 
-class SourceWitnessTests(unittest.TestCase):
+class SourceWitnessTests(TestCase):
     def setUp(self) -> None:
         self.revision = "a" * 40
         self.template = ROOT / ".well-known" / "szl-source.json"
@@ -72,7 +71,7 @@ class SourceWitnessTests(unittest.TestCase):
                 source_witness.load_witness(candidate)
 
 
-class EdgeReadbackTests(unittest.TestCase):
+class EdgeReadbackTests(TestCase):
     def setUp(self) -> None:
         self.revision = "b" * 40
 
@@ -126,7 +125,7 @@ class EdgeReadbackTests(unittest.TestCase):
                     },
                     {},
                 )
-            self.fail(f"unexpected GitHub readback URL: {url}")
+            raise AssertionError(f"unexpected GitHub readback URL: {url}")
 
         source, pages = edge.probe_github(
             edge.SOURCE_REPOSITORY,
@@ -422,7 +421,7 @@ class EdgeReadbackTests(unittest.TestCase):
         )
 
 
-class WorkflowContractTests(unittest.TestCase):
+class WorkflowContractTests(TestCase):
     def test_readback_is_automated_bounded_and_read_only(self) -> None:
         workflow = (
             ROOT / ".github" / "workflows" / "edge-security-readback.yml"
@@ -448,4 +447,4 @@ class WorkflowContractTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
