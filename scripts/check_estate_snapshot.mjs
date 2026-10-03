@@ -109,6 +109,7 @@ function validateKernelRelease(release) {
   assert.match(release.artifact.sha256, digest);
   assert.match(release.artifact.source_binding_report_sha256, digest);
   assert.equal(release.first_class_kernel.repo_type, 'kernel');
+  assert.equal(release.first_class_kernel.source_binding_path, 'build/torch-cpu/source-binding.json');
   for (const branch of ['main', 'v1']) {
     assert.match(release.first_class_kernel.branches_after[branch], sha);
     assert.equal(release.first_class_kernel.readback[branch], 'EXACT_BYTES_VERIFIED');
@@ -140,6 +141,7 @@ function validateKernelRelease(release) {
 }
 validateKernelRelease(shippedRecord.kernel_release_observation);
 for (const mutate of [
+  release => { release.first_class_kernel.source_binding_path = 'source-binding.json'; },
   release => { release.first_class_kernel.runtime.revision = '0'.repeat(40); },
   release => { release.authorization.source_revision = '0'.repeat(40); },
   release => { release.first_class_kernel.signature.publisher_revision = release.publisher_current_source_revision; },
