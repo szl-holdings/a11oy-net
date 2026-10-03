@@ -54,7 +54,7 @@
       "total": 34
     }
   },
-  "content_sha256": "132eaf0073a008e41a38da1a5fb5e04d1894e74a4ba0f81e5ea02a5b7a6e9ca8",
+  "content_sha256": "7504aed3fdc7c1d5228383a7f79c32477ab5507a266dd8f2dc8d408161d1fb3e",
   "counts": {
     "buckets": 2,
     "collections": 7,
@@ -87,7 +87,7 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T00:19:02Z",
+  "observed_at": "2026-10-03T00:37:59Z",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "resources": {
@@ -866,9 +866,9 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/killinchu-osint-corpus",
-        "last_modified": "2026-10-03T00:19:05.000Z",
+        "last_modified": "2026-10-03T00:37:55.000Z",
         "license": "other",
-        "repository_sha": "ec07b52b445ec3adea4f934e3c97a57aa1f94e26",
+        "repository_sha": "9a1b28332de50404357ea7a1eedeea351ea8d2e2",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1010,9 +1010,9 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/szl-science-forum-corpus",
-        "last_modified": "2026-10-02T22:35:35.000Z",
+        "last_modified": "2026-10-03T00:34:36.000Z",
         "license": "apache-2.0",
-        "repository_sha": "d8f8fec38361d988fddebec0be7898138af15275",
+        "repository_sha": "76e90b85678b501d14090c2964f50c01907dfe1b",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1827,17 +1827,17 @@
         "canonical_live_url": "https://szlholdings-finance.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/finance",
         "id": "SZLHOLDINGS/finance",
-        "last_modified": "2026-10-02T23:44:16.000Z",
+        "last_modified": "2026-10-03T00:29:41.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "67a7bc0d6fa93225f61a987b8afaa1549be755b7",
+        "repository_sha": "cca78d0eb5bbf0a1cd2fa8bcd4b99d680b2e7e94",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/finance",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "67a7bc0d6fa93225f61a987b8afaa1549be755b7",
+          "runtime_sha": "cca78d0eb5bbf0a1cd2fa8bcd4b99d680b2e7e94",
           "stage": "RUNNING"
         },
         "sdk": "docker",
@@ -1967,17 +1967,17 @@
         "canonical_live_url": "https://szlholdings-killinchu.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/killinchu",
         "id": "SZLHOLDINGS/killinchu",
-        "last_modified": "2026-10-02T03:28:46.000Z",
+        "last_modified": "2026-10-03T00:35:27.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "99e870d5b8a35dc5f28c7aa7b1a494b4ffd4da5c",
+        "repository_sha": "cb75b5b52baca1650a82991fd335a310043aabf3",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/killinchu",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "99e870d5b8a35dc5f28c7aa7b1a494b4ffd4da5c",
+          "runtime_sha": "cb75b5b52baca1650a82991fd335a310043aabf3",
           "stage": "RUNNING"
         },
         "sdk": "docker",
