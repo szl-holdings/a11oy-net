@@ -54,7 +54,7 @@
       "total": 34
     }
   },
-  "content_sha256": "132eaf0073a008e41a38da1a5fb5e04d1894e74a4ba0f81e5ea02a5b7a6e9ca8",
+  "content_sha256": "d57769dfaf2b258612fa1a958ff8afca103da867a8f08516306362331ed16a0c",
   "counts": {
     "buckets": 2,
     "collections": 7,
@@ -87,7 +87,7 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T00:19:02Z",
+  "observed_at": "2026-10-03T00:31:43Z",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "resources": {
@@ -866,9 +866,9 @@
       {
         "gated": false,
         "id": "SZLHOLDINGS/killinchu-osint-corpus",
-        "last_modified": "2026-10-03T00:19:05.000Z",
+        "last_modified": "2026-10-03T00:29:53.000Z",
         "license": "other",
-        "repository_sha": "ec07b52b445ec3adea4f934e3c97a57aa1f94e26",
+        "repository_sha": "1242182761b99ced9a37bb4ac41c21a112885cee",
         "source_observation": "PUBLIC_HF_REPOSITORY_OBSERVED"
       },
       {
@@ -1827,17 +1827,17 @@
         "canonical_live_url": "https://szlholdings-finance.hf.space/",
         "hub_url": "https://huggingface.co/spaces/SZLHOLDINGS/finance",
         "id": "SZLHOLDINGS/finance",
-        "last_modified": "2026-10-02T23:44:16.000Z",
+        "last_modified": "2026-10-03T00:29:41.000Z",
         "license": "apache-2.0",
         "listing": "AUTHOR_LIST_API",
-        "repository_sha": "67a7bc0d6fa93225f61a987b8afaa1549be755b7",
+        "repository_sha": "cca78d0eb5bbf0a1cd2fa8bcd4b99d680b2e7e94",
         "runtime": {
           "evidence_url": "https://huggingface.co/api/spaces/SZLHOLDINGS/finance",
           "hardware": "cpu-basic",
           "interpretation": "PROVIDER_REPORTED_STAGE_NOT_QUALITY_OR_FRESHNESS",
           "observation_state": "SPACE_API_OBSERVED",
           "repository_revision_state": "MATCHES_REPOSITORY_HEAD",
-          "runtime_sha": "67a7bc0d6fa93225f61a987b8afaa1549be755b7",
+          "runtime_sha": "cca78d0eb5bbf0a1cd2fa8bcd4b99d680b2e7e94",
           "stage": "RUNNING"
         },
         "sdk": "docker",
