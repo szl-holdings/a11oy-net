@@ -102,6 +102,40 @@ class EvidenceBindingsTest(unittest.TestCase):
                 )
             self.assertTrue(validate_binding(root, {**node, "evidence_digest": "sha256:bad"}, "fixture"))
 
+    def test_dated_unauthenticated_401_notes_cannot_claim_measured(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_contracts(root)
+            target = root / "spaces.json"
+            original = target.read_text(encoding="utf-8")
+            cases = (
+                ("keep", "governed-receipt-verifier", "historical_hub_status_note"),
+                ("fold", "holographic", "hub_status_note"),
+                ("fold", "anatomy", "hub_status_note"),
+            )
+            for section, ident, key in cases:
+                record = json.loads(original)
+                row = next(item for item in record[section] if item["id"] == ident)
+                self.assertIn("SNAPSHOT (unauthenticated", row[key])
+                self.assertIn("REPORTED (SZLHOLDINGS org-admin credential", row[key])
+                self.assertIn("NOT MEASURED", row[key])
+                row[key] = row[key].replace("SNAPSHOT (unauthenticated", "MEASURED (unauthenticated", 1)
+                target.write_text(json.dumps(record), encoding="utf-8")
+                with self.subTest(section=section, ident=ident):
+                    self.assertIn(f"{section}/{ident}", " ".join(validate_documents(root)))
+            target.write_text(original, encoding="utf-8")
+
+    def test_estate_os_current_hub_card_cannot_claim_measured(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_contracts(root)
+            target = root / "estate" / "os" / "index.html"
+            target.parent.mkdir(parents=True)
+            page = (ROOT / "estate" / "os" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("SNAPSHOT from the unauthenticated Hub API", page)
+            target.write_text(page.replace("SNAPSHOT from the unauthenticated Hub API", "MEASURED from the unauthenticated Hub API", 1), encoding="utf-8")
+            self.assertIn("estate/os/index.html", " ".join(validate_documents(root)))
+
     def test_nested_labels_and_fail_closed_boundaries(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

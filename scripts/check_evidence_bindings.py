@@ -133,6 +133,25 @@ def validate_documents(root: Path = ROOT) -> list[str]:
         or isinstance(spaces["cut"]["snapshot_total"], bool)
     ):
         errors.append("spaces.json: old Hub cut must remain a dated SNAPSHOT")
+    # The unauthenticated 401 observations have no published response witness.
+    # Keep those dated notes separate from the authenticated REPORTED check.
+    status_notes = (
+        ("keep", "governed-receipt-verifier", "historical_hub_status_note"),
+        ("fold", "holographic", "hub_status_note"),
+        ("fold", "anatomy", "hub_status_note"),
+    )
+    for section, ident, key in status_notes:
+        row = next((item for item in spaces[section] if item.get("id") == ident), None)
+        note = row.get(key, "") if isinstance(row, dict) else ""
+        if (
+            not isinstance(note, str)
+            or "SNAPSHOT (unauthenticated" not in note
+            or "MEASURED (unauthenticated" in note
+            or "REPORTED (SZLHOLDINGS org-admin credential" not in note
+            or "A 401 alone cannot tell private from absent." not in note
+            or "NOT MEASURED" not in note
+        ):
+            errors.append(f"spaces.json: {section}/{ident} must preserve the dated SNAPSHOT, REPORTED, and 401 boundaries")
     homepage = (root / "index.html") if (root / "index.html").is_file() else None
     if homepage is not None:
         page = homepage.read_text(encoding="utf-8")
@@ -152,6 +171,12 @@ def validate_documents(root: Path = ROOT) -> list[str]:
         page = estate_html.read_text(encoding="utf-8")
         if f"later {estate['captured_at'][:10]} machine snapshot" not in page:
             errors.append("estate/index.html: machine-link date must distinguish the later JSON snapshot")
+    estate_os_html = root / "estate" / "os" / "index.html"
+    if estate_os_html.is_file():
+        page = estate_os_html.read_text(encoding="utf-8")
+        card = re.search(r"<article><span>HF models · public</span>(.*?)</article>", page, re.DOTALL)
+        if card is None or "SNAPSHOT from the unauthenticated Hub API" not in card.group(1):
+            errors.append("estate/os/index.html: current HF models card must retain SNAPSHOT")
     llms = (root / "llms.txt") if (root / "llms.txt").is_file() else None
     if llms is not None and "CLOSED-as-MEASURED" in llms.read_text(encoding="utf-8"):
         errors.append("llms.txt: unbound closure must not claim MEASURED")

@@ -249,6 +249,15 @@ def check_generated_hf_inventory() -> None:
                 f"{page} prints generated counts without their observation date"
             )
 
+    estate_os = (ROOT / "estate/os/index.html").read_text(encoding="utf-8")
+    hf_models_card = re.search(
+        r"<article><span>HF models · public</span>(.*?)</article>", estate_os, re.DOTALL
+    )
+    assert hf_models_card is not None, "estate OS public HF models card is missing"
+    assert "SNAPSHOT from the unauthenticated Hub API" in hf_models_card.group(1), (
+        "estate OS public HF count has no raw API witness for MEASURED"
+    )
+
     # (c) every Hub asset or Space host these surfaces link is publicly listed
     pools = {
         "": {row["id"] for row in resources["models"]},
