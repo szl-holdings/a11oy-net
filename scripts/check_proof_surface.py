@@ -23,6 +23,7 @@ MANIFEST_ALIAS = ROOT / "manifest.webmanifest"
 HEADERS = ROOT / "_headers"
 CNAME = ROOT / "CNAME"
 SECURITY = ROOT / ".well-known" / "security.txt"
+SOURCE_WITNESS = ROOT / ".well-known" / "szl-source.json"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
 PROBE_POLICY = ROOT / "scripts" / "probe_policy.js"
@@ -33,7 +34,10 @@ READYZ = ROOT / "readyz"
 BUILD_INFO = ROOT / "api" / "build-info"
 DILIGENCE = ROOT / "diligence" / "index.html"
 STAMP_HEALTH_SHA = ROOT / "scripts" / "stamp_health_sha.py"
+STAMP_SOURCE_WITNESS = ROOT / "scripts" / "stamp_source_witness.py"
 PAGES_ARTIFACT_BUILDER = ROOT / "scripts" / "build_pages_artifact.py"
+EDGE_READBACK = ROOT / "scripts" / "edge_security_readback.py"
+EDGE_READBACK_WORKFLOW = ROOT / ".github" / "workflows" / "edge-security-readback.yml"
 GENERATOR = ROOT / "scripts" / "generate_hf_inventory.py"
 HF_INVENTORY = ROOT / "public-inventory.json"
 HF_CURRENT = ROOT / "estate" / "hf-current.json"
@@ -341,7 +345,12 @@ def check() -> None:
     assert "python3 scripts/check_diligence_surface.py" in workflow
     assert "node scripts/check_probe_policy.mjs" in workflow
     assert STAMP_HEALTH_SHA.is_file(), "Pages artifact stamp for health.json sha must exist"
+    assert STAMP_SOURCE_WITNESS.is_file(), "Pages source-witness stamp must exist"
+    assert SOURCE_WITNESS.is_file(), "canonical static source-witness template must exist"
     assert PAGES_ARTIFACT_BUILDER.is_file(), "isolated Pages artifact builder must exist"
+    assert EDGE_READBACK.is_file() and EDGE_READBACK_WORKFLOW.is_file(), (
+        "automated edge-security readback script and workflow must exist"
+    )
     assert "python3 scripts/build_pages_artifact.py" in workflow
     assert "--source-revision \"${SOURCE_REVISION}\"" in workflow
     assert "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d" in workflow
@@ -363,9 +372,11 @@ def check() -> None:
     assert '_git(root, "ls-tree", "-rz", "--full-tree", source_revision)' in builder
     assert '("git", "-C", str(root), "cat-file", "--batch")' in builder
     assert 'stamp(output / "health.json", source_revision)' in builder
+    assert 'output / ".well-known" / "szl-source.json"' in builder
     assert 'artifact output must be outside the source tree' in builder
     for protected_artifact in (
         ".well-known/security.txt",
+        ".well-known/szl-source.json",
         "404.html",
         "assets/a11oy-mark.svg",
         "assets/diligence.css",
@@ -385,6 +396,30 @@ def check() -> None:
         "scripts/probe_policy.js",
     ):
         assert protected_artifact in builder
+    source_witness = json.loads(SOURCE_WITNESS.read_text(encoding="utf-8"))
+    assert source_witness["schema_version"] == "a11oy-static-source-witness/v1"
+    assert source_witness["surface"] == "https://a11oy.net"
+    assert source_witness["source_repository"] == (
+        "https://github.com/szl-holdings/a11oy-net"
+    )
+    assert source_witness["source_revision"] == (
+        "UNSTAMPED_BY_PAGES_ARTIFACT_BUILDER"
+    )
+    assert source_witness["artifact_kind"] == "STATIC_GITHUB_PAGES"
+    assert source_witness["artifact_binding"] == "EXACT_SOURCE_REVISION"
+    assert source_witness["product_runtime_readiness"] == "NOT_MEASURED"
+    assert source_witness["uptime"] == "NOT_MEASURED"
+    assert source_witness["dsse_live"] == "NOT_CLAIMED"
+    assert source_witness["generated_at_utc"] is None
+    edge_workflow = EDGE_READBACK_WORKFLOW.read_text(encoding="utf-8")
+    assert "workflow_run:" in edge_workflow and "schedule:" in edge_workflow
+    assert "pages: read" in edge_workflow
+    assert "contents: write" not in edge_workflow and "pages: write" not in edge_workflow
+    assert "persist-credentials: false" in edge_workflow
+    assert "python3 scripts/edge_security_readback.py" in edge_workflow
+    assert re.search(
+        r"actions/upload-artifact@[0-9a-f]{40} # v7\.0\.1", edge_workflow
+    )
     assert PROBE_POLICY.is_file() and PROBE_POLICY_CHECK.is_file(), (
         "shared fail-closed browser observation policy and regression check are required"
     )

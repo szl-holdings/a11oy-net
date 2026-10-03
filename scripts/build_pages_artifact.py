@@ -3,8 +3,9 @@
 """Build the exact-source GitHub Pages artifact in an isolated directory.
 
 Only files tracked by the checked-out commit are admitted. GitHub control-plane
-files are excluded, and ``health.json`` is stamped in the staging copy only.
-The committed source tree is never rewritten by this builder.
+files are excluded, while ``health.json`` and the static source witness are
+stamped in the staging copy only. The committed source tree is never rewritten
+by this builder.
 """
 
 from __future__ import annotations
@@ -16,12 +17,14 @@ import subprocess
 import sys
 
 from stamp_health_sha import SHA_RE, stamp
+from stamp_source_witness import stamp as stamp_source_witness
 
 
 EXCLUDED_TOP_LEVEL = {".git", ".github"}
 REQUIRED_FILES = (
     ".nojekyll",
     ".well-known/security.txt",
+    ".well-known/szl-source.json",
     "404.html",
     "_headers",
     "api/build-info/index.html",
@@ -168,6 +171,21 @@ def build(root: pathlib.Path, output: pathlib.Path, source_revision: str) -> dic
     if health.get("dsse_live") != "NOT_CLAIMED":
         raise ValueError("staged health.json must not claim DSSE-LIVE")
 
+    source_witness = stamp_source_witness(
+        output / ".well-known" / "szl-source.json",
+        source_revision,
+    )
+    if source_witness.get("source_revision") != source_revision:
+        raise ValueError("staged source witness does not bind the exact source revision")
+    if source_witness.get("artifact_binding") != "EXACT_SOURCE_REVISION":
+        raise ValueError("staged source witness must preserve exact artifact binding")
+    if source_witness.get("product_runtime_readiness") != "NOT_MEASURED":
+        raise ValueError("staged source witness must not claim runtime readiness")
+    if source_witness.get("uptime") != "NOT_MEASURED":
+        raise ValueError("staged source witness must not claim uptime")
+    if source_witness.get("dsse_live") != "NOT_CLAIMED":
+        raise ValueError("staged source witness must not claim DSSE-LIVE")
+
     return {
         "status": "PAGES_ARTIFACT_STAGED",
         "source_revision": source_revision,
@@ -179,6 +197,16 @@ def build(root: pathlib.Path, output: pathlib.Path, source_revision: str) -> dic
             "probe_contract": health["probe_contract"],
             "uptime": health["uptime"],
             "dsse_live": health["dsse_live"],
+        },
+        "source_witness_contract": {
+            "source_revision": source_witness["source_revision"],
+            "artifact_kind": source_witness["artifact_kind"],
+            "artifact_binding": source_witness["artifact_binding"],
+            "product_runtime_readiness": source_witness[
+                "product_runtime_readiness"
+            ],
+            "uptime": source_witness["uptime"],
+            "dsse_live": source_witness["dsse_live"],
         },
     }
 

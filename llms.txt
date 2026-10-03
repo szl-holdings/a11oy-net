@@ -47,6 +47,7 @@ Authoritative public paths:
 - Wiñay honesty contract: https://a11oy.net/ayllu/winay.json
 - Decision Integrity contract: https://a11oy.net/decision.json
 - Machine-readable evidence contract: https://a11oy.net/evidence.json
+- Exact static source witness (artifact-stamped Git revision; not runtime health): https://a11oy.net/.well-known/szl-source.json
 - Static-surface scope: https://a11oy.net/api/build-info/
 - Static probe document (not runtime health): https://a11oy.net/health.json
 - Static HTML reachability only (not JSON health; not a health URL): https://a11oy.net/readyz/
@@ -69,3 +70,4 @@ Truth boundary:
 - CNAME is a11oy.net. Prior DNS observations pointed to GitHub Pages; current DNS and reachability require fresh readback. Product code may 301 a11oy.net to a-11-oy.com only if that Host is routed into the product app. This origin is not a product host.
 - Canonical, og:url, and sameAs for these pages are https://a11oy.net/... never a11oy.com, never a Hugging Face Space as page canonical.
 - _headers is policy intent. GitHub Pages does not apply it. live_edge_security_headers_deployment_proven=false.
+- The source witness identifies static artifact source only. A fresh protected-main and provider readback is still required; it does not prove product runtime, uptime, or signing.

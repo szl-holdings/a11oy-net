@@ -347,6 +347,7 @@ def check() -> None:
     assert "_headers is policy intent" in llms
     assert "/healthz is not published" in llms
     assert "https://a11oy.net/health.json" in llms
+    assert "https://a11oy.net/.well-known/szl-source.json" in llms
     record_contract = json.loads(RECORD_JSON.read_text(encoding="utf-8"))
     assert record_contract["surface"]["url"] == "https://a11oy.net/record/"
     assert record_contract["permalinks"] == {
