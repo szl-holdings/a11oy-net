@@ -81,6 +81,12 @@ equivalence.
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
+- **Exact static source witness:**
+  [`/.well-known/szl-source.json`](https://a11oy.net/.well-known/szl-source.json)
+  is stamped only in the isolated Pages artifact. Its revision identifies the
+  Git commit used to assemble those static bytes. A fresh readback must still
+  prove that revision is the current protected, GitHub-verified `main`; the
+  document does not establish product-runtime readiness, uptime, or signing.
 - **Static route scope:** [`/health.json`](https://a11oy.net/health.json) is a
   committed static JSON document. Receiving it proves only that this exact path
   was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
@@ -207,6 +213,7 @@ The checks validate:
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
 | `health.json` | Only health document: committed static JSON; `signer=unavailable`; `sha` is last published main; not runtime, not DSSE-LIVE, not uptime. |
+| `.well-known/szl-source.json`, `scripts/stamp_source_witness.py` | Unstamped source template and artifact-only exact Git revision stamp; canonical presence is a static deployment witness, not runtime health. |
 | `readyz/index.html` | HTML directory reachability only; never a health URL. `/healthz` is not published. |
 | `api/build-info/index.html` | Static surface scope without an immutable build-identity claim. |
 | `chat/index.html`, `code/index.html` | Truthful cross-domain product gateways with no local execution claim. |
@@ -221,7 +228,8 @@ The checks validate:
 | `scripts/check_honest_kernel_bind.py` | HTML/CSP contract: no hardcoded kernel 8; catalog 25 labelled. |
 | `scripts/check_proof_surface.py` | Metadata, accessibility, and truth-surface guard. |
 | `scripts/check_diligence_surface.py` | Diligence, machine-contract, no-script, and recovery-route guard. |
-| `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. |
+| `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. GitHub Pages does not apply `_headers`. |
+| `scripts/edge_security_readback.py`, `.github/workflows/edge-security-readback.yml` | Read-only exact-main, source-witness, Pages, TLS, DNSSEC, and live-header readback with a bounded generated receipt. |
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
 
@@ -245,8 +253,9 @@ The repository carries a pinned GitHub Actions Pages pipeline in
 `pages build and deployment` remains a candidate-only build: it never deploys
 a pull request. It copies only files tracked by the exact checked-out commit
 into an isolated staging directory, excludes `.git` and `.github`, and stamps
-`health.json` only in that staging copy. The committed source file is not
-rewritten. The artifact preserves `.nojekyll` and `.well-known/security.txt`.
+`health.json` plus `/.well-known/szl-source.json` only in that staging copy.
+The committed source templates are not rewritten. The artifact preserves
+`.nojekyll` and `.well-known/security.txt`.
 
 The Pages provider was observed as `build_type=workflow` on 2026-10-03 UTC. A
 main-branch push builds and deploys automatically; an operator may also
@@ -287,9 +296,12 @@ Post-merge verification sequence:
    needed, use `main` with `deploy=true`; a moved `main` is refused at final
    reauthorization.
 4. Retain the successful workflow URL and deployed `page_url`, then read back
-   `/health.json` and require its `sha` to equal the deployed protected-main
-   revision. Preserve `signer=unavailable`, `probe_contract=STATIC_DOCUMENT`,
-   `uptime=NOT_MEASURED`, and `dsse_live=NOT_CLAIMED`.
+   `/health.json` and `/.well-known/szl-source.json`. Require both revisions to
+   equal the deployed protected-main revision. Preserve the existing static
+   `health.json` contract, including `signer=unavailable` and
+   `probe_contract=STATIC_DOCUMENT`. The source witness must keep runtime
+   readiness, uptime, and DSSE-LIVE status `UNAVAILABLE`; it does not turn a
+   static source binding into a runtime claim.
 
 Rollback is reviewable: revert a bad source revision through a normal
 protected pull request, then verify the resulting Pages deployment and public
@@ -299,19 +311,21 @@ still configured. Do not hand-edit the committed `health.json` to impersonate
 a deployment, and do not treat rollback reachability as runtime-health or
 header-deployment evidence.
 
-`_headers` is a versioned edge-security contract, not a live-header receipt. Its
-live deployment state remains **UNKNOWN** on this candidate:
-`live_edge_security_headers_deployment_proven=false` records only that no proof
-has been attached; it is not an observation that deployment is absent. No
-source-bound readback URI, UTC
-observation time, or source revision is attached. CI recomputes every inline
-script hash and rejects a weakened or incomplete contract, but GitHub Pages does not
-apply this file. Its presence is therefore not deployment evidence. The domain
-must be cut over to a compatible edge host or proxy before those response
-headers are live. After cutover, run **Edge Security Readback**; it compares the
-root and web-manifest responses with the exact committed contract and fails
-closed on missing or changed headers. Update the deployment-state evidence only
-after that exact live readback succeeds.
+`_headers` is a versioned edge-security contract, not a live-header receipt. CI
+recomputes every inline-script hash and rejects a weakened or incomplete
+contract, but GitHub Pages does not apply this file. Its presence is therefore
+not deployment evidence. **Edge Security Readback** runs after a successful
+main deployment workflow, on a daily schedule, and on explicit dispatch. It
+reauthorizes current `main`, requires GitHub to report that revision protected
+and verified, compares the deployed source witness with that exact revision,
+and evaluates Pages HTTPS enforcement, a hostname-verified TLS handshake,
+authenticated DS and DNSKEY answers through independent validating resolvers,
+and live response headers. It uploads a bounded point-in-time JSON receipt and
+fails if any control is unavailable, stale, missing, or mismatched. These
+controls remain independent: a valid certificate cannot promote missing
+DNSSEC, missing headers, a stale source witness, or disabled Pages HTTPS
+enforcement to PASS. Update deployment-state evidence only after that exact
+live readback succeeds.
 
 Report vulnerabilities through the organization
 [security policy](https://github.com/szl-holdings/.github/security/policy).

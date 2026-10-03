@@ -1,14 +1,36 @@
 name: Edge Security Readback
 
 on:
+  workflow_run:
+    workflows: ["Link & Asset Check"]
+    branches: [main]
+    types: [completed]
+  schedule:
+    - cron: "17 06 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
+  pages: read
+
+concurrency:
+  group: edge-security-readback
+  cancel-in-progress: true
+
+env:
+  SOURCE_REVISION: ${{ github.event.workflow_run.head_sha || github.sha }}
 
 jobs:
   exact-live-readback:
-    name: Exact live header readback
+    name: Exact source, TLS, DNSSEC, and header readback
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.conclusion == 'success'
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
@@ -16,11 +38,49 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Require successful exact-source deployment workflow
+        if: github.event_name == 'workflow_run'
+        shell: bash
+        env:
+          UPSTREAM_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          set -euo pipefail
+          if [ "${UPSTREAM_CONCLUSION}" != "success" ]; then
+            echo "Upstream Link & Asset Check concluded ${UPSTREAM_CONCLUSION}; refusing live closure." >&2
+            exit 1
+          fi
 
-      - name: Validate committed contract and live edge
+      - name: Checkout exact observed source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.SOURCE_REVISION }}
+          persist-credentials: false
+
+      - name: Reauthorize exact current protected main
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          current="$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" refs/heads/main | cut -f1)"
+          if [ -z "${current}" ] || [ "${actual}" != "${SOURCE_REVISION}" ] || [ "${current}" != "${SOURCE_REVISION}" ]; then
+            echo "Source drift: event=${SOURCE_REVISION}, checkout=${actual}, current_main=${current:-UNAVAILABLE}." >&2
+            exit 1
+          fi
+
+      - name: Read back independent live controls
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: >-
-          python3 scripts/check_security_headers.py
-          --url https://a11oy.net/
-          --url https://a11oy.net/site.webmanifest
+          python3 scripts/edge_security_readback.py
+          --expected-revision "${SOURCE_REVISION}"
+          --github-repository "${GITHUB_REPOSITORY}"
+          --output edge-security-readback.json
+
+      - name: Retain bounded readback receipt
+        if: always() && hashFiles('edge-security-readback.json') != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: edge-security-readback-${{ env.SOURCE_REVISION }}
+          path: edge-security-readback.json
+          if-no-files-found: error
+          retention-days: 30

@@ -32,6 +32,9 @@ class PagesArtifactTests(unittest.TestCase):
             ("git", "-C", str(ROOT), "rev-parse", "HEAD"), text=True
         ).strip()
         source_health_before = (ROOT / "health.json").read_bytes()
+        source_witness_before = (
+            ROOT / ".well-known" / "szl-source.json"
+        ).read_bytes()
 
         with tempfile.TemporaryDirectory() as temporary:
             output = pathlib.Path(temporary) / "site"
@@ -42,6 +45,9 @@ class PagesArtifactTests(unittest.TestCase):
             self.assertFalse((output / ".git").exists())
             self.assertFalse((output / ".github").exists())
             self.assertTrue((output / ".well-known" / "security.txt").is_file())
+            self.assertTrue(
+                (output / ".well-known" / "szl-source.json").is_file()
+            )
             self.assertTrue((output / ".nojekyll").is_file())
             self.assertTrue((output / "oac" / "index.html").is_file())
             self.assertTrue((output / "oac" / "release.json").is_file())
@@ -65,7 +71,35 @@ class PagesArtifactTests(unittest.TestCase):
             self.assertEqual(staged_health["uptime"], "NOT_MEASURED")
             self.assertEqual(staged_health["dsse_live"], "NOT_CLAIMED")
 
+            staged_source_witness = json.loads(
+                (output / ".well-known" / "szl-source.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(
+                staged_source_witness["source_revision"], source_revision
+            )
+            self.assertEqual(
+                staged_source_witness["artifact_kind"], "STATIC_GITHUB_PAGES"
+            )
+            self.assertEqual(
+                staged_source_witness["artifact_binding"], "EXACT_SOURCE_REVISION"
+            )
+            self.assertEqual(
+                staged_source_witness["product_runtime_readiness"], "UNAVAILABLE"
+            )
+            self.assertEqual(staged_source_witness["uptime"], "UNAVAILABLE")
+            self.assertEqual(staged_source_witness["dsse_live"], "UNAVAILABLE")
+            self.assertEqual(
+                receipt["source_witness_contract"]["source_revision"],
+                source_revision,
+            )
+
         self.assertEqual((ROOT / "health.json").read_bytes(), source_health_before)
+        self.assertEqual(
+            (ROOT / ".well-known" / "szl-source.json").read_bytes(),
+            source_witness_before,
+        )
 
     def test_rejects_output_inside_source_tree(self) -> None:
         builder = load_builder()
