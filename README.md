@@ -179,7 +179,16 @@ The checks validate:
 | `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
 | `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
-| `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates `public-inventory.json`, `estate/hf-current.json`, `live-align/hf_live_inventory.json`, the `models.json` hub block and the `spaces.json` `hub_presence` block from the unauthenticated Hub API; the workflow reruns it daily and proposes a reviewed PR whose commit GitHub signs (`scripts/verified_commit_payload.py`). No Hugging Face token. |
+| `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates current inventory and page fields from the unauthenticated Hub API after matching all model, dataset, and Space IDs to an immutable signed A11oy manifest; the workflow reruns it daily and proposes a reviewed PR whose commit GitHub signs (`scripts/verified_commit_payload.py`). No Hugging Face token. |
+| `public-membership.json`, `estate/canonical-hf-manifest.json` | Current public repository membership and exact retained canonical source bytes. The record binds the GitHub source revision, Git blob, SHA-256, scope, and counts. A source movement during observation, visibility ambiguity, or membership drift blocks generation. |
+| `public-membership.observed-2026-09-10.json` | Exact September 10 membership receipt retained as history; its observation, source, counts, and evidence are not relabelled. |
+
+Public repository membership consists of models, datasets, and Spaces, including
+the reserved public `README` Space when it is independently observable. Kernel
+repositories are a subset of models and are counted once in totals. Collections
+and buckets are separately observed auxiliary resources outside that membership
+scope. Neither listing alignment nor source binding establishes runtime readiness,
+model quality, or permission to publish a product release.
 | `notes/index.html`, `CHANGELOG.md` | Dated notes / status pointers. |
 | `evidence.json`, `llms.txt` | Machine-readable evidence boundaries and automated-reader routing. |
 | `health.json` | Only health document: committed static JSON; `signer=unavailable`; `sha` is last published main; not runtime, not DSSE-LIVE, not uptime. |

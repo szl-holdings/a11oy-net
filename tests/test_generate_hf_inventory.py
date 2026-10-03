@@ -4,11 +4,14 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
+import copy
 import json
 import shutil
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "hf_api"
@@ -31,6 +34,22 @@ PAGE = """<!doctype html>
 
 def fixture(name: str):
     return json.loads((FIXTURE / name).read_text(encoding="utf-8"))
+
+
+def rebind(raw):
+    """A changed synthetic source and observation; never used for live outputs."""
+    manifest = json.loads(raw["canonical_source"]["manifest_text"])
+    spaces = list(raw["spaces"])
+    listed = {row["id"] for row in spaces}
+    spaces.extend(row for row in raw["special_spaces"].values()
+                  if row.get("private") is False and row["id"] not in listed)
+    rows = {"models": raw["models"], "datasets": raw["datasets"], "spaces": spaces}
+    manifest["inventory"] = rows
+    manifest["counts"] = {kind: len(value) for kind, value in rows.items()}
+    content = (json.dumps(manifest, indent=2) + "\n").encode()
+    blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
+    raw["canonical_source"] = gen.canonical_source(content, "a" * 40, blob)
+    return raw
 
 
 class SiteCopy:
@@ -79,6 +98,12 @@ class GeneratorTest(unittest.TestCase):
         self.assertEqual(inventory["counts"]["spaces_list_api_rows"], listed_spaces)
         self.assertEqual(inventory["counts"]["special_spaces_added"], 1)
         self.assertEqual(inventory["counts"]["spaces"], listed_spaces + 1)
+        repository_total = len(fixture("models.json")) + len(fixture("datasets.json")) + listed_spaces + 1
+        self.assertEqual(inventory["counts"]["repository_membership_total"], repository_total)
+        self.assertEqual(inventory["counts"]["public_resources_total"],
+                         repository_total + len(fixture("collections.json")) + len(fixture("buckets.json")))
+        self.assertEqual(inventory["claim_boundaries"]["kernel_membership"],
+                         "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS")
         self.assertEqual(current["counts"]["spaces_public"], listed_spaces + 1)
         self.assertEqual(inventory["private_assets"], "NOT_OBSERVED")
         self.assertEqual(current["private_assets"], "NOT_OBSERVED")
@@ -116,6 +141,7 @@ class GeneratorTest(unittest.TestCase):
         self.site.run(T1)
         raw = gen.collect(gen.FixtureSource(FIXTURE))
         raw["models"] = raw["models"][1:]
+        rebind(raw)
         _outputs, changed = self.site.run(T2, raw)
         self.assertIn(gen.INVENTORY_PATH, changed)
         self.assertIn(gen.MODELS_PATH, changed)
@@ -128,6 +154,7 @@ class GeneratorTest(unittest.TestCase):
             "SZLHOLDINGS/chaski": "TRAINED_WEIGHTS",
             "SZLHOLDINGS/Moons-Nano": "NANO_SYNTHETIC",
             "SZLHOLDINGS/szl-maskmod": "KERNEL_SOFTWARE",
+            "SZLHOLDINGS/szl-block-kv": "CODE_OR_SCRIPTS",
             "SZLHOLDINGS/qantu": "ROADMAP_EMPTY",
             "SZLHOLDINGS/szl-training-scripts": "CODE_OR_SCRIPTS",
             "SZLHOLDINGS/szl-energy-attest": "ROADMAP_EMPTY",
@@ -209,6 +236,115 @@ class GeneratorTest(unittest.TestCase):
         source = (ROOT / "scripts" / "generate_hf_inventory.py").read_text(encoding="utf-8")
         for forbidden in ("HF_TOKEN", "Authorization", "os.environ", "upload_", "create_commit", "method=\"POST\""):
             self.assertNotIn(forbidden, source)
+
+    def test_canonical_binding_retains_exact_bytes_and_all_three_memberships(self) -> None:
+        outputs, _ = self.site.run(T1)
+        current = self.site.read(gen.CURRENT_PATH)
+        record = self.site.read(gen.MEMBERSHIP_PATH)
+        source = (self.site.root / gen.CANONICAL_COPY_PATH).read_bytes()
+        self.assertEqual(source, (FIXTURE / "canonical_manifest.json").read_bytes())
+        self.assertEqual(record["source_sha256"], hashlib.sha256(source).hexdigest())
+        self.assertEqual(record, current["canonical_membership_source"])
+        self.assertEqual(record["scope_sha256"], hashlib.sha256(gen.canonical(gen.PUBLIC_SCOPE)).hexdigest())
+        self.assertFalse(record["production_authorization"])
+        self.assertIn(gen.MEMBERSHIP_PATH, outputs)
+
+    def test_observed_membership_drift_missing_binding_and_kernel_only_are_blocking(self) -> None:
+        original = gen.collect(gen.FixtureSource(FIXTURE))
+        for kind in ("models", "datasets", "spaces"):
+            raw = copy.deepcopy(original)
+            raw[kind] = raw[kind][1:]
+            with self.subTest(kind=kind), self.assertRaises(gen.GenerationError):
+                gen.build_inventory(raw, T1)
+        missing = copy.deepcopy(original)
+        del missing["canonical_source"]
+        with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(missing, T1)
+        kernel_only = copy.deepcopy(original)
+        kernel_only["kernels"][0]["id"] = "SZLHOLDINGS/unlisted-kernel"
+        with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(kernel_only, T1)
+
+    def test_canonical_scope_blob_duplicate_keys_and_private_disposition_are_blocking(self) -> None:
+        original = (FIXTURE / "canonical_manifest.json").read_bytes()
+        manifest = json.loads(original)
+        variants = [
+            {**manifest, "schemaVersion": 1},
+            {**manifest, "org": "someone-else"},
+            {**manifest, "inventoryScope": {**manifest["inventoryScope"], "authenticated": True}},
+            {**manifest, "inventoryScope": {**manifest["inventoryScope"], "visibility": "all"}},
+            {**manifest, "inventoryScope": {**manifest["inventoryScope"], "privateAssetsIncluded": True}},
+            {**manifest, "counts": {**manifest["counts"], "spaces": True}},
+            {**manifest, "counts": {**manifest["counts"], "models": manifest["counts"]["models"] + 1}},
+            {**manifest, "inventory": {**manifest["inventory"], "spaces":
+             [{**manifest["inventory"]["spaces"][0], "private": True}] + manifest["inventory"]["spaces"][1:]}},
+            {**manifest, "inventory": {**manifest["inventory"], "spaces":
+             [{**manifest["inventory"]["spaces"][0], "private": None}] + manifest["inventory"]["spaces"][1:]}},
+            {**manifest, "inventory": {**manifest["inventory"], "models":
+             [{**manifest["inventory"]["models"][0], "id": "other/model"}] + manifest["inventory"]["models"][1:]}},
+            {**manifest, "observedAt": "2026-09-29"},
+        ]
+        raw_variants = [json.dumps(value).encode() for value in variants]
+        raw_variants.extend((b"{broken", original.rstrip()[:-1] + b',"counts":{}}',
+                             b'{"schemaVersion":NaN}', b'{"schemaVersion":1e999}'))
+        for raw in raw_variants:
+            blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+            with self.subTest(raw=raw[:80]), self.assertRaises(gen.GenerationError):
+                gen.canonical_source(raw, "a" * 40, blob)
+        with self.assertRaises(gen.GenerationError):
+            gen.canonical_source(original, "main", "b" * 40)
+        with self.assertRaises(gen.GenerationError):
+            gen.canonical_source(original, "a" * 40, "b" * 40)
+
+    def test_live_source_resolves_signed_head_then_reads_immutable_manifest(self) -> None:
+        raw = (FIXTURE / "canonical_manifest.json").read_bytes()
+        blob = fixture("canonical_source.json")["source_git_blob"]
+        source = gen.LiveSource(attempts=1)
+        with mock.patch.object(source, "_get", side_effect=[
+            {"sha": "a" * 40, "commit": {"verification": {"verified": True}}},
+            {"type": "file", "path": gen.CANONICAL_PATH, "sha": blob},
+        ]) as metadata, mock.patch.object(source, "_bytes", return_value=raw) as content:
+            result = source.canonical_source()
+        self.assertEqual(result["record"]["source_revision"], "a" * 40)
+        self.assertIn("ref=" + "a" * 40, metadata.call_args_list[1].args[0])
+        self.assertIn("/" + "a" * 40 + "/", content.call_args.args[0])
+        with mock.patch.object(source, "_get", return_value={"sha": "a" * 40,
+             "commit": {"verification": {"verified": False}}}):
+            with self.assertRaises(gen.GenerationError):
+                source.canonical_source()
+        with mock.patch.object(source, "_get", return_value={"sha": "b" * 40}):
+            with self.assertRaisesRegex(gen.GenerationError, "advanced"):
+                source.validate_source_head("a" * 40)
+
+    def test_unknown_public_disposition_and_reserved_identity_are_blocking(self) -> None:
+        original = gen.collect(gen.FixtureSource(FIXTURE))
+        for value in (None, 0, "false"):
+            for kind in ("models", "datasets", "spaces"):
+                raw = copy.deepcopy(original)
+                raw[kind][0]["private"] = value
+                with self.subTest(kind=kind, value=value), self.assertRaises(gen.GenerationError):
+                    gen.build_inventory(raw, T1)
+            raw = copy.deepcopy(original)
+            raw["special_spaces"]["README"]["private"] = value
+            with self.subTest(reserved=value), self.assertRaises(gen.GenerationError):
+                gen.build_inventory(raw, T1)
+        raw = copy.deepcopy(original)
+        raw["special_spaces"]["README"]["id"] = "other/README"
+        with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(raw, T1)
+
+    def test_equal_counts_different_source_membership_and_reserved_omission_block(self) -> None:
+        original = gen.collect(gen.FixtureSource(FIXTURE))
+        advanced = copy.deepcopy(original)
+        advanced["models"][0]["id"] = "SZLHOLDINGS/new-source-model"
+        rebind(advanced)
+        original["canonical_source"] = advanced["canonical_source"]
+        with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(original, T1)
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        raw["special_spaces"] = {}
+        with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(raw, T1)
 
     def test_refresh_workflow_is_scheduled_locked_tokenless_and_never_merges(self) -> None:
         text = (ROOT / gen.REFRESH_WORKFLOW).read_text(encoding="utf-8")
