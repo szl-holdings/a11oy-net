@@ -14,7 +14,7 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 36,
+    "datasets": 37,
     "kernels": 14,
     "models": 47,
     "spaces": 34
@@ -29,7 +29,7 @@
     },
     {
       "field": "datasets",
-      "live_public": 36,
+      "live_public": 37,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -50,7 +50,7 @@
     },
     {
       "field": "datasets",
-      "live_public": 36,
+      "live_public": 37,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -92,11 +92,10 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T08:43:40Z",
+  "observed_at": "2026-10-03T10:28:03Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
-    "SZLHOLDINGS/a11oy",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/david-leads",
@@ -133,6 +132,7 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 34
+    "RUNNING": 33,
+    "RUNNING_APP_STARTING": 1
   }
 }
