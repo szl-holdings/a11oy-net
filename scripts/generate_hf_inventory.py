@@ -185,15 +185,13 @@ class LiveSource:
         raise GenerationError(f"GET {url} failed: {last}")
 
     def _get(self, url: str) -> Any:
-        try:
-            return json.loads(self._bytes(url).decode("utf-8"))
-        except (UnicodeError, ValueError) as exc:
-            raise GenerationError("public metadata JSON unavailable or malformed") from exc
+        return strict_json(self._bytes(url))
 
     def canonical_source(self) -> dict[str, Any]:
         commit = self._get(f"https://api.github.com/repos/{CANONICAL_REPOSITORY}/commits/main")
         revision = commit.get("sha") if isinstance(commit, dict) else None
-        verification = commit.get("commit", {}).get("verification", {}) if isinstance(commit, dict) else {}
+        detail = commit.get("commit") if isinstance(commit, dict) else None
+        verification = detail.get("verification") if isinstance(detail, dict) else None
         if (not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision)
                 or not isinstance(verification, dict) or verification.get("verified") is not True):
             raise GenerationError("canonical main revision or valid commit signature unavailable")
@@ -354,30 +352,37 @@ def canonical(value: Any) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode("utf-8")
 
 
-def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
-    """Bind exact GitHub bytes; ambiguity, privacy, or malformed scope denies output."""
+def strict_json(raw: bytes) -> Any:
+    """Reject ambiguous keys and nonfinite numbers before validating a record."""
     def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
         value: dict[str, Any] = {}
         for key, item in pairs:
             if key in value:
-                raise GenerationError("duplicate canonical manifest key")
+                raise GenerationError("duplicate JSON record key")
             value[key] = item
         return value
 
     def nonfinite(_value: str) -> Any:
-        raise GenerationError("nonfinite canonical manifest value")
+        raise GenerationError("nonfinite JSON record value")
+
+    try:
+        value = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object, parse_constant=nonfinite)
+        canonical(value)  # Reject numeric overflow as well as NaN/Infinity literals.
+        return value
+    except (UnicodeError, ValueError) as exc:
+        raise GenerationError("JSON record is unavailable or malformed") from exc
+
+
+def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
+    """Bind exact GitHub bytes; ambiguity, privacy, or malformed scope denies output."""
 
     if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision):
         raise GenerationError("canonical source revision must be an immutable Git SHA")
     actual_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
     if not isinstance(blob, str) or blob != actual_blob:
         raise GenerationError("canonical source Git blob does not bind the retained bytes")
-    try:
-        text = raw.decode("utf-8")
-        manifest = json.loads(text, object_pairs_hook=unique_object, parse_constant=nonfinite)
-        canonical(manifest)  # Reject numeric overflow as well as NaN/Infinity literals.
-    except (UnicodeError, ValueError) as exc:
-        raise GenerationError("canonical manifest is unavailable or malformed") from exc
+    manifest = strict_json(raw)
+    text = raw.decode("utf-8")
     scope = manifest.get("inventoryScope") if isinstance(manifest, dict) else None
     counts = manifest.get("counts") if isinstance(manifest, dict) else None
     inventory = manifest.get("inventory") if isinstance(manifest, dict) else None
@@ -1086,14 +1091,14 @@ def write(root: Path, outputs: dict[str, str], dry_run: bool, log: Callable[[str
     changed = []
     for relative, text in sorted(outputs.items()):
         path = root / relative
-        before = path.read_text(encoding="utf-8") if path.is_file() else None
-        if before == text:
+        content = text.encode("utf-8")
+        before = path.read_bytes() if path.is_file() else None
+        if before == content:
             continue
         changed.append(relative)
         if not dry_run:
             path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("w", encoding="utf-8", newline="\n") as handle:
-                handle.write(text)
+            path.write_bytes(content)
     log(("would change: " if dry_run else "changed: ") + (", ".join(changed) or "nothing"))
     return changed
 

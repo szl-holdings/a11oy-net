@@ -1,19 +1,20 @@
 {
   "counts": {
-    "datasets": 35,
-    "models": 46,
-    "spaces": 21
-  },
-  "evidence": {
-    "archive_sha256": "b9d88f328029fbf49437a5154abdaaae7de8b7823138e0eae69a27ace601b488",
-    "artifact": 10135145952,
-    "record_sha256": "3ed462ea005ccf273dd25813d239a892d5c49138246b5a32ba014612d6e1a0fb",
-    "workflow_run": 34432937958
+    "datasets": 36,
+    "models": 47,
+    "spaces": 34
   },
   "historical_portfolio_contract_replaced": false,
+  "historical_snapshots": [
+    {
+      "observed_at": "2026-09-10T03:20:41Z",
+      "path": "/public-membership.observed-2026-09-10.json"
+    }
+  ],
   "model_quality_inferred": false,
-  "observed_at": "2026-09-10T03:20:41Z",
+  "observed_at": "2026-10-03T06:41:25Z",
   "production_authorization": false,
+  "retained_source_path": "/estate/canonical-hf-manifest.json",
   "runtime_readiness_inferred": false,
   "schema": "szl.public-profile-inventory/v1",
   "scope": {
@@ -33,9 +34,9 @@
     "visibility": "public-only"
   },
   "scope_sha256": "9060fa8d7edcd5c246b86bcfcf1916df44b18038253325336f2f46208f8001ae",
-  "source_git_blob": "08d7c8097c4b6b00d774c379e6e68f6bfb720fa4",
+  "source_git_blob": "f345cd5dfe8fa246e9c877a9303cedf73c603a92",
   "source_path": "docs/huggingface-ecosystem-manifest.json",
   "source_repository": "szl-holdings/a11oy",
-  "source_revision": "4c6621b17ba452d5af7aa2460462fdfbe513509f",
-  "source_sha256": "04dc30206d499f004fe8151cfdf63700c380db29c2afc3d97d2a213303421ca2"
+  "source_revision": "622bf9da064c3afd0509d420bb3702d5aafc7fcb",
+  "source_sha256": "1c89d3cc399992a3ab8ed0c97de5a6d488c50d6d0c9737c33b2c2ccbaa9503fc"
 }

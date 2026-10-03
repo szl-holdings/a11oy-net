@@ -339,6 +339,31 @@ class GeneratorTest(unittest.TestCase):
         with mock.patch.object(source, "_get", return_value={"sha": "b" * 40}):
             with self.assertRaisesRegex(gen.GenerationError, "advanced"):
                 source.validate_source_head("a" * 40)
+        for malformed in (None, [], {"sha": "a" * 40, "commit": []},
+                          {"sha": "a" * 40, "commit": {"verification": "valid"}}):
+            with self.subTest(metadata=malformed), mock.patch.object(source, "_get", return_value=malformed):
+                with self.assertRaises(gen.GenerationError):
+                    source.canonical_source()
+
+    def test_retained_canonical_manifest_preserves_exact_newline_bytes(self) -> None:
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        content = raw["canonical_source"]["manifest_text"].replace("\n", "\r\n").encode("utf-8")
+        blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
+        raw["canonical_source"] = gen.canonical_source(content, "a" * 40, blob)
+        self.site.run(T1, raw)
+        self.assertEqual((self.site.root / gen.CANONICAL_COPY_PATH).read_bytes(), content)
+        _, changed = self.site.run(T2, raw)
+        self.assertEqual(changed, [])
+
+    def test_primary_record_and_public_metadata_ambiguity_are_blocking(self) -> None:
+        for raw in (b'{"counts":{},"counts":{}}', b'{"private":true,"private":false}',
+                    b'{"value":NaN}', b'{"value":1e999}', b'[]junk', b'\xff'):
+            with self.subTest(raw=raw), self.assertRaises(gen.GenerationError):
+                gen.strict_json(raw)
+            source = gen.LiveSource(attempts=1)
+            with mock.patch.object(source, "_bytes", return_value=raw):
+                with self.assertRaises(gen.GenerationError):
+                    source._get("https://huggingface.co/api/spaces/SZLHOLDINGS/README")
 
     def test_unknown_public_disposition_and_reserved_identity_are_blocking(self) -> None:
         original = gen.collect(gen.FixtureSource(FIXTURE))

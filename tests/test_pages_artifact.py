@@ -49,6 +49,12 @@ class PagesArtifactTests(unittest.TestCase):
                 ("git", "-C", str(ROOT), "show", f"{source_revision}:index.html")
             )
             self.assertEqual((output / "index.html").read_bytes(), committed_index)
+            for relative in ("public-membership.json", "estate/canonical-hf-manifest.json",
+                             "public-membership.observed-2026-09-10.json"):
+                committed = subprocess.check_output(
+                    ("git", "-C", str(ROOT), "show", f"{source_revision}:{relative}")
+                )
+                self.assertEqual((output / relative).read_bytes(), committed)
 
             staged_health = json.loads(
                 (output / "health.json").read_text(encoding="utf-8")

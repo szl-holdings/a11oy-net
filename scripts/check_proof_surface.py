@@ -198,7 +198,7 @@ def check_generated_hf_inventory() -> None:
         "repository_membership_total": counts["repository_membership_total"],
         "spaces_public": counts["spaces"],
     }
-    membership = json.loads((ROOT / gen.MEMBERSHIP_PATH).read_text(encoding="utf-8"))
+    membership = gen.strict_json((ROOT / gen.MEMBERSHIP_PATH).read_bytes())
     source = gen.canonical_source(
         (ROOT / gen.CANONICAL_COPY_PATH).read_bytes(),
         membership["source_revision"], membership["source_git_blob"],
