@@ -43,9 +43,9 @@ class SourceWitnessTests(unittest.TestCase):
             stamped = source_witness.stamp(candidate, self.revision)
         self.assertEqual(stamped["source_revision"], self.revision)
         self.assertEqual(stamped["artifact_binding"], "EXACT_SOURCE_REVISION")
-        self.assertEqual(stamped["product_runtime_readiness"], "NOT_MEASURED")
-        self.assertEqual(stamped["uptime"], "NOT_MEASURED")
-        self.assertEqual(stamped["dsse_live"], "NOT_CLAIMED")
+        self.assertEqual(stamped["product_runtime_readiness"], "UNAVAILABLE")
+        self.assertEqual(stamped["uptime"], "UNAVAILABLE")
+        self.assertEqual(stamped["dsse_live"], "UNAVAILABLE")
         self.assertIsNone(stamped["generated_at_utc"])
 
     def test_stamp_rejects_already_stamped_or_extended_template(self) -> None:
@@ -115,6 +115,12 @@ class EdgeReadbackTests(unittest.TestCase):
                         "cname": "a11oy.net",
                         "https_enforced": True,
                         "html_url": "https://a11oy.net/",
+                        "protected_domain_state": "verified",
+                        "https_certificate": {
+                            "state": "approved",
+                            "domains": ["a11oy.net", "www.a11oy.net"],
+                            "expires_at": "2099-01-01",
+                        },
                     },
                     {},
                 )
@@ -146,6 +152,12 @@ class EdgeReadbackTests(unittest.TestCase):
             "cname": "a11oy.net",
             "https_enforced": True,
             "html_url": "https://a11oy.net/",
+            "protected_domain_state": "verified",
+            "https_certificate": {
+                "state": "approved",
+                "domains": ["a11oy.net", "www.a11oy.net"],
+                "expires_at": "2099-01-01",
+            },
         }
         self.assertEqual(edge.validate_pages_settings(pages)["status"], "PASS")
         pages["https_enforced"] = False
@@ -153,6 +165,60 @@ class EdgeReadbackTests(unittest.TestCase):
         failed = edge.validate_pages_settings(pages)
         self.assertEqual(failed["status"], "FAIL")
         self.assertGreaterEqual(len(failed["errors"]), 2)
+
+    def test_pages_settings_reject_unsafe_origin_certificate_states(self) -> None:
+        valid = {
+            "build_type": "workflow",
+            "status": "built",
+            "cname": "a11oy.net",
+            "https_enforced": True,
+            "html_url": "https://a11oy.net/",
+            "protected_domain_state": "verified",
+            "https_certificate": {
+                "state": "approved",
+                "domains": ["a11oy.net", "www.a11oy.net"],
+                "expires_at": "2099-01-01",
+            },
+        }
+        mutations = (
+            (
+                "bad authorization",
+                lambda pages: pages["https_certificate"].update(state="bad_authz"),
+            ),
+            (
+                "missing expiry",
+                lambda pages: pages["https_certificate"].pop("expires_at"),
+            ),
+            (
+                "malformed expiry",
+                lambda pages: pages["https_certificate"].update(expires_at="never"),
+            ),
+            (
+                "wrong domain",
+                lambda pages: pages["https_certificate"].update(
+                    domains=["example.com"]
+                ),
+            ),
+            (
+                "near expiry",
+                lambda pages: pages["https_certificate"].update(
+                    expires_at="2026-10-04"
+                ),
+            ),
+            (
+                "unverified domain",
+                lambda pages: pages.update(protected_domain_state="pending"),
+            ),
+        )
+        now = edge.dt.datetime(2026, 10, 3, tzinfo=edge.dt.timezone.utc)
+        for label, mutate in mutations:
+            with self.subTest(label=label):
+                pages = copy.deepcopy(valid)
+                mutate(pages)
+                self.assertEqual(
+                    edge.validate_pages_settings(pages, now=now)["status"],
+                    "FAIL",
+                )
 
     def test_final_main_reauthorization_rejects_mid_probe_source_move(self) -> None:
         newer = "c" * 40
@@ -166,7 +232,9 @@ class EdgeReadbackTests(unittest.TestCase):
             mock.patch.object(
                 edge, "probe_source_witness", return_value=copy.deepcopy(passing)
             ),
-            mock.patch.object(edge, "probe_tls", return_value=copy.deepcopy(passing)),
+            mock.patch.object(
+                edge, "probe_tls", return_value=copy.deepcopy(passing)
+            ) as tls_probe,
             mock.patch.object(
                 edge, "probe_dnssec", return_value=copy.deepcopy(passing)
             ),
@@ -193,6 +261,21 @@ class EdgeReadbackTests(unittest.TestCase):
 
         self.assertEqual(receipt["result"], "FAIL")
         self.assertIn("source_control_reauthorization", receipt["failed_controls"])
+        self.assertIn("tls_edge", receipt["probes"])
+        self.assertIn("tls_pages_origin", receipt["probes"])
+        self.assertEqual(
+            tls_probe.call_args_list,
+            [
+                mock.call(
+                    connect_hostname=edge.HOSTNAME,
+                    verification_hostname=edge.HOSTNAME,
+                ),
+                mock.call(
+                    connect_hostname=edge.PAGES_ORIGIN_HOSTNAME,
+                    verification_hostname=edge.HOSTNAME,
+                ),
+            ],
+        )
         self.assertEqual(
             receipt["probes"]["source_control_reauthorization"][
                 "observed_main_revision"

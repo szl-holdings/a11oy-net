@@ -297,9 +297,11 @@ Post-merge verification sequence:
    reauthorization.
 4. Retain the successful workflow URL and deployed `page_url`, then read back
    `/health.json` and `/.well-known/szl-source.json`. Require both revisions to
-   equal the deployed protected-main revision. Preserve
-   `signer=unavailable`, `probe_contract=STATIC_DOCUMENT`,
-   `uptime=NOT_MEASURED`, and `dsse_live=NOT_CLAIMED`.
+   equal the deployed protected-main revision. Preserve the existing static
+   `health.json` contract, including `signer=unavailable` and
+   `probe_contract=STATIC_DOCUMENT`. The source witness must keep runtime
+   readiness, uptime, and DSSE-LIVE status `UNAVAILABLE`; it does not turn a
+   static source binding into a runtime claim.
 
 Rollback is reviewable: revert a bad source revision through a normal
 protected pull request, then verify the resulting Pages deployment and public

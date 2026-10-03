@@ -6,8 +6,8 @@
   "artifact_kind": "STATIC_GITHUB_PAGES",
   "artifact_binding": "EXACT_SOURCE_REVISION",
   "witness_semantics": "When this document is served from its canonical URL, source_revision identifies the exact Git commit used to assemble the static Pages artifact. It does not establish application runtime health, product readiness, uptime, signing, or current protected-main status without a fresh control-plane readback.",
-  "product_runtime_readiness": "NOT_MEASURED",
-  "uptime": "NOT_MEASURED",
-  "dsse_live": "NOT_CLAIMED",
+  "product_runtime_readiness": "UNAVAILABLE",
+  "uptime": "UNAVAILABLE",
+  "dsse_live": "UNAVAILABLE",
   "generated_at_utc": null
 }

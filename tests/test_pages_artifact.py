@@ -86,10 +86,10 @@ class PagesArtifactTests(unittest.TestCase):
                 staged_source_witness["artifact_binding"], "EXACT_SOURCE_REVISION"
             )
             self.assertEqual(
-                staged_source_witness["product_runtime_readiness"], "NOT_MEASURED"
+                staged_source_witness["product_runtime_readiness"], "UNAVAILABLE"
             )
-            self.assertEqual(staged_source_witness["uptime"], "NOT_MEASURED")
-            self.assertEqual(staged_source_witness["dsse_live"], "NOT_CLAIMED")
+            self.assertEqual(staged_source_witness["uptime"], "UNAVAILABLE")
+            self.assertEqual(staged_source_witness["dsse_live"], "UNAVAILABLE")
             self.assertEqual(
                 receipt["source_witness_contract"]["source_revision"],
                 source_revision,

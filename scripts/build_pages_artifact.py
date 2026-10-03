@@ -179,12 +179,12 @@ def build(root: pathlib.Path, output: pathlib.Path, source_revision: str) -> dic
         raise ValueError("staged source witness does not bind the exact source revision")
     if source_witness.get("artifact_binding") != "EXACT_SOURCE_REVISION":
         raise ValueError("staged source witness must preserve exact artifact binding")
-    if source_witness.get("product_runtime_readiness") != "NOT_MEASURED":
-        raise ValueError("staged source witness must not claim runtime readiness")
-    if source_witness.get("uptime") != "NOT_MEASURED":
-        raise ValueError("staged source witness must not claim uptime")
-    if source_witness.get("dsse_live") != "NOT_CLAIMED":
-        raise ValueError("staged source witness must not claim DSSE-LIVE")
+    if source_witness.get("product_runtime_readiness") != "UNAVAILABLE":
+        raise ValueError("staged source witness runtime readiness must be UNAVAILABLE")
+    if source_witness.get("uptime") != "UNAVAILABLE":
+        raise ValueError("staged source witness uptime must be UNAVAILABLE")
+    if source_witness.get("dsse_live") != "UNAVAILABLE":
+        raise ValueError("staged source witness DSSE-LIVE status must be UNAVAILABLE")
 
     return {
         "status": "PAGES_ARTIFACT_STAGED",

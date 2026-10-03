@@ -33,11 +33,13 @@ from stamp_source_witness import SHA_RE, validate_contract
 
 
 HOSTNAME = "a11oy.net"
+PAGES_ORIGIN_HOSTNAME = "szl-holdings.github.io"
 SURFACE = "https://a11oy.net"
 SOURCE_WITNESS_URL = f"{SURFACE}/.well-known/szl-source.json"
 SOURCE_REPOSITORY = "szl-holdings/a11oy-net"
 MAX_JSON_BYTES = 64 * 1024
 MIN_TLS_REMAINING = dt.timedelta(days=7)
+REQUIRED_PAGES_CERTIFICATE_DOMAINS = frozenset({HOSTNAME, f"www.{HOSTNAME}"})
 DNSSEC_RESOLVERS = (
     ("cloudflare", "https://cloudflare-dns.com/dns-query"),
     ("google", "https://dns.google/resolve"),
@@ -176,7 +178,28 @@ def validate_source_control(
     }
 
 
-def validate_pages_settings(pages: dict[str, Any]) -> dict[str, Any]:
+def _parse_provider_expiry(value: Any) -> dt.datetime:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("Pages certificate expiry is missing")
+    normalized = value.strip().replace("Z", "+00:00")
+    try:
+        parsed = dt.datetime.fromisoformat(normalized)
+    except ValueError as exc:
+        raise ValueError("Pages certificate expiry is not valid ISO 8601") from exc
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=dt.timezone.utc)
+    return parsed.astimezone(dt.timezone.utc)
+
+
+def validate_pages_settings(
+    pages: dict[str, Any],
+    *,
+    now: dt.datetime | None = None,
+) -> dict[str, Any]:
+    now = now or dt.datetime.now(dt.timezone.utc)
+    if now.tzinfo is None:
+        raise ValueError("Pages validation time must be timezone-aware")
+    now = now.astimezone(dt.timezone.utc)
     errors: list[str] = []
     expected = {
         "build_type": "workflow",
@@ -192,6 +215,51 @@ def validate_pages_settings(pages: dict[str, Any]) -> dict[str, Any]:
     html_url = pages.get("html_url")
     if not isinstance(html_url, str) or not html_url.startswith("https://"):
         errors.append("Pages html_url is not an HTTPS URL")
+    protected_domain_state = pages.get("protected_domain_state")
+    if protected_domain_state != "verified":
+        errors.append(
+            "Pages protected_domain_state is "
+            f"{protected_domain_state!r}, expected 'verified'"
+        )
+
+    certificate = pages.get("https_certificate")
+    certificate_state = None
+    certificate_domains: list[str] = []
+    certificate_expires_at = None
+    certificate_remaining_days = None
+    if not isinstance(certificate, dict):
+        errors.append("Pages https_certificate is not an object")
+    else:
+        certificate_state = certificate.get("state")
+        if certificate_state != "approved":
+            errors.append(
+                "Pages https_certificate.state is "
+                f"{certificate_state!r}, expected 'approved'"
+            )
+        domains = certificate.get("domains")
+        if isinstance(domains, list) and all(isinstance(item, str) for item in domains):
+            certificate_domains = domains
+            missing_domains = REQUIRED_PAGES_CERTIFICATE_DOMAINS - set(domains)
+            if missing_domains:
+                errors.append(
+                    "Pages certificate does not cover required domains: "
+                    + ", ".join(sorted(missing_domains))
+                )
+        else:
+            errors.append("Pages https_certificate.domains is not a string list")
+        certificate_expires_at = certificate.get("expires_at")
+        try:
+            expires_at = _parse_provider_expiry(certificate_expires_at)
+        except ValueError as exc:
+            errors.append(str(exc))
+        else:
+            remaining = expires_at - now
+            certificate_remaining_days = int(remaining.total_seconds() // 86400)
+            if remaining < MIN_TLS_REMAINING:
+                errors.append(
+                    "Pages origin certificate has less than seven days remaining "
+                    "or is expired"
+                )
     return {
         "status": "PASS" if not errors else "FAIL",
         "build_type": pages.get("build_type"),
@@ -199,6 +267,13 @@ def validate_pages_settings(pages: dict[str, Any]) -> dict[str, Any]:
         "cname": pages.get("cname"),
         "https_enforced": pages.get("https_enforced"),
         "html_url": html_url,
+        "protected_domain_state": protected_domain_state,
+        "https_certificate": {
+            "state": certificate_state,
+            "domains": certificate_domains,
+            "expires_at": certificate_expires_at,
+            "remaining_days": certificate_remaining_days,
+        },
         "errors": errors,
     }
 
@@ -405,18 +480,26 @@ def _certificate_name(value: Any) -> str | None:
 
 def probe_tls(
     *,
-    hostname: str = HOSTNAME,
+    connect_hostname: str = HOSTNAME,
+    verification_hostname: str = HOSTNAME,
     now: dt.datetime | None = None,
 ) -> dict[str, Any]:
-    if hostname != HOSTNAME:
-        raise ProbeError(f"TLS hostname must be exactly {HOSTNAME}")
+    allowed_targets = {
+        (HOSTNAME, HOSTNAME),
+        (PAGES_ORIGIN_HOSTNAME, HOSTNAME),
+    }
+    if (connect_hostname, verification_hostname) not in allowed_targets:
+        raise ProbeError("TLS target is not an approved edge or Pages-origin probe")
     now = now or dt.datetime.now(dt.timezone.utc)
     context = ssl.create_default_context()
     context.minimum_version = ssl.TLSVersion.TLSv1_2
     context.set_alpn_protocols(["h2", "http/1.1"])
     try:
-        with socket.create_connection((hostname, 443), timeout=20) as raw_socket:
-            with context.wrap_socket(raw_socket, server_hostname=hostname) as tls_socket:
+        with socket.create_connection((connect_hostname, 443), timeout=20) as raw_socket:
+            with context.wrap_socket(
+                raw_socket,
+                server_hostname=verification_hostname,
+            ) as tls_socket:
                 certificate = tls_socket.getpeercert()
                 protocol = tls_socket.version()
                 cipher = tls_socket.cipher()
@@ -444,7 +527,8 @@ def probe_tls(
         )
     return {
         "status": "PASS" if not errors else "FAIL",
-        "hostname": hostname,
+        "connect_hostname": connect_hostname,
+        "verification_hostname": verification_hostname,
         "hostname_verified": True,
         "protocol": protocol,
         "cipher": cipher[0] if isinstance(cipher, tuple) and cipher else None,
@@ -512,7 +596,20 @@ def build_receipt(
 
     for key, operation in (
         ("deployed_source_witness", lambda: probe_source_witness(expected_revision)),
-        ("tls", probe_tls),
+        (
+            "tls_edge",
+            lambda: probe_tls(
+                connect_hostname=HOSTNAME,
+                verification_hostname=HOSTNAME,
+            ),
+        ),
+        (
+            "tls_pages_origin",
+            lambda: probe_tls(
+                connect_hostname=PAGES_ORIGIN_HOSTNAME,
+                verification_hostname=HOSTNAME,
+            ),
+        ),
         ("dnssec", probe_dnssec),
         ("security_headers", probe_headers),
     ):
@@ -547,7 +644,7 @@ def build_receipt(
         "probes": probes,
         "boundaries": [
             "This receipt is a point-in-time external readback, not an uptime claim.",
-            "TLS, DNSSEC, Pages settings, source binding, and response headers are independent controls.",
+            "Edge TLS, Pages-origin TLS, DNSSEC, Pages settings, source binding, and response headers are independent controls.",
             "The static proof origin does not establish a-11-oy.com product-runtime readiness.",
             "A committed _headers file is not evidence that GitHub Pages or Cloudflare enforced those headers.",
         ],

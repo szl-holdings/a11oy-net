@@ -407,9 +407,9 @@ def check() -> None:
     )
     assert source_witness["artifact_kind"] == "STATIC_GITHUB_PAGES"
     assert source_witness["artifact_binding"] == "EXACT_SOURCE_REVISION"
-    assert source_witness["product_runtime_readiness"] == "NOT_MEASURED"
-    assert source_witness["uptime"] == "NOT_MEASURED"
-    assert source_witness["dsse_live"] == "NOT_CLAIMED"
+    assert source_witness["product_runtime_readiness"] == "UNAVAILABLE"
+    assert source_witness["uptime"] == "UNAVAILABLE"
+    assert source_witness["dsse_live"] == "UNAVAILABLE"
     assert source_witness["generated_at_utc"] is None
     edge_workflow = EDGE_READBACK_WORKFLOW.read_text(encoding="utf-8")
     assert "workflow_run:" in edge_workflow and "schedule:" in edge_workflow

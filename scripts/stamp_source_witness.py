@@ -82,12 +82,12 @@ def validate_contract(witness: dict[str, Any], expected_revision: str) -> None:
         raise ValueError("source witness artifact_kind must remain STATIC_GITHUB_PAGES")
     if witness["artifact_binding"] != "EXACT_SOURCE_REVISION":
         raise ValueError("source witness artifact_binding must remain exact")
-    if witness["product_runtime_readiness"] != "NOT_MEASURED":
-        raise ValueError("source witness must not claim product runtime readiness")
-    if witness["uptime"] != "NOT_MEASURED":
-        raise ValueError("source witness must not claim uptime")
-    if witness["dsse_live"] != "NOT_CLAIMED":
-        raise ValueError("source witness must not claim DSSE-LIVE")
+    if witness["product_runtime_readiness"] != "UNAVAILABLE":
+        raise ValueError("source witness runtime readiness must remain UNAVAILABLE")
+    if witness["uptime"] != "UNAVAILABLE":
+        raise ValueError("source witness uptime must remain UNAVAILABLE")
+    if witness["dsse_live"] != "UNAVAILABLE":
+        raise ValueError("source witness DSSE-LIVE status must remain UNAVAILABLE")
     if witness["generated_at_utc"] is not None:
         raise ValueError("source witness must not invent a generation timestamp")
     semantics = witness["witness_semantics"]
