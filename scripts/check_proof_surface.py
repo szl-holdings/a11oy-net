@@ -267,6 +267,15 @@ def check_generated_hf_inventory() -> None:
                 f"{page} prints generated counts without their observation date"
             )
 
+    estate_os = (ROOT / "estate/os/index.html").read_text(encoding="utf-8")
+    hf_models_card = re.search(
+        r"<article><span>HF models · public</span>(.*?)</article>", estate_os, re.DOTALL
+    )
+    assert hf_models_card is not None, "estate OS public HF models card is missing"
+    assert "SNAPSHOT from the unauthenticated Hub API" in hf_models_card.group(1), (
+        "estate OS public HF count has no raw API witness for MEASURED"
+    )
+
     # (c) every Hub asset or Space host these surfaces link is publicly listed
     pools = {
         "": {row["id"] for row in resources["models"]},
@@ -499,6 +508,7 @@ def check() -> None:
         "https://a11oy.net/experiments/",
         "https://a11oy.net/diligence/",
         "https://a11oy.net/record/",
+        "https://a11oy.net/oac/",
         "https://a11oy.net/estate/",
         "https://a11oy.net/estate/os/",
         "https://a11oy.net/estate/plane/",
@@ -546,6 +556,9 @@ def check() -> None:
     assert "https://a11oy.com" not in origin_src
     origin_contract = json.loads((ROOT / "origin.json").read_text(encoding="utf-8"))
     assert origin_contract["incident"] == "INC-05"
+    assert origin_contract["observed_at_utc"] in origin_src, (
+        "origin human page must display the latest machine-record probe timestamp"
+    )
     assert origin_contract["boundaries"]["does_not_change_dns"] is True
     assert origin_contract["boundaries"]["grok_spa_not_published_here"] is True
     assert (ROOT / "frontiers" / "index.html").is_file(), "named frontiers SNAPSHOT HTML must exist"
@@ -636,16 +649,19 @@ def check() -> None:
     assert recapture["atlas_keep_7_rewritten"] is False
     assert recapture["unprivate_38"] is False
     assert recapture["operational"] is False
-    # 2026-09-25: KEEP-6 is policy, not Hub state. The verifier Space id stays
-    # in the cut but is recorded NOT_FOUND on the Hub (401 public, 404 to an
-    # org-authenticated read); it must not be described as a live Hub app.
-    # The anatomy and holographic fold entries carry the same Hub record, and
-    # anatomy no longer claims the Space was re-privatized. The 404 is an
-    # org-authenticated read, so the class is REPORTED, not MEASURED.
+    # KEEP-6 is policy, not Hub state. The verifier's 2026-09-26 NOT_FOUND
+    # result remains a dated historical check; the generated hub_presence
+    # is authoritative for the current public listing. Its runtime is not
+    # inferred. Anatomy and holographic still carry the old Hub record.
     verifier = next(item for item in spaces_contract["keep"] if item["id"] == "governed-receipt-verifier")
     assert "Public Hub application KEEP" not in verifier["why"]
+    assert "historical" in verifier["why"] and "hub_presence" in verifier["why"]
+    assert "hub_status" not in verifier
+    assert verifier["historical_hub_status"] == "NOT_FOUND"
+    assert verifier["historical_hub_status_evidence_class"] == "REPORTED"
+    assert verifier["historical_hub_status_observed_at"] == "2026-09-26T01:52:53Z"
     fold_by_id = {item["id"]: item for item in spaces_contract["fold"]}
-    for hub_entry in (verifier, fold_by_id["anatomy"], fold_by_id["holographic"]):
+    for hub_entry in (fold_by_id["anatomy"], fold_by_id["holographic"]):
         assert hub_entry.get("hub_status") == "NOT_FOUND", hub_entry["id"]
         assert hub_entry.get("hub_status_evidence_class") == "REPORTED", hub_entry["id"]
     assert fold_by_id["anatomy"]["dest"] == "https://a-11-oy.com/anatomy-v5"
@@ -666,6 +682,14 @@ def check() -> None:
     assert not any(item.get("operational") for item in models_contract["models"])
     check_generated_hf_inventory()
     assert (ROOT / "atlas.json").is_file(), "atlas machine contract must exist"
+    atlas_contract = json.loads((ROOT / "atlas.json").read_text(encoding="utf-8"))
+    assert atlas_contract["status"]["state"] == "HISTORICAL", (
+        "dated atlas.json observations must not claim CURRENT"
+    )
+    assert atlas_contract["status"]["current_public_inventory"] == "/public-inventory.json"
+    assert atlas_contract["status"]["probed_at"] == atlas_contract["hub_snapshot"]["observed_at"]
+    current_public = json.loads(HF_INVENTORY.read_text(encoding="utf-8"))
+    assert atlas_contract["hub_snapshot"]["observed_at"] < current_public["observed_at"]
     assert (ROOT / "notes" / "index.html").is_file(), "dated notes must exist"
     assert (ROOT / "atelier" / "index.html").is_file(), "atelier walk must exist"
     assert (ROOT / "khipu" / "index.html").is_file(), "khipu RECORD must exist"
@@ -1053,6 +1077,11 @@ def check() -> None:
     )
     assert "renderSnapshotAge(inventory, Date.now());" in inventory_cards
     assert "age > DAY_MS" in inventory_cards
+    assert "committed SNAPSHOT classification" in inventory_cards
+    assert "committed MEASURED classification" not in inventory_cards
+    assert 'label: typeof item.observed_object_count === "number" ? "SNAPSHOT" : "UNAVAILABLE"' in inventory_cards, (
+        "unwitnessed bucket-tree counts must render as SNAPSHOT, not MEASURED"
+    )
 
     proof_ids = {
         str(anchor["data-proof"])
@@ -1076,20 +1105,24 @@ def check() -> None:
     assert "RUNTIME CHECK BELOW" not in source
     # 2026-09-25: anatomy and holographic Hub Spaces answer HTTP 401 to the
     # public; their cards drop REPORTED (14 -> 12) and carry no link.
-    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returns 404 for
-    # anatomy, holographic and governed-receipt-verifier, so they are NOT FOUND,
-    # not private. Row 07 and both cards say so.
+    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returned 404 for
+    # anatomy, holographic and governed-receipt-verifier. The verifier later
+    # reappeared in the generated public listing, while the dated row remains
+    # historical. The two curated missing cards stay unlinked.
     assert source.count('<span class="stack-truth">REPORTED</span>') == 12
     assert source.count('<span class="stack-truth">NOT FOUND</span>') == 2
     assert "RETIRED/PRIVATE" not in source
     assert (
         '<div class="dossier-row"><span class="dossier-index">07</span><span><b>Verifier Space</b>'
-        "<small>Hub Space SZLHOLDINGS/governed-receipt-verifier · HTTP 401 to the public, 404 to an "
-        "authenticated org-admin read (checked 2026-09-26 UTC) · link removed</small></span>"
-        '<span class="dossier-action">NOT FOUND</span></div>' in source
-    ), "dossier row 07 must be an unlinked row with a NOT FOUND action chip"
+        '<small>Historical check: SZLHOLDINGS/governed-receipt-verifier returned HTTP 401 '
+        'to the public and 404 to an authenticated org-admin read on 2026-09-26. '
+        'Current public listings appear in the generated rows below; runtime remains '
+        'unverified.</small></span><span class="dossier-action">HISTORICAL</span></div>' in source
+    ), "dossier row 07 must distinguish its historical check from the current listing"
+    curated, marker, _ = source.partition("<!-- hf-current:live-space-rows begin")
+    assert marker, "current live-space rows marker is required"
     for retired in ("anatomy", "holographic", "governed-receipt-verifier"):
-        assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in source
+        assert f'href="https://huggingface.co/spaces/SZLHOLDINGS/{retired}"' not in curated
     assert 'href="https://github.com/szl-holdings/szl-experiments"' not in source
     assert (
         "REPORTED identifies listing metadata only; runtime state, capability, "
@@ -1251,10 +1284,11 @@ def check() -> None:
     assert "YARQA-ATTN" in source
     assert "A11OY-MINI" in source
     assert 'href="https://huggingface.co/SZLHOLDINGS/chaski"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/qantu"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/waman"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/chakana"' in source
-    assert 'href="https://huggingface.co/SZLHOLDINGS/tinku"' in source
+    for model in ("qantu", "waman", "chakana", "tinku"):
+        assert f'href="https://huggingface.co/SZLHOLDINGS/{model}"' not in source
+        card = next((line for line in source.splitlines() if f"<h3>{model}</h3>" in line), None)
+        assert card is not None and '<div class="stack-card">' in card
+        assert "No public Hub card" in card and "ROADMAP" in card
     assert source.count('href="https://huggingface.co/SZLHOLDINGS/YARQA-ATTN"') == 1, (
         "YARQA-ATTN stays one KERNEL-owned cutting card, not a fourth Triton stack"
     )

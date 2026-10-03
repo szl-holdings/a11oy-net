@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -9,6 +10,14 @@ from tools import rollout_holographic_proof_v2 as holo
 from tools import rollout_proof_flow_shell as flow
 
 ROOT = Path(__file__).resolve().parents[1] / 'experiments/confirmation'
+WORKBENCH = 'https://szlholdings-szl-foundation-confirmation.hf.space'
+
+
+def live_trial_handoff():
+    served = (ROOT / 'index.html').read_bytes().decode('utf-8')
+    matches = re.findall(r'<aside id="fresh-trials"[^>]*>.*?</aside>', served, flags=re.DOTALL)
+    assert len(matches) == 1, 'Declare exactly one off-origin exploratory workbench handoff'
+    return matches[0]
 
 
 def test_confirmation_mirror_preserves_frozen_release_and_all_data_hashes():
@@ -49,7 +58,7 @@ def test_publication_record_is_source_bound_and_preserves_provider_scope():
     assert expected.count('<body>') == 1
     expected = expected.replace('<body>', '<body class="foundation-confirmation">')
     served = (ROOT / 'index.html').read_bytes()
-    assert served.decode('utf-8') == expected
+    assert served.decode('utf-8').replace(live_trial_handoff(), '', 1) == expected
     integration = record['proof_origin_integration']
     assert integration['canonical_document'] == 'source-index.html'
     assert integration['served_document_sha256'] == hashlib.sha256(served).hexdigest()
@@ -59,7 +68,31 @@ def test_publication_record_is_source_bound_and_preserves_provider_scope():
     assert integration['experiment_data_modified'] is False
 
 
+def test_fresh_trial_handoff_keeps_runtime_and_frozen_evidence_separate():
+    handoff = live_trial_handoff()
+    assert handoff.count('<a ') == 1
+    assert f'href="{WORKBENCH}"' in handoff
+    assert 'Run a fresh trial' in handoff
+    assert 'on-demand' in handoff and 'exploratory synthetic CPU inference' in handoff
+    assert 'unsigned receipt' in handoff and '24 hours' in handoff and '128-record limit' in handoff
+    assert 'lost on restart' in handoff and 'download yours' in handoff
+    assert 'frozen <strong>FAILED</strong> benchmark unchanged' in handoff
+    assert not re.search(r'<(?:script|iframe|form)\b', handoff, flags=re.IGNORECASE)
+    record = json.loads((ROOT / 'publication.json').read_bytes())
+    location = record['proof_origin_integration']['exploratory_workbench_handoff']
+    assert location['url'] == WORKBENCH
+    assert location['html_sha256'] == hashlib.sha256(handoff.encode('utf-8')).hexdigest()
+    assert location['role'] == 'OFF_ORIGIN_EXPLORATORY_WORKBENCH_LOCATION'
+    assert location['location_only'] is True
+    assert location['execution_on_proof_origin'] is False
+    assert location['new_trials_modify_registered_benchmark'] is False
+    assert record['surface_role'] == 'STATIC_RECORDED_EVIDENCE_REPLAY'
+    assert record['scientific_overall_gate'] == 'FAILED'
+    assert record['model_inference_performed'] is False
+
+
 if __name__ == '__main__':
     test_confirmation_mirror_preserves_frozen_release_and_all_data_hashes()
     test_publication_record_is_source_bound_and_preserves_provider_scope()
+    test_fresh_trial_handoff_keeps_runtime_and_frozen_evidence_separate()
     print('OK: frozen confirmation evidence and canonical publication binding are intact.')

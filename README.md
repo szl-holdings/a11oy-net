@@ -21,8 +21,8 @@ this origin is the RECORD. Hub atlas and ROADMAP live here, not on `.com`.
 Interactive `/verify` stays on
 [a-11-oy.com/verify](https://a-11-oy.com/verify) and is not cloned. There is no `/investor` route;
 investor review is [`/diligence/#investors`](https://a11oy.net/diligence/#investors).
-This origin remains independently reachable if a-11-oy.com or the Hugging Face
-Space is down.
+This origin is a separate failure domain from a-11-oy.com and its Hugging Face
+Space; independent reachability requires a fresh host readback.
 
 Header on both origins: **Product | Proof**. Product ↗ → `https://a-11-oy.com`.
 Proof is the current surface here.
@@ -44,6 +44,7 @@ equivalence.
 - **Use the product:** open [a-11-oy.com](https://a-11-oy.com).
 - **Read RECORD:** open [a11oy.net/record/](https://a11oy.net/record/).
 - **Decision Integrity RECORD:** open [a11oy.net/decision/](https://a11oy.net/decision/). Evaluate on [a-11-oy.com/decision](https://a-11-oy.com/decision) and vanity paths `/terra` `/aegis` `/puriq-markets` `/counsel`. Kernel is not run here. Hub Spaces are not required.
+- **OAC release RECORD:** open [a11oy.net/oac/](https://a11oy.net/oac/) for a dated, synthetic-only source/Hub/CI snapshot. This static page does not probe the current provider or handle patient data.
 - **Verify a receipt interactively:** use
   [https://a-11-oy.com/verify](https://a-11-oy.com/verify). Do not clone that tool here.
 - **Inspect source:** begin with the
@@ -56,7 +57,7 @@ equivalence.
 - **Evidence registry:** [`/`](https://a11oy.net/) is the RECORD: Hub atlas,
   ROADMAP cards, 90-second diligence table, and browser-observed metadata live here.
 - **Investor diligence:** [`/diligence/#summary`](https://a11oy.net/diligence/#summary)
-  is the 90-second MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
+  is the 90-second SNAPSHOT / MEASURED / ROADMAP / UNAVAILABLE table, then thesis, source,
   and boundaries. There is no `/investor` route.
 - **RECORD:** [`/record/`](https://a11oy.net/record/) is the canonical receipt
   **index** on this origin — pointers, not a receipt database. This repository
@@ -66,7 +67,9 @@ equivalence.
   Interactive verify stays at
   [https://a-11-oy.com/verify](https://a-11-oy.com/verify).
 - **Hub atlas:** [`/#atlas`](https://a11oy.net/#atlas) inventories public HF and
-  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is fetchable.
+  GitHub surfaces. [`/atlas.json`](https://a11oy.net/atlas.json) is a fetchable
+  historical September 25 observation; the newer generated public Hub inventory
+  is [`/public-inventory.json`](https://a11oy.net/public-inventory.json).
 - **Dated notes:** [`/notes/`](https://a11oy.net/notes/) and
   [`CHANGELOG.md`](https://a11oy.net/CHANGELOG.md).
 - **Developer diligence:** [`/diligence/#developers`](https://a11oy.net/diligence/#developers)
@@ -95,10 +98,10 @@ equivalence.
 
 ## Architecture
 
-The registry is a dependency-light static site served by GitHub Pages behind
-Cloudflare DNS. The committed `CNAME` file is `a11oy.net`. Live DNS for
-a11oy.net currently resolves to GitHub Pages, so this proof registry is
-independently reachable. Product source (`a11oy_canonical_domain.py`) may
+The registry is a dependency-light static site configured for GitHub Pages.
+The committed `CNAME` file is `a11oy.net`; prior public DNS observations pointed
+to GitHub Pages. Recheck current DNS and response bytes before asserting live
+reachability. Product source (`a11oy_canonical_domain.py`) may
 SUNSET-301 `a11oy.net` → `a-11-oy.com` only when that Host header is routed
 into the product app. Do not assume this origin is a product host, and do
 not add product routes such as `/api/lake` here.
@@ -125,6 +128,7 @@ claims.
 
 | Label | Meaning on this surface |
 | --- | --- |
+| `SNAPSHOT` | A dated historical observation or catalog copy; not a live readback or current state. |
 | `MEASURED` | Direct observation with a disclosed source and context. |
 | `REPORTED` | Public upstream metadata; not independently measured here. |
 | `MODELED` | Simulated or analytically derived. |
@@ -134,6 +138,21 @@ claims.
 
 Operational status is separate from evidence class. Hub `RUNNING` state is
 transport metadata and does not establish end-to-end capability.
+
+Nine machine contracts are checked by `scripts/check_evidence_bindings.py`:
+`/evidence.json`, `/atlas.json`, `/estate.json`, `/origin.json`,
+`/estate/hf-current.json`, `/models.json`, `/spaces.json`, and both dated PyPI
+provenance records. A `MEASURED` claim in any of them needs a same-object
+`evidence_uri` and SHA-256 `evidence_digest` resolving to exact published
+witness bytes. Their unwitnessed observations remain `SNAPSHOT`, while carried
+benchmark assertions remain `REPORTED`. This is not a whole-registry
+certification: raw Hub/PyPI response witnesses and a site-wide census still
+need separate review. `/evidence.json` keeps those exceptions explicit.
+`/spaces.json` v2 replaces the unsupported historical `cut.measured` name
+with `cut.snapshot_total`; clients using that field must update explicitly.
+The dated `/stalled.json` record still names v1.2.0 at a mutable URL; it is
+preserved unchanged, and the referenced older source is pinned at
+[`2ee4a7f:spaces.json`](https://github.com/szl-holdings/a11oy-net/blob/2ee4a7fe44085c43e61e7e665e304555b415d1f4/spaces.json).
 
 The kernel chip binds live `/api/a11oy/v1/honest` `locked_formula_count` and
 paints **8** only when that field is exactly 8; otherwise **N/A** /
@@ -149,12 +168,14 @@ repository root:
 
 ```bash
 python scripts/check_proof_surface.py
+python scripts/check_evidence_bindings.py
 python scripts/check_diligence_surface.py
 python scripts/check_security_headers.py
 python scripts/check_honest_kernel_bind.py
 node scripts/check_atlas_policy.mjs
 node scripts/check_probe_policy.mjs
 node scripts/check_honest_kernel_bind.mjs
+python -m unittest tests.test_evidence_bindings tests.test_generate_hf_inventory
 ```
 
 The checks validate:
@@ -177,6 +198,7 @@ The checks validate:
 | `index.html` | Accessible product narrative, 90-second table, RECORD, live reads, and registry UI. |
 | `diligence/index.html`, `assets/diligence.css` | Investor/developer diligence paths, 90-second table, and print-safe presentation. |
 | `record/index.html`, `record.json` | Canonical RECORD index of pointers; no receipt store; links to `.com /verify`. |
+| `oac/index.html`, `oac/release.json` | Dated OAC synthetic release record; no scoring runtime, live probe, or clinical result path. |
 | `CNAME` | GitHub Pages host is `a11oy.net`. This origin is not a product host. |
 | `atlas.json` | Fetchable Hub snapshot + GitHub inventory. |
 | `scripts/generate_hf_inventory.py`, `.github/workflows/hf-inventory-refresh.yml` | The only writer of Hub counts here: regenerates current inventory and page fields from the unauthenticated Hub API after matching all model, dataset, and Space IDs to an immutable signed A11oy manifest; the workflow reruns it daily and proposes a reviewed PR whose commit GitHub signs (`scripts/verified_commit_payload.py`). No Hugging Face token. |
@@ -226,14 +248,17 @@ into an isolated staging directory, excludes `.git` and `.github`, and stamps
 `health.json` only in that staging copy. The committed source file is not
 rewritten. The artifact preserves `.nojekyll` and `.well-known/security.txt`.
 
-The provider is intentionally still `build_type=legacy` while this change is
-reviewed. In that mode, pushes read the provider setting and skip the Actions
-deployment without changing it. After the provider is migrated to
-`build_type=workflow`, a main-branch push builds and deploys automatically; an
-operator may also explicitly dispatch the workflow with `deploy=true`. Both
-paths check out `github.sha`, prove the local checkout is that exact revision,
-and re-read protected `main` immediately before deployment. If `main` moved,
-deployment fails closed rather than publishing a stale artifact.
+The Pages provider was observed as `build_type=workflow` on 2026-10-03 UTC. A
+main-branch push builds and deploys automatically; an operator may also
+explicitly dispatch the workflow from `main` with `deploy=true`. Both paths
+check out `github.sha`, prove the local checkout is that exact revision, and
+re-read protected `main` immediately before deployment. If `main` moved,
+deployment fails closed rather than publishing a stale artifact. The
+[October 3 main run](https://github.com/szl-holdings/a11oy-net/actions/runs/37080908308)
+completed successfully for `68ec09e303d215eebdc5c6268519406820025f9d`;
+a cache-busted public
+`/health.json` read returned that SHA with `signer=unavailable` and
+`uptime=NOT_MEASURED`. That dated result is not a promise about later revisions.
 
 The pipeline uses immutable action revisions, keeps source build permissions
 separate from deployment permissions, and grants `pages: write` plus
@@ -241,27 +266,37 @@ separate from deployment permissions, and grants `pages: write` plus
 static-source binding only. It does not prove runtime health, signing, uptime,
 or live response headers.
 
-Post-merge provider sequence:
+During the 2026-10-02/03 UTC readbacks, public HTTPS through Cloudflare and a
+direct TLS read of the GitHub Pages origin both worked, but the Pages API reported
+`https_certificate.state=bad_authz` and `https_enforced=false`. The observed
+origin certificate expires on 2026-10-14. This is an origin-renewal risk, not
+evidence of a public outage. Inspect the Cloudflare SSL mode and underlying
+proxied DNS targets with provider access, diagnose Pages ACME authorization,
+then require a renewed `approved` origin certificate and read back both origin
+and edge HTTPS before closing that risk. A Cloudflare edge response alone
+does not establish end-to-end TLS.
+
+Post-merge verification sequence:
 
 1. Confirm the merged revision is the current protected `main` head and both
    required PR contexts passed for that exact reviewed head.
-2. Confirm the merge-triggered workflow reports `build_type=legacy` and did
-   not run the Actions deploy job. Preserve the existing branch deployment.
-3. In repository Pages settings, change the source to **GitHub Actions**. Do
-   not change `CNAME`, custom-domain, or HTTPS settings in this operation.
-4. Dispatch **Link & Asset Check** from `main` with `deploy=true`. A dispatch
-   from any other ref is ineligible, and a moved `main` is refused at final
+2. Re-read the Pages provider setting and require `build_type=workflow` for an
+   Actions deployment. Investigate any changed setting before publication.
+3. Confirm the merge-triggered **Link & Asset Check** build and deploy jobs
+   succeeded for that protected-main revision. If a separate dispatch is
+   needed, use `main` with `deploy=true`; a moved `main` is refused at final
    reauthorization.
-5. Retain the successful workflow URL and deployed `page_url`, then read back
-   `/health.json` and require its `sha` to equal the dispatched protected-main
+4. Retain the successful workflow URL and deployed `page_url`, then read back
+   `/health.json` and require its `sha` to equal the deployed protected-main
    revision. Preserve `signer=unavailable`, `probe_contract=STATIC_DOCUMENT`,
    `uptime=NOT_MEASURED`, and `dsse_live=NOT_CLAIMED`.
 
-Rollback is provider-first and reviewable: switch Pages back to branch
-deployment from `main` at `/`, then revert a bad source revision through a
-normal protected pull request. Verify the restored public files against that
-known revision. Do not hand-edit the committed `health.json` to impersonate a
-deployment, and do not treat rollback reachability as runtime-health or
+Rollback is reviewable: revert a bad source revision through a normal
+protected pull request, then verify the resulting Pages deployment and public
+files against that known revision. A provider-setting change needs its own
+current-state review; do not assume the earlier branch-deployment mode is
+still configured. Do not hand-edit the committed `health.json` to impersonate
+a deployment, and do not treat rollback reachability as runtime-health or
 header-deployment evidence.
 
 `_headers` is a versioned edge-security contract, not a live-header receipt. Its

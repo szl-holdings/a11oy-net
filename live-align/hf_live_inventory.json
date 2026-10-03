@@ -3,7 +3,9 @@
     "kernel:SZLHOLDINGS/governed-inference-meter",
     "kernel:SZLHOLDINGS/szl-block-kv",
     "kernel:SZLHOLDINGS/szl-governed-norm",
+    "kernel:SZLHOLDINGS/szl-kernels",
     "kernel:SZLHOLDINGS/szl-receipt-attn",
+    "model:SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3-authenticated",
     "space:SZLHOLDINGS/szl-bench-suite"
   ],
   "claim_boundaries": {
@@ -13,50 +15,50 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 35,
+    "datasets": 36,
     "kernels": 14,
-    "models": 50,
-    "spaces": 32
+    "models": 47,
+    "spaces": 34
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 50,
+      "live_public": 47,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "datasets",
-      "live_public": 35,
+      "live_public": 36,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "spaces_public",
-      "live_public": 32,
+      "live_public": 34,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "models",
-      "live_public": 50,
+      "live_public": 47,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "datasets",
-      "live_public": 35,
+      "live_public": 36,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "spaces",
-      "live_public": 32,
+      "live_public": 34,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -91,7 +93,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-09-30T21:39:41Z",
+  "observed_at": "2026-10-03T04:14:39Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
@@ -100,7 +102,9 @@
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/david-leads",
     "SZLHOLDINGS/finance",
+    "SZLHOLDINGS/foundation-confirmation-v2",
     "SZLHOLDINGS/gdw-frontier",
+    "SZLHOLDINGS/governed-receipt-verifier",
     "SZLHOLDINGS/holographic-unify",
     "SZLHOLDINGS/immune",
     "SZLHOLDINGS/immune-lattice",
@@ -116,6 +120,7 @@
     "SZLHOLDINGS/szl-command-lab",
     "SZLHOLDINGS/szl-constellation",
     "SZLHOLDINGS/szl-forge-lab",
+    "SZLHOLDINGS/szl-foundation-confirmation",
     "SZLHOLDINGS/szl-frontier",
     "SZLHOLDINGS/szl-khipu",
     "SZLHOLDINGS/szl-marketing-1.1",
@@ -129,7 +134,6 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "BUILD_ERROR": 1,
-    "RUNNING": 31
+    "RUNNING": 34
   }
 }

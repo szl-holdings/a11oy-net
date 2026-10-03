@@ -31,6 +31,26 @@
       "reason": "No source-bound live response-header readback is attached to this candidate. The committed _headers file is policy intent, not deployment evidence."
     }
   },
+  "measurement_binding": {
+    "state": "PARTIAL",
+    "covered_contracts": [
+      "/evidence.json",
+      "/atlas.json",
+      "/estate.json",
+      "/origin.json",
+      "/estate/hf-current.json",
+      "/models.json",
+      "/spaces.json",
+      "/pypi-provenance-2026-10-01.json",
+      "/pypi-provenance-2026-10-01-release-wave.json"
+    ],
+    "known_exceptions": [
+      "The generated public Hub contracts /estate/hf-current.json, /models.json, and /spaces.json are guarded as SNAPSHOT or REPORTED because raw API and carried benchmark bytes are not attached; their date, generator, and content hash do not independently prove upstream responses.",
+      "The dated PyPI provenance records are guarded as SNAPSHOT because raw provenance responses are not attached; public attestation pointers alone are not an atomic local witness.",
+      "A site-wide census of other MEASURED labels is not complete; no whole-registry measurement certification is asserted."
+    ],
+    "meaning": "Nine proof contracts are guarded against unbound MEASURED labels. This remains PARTIAL, not a site-wide or external-probe authenticity certificate."
+  },
   "entrypoints": [
     {
       "name": "latest_estate_observation",
@@ -81,13 +101,13 @@
     {
       "name": "estate_snapshot",
       "url": "https://a11oy.net/estate/",
-      "evidence_class": "MEASURED",
+      "evidence_class": "SNAPSHOT",
       "scope": "dated public GitHub/HF inventory snapshot; not product runtime; not a live dashboard"
     },
     {
       "name": "estate_contract",
       "url": "https://a11oy.net/estate.json",
-      "evidence_class": "MEASURED",
+      "evidence_class": "SNAPSHOT",
       "scope": "machine-readable estate snapshot; counts are inventory not quality"
     },
     {
@@ -105,13 +125,13 @@
     {
       "name": "origin_lock_record",
       "url": "https://a11oy.net/origin/",
-      "evidence_class": "MEASURED",
+      "evidence_class": "SNAPSHOT",
       "scope": "INC-05 dated public-identity-host probe; not DNS control; not a Cloudflare API; not product runtime; not a fourth origin; a Grok working copy is not published here"
     },
     {
       "name": "origin_lock_contract",
       "url": "https://a11oy.net/origin.json",
-      "evidence_class": "MEASURED",
+      "evidence_class": "SNAPSHOT",
       "scope": "dated machine-readable origin observation; inspect origin.json for its captured redirect and provider-domain states; no current status is implied by this index"
     },
     {
@@ -212,7 +232,7 @@
     }
   ],
   "labels": {
-    "MEASURED": "Direct observation with a disclosed source and context.",
+    "MEASURED": "Direct observation with a disclosed source and context. The nine guarded machine contracts additionally require an atomic evidence_uri and SHA-256 evidence_digest for each MEASURED claim.",
     "REPORTED": "Public upstream metadata; not independently measured here.",
     "SNAPSHOT": "A dated copy of a catalog or hologram; not a live measurement.",
     "MODELED": "Simulated or analytically derived.",

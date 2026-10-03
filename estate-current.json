@@ -1,8 +1,8 @@
 {
   "schema": "szl.proof-snapshot-pointer/v1",
-  "path": "/estate-observed-2026-09-30.json",
-  "sha256": "b6d98f62a41322b1bcc900557995f72f2b0420f36eddb06364163bcd9d02c8b6",
-  "captured_at": "2026-09-30T02:43:27Z",
+  "path": "/estate-observed-2026-10-02.json",
+  "sha256": "393b9f1a59f366b89ec309ab03f0c075be3fdb5e8ba7a6aebd2c4504627b19e2",
+  "captured_at": "2026-10-03T01:10:37Z",
   "scope": "public_repositories_only",
   "meaning": "Latest indexed observation. Digest equality proves byte consistency only. Age and qualification must be evaluated separately."
 }

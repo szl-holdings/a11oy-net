@@ -160,11 +160,19 @@ jobs:
       - name: Validate proof registry surface
         run: python3 scripts/check_proof_surface.py
 
+      - name: Validate historical evidence bindings and tamper regressions
+        run: |
+          python3 scripts/check_evidence_bindings.py
+          python3 -m unittest discover -s tests -p test_evidence_bindings.py
+
       - name: Validate SZL Frontier source/evidence record
         run: python3 scripts/check_szl_frontier_record.py
 
       - name: Validate frozen confirmation evidence and canonical publication binding
         run: python3 tests/test_confirmation_record.py
+
+      - name: Validate bounded OAC static release record
+        run: python3 tests/test_oac_proof_contract.py
 
       - name: Validate diligence and machine evidence surface
         run: python3 scripts/check_diligence_surface.py

@@ -734,6 +734,11 @@ def build_models_contract(prior: dict[str, Any], raw_models: list[dict[str, Any]
         earlier = prior_rows.get(ident, {})
         bench = earlier.get("bench")
         keep_bench = earlier.get("class") == klass and bench_still_bound(bench, files)
+        carried_bench = copy.deepcopy(bench) if keep_bench else None
+        if carried_bench is not None:
+            # A listed filename does not bind the prior benchmark file bytes.
+            # Never promote a carried assertion to MEASURED on an API refresh.
+            carried_bench["evidence_class"] = "REPORTED"
         rows.append(
             {
                 "id": ident,
@@ -742,7 +747,7 @@ def build_models_contract(prior: dict[str, Any], raw_models: list[dict[str, Any]
                 "library": item.get("library_name"),
                 "files": len(files),
                 "weights": weight_files(files),
-                "bench": copy.deepcopy(bench) if keep_bench else None,
+                "bench": carried_bench,
                 "operational": False,
                 "trained": klass in ("TRAINED_WEIGHTS", "NANO_SYNTHETIC"),
             }
@@ -764,12 +769,13 @@ def build_models_contract(prior: dict[str, Any], raw_models: list[dict[str, Any]
         "author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. "
         "Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated "
         "record only while its source file is still listed and the class is unchanged; otherwise it is "
-        "null. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp "
+        "null and remains REPORTED without the benchmark bytes. The KEEP / fold cut stays /spaces.json "
+        "policy, not a Hub count. This file does not stamp "
         "OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE "
         "from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards."
     )
     contract["captured_at"] = inventory["observed_at"]
-    contract["evidence_class"] = "MEASURED"
+    contract["evidence_class"] = "SNAPSHOT"
     contract["generated_by"] = GENERATOR
     contract["method"] = (
         "Unauthenticated Hugging Face API GET /api/models?author=" + ORG + " with expanded sibling file "
@@ -809,7 +815,7 @@ def build_spaces_contract(prior: dict[str, Any], inventory: dict[str, Any]) -> d
         }
 
     contract["hub_presence"] = {
-        "evidence_class": "MEASURED",
+        "evidence_class": "SNAPSHOT",
         "fold": split("fold"),
         "generated_by": GENERATOR,
         "interpretation": (
@@ -861,7 +867,7 @@ def historical_rows(root: Path) -> list[dict[str, Any]]:
         },
         {
             "captured_at": old.get("observed_at"),
-            "evidence_class": "MEASURED",
+            "evidence_class": "SNAPSHOT",
             "path": "/" + HISTORICAL_INVENTORY_PATH,
             "role": "prior public-inventory.json (" + str(old.get("schema")) + "); historical, not rewritten",
         },
@@ -888,7 +894,7 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
             "repository_membership_total": counts["repository_membership_total"],
             "spaces_public": counts["spaces"],
         },
-        "evidence_class": "MEASURED",
+        "evidence_class": "SNAPSHOT",
         "freshness": {
             "badge_stale_after_hours": 24,
             "refresh_workflow": REFRESH_WORKFLOW,
