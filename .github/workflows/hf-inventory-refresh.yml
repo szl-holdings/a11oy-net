@@ -85,6 +85,7 @@ jobs:
           status=pass
           for check in \
             "python3 scripts/check_proof_surface.py" \
+            "python3 scripts/check_evidence_bindings.py" \
             "python3 scripts/check_security_headers.py" \
             "python3 tests/test_generate_hf_inventory.py"; do
             if ! ${check} > "${RUNNER_TEMP}/check.log" 2>&1; then

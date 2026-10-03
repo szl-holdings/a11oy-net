@@ -37,14 +37,19 @@
       "/evidence.json",
       "/atlas.json",
       "/estate.json",
-      "/origin.json"
+      "/origin.json",
+      "/estate/hf-current.json",
+      "/models.json",
+      "/spaces.json",
+      "/pypi-provenance-2026-10-01.json",
+      "/pypi-provenance-2026-10-01-release-wave.json"
     ],
     "known_exceptions": [
-      "The generated public Hub contracts /estate/hf-current.json, /models.json, and /spaces.json carry observation-time MEASURED labels without attached raw API response witnesses; their date, generator, and content hash do not independently prove the upstream responses.",
-      "The dated PyPI provenance record carries a MEASURED label and per-release public attestation pointers, but is not yet covered by this atomic evidence_uri/evidence_digest validator.",
+      "The generated public Hub contracts /estate/hf-current.json, /models.json, and /spaces.json are guarded as SNAPSHOT or REPORTED because raw API and carried benchmark bytes are not attached; their date, generator, and content hash do not independently prove upstream responses.",
+      "The dated PyPI provenance records are guarded as SNAPSHOT because raw provenance responses are not attached; public attestation pointers alone are not an atomic local witness.",
       "A site-wide census of other MEASURED labels is not complete; no whole-registry measurement certification is asserted."
     ],
-    "meaning": "The four historical contracts are guarded against unbound MEASURED labels. This is not a site-wide or external-probe authenticity certificate."
+    "meaning": "Nine proof contracts are guarded against unbound MEASURED labels. This remains PARTIAL, not a site-wide or external-probe authenticity certificate."
   },
   "entrypoints": [
     {
@@ -227,7 +232,7 @@
     }
   ],
   "labels": {
-    "MEASURED": "Direct observation with a disclosed source and context. The four guarded historical contracts additionally require an atomic evidence_uri and SHA-256 evidence_digest for each MEASURED claim.",
+    "MEASURED": "Direct observation with a disclosed source and context. The nine guarded machine contracts additionally require an atomic evidence_uri and SHA-256 evidence_digest for each MEASURED claim.",
     "REPORTED": "Public upstream metadata; not independently measured here.",
     "SNAPSHOT": "A dated copy of a catalog or hologram; not a live measurement.",
     "MODELED": "Simulated or analytically derived.",

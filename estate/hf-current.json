@@ -13,7 +13,7 @@
     "public_resources_total": 139,
     "spaces_public": 34
   },
-  "evidence_class": "MEASURED",
+  "evidence_class": "SNAPSHOT",
   "freshness": {
     "badge_stale_after_hours": 24,
     "refresh_workflow": ".github/workflows/hf-inventory-refresh.yml",

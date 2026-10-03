@@ -22,8 +22,46 @@ PROBE_DIGEST = "sha256:fffe2ea97f6dbbea14bfeefa99302f17a00a99efea132a1a05d2bb511
 
 
 class EvidenceBindingsTest(unittest.TestCase):
+    @staticmethod
+    def copy_contracts(root: Path) -> None:
+        for name in DOCUMENTS:
+            target = root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / name, target)
+
     def test_published_historical_contracts(self) -> None:
         self.assertEqual(validate_documents(ROOT), [])
+
+    def test_generated_and_pypi_labels_require_atomic_witnesses(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_contracts(root)
+            cases = (
+                ("estate/hf-current.json", ("evidence_class",)),
+                ("models.json", ("models", 0, "bench", "evidence_class")),
+                ("models.json", ("local_nexus_kernel", "tests", "evidence_class")),
+                ("spaces.json", ("hub_presence", "evidence_class")),
+                ("pypi-provenance-2026-10-01.json", ("evidence_class",)),
+                ("pypi-provenance-2026-10-01-release-wave.json", ("evidence_class",)),
+            )
+            for name, keys in cases:
+                target = root / name
+                original = target.read_text(encoding="utf-8")
+                record = json.loads(original)
+                node = record
+                for key in keys[:-1]:
+                    node = node[key]
+                node[keys[-1]] = "MEASURED"
+                target.write_text(json.dumps(record), encoding="utf-8")
+                with self.subTest(name=name, keys=keys):
+                    self.assertIn(name, " ".join(validate_documents(root)))
+                target.write_text(original, encoding="utf-8")
+
+            spaces = root / "spaces.json"
+            record = json.loads(spaces.read_text(encoding="utf-8"))
+            record["cut"]["hubArchive"] = "MEASURED"
+            spaces.write_text(json.dumps(record), encoding="utf-8")
+            self.assertIn("spaces.json", " ".join(validate_documents(root)))
 
     def test_exact_bytes_and_atomic_pair(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -62,15 +100,12 @@ class EvidenceBindingsTest(unittest.TestCase):
                     validate_binding(root, {**node, "evidence_uri": invalid}, "fixture"),
                     invalid,
                 )
-            self.assertTrue(
-                validate_binding(root, {**node, "evidence_digest": "sha256:bad"}, "fixture")
-            )
+            self.assertTrue(validate_binding(root, {**node, "evidence_digest": "sha256:bad"}, "fixture"))
 
     def test_nested_labels_and_fail_closed_boundaries(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for name in DOCUMENTS:
-                shutil.copyfile(ROOT / name, root / name)
+            self.copy_contracts(root)
             origin_path = root / "origin.json"
             origin = json.loads(origin_path.read_text(encoding="utf-8"))
             origin["hosts"][0]["honesty"] = "MEASURED"
@@ -95,17 +130,14 @@ class EvidenceBindingsTest(unittest.TestCase):
     def test_human_pages_must_match_machine_snapshot_dates(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for name in DOCUMENTS:
-                shutil.copyfile(ROOT / name, root / name)
+            self.copy_contracts(root)
             (root / "origin").mkdir()
-            (root / "estate").mkdir()
+            (root / "estate").mkdir(exist_ok=True)
             (root / "origin" / "index.html").write_text(
                 "Historical probe 2026-09-26T01:10:00Z CLOSED-as-MEASURED",
                 encoding="utf-8",
             )
-            (root / "estate" / "index.html").write_text(
-                "Read machine snapshot", encoding="utf-8"
-            )
+            (root / "estate" / "index.html").write_text("Read machine snapshot", encoding="utf-8")
             failures = " ".join(validate_documents(root))
             self.assertIn("latest machine-record timestamp", failures)
             self.assertIn("unbound closure", failures)

@@ -139,14 +139,20 @@ claims.
 Operational status is separate from evidence class. Hub `RUNNING` state is
 transport metadata and does not establish end-to-end capability.
 
-The historical machine contracts `/evidence.json`, `/atlas.json`, `/estate.json`,
-and `/origin.json` are checked by `scripts/check_evidence_bindings.py`: a
-`MEASURED` claim in them needs a same-object `evidence_uri` and SHA-256
-`evidence_digest` resolving to exact published witness bytes. Their older
-unwitnessed probes are therefore `SNAPSHOT`, not a current measurement. This is
-not a whole-registry certification: the generated public Hub contracts and the
-dated PyPI provenance record still need their own raw-response or attestation
-witness binding review. `/evidence.json` keeps those exceptions explicit.
+Nine machine contracts are checked by `scripts/check_evidence_bindings.py`:
+`/evidence.json`, `/atlas.json`, `/estate.json`, `/origin.json`,
+`/estate/hf-current.json`, `/models.json`, `/spaces.json`, and both dated PyPI
+provenance records. A `MEASURED` claim in any of them needs a same-object
+`evidence_uri` and SHA-256 `evidence_digest` resolving to exact published
+witness bytes. Their unwitnessed observations remain `SNAPSHOT`, while carried
+benchmark assertions remain `REPORTED`. This is not a whole-registry
+certification: raw Hub/PyPI response witnesses and a site-wide census still
+need separate review. `/evidence.json` keeps those exceptions explicit.
+`/spaces.json` v2 replaces the unsupported historical `cut.measured` name
+with `cut.snapshot_total`; clients using that field must update explicitly.
+The dated `/stalled.json` record still names v1.2.0 at a mutable URL; it is
+preserved unchanged, and the referenced older source is pinned at
+[`2ee4a7f:spaces.json`](https://github.com/szl-holdings/a11oy-net/blob/2ee4a7fe44085c43e61e7e665e304555b415d1f4/spaces.json).
 
 The kernel chip binds live `/api/a11oy/v1/honest` `locked_formula_count` and
 paints **8** only when that field is exactly 8; otherwise **N/A** /
