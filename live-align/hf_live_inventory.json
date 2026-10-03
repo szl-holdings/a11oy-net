@@ -92,10 +92,11 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T10:28:03Z",
+  "observed_at": "2026-10-03T11:01:47Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
+    "SZLHOLDINGS/a11oy",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/david-leads",
@@ -132,7 +133,6 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 33,
-    "RUNNING_APP_STARTING": 1
+    "RUNNING": 34
   }
 }
