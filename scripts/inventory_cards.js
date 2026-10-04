@@ -80,7 +80,7 @@
     if (kind === "DATASET") base += "datasets/";
     if (kind === "SPACE") base += "spaces/";
     if (kind === "COLLECTION") return "https://huggingface.co/collections/" + id;
-    if (kind === "BUCKET") return "https://huggingface.co/" + id;
+    if (kind === "BUCKET") return "https://huggingface.co/buckets/" + id;
     return base + id;
   }
 
