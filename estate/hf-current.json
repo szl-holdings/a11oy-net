@@ -13,7 +13,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-10-03T10:47:12Z",
+    "observed_at": "2026-10-03T11:25:22Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -35,11 +35,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "9060fa8d7edcd5c246b86bcfcf1916df44b18038253325336f2f46208f8001ae",
-    "source_git_blob": "3c001bc04a2aeb2604c2761f36692e56834aed7f",
+    "source_git_blob": "efb39ae550a369779863f4d0e6fda8abcbabe887",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "27f1befc76705152d63809aa79fa566787427820",
-    "source_sha256": "7f314e2438d775c88d3190ecb4e0e0955a55f34fc10949ac97eeb7490a8165a3"
+    "source_revision": "f291a53fb78b492b74059c3e21cc354af5c117d8",
+    "source_sha256": "11f20ba555fa6f2d50b5736fad70452fd242d719a58bbdbe7eb364e38ee8e73e"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -122,13 +122,13 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T11:01:47Z",
-  "observed_date": "2026-10-03",
+  "observed_at": "2026-10-04T07:17:49Z",
+  "observed_date": "2026-10-04",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v1",
   "source": "/public-inventory.json",
-  "source_content_sha256": "11e9853861ad121eb5b51ec648a0697f56446d351e1a155a95beb342e7f2d2d0",
+  "source_content_sha256": "0ab286e321fc3dc938fd2a8bc7de9ab6c7f307f725dc8cc92b284bcd42cc7186",
   "spaces_by_runtime_stage": {
     "RUNNING": 34
   }
