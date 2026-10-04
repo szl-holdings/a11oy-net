@@ -173,7 +173,7 @@ function pythonOf(m) {
     return `# ${mod} — loop_tax. ms MEASURED, overhead DERIVED, joules never invented.\nfrom szl_khipu.ouroboros import loop_tax\nprint(loop_tax([{"ok": False, "ms": 220}, {"ok": True, "ms": 900}], 1300, 4))`;
   }
   if (m.weights === "full" || m.weights === "adapter") {
-    return `# receipted Unsloth. Sign BEFORE merge. GGUF is derived.\n# github.com/szl-holdings/szl-forge  +  ${mod}\n# base = ${m.base or "Qwen/Qwen2.5-1.5B-Instruct"}\n# dataset SHA-256 + LoRA r + seed + final_loss → training_receipt.json`;
+    return `# receipted Unsloth. Sign BEFORE merge. GGUF is derived.\n# github.com/szl-holdings/szl-forge  +  ${mod}\n# base = ${m.base || "Qwen/Qwen2.5-1.5B-Instruct"}\n# dataset SHA-256 + LoRA r + seed + final_loss → training_receipt.json`;
   }
   if (m.evidence === "ROADMAP" || m.evidence === "STUB") {
     return `# ${m.name} is ${m.evidence}. There is nothing to fit.\n# Publishing the empty seat is the point. Do not load ${m.hf} as transformers.`;
