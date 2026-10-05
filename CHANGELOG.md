@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-05 — repair the static Atelier JavaScript parser contract
+
+- Replace the Python-style `or` token in `atelier/app.js` with JavaScript `||`, restoring parseability while retaining the existing missing-or-empty model-base fallback; demote the selected model heading to `h2` so the walk view keeps one document-level `h1`.
+- Add offline Node and Python-collected regression tests covering parse success, direct model-base values, empty/missing fallback, HTML escaping, and unchanged signed/energy labels. The proof origin remains a static lab handoff; no model is loaded, retrained, promoted, or newly measured by this repair.
+- Qualify the `/atelier/` reader path and local verification commands without changing its canonical source (`szl-holdings/szl-atelier`), public Space, navigation tier, runtime claim, or evidence vocabulary.
+
 ## 2026-10-03 — close visible Hub label drift and update the Pages runbook
 
 - After protected merge #263, align the Estate OS public-Hub count card and three dated unauthenticated Space-status notes with the `SNAPSHOT` machine contracts. Retain the separate authenticated `REPORTED` status and the limits of an HTTP 401. Counts, observation times, Hub visibility, and provider resources are unchanged.

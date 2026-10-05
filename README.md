@@ -78,6 +78,7 @@ equivalence.
   [`/code/`](https://a11oy.net/code/) remain live URLs as one-line Diligence
   handoffs, not top-level nav peers. They do not claim product readiness.
   Interactive receipt verify stays on [a-11-oy.com/verify](https://a-11-oy.com/verify).
+- **Atelier lab:** [`/atelier/`](https://a11oy.net/atelier/) is a static, source-linked model walk. Its canonical playable Space remains [`SZLHOLDINGS/szl-atelier`](https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier), and canonical source remains [`szl-holdings/szl-atelier`](https://github.com/szl-holdings/szl-atelier). JavaScript parseability is locally regression-tested; model quality, runtime readiness, retraining, and energy remain outside this proof-origin contract.
 - **Machine readers:** [`/evidence.json`](https://a11oy.net/evidence.json) states
   the evidence contract, while [`/llms.txt`](https://a11oy.net/llms.txt) routes
   automated readers without extending any claim.
