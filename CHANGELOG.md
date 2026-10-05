@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-05 - preserve content-addressed Atelier bytes on Windows
+
+- Mark only atelier/app.js as byte-preserved in .gitattributes. Its source bytes, module URL and existing exact SHA-256 check remain unchanged; no global Git setting is changed.
+- Add a temporary-repository checkout regression under core.autocrlf true, input and false. The true case reproduced LF-to-CRLF drift before this policy change. Existing signed source and publication gates remain required.
+
 ## 2026-10-05 - keep Atelier navigation independent of inventory counts
 
 - Replace the undated forty-model navigation description with a versioned Hub artifact explorer description. Generated inventory counts and dated records are unchanged.
