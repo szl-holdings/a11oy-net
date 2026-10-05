@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-05 - keep Atelier navigation independent of inventory counts
+
+- Replace the undated forty-model navigation description with a versioned Hub artifact explorer description. Generated inventory counts and dated records are unchanged.
+- Add three offline HTML-parser contracts for the description, canonical Space identity, and explicit non-product-runtime boundary. No model, kernel, dataset, runtime or provider setting is changed.
+
 ## 2026-10-05 — repair the static Atelier JavaScript parser contract
 
 - Replace the Python-style `or` token in `atelier/app.js` with JavaScript `||`, restoring parseability while retaining the existing missing-or-empty model-base fallback; demote the selected model heading to `h2` so the walk view keeps one document-level `h1`.
