@@ -1,0 +1,14 @@
+{
+  "schema": "szl.brand-projection.v1",
+  "source_repository": "szl-holdings/szl-brand",
+  "source_commit": "2594f7f726cb14c6f123a948ad1c2d1d39ac9497",
+  "source_path": "kit/logos/orbit-v2/szl-orbit.svg",
+  "source_blob_sha": "b9eaa9d496e98b97ae24de93d7f04c248d9261be",
+  "destination_path": "assets/a11oy-mark.svg",
+  "sha256": "84a23d7b2a6dd198378ded91e52c545df2943fd33cbc4a67dd4184e94f4d94fb",
+  "superseded_blob_sha": "0adcd0abd51b66e77f113e2ceacc5b07fbf13912",
+  "scope": "Shared favicon, app icon and SZL publisher logo; existing URL retained",
+  "product_name": "a11oy Proof Registry",
+  "live_deployment": "NOT_ATTESTED",
+  "notes": "The founder-authorized parent mark replaces the old lambda-only identity at the existing asset path. Historical screenshots, citations, evidence JSON, runtime claims, CSP and deployment workflows are unchanged. Verify the exact asset after Pages deployment before asserting live rollout."
+}
