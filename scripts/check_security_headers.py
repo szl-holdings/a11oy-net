@@ -173,11 +173,33 @@ class HtmlSecuritySurface(HTMLParser):
         self.inline_style_attributes = 0
         self.stylesheet_links = 0
         self.external_scripts = 0
+        self.script_sources: list[str] = []
+        self.inline_event_attributes: list[str] = []
+        self.javascript_attributes: list[str] = []
+        self.duplicate_attributes: list[str] = []
+        self.srcdoc_elements = 0
+        self.foreign_content_elements = 0
+        self.base_hrefs: list[str] = []
+        self.ambiguous_script_markup: list[str] = []
+        self.inline_script_bodies: list[str] = []
+        self._script_open = False
+        self._script_has_src = False
+        self._script_parts: list[str] = []
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
-        item = dict(attrs)
+        item: dict[str, str | None] = {}
+        for name, value in attrs:
+            if name in item:
+                self.duplicate_attributes.append(f"{tag}.{name}")
+            else:
+                item[name] = value
+        for name, value in attrs:
+            if value is not None and name.lower().startswith("on"):
+                self.inline_event_attributes.append(name)
+            if value is not None and re.sub(r"[\x00-\x20]", "", value).lower().startswith("javascript:"):
+                self.javascript_attributes.append(name)
         if (
             tag.lower() == "meta"
             and str(item.get("http-equiv") or "").lower()
@@ -193,8 +215,43 @@ class HtmlSecuritySurface(HTMLParser):
             item.get("rel") or ""
         ).lower().split():
             self.stylesheet_links += 1
-        if tag.lower() == "script" and item.get("src"):
-            self.external_scripts += 1
+        if tag.lower() == "iframe" and "srcdoc" in item:
+            self.srcdoc_elements += 1
+        if tag.lower() in {"svg", "math"}:
+            self.foreign_content_elements += 1
+        if tag.lower() == "base" and "href" in item:
+            self.base_hrefs.append(str(item["href"] or ""))
+        if tag.lower() == "script":
+            self._script_open = True
+            self._script_has_src = "src" in item
+            self._script_parts = []
+            if self._script_has_src:
+                self.external_scripts += 1
+                self.script_sources.append(str(item["src"] or ""))
+
+    def handle_data(self, data: str) -> None:
+        if self._script_open and not self._script_has_src:
+            self._script_parts.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "script" and self._script_open:
+            if not self._script_has_src:
+                self.inline_script_bodies.append("".join(self._script_parts))
+            self._script_open = False
+            self._script_parts = []
+
+    def handle_startendtag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        if tag.lower() == "script":
+            self.ambiguous_script_markup.append("self-closing script element")
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
+
+    def close(self) -> None:
+        super().close()
+        if self._script_open:
+            self.ambiguous_script_markup.append("unclosed script element")
 
 
 def parse_headers(path: pathlib.Path) -> dict[str, str]:
@@ -216,12 +273,12 @@ def parse_headers(path: pathlib.Path) -> dict[str, str]:
 
 
 def inline_script_hashes(html: str) -> set[str]:
+    surface = HtmlSecuritySurface()
+    surface.feed(html)
+    surface.close()
     hashes: set[str] = set()
-    pattern = re.compile(r"<script(?P<attrs>[^>]*)>(?P<body>.*?)</script\b[^>]*>", re.I | re.S)
-    for match in pattern.finditer(html):
-        if re.search(r"\bsrc\s*=", match.group("attrs"), re.I):
-            continue
-        digest = hashlib.sha256(match.group("body").encode("utf-8")).digest()
+    for body in surface.inline_script_bodies:
+        digest = hashlib.sha256(body.encode("utf-8")).digest()
         hashes.add("'sha256-" + base64.b64encode(digest).decode("ascii") + "'")
     return hashes
 
@@ -237,6 +294,100 @@ def parse_csp(value: str) -> dict[str, set[str]]:
             raise ValueError(f"duplicate CSP directive: {directive}")
         parsed[directive] = set(part[1:])
     return parsed
+
+
+def validate_global_script_coverage(
+    root: pathlib.Path, headers: dict[str, str]
+) -> list[str]:
+    """Check the catch-all script policy against every publishable HTML page."""
+    errors: list[str] = []
+    try:
+        policy = parse_csp(headers.get("content-security-policy", ""))
+    except ValueError as exc:
+        return [f"global script coverage: {exc}"]
+    sources = policy.get("script-src", policy.get("default-src", set()))
+    paths = sorted(
+        path for path in root.rglob("*")
+        if path.relative_to(root).parts[0] not in {".git", ".github"}
+        and path.suffix.lower() in {".html", ".htm"}
+        and (path.is_file() or path.is_symlink())
+    )
+    if not paths:
+        return ["global script coverage: no HTML pages found"]
+    for path in paths:
+        relative = path.relative_to(root).as_posix()
+        if path.is_symlink():
+            errors.append(f"{relative}: symlinked HTML is not admitted")
+            continue
+        try:
+            html = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"{relative}: cannot read global script coverage: {exc}")
+            continue
+        # HTMLParser skips CDATA/marked sections that a browser can parse as
+        # active HTML after the first >. Only ordinary HTML5 doctypes and
+        # comments are needed in this source tree; reject other declarations
+        # before passing them to the parser, including within ambiguous markup.
+        if re.search(r"<!(?!--|doctype[\t\n\f\r ]+html[\t\n\f\r ]*>)", html, re.I):
+            errors.append(f"{relative}: unsupported HTML declaration is not admitted")
+            continue
+        missing = inline_script_hashes(html) - sources
+        if missing:
+            errors.append(f"{relative}: inline script hashes are not admitted by global CSP")
+        if re.search(r"<!--(?:>|->)|--!>", html):
+            errors.append(f"{relative}: ambiguous HTML comment syntax is not admitted")
+        surface = HtmlSecuritySurface()
+        surface.feed(html)
+        surface.close()
+        if surface.duplicate_attributes:
+            errors.append(f"{relative}: duplicate HTML attributes are not admitted")
+        if surface.srcdoc_elements:
+            errors.append(f"{relative}: iframe srcdoc requires a separately reviewed CSP contract")
+        if surface.foreign_content_elements:
+            errors.append(f"{relative}: inline SVG/MathML requires a separately reviewed CSP contract")
+        if surface.ambiguous_script_markup:
+            errors.append(f"{relative}: ambiguous script markup is not admitted")
+        if surface.inline_event_attributes:
+            errors.append(f"{relative}: inline event attributes are not admitted by global CSP")
+        if surface.javascript_attributes:
+            errors.append(f"{relative}: JavaScript URL attributes are not admitted by global CSP")
+        for href in surface.base_hrefs:
+            try:
+                base_url = urllib.parse.urlsplit(
+                    urllib.parse.urljoin(f"https://a11oy.net/{relative}", href)
+                )
+                valid_base = (
+                    not re.search(r"[\x00-\x20\x7f\\]", href)
+                    and base_url.scheme == "https"
+                    and base_url.hostname == "a11oy.net"
+                    and base_url.port in (None, 443)
+                    and base_url.username is None
+                    and base_url.password is None
+                )
+            except ValueError:
+                valid_base = False
+            if not valid_base:
+                errors.append(f"{relative}: base href is not admitted by global CSP")
+        for source in surface.script_sources:
+            if not source or re.search(r"[\x00-\x20\x7f\\]", source):
+                errors.append(f"{relative}: ambiguous script source is not admitted by global CSP")
+                continue
+            try:
+                resolved = urllib.parse.urlsplit(
+                    urllib.parse.urljoin(f"https://a11oy.net/{relative}", source)
+                )
+                same_origin = (
+                    resolved.scheme == "https"
+                    and resolved.hostname == "a11oy.net"
+                    and resolved.port in (None, 443)
+                    and resolved.username is None
+                    and resolved.password is None
+                )
+            except ValueError:
+                same_origin = False
+            if not same_origin or "'self'" not in sources:
+                errors.append(f"{relative}: script source is not admitted by global CSP: {source}")
+    return errors
 
 
 def meta_csp_exactly_matches(
@@ -470,6 +621,7 @@ def validate_static() -> tuple[dict[str, str], list[str]]:
     for key, expected_value in EXPECTED_HEADER_VALUES.items():
         if normalize(headers.get(key, "")) != normalize(expected_value):
             errors.append(f"{key} does not match the fail-closed contract")
+    errors.extend(validate_global_script_coverage(ROOT, headers))
     return headers, errors
 
 

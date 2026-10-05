@@ -192,7 +192,9 @@ jobs:
           node scripts/check_honest_kernel_bind.mjs
 
       - name: Validate edge security contract
-        run: python3 scripts/check_security_headers.py
+        run: |
+          python3 scripts/check_security_headers.py
+          python3 -m unittest discover -s tests -p test_global_script_coverage.py
 
       - name: Validate isolated Pages artifact builder
         run: python3 tests/test_pages_artifact.py
