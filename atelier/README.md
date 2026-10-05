@@ -1,6 +1,6 @@
 # Atelier walk (proof origin)
 
-Static forty-model walk on the proof registry.
+Static curated gallery of 40 records on the proof registry. Its catalog is separate from the current public Hub inventory. The canonical Hugging Face Space uses the `frontier/atelier_v3` projection in `szl-holdings/szl-atelier`.
 
 - This path: https://a11oy.net/atelier/
 - Canonical Space: https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier
