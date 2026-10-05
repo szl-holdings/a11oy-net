@@ -2,3 +2,6 @@
 estate/canonical-hf-manifest.json -text
 public-membership.observed-2026-09-10.json -text
 tests/fixtures/hf_api/canonical_manifest.json -text
+
+# The Atelier module URL fingerprints the exact committed JavaScript bytes.
+atelier/app.js -text
