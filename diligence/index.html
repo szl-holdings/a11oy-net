@@ -83,24 +83,24 @@
 
     <section id="summary">
       <div class="wrap">
-        <div class="section-head"><span class="section-label">Ninety seconds</span><h2>What is MEASURED, ROADMAP, or UNAVAILABLE.</h2><p>A figure without method, date, and N is omitted. This table does not invent evals.</p></div>
+        <div class="section-head"><span class="section-label">Ninety seconds</span><h2>What is SNAPSHOT, REPORTED, ROADMAP, or UNAVAILABLE.</h2><p>The August 2026 observations below are historical snapshots, not live checks. A figure without method, date, and N is omitted. This table does not invent evals.</p></div>
         <div class="summary-scroll">
           <table class="summary-table">
             <thead>
               <tr><th>Claim</th><th>Class</th><th>Method / date / N</th><th>Bound</th></tr>
             </thead>
             <tbody>
-              <tr><td>This origin is a static proof registry</td><td><span class="cls cls-measured">MEASURED</span></td><td>This document · GitHub Pages · 2026-08-28</td><td>Reachability of a11oy.net only.</td></tr>
-              <tr><td>Origin health document</td><td><span class="cls cls-measured">MEASURED</span></td><td>/health.json · committed static file · 2026-08-28</td><td>Not DSSE-LIVE. signer=unavailable. sha is last published main. Not uptime. /readyz is HTML. /healthz is not published (404 HTML).</td></tr>
-              <tr><td>Receipt store on this origin</td><td><span class="cls cls-measured">MEASURED</span></td><td>This repository · 2026-08-28</td><td>None. RECORD is pointers. Live receipts stay on the product Space.</td></tr>
+              <tr><td>Static proof-registry path was served</td><td><span class="cls cls-reported">SNAPSHOT</span></td><td>This document · GitHub Pages · 2026-08-28</td><td>Reachability of a11oy.net at that observation only. Not current product readiness.</td></tr>
+              <tr><td>Origin health document was a static file</td><td><span class="cls cls-reported">SNAPSHOT</span></td><td>/health.json · committed static file · 2026-08-28</td><td>Not DSSE-LIVE or uptime. signer=unavailable then; sha was last published main. /readyz was HTML at that observation. In this source, /healthz is not published (a Pages 404 HTML response is not a health probe).</td></tr>
+              <tr><td>Receipt store on this origin (2026-08-28 observation)</td><td><span class="cls cls-reported">SNAPSHOT</span></td><td>This repository · 2026-08-28</td><td>None was found then; RECORD indexed pointers. Verify current product receipts at their own origin.</td></tr>
               <!-- estate counts render from estate.json manifest — see szl-holdings org: https://github.com/szl-holdings -->
-              <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">REPORTED</span></td><td>Committed Hub metadata · 2026-08-31</td><td>Estate counts render from the <a href="/estate.json">estate.json manifest</a> — see <a href="https://github.com/szl-holdings" target="_blank" rel="noopener">github.com/szl-holdings</a>. Listing metadata, not quality.</td></tr>
+              <tr><td>Public Hub listing snapshot</td><td><span class="cls cls-reported">SNAPSHOT</span></td><td>Committed Hub metadata · 2026-08-31</td><td>The linked <a href="/estate.json">estate.json manifest</a> retains its own observation date — see <a href="https://github.com/szl-holdings" target="_blank" rel="noopener">github.com/szl-holdings</a>. Historical listing metadata, not current inventory or quality.</td></tr>
               <tr><td>Eight locked-proven formulas</td><td><span class="cls cls-reported">REPORTED</span></td><td>Lean kernel c7c0ba17 in public source</td><td>Source-bounded. Live kernel count is /honest locked_formula_count, not this row. Λ is not among the eight.</td></tr>
               <tr><td>Λ uniqueness</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>Conjecture 1 · advisory</td><td>Never a theorem. Never green.</td></tr>
               <tr><td>Fall 2026 cuts and KERNEL originals</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>Named cards and GitHub source</td><td>Not OPERATIONAL.</td></tr>
               <tr><td>Interactive receipt verification</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>Tool stays at a-11-oy.com/verify.</td></tr>
               <tr><td>Product runtime honesty / health</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>This scriptless room does not fetch. Kernel chip on / paints from locked_formula_count or N/A.</td></tr>
-              <tr><td>Estate snapshot on this origin</td><td><span class="cls cls-measured">MEASURED</span></td><td>/estate/ + /estate.json · 2026-08-29T18:23Z</td><td>Dated inventory and closeout recapture. Not a live dashboard. Not a receipt store. Not product runtime.</td></tr>
+              <tr><td>Estate snapshot on this origin</td><td><span class="cls cls-reported">SNAPSHOT</span></td><td>/estate/ + /estate.json · 2026-08-29T18:23Z</td><td>Historical inventory and closeout recapture at the stated date. Not a live dashboard. Not a receipt store. Not product runtime.</td></tr>
               <tr><td>Eval leaderboard or quality scores</td><td><span class="cls cls-unavailable">UNAVAILABLE</span></td><td>—</td><td>No method+date+N figure on this origin.</td></tr>
               <tr><td>SLSA L3</td><td><span class="cls cls-roadmap">ROADMAP</span></td><td>—</td><td>L1 honest · L2 attested · L3 not claimed here.</td></tr>
             </tbody>
@@ -121,13 +121,13 @@
 
     <section id="investors">
       <div class="wrap">
-        <div class="section-head"><span class="section-label">Investor path</span><h2>Four passes through the public record.</h2><p>Review the operating thesis and its evidence in a sequence that exposes uncertainty early.</p></div>
+        <div class="section-head"><span class="section-label">Investor path</span><h2>Five passes through the public record.</h2><p>Review the operating thesis and its evidence in a sequence that exposes uncertainty early.</p></div>
         <div class="steps">
           <article class="step"><h3>Product boundary</h3><p>Separate the product experience from this separately navigable proof surface.</p><a href="https://a-11-oy.com">Open product domain</a></article>
           <article class="step"><h3>RECORD and receipts</h3><p>Read the canonical index of pointers here. Live receipts stay on the product Space. Use the product /verify tool if you need an interactive check.</p><a href="/record/">Open RECORD</a></article>
           <article class="step"><h3>Source and benchmarks</h3><p>Read the public implementation, history, CI, and governed-agent benchmark.</p><a href="https://github.com/szl-holdings/a11oy">Inspect source</a></article>
           <article class="step"><h3>Public estate</h3><p>Review Hub atlas and GitHub surfaces as reported metadata. Reachability is not quality.</p><a href="/#atlas">Browse Hub atlas</a></article>
-          <article class="step"><h3>Estate snapshot</h3><p>Read the dated MEASURED inventory, key hunt, and closeout recapture. Counts are not quality. Closeout stays BLOCKED until exact-SHA deploy and HMAC.</p><a href="/estate/">Open estate snapshot</a></article>
+          <article class="step"><h3>Estate snapshot</h3><p>Read the dated SNAPSHOT inventory, key hunt, and closeout recapture. Counts are not quality. The recorded closeout stayed BLOCKED pending exact-SHA deploy and HMAC; this is not a current runtime status.</p><a href="/estate/">Open estate snapshot</a></article>
         </div>
       </div>
     </section>
@@ -151,7 +151,7 @@ node scripts/check_atlas_policy.mjs</code></pre>
               <a href="/evidence.json">/evidence.json · evidence contract</a>
               <a href="/record.json">/record.json · RECORD contract</a>
               <a href="/atlas.json">/atlas.json · Hub and GitHub inventory</a>
-              <a href="/estate.json">/estate.json · dated MEASURED inventory and closeout recapture</a>
+              <a href="/estate.json">/estate.json · dated SNAPSHOT inventory and closeout recapture</a>
               <a href="/estate/">/estate/ · estate snapshot HTML</a>
               <a href="/site.webmanifest">/site.webmanifest · application metadata</a>
               <a href="/llms.txt">/llms.txt · automated-reader routing</a>
@@ -185,6 +185,7 @@ node scripts/check_atlas_policy.mjs</code></pre>
       <div class="wrap">
         <div class="section-head"><span class="section-label">Evidence vocabulary</span><h2>Labels are a control surface.</h2></div>
         <dl class="labels">
+          <div class="label"><dt>SNAPSHOT</dt><dd>A dated historical observation or catalog copy; not a live readback or current state.</dd></div>
           <div class="label"><dt>MEASURED</dt><dd>Direct observation with disclosed source and context.</dd></div>
           <div class="label"><dt>REPORTED</dt><dd>Public upstream metadata; not independently measured here.</dd></div>
           <div class="label"><dt>MODELED</dt><dd>Simulated or analytically derived.</dd></div>
