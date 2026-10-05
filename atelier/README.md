@@ -23,3 +23,16 @@ python -m unittest tests.test_atelier_javascript
 ```
 
 The checks execute the page script in a network-free Node fixture after removing only the terminal `boot()` call. They cover model-base fallback and HTML escaping; they do not download metadata, load weights, start the canonical Space, or extend any training, energy, performance, safety, or operational claim.
+
+## Module cache reference
+
+The page's module URL includes `?v=` followed by the SHA-256 of the exact
+`atelier/app.js` bytes. This gives updated HTML a distinct application URL when
+the script changes, so an earlier cached script does not keep rendering stale
+copy alongside a newer catalog. The module remains on the same origin.
+
+Whenever `app.js` changes, refresh that fingerprint in `atelier/index.html`.
+The collected Python regression parses the actual module reference and compares
+it with the script bytes, failing on an absent or stale fingerprint. Its passing
+result establishes the source reference; verify the deployed page and browser
+behavior after publication.
