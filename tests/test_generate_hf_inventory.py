@@ -289,6 +289,49 @@ class GeneratorTest(unittest.TestCase):
         with self.assertRaises(gen.GenerationError):
             gen.build_inventory(kernel_only, T1)
 
+    @staticmethod
+    def _with_kernel_subset(manifest: dict, count: int = 2) -> dict:
+        kernels = [{**row, "repoType": "kernel"} for row in manifest["inventory"]["models"][:count]]
+        return {**manifest, "counts": {**manifest["counts"], "kernels": len(kernels)},
+                "inventory": {**manifest["inventory"], "kernels": kernels}}
+
+    @staticmethod
+    def _bind(value: dict) -> tuple[bytes, str]:
+        raw = json.dumps(value).encode()
+        return raw, hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+
+    def test_canonical_native_kernel_subset_is_admitted_without_a_fourth_kind(self) -> None:
+        manifest = json.loads((FIXTURE / "canonical_manifest.json").read_bytes())
+        raw, blob = self._bind(self._with_kernel_subset(manifest))
+        result = gen.canonical_source(raw, "a" * 40, blob)
+        self.assertEqual(set(result["record"]["counts"]), set(gen.PUBLIC_SCOPE["kinds"]))
+        self.assertEqual(result["record"]["counts"], {kind: manifest["counts"][kind] for kind in gen.PUBLIC_SCOPE["kinds"]})
+        self.assertEqual(set(result["ids"]), set(gen.PUBLIC_SCOPE["kinds"]))
+
+    def test_canonical_native_kernel_subset_violations_are_blocking(self) -> None:
+        manifest = json.loads((FIXTURE / "canonical_manifest.json").read_bytes())
+        good = self._with_kernel_subset(manifest)
+        outside = copy.deepcopy(good)
+        outside["inventory"]["kernels"][0]["id"] = "SZLHOLDINGS/unlisted-kernel"
+        private = copy.deepcopy(good)
+        private["inventory"]["kernels"][0]["private"] = True
+        duplicate = copy.deepcopy(good)
+        duplicate["inventory"]["kernels"][1] = duplicate["inventory"]["kernels"][0]
+        variants = {
+            "count_mismatch": {**good, "counts": {**good["counts"], "kernels": 3}},
+            "count_not_int": {**good, "counts": {**good["counts"], "kernels": True}},
+            "count_without_rows": {**good, "inventory": manifest["inventory"]},
+            "rows_without_count": {**good, "counts": manifest["counts"]},
+            "kernel_outside_models": outside,
+            "private_kernel": private,
+            "duplicate_kernel": duplicate,
+            "unknown_kind": {**good, "counts": {**good["counts"], "collections": 0}},
+        }
+        for name, value in variants.items():
+            raw, blob = self._bind(value)
+            with self.subTest(name), self.assertRaises(gen.GenerationError):
+                gen.canonical_source(raw, "a" * 40, blob)
+
     def test_canonical_scope_blob_duplicate_keys_and_private_disposition_are_blocking(self) -> None:
         original = (FIXTURE / "canonical_manifest.json").read_bytes()
         manifest = json.loads(original)
