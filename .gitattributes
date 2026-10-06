@@ -5,3 +5,6 @@ tests/fixtures/hf_api/canonical_manifest.json -text
 
 # The Atelier module URL fingerprints the exact committed JavaScript bytes.
 atelier/app.js -text
+
+# Vendored KANCHAY bytes are pinned by sha256 in assets/szl/SOURCE.json.
+assets/szl/** -text

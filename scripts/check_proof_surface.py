@@ -78,6 +78,31 @@ def relative_luminance(hex_color: str) -> float:
     return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
 
 
+KANCHAY_TOKENS = ROOT / "assets" / "szl" / "szl-tokens.css"
+KANCHAY_SOURCE = ROOT / "assets" / "szl" / "SOURCE.json"
+
+
+def kanchay_palette() -> dict[str, str]:
+    """Return KANCHAY's vendored palette (``color-graphite-900`` -> ``#080B12``) after a byte check."""
+
+    import hashlib
+
+    data = KANCHAY_TOKENS.read_bytes()
+    pinned = json.loads(KANCHAY_SOURCE.read_text(encoding="utf-8"))["sha256"]["szl-tokens.css"]
+    assert hashlib.sha256(data).hexdigest() == pinned, "assets/szl/szl-tokens.css must match SOURCE.json"
+    return dict(re.findall(r"--(color-[a-z0-9-]+):(#[0-9a-fA-F]{6})", data.decode("utf-8")))
+
+
+def resolve_tokens(css: str) -> dict[str, str]:
+    """Resolve ``--name:#hex`` and ``--name:var(--color-x)`` declarations to hex values."""
+
+    palette = kanchay_palette()
+    colors = dict(re.findall(r"--([a-z0-9-]+):\s*(#[0-9a-fA-F]{6})", css))
+    for name, token in re.findall(r"--([a-z0-9-]+):\s*var\(--(color-[a-z0-9-]+)\)", css):
+        colors.setdefault(name, palette[token])
+    return colors
+
+
 def contrast_ratio(first: str, second: str) -> float:
     high, low = sorted(
         (relative_luminance(first), relative_luminance(second)),
@@ -572,7 +597,7 @@ def check() -> None:
     manifest_bytes = MANIFEST.read_bytes()
     manifest = json.loads(manifest_bytes.decode("utf-8"))
     assert manifest["start_url"] == "/"
-    assert manifest["theme_color"] == "#080c14"
+    assert manifest["theme_color"] == "#080b12"
     assert MANIFEST_ALIAS.read_bytes() == manifest_bytes, (
         "manifest.webmanifest must be byte-identical to site.webmanifest"
     )
@@ -1206,29 +1231,38 @@ def check() -> None:
     assert "data-probe=" not in source, (
         "product routes are public links only and must not be browser-probed"
     )
-    colors = dict(re.findall(r"--([a-z-]+):(#[0-9a-fA-F]{6})", source))
-    assert colors["void"] == "#080c14"
-    assert colors["proof"] == "#3af4c8"
-    assert colors["lattice"] == "#5b8dee"
-    assert colors["gold"] == "#d7b96b"
+    # KANCHAY 1.3.0: the proof tokens resolve to the shared graphite palette, the teal link/focus
+    # accent, silver linework and the hatun gold kept for OPEN status.
+    palette = kanchay_palette()
+    colors = resolve_tokens(source)
+    assert colors["void"] == palette["color-graphite-900"]
+    assert colors["proof"] == palette["color-yuyay-200"]
+    assert colors["lattice"] == palette["color-silver-300"]
+    assert colors["gold"] == palette["color-hatun-300"] == "#d7b96b"
     for background in ("void", "deep", "surface"):
         assert contrast_ratio(colors["ghost"], colors[background]) >= 4.5
     assert "#c9b787" not in source.lower()
     assert "#5fb3a3" not in source.lower()
     assert "#0a0a0a" not in source.lower()
     kanchay = (ROOT / "assets" / "kanchay.css").read_text(encoding="utf-8")
-    assert "--void:#080c14" in kanchay
-    assert "--proof:#3af4c8" in kanchay
-    assert "--lattice:#5b8dee" in kanchay
-    assert "--gold:#d7b96b" in kanchay
-    assert "Space Grotesk" in kanchay and "JetBrains Mono" in kanchay
+    assert "--void:var(--color-graphite-900)" in kanchay
+    assert "--proof:var(--color-yuyay-200)" in kanchay
+    assert "--lattice:var(--color-silver-300)" in kanchay
+    assert "--gold:var(--color-hatun-300)" in kanchay
+    kanchay_base = (ROOT / "assets" / "kanchay-base.css").read_text(encoding="utf-8")
+    assert "--head:var(--font-display)" in kanchay_base and "--mono:var(--font-mono)" in kanchay_base
+    assert "Space Grotesk" not in kanchay_base and "JetBrains Mono" not in kanchay_base
+    assert source.index('href="/assets/szl/szl-tokens.css"') < source.index('href="assets/kanchay.css"')
+    assert "@font-face" not in source and "woff2" not in source
     assert ".empty-panel" in kanchay
     assert "kanchay-lattice-drift" in kanchay
     assert "prefers-reduced-motion:reduce" in kanchay
     assert "class=\"empty-panel\"" in source or "empty-panel" in source
     assert "PROOF REGISTRY" in source
-    assert colors["gray"] == "#7d8aa0"
-    assert ".wordmark .glyph{width:26px;height:26px;border-radius:7px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--gray);" in source
+    assert colors["gray"] == palette["color-graphite-300"]
+    assert ".wordmark .glyph{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;overflow:hidden}.wordmark .glyph img{display:block;width:26px;height:26px}" in source
+    assert source.count('<img src="/assets/szl/logos/szl-icon-32.svg" alt="" width="26" height="26"') >= 2
+    assert ">Λ</span>" not in source
     assert 'id="atlasResources" aria-busy="false"' in source
     assert 'grid.setAttribute("aria-busy","true")' in source
     assert 'grid.setAttribute("aria-busy","false")' in source
