@@ -84,6 +84,7 @@ def test_oac_html_keeps_identity_scope_and_local_navigation():
     stylesheet = [attrs["href"] for tag, attrs in elements
                   if tag == "link" and attrs.get("rel") == "stylesheet"]
     assert stylesheet == [
+        "/assets/szl/szl-tokens.css",
         "/assets/kanchay.css", "/assets/szl-flow-proof.css",
         "/assets/szl-flow-proof-static.css", "/assets/szl-holo-proof-v2.css",
     ]

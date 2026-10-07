@@ -6,8 +6,8 @@
   "start_url": "/",
   "scope": "/",
   "display": "minimal-ui",
-  "background_color": "#080c14",
-  "theme_color": "#080c14",
+  "background_color": "#080b12",
+  "theme_color": "#080b12",
   "icons": [
     {
       "src": "/assets/a11oy-mark.svg",

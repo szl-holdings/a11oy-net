@@ -403,10 +403,11 @@ def check() -> None:
     css = STYLE.read_text(encoding="utf-8")
     assert "@media print" in css
     assert "@media(prefers-reduced-motion:reduce)" in css
-    assert "--void:#080c14" in css
-    assert "--proof:#3af4c8" in css
-    assert "--lattice:#5b8dee" in css
-    assert "--gold:#d7b96b" in css
+    assert "--void:var(--color-graphite-900)" in css
+    assert "--proof:var(--color-yuyay-200)" in css
+    assert "--lattice:var(--color-silver-300)" in css
+    assert "--gold:var(--color-hatun-300)" in css
+    assert "Space Grotesk" not in css and "JetBrains Mono" not in css
     assert "#c9b787" not in css.lower()
     assert "#5fb3a3" not in css.lower()
     assert "Product ↗" in CHAT.read_text(encoding="utf-8")
