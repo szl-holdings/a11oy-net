@@ -386,28 +386,34 @@ def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
     scope = manifest.get("inventoryScope") if isinstance(manifest, dict) else None
     counts = manifest.get("counts") if isinstance(manifest, dict) else None
     inventory = manifest.get("inventory") if isinstance(manifest, dict) else None
+    kinds = set(PUBLIC_SCOPE["kinds"])
+    # Native kernels are a model subset counted once (PUBLIC_SCOPE kernel_policy), never a fourth kind.
+    has_kernels = isinstance(counts, dict) and "kernels" in counts
     if not (
         isinstance(manifest, dict) and manifest.get("schemaVersion") == 2
         and manifest.get("org") == ORG and isinstance(scope, dict)
         and scope.get("visibility") == "public-only"
         and scope.get("authenticated") is False and scope.get("privateAssetsIncluded") is False
-        and isinstance(counts, dict) and set(counts) == set(PUBLIC_SCOPE["kinds"])
-        and all(type(counts[kind]) is int and counts[kind] >= 0 for kind in PUBLIC_SCOPE["kinds"])
-        and isinstance(inventory, dict) and valid_timestamp(manifest.get("observedAt", ""))
+        and isinstance(counts, dict) and set(counts) == kinds | ({"kernels"} if has_kernels else set())
+        and all(type(counts[kind]) is int and counts[kind] >= 0 for kind in counts)
+        and isinstance(inventory, dict) and ("kernels" in inventory) == has_kernels
+        and valid_timestamp(manifest.get("observedAt", ""))
     ):
         raise GenerationError("canonical public membership schema or scope is unavailable")
     ids: dict[str, list[str]] = {}
-    for kind in PUBLIC_SCOPE["kinds"]:
+    for kind in [*PUBLIC_SCOPE["kinds"], *(["kernels"] if has_kernels else [])]:
         rows = inventory.get(kind)
         if not isinstance(rows, list) or any(not isinstance(row, dict) or row.get("private") is not False for row in rows):
             raise GenerationError(f"canonical {kind} public disposition unavailable")
         ids[kind] = [row["id"] for row in by_id(rows)]
         if counts[kind] != len(ids[kind]):
             raise GenerationError(f"canonical {kind} count does not bind its complete membership")
+    if has_kernels and set(ids.pop("kernels")) - set(ids["models"]):
+        raise GenerationError("canonical kernel subset has repositories absent from the public model membership")
     record = {
         "schema": "szl.public-profile-inventory/v1", "scope": PUBLIC_SCOPE,
         "scope_sha256": hashlib.sha256(canonical(PUBLIC_SCOPE)).hexdigest(),
-        "counts": counts, "observed_at": manifest["observedAt"],
+        "counts": {kind: counts[kind] for kind in PUBLIC_SCOPE["kinds"]}, "observed_at": manifest["observedAt"],
         "source_repository": CANONICAL_REPOSITORY, "source_path": CANONICAL_PATH,
         "source_revision": revision, "source_git_blob": blob,
         "source_sha256": hashlib.sha256(raw).hexdigest(),
