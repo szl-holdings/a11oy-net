@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-10-06 - adopt the estate's KANCHAY 1.3.0 tokens and type
+
+- Vendor the KANCHAY 1.3.0 tokens-only stylesheet (`assets/szl/szl-tokens.css`, pinned by
+  `assets/szl/SOURCE.json`), so this origin shares the estate's one design system. It is linked
+  first on every page that links a stylesheet. Tokens only: this origin keeps its own component
+  CSS, because `.card`, `.chip`, `.hero` and `.nav` collide with KANCHAY's components.
+- Re-point the proof token layers (`kanchay-base.css`, `kanchay.css`, `diligence.css`, the Flow
+  Shell and the homepage) at KANCHAY palette tokens:
+  - graphite neutrals (canvas `#080B12`);
+  - teal `--color-yuyay-200` for the former `#3af4c8` proof accent;
+  - silver for lattice;
+  - the same hatun gold.
+- Typography moves to KANCHAY's device font stacks. The Fraunces, Instrument Serif and Inter
+  webfonts are removed. The homepage heading sets the product name `a11oy` in the shared sans, so
+  its digits no longer read as "alloy" in the italic serif.
+- The wordmark glyph is the SZL Orbit v2 icon (`assets/szl/logos/szl-icon-32.svg`) instead of the
+  retired lambda-only glyph.
+- Gates `check_proof_surface.py` and `check_diligence_surface.py` resolve the proof tokens through
+  the vendored palette. They pin the vendored bytes and keep the ghost-text 4.5:1 floor.
+- Dated snapshot pages (`estate/*-2026-*`) and the hash-pinned confirmation record are
+  byte-unchanged.
+
 ## 2026-10-05 - preserve content-addressed Atelier bytes on Windows
 
 - Mark only atelier/app.js as byte-preserved in .gitattributes. Its source bytes, module URL and existing exact SHA-256 check remain unchanged; no global Git setting is changed.

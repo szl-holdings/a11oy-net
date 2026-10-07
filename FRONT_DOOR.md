@@ -19,6 +19,10 @@ LOCKED for doctrine. IMPLEMENTED for the first fold and primary nav
 (HTML + `check_proof_surface.py` in the same PR). Palette, companion
 pages, and remaining gates stay as written.
 
+2026-10-06: the palette and type moved to the estate's KANCHAY 1.3.0 tokens
+(graphite neutrals, teal accent, device font stacks), per the owner's frontend
+overhaul brief. The IA lock below is unchanged.
+
 This note is the IA lock. Collapse of the first fold and nav landed with
 gate updates in the same PR. Do not re-expand Atelier, Notes, Evidence
 index, or Live reads into primary nav. Do not put atelier back on the

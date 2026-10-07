@@ -1,0 +1,11 @@
+{
+  "schema": "szl.brand-projection.v1",
+  "source_repository": "szl-holdings/szl-brand",
+  "source_path": "kit/logos/orbit-v2/suite/szl-icon-32.svg",
+  "suite_version": "1.0.0",
+  "master_sha256": "84a23d7b2a6dd198378ded91e52c545df2943fd33cbc4a67dd4184e94f4d94fb",
+  "sha256": "6e2b7d72a3af3d9602b79de41df0194ede6496a9661f057108ec224c0efc92e6",
+  "destination_path": "assets/szl/logos/szl-icon-32.svg",
+  "scope": "Proof wordmark glyph (24-48 px placement); the favicon stays assets/a11oy-mark.svg",
+  "live_deployment": "NOT_ATTESTED"
+}
