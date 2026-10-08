@@ -50,11 +50,36 @@
     "production_authorization": false
   },
   "runtime": {
-    "v2_service_claimed": false,
+    "v2_service_claimed": true,
     "provider_live_verification": false,
     "status": "UNKNOWN",
+    "status_scope": "CURRENT_STATE_NOT_PROBED_BY_STATIC_PAGE",
     "probe_performed": false,
-    "mutable_v1_demo_is_v2": false
+    "mutable_v1_demo_is_v2": false,
+    "same_mutable_space_hosts_opt_in_v2": true,
+    "opt_in_preview_url": "https://szlholdings-oac-system-health-lab.hf.space/#v2-panel",
+    "identity_url": "https://szlholdings-oac-system-health-lab.hf.space/api/v2/identity",
+    "readiness_url": "https://szlholdings-oac-system-health-lab.hf.space/api/v2/readyz",
+    "hosted_witness": {
+      "evidence_class": "REPORTED",
+      "completed_at_utc": "2026-10-08T04:46:32Z",
+      "application_source_revision": "3f7554efaddf086680b25301502c3bf176d83089",
+      "space_revision": "1c33503830a12c5661fc3ee8cd0a4b3a75451c25",
+      "hub_model_revision": "a824a32d91a383d33a1e1e595f11b8362d1b4efa",
+      "run_url": "https://github.com/szl-holdings/szl-forge/actions/runs/37728965604",
+      "artifact_id": 11529195992,
+      "artifact_digest": "sha256:cd3de50ce41f911e7636b30766dc27105c6ef2e4684733b3fe756840868ecc2d",
+      "status": "PASS_REPORTED",
+      "source_parity_scope": "IMMUTABLE_GIT_ARTIFACT_PARITY",
+      "source_parity_count": 4,
+      "synthetic_case_count": 3,
+      "source_to_hub_model_byte_parity_replayed_here": false,
+      "independently_replayed_here": false,
+      "continuous_monitoring": false,
+      "product_site_readiness_established": false,
+      "clinical_use_authorized": false,
+      "production_promotion_allowed": false
+    }
   },
   "relationship_to_v1": {
     "release_record": "release.json",

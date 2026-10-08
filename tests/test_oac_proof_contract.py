@@ -19,6 +19,11 @@ V2_SOURCE = "a975c6f35f215a120ae68fea3fe69226b9a0a53f"
 V2_CARD_SOURCE = "6330dea7318effba583a6501346fee590174a39f"
 V2_INITIAL_HUB = "ff107198aa257ce1bb1841377d553bee3f90be41"
 V2_HUB = "a824a32d91a383d33a1e1e595f11b8362d1b4efa"
+V2_APPLICATION = "3f7554efaddf086680b25301502c3bf176d83089"
+V2_SPACE = "1c33503830a12c5661fc3ee8cd0a4b3a75451c25"
+V2_WITNESS_RUN = "37728965604"
+V2_ORIGIN = "https://szlholdings-oac-system-health-lab.hf.space"
+V2_WITNESS_DIGEST = "sha256:cd3de50ce41f911e7636b30766dc27105c6ef2e4684733b3fe756840868ecc2d"
 
 
 class Surface(HTMLParser):
@@ -108,11 +113,34 @@ def test_oac_v2_artifact_is_separate_declared_and_non_authoritative():
                 "production_authorization"):
         assert record["authority"][key] is False
     assert record["authority"]["proposal_only"] is True
-    assert record["runtime"]["v2_service_claimed"] is False
+    assert record["runtime"]["v2_service_claimed"] is True
     assert record["runtime"]["provider_live_verification"] is False
     assert record["runtime"]["status"] == "UNKNOWN"
+    assert record["runtime"]["status_scope"] == "CURRENT_STATE_NOT_PROBED_BY_STATIC_PAGE"
     assert record["runtime"]["probe_performed"] is False
     assert record["runtime"]["mutable_v1_demo_is_v2"] is False
+    assert record["runtime"]["same_mutable_space_hosts_opt_in_v2"] is True
+    assert record["runtime"]["opt_in_preview_url"] == V2_ORIGIN + "/#v2-panel"
+    assert record["runtime"]["identity_url"] == V2_ORIGIN + "/api/v2/identity"
+    assert record["runtime"]["readiness_url"] == V2_ORIGIN + "/api/v2/readyz"
+    witness = record["runtime"]["hosted_witness"]
+    assert witness["evidence_class"] == "REPORTED"
+    assert witness["completed_at_utc"] == "2026-10-08T04:46:32Z"
+    assert witness["application_source_revision"] == V2_APPLICATION
+    assert witness["space_revision"] == V2_SPACE
+    assert witness["hub_model_revision"] == V2_HUB
+    assert witness["run_url"].endswith("/" + V2_WITNESS_RUN)
+    assert witness["artifact_id"] == 11529195992
+    assert witness["artifact_digest"] == V2_WITNESS_DIGEST
+    assert witness["status"] == "PASS_REPORTED"
+    assert witness["source_parity_scope"] == "IMMUTABLE_GIT_ARTIFACT_PARITY"
+    assert witness["source_parity_count"] == 4
+    assert witness["synthetic_case_count"] == 3
+    for key in ("source_to_hub_model_byte_parity_replayed_here",
+                "independently_replayed_here", "continuous_monitoring",
+                "product_site_readiness_established", "clinical_use_authorized",
+                "production_promotion_allowed"):
+        assert witness[key] is False
     assert record["relationship_to_v1"]["release_record"] == "release.json"
     assert record["relationship_to_v1"]["supersedes_v1_snapshot"] is False
     assert record["local_verification"]["provider_evidence_verified"] is False
@@ -146,17 +174,23 @@ def test_oac_html_keeps_identity_scope_and_local_navigation():
             target = ROOT / parsed.path.lstrip("/") if ref.startswith("/") else OAC / parsed.path
             assert target.is_file() or (target / "index.html").is_file(), ref
     for label in ("RECORD", "REPORTED", "UNKNOWN", "DECLARED", "SIMULATED",
-                  "v2 runtime (not probed)", "synthetic numeric telemetry", "not clinical",
+                  "current state by this page", "synthetic numeric telemetry", "not clinical",
                   "not device control", "No new training", "mutable demo"):
         assert label in source
     for identity in (SOURCE, HUB, MODEL, DATASET, ARTIFACT, V2_SOURCE,
-                     V2_CARD_SOURCE, V2_INITIAL_HUB, V2_HUB,
-                     "36966679696", "11209469462", "37726459882"):
+                     V2_CARD_SOURCE, V2_INITIAL_HUB, V2_HUB, V2_APPLICATION,
+                     V2_SPACE, "36966679696", "11209469462", "37726459882",
+                     V2_WITNESS_RUN):
         assert identity in source
     assert "unsigned receipt records file digests" in source
     assert "does not authenticate that origin" in source
     assert 'href="v2-artifact.json"' in source
-    assert "v1 Space snapshot and mutable demo below do not establish v2 deployment" in source
+    assert "four immutable Git artifact matches" in source
+    assert "does not establish a-11-oy.com product readiness" in source
+    assert "does not probe current provider state" in source
+    assert 'href="https://szlholdings-oac-system-health-lab.hf.space/#v2-panel"' in source
+    assert 'href="https://szlholdings-oac-system-health-lab.hf.space/api/v2/identity"' in source
+    assert 'href="https://szlholdings-oac-system-health-lab.hf.space/api/v2/readyz"' in source
     assert 'href="#main"' in source
     assert 'id="main"' in source
     assert "min-height:44px" in source
