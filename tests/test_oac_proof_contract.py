@@ -15,6 +15,10 @@ HUB = "4bf4d94161c0d135af6b5a3bc25f45b06f6e3979"
 MODEL = "dd7d109813abcd90c5250106dc2eabd2804e7ac3"
 DATASET = "f7ab6170bf78138b187b8cb707d374a25ad85375"
 ARTIFACT = "7555d5ab6f6f1c56f7304ba365904479b7fde8819b0b183b8455a3f71f61a4b3"
+V2_SOURCE = "a975c6f35f215a120ae68fea3fe69226b9a0a53f"
+V2_CARD_SOURCE = "6330dea7318effba583a6501346fee590174a39f"
+V2_INITIAL_HUB = "ff107198aa257ce1bb1841377d553bee3f90be41"
+V2_HUB = "a824a32d91a383d33a1e1e595f11b8362d1b4efa"
 
 
 class Surface(HTMLParser):
@@ -69,6 +73,51 @@ def test_oac_release_is_exact_handoff_not_current_probe():
     assert record["local_verification"]["provider_evidence_verified"] is False
 
 
+def test_oac_v2_artifact_is_separate_declared_and_non_authoritative():
+    data = (OAC / "v2-artifact.json").read_bytes()
+    assert len(data) < 12000
+    record = json.loads(data)
+    assert record["schema"] == "szl.oac.ops-health-v2-artifact-snapshot.v1"
+    assert record["kind"] == "STATIC_DOCUMENT"
+    assert record["evidence_class"] == "DECLARED"
+    assert record["snapshot_date"] == "2026-10-08"
+    assert record["currentness"] == "UNKNOWN"
+    assert record["source"]["packaging_revision"] == V2_SOURCE
+    assert record["source"]["url"].endswith("/" + V2_SOURCE + "/publishing/oac-ops-health-v2")
+    assert record["source"]["card_correction_revision"] == V2_CARD_SOURCE
+    assert record["source"]["card_correction_url"].endswith("/" + V2_CARD_SOURCE + "/publishing/oac-ops-health-v2")
+    assert record["hub"]["initial_revision"] == V2_INITIAL_HUB
+    assert record["hub"]["initial_url"].endswith("/" + V2_INITIAL_HUB)
+    assert record["hub"]["revision"] == V2_HUB
+    assert record["hub"]["url"].endswith("/" + V2_HUB)
+    assert record["hub"]["publisher_run"].endswith("/37726459882")
+    assert record["hub"]["source_to_hub_byte_parity_replayed_here"] is False
+    assert record["receipt"] == {
+        "signed": False,
+        "file_digests_recorded": True,
+        "declared_local_research_origin_authenticated": False,
+    }
+    assert record["artifact"]["input_evidence_class"] == "SIMULATED"
+    assert record["artifact"]["bounded_input_fields"] == 8
+    assert record["artifact"]["proposals"] == ["ALERT", "NO_ALERT", "ABSTAIN"]
+    assert record["artifact"]["transformer_checkpoint"] is False
+    assert record["artifact"]["independent_evaluation_replayed_here"] is False
+    assert record["artifact"]["complete_origin_layer_test_replay_available"] is False
+    for key in ("message_acknowledgement", "device_control", "result_interpretation",
+                "result_release", "care_decision", "clinical_validation",
+                "production_authorization"):
+        assert record["authority"][key] is False
+    assert record["authority"]["proposal_only"] is True
+    assert record["runtime"]["v2_service_claimed"] is False
+    assert record["runtime"]["provider_live_verification"] is False
+    assert record["runtime"]["status"] == "UNKNOWN"
+    assert record["runtime"]["probe_performed"] is False
+    assert record["runtime"]["mutable_v1_demo_is_v2"] is False
+    assert record["relationship_to_v1"]["release_record"] == "release.json"
+    assert record["relationship_to_v1"]["supersedes_v1_snapshot"] is False
+    assert record["local_verification"]["provider_evidence_verified"] is False
+
+
 def test_oac_html_keeps_identity_scope_and_local_navigation():
     data = (OAC / "index.html").read_bytes()
     assert len(data) < 18000
@@ -96,11 +145,18 @@ def test_oac_html_keeps_identity_scope_and_local_navigation():
         if not parsed.scheme and parsed.path:
             target = ROOT / parsed.path.lstrip("/") if ref.startswith("/") else OAC / parsed.path
             assert target.is_file() or (target / "index.html").is_file(), ref
-    for label in ("RECORD", "SNAPSHOT", "NOT_PROBED", "synthetic numeric telemetry",
-                  "not clinical", "not device control", "No new training", "mutable demo"):
+    for label in ("RECORD", "REPORTED", "UNKNOWN", "DECLARED", "SIMULATED",
+                  "v2 runtime (not probed)", "synthetic numeric telemetry", "not clinical",
+                  "not device control", "No new training", "mutable demo"):
         assert label in source
-    for identity in (SOURCE, HUB, MODEL, DATASET, ARTIFACT, "36966679696", "11209469462"):
+    for identity in (SOURCE, HUB, MODEL, DATASET, ARTIFACT, V2_SOURCE,
+                     V2_CARD_SOURCE, V2_INITIAL_HUB, V2_HUB,
+                     "36966679696", "11209469462", "37726459882"):
         assert identity in source
+    assert "unsigned receipt records file digests" in source
+    assert "does not authenticate that origin" in source
+    assert 'href="v2-artifact.json"' in source
+    assert "v1 Space snapshot and mutable demo below do not establish v2 deployment" in source
     assert 'href="#main"' in source
     assert 'id="main"' in source
     assert "min-height:44px" in source
@@ -146,6 +202,7 @@ def test_oac_static_catalog_admission_is_not_provider_evidence():
 
 if __name__ == "__main__":
     test_oac_release_is_exact_handoff_not_current_probe()
+    test_oac_v2_artifact_is_separate_declared_and_non_authoritative()
     test_oac_html_keeps_identity_scope_and_local_navigation()
     test_oac_static_catalog_admission_is_not_provider_evidence()
     print("OK: OAC static release contract; current provider state remains NOT_PROBED by this page.")
