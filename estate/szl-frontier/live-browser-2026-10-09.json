@@ -1,0 +1,253 @@
+{
+  "schema": "szl.frontier.live-browser/v1",
+  "observedAt": "2026-10-09T10:31:25.696Z",
+  "sourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+  "providerRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+  "base": "https://szlholdings-szl-frontier.hf.space",
+  "totals": {
+    "journeys": 8,
+    "navFailures": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "requestFailures": 0,
+    "httpErrors": 0,
+    "overflow": 0,
+    "effectiveUndersized": 0,
+    "focusFailures": 0,
+    "missingMain": 0
+  },
+  "results": [
+    {
+      "route": "/",
+      "viewport": {
+        "w": 320,
+        "h": 568
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 320,
+        "width": 320,
+        "undersized": [],
+        "controls": 19,
+        "body": "SZL FRONTIER\nCOMMAND CENTER\nSZL Frontier orchestrator\n\nDeny-by-default memory, Yachay second brain (handles only), governed ingest, and a controlled action adapter. Approval cannot lift a hard deny. Index is DATA, never weights.\n\nRun gates\nPRODUCTION DISPOSITION\n\nSoftware plane OPERATIONAL. Production effects remain HOLD. Automatic promotion is false. Λ remains Conjecture 1.\n\nOpen operational intake\n01\nMemory plane\n02\nIngest\n03\nModel registry\n04\nIntel connector\n05\nAction adapter\n06\nAdversary\n07\nYachay brain\n08\nFrontier\n09\nRelease gates\nFIVE SUPERPOWERS\n01\nGoverned recall\nIdentity, purpose, clearance\n02\nProvenance seal\nHash chain, receipts\n03\nIsolation\nTenant and domain\n04\nDerived reindex\nvxdb is disposable\n05\nHuman-gated action\nApproval ≠ escalation\nACTIVE MEMORIES\n5\n5 total\nRECEIPTS SEALED\n5\n0 denied\nACTIONS / INGEST\n0\n0 model routes\nRELEASE GATES\n—\nrun campaign\nCOVENANT SOFTWARE RULES · DECLARED\nMC-R1 · Tenant isolation · DECLARED\nidentity.tenant ≠ record.tenant ⇒ deny\nMC-R2 · Domain isolation · DECLARED\nidentity.domain ≠ record.domain ∧ ¬auditor ⇒ deny\nMC-R3 · Purpose bind · DECLARED\npurpose ∉ write-set ⇒ deny mutation\nMC-R4 · Class authority · DECLARED\npolicy_memory ⇐ auditor only\nMC-R5 · Clearance rank · DECLARED\nsensitivity > clearance ⇒ deny recall\nMC-R6 · Provenance · DECLARED\nevidence requires sourceRefs ∧ contentSha256\nMC-R7 · Injection · DECLARED\noverride-covenant text ⇒ quarantine, never index\nMC-R8 · Embed generation · DECLARED\nrevision ≠ current ⇒ cannot serve recall\nMC-R9 · Hard deny · DECLARED\napproval ⇏ lift recon | foreign-write | weaponize\nMemory classes\n"
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "text": "Open menu",
+        "href": ""
+      }
+    },
+    {
+      "route": "/frontier",
+      "viewport": {
+        "w": 320,
+        "h": 568
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 320,
+        "width": 320,
+        "undersized": [],
+        "controls": 31,
+        "body": "SZL FRONTIER\nFRONTIER ORGAN · OPERATIONAL SOFTWARE / PRODUCTION HOLD\nOperational intake plane\n\nF01–F34 workstreams, bounded Ouroboros cycle, and public estate observation are operational. This organ admits evaluation; production effects, training, and automatic promotion remain held.\n\nHarbor\nSource identity\nSOFTWARE\nOPERATIONAL\nhealth + readiness contracts\nPRODUCTION EFFECTS\nHOLD\nautomatic promotion false\nINSPECTED HEAD\nb3aee644\nMODELED · 2026-09-20T11:26:13Z\nWORKSTREAMS\n9/34\nselected for eval, not production\nΛ\nConjecture 1\nnever a theorem\nOPTIONAL EVALUATION\nOff. Triad compose and membership pin stay contract-only.\nOff · contract only\nWorkstreams\nCycle\nFlotation\nEstate\nTriad\nPin\nCodex\nKernels\nLeases\nOptional\nAudit\nJourneys\nLab\nSearch\nFamily\nall\nruntime\nmodel\nquantization\nmemory\neval\ndata\nserving\nresearch\nvertical\nStatus\nall\nADMITTED_EVALUATION\nWATCH\nHOLD\nBLOCKED_EXTERNAL\nNOT_ADOPTED\nUNAVAILABLE\nExport JSON\n\n34 matching · selected-for-release is evaluation scope, not authorization.\n\nFrontier workstreams F01 through F34\nID\tWORKSTREAM\tOWNER\tSTATUS\tRELEASE SET\nF01\tEdge0 exact-route expert prefetch\nruntime\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF02\tSpark-X2.5 context-budget ladder\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF03\tBonsai packing + runtime\nmodel\n\tszl-holdings/szl-frontier\tHOLD\twatch only\nF04\tDeepSeek / DSpark serving boundary\nserving\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF05\tTencent SAS approximate attention\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF06\tGranite / Lyte forecast uncertainty\neval\n\tszl-holdings/a"
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "text": "Open menu",
+        "href": ""
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "w": 375,
+        "h": 812
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 375,
+        "width": 375,
+        "undersized": [],
+        "controls": 19,
+        "body": "SZL FRONTIER\nCOMMAND CENTER\nSZL Frontier orchestrator\n\nDeny-by-default memory, Yachay second brain (handles only), governed ingest, and a controlled action adapter. Approval cannot lift a hard deny. Index is DATA, never weights.\n\nRun gates\nPRODUCTION DISPOSITION\n\nSoftware plane OPERATIONAL. Production effects remain HOLD. Automatic promotion is false. Λ remains Conjecture 1.\n\nOpen operational intake\n01\nMemory plane\n02\nIngest\n03\nModel registry\n04\nIntel connector\n05\nAction adapter\n06\nAdversary\n07\nYachay brain\n08\nFrontier\n09\nRelease gates\nFIVE SUPERPOWERS\n01\nGoverned recall\nIdentity, purpose, clearance\n02\nProvenance seal\nHash chain, receipts\n03\nIsolation\nTenant and domain\n04\nDerived reindex\nvxdb is disposable\n05\nHuman-gated action\nApproval ≠ escalation\nACTIVE MEMORIES\n5\n5 total\nRECEIPTS SEALED\n5\n0 denied\nACTIONS / INGEST\n0\n0 model routes\nRELEASE GATES\n—\nrun campaign\nCOVENANT SOFTWARE RULES · DECLARED\nMC-R1 · Tenant isolation · DECLARED\nidentity.tenant ≠ record.tenant ⇒ deny\nMC-R2 · Domain isolation · DECLARED\nidentity.domain ≠ record.domain ∧ ¬auditor ⇒ deny\nMC-R3 · Purpose bind · DECLARED\npurpose ∉ write-set ⇒ deny mutation\nMC-R4 · Class authority · DECLARED\npolicy_memory ⇐ auditor only\nMC-R5 · Clearance rank · DECLARED\nsensitivity > clearance ⇒ deny recall\nMC-R6 · Provenance · DECLARED\nevidence requires sourceRefs ∧ contentSha256\nMC-R7 · Injection · DECLARED\noverride-covenant text ⇒ quarantine, never index\nMC-R8 · Embed generation · DECLARED\nrevision ≠ current ⇒ cannot serve recall\nMC-R9 · Hard deny · DECLARED\napproval ⇏ lift recon | foreign-write | weaponize\nMemory classes\n"
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "text": "Open menu",
+        "href": ""
+      }
+    },
+    {
+      "route": "/frontier",
+      "viewport": {
+        "w": 375,
+        "h": 812
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 375,
+        "width": 375,
+        "undersized": [],
+        "controls": 31,
+        "body": "SZL FRONTIER\nFRONTIER ORGAN · OPERATIONAL SOFTWARE / PRODUCTION HOLD\nOperational intake plane\n\nF01–F34 workstreams, bounded Ouroboros cycle, and public estate observation are operational. This organ admits evaluation; production effects, training, and automatic promotion remain held.\n\nHarbor\nSource identity\nSOFTWARE\nOPERATIONAL\nhealth + readiness contracts\nPRODUCTION EFFECTS\nHOLD\nautomatic promotion false\nINSPECTED HEAD\nb3aee644\nMODELED · 2026-09-20T11:26:13Z\nWORKSTREAMS\n9/34\nselected for eval, not production\nΛ\nConjecture 1\nnever a theorem\nOPTIONAL EVALUATION\nOff. Triad compose and membership pin stay contract-only.\nOff · contract only\nWorkstreams\nCycle\nFlotation\nEstate\nTriad\nPin\nCodex\nKernels\nLeases\nOptional\nAudit\nJourneys\nLab\nSearch\nFamily\nall\nruntime\nmodel\nquantization\nmemory\neval\ndata\nserving\nresearch\nvertical\nStatus\nall\nADMITTED_EVALUATION\nWATCH\nHOLD\nBLOCKED_EXTERNAL\nNOT_ADOPTED\nUNAVAILABLE\nExport JSON\n\n34 matching · selected-for-release is evaluation scope, not authorization.\n\nFrontier workstreams F01 through F34\nID\tWORKSTREAM\tOWNER\tSTATUS\tRELEASE SET\nF01\tEdge0 exact-route expert prefetch\nruntime\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF02\tSpark-X2.5 context-budget ladder\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF03\tBonsai packing + runtime\nmodel\n\tszl-holdings/szl-frontier\tHOLD\twatch only\nF04\tDeepSeek / DSpark serving boundary\nserving\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF05\tTencent SAS approximate attention\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF06\tGranite / Lyte forecast uncertainty\neval\n\tszl-holdings/a"
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "text": "Open menu",
+        "href": ""
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "w": 768,
+        "h": 1024
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 768,
+        "width": 768,
+        "undersized": [],
+        "controls": 31,
+        "body": "SZL\nFRONTIER\nCommand\nMemory\nIngest\nModels\nIntel\nActions\nAdversary\nBrain\nFrontier\nHarbor\nMesh\nProof\nGates\nYACHAY LOADING · UNKNOWN\nΛ ALLOW\nmem 5\nrcpt 5\nbrain —\ndeny-by-default\nprod HOLD\nconjecture 1\nCOMMAND CENTER\nSZL Frontier orchestrator\n\nDeny-by-default memory, Yachay second brain (handles only), governed ingest, and a controlled action adapter. Approval cannot lift a hard deny. Index is DATA, never weights.\n\nRun gates\nPRODUCTION DISPOSITION\n\nSoftware plane OPERATIONAL. Production effects remain HOLD. Automatic promotion is false. Λ remains Conjecture 1.\n\nOpen operational intake\n01\nMemory plane\n02\nIngest\n03\nModel registry\n04\nIntel connector\n05\nAction adapter\n06\nAdversary\n07\nYachay brain\n08\nFrontier\n09\nRelease gates\nFIVE SUPERPOWERS\n01\nGoverned recall\nIdentity, purpose, clearance\n02\nProvenance seal\nHash chain, receipts\n03\nIsolation\nTenant and domain\n04\nDerived reindex\nvxdb is disposable\n05\nHuman-gated action\nApproval ≠ escalation\nACTIVE MEMORIES\n5\n5 total\nRECEIPTS SEALED\n5\n0 denied\nACTIONS / INGEST\n0\n0 model routes\nRELEASE GATES\n—\nrun campaign\nCOVENANT SOFTWARE RULES · DECLARED\nMC-R1 · Tenant isolation · DECLARED\nidentity.tenant ≠ record.tenant ⇒ deny\nMC-R2 · Domain isolation · DECLARED\nidentity.domain ≠ record.domain ∧ ¬auditor ⇒ deny\nMC-R3 · Purpose bind · DECLARED\npurpose ∉ write-set ⇒ deny mutation\nMC-R4 · Class authority · DECLARED\npolicy_memory ⇐ auditor only\nMC-R5 · Clearance rank · DECLARED\nsensitivity > clearance ⇒ deny recall\nMC-R6 · Provenance · DECLARED\nevidence requires sourceRefs ∧ contentSha256\nMC-R7 · Injection · DECLARED\noverride-covenant text ⇒ quarantine"
+      },
+      "focus": {
+        "tag": "A",
+        "text": "Command",
+        "href": "/"
+      }
+    },
+    {
+      "route": "/frontier",
+      "viewport": {
+        "w": 768,
+        "h": 1024
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 768,
+        "width": 768,
+        "undersized": [],
+        "controls": 43,
+        "body": "SZL\nFRONTIER\nCommand\nMemory\nIngest\nModels\nIntel\nActions\nAdversary\nBrain\nFrontier\nHarbor\nMesh\nProof\nGates\nYACHAY LOADING · UNKNOWN\nΛ ALLOW\nmem 5\nrcpt 5\nbrain —\ndeny-by-default\nprod HOLD\nconjecture 1\nFRONTIER ORGAN · OPERATIONAL SOFTWARE / PRODUCTION HOLD\nOperational intake plane\n\nF01–F34 workstreams, bounded Ouroboros cycle, and public estate observation are operational. This organ admits evaluation; production effects, training, and automatic promotion remain held.\n\nHarbor\nSource identity\nSOFTWARE\nOPERATIONAL\nhealth + readiness contracts\nPRODUCTION EFFECTS\nHOLD\nautomatic promotion false\nINSPECTED HEAD\nb3aee644\nMODELED · 2026-09-20T11:26:13Z\nWORKSTREAMS\n9/34\nselected for eval, not production\nΛ\nConjecture 1\nnever a theorem\nOPTIONAL EVALUATION\nOff. Triad compose and membership pin stay contract-only.\nOff · contract only\nWorkstreams\nCycle\nFlotation\nEstate\nTriad\nPin\nCodex\nKernels\nLeases\nOptional\nAudit\nJourneys\nLab\nSearch\nFamily\nall\nruntime\nmodel\nquantization\nmemory\neval\ndata\nserving\nresearch\nvertical\nStatus\nall\nADMITTED_EVALUATION\nWATCH\nHOLD\nBLOCKED_EXTERNAL\nNOT_ADOPTED\nUNAVAILABLE\nExport JSON\n\n34 matching · selected-for-release is evaluation scope, not authorization.\n\nFrontier workstreams F01 through F34\nID\tWORKSTREAM\tOWNER\tSTATUS\tRELEASE SET\nF01\tEdge0 exact-route expert prefetch\nruntime\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF02\tSpark-X2.5 context-budget ladder\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF03\tBonsai packing + runtime\nmodel\n\tszl-holdings/szl-frontier\tHOLD\twatch only\nF04\tDeepSeek / DSpark serving boundary\nserving\n\tszl-holdings/szl-front"
+      },
+      "focus": {
+        "tag": "A",
+        "text": "Command",
+        "href": "/"
+      }
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 1440,
+        "width": 1440,
+        "undersized": [],
+        "controls": 31,
+        "body": "SZL\nFRONTIER\nCommand\nMemory\nIngest\nModels\nIntel\nActions\nAdversary\nBrain\nFrontier\nHarbor\nMesh\nProof\nGates\nYACHAY LOADING · UNKNOWN\nΛ ALLOW\nmem 5\nrcpt 5\nbrain —\ndeny-by-default\nprod HOLD\nconjecture 1\nCOMMAND CENTER\nSZL Frontier orchestrator\n\nDeny-by-default memory, Yachay second brain (handles only), governed ingest, and a controlled action adapter. Approval cannot lift a hard deny. Index is DATA, never weights.\n\nRun gates\nPRODUCTION DISPOSITION\n\nSoftware plane OPERATIONAL. Production effects remain HOLD. Automatic promotion is false. Λ remains Conjecture 1.\n\nOpen operational intake\n01\nMemory plane\n02\nIngest\n03\nModel registry\n04\nIntel connector\n05\nAction adapter\n06\nAdversary\n07\nYachay brain\n08\nFrontier\n09\nRelease gates\nFIVE SUPERPOWERS\n01\nGoverned recall\nIdentity, purpose, clearance\n02\nProvenance seal\nHash chain, receipts\n03\nIsolation\nTenant and domain\n04\nDerived reindex\nvxdb is disposable\n05\nHuman-gated action\nApproval ≠ escalation\nACTIVE MEMORIES\n5\n5 total\nRECEIPTS SEALED\n5\n0 denied\nACTIONS / INGEST\n0\n0 model routes\nRELEASE GATES\n—\nrun campaign\nCOVENANT SOFTWARE RULES · DECLARED\nMC-R1 · Tenant isolation · DECLARED\nidentity.tenant ≠ record.tenant ⇒ deny\nMC-R2 · Domain isolation · DECLARED\nidentity.domain ≠ record.domain ∧ ¬auditor ⇒ deny\nMC-R3 · Purpose bind · DECLARED\npurpose ∉ write-set ⇒ deny mutation\nMC-R4 · Class authority · DECLARED\npolicy_memory ⇐ auditor only\nMC-R5 · Clearance rank · DECLARED\nsensitivity > clearance ⇒ deny recall\nMC-R6 · Provenance · DECLARED\nevidence requires sourceRefs ∧ contentSha256\nMC-R7 · Injection · DECLARED\noverride-covenant text ⇒ quarantine"
+      },
+      "focus": {
+        "tag": "A",
+        "text": "Command",
+        "href": "/"
+      }
+    },
+    {
+      "route": "/frontier",
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      },
+      "status": 200,
+      "error": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "requestFailures": [],
+      "httpErrors": [],
+      "metrics": {
+        "title": "SZL Frontier",
+        "lang": "en",
+        "hasMain": true,
+        "overflow": false,
+        "scrollWidth": 1440,
+        "width": 1440,
+        "undersized": [],
+        "controls": 43,
+        "body": "SZL\nFRONTIER\nCommand\nMemory\nIngest\nModels\nIntel\nActions\nAdversary\nBrain\nFrontier\nHarbor\nMesh\nProof\nGates\nYACHAY LOADING · UNKNOWN\nΛ ALLOW\nmem 5\nrcpt 5\nbrain —\ndeny-by-default\nprod HOLD\nconjecture 1\nFRONTIER ORGAN · OPERATIONAL SOFTWARE / PRODUCTION HOLD\nOperational intake plane\n\nF01–F34 workstreams, bounded Ouroboros cycle, and public estate observation are operational. This organ admits evaluation; production effects, training, and automatic promotion remain held.\n\nHarbor\nSource identity\nSOFTWARE\nOPERATIONAL\nhealth + readiness contracts\nPRODUCTION EFFECTS\nHOLD\nautomatic promotion false\nINSPECTED HEAD\nb3aee644\nMODELED · 2026-09-20T11:26:13Z\nWORKSTREAMS\n9/34\nselected for eval, not production\nΛ\nConjecture 1\nnever a theorem\nOPTIONAL EVALUATION\nOff. Triad compose and membership pin stay contract-only.\nOff · contract only\nWorkstreams\nCycle\nFlotation\nEstate\nTriad\nPin\nCodex\nKernels\nLeases\nOptional\nAudit\nJourneys\nLab\nSearch\nFamily\nall\nruntime\nmodel\nquantization\nmemory\neval\ndata\nserving\nresearch\nvertical\nStatus\nall\nADMITTED_EVALUATION\nWATCH\nHOLD\nBLOCKED_EXTERNAL\nNOT_ADOPTED\nUNAVAILABLE\nExport JSON\n\n34 matching · selected-for-release is evaluation scope, not authorization.\n\nFrontier workstreams F01 through F34\nID\tWORKSTREAM\tOWNER\tSTATUS\tRELEASE SET\nF01\tEdge0 exact-route expert prefetch\nruntime\n\tszl-holdings/szl-frontier\tADMITTED EVALUATION\twatch only\nF02\tSpark-X2.5 context-budget ladder\nruntime\n\tszl-holdings/szl-frontier\tWATCH\twatch only\nF03\tBonsai packing + runtime\nmodel\n\tszl-holdings/szl-frontier\tHOLD\twatch only\nF04\tDeepSeek / DSpark serving boundary\nserving\n\tszl-holdings/szl-front"
+      },
+      "focus": {
+        "tag": "A",
+        "text": "Command",
+        "href": "/"
+      }
+    }
+  ]
+}
