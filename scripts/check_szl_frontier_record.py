@@ -44,6 +44,8 @@ def check()->None:
     for value in (SOURCE,PREVIOUS,TREE,SPACE,'ea4df6392e3ee7447ecdb7412d77abeb9a07bcd4b4aad96aa64fdb9d04b1806e','17d480fe82a128998c43514a045481855c9bda6ec7ba2fc4b7875e13a0c970cf','5fff0bef60382600b0bf46ea22e4fa8ffde31b3bfbdbe5e07c05f301fcf2797e',PRODUCT_SOURCE): assert value in page
     for link in ('./alignment.json','./frontier-operational-37915819258.json','./live-browser-2026-10-09.json','./estate-release-train-34297559945.json'): assert f'href="{link}"' in page
     for phrase in ('SOFTWARE OPERATIONAL','PRODUCTION HOLD','runtimeVerified=false','NOT_CLAIMED','No ATO','Conjecture 1'): assert phrase in page
+    assert 'href="/assets/szl/logos/szl-icon-32.svg"' in page
+    assert 'min-height: 44px' in page and 'a:focus-visible' in page
     forbidden=('fully production ready','autonomous production authority granted','model quality verified')
     assert not any(x in page.lower() for x in forbidden)
     print('OK: Frontier exact source/HF/browser evidence is current; software is OPERATIONAL and production remains HOLD.')
