@@ -1,6 +1,6 @@
 {
   "schema": "szl.proof.frontier-alignment.v1",
-  "recordedAt": "2026-09-09T01:23:06.689111Z",
+  "recordedAt": "2026-10-09T10:35:11.249510Z",
   "authorityChain": [
     "GitHub",
     "Hugging Face",
@@ -9,23 +9,28 @@
   ],
   "source": {
     "repository": "szl-holdings/szl-frontier",
-    "revision": "0640258ccd63f40605a1811287322e99038836da",
-    "previousRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
+    "revision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "previousRevision": "1723045ecf5b06fd9a5e80a759ff22ea9804885d",
     "state": "EXACT_AT_OBSERVATION"
   },
   "huggingFace": {
     "space": "SZLHOLDINGS/szl-frontier",
-    "spaceRepositoryRevision": "e71a9b32159e3964b8ed06ddb0603fe90a8d7f23",
-    "spaceLastModified": "2026-09-08T15:50:45.000Z",
+    "spaceRepositoryRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+    "previousSpaceRepositoryRevision": "452d49ba13b663544489c0290b1da9b333300a5d",
+    "spaceLastModified": "2026-10-09T10:09:32.000Z",
     "runtimeDeploymentUrl": "https://szlholdings-szl-frontier.hf.space/deployment.json",
-    "runtimeDeploymentSourceRevision": "0640258ccd63f40605a1811287322e99038836da",
-    "runtimeDeploymentSha256": "0af84df5d380f4bd19bd5a14b24fb87520955dd020f87d064d45af9d89516033",
+    "runtimeDeploymentSourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "runtimeDeploymentSha256": "ea4df6392e3ee7447ecdb7412d77abeb9a07bcd4b4aad96aa64fdb9d04b1806e",
+    "runtimeHealthUrl": "https://szlholdings-szl-frontier.hf.space/healthz",
+    "runtimeHealthSha256": "17d480fe82a128998c43514a045481855c9bda6ec7ba2fc4b7875e13a0c970cf",
     "runtimeStage": "RUNNING",
-    "syncWorkflowRun": 34247345227,
-    "syncWorkflowJob": 102132616561,
-    "independentWitnessJob": "6aa06d28900620b5c77e3a5c",
+    "syncWorkflowRun": 37915819258,
+    "syncWorkflowJob": 113771608026,
+    "publisherReceiptArtifactId": 11609173699,
+    "publisherReceiptSha256": "5700a10aa61d0de8bc998c45ed16977fb8d87255b96128245d1e4a1c6b1b3cdc",
+    "browserReceiptSha256": "5fff0bef60382600b0bf46ea22e4fa8ffde31b3bfbdbe5e07c05f301fcf2797e",
     "witness": "PASS",
-    "evidence": "The protected-main publisher completed successfully and its exact-source step passed. A separate read-only Hugging Face CPU witness observed Space repository e71a9b32159e3964b8ed06ddb0603fe90a8d7f23 and deployment source 0640258ccd63f40605a1811287322e99038836da. RUNNING refers only to the Frontier Space runtime, not to a model, provider route, or production authorization."
+    "evidence": "Protected source, immutable provider revision, deployment identity, published bytes, running state and eight browser journeys were read back. RUNNING and OPERATIONAL refer to the Frontier software plane only; runtimeVerified, model quality, autonomous effects and production authorization remain false or unclaimed."
   },
   "product": {
     "witnessScope": "HISTORICAL_FRONTIER_NOW_SUMMARY",
@@ -118,14 +123,15 @@
       "huggingFaceSpaceRepositoryRevision": "1ff1d239257a0166d784fef358b8a784f9309481",
       "runtimeSourceRevision": "a6a653b0d93a0d150b868a044642ce4f5c71d766",
       "state": "SOURCE_REVISION_MISMATCH"
-    }
+    },
+    "status": "PRESERVED_HISTORICAL_A11OY_ESTATE_OBSERVATION"
   },
   "proof": {
     "origin": "https://a11oy.net",
     "ownerRepository": "szl-holdings/a11oy-net",
     "page": "/estate/szl-frontier/",
-    "previousSourceRevision": "3590daaadce2d2b07950ba844afe8bd6d870fb12",
-    "state": "CURRENT_FRONTIER_SOURCE_HF_EXACT_LATEST_PRODUCT_ESTATE_OBSERVATION_RECORDED_SUMMARY_BINDING_HISTORICAL"
+    "previousSourceRevision": "1723045ecf5b06fd9a5e80a759ff22ea9804885d",
+    "state": "CURRENT_FRONTIER_SOFTWARE_OPERATIONAL_SOURCE_HF_EXACT_PRODUCT_PROJECTION_SEPARATE_PRODUCTION_HOLD"
   },
   "measuredEvidence": {
     "glm53FlashVsKhipu": {
@@ -155,8 +161,32 @@
     }
   },
   "overall": {
-    "state": "SOURCE_HF_EXACT_PRODUCT_ESTATE_PARITY_MATCH_PROOF_ADVANCED_ESTATE_BLOCKERS_HOLD",
+    "state": "FRONTIER_SOFTWARE_OPERATIONAL_SOURCE_HF_EXACT_BROWSER_PASS_PRODUCT_PROJECTION_SEPARATE_PRODUCTION_HOLD",
+    "softwarePlaneOperational": true,
+    "runtimeVerified": false,
     "productionDisposition": "HOLD",
+    "productionAuthorization": false,
     "automaticPromotion": false
+  },
+  "latestFrontierOperationalObservation": {
+    "record": "./frontier-operational-37915819258.json",
+    "browserRecord": "./live-browser-2026-10-09.json",
+    "observedAt": "2026-10-09T10:31:25.696Z",
+    "sourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "sourceTree": "a9c0e3c3a7475b89c426543f22d857fb37fbd88b",
+    "huggingFaceSpaceRepositoryRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+    "huggingFaceRuntimeRepositoryRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+    "runtimeSourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "sourceRuntimeParity": "MATCH",
+    "repositoryByteParity": "VERIFIED_BY_PUBLISHER",
+    "softwareState": "OPERATIONAL",
+    "runtimeVerified": false,
+    "productionDisposition": "HOLD",
+    "productionAuthorization": false,
+    "browserAcceptance": "PASS",
+    "publisherRun": 37915819258,
+    "publisherReceiptArtifactId": 11609173699,
+    "companionProjectionReceiptArtifactId": 11608488705,
+    "productProjection": "SEPARATE_A11OY_UNIFIED_SHOWCASE"
   }
 }

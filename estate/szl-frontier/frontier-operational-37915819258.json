@@ -1,0 +1,157 @@
+{
+  "schema": "szl.proof.frontier-operational-observation.v1",
+  "recordedAt": "2026-10-09T10:35:11.249510Z",
+  "authorityChain": [
+    "GitHub",
+    "Hugging Face",
+    "a-11-oy.com",
+    "a11oy.net"
+  ],
+  "source": {
+    "repository": "szl-holdings/szl-frontier",
+    "pullRequest": 242,
+    "baseRevision": "1723045ecf5b06fd9a5e80a759ff22ea9804885d",
+    "headRevision": "435984365616bda3fd5062e94c921efd8a06ef8c",
+    "mergeRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "tree": "a9c0e3c3a7475b89c426543f22d857fb37fbd88b",
+    "signatureVerified": true,
+    "signatureReason": "valid",
+    "softwarePlane": "OPERATIONAL",
+    "productionDisposition": "HOLD",
+    "productionAuthorization": false
+  },
+  "github": {
+    "postMergeRuns": [
+      {
+        "workflow": "Edge source witness",
+        "run": 37915819278,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "Frontier proof witness",
+        "run": 37915819233,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "CI",
+        "run": 37915819372,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "Scorecard",
+        "run": 37915820050,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "CodeQL",
+        "run": 37915819994,
+        "conclusion": "success"
+      },
+      {
+        "workflow": "Sync Hugging Face Space",
+        "run": 37915819258,
+        "conclusion": "success"
+      }
+    ],
+    "allPostMergeSuccessful": true
+  },
+  "huggingFace": {
+    "space": "SZLHOLDINGS/szl-frontier",
+    "spaceRepositoryRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+    "previousSpaceRepositoryRevision": "452d49ba13b663544489c0290b1da9b333300a5d",
+    "runtimeRepositoryRevision": "abd201876ee210b3c31b05bdf57faedef3604cd1",
+    "runtimeStage": "RUNNING",
+    "lastModified": "2026-10-09T10:09:32.000Z",
+    "sourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+    "publisherRun": 37915819258,
+    "publisherJob": 113771608026,
+    "publisherReceiptArtifactId": 11609173699,
+    "publisherReceiptSha256": "5700a10aa61d0de8bc998c45ed16977fb8d87255b96128245d1e4a1c6b1b3cdc",
+    "publishedFiles": 599,
+    "deploymentJsonSha256": "ea4df6392e3ee7447ecdb7412d77abeb9a07bcd4b4aad96aa64fdb9d04b1806e",
+    "healthzSha256": "17d480fe82a128998c43514a045481855c9bda6ec7ba2fc4b7875e13a0c970cf",
+    "companionProjection": {
+      "publisherJob": 113771608377,
+      "receiptArtifactId": 11608488705,
+      "receiptSha256": "545db3a37045bd3244ef7185729cfbe18cb23f13180010b71b099dc7fa697694",
+      "state": "VERIFIED_NO_CHANGE",
+      "newCommit": false,
+      "publishedFiles": 11,
+      "note": "The source-owned companion projection was byte-identical. Its repository identity is intentionally omitted from this public record."
+    }
+  },
+  "runtime": {
+    "health": {
+      "url": "https://szlholdings-szl-frontier.hf.space/healthz",
+      "httpStatus": 200,
+      "schema": "szl.frontier.health/v1",
+      "status": "ok",
+      "operational": true,
+      "softwareState": "OPERATIONAL",
+      "productionDisposition": "HOLD",
+      "productionAuthorization": false,
+      "runtimeVerified": false,
+      "meaning": "The software process is operational. runtimeVerified=false preserves the broader model/provider/effect qualification boundary."
+    },
+    "deployment": {
+      "url": "https://szlholdings-szl-frontier.hf.space/deployment.json",
+      "httpStatus": 200,
+      "schema": "szl.runtime-source/v1",
+      "authority": "protected-github-source",
+      "sourceRevision": "f2eaf02a3f506e3220c233180cbddc6e66077c08",
+      "sourceRepository": "szl-holdings/szl-frontier",
+      "surface": "SZLHOLDINGS/szl-frontier",
+      "sourceIdentityVerified": true
+    },
+    "browser": {
+      "record": "./live-browser-2026-10-09.json",
+      "recordSha256": "5fff0bef60382600b0bf46ea22e4fa8ffde31b3bfbdbe5e07c05f301fcf2797e",
+      "observedAt": "2026-10-09T10:31:25.696Z",
+      "routes": [
+        "/",
+        "/frontier"
+      ],
+      "viewports": [
+        "320x568",
+        "375x812",
+        "768x1024",
+        "1440x900"
+      ],
+      "journeys": 8,
+      "navFailures": 0,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "requestFailures": 0,
+      "httpErrors": 0,
+      "overflow": 0,
+      "effectiveUndersized": 0,
+      "focusFailures": 0,
+      "missingMain": 0,
+      "verdict": "PASS"
+    }
+  },
+  "productProjection": {
+    "url": "https://a-11-oy.com/frontier",
+    "httpStatus": 200,
+    "productSourceRevision": "a62067cd22cbda6583533cdf6f447e859ba0b0a9",
+    "productRouteSha256": "1e219647e8bc98408a3e9a5517075ecff0364253c1a3c0e8f904e3b20fcb1d92",
+    "productHonestReadbackSha256": "a89ad5db7ec04c207033dd0fc4f967df43e52cd994f16673f7fabf99c11016e1",
+    "relationship": "SEPARATE_A11OY_UNIFIED_SHOWCASE",
+    "exactFrontierByteParity": "NOT_CLAIMED",
+    "productionAuthorization": false,
+    "note": "The A11oy product route is reachable and source-identified independently. It is not represented as the SZL Frontier Space or as byte-identical to it."
+  },
+  "proof": {
+    "origin": "https://a11oy.net",
+    "page": "/estate/szl-frontier/",
+    "artifactKind": "STATIC_RECORD",
+    "runtimeHealthClaim": false
+  },
+  "bounds": [
+    "Software operational does not mean production authorized.",
+    "runtimeVerified=false is preserved for broader runtime/model/provider qualification.",
+    "No model-quality, training, inference, autonomous-effect, ATO, or production-readiness claim is made.",
+    "The product projection and Frontier Space are separate source-owned surfaces.",
+    "This record is a dated static observation, not continuous monitoring."
+  ]
+}
