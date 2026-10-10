@@ -428,6 +428,7 @@
         "david-leads",
         "immune-lattice",
         "llm-router-live",
+        "nexus",
         "szl-command-lab",
         "szl-forge-lab",
         "szl-model-inference-lab",
@@ -450,7 +451,6 @@
         "lambda-gate-holo",
         "lyte-lattice",
         "lyte-services",
-        "nexus",
         "receipt-chain-live",
         "sda",
         "szl-blocked-live",
@@ -478,7 +478,7 @@
       ],
       "not_listed": []
     },
-    "observed_at": "2026-10-03T11:01:47Z",
+    "observed_at": "2026-10-10T05:33:01Z",
     "source": "/public-inventory.json"
   }
 }

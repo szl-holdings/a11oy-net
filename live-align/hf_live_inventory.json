@@ -1,8 +1,5 @@
 {
   "assets_missing_license": [
-    "kernel:SZLHOLDINGS/governed-inference-meter",
-    "kernel:SZLHOLDINGS/szl-governed-norm",
-    "kernel:SZLHOLDINGS/szl-kernels",
     "kernel:SZLHOLDINGS/szl-receipt-attn",
     "model:SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3-authenticated",
     "space:SZLHOLDINGS/szl-bench-suite"
@@ -16,13 +13,13 @@
   "counts": {
     "datasets": 37,
     "kernels": 14,
-    "models": 47,
-    "spaces": 34
+    "models": 48,
+    "spaces": 37
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 47,
+      "live_public": 48,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -36,14 +33,14 @@
     },
     {
       "field": "spaces_public",
-      "live_public": 34,
+      "live_public": 37,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "models",
-      "live_public": 47,
+      "live_public": 48,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -57,7 +54,7 @@
     },
     {
       "field": "spaces",
-      "live_public": 34,
+      "live_public": 37,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -92,7 +89,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-03T11:01:47Z",
+  "observed_at": "2026-10-10T05:33:01Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
@@ -110,6 +107,7 @@
     "SZLHOLDINGS/killinchu",
     "SZLHOLDINGS/llm-router-live",
     "SZLHOLDINGS/lyte",
+    "SZLHOLDINGS/nexus",
     "SZLHOLDINGS/oac-system-health-lab",
     "SZLHOLDINGS/prove-it",
     "SZLHOLDINGS/sentra",
@@ -124,6 +122,8 @@
     "SZLHOLDINGS/szl-khipu",
     "SZLHOLDINGS/szl-marketing-1.1",
     "SZLHOLDINGS/szl-model-inference-lab",
+    "SZLHOLDINGS/szl-router-control",
+    "SZLHOLDINGS/szl-seismic-review",
     "SZLHOLDINGS/szl-typesafe-triage",
     "SZLHOLDINGS/terra",
     "SZLHOLDINGS/the-grid",
@@ -133,6 +133,6 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 34
+    "RUNNING": 37
   }
 }

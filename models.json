@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
   "reader_guide": "Every public Hub model card is classified here by scripts/generate_hf_inventory.py from the unauthenticated author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated record only while its source file is still listed and the class is unchanged; otherwise it is null and remains REPORTED without the benchmark bytes. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards.",
-  "captured_at": "2026-10-03T11:01:47Z",
+  "captured_at": "2026-10-10T05:33:01Z",
   "evidence_class": "SNAPSHOT",
   "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS with expanded sibling file lists; class rules in scripts/generate_hf_inventory.py classify_model(). File presence only: no weight is downloaded, loaded, or evaluated.",
   "operational": false,
@@ -19,9 +19,9 @@
   "p0_joblib": "open",
   "hub": {
     "org": "SZLHOLDINGS",
-    "models": 47,
+    "models": 48,
     "datasets": 37,
-    "spaces": 34,
+    "spaces": 37,
     "kernels": 14,
     "private": "NOT_OBSERVED",
     "listing": "https://huggingface.co/SZLHOLDINGS",
@@ -32,7 +32,7 @@
     "ROADMAP_EMPTY": 2,
     "NANO_SYNTHETIC": 5,
     "KERNEL_SOFTWARE": 16,
-    "CODE_OR_SCRIPTS": 6
+    "CODE_OR_SCRIPTS": 7
   },
   "classes": {
     "TRAINED_WEIGHTS": "safetensors, GGUF, or PEFT adapter bytes present",
@@ -255,7 +255,7 @@
       "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
       "library": null,
-      "files": 45,
+      "files": 53,
       "weights": [],
       "bench": null,
       "operational": false,
@@ -381,6 +381,17 @@
     },
     {
       "id": "SZLHOLDINGS/oac-clinical-transport-health-v1",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 7,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/oac-ops-health-v2",
       "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
       "library": null,
