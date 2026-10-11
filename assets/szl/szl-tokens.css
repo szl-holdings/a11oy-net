@@ -69,6 +69,13 @@
   --text-ghost:var(--color-graphite-300);
   --accent:var(--color-coral-400); --accent-hover:var(--color-coral-300);
   --accent-press:var(--color-coral-500); --accent-ink:var(--color-space-900);
+  /* Action fills are distinct from decorative coral: every small-text state must
+     meet 4.5:1. Press keeps the legible fill and adds the button's tactile offset. */
+  --action-bg:var(--color-coral-400); --action-hover-bg:var(--color-coral-300);
+  --action-press-bg:var(--color-coral-400); --action-ink:var(--color-space-900);
+  --hero-atmosphere:color-mix(in srgb, var(--color-space-700) 60%, transparent);
+  --holo-silver:var(--color-silver-100); --holo-teal:var(--color-yuyay-300);
+  --shadow-card:var(--shadow-sm); --shadow-card-hover:var(--shadow-md);
   --premium:var(--color-hatun-300);
   --link:var(--color-yuyay-200); --link-hover:var(--color-yuyay-100);
   --focus:var(--color-yuyay-400);
@@ -87,6 +94,16 @@
   --text-ghost:var(--color-ink-500);
   --accent:var(--color-coral-500); --accent-hover:var(--color-coral-400);
   --accent-press:#a8442f; --accent-ink:var(--color-white);
+  /* White on unmodified coral-500 is 4.48:1. This local navy mix preserves the
+     palette primitive while making the small primary label legible. */
+  --action-bg:color-mix(in srgb, var(--color-coral-500) 94%, var(--color-space-900));
+  --action-hover-bg:var(--accent-press);
+  --action-press-bg:color-mix(in srgb, var(--accent-press) 90%, var(--color-space-900));
+  --action-ink:var(--color-white);
+  --hero-atmosphere:color-mix(in srgb, var(--color-silver-300) 16%, transparent);
+  --holo-silver:var(--color-silver-500); --holo-teal:var(--color-yuyay-700);
+  --shadow-card:0 1px 2px rgba(3,15,41,.08);
+  --shadow-card-hover:0 4px 16px rgba(3,15,41,.10);
   --premium:var(--color-hatun-700);
   --link:var(--color-yuyay-700); --link-hover:var(--color-yuyay-800);
   --focus:var(--color-yuyay-600);
@@ -95,6 +112,15 @@
 }
 :root, [data-surface="dark"], [data-surface="light"] {
   --shadow-focus:0 0 0 3px color-mix(in srgb, var(--focus) 55%, transparent);
+  --holo-edge:linear-gradient(128deg, var(--holo-silver), var(--border) 24%,
+    var(--holo-teal) 48%, var(--border) 72%, var(--holo-silver));
+}
+:root {
+  --code-bg:var(--color-graphite-950); --code-ink:var(--color-graphite-50);
+  --code-muted:var(--color-graphite-300); --code-border:var(--color-graphite-600);
+  --code-edge:var(--color-graphite-400); --code-focus:var(--color-yuyay-400);
+  --code-link:var(--color-yuyay-200); --code-link-hover:var(--color-yuyay-100);
+  --code-string:var(--color-success-light); --code-number:var(--color-hatun-300);
 }
 :root {
   --text-xs:0.75rem; --text-sm:0.875rem; --text-base:1rem; --text-lg:1.25rem;
