@@ -231,12 +231,13 @@ input, select, textarea {
   transform: none;
 }
 
+/* Reading never depends on an intersection callback. A long inventory may
+ * not reach a percentage threshold, and keyboard users can jump into it. */
 [data-szl-proof-adaptive-v3="ready"][data-szl-proof-motion="full"] .szl-proof-adaptive-enter {
-  transition: opacity 360ms ease, transform 360ms ease;
+  transition: transform 360ms ease;
 }
 
-[data-szl-proof-adaptive-v3="ready"] .szl-proof-adaptive-enter[data-szl-proof-inview="false"] {
-  opacity: 0;
+[data-szl-proof-adaptive-v3="ready"][data-szl-proof-motion="full"] .szl-proof-adaptive-enter[data-szl-proof-inview="false"]:not(:focus-within) {
   transform: translateY(10px);
 }
 

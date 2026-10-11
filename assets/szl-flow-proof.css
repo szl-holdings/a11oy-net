@@ -72,7 +72,7 @@ body[data-szl-proof-theme="notebook"] {
   min-height: 58px;
   transform: translateX(-50%);
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 10px;
   padding: 7px;
@@ -111,11 +111,13 @@ body[data-szl-proof-theme="notebook"] {
 }
 .szl-proof-links {
   display: grid;
+  flex: 1;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 5px;
   min-width: 0;
 }
-.szl-proof-actions { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.szl-proof-actions { display: flex; align-items: center; justify-content: flex-end; gap: 5px; min-width: 0; }
+.szl-proof-static-rail { grid-template-columns: auto minmax(0, 1fr) auto; }
 .szl-proof-link,
 .szl-proof-switch,
 .szl-proof-toggle {
@@ -191,6 +193,9 @@ body[data-szl-proof-theme="notebook"] {
     left: 7px;
     right: 7px;
     bottom: calc(100% + 8px);
+    max-height: calc(100dvh - 100px - env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     grid-template-columns: 1fr;
     padding: 7px;
     border: 1px solid var(--szl-proof-line);
