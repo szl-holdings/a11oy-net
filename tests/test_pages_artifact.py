@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import pathlib
 import subprocess
@@ -54,7 +55,31 @@ class PagesArtifactTests(unittest.TestCase):
             committed_index = subprocess.check_output(
                 ("git", "-C", str(ROOT), "show", f"{source_revision}:index.html")
             )
-            self.assertEqual((output / "index.html").read_bytes(), committed_index)
+            frontend = json.loads((output / "frontend-assets.json").read_text(encoding="utf-8"))
+            self.assertEqual(frontend["source_revision"], source_revision)
+            self.assertEqual(frontend["scope"], "STATIC_FRONTEND_ASSET_DELIVERY_ONLY")
+            self.assertGreater(len(frontend["assets"]), 0)
+            self.assertIn("index.html", frontend["documents"])
+            for relative, entry in frontend["assets"].items():
+                canonical = subprocess.check_output(("git", "-C", str(ROOT), "show", f"{source_revision}:{relative}"))
+                self.assertEqual((output / relative).read_bytes(), canonical)
+                self.assertEqual(hashlib.sha256(canonical).hexdigest(), entry["source_sha256"])
+                derived = (output / entry["served_path"]).read_bytes()
+                self.assertEqual(hashlib.sha256(derived).hexdigest(), entry["served_sha256"])
+                self.assertIn(entry["served_sha256"], entry["served_path"])
+            # Every changed HTML document differs only in the admitted resource filenames.
+            # This covers the script-free RECORD/Diligence pages and frozen release pages too.
+            for relative, entry in frontend["documents"].items():
+                committed = subprocess.check_output(("git", "-C", str(ROOT), "show", f"{source_revision}:{relative}"))
+                served = (output / relative).read_bytes()
+                self.assertEqual(hashlib.sha256(committed).hexdigest(), entry["source_sha256"])
+                self.assertEqual(hashlib.sha256(served).hexdigest(), entry["served_sha256"])
+                restored = served
+                for asset in frontend["assets"].values():
+                    restored = restored.replace(pathlib.PurePosixPath(asset["served_path"]).name.encode(),
+                                                pathlib.PurePosixPath(asset["source_path"]).name.encode())
+                self.assertEqual(restored, committed, relative)
+            self.assertNotEqual((output / "index.html").read_bytes(), committed_index)
             for relative in ("public-membership.json", "estate/canonical-hf-manifest.json",
                              "public-membership.observed-2026-09-10.json"):
                 committed = subprocess.check_output(

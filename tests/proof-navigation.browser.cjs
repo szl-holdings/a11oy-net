@@ -9,7 +9,11 @@ const http = require('node:http');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
-const root = path.resolve(__dirname, '..');
+const root = process.env.PROOF_BROWSER_ROOT
+  ? path.resolve(process.env.PROOF_BROWSER_ROOT) : path.resolve(__dirname, '..');
+const assetManifestPath = path.join(root, 'frontend-assets.json');
+const assetManifest = fs.existsSync(assetManifestPath)
+  ? JSON.parse(fs.readFileSync(assetManifestPath, 'utf8')) : null;
 const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png',
   '.webmanifest': 'application/manifest+json' };
@@ -44,6 +48,13 @@ async function run() {
   async function pageAt(width, height, pathname = '/', options = {}) {
     const page = await browser.newPage({ viewport: { width, height }, reducedMotion: 'reduce', ...options });
     const errors = [];
+    const staleAssetRequests = [];
+    page.on('request', request => {
+      const url = new URL(request.url());
+      if (assetManifest && url.origin === origin && assetManifest.assets[url.pathname.slice(1)]) {
+        staleAssetRequests.push(url.pathname);
+      }
+    });
     page.on('pageerror', error => errors.push(error.message));
     page.on('requestfailed', request => {
       if (new URL(request.url()).origin === origin) errors.push(`${request.url()}: ${request.failure()?.errorText}`);
@@ -51,6 +62,7 @@ async function run() {
     await page.route('**/*', route => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
     await page.goto(origin + pathname, { waitUntil: 'networkidle' });
     page.proofErrors = errors;
+    page.staleAssetRequests = staleAssetRequests;
     const variant = options.forcedColors ? '-forced-colors'
       : options.reducedMotion === 'no-preference' ? '-motion'
       : options.javaScriptEnabled === false ? '-no-script' : '';
@@ -63,6 +75,7 @@ async function run() {
       const page = await pageAt(width, height);
       await inspect(`reachable rail and readable geometry ${width}x${height}`, async () => {
         assert.deepEqual(page.proofErrors, [], 'local source scripts must load without errors');
+        assert.deepEqual(page.staleAssetRequests, [], 'staged pages and dynamic loaders must request content-addressed assets');
         const geometry = await page.locator('.szl-proof-rail').evaluate(node => {
           const rect = node.getBoundingClientRect();
           return { top: rect.top, bottom: rect.bottom, width: rect.width,
@@ -137,7 +150,8 @@ async function run() {
     await browser.close();
     await new Promise(resolve => server.close(resolve));
   }
-  console.log(JSON.stringify({ scope: 'local source; external requests blocked', browser: browser.version(), passed: checks, failed: failures.length, failures }, null, 2));
+  console.log(JSON.stringify({ scope: assetManifest ? 'staged Pages artifact; external requests blocked' : 'local source; external requests blocked',
+    sourceRevision: assetManifest?.source_revision || null, browser: browser.version(), passed: checks, failed: failures.length, failures }, null, 2));
   if (failures.length) process.exitCode = 1;
 }
 run().catch(error => { console.error(error); server.close(); process.exitCode = 1; });

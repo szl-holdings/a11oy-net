@@ -3,9 +3,9 @@
 """Build the exact-source GitHub Pages artifact in an isolated directory.
 
 Only files tracked by the checked-out commit are admitted. GitHub control-plane
-files are excluded, while ``health.json`` and the static source witness are
-stamped in the staging copy only. The committed source tree is never rewritten
-by this builder.
+files are excluded. Frontend resource URLs are derived from their content in
+the staging copy, while ``health.json`` and the static source witness are
+stamped there only. The committed source tree is never rewritten by this builder.
 """
 
 from __future__ import annotations
@@ -18,6 +18,7 @@ import sys
 
 from stamp_health_sha import SHA_RE, stamp
 from stamp_source_witness import stamp as stamp_source_witness
+from fingerprint_frontend_assets import fingerprint
 
 
 EXCLUDED_TOP_LEVEL = {".git", ".github"}
@@ -159,6 +160,8 @@ def build(root: pathlib.Path, output: pathlib.Path, source_revision: str) -> dic
     if missing:
         raise ValueError("artifact is missing required files: " + ", ".join(missing))
 
+    frontend = fingerprint(output, source_revision)
+
     health = stamp(output / "health.json", source_revision)
     if health.get("sha") != source_revision:
         raise ValueError("staged health.json does not bind the exact source revision")
@@ -191,6 +194,14 @@ def build(root: pathlib.Path, output: pathlib.Path, source_revision: str) -> dic
         "source_revision": source_revision,
         "tracked_files_copied": copied,
         "excluded_top_level": sorted(EXCLUDED_TOP_LEVEL),
+        "frontend_asset_contract": {
+            "manifest": "frontend-assets.json",
+            "schema": frontend["schema"],
+            "source_revision": frontend["source_revision"],
+            "content_addressed_assets": len(frontend["assets"]),
+            "documents_with_versioned_resources": len(frontend["documents"]),
+            "canonical_assets_preserved": True,
+        },
         "health_contract": {
             "sha": health["sha"],
             "signer": health["signer"],
