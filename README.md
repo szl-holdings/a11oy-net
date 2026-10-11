@@ -201,11 +201,13 @@ The checks validate:
 For browser interaction checks, make Playwright and Chromium available locally,
 then run `node tests/proof-navigation.browser.cjs`. An existing Chromium may be
 selected with `PROOF_BROWSER_EXECUTABLE`; `PROOF_BROWSER_ARTIFACTS` names an optional
-screenshot directory. The harness serves this checkout and blocks every external
-request. It checks six viewport sizes, the mobile disclosure's keyboard order and
+screenshot directory. Set `PROOF_BROWSER_ROOT` to an isolated Pages artifact to
+check the files that will be published, including their content-addressed resource
+requests. Otherwise the harness serves this checkout. It blocks every external
+request and checks six viewport sizes, the mobile disclosure's keyboard order and
 dismissal, full dossier text, readable motion states, forced-color focus, and the
 script-free Record and Diligence navigation. These observations concern local
-source behavior; they do not establish a deployed revision or runtime readiness.
+static-file behavior; they do not establish a deployed revision or runtime readiness.
 
 ## Repository map
 
@@ -266,6 +268,21 @@ into an isolated staging directory, excludes `.git` and `.github`, and stamps
 `health.json` plus `/.well-known/szl-source.json` only in that staging copy.
 The committed source templates are not rewritten. The artifact preserves
 `.nojekyll` and `.well-known/security.txt`.
+
+`scripts/fingerprint_frontend_assets.py` gives staged CSS and JavaScript their
+full SHA-256 filenames and rewrites only actual stylesheet/script resource
+attributes in staged HTML. CSS imports and the reviewed dynamic loader sites in
+the Flow/Holo scripts resolve to their dependencies' content-addressed paths
+before the parent is hashed. A changed dependency therefore rotates the parent's
+URL as well. Original canonical asset paths remain available; inline scripts,
+runtime data, JSON evidence, and machine-contract bytes are preserved. The
+deterministic `/frontend-assets.json` binds canonical and served asset hashes,
+changed document hashes, and the exact source revision. Its scope is static
+asset delivery. It makes no runtime or capability claim.
+
+This prevents a fresh HTML response from combining with an older cached CSS/JS
+response at the same URL. Check the published resource URLs and live behavior
+after deployment; a successful Pages job alone does not establish CDN freshness.
 
 The Pages provider was observed as `build_type=workflow` on 2026-10-03 UTC. A
 main-branch push builds and deploys automatically; an operator may also

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-11 — Bind frontend asset delivery to content
+
+- The isolated Pages builder now emits content-addressed CSS/JS paths, resolves
+  CSS imports and reviewed dynamic loaders recursively, and rewrites staged
+  HTML resource attributes to those paths. Original canonical assets remain.
+- A deterministic source-bound asset manifest records canonical/served hashes.
+  Inline scripts, runtime data, evidence, and machine contracts keep their bytes.
+- Added dependency-rotation, deterministic-build, cycle/missing-dependency, and
+  actual artifact integrity checks. Browser checks can inspect the staged tree
+  and reject unversioned resource requests.
+
 ## 2026-10-11 - repair proof navigation and reading geometry
 
 - Keep the shared Flow rail as a compact dock when the holographic layer adopts
