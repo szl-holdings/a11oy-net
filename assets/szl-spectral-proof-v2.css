@@ -383,8 +383,8 @@ html[data-szl-proof-performance="quiet"] [data-szl-proof-card="true"] {
   92%, 100% { transform: translate3d(0, 72%, 0); opacity: 0; }
 }
 @keyframes szl-proof-reveal {
-  from { opacity: .74; transform: translateY(10px); filter: blur(2px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { transform: translateY(10px); }
+  to { transform: translateY(0); }
 }
 
 @media (max-width: 820px) {

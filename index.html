@@ -130,6 +130,8 @@ h1,h2,h3,p,li,dd,dt,a,button{overflow-wrap:anywhere}
 @media (prefers-reduced-motion:reduce){.baton{display:none}}
 
 main{position:relative;z-index:1}
+/* The root's .wrap owns its gutters; the shared main inset would double them. */
+main#main-content{padding-inline:0}
 
 /* ---- nav ---- */
 nav{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px);background:rgba(8,12,20,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
@@ -353,7 +355,7 @@ footer{border-top:1px solid var(--border);padding:52px 0 calc(64px + env(safe-ar
 .dossier-row:last-child{border-bottom:0}
 .dossier-index{width:30px;height:30px;border:1px solid var(--border);border-radius:9px;display:grid;place-items:center;color:var(--t2);font:10px var(--mono)}
 .dossier-row b{display:block;font-size:13.5px}
-.dossier-row small{display:block;margin-top:2px;color:var(--ghost);font:10px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dossier-row small{display:block;margin-top:4px;color:var(--ghost);font:12px/1.5 var(--mono);white-space:normal;overflow-wrap:anywhere}
 .dossier-action{color:var(--t1);font:9.5px var(--mono);letter-spacing:.11em}
 .dossier-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);color:var(--ghost);font:10.5px/1.6 var(--mono)}
 .signal-rail{display:flex;align-items:center;gap:8px;margin-top:24px;color:var(--ghost);font:10.5px var(--mono)}

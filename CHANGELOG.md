@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-11 - repair proof navigation and reading geometry
+
+- Keep the shared Flow rail as a compact dock when the holographic layer adopts
+  it. The old header geometry left that appended rail after the entire document
+  and forced closed mobile menu links into narrow columns.
+- Put the disclosure button before its links in keyboard order, synchronize its
+  accessible name and expanded state, and support Escape, Arrow Down, outside
+  clicks, focus leaving the rail, and viewport changes.
+- Keep the no-JavaScript record rails as scrollable links with room below the
+  document. Existing primary navigation and all route destinations remain intact.
+- Remove the doubled homepage gutter, compact the mobile header into two rows,
+  wrap complete dossier explanations, and keep evidence readable throughout the
+  decorative entry effects. Status labels, counts, witnesses, publication
+  exclusions, and generated inventory are unchanged.
+- Add a local Chromium regression covering six viewport sizes, menu behavior,
+  complete text, motion, forced colors, and script-free Record and Diligence.
+
 ## 2026-10-06 - adopt the estate's KANCHAY 1.3.0 tokens and type
 
 - Vendor the KANCHAY 1.3.0 tokens-only stylesheet (`assets/szl/szl-tokens.css`, pinned by

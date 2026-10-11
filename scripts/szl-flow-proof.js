@@ -230,12 +230,26 @@
       "aria-expanded": "false",
       "aria-label": "Open journey navigation"
     }, "Menu");
-    toggle.addEventListener("click", function () {
-      var open = rail.dataset.open !== "true";
+    function setMenu(open, restoreFocus) {
       rail.dataset.open = String(open);
       toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close journey navigation" : "Open journey navigation");
       toggle.textContent = open ? "Close" : "Menu";
+      if (restoreFocus) toggle.focus();
+    }
+    toggle.addEventListener("click", function () {
+      var open = rail.dataset.open !== "true";
+      setMenu(open);
       if (open) announce("Journey navigation opened");
+    });
+    toggle.addEventListener("keydown", function (event) {
+      if (event.key !== "ArrowDown") return;
+      event.preventDefault();
+      setMenu(true);
+      links.querySelector("a").focus();
+    });
+    links.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setMenu(false);
     });
 
     var switcher = el("a", {
@@ -247,9 +261,10 @@
     switcher.appendChild(el("strong", {}, "Product"));
 
     actions.appendChild(toggle);
+    // Keep the disclosure before its links in keyboard and reading order.
+    actions.appendChild(links);
     actions.appendChild(switcher);
     rail.appendChild(origin);
-    rail.appendChild(links);
     rail.appendChild(actions);
 
     var live = el("div", {
@@ -278,6 +293,8 @@
     }, { passive: true });
     window.addEventListener("resize", function () {
       document.documentElement.dataset.szlProofPerformance = performanceTier();
+      if (window.innerWidth > 820) setMenu(false);
+      else if (links.contains(document.activeElement)) setMenu(true);
       updateProgress();
     }, { passive: true });
     if (window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
@@ -289,16 +306,14 @@
     });
     document.addEventListener("click", function (event) {
       if (rail.dataset.open !== "true" || rail.contains(event.target)) return;
-      rail.dataset.open = "false";
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "Menu";
+      setMenu(false);
+    });
+    document.addEventListener("focusin", function (event) {
+      if (rail.dataset.open === "true" && !rail.contains(event.target)) setMenu(false);
     });
     document.addEventListener("keydown", function (event) {
       if (event.key !== "Escape" || rail.dataset.open !== "true") return;
-      rail.dataset.open = "false";
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "Menu";
-      toggle.focus();
+      setMenu(false, true);
     });
 
     document.dispatchEvent(new CustomEvent("szl:proof-spectral-ready", {

@@ -198,6 +198,15 @@ The checks validate:
   branded 404, SVG mark, and no-JavaScript route boundaries;
 - the committed edge-security contract without promoting it to deployed state.
 
+For browser interaction checks, make Playwright and Chromium available locally,
+then run `node tests/proof-navigation.browser.cjs`. An existing Chromium may be
+selected with `PROOF_BROWSER_EXECUTABLE`; `PROOF_BROWSER_ARTIFACTS` names an optional
+screenshot directory. The harness serves this checkout and blocks every external
+request. It checks six viewport sizes, the mobile disclosure's keyboard order and
+dismissal, full dossier text, readable motion states, forced-color focus, and the
+script-free Record and Diligence navigation. These observations concern local
+source behavior; they do not establish a deployed revision or runtime readiness.
+
 ## Repository map
 
 | Path | Responsibility |
