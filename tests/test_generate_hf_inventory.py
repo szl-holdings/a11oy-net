@@ -9,9 +9,8 @@ import copy
 import json
 import shutil
 import tempfile
-import unittest
 from pathlib import Path
-from unittest import mock
+from unittest import TestCase, main, mock
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "hf_api"
@@ -85,7 +84,7 @@ class SiteCopy:
         self._tmp.cleanup()
 
 
-class GeneratorTest(unittest.TestCase):
+class GeneratorTest(TestCase):
     def setUp(self) -> None:
         self.site = SiteCopy()
 
@@ -290,7 +289,7 @@ class GeneratorTest(unittest.TestCase):
             gen.build_inventory(kernel_only, T1)
 
     @staticmethod
-    def _with_kernel_subset(manifest: dict, count: int = 2) -> dict:
+    def _with_native_kernels(manifest: dict, count: int = 2) -> dict:
         kernels = [{**row, "repoType": "kernel"} for row in manifest["inventory"]["models"][:count]]
         return {**manifest, "counts": {**manifest["counts"], "kernels": len(kernels)},
                 "inventory": {**manifest["inventory"], "kernels": kernels}}
@@ -300,19 +299,23 @@ class GeneratorTest(unittest.TestCase):
         raw = json.dumps(value).encode()
         return raw, hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
-    def test_canonical_native_kernel_subset_is_admitted_without_a_fourth_kind(self) -> None:
+    def test_canonical_native_kernels_keep_a_separate_typed_namespace(self) -> None:
         manifest = json.loads((FIXTURE / "canonical_manifest.json").read_bytes())
-        raw, blob = self._bind(self._with_kernel_subset(manifest))
+        native = self._with_native_kernels(manifest)
+        native["inventory"]["kernels"][0]["id"] = "SZLHOLDINGS/kernel-with-no-model-mirror"
+        raw, blob = self._bind(native)
         result = gen.canonical_source(raw, "a" * 40, blob)
-        self.assertEqual(set(result["record"]["counts"]), set(gen.PUBLIC_SCOPE["kinds"]))
-        self.assertEqual(result["record"]["counts"], {kind: manifest["counts"][kind] for kind in gen.PUBLIC_SCOPE["kinds"]})
-        self.assertEqual(set(result["ids"]), set(gen.PUBLIC_SCOPE["kinds"]))
+        self.assertEqual(result["record"]["schema"], "szl.public-profile-inventory/v2")
+        self.assertEqual(result["record"]["scope"], gen.NATIVE_KERNEL_SCOPE)
+        self.assertEqual(result["record"]["counts"], native["counts"])
+        self.assertEqual(set(result["ids"]), set(gen.NATIVE_KERNEL_SCOPE["kinds"]))
+        self.assertEqual(result["ids"]["kernels"], sorted(row["id"] for row in native["inventory"]["kernels"]))
 
-    def test_canonical_native_kernel_subset_violations_are_blocking(self) -> None:
+    def test_canonical_native_kernel_ambiguity_and_privacy_are_blocking(self) -> None:
         manifest = json.loads((FIXTURE / "canonical_manifest.json").read_bytes())
-        good = self._with_kernel_subset(manifest)
-        outside = copy.deepcopy(good)
-        outside["inventory"]["kernels"][0]["id"] = "SZLHOLDINGS/unlisted-kernel"
+        good = self._with_native_kernels(manifest)
+        wrong_type = copy.deepcopy(good)
+        wrong_type["inventory"]["kernels"][0]["repoType"] = "model"
         private = copy.deepcopy(good)
         private["inventory"]["kernels"][0]["private"] = True
         duplicate = copy.deepcopy(good)
@@ -322,7 +325,7 @@ class GeneratorTest(unittest.TestCase):
             "count_not_int": {**good, "counts": {**good["counts"], "kernels": True}},
             "count_without_rows": {**good, "inventory": manifest["inventory"]},
             "rows_without_count": {**good, "counts": manifest["counts"]},
-            "kernel_outside_models": outside,
+            "wrong_repository_type": wrong_type,
             "private_kernel": private,
             "duplicate_kernel": duplicate,
             "unknown_kind": {**good, "counts": {**good["counts"], "collections": 0}},
@@ -331,6 +334,64 @@ class GeneratorTest(unittest.TestCase):
             raw, blob = self._bind(value)
             with self.subTest(name), self.assertRaises(gen.GenerationError):
                 gen.canonical_source(raw, "a" * 40, blob)
+
+    def native_observation(self):
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        manifest = json.loads(raw["canonical_source"]["manifest_text"])
+        manifest["inventory"]["kernels"] = [dict(row, repoType="kernel") for row in raw["kernels"]]
+        manifest["counts"]["kernels"] = len(raw["kernels"])
+        content, blob = self._bind(manifest)
+        raw["canonical_source"] = gen.canonical_source(content, "a" * 40, blob)
+        return raw
+
+    def test_native_kernel_same_id_as_model_counts_both_typed_repositories(self) -> None:
+        raw = self.native_observation()
+        inventory = gen.build_inventory(raw, T1)
+        self.assertEqual(inventory["schema"], "szl.public-hf-inventory/v5")
+        expected = sum(inventory["counts"][kind] for kind in ("models", "datasets", "spaces", "kernels"))
+        self.assertEqual(inventory["counts"]["repository_membership_total"], expected)
+        self.assertEqual(inventory["claim_boundaries"]["kernel_membership"],
+                         "SEPARATE_NATIVE_NAMESPACE_COUNTED_ONCE_PER_KIND_AND_ID")
+        self.assertEqual(inventory["counts"]["public_resources_total"],
+                         expected + inventory["counts"]["collections"] + inventory["counts"]["buckets"])
+        self.site.run(T1, raw)
+        self.assertEqual(self.site.read(gen.CURRENT_PATH)["schema"], "szl.hf-current/v2")
+        native_page = gen.render_page("kernels (included in models)", self.site.read(gen.CURRENT_PATH))
+        self.assertEqual(native_page, "kernels (separate native repositories)")
+        _, changed = self.site.run(T2, raw)
+        self.assertEqual(changed, [])
+
+    def test_native_kernel_membership_drift_is_rejected_even_for_a_model_id(self) -> None:
+        original = self.native_observation()
+        for change in ("swap", "missing", "empty"):
+            raw = copy.deepcopy(original)
+            if change == "swap":
+                raw["kernels"][0]["id"] = "SZLHOLDINGS/chaski"
+            elif change == "missing":
+                raw["kernels"] = raw["kernels"][1:]
+            else:
+                raw["kernels"] = []
+            with self.subTest(change=change), self.assertRaisesRegex(gen.GenerationError, "observed kernels membership differs"):
+                gen.build_inventory(raw, T1)
+
+    def test_unavailable_kernel_listing_is_not_an_empty_observation(self) -> None:
+        class MissingKernels(gen.FixtureSource):
+            def listing(self, kind):
+                return None if kind == "kernels" else super().listing(kind)
+
+        with self.assertRaisesRegex(gen.GenerationError, "kernels listing is unavailable"):
+            gen.collect(MissingKernels(FIXTURE))
+
+    def test_native_kernel_without_model_mirror_is_inventoried(self) -> None:
+        raw = self.native_observation()
+        raw["kernels"][0]["id"] = "SZLHOLDINGS/native-only"
+        manifest = json.loads(raw["canonical_source"]["manifest_text"])
+        manifest["inventory"]["kernels"][0]["id"] = "SZLHOLDINGS/native-only"
+        content, blob = self._bind(manifest)
+        raw["canonical_source"] = gen.canonical_source(content, "a" * 40, blob)
+        inventory = gen.build_inventory(raw, T1)
+        self.assertIn("SZLHOLDINGS/native-only", [row["id"] for row in inventory["resources"]["kernels"]])
+        self.assertNotIn("SZLHOLDINGS/native-only", [row["id"] for row in inventory["resources"]["models"]])
 
     def test_canonical_scope_blob_duplicate_keys_and_private_disposition_are_blocking(self) -> None:
         original = (FIXTURE / "canonical_manifest.json").read_bytes()
@@ -466,4 +527,4 @@ class GeneratorTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
