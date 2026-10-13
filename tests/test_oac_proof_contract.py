@@ -17,9 +17,12 @@ MODEL = "dd7d109813abcd90c5250106dc2eabd2804e7ac3"
 DATASET = "f7ab6170bf78138b187b8cb707d374a25ad85375"
 ARTIFACT = "7555d5ab6f6f1c56f7304ba365904479b7fde8819b0b183b8455a3f71f61a4b3"
 V2_SOURCE = "a975c6f35f215a120ae68fea3fe69226b9a0a53f"
-V2_CARD_SOURCE = "6330dea7318effba583a6501346fee590174a39f"
+V2_CARD_SOURCE = "aa7bc8499cd44ebddb76105e1dfb82f4af4435c1"
 V2_INITIAL_HUB = "ff107198aa257ce1bb1841377d553bee3f90be41"
-V2_HUB = "a824a32d91a383d33a1e1e595f11b8362d1b4efa"
+V2_HUB = "832b27f6af978217d1317d31037c4159bb07ee2d"
+# The hosted witness exercised the model at this earlier revision; the Hub
+# commits after it (114638ea, 832b27f6) change only README.md.
+V2_WITNESS_HUB = "a824a32d91a383d33a1e1e595f11b8362d1b4efa"
 V2_APPLICATION = "3f7554efaddf086680b25301502c3bf176d83089"
 V2_SPACE = "1c33503830a12c5661fc3ee8cd0a4b3a75451c25"
 V2_WITNESS_RUN = "37728965604"
@@ -96,7 +99,7 @@ def test_oac_v2_artifact_is_separate_declared_and_non_authoritative():
     assert record["schema"] == "szl.oac.ops-health-v2-artifact-snapshot.v1"
     assert record["kind"] == "STATIC_DOCUMENT"
     assert record["evidence_class"] == "DECLARED"
-    assert record["snapshot_date"] == "2026-10-08"
+    assert record["snapshot_date"] == "2026-10-13"
     assert record["currentness"] == "UNKNOWN"
     assert record["source"]["packaging_revision"] == V2_SOURCE
     assert record["source"]["url"].endswith("/" + V2_SOURCE + "/publishing/oac-ops-health-v2")
@@ -106,7 +109,7 @@ def test_oac_v2_artifact_is_separate_declared_and_non_authoritative():
     assert record["hub"]["initial_url"].endswith("/" + V2_INITIAL_HUB)
     assert record["hub"]["revision"] == V2_HUB
     assert record["hub"]["url"].endswith("/" + V2_HUB)
-    assert record["hub"]["publisher_run"].endswith("/37726459882")
+    assert record["hub"]["publisher_run"].endswith("/38446055951")
     assert record["hub"]["source_to_hub_byte_parity_replayed_here"] is False
     assert record["receipt"] == {
         "signed": False,
@@ -139,7 +142,7 @@ def test_oac_v2_artifact_is_separate_declared_and_non_authoritative():
     assert witness["completed_at_utc"] == "2026-10-08T04:46:32Z"
     assert witness["application_source_revision"] == V2_APPLICATION
     assert witness["space_revision"] == V2_SPACE
-    assert witness["hub_model_revision"] == V2_HUB
+    assert witness["hub_model_revision"] == V2_WITNESS_HUB
     assert witness["run_url"].endswith("/" + V2_WITNESS_RUN)
     assert witness["artifact_id"] == 11529195992
     assert witness["artifact_digest"] == V2_WITNESS_DIGEST
@@ -190,7 +193,7 @@ def test_oac_html_keeps_identity_scope_and_local_navigation():
         assert label in source
     for identity in (SOURCE, HUB, MODEL, DATASET, ARTIFACT, V2_SOURCE,
                      V2_CARD_SOURCE, V2_INITIAL_HUB, V2_HUB, V2_APPLICATION,
-                     V2_SPACE, "36966679696", "11209469462", "37726459882",
+                     V2_SPACE, "36966679696", "11209469462", "38446055951",
                      V2_WITNESS_RUN):
         assert identity in source
     assert "unsigned receipt records file digests" in source
