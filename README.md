@@ -246,12 +246,17 @@ static-file behavior; they do not establish a deployed revision or runtime readi
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
 
-Public repository membership consists of models, datasets, and Spaces, including
-the reserved public `README` Space when it is independently observable. Kernel
-repositories are a subset of models and are counted once in totals. Collections
-and buckets are separately observed auxiliary resources outside that membership
-scope. Neither listing alignment nor source binding establishes runtime readiness,
-model quality, or permission to publish a product release.
+Native-kernel source manifests bind four repository namespaces: models, datasets,
+Spaces, and kernels. Each `(kind, id)` is counted once, so a model mirror and a
+native kernel with the same name remain distinct repositories. All four observed
+sets must equal the immutable source membership; a missing or different kernel
+set blocks publication. These captures use membership scope/schema v2, inventory
+v5, and compact-current v2. Older three-kind captures keep their historical v1
+membership and v4 inventory semantics and are not silently relabelled.
+The reserved public `README` Space is included when independently observable.
+Collections and buckets remain auxiliary resources outside repository membership.
+Listing alignment and source binding do not establish runtime readiness, model
+quality, or permission to publish a product release.
 
 ## Publishing and security
 

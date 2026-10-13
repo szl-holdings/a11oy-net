@@ -5,6 +5,7 @@
 from html.parser import HTMLParser
 import json
 from pathlib import Path
+import re
 from urllib.parse import urlparse
 
 
@@ -24,6 +25,7 @@ V2_SPACE = "1c33503830a12c5661fc3ee8cd0a4b3a75451c25"
 V2_WITNESS_RUN = "37728965604"
 V2_ORIGIN = "https://szlholdings-oac-system-health-lab.hf.space"
 V2_WITNESS_DIGEST = "sha256:cd3de50ce41f911e7636b30766dc27105c6ef2e4684733b3fe756840868ecc2d"
+V1_LISTING_HUB = "28242f5b8fe46bcfc5ea63b34a904dc1dc2d60f1"
 
 
 class Surface(HTMLParser):
@@ -33,6 +35,15 @@ class Surface(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         self.elements.append((tag, dict(attrs)))
+
+
+def test_oac_advertised_hub_revisions_link_to_exact_immutable_trees():
+    page = (OAC / "index.html").read_text(encoding="utf-8")
+    advertised = re.findall(r'<a href="([^"]+)">Hub rev ([0-9a-f]{8})</a>', page)
+    assert dict((label, href) for href, label in advertised) == {
+        V1_LISTING_HUB[:8]: "https://huggingface.co/SZLHOLDINGS/oac-system-health-v1/tree/" + V1_LISTING_HUB,
+        V2_HUB[:8]: "https://huggingface.co/SZLHOLDINGS/oac-ops-health-v2/tree/" + V2_HUB,
+    }
 
 
 def test_oac_release_is_exact_handoff_not_current_probe():

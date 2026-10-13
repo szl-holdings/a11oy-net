@@ -180,8 +180,9 @@ def check_generated_hf_inventory() -> None:
     spaces = json.loads((ROOT / "spaces.json").read_text(encoding="utf-8"))
 
     # (a) schema and observation mode
-    assert inventory["schema"] == gen.SCHEMA_INVENTORY
-    assert current["schema"] == gen.SCHEMA_CURRENT
+    native_kernels = inventory["canonical_membership_source"]["schema"] == "szl.public-profile-inventory/v2"
+    assert inventory["schema"] == (gen.SCHEMA_NATIVE_INVENTORY if native_kernels else gen.SCHEMA_INVENTORY)
+    assert current["schema"] == (gen.SCHEMA_NATIVE_CURRENT if native_kernels else gen.SCHEMA_CURRENT)
     assert live_align["schema"] == gen.SCHEMA_LIVE_ALIGN
     for document in (inventory, current, live_align):
         assert document["organization"] == "SZLHOLDINGS"
@@ -202,12 +203,13 @@ def check_generated_hf_inventory() -> None:
         assert counts[kind] == len(ids) == len(set(ids)), kind
         assert ids == sorted(ids), f"{kind} ids must be sorted"
     assert counts["spaces"] == counts["spaces_list_api_rows"] + counts["special_spaces_added"]
-    model_ids = {row["id"] for row in resources["models"]}
-    assert {row["id"] for row in resources["kernels"]} <= model_ids, (
-        "kernel repositories must be a subset of model membership"
-    )
+    membership_kinds = ("models", "datasets", "spaces", "kernels") if native_kernels else ("models", "datasets", "spaces")
+    if not native_kernels:
+        assert {row["id"] for row in resources["kernels"]} <= {row["id"] for row in resources["models"]}, (
+            "legacy kernel listing must remain within its historical model membership"
+        )
     assert counts["repository_membership_total"] == sum(
-        counts[kind] for kind in ("models", "datasets", "spaces")
+        counts[kind] for kind in membership_kinds
     )
     assert counts["hub_artifacts_total"] == counts["repository_membership_total"] + counts["collections"]
     assert counts["public_resources_total"] == counts["hub_artifacts_total"] + counts["buckets"]

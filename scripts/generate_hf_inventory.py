@@ -9,10 +9,12 @@ as NOT_OBSERVED, never as zero.
 
 Outputs (all deterministic for a given API observation):
 
-  public-inventory.json               szl.public-hf-inventory/v4, full detail
+  public-inventory.json               szl.public-hf-inventory/v5, full detail
+                                      (v4 for historical three-kind sources)
   public-membership.json              canonical GitHub-bound public membership
   estate/canonical-hf-manifest.json    exact immutable canonical manifest bytes
-  estate/hf-current.json              szl.hf-current/v1, the compact current
+  estate/hf-current.json              szl.hf-current/v2, the compact current
+                                      (v1 for historical three-kind sources)
                                       counts that pages render
   live-align/hf_live_inventory.json   szl.live-align/v2, drift against the
                                       dated historical snapshots
@@ -59,6 +61,8 @@ REFRESH_WORKFLOW = ".github/workflows/hf-inventory-refresh.yml"
 
 SCHEMA_INVENTORY = "szl.public-hf-inventory/v4"
 SCHEMA_CURRENT = "szl.hf-current/v1"
+SCHEMA_NATIVE_INVENTORY = "szl.public-hf-inventory/v5"
+SCHEMA_NATIVE_CURRENT = "szl.hf-current/v2"
 SCHEMA_LIVE_ALIGN = "szl.live-align/v2"
 OBSERVATION_MODE = "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT"
 SPECIAL_SPACES = ("README",)
@@ -74,6 +78,13 @@ PUBLIC_SCOPE = {
     "kernel_policy": "count-once-as-model-repository-not-a-fourth-kind",
     "collections_and_buckets": "outside-repository-membership-scope",
     "portfolio_and_operational_policy": False,
+}
+NATIVE_KERNEL_SCOPE = {
+    **PUBLIC_SCOPE,
+    "id": "hf-public-author-membership/v2",
+    "kinds": ["models", "datasets", "spaces", "kernels"],
+    "kernel_policy": "native-kernel-repository-separate-namespace-counted-once",
+    "identity": "repository-kind-and-id",
 }
 
 INVENTORY_PATH = "public-inventory.json"
@@ -273,6 +284,8 @@ def collect(source: Any) -> dict[str, Any]:
     raw: dict[str, Any] = {"canonical_source": source.canonical_source()}
     for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
         raw[kind] = source.listing(kind)
+        if not isinstance(raw[kind], list):
+            raise GenerationError(f"{kind} listing is unavailable or malformed")
         limit = LISTING_LIMIT.get(kind)
         if limit is not None and len(raw[kind]) >= limit:
             raise GenerationError(
@@ -387,8 +400,11 @@ def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
     counts = manifest.get("counts") if isinstance(manifest, dict) else None
     inventory = manifest.get("inventory") if isinstance(manifest, dict) else None
     kinds = set(PUBLIC_SCOPE["kinds"])
-    # Native kernels are a model subset counted once (PUBLIC_SCOPE kernel_policy), never a fourth kind.
+    # Legacy three-kind captures retain v1 semantics. A source that enumerates
+    # native kernels binds all four typed namespaces; matching bare IDs do not
+    # make a native kernel and its legacy model mirror the same repository.
     has_kernels = isinstance(counts, dict) and "kernels" in counts
+    membership_scope = NATIVE_KERNEL_SCOPE if has_kernels else PUBLIC_SCOPE
     if not (
         isinstance(manifest, dict) and manifest.get("schemaVersion") == 2
         and manifest.get("org") == ORG and isinstance(scope, dict)
@@ -396,24 +412,25 @@ def canonical_source(raw: bytes, revision: str, blob: str) -> dict[str, Any]:
         and scope.get("authenticated") is False and scope.get("privateAssetsIncluded") is False
         and isinstance(counts, dict) and set(counts) == kinds | ({"kernels"} if has_kernels else set())
         and all(type(counts[kind]) is int and counts[kind] >= 0 for kind in counts)
-        and isinstance(inventory, dict) and ("kernels" in inventory) == has_kernels
+        and isinstance(inventory, dict) and set(inventory) == set(counts)
         and valid_timestamp(manifest.get("observedAt", ""))
     ):
         raise GenerationError("canonical public membership schema or scope is unavailable")
     ids: dict[str, list[str]] = {}
-    for kind in [*PUBLIC_SCOPE["kinds"], *(["kernels"] if has_kernels else [])]:
+    for kind in membership_scope["kinds"]:
         rows = inventory.get(kind)
         if not isinstance(rows, list) or any(not isinstance(row, dict) or row.get("private") is not False for row in rows):
             raise GenerationError(f"canonical {kind} public disposition unavailable")
         ids[kind] = [row["id"] for row in by_id(rows)]
         if counts[kind] != len(ids[kind]):
             raise GenerationError(f"canonical {kind} count does not bind its complete membership")
-    if has_kernels and set(ids.pop("kernels")) - set(ids["models"]):
-        raise GenerationError("canonical kernel subset has repositories absent from the public model membership")
+        if kind == "kernels" and any(row.get("repoType") != "kernel" for row in rows):
+            raise GenerationError("canonical native kernel namespace is unavailable")
     record = {
-        "schema": "szl.public-profile-inventory/v1", "scope": PUBLIC_SCOPE,
-        "scope_sha256": hashlib.sha256(canonical(PUBLIC_SCOPE)).hexdigest(),
-        "counts": {kind: counts[kind] for kind in PUBLIC_SCOPE["kinds"]}, "observed_at": manifest["observedAt"],
+        "schema": "szl.public-profile-inventory/v2" if has_kernels else "szl.public-profile-inventory/v1",
+        "scope": membership_scope,
+        "scope_sha256": hashlib.sha256(canonical(membership_scope)).hexdigest(),
+        "counts": {kind: counts[kind] for kind in membership_scope["kinds"]}, "observed_at": manifest["observedAt"],
         "source_repository": CANONICAL_REPOSITORY, "source_path": CANONICAL_PATH,
         "source_revision": revision, "source_git_blob": blob,
         "source_sha256": hashlib.sha256(raw).hexdigest(),
@@ -584,13 +601,16 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         key=lambda row: row["id"],
     )
     kernels = [kernel_row(item) for item in by_id(raw["kernels"])]
-    model_ids = {row["id"] for row in models}
-    if {row["id"] for row in kernels} - model_ids:
-        raise GenerationError("kernel subset has repositories absent from the public model membership")
     binding = raw.get("canonical_source")
     if not isinstance(binding, dict) or not isinstance(binding.get("record"), dict):
         raise GenerationError("canonical public membership source binding unavailable")
-    for kind, rows in (("models", models), ("datasets", datasets), ("spaces", spaces)):
+    native_kernels = binding["record"].get("schema") == "szl.public-profile-inventory/v2"
+    membership_rows = {"models": models, "datasets": datasets, "spaces": spaces}
+    if native_kernels:
+        membership_rows["kernels"] = kernels
+    elif {row["id"] for row in kernels} - {row["id"] for row in models}:
+        raise GenerationError("legacy kernel subset has repositories absent from the public model membership")
+    for kind, rows in membership_rows.items():
         if sorted(row["id"] for row in rows) != binding.get("ids", {}).get(kind):
             raise GenerationError(f"observed {kind} membership differs from immutable canonical GitHub source")
     collections = sorted(
@@ -609,12 +629,12 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         ),
         key=lambda row: row["id"],
     )
-    members: dict[str, set[str]] = {"model": set(), "dataset": set(), "space": set(), "bucket": set()}
+    members: dict[str, set[str]] = {"model": set(), "dataset": set(), "space": set(), "kernel": set(), "bucket": set()}
     for row in collections:
         for entry in row["items"]:
             if entry["type"] in members:
                 members[entry["type"]].add(entry["id"])
-    repository_membership = len(models) + len(datasets) + len(spaces)
+    repository_membership = sum(len(rows) for rows in membership_rows.values())
     hub_artifacts = repository_membership + len(collections)
     counts = {
         "buckets": len(buckets),
@@ -633,7 +653,10 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     inventory = {
         "claim_boundaries": {
             "github_alignment": "EXACT_IMMUTABLE_MANIFEST_MEMBERSHIP_ONLY_NOT_RUNTIME_PARITY",
-            "kernel_membership": "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS",
+            "kernel_membership": (
+                "SEPARATE_NATIVE_NAMESPACE_COUNTED_ONCE_PER_KIND_AND_ID" if native_kernels
+                else "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS"
+            ),
             "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
             "license": "HUB_CARD_OR_TAG_METADATA_ONLY_NOT_LEGAL_REVIEW",
             "private_assets": "NOT_OBSERVED",
@@ -672,11 +695,14 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
             "models": models,
             "spaces": spaces,
         },
-        "schema": SCHEMA_INVENTORY,
+        "schema": SCHEMA_NATIVE_INVENTORY if native_kernels else SCHEMA_INVENTORY,
         "canonical_membership_source": binding["record"],
         "spaces_by_runtime_stage": dict(sorted(stages.items())),
         "special_spaces": sorted(row["id"] for row in spaces if row["listing"] != "AUTHOR_LIST_API"),
     }
+    if native_kernels:
+        inventory["collection_coverage"]["kernels"] = coverage(
+            [row["id"] for row in kernels], members["kernel"])
     inventory["content_sha256"] = inventory_content_sha(inventory)
     return inventory
 
@@ -890,7 +916,7 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
     return {
         "claim_boundaries": {
             "counts": "PUBLIC_LISTING_ONLY_NOT_QUALITY_SAFETY_OR_READINESS",
-            "kernel_membership": "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS",
+            "kernel_membership": inventory["claim_boundaries"]["kernel_membership"],
             "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
             "private_assets": "NOT_OBSERVED",
             "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE",
@@ -922,7 +948,7 @@ def build_current(inventory: dict[str, Any], spaces_policy: dict[str, Any], hist
         "observed_date": inventory["observed_at"][:10],
         "organization": ORG,
         "private_assets": "NOT_OBSERVED",
-        "schema": SCHEMA_CURRENT,
+        "schema": SCHEMA_NATIVE_CURRENT if inventory["schema"] == SCHEMA_NATIVE_INVENTORY else SCHEMA_CURRENT,
         "source": "/" + INVENTORY_PATH,
         "source_content_sha256": inventory["content_sha256"],
         "canonical_membership_source": inventory["canonical_membership_source"],
@@ -1024,6 +1050,8 @@ def render_page(text: str, current: dict[str, Any]) -> str:
         return match.group("open") + html.escape(str(value), quote=False) + match.group("close")
 
     text = FIELD.sub(fill, text)
+    if current["schema"] == SCHEMA_NATIVE_CURRENT:
+        text = text.replace("kernels (included in models)", "kernels (separate native repositories)")
 
     def rows(match: re.Match[str]) -> str:
         body = "".join(live_row(card) for card in current["live_space_cards"])
@@ -1068,7 +1096,7 @@ def generate(root: Path, raw: dict[str, Any], observed_at: str) -> dict[str, str
     if committed_path.is_file():
         committed = json.loads(committed_path.read_text(encoding="utf-8"))
         if (
-            committed.get("schema") == SCHEMA_INVENTORY
+            committed.get("schema") == inventory["schema"]
             and committed.get("content_sha256") == inventory["content_sha256"]
             and valid_timestamp(str(committed.get("observed_at")))
         ):
