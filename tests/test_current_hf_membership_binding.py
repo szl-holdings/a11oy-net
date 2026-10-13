@@ -22,8 +22,19 @@ def test_current_public_membership_is_exact_source_bound() -> None:
     assert CURRENT["scope"]["id"] == "hf-public-author-membership/v1"
     assert CURRENT["scope"]["authentication"] == "none"
     assert CURRENT["scope"]["visibility"] == "public-only"
-    assert CURRENT["counts"] == SOURCE["counts"]
-    assert CURRENT["counts"] == {kind: len(SOURCE["inventory"][kind]) for kind in ("models", "datasets", "spaces")}
+    kinds = ("models", "datasets", "spaces")
+    # Native kernels are a model subset counted once (scope kernel_policy), never a
+    # fourth membership kind. The generator admits a source "kernels" count (#286),
+    # so membership binds the three repository kinds exactly and the kernel subset
+    # is checked here the same way the generator checks it.
+    assert set(SOURCE["counts"]) - set(kinds) <= {"kernels"}
+    assert CURRENT["counts"] == {kind: SOURCE["counts"][kind] for kind in kinds}
+    assert CURRENT["counts"] == {kind: len(SOURCE["inventory"][kind]) for kind in kinds}
+    assert ("kernels" in SOURCE["counts"]) == ("kernels" in SOURCE["inventory"])
+    if "kernels" in SOURCE["counts"]:
+        assert SOURCE["counts"]["kernels"] == len(SOURCE["inventory"]["kernels"])
+        assert {row["id"] for row in SOURCE["inventory"]["kernels"]} <= {
+            row["id"] for row in SOURCE["inventory"]["models"]}
     assert CURRENT["observed_at"] == SOURCE["observedAt"]
     assert CURRENT["source_repository"] == "szl-holdings/a11oy"
     assert re.fullmatch(r"[0-9a-f]{40}", CURRENT["source_revision"])
