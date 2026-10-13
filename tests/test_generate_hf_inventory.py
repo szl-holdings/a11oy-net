@@ -9,9 +9,8 @@ import copy
 import json
 import shutil
 import tempfile
-import unittest
 from pathlib import Path
-from unittest import mock
+from unittest import TestCase, main, mock
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "hf_api"
@@ -85,7 +84,7 @@ class SiteCopy:
         self._tmp.cleanup()
 
 
-class GeneratorTest(unittest.TestCase):
+class GeneratorTest(TestCase):
     def setUp(self) -> None:
         self.site = SiteCopy()
 
@@ -528,4 +527,4 @@ class GeneratorTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
