@@ -2,6 +2,7 @@
   "canonical_membership_source": {
     "counts": {
       "datasets": 37,
+      "kernels": 14,
       "models": 48,
       "spaces": 37
     },
@@ -17,34 +18,36 @@
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
-    "schema": "szl.public-profile-inventory/v1",
+    "schema": "szl.public-profile-inventory/v2",
     "scope": {
       "authentication": "none",
       "collections_and_buckets": "outside-repository-membership-scope",
-      "id": "hf-public-author-membership/v1",
+      "id": "hf-public-author-membership/v2",
+      "identity": "repository-kind-and-id",
       "include_disabled_metadata": true,
       "include_gated_metadata": true,
       "include_reserved_readme_if_public": true,
-      "kernel_policy": "count-once-as-model-repository-not-a-fourth-kind",
+      "kernel_policy": "native-kernel-repository-separate-namespace-counted-once",
       "kinds": [
         "models",
         "datasets",
-        "spaces"
+        "spaces",
+        "kernels"
       ],
       "portfolio_and_operational_policy": false,
       "visibility": "public-only"
     },
-    "scope_sha256": "9060fa8d7edcd5c246b86bcfcf1916df44b18038253325336f2f46208f8001ae",
+    "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
     "source_git_blob": "e2c6b3ecfbd1b4aa7520a65410a350e0b8b0ccc1",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "566fab49e0f0ab7191fe7cb14a3b923c9fb6b375",
+    "source_revision": "de36cfea838e23520a4b5e2850c557e2f870a439",
     "source_sha256": "f4c16b97d8fee346acc4d9d5bb552fbfe2841a991b294ddcfa3084c994c7eff1"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
     "counts": "PUBLIC_LISTING_ONLY_NOT_QUALITY_SAFETY_OR_READINESS",
-    "kernel_membership": "MODEL_SUBSET_COUNTED_ONCE_IN_TOTALS",
+    "kernel_membership": "SEPARATE_NATIVE_NAMESPACE_COUNTED_ONCE_PER_KIND_AND_ID",
     "private_assets": "NOT_OBSERVED",
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
@@ -54,8 +57,8 @@
     "datasets_public": 37,
     "kernels": 14,
     "models": 48,
-    "public_resources_total": 131,
-    "repository_membership_total": 122,
+    "public_resources_total": 145,
+    "repository_membership_total": 136,
     "spaces_public": 37
   },
   "evidence_class": "SNAPSHOT",
@@ -122,13 +125,13 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-13T05:37:18Z",
+  "observed_at": "2026-10-13T16:15:45Z",
   "observed_date": "2026-10-13",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
-  "schema": "szl.hf-current/v1",
+  "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "2c5ed57747bad3d38aba2ea3c6ac1e18554e3ef0ba945c883b8cc17609ea0680",
+  "source_content_sha256": "75ac392273fa783eed1799af52ca34bc6b01e03333bc6a47a61432d4111c2f21",
   "spaces_by_runtime_stage": {
     "RUNNING": 37
   }
