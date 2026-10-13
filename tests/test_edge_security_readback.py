@@ -442,7 +442,7 @@ class WorkflowContractTests(TestCase):
         self.assertIn("if: always()", workflow)
         self.assertRegex(
             workflow,
-            r"actions/upload-artifact@[0-9a-f]{40} # v7\.0\.1",
+            r"actions/upload-artifact@[0-9a-f]{40} # v7\.0\.2",
         )
 
 

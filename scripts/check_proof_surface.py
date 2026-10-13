@@ -445,7 +445,7 @@ def check() -> None:
     assert "persist-credentials: false" in edge_workflow
     assert "python3 scripts/edge_security_readback.py" in edge_workflow
     assert re.search(
-        r"actions/upload-artifact@[0-9a-f]{40} # v7\.0\.1", edge_workflow
+        r"actions/upload-artifact@[0-9a-f]{40} # v7\.0\.2", edge_workflow
     )
     assert PROBE_POLICY.is_file() and PROBE_POLICY_CHECK.is_file(), (
         "shared fail-closed browser observation policy and regression check are required"
