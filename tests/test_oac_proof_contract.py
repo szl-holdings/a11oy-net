@@ -188,7 +188,7 @@ def test_oac_html_keeps_identity_scope_and_local_navigation():
             target = ROOT / parsed.path.lstrip("/") if ref.startswith("/") else OAC / parsed.path
             assert target.is_file() or (target / "index.html").is_file(), ref
     for label in ("RECORD", "REPORTED", "UNKNOWN", "DECLARED", "SIMULATED",
-                  "current state by this page", "synthetic numeric telemetry", "not clinical",
+                  "current state by this page", "synthetic numeric telemetry", "not software for care delivery",
                   "not device control", "No new training", "mutable demo"):
         assert label in source
     for identity in (SOURCE, HUB, MODEL, DATASET, ARTIFACT, V2_SOURCE,
