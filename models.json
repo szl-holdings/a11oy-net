@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
   "reader_guide": "Every public Hub model card is classified here by scripts/generate_hf_inventory.py from the unauthenticated author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated record only while its source file is still listed and the class is unchanged; otherwise it is null and remains REPORTED without the benchmark bytes. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards.",
-  "captured_at": "2026-10-13T16:15:45Z",
+  "captured_at": "2026-10-16T05:31:17Z",
   "evidence_class": "SNAPSHOT",
   "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS with expanded sibling file lists; class rules in scripts/generate_hf_inventory.py classify_model(). File presence only: no weight is downloaded, loaded, or evaluated.",
   "operational": false,
@@ -21,7 +21,7 @@
     "org": "SZLHOLDINGS",
     "models": 48,
     "datasets": 37,
-    "spaces": 37,
+    "spaces": 38,
     "kernels": 14,
     "private": "NOT_OBSERVED",
     "listing": "https://huggingface.co/SZLHOLDINGS",
@@ -30,9 +30,9 @@
   "counts": {
     "TRAINED_WEIGHTS": 18,
     "ROADMAP_EMPTY": 2,
-    "NANO_SYNTHETIC": 5,
-    "KERNEL_SOFTWARE": 16,
-    "CODE_OR_SCRIPTS": 7
+    "NANO_SYNTHETIC": 6,
+    "KERNEL_SOFTWARE": 4,
+    "CODE_OR_SCRIPTS": 18
   },
   "classes": {
     "TRAINED_WEIGHTS": "safetensors, GGUF, or PEFT adapter bytes present",
@@ -235,20 +235,16 @@
     },
     {
       "id": "SZLHOLDINGS/YARQA-ATTN",
-      "class": "KERNEL_SOFTWARE",
+      "class": "NANO_SYNTHETIC",
       "pipeline": null,
-      "library": "kernels",
-      "files": 26,
+      "library": null,
+      "files": 7,
       "weights": [
         "yarqa_attn.npz"
       ],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "KERNEL-owned; not an ATELIER model; not a fourth Triton stack",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
-      "trained": false
+      "trained": true
     },
     {
       "id": "SZLHOLDINGS/a11oy-v19-substrate",
@@ -414,30 +410,23 @@
     },
     {
       "id": "SZLHOLDINGS/szl-block-kv",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 14,
+      "library": null,
+      "files": 5,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "torch paged KV gather; Triton page kernel remains ROADMAP",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-blocked",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 31,
+      "library": null,
+      "files": 10,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
@@ -454,69 +443,45 @@
     },
     {
       "id": "SZLHOLDINGS/szl-formulas",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 33,
+      "library": null,
+      "files": 10,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "locked_proven": [
-          "F1",
-          "F4",
-          "F7",
-          "F11",
-          "F12",
-          "F18",
-          "F19",
-          "F22"
-        ],
-        "lambda": "Conjecture 1",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-governed-norm",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 28,
+      "library": null,
+      "files": 17,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "laptop pytest FAIL on that host; not retried here",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-govsign",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 20,
+      "library": null,
+      "files": 12,
       "weights": [],
-      "bench": {
-        "source": "TRAINING_RECEIPT.json",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-invariants",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 18,
+      "library": null,
+      "files": 10,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
@@ -543,7 +508,7 @@
       "class": "NANO_SYNTHETIC",
       "pipeline": null,
       "library": "numpy",
-      "files": 195,
+      "files": 196,
       "weights": [
         "artifacts/mini_embed.npz",
         "artifacts/moons.npz",
@@ -575,31 +540,23 @@
     },
     {
       "id": "SZLHOLDINGS/szl-lambda-gate",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 80,
+      "library": null,
+      "files": 31,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "laptop pytest FAIL on that host; not retried here",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-maskmod",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 13,
+      "library": null,
+      "files": 5,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "not Triton-in-tree",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
@@ -620,44 +577,34 @@
     },
     {
       "id": "SZLHOLDINGS/szl-ouroboros",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 20,
+      "library": null,
+      "files": 11,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-provctl",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 20,
+      "library": null,
+      "files": 10,
       "weights": [],
-      "bench": {
-        "source": "TRAINING_RECEIPT.json",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-receipt-attn",
-      "class": "KERNEL_SOFTWARE",
+      "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
-      "library": "kernels",
-      "files": 23,
+      "library": null,
+      "files": 5,
       "weights": [],
-      "bench": {
-        "source": "BENCH.laptop-blackwell.json",
-        "note": "Triton bytes in-tree. Canonical GitHub szl-holdings/szl-receipt-attn.",
-        "evidence_class": "REPORTED"
-      },
+      "bench": null,
       "operational": false,
       "trained": false
     },

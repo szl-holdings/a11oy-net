@@ -1,6 +1,5 @@
 {
   "assets_missing_license": [
-    "kernel:SZLHOLDINGS/szl-receipt-attn",
     "model:SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3-authenticated"
   ],
   "claim_boundaries": {
@@ -13,7 +12,7 @@
     "datasets": 37,
     "kernels": 14,
     "models": 48,
-    "spaces": 37
+    "spaces": 38
   },
   "drift_vs_committed_snapshots": [
     {
@@ -32,7 +31,7 @@
     },
     {
       "field": "spaces_public",
-      "live_public": 37,
+      "live_public": 38,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -53,7 +52,7 @@
     },
     {
       "field": "spaces",
-      "live_public": 37,
+      "live_public": 38,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -88,7 +87,7 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-13T16:15:45Z",
+  "observed_at": "2026-10-16T05:31:17Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
@@ -99,6 +98,7 @@
     "SZLHOLDINGS/finance",
     "SZLHOLDINGS/foundation-confirmation-v2",
     "SZLHOLDINGS/gdw-frontier",
+    "SZLHOLDINGS/governed-agent-bench",
     "SZLHOLDINGS/governed-receipt-verifier",
     "SZLHOLDINGS/holographic-unify",
     "SZLHOLDINGS/immune",
@@ -132,6 +132,6 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 37
+    "RUNNING": 38
   }
 }

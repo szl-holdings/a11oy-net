@@ -3,7 +3,7 @@
     "datasets": 37,
     "kernels": 14,
     "models": 48,
-    "spaces": 37
+    "spaces": 38
   },
   "historical_portfolio_contract_replaced": false,
   "historical_snapshots": [
@@ -13,7 +13,7 @@
     }
   ],
   "model_quality_inferred": false,
-  "observed_at": "2026-10-11T15:48:06Z",
+  "observed_at": "2026-10-16T01:21:12Z",
   "production_authorization": false,
   "retained_source_path": "/estate/canonical-hf-manifest.json",
   "runtime_readiness_inferred": false,
@@ -37,9 +37,9 @@
     "visibility": "public-only"
   },
   "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-  "source_git_blob": "e2c6b3ecfbd1b4aa7520a65410a350e0b8b0ccc1",
+  "source_git_blob": "ae62ede536ac7afcb25a93a2fce621d41b87c2f3",
   "source_path": "docs/huggingface-ecosystem-manifest.json",
   "source_repository": "szl-holdings/a11oy",
-  "source_revision": "de36cfea838e23520a4b5e2850c557e2f870a439",
-  "source_sha256": "f4c16b97d8fee346acc4d9d5bb552fbfe2841a991b294ddcfa3084c994c7eff1"
+  "source_revision": "3e3c60d10217db7c5278f8ca099c9c9f25588efb",
+  "source_sha256": "23acfab9e8f3baefaaf2fd52420bbb76035610341e2f8ea35ce1cc4aae5eaa26"
 }
