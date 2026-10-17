@@ -4,7 +4,7 @@
       "datasets": 37,
       "kernels": 14,
       "models": 48,
-      "spaces": 37
+      "spaces": 38
     },
     "historical_portfolio_contract_replaced": false,
     "historical_snapshots": [
@@ -14,7 +14,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-10-11T15:48:06Z",
+    "observed_at": "2026-10-17T00:06:28Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -38,11 +38,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-    "source_git_blob": "e2c6b3ecfbd1b4aa7520a65410a350e0b8b0ccc1",
+    "source_git_blob": "df5d75d661c219885b30b5d4b0bba6e1be1a0b88",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "de36cfea838e23520a4b5e2850c557e2f870a439",
-    "source_sha256": "f4c16b97d8fee346acc4d9d5bb552fbfe2841a991b294ddcfa3084c994c7eff1"
+    "source_revision": "d2542574d153465599f0affd6d97ef62cb635313",
+    "source_sha256": "9687c8f50288ebb9c0f9dbe2a06c68dbc118be123b862cb147b1f9a30b3203c6"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -57,9 +57,9 @@
     "datasets_public": 37,
     "kernels": 14,
     "models": 48,
-    "public_resources_total": 145,
-    "repository_membership_total": 136,
-    "spaces_public": 37
+    "public_resources_total": 146,
+    "repository_membership_total": 137,
+    "spaces_public": 38
   },
   "evidence_class": "SNAPSHOT",
   "freshness": {
@@ -125,14 +125,14 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-13T16:15:45Z",
-  "observed_date": "2026-10-13",
+  "observed_at": "2026-10-17T05:29:38Z",
+  "observed_date": "2026-10-17",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "75ac392273fa783eed1799af52ca34bc6b01e03333bc6a47a61432d4111c2f21",
+  "source_content_sha256": "a6c2811d130e500435c3cd8e68dc686ab594b1d6c4bf48deb3b6d01ae5940c87",
   "spaces_by_runtime_stage": {
-    "RUNNING": 37
+    "RUNNING": 38
   }
 }
