@@ -1,35 +1,39 @@
 {
   "claim_boundaries": {
-    "meaning": "SNAPSHOT observation only. Not an SLA, quality certificate, or deploy authorization."
+    "meaning": "Dated observer-declared report, not independent hardware, model, runtime, price, or quality verification. Not an SLA or execution authorization.",
+    "independent_verification": "UNKNOWN",
+    "execution_authorized": false,
+    "training_authorized": false,
+    "spend_authorized": false
   },
-  "cloudflare_api_control": "WAITING_STEPHEN",
+  "cloudflare_api_control": "UNKNOWN",
   "domains": {
     "product": {
       "edge": "cloudflare",
       "host": "a-11-oy.com",
       "http": 200,
-      "status": "LIVE"
+      "status": "DECLARED"
     },
     "proof": {
       "edge": "cloudflare",
       "host": "a11oy.net",
       "http": 200,
       "origin": "github-pages",
-      "status": "LIVE"
+      "status": "DECLARED"
     }
   },
-  "evidence_class": "SNAPSHOT",
+  "evidence_class": "DECLARED",
   "ha_alternatives": {
     "lambda_labs": {
       "a6000_list_price_usd_per_hr": 1.09,
       "house_keys": false,
       "live_instance": false,
-      "status": "EVALUATION_ONLY"
+      "status": "DECLARED"
     },
     "tensordock": {
       "house_keys": false,
       "live_instance": false,
-      "status": "EVALUATION_ONLY"
+      "status": "DECLARED"
     }
   },
   "hf_public_counts_api": {
@@ -51,7 +55,7 @@
       "public_ipv4": "5.161.126.99",
       "ram_gib": 122,
       "role": "pulse_memory_sandboxes",
-      "status": "LIVE",
+      "status": "DECLARED",
       "think_online": 108,
       "vcpu": 32
     },
@@ -65,7 +69,7 @@
       "provider": "massed_compute",
       "public_ipv4": "64.247.206.118",
       "role": "stateless_inference_mouth",
-      "status": "LIVE",
+      "status": "DECLARED",
       "tribe_bonsai": 1
     }
   },
@@ -75,5 +79,12 @@
     "github": "szl-holdings",
     "huggingface": "SZLHOLDINGS"
   },
-  "schema": "szl.estate.infrastructure_observation/v1"
+  "schema": "szl.estate.infrastructure_observation_projection/v1",
+  "source_observation": {
+    "path": "/estate/living-souls-infrastructure/source-observation.json",
+    "source_revision": "c6779337195f0336b761e5599312e4b454ee3702",
+    "original_path": "estate/living-souls-infrastructure/observation.json",
+    "git_blob": "8818cbadd449893f1a53ea8b288e7eff632cebee",
+    "sha256": "2ad5512e38779bf10959e48bca2b83cd72d22d6c05f4a6ccb6d1f3aca9ac8d9a"
+  }
 }

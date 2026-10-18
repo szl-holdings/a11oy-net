@@ -2,10 +2,13 @@
 """Offline contract checks for the monochrome proof Flow Shell."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import re
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = ROOT / "assets" / "szl-flow-proof.css"
@@ -23,6 +26,7 @@ NO_SCRIPT_DOCUMENTS = {
     "chat/index.html",
     "code/index.html",
     "diligence/index.html",
+    "estate/living-souls-infrastructure/index.html",
     "notes/index.html",
     "oac/index.html",
     "record/index.html",
@@ -127,6 +131,33 @@ class ProofFlowShellContract(unittest.TestCase):
     def test_assets_are_local_only(self) -> None:
         implementation = self.css + self.static_css + self.js + self.rollout
         self.assertNotRegex(implementation, r"https?://(?:cdn|unpkg|jsdelivr)")
+
+    def test_infrastructure_static_binding_preserves_csp_and_is_idempotent(self) -> None:
+        relative = "estate/living-souls-infrastructure/index.html"
+        spec = importlib.util.spec_from_file_location("proof_flow_rollout_test", ROLLOUT)
+        binder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(binder)
+        policy = "default-src 'self'; script-src 'none'; style-src 'self'; connect-src 'none'"
+        original = (
+            '<!doctype html><html><head><meta http-equiv="Content-Security-Policy" '
+            f'content="{policy}"></head><body><main>DECLARED fixture</main></body></html>'
+        )
+        with tempfile.TemporaryDirectory(prefix="szl-static-proof-test-") as directory:
+            root = Path(directory)
+            page = root / relative
+            page.parent.mkdir(parents=True)
+            page.write_text(original, encoding="utf-8")
+            with patch.object(binder, "ROOT", root):
+                self.assertEqual(binder.inject(page), "injected")
+                bound = page.read_text(encoding="utf-8")
+                self.assertTrue(binder.is_bound(relative, bound))
+                self.assertIn(f'content="{policy}"', bound)
+                self.assertNotIn("<script", bound.lower())
+                self.assertIn('data-szl-proof-theme="atlas-mono"', bound)
+                self.assertIn('data-journey="models" aria-current="page"', bound)
+                self.assertEqual(bound.count(STATIC_MARKER), 1)
+                self.assertEqual(binder.inject(page), "present")
+                self.assertEqual(page.read_text(encoding="utf-8"), bound)
 
 
 if __name__ == "__main__":
