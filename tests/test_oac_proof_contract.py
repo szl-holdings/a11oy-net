@@ -234,11 +234,22 @@ def test_oac_static_catalog_admission_is_not_provider_evidence():
     flow = json.loads((ROOT / "frontend-flow-shell-state.json").read_bytes())
     holographic = json.loads((ROOT / "holographic-experience-v2/rollout-state.json").read_bytes())
     assert flow["state"] == holographic["state"] == "ROLLED_OUT"
-    assert flow["examined_documents"] == 46
+    # Presentation coverage follows the actual static source tree. A new proof
+    # document must be bound, not silently omitted to preserve an old total.
+    documents = {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("index.html")}
+    documents.add("404.html")
+    sealed = {"api/build-info/index.html", "readyz/index.html"}
+    bound = documents - sealed
+    assert set(flow["injected_documents"]) == bound
+    assert len(flow["injected_documents"]) == len(bound)
+    assert flow["examined_documents"] == len(bound)
     assert flow["injected_documents"].count("oac/index.html") == 1
     assert flow["zero_javascript_documents"].count("oac/index.html") == 1
-    assert holographic["examined_documents"] == 48
-    assert holographic["bound_documents"] == 46
+    assert set(holographic["bindings"]) == bound
+    assert len(holographic["bindings"]) == len(bound)
+    assert set(holographic["opt_out_documents"]) == sealed
+    assert holographic["examined_documents"] == len(documents)
+    assert holographic["bound_documents"] == len(bound)
     assert holographic["bindings"].count("oac/index.html") == 1
     assert holographic["zero_javascript_documents"].count("oac/index.html") == 1
     assert "oac/index.html" not in holographic["interactive_documents"]
