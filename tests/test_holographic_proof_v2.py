@@ -110,6 +110,19 @@ class HolographicProofV2Contract(unittest.TestCase):
         self.assertIn("adoptExistingRail", self.javascript)
         self.assertIn('querySelector(".szl-proof-rail, .szl-proof-static-rail")', self.javascript)
 
+    def test_infrastructure_observation_keeps_static_csp_and_one_shared_rail(self) -> None:
+        relative = "estate/living-souls-infrastructure/index.html"
+        text = (ROOT / relative).read_text(encoding="utf-8")
+        self.assertIn(relative, self.state["zero_javascript_documents"])
+        self.assertNotIn(relative, self.state["interactive_documents"])
+        self.assertIn("script-src 'none'", text)
+        self.assertIn("connect-src 'none'", text)
+        self.assertNotIn("<script", text.lower())
+        self.assertNotRegex(text, r"(?i)\sstyle\s*=")
+        self.assertIn('href="/assets/living-souls-infrastructure.css"', text)
+        self.assertEqual(text.count(ADOPTED_MARKER), 1)
+        self.assertEqual(text.count('data-szl-proof-flow-asset="static"'), 1)
+
     def test_stylesheet_is_balanced_and_mobile_safe(self) -> None:
         without_comments = re.sub(r"/\*.*?\*/", "", self.css, flags=re.DOTALL)
         self.assertEqual(without_comments.count("{"), without_comments.count("}"))

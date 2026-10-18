@@ -21,6 +21,7 @@
     "estate/frontier-2026-09-11/index.html",
     "estate/frontier-2026-09-11-litellm/index.html",
     "estate/index.html",
+    "estate/living-souls-infrastructure/index.html",
     "estate/operational-2026-09-20-t1500z/index.html",
     "estate/operational-payload-1/index.html",
     "estate/os/index.html",
@@ -51,9 +52,9 @@
     "vessels/lattice/index.html",
     "vessels/world/index.html"
   ],
-  "bound_documents": 46,
+  "bound_documents": 47,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 48,
+  "examined_documents": 49,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -99,6 +100,7 @@
     "decision/index.html",
     "diligence/index.html",
     "estate/index.html",
+    "estate/living-souls-infrastructure/index.html",
     "factory/index.html",
     "five-space/index.html",
     "frontiers/index.html",
