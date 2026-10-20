@@ -1,0 +1,140 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'">
+  <title>Evidence diagrams · A11oy Proof</title>
+  <meta name="description" content="Four static diagrams drawn from recorded runs on fictional cases and synthetic telemetry: a governed decision trace, a tamper lab, a mutation test of the replay checks, and an audited model against its baselines.">
+  <link rel="canonical" href="https://a11oy.net/diagrams/">
+  <meta property="og:url" content="https://a11oy.net/diagrams/">
+  <link rel="stylesheet" href="/assets/szl/szl-tokens.css" data-szl-kanchay="tokens-1.3.0" />
+  <link rel="stylesheet" href="/assets/kanchay.css">
+  <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
+  <link rel="stylesheet" href="/assets/szl-flow-proof-static.css" data-szl-proof-flow-asset="static-style" />
+  <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
+  <style>
+    *{box-sizing:border-box}body{margin:0;font:1rem/1.6 var(--sans);color:var(--ink);background:var(--void)}
+    .shell{max-width:76rem;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,3rem)}
+    header{padding-block:1rem;border-bottom:1px solid var(--border)}
+    .identity{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-family:var(--mono);font-size:.8rem}
+    .origin-switch,.primary-nav{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+    a{color:var(--proof);text-underline-offset:.2em;min-height:44px;display:inline-flex;align-items:center;overflow-wrap:anywhere}
+    a:focus-visible{outline:3px solid var(--proof);outline-offset:4px}
+    .skip{position:absolute;inset-inline-start:1rem;inset-block-start:-6rem;background:var(--panel);padding:1rem;z-index:10}.skip:focus{inset-block-start:1rem}
+    .hero{padding-block:clamp(3rem,8vw,6rem)}.eyebrow{font:.75rem/1.6 var(--mono);letter-spacing:.1em;color:var(--sub);text-transform:uppercase}
+    h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.04em;max-width:19ch;margin:.75rem 0 1.5rem}
+    h2{font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;margin:0 0 1rem}h3{font-size:1.05rem;margin:0 0 .5rem}
+    .intro{font-size:1.2rem;max-width:62ch;color:var(--sub)}.note{font-size:.95rem;color:var(--sub);max-width:80ch}
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:1.5rem}.badge{padding:.35rem .7rem;border:1px solid var(--border);border-radius:999px;font:.75rem/1.5 var(--mono);color:var(--sub)}
+    .record-link{padding:.7rem 1rem;border:1px solid var(--border);border-radius:12px;text-decoration:none}
+    .section{padding-block:2.5rem;border-top:1px solid var(--border)}
+    dl{display:grid;grid-template-columns:minmax(9rem,1fr) minmax(0,3fr);gap:.75rem 1rem;margin-block:1.5rem}dt{color:var(--sub)}dd{margin:0;min-width:0}
+    code{font-family:var(--mono);font-size:.85rem;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{padding:1.25rem;border:1px solid var(--border);border-radius:12px;background:var(--panel);min-width:0}.card p{color:var(--sub);margin-bottom:0}
+    li{margin-block:.5rem}footer{padding-block:2rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--sub)}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}dl{grid-template-columns:1fr;gap:.25rem}dd{margin-bottom:.75rem}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+<style>
+  figure{margin:0 0 3.5rem}figure img{display:block;width:100%;height:auto;border:1px solid var(--border);border-radius:.5rem;background:#fff}figcaption{margin-top:1rem;max-width:62rem}figcaption h2{margin:0 0 .4rem;font-size:1.25rem}.labels{display:flex;flex-wrap:wrap;gap:.5rem;margin:.2rem 0 .6rem;font:.75rem/1.6 var(--mono);letter-spacing:.06em}.labels span{border:1px solid var(--border);border-radius:999px;padding:.05rem .6rem}.key{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1rem;margin:1rem 0 2.5rem}.key dt{font-family:var(--mono)}.key dd{margin:0}ul.limits li{margin:.35rem 0}
+</style>
+</head>
+<body data-szl-proof-flow="record" data-szl-proof-theme="forensic">
+<a class="skip" href="#main">Skip to the evidence diagrams</a>
+<header class="shell">
+  <div class="identity"><span>A11oy / DIAGRAMS</span><div class="origin-switch"><a href="https://a-11-oy.com">Product</a><span aria-hidden="true">|</span><a href="https://a11oy.net" aria-current="true">Proof</a></div></div>
+  <nav class="primary-nav" aria-label="Proof navigation"><a href="https://a-11-oy.com">Product ↗</a><a href="/record/">Record</a><a href="/diligence/">Diligence</a><a href="/#atlas">Atlas</a></nav>
+</header>
+
+<main id="main" class="shell">
+<section class="hero" aria-labelledby="page-title">
+  <p class="eyebrow">Evidence diagrams · rendered 2026-10-20 · fictional cases, synthetic telemetry</p>
+  <h1 id="page-title">Four diagrams, each drawn from recorded outputs.</h1>
+  <p>The first three follow one fictional governed decision from case to replay and test the checks that guard it. The fourth places an
+  audited advisory model against two baselines and the ceiling its own data generator allows. Every number on this page is read from the
+  recorded run outputs when the page is built.</p>
+  <dl class="key" aria-label="Evidence labels">
+    <dt>MEASURED</dt><dd>computed by a recorded run</dd>
+    <dt>REPORTED</dt><dd>stated by a named source and not re-run here</dd>
+    <dt>SIMULATED</dt><dd>fixtures standing in for policy and approvals</dd>
+    <dt>FICTIONAL</dt><dd>invented case data</dd>
+    <dt>UNKNOWN</dt><dd>not established</dd>
+  </dl>
+</section>
+<figure id="trace">
+  <img src="evidence-constellation-trace.png" width="2400" height="1290" alt="Eight-step flow for fictional case C04. 1, synthetic case: no successful delivery for 20 hours. 2, retrieved evidence: 7 records. 3, advisory decision: no attention advised, score 0.153 below threshold 0.16, while the generator&#x27;s own risk is 0.376. 4, simulated policy rule P3 sends it to a human. 5, simulated approval not given. 6, receipt validator INCOMPLETE: source signatures not verified, clock not NTP-synced, no RFC 3161 time token. 7, replay structurally consistent, not authenticated. 8, live action blocked." loading="lazy" decoding="async">
+  <figcaption>
+    <h2>One governed decision, traced from case to replay</h2>
+    <div class="labels" aria-label="Evidence labels"><span>MEASURED</span><span>SIMULATED</span><span>FICTIONAL</span></div>
+    <p>Fictional case C04: a relay reports no successful delivery for 20 hours while every other control looks healthy. The advisory model scores 0.153, under its 0.16 threshold, so it advises no attention; the synthetic generator's own risk for the same inputs is 0.376. The model is known to under-flag long outages, so simulated policy rule P3 sends the decision to a human. The approval is not given, and the live action stays blocked.</p>
+    <p><a href="evidence-constellation-trace.svg">Vector SVG</a> · <a href="manifest.json">SHA-256 in manifest</a></p>
+  </figcaption>
+</figure>
+<figure id="tamper">
+  <img src="tamper-lab-verdicts.png" width="2400" height="1290" alt="Grid of 9 fictional cases by 5 receipt copies. Every genuine copy is structurally consistent but unsigned. The T1, T2 and T4 forgeries are caught in all 27 cells. Every T3 full-rewrite forgery passes (9 cells), because the receipts are unsigned." loading="lazy" decoding="async">
+  <figcaption>
+    <h2>Four forgeries per receipt: three are caught, one is not</h2>
+    <div class="labels" aria-label="Evidence labels"><span>MEASURED</span><span>FICTIONAL</span></div>
+    <p>Each of the 9 fictional receipts is re-verified with four forged copies, 45 verdicts in all. Editing an input (T1), rewriting the advisory (T2), or rewriting it while leaving the hash-chained log alone (T4) is caught. A full rewrite with every digest recomputed (T3) passes: without a signature from a key the forger does not hold, or an independent time anchor, structural replay cannot tell it from the original.</p>
+    <p><a href="tamper-lab-verdicts.svg">Vector SVG</a> · <a href="manifest.json">SHA-256 in manifest</a></p>
+  </figcaption>
+</figure>
+<figure id="mutation">
+  <img src="replay-check-mutation-coverage.png" width="2400" height="1020" alt="Matrix of 6 replay checks by 8 forgeries. Forcing any single check to pass changes at least one forgery&#x27;s verdict: 6 of 6 mutants killed. The page&#x27;s own four forgeries make 2 of the 6 checks load-bearing; harness forgeries X2 to X5 cover the rest. T3 is never caught." loading="lazy" decoding="async">
+  <figcaption>
+    <h2>Every replay check is shown to catch something</h2>
+    <div class="labels" aria-label="Evidence labels"><span>MEASURED</span></div>
+    <p>A check that never fails tests nothing. Each row forces one replay check to always pass; a filled cell marks a forgery whose verdict then changed. All six mutants are killed in the Python verifier and in its JavaScript port. The page's own four forgeries exercise only two of the six checks, so four harness-only forgeries (X2 to X5) cover the rest.</p>
+    <p><a href="replay-check-mutation-coverage.svg">Vector SVG</a> · <a href="manifest.json">SHA-256 in manifest</a></p>
+  </figcaption>
+</figure>
+<figure id="baselines">
+  <img src="oac-baselines-and-ceiling.png" width="1084" height="576" alt="Two panels for oac-system-health-v1 on its 240-row synthetic test split. Panel a compares an always-majority predictor, the rule consecutive_failures &gt; 0 and the model, with bootstrap 95% intervals. Panel b shows the model&#x27;s ROC AUC 0.830 against the generator&#x27;s own ceiling of 0.841." loading="lazy" decoding="async">
+  <figcaption>
+    <h2>The audited model against two baselines and its generator&#x27;s ceiling</h2>
+    <div class="labels" aria-label="Evidence labels"><span>MEASURED</span></div>
+    <p>oac-system-health-v1 on its 240-row synthetic test split, with bootstrap 95% intervals. The model beats an always &ldquo;no attention&rdquo; predictor and the one-line rule <code>consecutive_failures &gt; 0</code> on the prevalence-aware metrics. On accuracy the constant predictor scores 0.7875 against the model's 0.7167, a paired difference of -0.0708 whose 95% interval [-0.1500, +0.0083] includes zero. The model's ROC AUC of 0.830 sits 0.011 below the 0.841 ceiling set by the generator's own label noise, so this split leaves almost no room to show a better model.</p>
+    <p><a href="oac-baselines-and-ceiling.svg">Vector SVG</a> · <a href="manifest.json">SHA-256 in manifest</a></p>
+  </figcaption>
+</figure>
+<section aria-labelledby="limits">
+  <h2 id="limits">What these diagrams do not show</h2>
+  <ul class="limits">
+    <li>The diagrams describe oac-system-health-v1. The separate v2 release on the <a href="/oac/">OAC record</a> is not shown.</li>
+    <li>The 9 cases are fictional and hand-written. They say nothing about model quality or generalization.</li>
+    <li>Policy and approvals are simulated fixtures. No one approved anything.</li>
+    <li>Receipts are unsigned and carry no independent time anchor. A consistent replay shows that the records agree with each other and
+    with the pinned model, not who wrote them.</li>
+    <li>The advisory model was trained only on synthetic operations telemetry. It is not clinical, and it refuses clinical field names at admission.</li>
+    <li>Diagrams 1 to 3 are rendered from a local demo build that pins the sources below; that build is not published yet. The
+    interactive version of the trace is not published either, and its rendering in a real browser has not been verified (UNKNOWN).</li>
+    <li>The baselines and generator ceiling in diagram 4 were also added to the szl-forge evaluation lane (REPORTED; not re-run for this page).</li>
+  </ul>
+</section>
+<section aria-labelledby="sources">
+  <h2 id="sources">Pinned sources</h2>
+  <ul>
+    <li>Advisory model and kernel: <a href="https://github.com/szl-holdings/szl-forge/tree/c8d6804e96c0bf72605103024007b0e76df005be/clinical-gateway">szl-forge@c8d6804e</a></li>
+    <li>Receipt validator: <a href="https://github.com/szl-holdings/governed-receipt-spec/blob/7d9d70d9c643cfe3872694a1361a372229e0852a/governed_action.py">governed-receipt-spec@7d9d70d9</a></li>
+    <li>Every file on this page, with its SHA-256: <a href="manifest.json">manifest.json</a></li>
+  </ul>
+</section>
+</main>
+<footer class="shell">SZL Holdings · Static evidence diagrams · Fictional cases and synthetic telemetry only · No data about people, provider mutation, or device action.</footer>
+  <nav class="szl-proof-rail szl-proof-static-rail" aria-label="SZL public-estate journeys" data-szl-proof-flow-asset="static" data-szl-proof-holo-adopted="true">
+    <div class="szl-proof-origin" title="a11oy.net independent proof origin"><span>Record</span></div>
+    <div class="szl-proof-links">
+      <a class="szl-proof-link" href="https://a11oy.net/" data-journey="start">Start Here</a>
+      <a class="szl-proof-link" href="https://a-11-oy.com/" data-journey="products">Products &amp; Demos</a>
+      <a class="szl-proof-link" href="https://a11oy.net/estate/" data-journey="models">Models &amp; Data</a>
+      <a class="szl-proof-link" href="https://a11oy.net/khipu/" data-journey="kernels">Kernels &amp; SDKs</a>
+      <a class="szl-proof-link" href="https://a11oy.net/record/" data-journey="proofs" aria-current="page">Proofs &amp; Research</a>
+    </div>
+    <div class="szl-proof-actions">
+      <a class="szl-proof-switch" href="https://a-11-oy.com/" title="Open the product command origin"><span>Open</span><strong>Product</strong></a>
+    </div>
+  </nav>
+</body>
+</html>

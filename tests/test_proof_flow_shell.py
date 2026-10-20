@@ -25,6 +25,7 @@ NO_SCRIPT_DOCUMENTS = {
     "404.html",
     "chat/index.html",
     "code/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/living-souls-infrastructure/index.html",
     "notes/index.html",
