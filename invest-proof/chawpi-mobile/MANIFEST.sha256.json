@@ -1,0 +1,83 @@
+{
+  "stamp": "20261020T051651Z",
+  "unix": 1792473411,
+  "mandate": "Emergency public ownership stamp \u2014 Chawpi + Investor Door mobile showcase",
+  "claim": "AlloyScape Chawpi (Py\u2194En Deterministic Semantic Compiling) + mobile Investor Door assets are original SZL Holdings / Rosa Lutar work, in production on HQ prior to external Korean-firm disclosure.",
+  "public_registry": "https://alloyszlholdings.com/invest/",
+  "showcase": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/",
+  "assets": [
+    {
+      "file": "00-cover-invest-9x16.mp4",
+      "bytes": 2609069,
+      "sha256": "b2c725fce3e61368885581233d17a71b36dc63376a5ac8aba1160472bb304387",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/00-cover-invest-9x16.mp4"
+    },
+    {
+      "file": "01-mission-invest-9x16.mp4",
+      "bytes": 4351955,
+      "sha256": "e8323577647f8a74f433adcabd62fdc7c9a2d28903ee7a474f239df0e9312e1f",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/01-mission-invest-9x16.mp4"
+    },
+    {
+      "file": "02-reason-invest-9x16.mp4",
+      "bytes": 5691530,
+      "sha256": "db74baacc4cd0c608b70708cf06fff735e9496d3506d7ecfabb29fef4f4e8845",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/02-reason-invest-9x16.mp4"
+    },
+    {
+      "file": "03-brains-invest-9x16.mp4",
+      "bytes": 3910881,
+      "sha256": "1369c832bd7e3873313da94542a56b553d25e71f7f30e75206e00637d663b4f4",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/03-brains-invest-9x16.mp4"
+    },
+    {
+      "file": "04-heart-invest-9x16.mp4",
+      "bytes": 4082572,
+      "sha256": "65bd6440e89b57c01f5f599beebe442164f8eb3e75b44217498052d430f3bc99",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/04-heart-invest-9x16.mp4"
+    },
+    {
+      "file": "05-blood-invest-9x16.mp4",
+      "bytes": 4380798,
+      "sha256": "f3cc9c771eab3689f7fb54d5f3acc60ce62543f38ea407da68b5fa89cf59820e",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/05-blood-invest-9x16.mp4"
+    },
+    {
+      "file": "06-immune-invest-9x16.mp4",
+      "bytes": 3822155,
+      "sha256": "fc90b49a6a831ce62a9ff2a6b9fd62230ddf512cab0bced08d34e9092273bf72",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/06-immune-invest-9x16.mp4"
+    },
+    {
+      "file": "07-skeleton-invest-9x16.mp4",
+      "bytes": 2755732,
+      "sha256": "8bd7521a75cb326255684eea3bad6a496a0b1e3c5bc2d4f7b0a9c4c7645314cc",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/07-skeleton-invest-9x16.mp4"
+    },
+    {
+      "file": "08-optimize-invest-9x16.mp4",
+      "bytes": 4191406,
+      "sha256": "4c68b7831bca406baae60cbd4c78e71ae3579e37dff110b1ba456b8cf58cd4e9",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/08-optimize-invest-9x16.mp4"
+    },
+    {
+      "file": "09-close-invest-9x16.mp4",
+      "bytes": 2491660,
+      "sha256": "a7926fbf9139f1f693d9e0c695fb3b74a59785b6ff330df6854306a98e7b1539",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/09-close-invest-9x16.mp4"
+    },
+    {
+      "file": "brain-invest-9x16.mp4",
+      "bytes": 3449078,
+      "sha256": "d2c79cad2bef07908f16e6ce8bc7323f0d5d6c91a709c6fabf88eed4c4493319",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/brain-invest-9x16.mp4"
+    },
+    {
+      "file": "heart-invest-9x16.mp4",
+      "bytes": 3423961,
+      "sha256": "393700b8b8382c687430d1f7d748eaf3663013c72abfe87bc2e9b32c92c57e5a",
+      "url": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/heart-invest-9x16.mp4"
+    }
+  ],
+  "asset_count": 12
+}

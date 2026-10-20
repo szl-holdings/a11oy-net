@@ -1,0 +1,91 @@
+{
+  "title": "CHAWPI PUBLIC OWNERSHIP / PRIOR-ART STAMP",
+  "stamp": "2026-10-20T05:16:52Z",
+  "unix": 1792473412,
+  "owner": "SZL Holdings Inc. \u00b7 AlloyScape \u00b7 Founder Rosa Lutar \u00b7 Architect/CTO Stephen Lutar",
+  "invention": "Chawpi \u2014 Deterministic Semantic Compiling (English\u2194Python travel translator; no LLM on compile step)",
+  "live_door": "https://alloyszlholdings.com/invest/",
+  "showcase": "https://alloyszlholdings.com/invest/showcase/chawpi-mobile/",
+  "proof_url": "https://alloyszlholdings.com/invest/proof/chawpi/",
+  "root_sha256": "02cb89cd1777e76f4841966eae3bed016a245bae1b820a2d0906fa967c1c9d8e",
+  "files": [
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/translate.py",
+      "bytes": 16339,
+      "sha256": "b46b7d483e0cba0582d3a838c2ceb13627969f5b34ebcb8bdae555bbfaf1f37a",
+      "mtime_utc": "2026-10-20T05:04:54Z",
+      "ctime_utc": "2026-10-20T05:04:54Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/lexicon.json",
+      "bytes": 22730,
+      "sha256": "9967e6083ee94545c98f4e4e42370c902a036957052372d1c00447b077b8252d",
+      "mtime_utc": "2026-10-12T00:16:33Z",
+      "ctime_utc": "2026-10-12T00:16:33Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/bridge.mjs",
+      "bytes": 4533,
+      "sha256": "3624fbff1dd4acfaa373334955354d28e6f3418a4d8f3c772231349aaabbe77b",
+      "mtime_utc": "2026-10-20T05:04:54Z",
+      "ctime_utc": "2026-10-20T05:04:54Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/bin/pyen",
+      "bytes": 355,
+      "sha256": "d575fa83db2283f195444c0a40c6b361b30ca9f95ddcb54c9aa44d65011a9d07",
+      "mtime_utc": "2026-10-20T05:05:15Z",
+      "ctime_utc": "2026-10-20T05:05:15Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/README.md",
+      "bytes": 2145,
+      "sha256": "75e7ada488bca4c1aeff3ab1a4ce2fc1a3fbaa177f742fbc5ad853f06d6cba39",
+      "mtime_utc": "2026-10-11T18:13:45Z",
+      "ctime_utc": "2026-10-11T18:13:45Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/py-en-translate/NAME-CHAWPI.md",
+      "bytes": 1878,
+      "sha256": "482a694d71ab63187e6c0671ac46f5e753ae849143e5b959684b352e7f7e67c9",
+      "mtime_utc": "2026-10-11T21:13:22Z",
+      "ctime_utc": "2026-10-11T21:13:22Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/rosa-paste/G-CHAWPI-X2-RECEIPT-LATEST.md",
+      "bytes": 3108,
+      "sha256": "57b43071a60a8daca001cb4b0a331215a66f69d47331decc6707add34d46f116",
+      "mtime_utc": "2026-10-12T00:37:55Z",
+      "ctime_utc": "2026-10-12T00:37:55Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/rosa-paste/G-CHAWPI-KEEP-BOTH-NOTE-LATEST.md",
+      "bytes": 1843,
+      "sha256": "4f945401e7b57bc5e732d234b7722db4f88d7af8068939978c987e4c07af3bc2",
+      "mtime_utc": "2026-10-12T02:31:55Z",
+      "ctime_utc": "2026-10-12T02:31:55Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/rosa-paste/G-CHAWPI-GUARDRAIL-LOCKED-LATEST.md",
+      "bytes": 1573,
+      "sha256": "bb3b8d1dd5f3797a53f05a4099e0468526ba83a9bf35f6c73da5e3e26d810a5a",
+      "mtime_utc": "2026-10-20T05:04:54Z",
+      "ctime_utc": "2026-10-20T05:04:54Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/rosa-paste/G-CHAWPI-GUARDRAIL-LOCKED-20261020T050453Z.md",
+      "bytes": 1573,
+      "sha256": "bb3b8d1dd5f3797a53f05a4099e0468526ba83a9bf35f6c73da5e3e26d810a5a",
+      "mtime_utc": "2026-10-20T05:04:54Z",
+      "ctime_utc": "2026-10-20T05:04:54Z"
+    },
+    {
+      "path": "/opt/alloyscape/ops/rosa-paste/G-CHAWPI-X1-RECEIPT-LATEST.md",
+      "bytes": 3672,
+      "sha256": "1b609320eea9b7d84ad19c293d4b7b21a959f7172f9a503819d1b4d6c0ec1f9e",
+      "mtime_utc": "2026-10-12T00:22:12Z",
+      "ctime_utc": "2026-10-12T00:22:12Z"
+    }
+  ],
+  "notice": "This public registry timestamps production artifacts. External disclosure to a Korean firm does not transfer ownership. Copycat claims are defeated by these public hashes + live production paths."
+}
