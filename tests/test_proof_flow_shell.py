@@ -25,6 +25,7 @@ NO_SCRIPT_DOCUMENTS = {
     "404.html",
     "chat/index.html",
     "code/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/living-souls-infrastructure/index.html",
     "notes/index.html",
@@ -131,6 +132,33 @@ class ProofFlowShellContract(unittest.TestCase):
     def test_assets_are_local_only(self) -> None:
         implementation = self.css + self.static_css + self.js + self.rollout
         self.assertNotRegex(implementation, r"https?://(?:cdn|unpkg|jsdelivr)")
+
+    def test_diagrams_missing_rail_is_regenerated_without_script(self) -> None:
+        relative = "diagrams/index.html"
+        spec = importlib.util.spec_from_file_location("proof_flow_diagrams_test", ROLLOUT)
+        binder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(binder)
+        original = (ROOT / relative).read_text(encoding="utf-8")
+        missing_rail, count = re.subn(
+            r'<nav\b(?=[^>]*data-szl-proof-flow-asset="static")[^>]*>.*?</nav>',
+            "", original, flags=re.DOTALL,
+        )
+        self.assertEqual(count, 1)
+        with tempfile.TemporaryDirectory(prefix="szl-diagrams-rail-test-") as directory:
+            root = Path(directory)
+            page = root / relative
+            page.parent.mkdir(parents=True)
+            page.write_text(missing_rail, encoding="utf-8")
+            with patch.object(binder, "ROOT", root):
+                self.assertEqual(binder.inject(page), "injected")
+                bound = page.read_text(encoding="utf-8")
+                self.assertTrue(binder.is_bound(relative, bound))
+                self.assertNotIn("<script", bound.lower())
+                self.assertIn("script-src 'none'", bound)
+                self.assertIn('data-journey="proofs" aria-current="page"', bound)
+                self.assertEqual(bound.count(STATIC_MARKER), 1)
+                self.assertEqual(binder.inject(page), "present")
+                self.assertEqual(page.read_text(encoding="utf-8"), bound)
 
     def test_infrastructure_static_binding_preserves_csp_and_is_idempotent(self) -> None:
         relative = "estate/living-souls-infrastructure/index.html"
