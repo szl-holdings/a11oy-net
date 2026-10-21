@@ -1,5 +1,5 @@
 {
-  "examined_documents": 47,
+  "examined_documents": 48,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -12,6 +12,7 @@
     "contact/index.html",
     "counsel/index.html",
     "decision/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/alloy-os/index.html",
     "estate/frontier-2026-09-04/index.html",
@@ -58,6 +59,7 @@
     "404.html",
     "chat/index.html",
     "code/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/living-souls-infrastructure/index.html",
     "notes/index.html",

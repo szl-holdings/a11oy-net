@@ -15,6 +15,7 @@
     "contact/index.html",
     "counsel/index.html",
     "decision/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/alloy-os/index.html",
     "estate/frontier-2026-09-04/index.html",
@@ -52,9 +53,9 @@
     "vessels/lattice/index.html",
     "vessels/world/index.html"
   ],
-  "bound_documents": 47,
+  "bound_documents": 48,
   "decorative_motion_is_measured_telemetry": false,
-  "examined_documents": 49,
+  "examined_documents": 50,
   "interactive_documents": [
     "atelier/index.html",
     "ayllu/index.html",
@@ -98,6 +99,7 @@
     "command/index.html",
     "counsel/index.html",
     "decision/index.html",
+    "diagrams/index.html",
     "diligence/index.html",
     "estate/index.html",
     "estate/living-souls-infrastructure/index.html",

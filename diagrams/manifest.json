@@ -1,0 +1,99 @@
+{
+  "schema": "szl.evidence-diagrams/v1",
+  "data": "fictional cases and synthetic telemetry only",
+  "sources": {
+    "szl_forge_commit": "c8d6804e96c0bf72605103024007b0e76df005be",
+    "governed_receipt_spec_commit": "7d9d70d9c643cfe3872694a1361a372229e0852a"
+  },
+  "diagrams": [
+    {
+      "name": "evidence-constellation-trace",
+      "title": "One governed decision, traced from case to replay",
+      "alt": "Eight-step flow for fictional case C04. 1, synthetic case: no successful delivery for 20 hours. 2, retrieved evidence: 7 records. 3, advisory decision: no attention advised, score 0.153 below threshold 0.16, while the generator's own risk is 0.376. 4, simulated policy rule P3 sends it to a human. 5, simulated approval not given. 6, receipt validator INCOMPLETE: source signatures not verified, clock not NTP-synced, no RFC 3161 time token. 7, replay structurally consistent, not authenticated. 8, live action blocked.",
+      "labels": [
+        "MEASURED",
+        "SIMULATED",
+        "FICTIONAL"
+      ],
+      "png": {
+        "file": "evidence-constellation-trace.png",
+        "bytes": 211980,
+        "sha256": "182d238859e30b6ab474e05ee8e967d0111236461fb2e9239c2e54138e228899"
+      },
+      "svg": {
+        "file": "evidence-constellation-trace.svg",
+        "bytes": 165017,
+        "sha256": "c494d9e551981ac8040c1e843d594e0d6d4cfef03c5e828198a574bce9a22c01"
+      }
+    },
+    {
+      "name": "tamper-lab-verdicts",
+      "title": "Four forgeries per receipt: three are caught, one is not",
+      "alt": "Grid of 9 fictional cases by 5 receipt copies. Every genuine copy is structurally consistent but unsigned. The T1, T2 and T4 forgeries are caught in all 27 cells. Every T3 full-rewrite forgery passes (9 cells), because the receipts are unsigned.",
+      "labels": [
+        "MEASURED",
+        "FICTIONAL"
+      ],
+      "png": {
+        "file": "tamper-lab-verdicts.png",
+        "bytes": 236120,
+        "sha256": "2f65f465850a4b317586f66cee01649d25cde6d05dbf23b5c30443ec5dd76694"
+      },
+      "svg": {
+        "file": "tamper-lab-verdicts.svg",
+        "bytes": 178707,
+        "sha256": "f288f05758180d13d911257364bdb6a345d8fabd4b2d0aee9cecc01af68aadf1"
+      }
+    },
+    {
+      "name": "replay-check-mutation-coverage",
+      "title": "Every replay check is shown to catch something",
+      "alt": "Matrix of 6 replay checks by 8 forgeries. Forcing any single check to pass changes at least one forgery's verdict: 6 of 6 mutants killed. The page's own four forgeries make 2 of the 6 checks load-bearing; harness forgeries X2 to X5 cover the rest. T3 is never caught.",
+      "labels": [
+        "MEASURED"
+      ],
+      "png": {
+        "file": "replay-check-mutation-coverage.png",
+        "bytes": 133162,
+        "sha256": "a136bfebd3e6cb4383d4c54a54285394898e1fc36dee5ffe5e22208f80cf5f56"
+      },
+      "svg": {
+        "file": "replay-check-mutation-coverage.svg",
+        "bytes": 120973,
+        "sha256": "be72150ec33732c4aa3064159a68b50c5796945ac587c3624b3e83f54e15618b"
+      }
+    },
+    {
+      "name": "oac-baselines-and-ceiling",
+      "title": "The audited model against two baselines and its generator's ceiling",
+      "alt": "Two panels for oac-system-health-v1 on its 240-row synthetic test split. Panel a compares an always-majority predictor, the rule consecutive_failures > 0 and the model, with bootstrap 95% intervals. Panel b shows the model's ROC AUC 0.830 against the generator's own ceiling of 0.841.",
+      "labels": [
+        "MEASURED"
+      ],
+      "png": {
+        "file": "oac-baselines-and-ceiling.png",
+        "bytes": 55363,
+        "sha256": "cd5fd68a9c1e65bd87a8aa69774993337944ff30a717f689f0229ea7ca01e25b"
+      },
+      "svg": {
+        "file": "oac-baselines-and-ceiling.svg",
+        "bytes": 87399,
+        "sha256": "2142fd5d549f47e059e8aaa12af5460586468b238b61bb75cdd4e8b99a2e9d34"
+      }
+    }
+  ],
+  "overview": {
+    "file": "evidence-diagrams-overview.png",
+    "alt": "Overview of four SZL evidence diagrams",
+    "width": 2484,
+    "height": 1367,
+    "bytes": 239371,
+    "sha256": "2e9db753f65a6df348fff38147aa44f4fbf792f6f3168c5da053edd50b1a7b16",
+    "order": [
+      "evidence-constellation-trace",
+      "tamper-lab-verdicts",
+      "replay-check-mutation-coverage",
+      "oac-baselines-and-ceiling"
+    ]
+  }
+}
