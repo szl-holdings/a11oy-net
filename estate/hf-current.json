@@ -3,8 +3,8 @@
     "counts": {
       "datasets": 37,
       "kernels": 14,
-      "models": 48,
-      "spaces": 37
+      "models": 41,
+      "spaces": 39
     },
     "historical_portfolio_contract_replaced": false,
     "historical_snapshots": [
@@ -14,7 +14,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-10-11T15:48:06Z",
+    "observed_at": "2026-10-27T15:30:24Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -38,11 +38,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-    "source_git_blob": "e2c6b3ecfbd1b4aa7520a65410a350e0b8b0ccc1",
+    "source_git_blob": "9a553476243f10bac0932efea4972fe9b5a54b52",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "de36cfea838e23520a4b5e2850c557e2f870a439",
-    "source_sha256": "f4c16b97d8fee346acc4d9d5bb552fbfe2841a991b294ddcfa3084c994c7eff1"
+    "source_revision": "6ad0975b1a8dc0889d884c05a7bc56ba59ca1378",
+    "source_sha256": "76b94512769c79f871ed2bd4f027eddce3771c655f90217f74b9b5ba6b754477"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -56,10 +56,10 @@
     "collections": 7,
     "datasets_public": 37,
     "kernels": 14,
-    "models": 48,
-    "public_resources_total": 145,
-    "repository_membership_total": 136,
-    "spaces_public": 37
+    "models": 41,
+    "public_resources_total": 140,
+    "repository_membership_total": 131,
+    "spaces_public": 39
   },
   "evidence_class": "SNAPSHOT",
   "freshness": {
@@ -125,14 +125,14 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-13T16:15:45Z",
-  "observed_date": "2026-10-13",
+  "observed_at": "2026-10-27T16:34:46Z",
+  "observed_date": "2026-10-27",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "75ac392273fa783eed1799af52ca34bc6b01e03333bc6a47a61432d4111c2f21",
+  "source_content_sha256": "339e727581a3ce9630f9e8c1c946cddc449e2607384fed511a794e613729e4f1",
   "spaces_by_runtime_stage": {
-    "RUNNING": 37
+    "RUNNING": 39
   }
 }

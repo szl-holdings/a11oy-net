@@ -426,6 +426,7 @@
         "ayllu",
         "counsel",
         "david-leads",
+        "governed-agent-bench",
         "immune-lattice",
         "llm-router-live",
         "nexus",
@@ -442,7 +443,6 @@
         "energy-attested-runs",
         "evidence-studio",
         "experiments",
-        "governed-agent-bench",
         "governed-norm-holo",
         "guardrail-receipt",
         "hatun-mcp",
@@ -478,7 +478,7 @@
       ],
       "not_listed": []
     },
-    "observed_at": "2026-10-13T16:15:45Z",
+    "observed_at": "2026-10-27T16:34:46Z",
     "source": "/public-inventory.json"
   }
 }
