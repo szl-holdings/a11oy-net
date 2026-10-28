@@ -26,6 +26,7 @@ SECURITY = ROOT / ".well-known" / "security.txt"
 SOURCE_WITNESS = ROOT / ".well-known" / "szl-source.json"
 SOCIAL_PREVIEW = ROOT / "assets" / "a11oy-net-social.png"
 LINK_WORKFLOW = ROOT / ".github" / "workflows" / "link-check.yml"
+LINK_CHECKER = ROOT / "scripts" / "check_links.py"
 PROBE_POLICY = ROOT / "scripts" / "probe_policy.js"
 PROBE_POLICY_CHECK = ROOT / "scripts" / "check_probe_policy.mjs"
 HONEST_KERNEL_BIND = ROOT / "scripts" / "honest_kernel_bind.js"
@@ -368,7 +369,8 @@ def check() -> None:
         r"^    name: pages build and deployment$", workflow, re.MULTILINE
     )
     assert "if: github.event_name == 'pull_request'" in workflow
-    assert 'root.rglob("*.html")' in workflow
+    assert "python3 scripts/check_links.py" in workflow
+    assert 'root.rglob("*.html")' in LINK_CHECKER.read_text(encoding="utf-8")
     assert "python3 scripts/check_diligence_surface.py" in workflow
     assert "node scripts/check_probe_policy.mjs" in workflow
     assert STAMP_HEALTH_SHA.is_file(), "Pages artifact stamp for health.json sha must exist"
