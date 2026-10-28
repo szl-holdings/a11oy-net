@@ -69,12 +69,36 @@ different result or a rate-limit/partial-state response.
   or independent witness accompanies that spot check; it is not an
   organization-wide audit or a public-access test.
 
+## Original owner-private frontend deployment (2026-10-28 UTC)
+
+- **MEASURED, Sites deployment readback:** The original [Curation Atlas Site](https://curation-atlas-szl.stephenlutar2.chatgpt.site)
+  (project `appgprj_6aaf0cfae87481918b98476c17d38392`) is live at that URL with
+  saved version 2 from source commit `533a29d9c8d681e167d932661271688c708972ca`.
+  Deployment `appgdep_6ae2727cce248191833c5757133aebe9` reported `succeeded` at
+  `2026-10-28T22:09:10Z`.
+- **MEASURED, Sites access readback:** Access mode is `custom`; the allowlist
+  contains only the owner `stephenlutar2@gmail.com`, with
+  `external_visitor_count=0`. This is an owner-private Site and has no public
+  audience.
+- **MEASURED, API CORS/source readback:** With this Site origin, the HF API
+  returned HTTP 200 for [`GET /healthz`](https://szlholdings-curation-atlas.hf.space/healthz)
+  and [`GET /v1/orgs/szl-holdings/audit?sample_size=4`](https://szlholdings-curation-atlas.hf.space/v1/orgs/szl-holdings/audit?sample_size=4).
+  `healthz` reported source revision
+  `533a29d9c8d681e167d932661271688c708972ca` with `sourceBinding` **DECLARED**,
+  and returned `Access-Control-Allow-Origin` for the Site. These are endpoint
+  observations only; they do not provide an independent deployment attestation
+  or runtime witness.
+
 ## Release boundary
 
-The linked frontend Site project `appgprj_6aaf0cfae87481918b98476c17d38392`
-was inaccessible to the current publication connector. Its current deployed
-frontend, its Python API wiring, and any release through that Site remain
-**UNKNOWN**. This note does not claim that `a-11-oy.com` serves Atlas.
-The initial note merged in [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306);
-this addendum still requires its own protected merge and public proof-route
-readback. No independent runtime witness was run.
+Earlier records treated this project as **UNKNOWN** because it was inaccessible;
+the 2026-10-28 Sites readback above supersedes that access observation for this
+project only. This note records measured deployment, custom access, source
+declaration, and endpoint responses for the original Site. It has no independent
+attestation or independent runtime witness. The product surface
+[`https://a-11-oy.com`](https://a-11-oy.com) remains separate and its current
+build is **REPORTED** stale; this note does not claim that the product serves
+Atlas. The initial note merged in [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306)
+and the separate Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307);
+this follow-up still requires its own protected merge and public proof-route
+readback.
