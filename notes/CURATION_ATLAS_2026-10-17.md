@@ -89,16 +89,66 @@ different result or a rate-limit/partial-state response.
   observations only; they do not provide an independent deployment attestation
   or runtime witness.
 
+## API source refresh and bounded probe (2026-10-28 EDT)
+
+- **MEASURED, source and provider readback:** The verified signed
+  [Atlas GitHub main](https://github.com/szl-holdings/curation-atlas/tree/072605abec3c24e969eea1ccd132038508c02b02)
+  is `072605abec3c24e969eea1ccd132038508c02b02` after research and API
+  Origin-guard PRs [#17](https://github.com/szl-holdings/curation-atlas/pull/17)
+  and [#18](https://github.com/szl-holdings/curation-atlas/pull/18). The
+  [Space tree](https://huggingface.co/spaces/SZLHOLDINGS/curation-atlas/tree/98602e5276b5000d29d227d857688a1264ab8fb9)
+  reported `98602e5276b5000d29d227d857688a1264ab8fb9` and `RUNNING`.
+  These six Space file blobs matched the GitHub commit's `backend/` blobs:
+
+| Backend file | Matching Git blob ID |
+| --- | --- |
+| `.dockerignore` | `89cf65fc63612881e6f836394d967a26efebc78d` |
+| `Dockerfile` | `389dbbde1e39f6ece1b8f151552c125a03a2f24a` |
+| `README.md` | `d96adba0fb800325709f60f21a16075264639379` |
+| `app.py` | `1d23f3e6f752133220f590a3964547b425c0beae` |
+| `audit.py` | `7a58617825af864d420c49ed5bdbda312863b9b6` |
+| `requirements.txt` | `39a3e3fe34736b91fcd715c97b1199269ff7785b` |
+
+- **MEASURED, live API spot check:** `/healthz` returned HTTP 200,
+  `PROCESS_ALIVE`, the above GitHub revision as `sourceRevision`,
+  `sourceBinding: DECLARED`, and `upstreamReadiness: UNKNOWN`. A GET audit from
+  `https://example.invalid` returned HTTP 403, `ORIGIN_NOT_ALLOWED`, and
+  `Cache-Control: no-store`. A GET from the original Site origin returned HTTP
+  200 and a **MEASURED** public observation at `2026-10-28T23:54:04Z`:
+  130 public repositories inventoried and four deeply sampled. The Space edge
+  still reflected the unrelated Origin in `Access-Control-Allow-Origin`; the
+  app guard is not authentication or a strict edge CORS policy. The data is
+  public, and callers can omit or forge `Origin`.
+- **UNAVAILABLE, current Site publication:** The original Site's last
+  successful version readback above remains v2 from
+  `533a29d9c8d681e167d932661271688c708972ca`. The current
+  Sites connection returns `project_not_found` for that exact project ID.
+  A local frontend build from `072605abec3c24e969eea1ccd132038508c02b02`
+  includes the live API URL in its client bundle. This release attempt did not
+  deploy a matching Site version or witness an authenticated browser audit;
+  current provider status is **UNAVAILABLE** through this connector. An
+  unauthenticated Site GET returned 401, which does not prove browser wiring.
+- **MEASURED, separate product pointer:** At `2026-10-29T00:03Z`,
+  [`a-11-oy.com`](https://a-11-oy.com) returned HTTP 200 with an Atlas GitHub
+  source link. Its `/api/build-info` reported revision
+  `6db8b768cade188d5d14ec57efdd710701059e98` from `env:SZL_GIT_SHA`.
+  This is a product build observation, not Atlas Site deployment or a policy
+  runtime qualification. The ten-Space retention source policy subsequently
+  merged in [A11oy PR #3035](https://github.com/szl-holdings/a11oy/pull/3035)
+  at verified signed main `58524995e84130bc8e59ca3d8cfb55a16067b9f2`
+  (`2026-10-29T00:04:44Z`). A later `/api/build-info` readback still reported
+  `6db8b768cade188d5d14ec57efdd710701059e98`; that merge is not a runtime
+  deployment witness. Earlier,
+  [Killinchu PR #562](https://github.com/szl-holdings/killinchu/pull/562)
+  merged the matching shared-file source.
+
 ## Release boundary
 
-Earlier records treated this project as **UNKNOWN** because it was inaccessible;
-the 2026-10-28 Sites readback above supersedes that access observation for this
-project only. This note records measured deployment, custom access, source
-declaration, and endpoint responses for the original Site. It has no independent
-attestation or independent runtime witness. The product surface
-[`https://a-11-oy.com`](https://a-11-oy.com) remains separate and its current
-build is **REPORTED** stale; this note does not claim that the product serves
-Atlas. The initial note merged in [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306)
-and the separate Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307);
-this follow-up still requires its own protected merge and public proof-route
-readback.
+The original Site's v2 deployment, the refreshed API, and the product source
+link are separate observations. None establishes an authenticated browser
+audit through the original Site, continuous runtime readiness, or ten-Space
+runtime admission. The initial note merged in
+[PR #306](https://github.com/szl-holdings/a11oy-net/pull/306), the separate
+Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307),
+and the original Site update in
+[PR #313](https://github.com/szl-holdings/a11oy-net/pull/313).
