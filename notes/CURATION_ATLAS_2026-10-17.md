@@ -178,13 +178,43 @@ different result or a rate-limit/partial-state response.
   successful passive probe job does not turn this endpoint into a qualified
   execution verdict.
 
+## Canonical product refresh (2026-10-29 UTC)
+
+- **MEASURED, source, provider, and live product:** Verified signed
+  [A11oy main](https://github.com/szl-holdings/a11oy/commit/4a3a66aa77352f8d81b341f488691bec3003bba8)
+  advanced to `4a3a66aa77352f8d81b341f488691bec3003bba8`. Hugging Face
+  reported [canonical Space](https://huggingface.co/spaces/SZLHOLDINGS/a11oy/tree/70d4f8ad1f377bca76146463133c0d807421882a)
+  commit `70d4f8ad1f377bca76146463133c0d807421882a` at `RUNNING`.
+  Post-run direct Space and product `/api/build-info` responses both reported
+  `OBSERVED` revision `4a3a66aa77352f8d81b341f488691bec3003bba8`
+  from `env:SZL_GIT_SHA` with `receipt_minted: false`. Both
+  `/api/a11oy/healthz` routes returned HTTP 200 and service `status: ok`,
+  while `operational_readiness` was `NOT_READY` with `ready: false`.
+  The product root still linked Atlas GitHub source. These are point-in-time
+  provider and HTTP observations, not an Atlas Site deployment.
+- **MEASURED, storage and readiness spot check:** The direct Space storage
+  endpoint reported `FENCED`, `WRITER`, epoch `80`, `claim: CLEAN`, an active
+  lease, `alert: false`, and `health: OK` for seven listed stores. Its
+  readiness summary reported `available: false`,
+  `probe_verdict_available: false`, and `READINESS_RUN_UNQUALIFIED` at
+  `2026-10-29T01:41:41Z`.
+- **MEASURED, protected workflow verdict:**
+  [A11oy HF sync run 40801039729](https://github.com/szl-holdings/a11oy/actions/runs/40801039729)
+  completed **FAILURE** for the exact source above. Deployment, exact
+  provider commit/byte/source attestation, runtime configuration, and passive
+  post-deploy probe jobs succeeded. Execution evidence collection failed with
+  `{"collected": false, "error": "EXECUTION_CONTEXT_REQUIRED", "execution_authorized": false}`
+  (exit code 2); later exact live-source relock, strict parity, and
+  protected-main reauthorization jobs were skipped. The full product release
+  remains **BLOCKED**.
+
 ## Release boundary
 
 The original Site's v2 deployment, the refreshed Atlas API, and the canonical
 product runtime are separate observations. None establishes an authenticated
 browser audit through the original Site, continuous Atlas API readiness, or
-execution evidence for ten-Space policy admission. The failed A11oy workflow
-does not qualify the full product release. The initial note merged in
+execution evidence for ten-Space policy admission. The failed A11oy workflows
+do not qualify the full product release. The initial note merged in
 [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306), the separate
 Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307),
 and the original Site update in
