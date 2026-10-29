@@ -142,12 +142,49 @@ different result or a rate-limit/partial-state response.
   [Killinchu PR #562](https://github.com/szl-holdings/killinchu/pull/562)
   merged the matching shared-file source.
 
+## Canonical product runtime readback (2026-10-28 EDT)
+
+- **MEASURED, current product and Space readback:** In probes completed by
+  `2026-10-29T00:32Z`, both the canonical
+  [Space `/api/build-info`](https://szlholdings-a11oy.hf.space/api/build-info)
+  and [product `/api/build-info`](https://a-11-oy.com/api/build-info)
+  reported `OBSERVED` revision
+  `3b69d3a7e6982483e41c90f5894a980a34d7845e` from
+  `env:SZL_GIT_SHA`; [A11oy GitHub main](https://github.com/szl-holdings/a11oy/commit/3b69d3a7e6982483e41c90f5894a980a34d7845e)
+  was verified signed. The direct Space response had `receipt_minted: false`.
+  Hugging Face reported canonical [Space `SZLHOLDINGS/a11oy`](https://huggingface.co/spaces/SZLHOLDINGS/a11oy/tree/368966dc70ae47e8310e2775abd2ebef0d36df8f)
+  at provider commit `368966dc70ae47e8310e2775abd2ebef0d36df8f`
+  and stage `RUNNING`. The product root returned HTTP 200 and still linked
+  Atlas GitHub source. These are point-in-time provider and HTTP observations.
+- **MEASURED, storage spot check:** The direct Space
+  [`/api/a11oy/v1/storage/status`](https://szlholdings-a11oy.hf.space/api/a11oy/v1/storage/status)
+  reported `FENCED`, `WRITER`, epoch `79`, `claim: CLEAN`, active lease,
+  and `alert: false`; its seven listed stores reported `health: OK` at that
+  readback. This does not establish sustained durability or execution evidence.
+- **MEASURED, protected workflow split:** The canonical
+  [A11oy HF sync run 40793871063](https://github.com/szl-holdings/a11oy/actions/runs/40793871063)
+  for that exact signed source completed **FAILURE**. Deployment, exact
+  provider commit/byte/source attestation, runtime configuration, and passive
+  post-deploy probe jobs succeeded. The `Collect and verify admitted execution
+  evidence` job failed with
+  `{"collected": false, "error": "EXECUTION_CONTEXT_REQUIRED", "execution_authorized": false}`
+  (exit code 2). The later exact live-source relock, strict parity, and
+  protected-main reauthorization jobs were skipped. This is a source-bound
+  deployment; the full release remains **BLOCKED**.
+- **MEASURED, live readiness after the run:** The direct Space
+  [`readiness/tab-matrix?view=summary`](https://szlholdings-a11oy.hf.space/api/a11oy/v1/readiness/tab-matrix?view=summary)
+  returned `available: false`, `probe_verdict_available: false`, and reason
+  `READINESS_RUN_UNQUALIFIED` at its `2026-10-29T00:38:03Z` check. The
+  successful passive probe job does not turn this endpoint into a qualified
+  execution verdict.
+
 ## Release boundary
 
-The original Site's v2 deployment, the refreshed API, and the product source
-link are separate observations. None establishes an authenticated browser
-audit through the original Site, continuous runtime readiness, or ten-Space
-runtime admission. The initial note merged in
+The original Site's v2 deployment, the refreshed Atlas API, and the canonical
+product runtime are separate observations. None establishes an authenticated
+browser audit through the original Site, continuous Atlas API readiness, or
+execution evidence for ten-Space policy admission. The failed A11oy workflow
+does not qualify the full product release. The initial note merged in
 [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306), the separate
 Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307),
 and the original Site update in
