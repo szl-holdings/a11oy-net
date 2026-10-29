@@ -208,6 +208,59 @@ different result or a rate-limit/partial-state response.
   protected-main reauthorization jobs were skipped. The full product release
   remains **BLOCKED**.
 
+## Current readback (2026-10-29T03:11Z)
+
+- **MEASURED, signed source and live product:** Verified signed
+  [A11oy main](https://github.com/szl-holdings/a11oy/commit/1d96e597aaa3711359d65082593688140b270c10)
+  is `1d96e597aaa3711359d65082593688140b270c10`. Product
+  [`/api/build-info`](https://a-11-oy.com/api/build-info) and direct Space
+  [`/api/build-info`](https://szlholdings-a11oy.hf.space/api/build-info)
+  both returned HTTP 200 with `OBSERVED` revision
+  `1d96e597aaa3711359d65082593688140b270c10` from `env:SZL_GIT_SHA` and
+  `receipt_minted: false`. The product root returned HTTP 200 and linked
+  [Atlas GitHub source](https://github.com/szl-holdings/curation-atlas).
+  The public Hugging Face Spaces API reported
+  [Space `SZLHOLDINGS/a11oy`](https://huggingface.co/spaces/SZLHOLDINGS/a11oy/tree/a61e0164643fcdc21b5501e8155a0759f9ab68b5)
+  stage `RUNNING` at provider sha
+  `a61e0164643fcdc21b5501e8155a0759f9ab68b5`. That provider sha is a separate
+  observation from the runtime `SZL_GIT_SHA`.
+- **MEASURED, health and storage:** Product
+  [`/api/a11oy/healthz`](https://a-11-oy.com/api/a11oy/healthz) returned
+  HTTP 200, service `status: ok`, `operational_readiness` `NOT_READY`, and
+  `ready: false`. Direct Space storage status reported `FENCED`, `WRITER`,
+  epoch `81`, `claim: CLEAN`, `alert: false`, and `health: OK` for all seven
+  listed stores.
+- **MEASURED, readiness:** Direct Space
+  [`readiness/tab-matrix?view=summary`](https://szlholdings-a11oy.hf.space/api/a11oy/v1/readiness/tab-matrix?view=summary)
+  at `2026-10-29T03:11:11Z` reported `available: false`,
+  `probe_verdict_available: false`, and `READINESS_RUN_UNQUALIFIED`.
+- **MEASURED, protected workflow verdict:**
+  [A11oy HF sync run 40803941858](https://github.com/szl-holdings/a11oy/actions/runs/40803941858)
+  for this signed main completed **FAILURE**. Source admission, deployment,
+  exact attestation, runtime configuration, and the no-restart runtime
+  verification job succeeded. `Admit the unchanged runtime and freeze
+  independent execution context` failed with
+  `{"context_frozen": false, "error": "EXECUTION_CONTEXT_REQUIRED", "execution_authorized": false}`
+  (exit code 2). The three execution identifiers were empty in that job.
+  Later probe, execution-evidence, live-source, parity, and reauthorization
+  jobs were skipped. Full release qualification remains **BLOCKED**.
+- **MEASURED, Atlas API:** [Curation Atlas
+  Space](https://huggingface.co/spaces/SZLHOLDINGS/curation-atlas/tree/98602e5276b5000d29d227d857688a1264ab8fb9)
+  was `RUNNING` at provider sha
+  `98602e5276b5000d29d227d857688a1264ab8fb9`.
+  [`GET /healthz`](https://szlholdings-curation-atlas.hf.space/healthz)
+  returned `PROCESS_ALIVE`, source revision
+  `072605abec3c24e969eea1ccd132038508c02b02`, source binding `DECLARED`, and
+  upstream readiness `UNKNOWN`. Verified signed Atlas main
+  [`245a90569470a57eed3d5a362a343b0d58624c65`](https://github.com/szl-holdings/curation-atlas/commit/245a90569470a57eed3d5a362a343b0d58624c65)
+  differs from that declared revision only in
+  `.github/workflows/codeql.yml`.
+- **UNAVAILABLE, original Site republish:** An unauthenticated GET of
+  [the original Site](https://curation-atlas-szl.stephenlutar2.chatgpt.site)
+  returned HTTP 401. This readback had no Sites control-plane session, so
+  `project_not_found` for `appgprj_6aaf0cfae87481918b98476c17d38392` was not
+  re-read. No new Site version was published.
+
 ## Release boundary
 
 The original Site's v2 deployment, the refreshed Atlas API, and the canonical
