@@ -133,8 +133,12 @@ different result or a rate-limit/partial-state response.
   source link. Its `/api/build-info` reported revision
   `6db8b768cade188d5d14ec57efdd710701059e98` from `env:SZL_GIT_SHA`.
   This is a product build observation, not Atlas Site deployment or a policy
-  qualification. The ten-Space retention proposal remains open in
-  [A11oy PR #3035](https://github.com/szl-holdings/a11oy/pull/3035), while
+  runtime qualification. The ten-Space retention source policy subsequently
+  merged in [A11oy PR #3035](https://github.com/szl-holdings/a11oy/pull/3035)
+  at verified signed main `58524995e84130bc8e59ca3d8cfb55a16067b9f2`
+  (`2026-10-29T00:04:44Z`). A later `/api/build-info` readback still reported
+  `6db8b768cade188d5d14ec57efdd710701059e98`; that merge is not a runtime
+  deployment witness. Earlier,
   [Killinchu PR #562](https://github.com/szl-holdings/killinchu/pull/562)
   merged the matching shared-file source.
 
@@ -142,8 +146,8 @@ different result or a rate-limit/partial-state response.
 
 The original Site's v2 deployment, the refreshed API, and the product source
 link are separate observations. None establishes an authenticated browser
-audit through the original Site, continuous runtime readiness, or a ten-Space
-policy release. The initial note merged in
+audit through the original Site, continuous runtime readiness, or ten-Space
+runtime admission. The initial note merged in
 [PR #306](https://github.com/szl-holdings/a11oy-net/pull/306), the separate
 Site addendum in [PR #307](https://github.com/szl-holdings/a11oy-net/pull/307),
 and the original Site update in
