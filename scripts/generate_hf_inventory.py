@@ -291,6 +291,9 @@ def collect(source: Any) -> dict[str, Any]:
             raise GenerationError(
                 f"{kind} listing returned {len(raw[kind])} rows, the page size; it may be truncated"
             )
+    # Validate auxiliary identities and visibility before requesting their detail.
+    for kind in ("collections", "buckets"):
+        raw[kind] = public_auxiliary_rows(raw[kind], kind)
     raw["special_spaces"] = {name: source.space(name) for name in SPECIAL_SPACES}
     raw["collection_detail"] = {
         str(item["slug"]): source.collection(str(item["slug"]))
@@ -359,6 +362,30 @@ def by_id(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         seen.add(ident)
         ordered.append(item)
     return ordered
+
+
+def public_auxiliary_rows(items: Any, kind: str) -> list[dict[str, Any]]:
+    """Require owned, unique, explicitly public auxiliary listing records."""
+    if not isinstance(items, list):
+        raise GenerationError(f"{kind} listing is unavailable or malformed")
+    key = "slug" if kind == "collections" else "id"
+    seen: set[str] = set()
+    for item in items:
+        if not isinstance(item, dict):
+            raise GenerationError(f"{kind} listing contains a malformed record")
+        ident = item.get(key)
+        if not isinstance(ident, str) or not ident.startswith(ORG + "/"):
+            raise GenerationError(f"{kind} listing identity outside {ORG}")
+        name = ident[len(ORG) + 1:]
+        if (not name or name in (".", "..") or any(c in name for c in "/?#")
+                or any(c.isspace() or ord(c) < 32 for c in name)):
+            raise GenerationError(f"{kind} listing identity is malformed")
+        if ident in seen:
+            raise GenerationError(f"duplicate {kind} listing identity: {ident}")
+        if item.get("private") is not False:
+            raise GenerationError(f"{kind} listing lacks an explicit public disposition")
+        seen.add(ident)
+    return sorted(items, key=lambda item: item[key])
 
 
 def canonical(value: Any) -> bytes:
@@ -527,13 +554,25 @@ def kernel_row(item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def collection_row(summary: dict[str, Any], detail: dict[str, Any]) -> dict[str, Any]:
-    items = detail.get("items") if isinstance(detail.get("items"), list) else []
+def collection_row(summary: dict[str, Any], detail: Any) -> dict[str, Any]:
+    if not isinstance(detail, dict) or detail.get("slug") != summary["slug"]:
+        raise GenerationError("collection detail does not bind the requested slug")
+    # Detail responses may omit visibility; a supplied value cannot contradict
+    # the explicitly public listing record or weaken it to an unknown value.
+    if "private" in detail and detail["private"] is not False:
+        raise GenerationError("collection detail conflicts with public listing disposition")
+    items = detail.get("items")
+    if not isinstance(items, list):
+        raise GenerationError("collection items are unavailable or malformed")
+    for entry in items:
+        if (not isinstance(entry, dict)
+                or not isinstance(entry.get("id"), str) or not entry["id"].strip()
+                or not isinstance(entry.get("type"), str) or not entry["type"].strip()):
+            raise GenerationError("collection contains a malformed item")
     rows = sorted(
         (
-            {"id": str(entry.get("id")), "position": entry.get("position"), "type": entry.get("type")}
+            {"id": entry["id"], "position": entry.get("position"), "type": entry["type"]}
             for entry in items
-            if isinstance(entry, dict) and entry.get("id")
         ),
         key=lambda row: (row["position"] if isinstance(row["position"], int) else 10**9, row["type"] or "", row["id"]),
     )
@@ -547,6 +586,8 @@ def collection_row(summary: dict[str, Any], detail: dict[str, Any]) -> dict[str,
 
 
 def bucket_row(item: dict[str, Any], tree: list[dict[str, Any]]) -> dict[str, Any]:
+    if not isinstance(tree, list):
+        raise GenerationError("bucket tree is unavailable or malformed")
     files = [entry for entry in tree if isinstance(entry, dict) and entry.get("type") == "file"]
     return {
         "created_at": item.get("createdAt"),
@@ -558,7 +599,7 @@ def bucket_row(item: dict[str, Any], tree: list[dict[str, Any]]) -> dict[str, An
         "source_observation": "PUBLIC_HF_BUCKET_OBSERVED",
         "tree_evidence_url": f"{API}/buckets/{item['id']}/tree?recursive=true",
         "updated_at": item.get("updatedAt"),
-        "visibility": "PRIVATE" if item.get("private") else "PUBLIC",
+        "visibility": "PUBLIC",  # public_auxiliary_rows requires private is False.
     }
 
 
@@ -613,22 +654,18 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     for kind, rows in membership_rows.items():
         if sorted(row["id"] for row in rows) != binding.get("ids", {}).get(kind):
             raise GenerationError(f"observed {kind} membership differs from immutable canonical GitHub source")
-    collections = sorted(
-        (
-            collection_row(item, raw["collection_detail"].get(str(item["slug"]), item))
-            for item in raw["collections"]
-            if item.get("private") is not True
-        ),
-        key=lambda row: row["slug"],
-    )
-    buckets = sorted(
-        (
-            bucket_row(item, raw["bucket_tree"].get(str(item["id"]), []))
-            for item in raw["buckets"]
-            if item.get("private") is not True
-        ),
-        key=lambda row: row["id"],
-    )
+    details = raw.get("collection_detail")
+    trees = raw.get("bucket_tree")
+    if not isinstance(details, dict) or not isinstance(trees, dict):
+        raise GenerationError("auxiliary detail observations are unavailable or malformed")
+    collections = [
+        collection_row(item, details.get(item["slug"]))
+        for item in public_auxiliary_rows(raw.get("collections"), "collections")
+    ]
+    buckets = [
+        bucket_row(item, trees.get(item["id"]))
+        for item in public_auxiliary_rows(raw.get("buckets"), "buckets")
+    ]
     members: dict[str, set[str]] = {"model": set(), "dataset": set(), "space": set(), "kernel": set(), "bucket": set()}
     for row in collections:
         for entry in row["items"]:
