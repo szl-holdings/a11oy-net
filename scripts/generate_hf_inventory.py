@@ -149,9 +149,9 @@ class GenerationError(RuntimeError):
 # --------------------------------------------------------------------------
 
 
-# Page sizes requested from the listing endpoints. A listing that comes back
-# this full may have been cut by the page size, so it is refused rather than
-# published as a complete count.
+# Page sizes requested from the listing endpoints. Live responses follow the
+# complete Link chain; unverified fixture/adapter lists this full remain refused
+# rather than being published as a complete count.
 LISTING_LIMIT = {"models": 1000, "datasets": 1000, "spaces": 1000, "kernels": 1000, "collections": 100}
 
 
@@ -170,6 +170,61 @@ def public_list_url(kind: str) -> str:
     return f"{API}/{kind}?author={ORG}"
 
 
+class CompleteListing(list):
+    """Rows from a live listing whose next-page chain ended explicitly."""
+
+
+def next_page(link: str | None, initial_url: str) -> str | None:
+    """Accept the Hub's Link next relation, bounded to the original endpoint."""
+    if not link:
+        return None
+    targets = []
+    for entry in re.split(r",(?=\s*<)", link):
+        match = re.fullmatch(r'\s*<([^<>]+)>\s*((?:;[^<>]*)?)\s*', entry)
+        if not match:
+            raise GenerationError("malformed pagination Link header")
+        parameters = match[2]
+        relations = []
+        parameter = re.compile(r';\s*([A-Za-z][A-Za-z0-9_-]*)\s*=\s*(?:"([^"\\]*)"|([A-Za-z0-9._~:/?&=%+-]+))\s*')
+        while parameters:
+            parsed = parameter.match(parameters)
+            if not parsed:
+                raise GenerationError("malformed pagination Link parameters")
+            if parsed[1].lower() == "rel":
+                relations.append(parsed[2] if parsed[2] is not None else parsed[3])
+            parameters = parameters[parsed.end():]
+        if len(relations) != 1:
+            raise GenerationError("ambiguous pagination Link relation")
+        relation_tokens = relations[0].split()
+        if not relation_tokens:
+            raise GenerationError("empty pagination Link relation")
+        for relation in relation_tokens:
+            registered = re.fullmatch(r"[A-Za-z][A-Za-z0-9.-]*", relation)
+            extension = urllib.parse.urlsplit(relation)
+            if not registered and not (extension.scheme in ("http", "https") and extension.netloc and "," not in relation):
+                raise GenerationError("invalid pagination Link relation token")
+        if "next" in [relation.lower() for relation in relation_tokens]:
+            targets.append(urllib.parse.urljoin(initial_url, match[1]))
+    if len(targets) > 1:
+        raise GenerationError("multiple next-page links")
+    if not targets:
+        return None
+    target = targets[0]
+    origin, page = urllib.parse.urlsplit(initial_url), urllib.parse.urlsplit(target)
+    if (page.scheme != "https" or page.netloc != origin.netloc
+            or page.path != origin.path or page.fragment
+            or page.username is not None or page.password is not None):
+        raise GenerationError("pagination left the original public endpoint")
+    # The cursor may change; the author/filter and expansion scope may not.
+    initial_query = urllib.parse.parse_qs(origin.query, keep_blank_values=True)
+    next_query = urllib.parse.parse_qs(page.query, keep_blank_values=True)
+    if any(next_query.get(key) != values for key, values in initial_query.items()):
+        raise GenerationError("pagination changed the observation scope")
+    if set(next_query) - set(initial_query) - {"cursor"}:
+        raise GenerationError("pagination introduced an unsupported query parameter")
+    return target
+
+
 class LiveSource:
     """Unauthenticated GETs against the public Hub API. No token is read."""
 
@@ -177,7 +232,7 @@ class LiveSource:
         self.attempts = attempts
         self.timeout = timeout
 
-    def _bytes(self, url: str) -> bytes:
+    def _response(self, url: str) -> tuple[bytes, str | None]:
         last: Exception | None = None
         for attempt in range(self.attempts):
             request = urllib.request.Request(
@@ -189,14 +244,40 @@ class LiveSource:
             )
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                    return response.read()
+                    return response.read(), ", ".join(response.headers.get_all("Link", [])) or None
             except Exception as exc:  # retried, then surfaced
                 last = exc
                 time.sleep(2 * (attempt + 1))
         raise GenerationError(f"GET {url} failed: {last}")
 
+    def _bytes(self, url: str) -> bytes:
+        body, link = self._response(url)
+        if next_page(link, url) is not None:
+            raise GenerationError("unexpected pagination on a single-resource response")
+        return body
+
     def _get(self, url: str) -> Any:
         return strict_json(self._bytes(url))
+
+    def _listing(self, url: str) -> CompleteListing:
+        rows = CompleteListing()
+        seen = set()
+        page = url
+        while page is not None:
+            if page in seen:
+                raise GenerationError("pagination cursor cycle")
+            if len(seen) >= 100:
+                raise GenerationError("pagination page budget exceeded")
+            seen.add(page)
+            body, link = self._response(page)
+            payload = strict_json(body)
+            if not isinstance(payload, list):
+                raise GenerationError("paginated listing returned a non-list response")
+            rows.extend(payload)
+            if len(rows) > 100_000:
+                raise GenerationError("pagination row budget exceeded")
+            page = next_page(link, url)
+        return rows
 
     def canonical_source(self) -> dict[str, Any]:
         commit = self._get(f"https://api.github.com/repos/{CANONICAL_REPOSITORY}/commits/main")
@@ -220,15 +301,8 @@ class LiveSource:
             raise GenerationError("canonical main advanced during the public observation")
 
     def listing(self, kind: str) -> list[dict[str, Any]]:
-        if kind == "collections":
-            payload = self._get(public_list_url("collections"))
-        elif kind == "buckets":
-            payload = self._get(f"{API}/buckets/{ORG}")
-        else:
-            payload = self._get(list_url(kind))
-        if not isinstance(payload, list):
-            raise GenerationError(f"{kind} listing returned {type(payload).__name__}")
-        return payload
+        url = public_list_url(kind) if kind in ("collections", "buckets") else list_url(kind)
+        return self._listing(url)
 
     def space(self, name: str) -> dict[str, Any]:
         return self._get(f"{API}/spaces/{ORG}/{name}")
@@ -237,10 +311,7 @@ class LiveSource:
         return self._get(f"{API}/collections/{slug}")
 
     def bucket_tree(self, bucket_id: str) -> list[dict[str, Any]]:
-        payload = self._get(f"{API}/buckets/{bucket_id}/tree?recursive=true")
-        if not isinstance(payload, list):
-            raise GenerationError(f"bucket tree {bucket_id} returned {type(payload).__name__}")
-        return payload
+        return self._listing(f"{API}/buckets/{bucket_id}/tree?recursive=true")
 
 
 def fixture_name(*parts: str) -> str:
@@ -287,7 +358,7 @@ def collect(source: Any) -> dict[str, Any]:
         if not isinstance(raw[kind], list):
             raise GenerationError(f"{kind} listing is unavailable or malformed")
         limit = LISTING_LIMIT.get(kind)
-        if limit is not None and len(raw[kind]) >= limit:
+        if limit is not None and len(raw[kind]) >= limit and not isinstance(raw[kind], CompleteListing):
             raise GenerationError(
                 f"{kind} listing returned {len(raw[kind])} rows, the page size; it may be truncated"
             )
