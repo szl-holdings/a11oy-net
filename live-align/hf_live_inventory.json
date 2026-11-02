@@ -1,5 +1,6 @@
 {
   "assets_missing_license": [
+    "space:SZLHOLDINGS/agents-studio",
     "space:SZLHOLDINGS/curation-atlas"
   ],
   "claim_boundaries": {
@@ -9,10 +10,10 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 37,
+    "datasets": 38,
     "kernels": 14,
     "models": 41,
-    "spaces": 39
+    "spaces": 40
   },
   "drift_vs_committed_snapshots": [
     {
@@ -24,14 +25,14 @@
     },
     {
       "field": "datasets",
-      "live_public": 37,
+      "live_public": 38,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "spaces_public",
-      "live_public": 39,
+      "live_public": 40,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
@@ -45,14 +46,14 @@
     },
     {
       "field": "datasets",
-      "live_public": 37,
+      "live_public": 38,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "spaces",
-      "live_public": 39,
+      "live_public": 40,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -87,11 +88,12 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-10-27T16:34:46Z",
+  "observed_at": "2026-11-02T02:08:53Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
     "SZLHOLDINGS/a11oy",
+    "SZLHOLDINGS/agents-studio",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/curation-atlas",
@@ -133,6 +135,6 @@
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 39
+    "RUNNING": 40
   }
 }
