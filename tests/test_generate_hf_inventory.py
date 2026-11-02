@@ -7,6 +7,7 @@ import importlib.util
 import hashlib
 import copy
 import json
+import io
 import shutil
 import tempfile
 from pathlib import Path
@@ -287,6 +288,58 @@ class GeneratorTest(TestCase):
         kernel_only["kernels"][0]["id"] = "SZLHOLDINGS/unlisted-kernel"
         with self.assertRaises(gen.GenerationError):
             gen.build_inventory(kernel_only, T1)
+
+    def test_membership_drift_reports_bound_source_and_both_directions(self) -> None:
+        for kind in ("models", "datasets", "spaces", "kernels"):
+            raw = self.native_observation()
+            missing_id = raw[kind][0]["id"]
+            raw[kind][0]["id"] = "SZLHOLDINGS/new-public-repository"
+            with self.subTest(kind=kind), self.assertRaises(gen.GenerationError) as caught:
+                gen.build_inventory(raw, T1)
+            prefix, payload = str(caught.exception).split(": ", 1)
+            self.assertEqual(prefix, f"observed {kind} membership differs from immutable canonical GitHub source")
+            diagnostic = json.loads(payload)
+            self.assertEqual(diagnostic["source_revision"], raw["canonical_source"]["record"]["source_revision"])
+            self.assertEqual(diagnostic["source_git_blob"], raw["canonical_source"]["record"]["source_git_blob"])
+            self.assertEqual(diagnostic["only_observed_ids"], ["SZLHOLDINGS/new-public-repository"])
+            self.assertEqual(diagnostic["only_canonical_ids"], [missing_id])
+            self.assertEqual(diagnostic["only_observed_count"], 1)
+            self.assertEqual(diagnostic["only_canonical_count"], 1)
+
+    def test_membership_drift_id_samples_are_sorted_bounded_and_counted(self) -> None:
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        raw["datasets"] = [dict(raw["datasets"][0], id=f"SZLHOLDINGS/new-{i:02}") for i in range(25, -1, -1)]
+        with self.assertRaises(gen.GenerationError) as caught:
+            gen.build_inventory(raw, T1)
+        diagnostic = json.loads(str(caught.exception).split(": ", 1)[1])
+        self.assertEqual(diagnostic["only_observed_count"], 26)
+        self.assertEqual(diagnostic["only_observed_ids"], [f"SZLHOLDINGS/new-{i:02}" for i in range(20)])
+        self.assertEqual(diagnostic["id_sample_limit"], 20)
+
+    def test_malformed_canonical_ids_keep_a_generation_error(self) -> None:
+        variants = ([{"id": "SZLHOLDINGS/public"}], ["SZLHOLDINGS/public", 1],
+                    None, "SZLHOLDINGS/public", {"SZLHOLDINGS/public": True})
+        for canonical_ids in variants:
+            raw = gen.collect(gen.FixtureSource(FIXTURE))
+            raw["canonical_source"]["ids"]["datasets"] = canonical_ids
+            with self.subTest(canonical_ids=canonical_ids), self.assertRaises(gen.GenerationError):
+                gen.build_inventory(raw, T1)
+
+    def test_membership_drift_cli_keeps_existing_outputs_unchanged(self) -> None:
+        self.site.run(T1)
+        before = {path.relative_to(self.site.root): path.read_bytes()
+                  for path in self.site.root.rglob("*") if path.is_file()}
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        raw["datasets"] = raw["datasets"][1:]
+        error = io.StringIO()
+        with mock.patch.object(gen, "collect", return_value=raw), mock.patch("sys.stderr", error):
+            result = gen.main(["--root", str(self.site.root), "--fixture", str(FIXTURE)])
+        after = {path.relative_to(self.site.root): path.read_bytes()
+                 for path in self.site.root.rglob("*") if path.is_file()}
+        self.assertEqual(result, 1)
+        self.assertEqual(after, before)
+        self.assertIn('"source_revision":', error.getvalue())
+        self.assertIn('"only_canonical_ids":', error.getvalue())
 
     @staticmethod
     def _with_native_kernels(manifest: dict, count: int = 2) -> dict:

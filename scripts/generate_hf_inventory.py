@@ -665,8 +665,31 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     elif {row["id"] for row in kernels} - {row["id"] for row in models}:
         raise GenerationError("legacy kernel subset has repositories absent from the public model membership")
     for kind, rows in membership_rows.items():
-        if sorted(row["id"] for row in rows) != binding.get("ids", {}).get(kind):
-            raise GenerationError(f"observed {kind} membership differs from immutable canonical GitHub source")
+        observed_ids = sorted(row["id"] for row in rows)
+        canonical_ids = binding.get("ids", {}).get(kind)
+        if observed_ids != canonical_ids:
+            if not isinstance(canonical_ids, list) or any(not isinstance(ident, str) for ident in canonical_ids):
+                raise GenerationError(
+                    f"observed {kind} membership differs from immutable canonical GitHub source: "
+                    "canonical ID list is unavailable or malformed"
+                )
+            # Keep the admission failure, but retain enough public evidence to
+            # reconcile it without repeating a moving live observation.
+            only_observed = sorted(set(observed_ids) - set(canonical_ids))
+            only_canonical = sorted(set(canonical_ids) - set(observed_ids))
+            diagnostic = {
+                "source_revision": binding["record"].get("source_revision"),
+                "source_git_blob": binding["record"].get("source_git_blob"),
+                "only_observed_count": len(only_observed),
+                "only_observed_ids": only_observed[:20],
+                "only_canonical_count": len(only_canonical),
+                "only_canonical_ids": only_canonical[:20],
+                "id_sample_limit": 20,
+            }
+            raise GenerationError(
+                f"observed {kind} membership differs from immutable canonical GitHub source: "
+                + json.dumps(diagnostic, sort_keys=True)
+            )
     details = raw.get("collection_detail")
     trees = raw.get("bucket_tree")
     if not isinstance(details, dict) or not isinstance(trees, dict):

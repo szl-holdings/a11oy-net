@@ -266,6 +266,10 @@ an unambiguous observation before retrying. Do not replace unknown visibility
 with public, drop malformed rows to force counts, or change the canonical
 membership source to clear an auxiliary observation error. Repository membership
 drift remains a separate blocking condition.
+Membership failures include the immutable canonical revision and Git blob,
+counts of IDs present only in each source, and the first 20 sorted IDs per side.
+Use that bound diagnostic to reconcile the observation; samples may be truncated
+and do not authorize changing the canonical membership or publishing output.
 Listing alignment and source binding do not establish runtime readiness, model
 quality, or permission to publish a product release.
 
