@@ -9,6 +9,7 @@ import copy
 import json
 import shutil
 import tempfile
+from email.message import Message
 from pathlib import Path
 from unittest import TestCase, main, mock
 
@@ -715,6 +716,84 @@ class AuxiliaryObservationTests(TestCase):
             raw[kind] = raw[kind][1:]
             with self.subTest(kind=kind), self.assertRaisesRegex(gen.GenerationError, "membership differs"):
                 self.build(raw)
+
+
+class ExplicitPaginationTests(TestCase):
+    """Exercise the real HTTP response adapter without network access."""
+
+    def response(self, payload, links=()):
+        response = mock.MagicMock()
+        response.__enter__.return_value = response
+        response.headers = Message()
+        for name, value in links:
+            response.headers[name] = value
+        response.read.return_value = json.dumps(payload).encode()
+        return response
+
+    def test_short_first_page_cannot_be_published_as_matching_canonical_subset(self):
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        self.assertLess(len(raw["datasets"]), gen.LISTING_LIMIT["datasets"])
+        # This incomplete first page would match the retained canonical IDs.
+        self.assertEqual(sorted(row["id"] for row in raw["datasets"]),
+                         raw["canonical_source"]["ids"]["datasets"])
+        response = self.response(raw["datasets"], [
+            ("Link", '<https://huggingface.co/api/datasets?cursor=second>; rel="next"')])
+        published = []
+        with mock.patch.object(gen.urllib.request, "urlopen", return_value=response) as opened, \
+                mock.patch.object(gen.time, "sleep") as sleep:
+            with self.assertRaisesRegex(gen.GenerationError, "next-page"):
+                raw["datasets"] = gen.LiveSource().listing("datasets")
+                published.append(gen.build_inventory(raw, T1))
+        self.assertEqual(published, [])
+        response.read.assert_not_called()
+        self.assertEqual(opened.call_count, 1)
+        sleep.assert_not_called()
+
+    def test_link_casing_repeated_headers_and_relation_tokens_are_recognized(self):
+        variants = [
+            [("link", '<https://huggingface.co/api/datasets?cursor=x>; rel=next')],
+            [("LINK", '<https://huggingface.co/api/datasets?cursor=x>; REL="NEXT"')],
+            [("Link", '<https://huggingface.co/api/datasets?cursor=x>; rel="prev next"')],
+            [("Link", '<https://huggingface.co/api/datasets?cursor=p>; rel="prev", '
+                       '<https://huggingface.co/api/datasets?cursor=n>; rel="next"')],
+            [("Link", '<https://huggingface.co/api/datasets?cursor=p>; rel="prev"'),
+             ("link", '<https://huggingface.co/api/datasets?cursor=n>; rel="next"')],
+        ]
+        for links in variants:
+            response = self.response([], links)
+            with self.subTest(links=links), \
+                    mock.patch.object(gen.urllib.request, "urlopen", return_value=response), \
+                    self.assertRaisesRegex(gen.GenerationError, "next-page"):
+                gen.LiveSource(attempts=1).listing("datasets")
+            response.read.assert_not_called()
+
+    def test_next_url_is_neither_followed_nor_exposed(self):
+        response = self.response([], [
+            ("Link", '<https://untrusted.invalid/?token=SYNTHETIC_SENTINEL>; rel="next"')])
+        with mock.patch.object(gen.urllib.request, "urlopen", return_value=response) as opened:
+            with self.assertRaises(gen.GenerationError) as caught:
+                gen.LiveSource().listing("datasets")
+        self.assertNotIn("SYNTHETIC_SENTINEL", str(caught.exception))
+        self.assertEqual(opened.call_count, 1)
+        self.assertEqual(opened.call_args.args[0].full_url, gen.list_url("datasets"))
+
+    def test_complete_single_response_keeps_existing_inventory_contract(self):
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        expected = gen.build_inventory(raw, T1)
+        response = self.response(raw["datasets"])
+        with mock.patch.object(gen.urllib.request, "urlopen", return_value=response):
+            raw["datasets"] = gen.LiveSource(attempts=1).listing("datasets")
+        self.assertEqual(gen.build_inventory(raw, T1), expected)
+        response.read.assert_called_once_with()
+
+    def test_all_listing_namespaces_honor_explicit_next_page(self):
+        for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
+            response = self.response([], [("Link", '</next>; rel="next"')])
+            with self.subTest(kind=kind), \
+                    mock.patch.object(gen.urllib.request, "urlopen", return_value=response), \
+                    self.assertRaisesRegex(gen.GenerationError, "next-page"):
+                gen.LiveSource(attempts=1).listing(kind)
+            response.read.assert_not_called()
 
 
 if __name__ == "__main__":

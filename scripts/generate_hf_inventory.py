@@ -144,6 +144,25 @@ class GenerationError(RuntimeError):
     """Raised when an observation cannot be turned into honest output."""
 
 
+def reject_next_page(headers: Any) -> None:
+    """Do not claim a bounded response is complete when the server says next.
+
+    A server can apply a smaller page size than requested. Row-count guards
+    alone cannot establish completeness; this client intentionally does not
+    follow continuation URLs or combine observations from additional pages.
+    """
+    for name, value in headers.items():
+        if name.lower() != "link":
+            continue
+        for quoted, bare in re.findall(
+            r';\s*rel\s*=\s*(?:"([^"]*)"|([^;,\s]+))', value, flags=re.IGNORECASE
+        ):
+            if "next" in (quoted or bare).lower().split():
+                raise GenerationError(
+                    "public observation returned a next-page Link; complete listing unavailable"
+                )
+
+
 # --------------------------------------------------------------------------
 # Sources: the live public API, or a fixture directory with the same shapes.
 # --------------------------------------------------------------------------
@@ -189,7 +208,11 @@ class LiveSource:
             )
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                    reject_next_page(response.headers)
                     return response.read()
+            except GenerationError:
+                # Explicit incompleteness is deterministic, not a transient GET.
+                raise
             except Exception as exc:  # retried, then surfaced
                 last = exc
                 time.sleep(2 * (attempt + 1))
