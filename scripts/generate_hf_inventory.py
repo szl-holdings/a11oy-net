@@ -588,12 +588,25 @@ def collection_row(summary: dict[str, Any], detail: Any) -> dict[str, Any]:
 def bucket_row(item: dict[str, Any], tree: list[dict[str, Any]]) -> dict[str, Any]:
     if not isinstance(tree, list):
         raise GenerationError("bucket tree is unavailable or malformed")
-    files = [entry for entry in tree if isinstance(entry, dict) and entry.get("type") == "file"]
+    files = []
+    seen_paths: set[str] = set()
+    for entry in tree:
+        if (not isinstance(entry, dict)
+                or entry.get("type") not in ("file", "directory")
+                or not isinstance(entry.get("path"), str) or not entry["path"].strip()):
+            raise GenerationError("bucket tree contains a malformed record")
+        if entry["path"] in seen_paths:
+            raise GenerationError("bucket tree contains a duplicate path")
+        seen_paths.add(entry["path"])
+        if entry["type"] == "file":
+            if type(entry.get("size")) is not int or entry["size"] < 0:
+                raise GenerationError("bucket file size is unavailable or malformed")
+            files.append(entry)
     return {
         "created_at": item.get("createdAt"),
         "id": item["id"],
         "observed_object_count": len(files),
-        "observed_size_bytes": sum(int(entry.get("size") or 0) for entry in files),
+        "observed_size_bytes": sum(entry["size"] for entry in files),
         "provider_reported_object_count": item.get("totalFiles"),
         "provider_reported_size_bytes": item.get("size"),
         "source_observation": "PUBLIC_HF_BUCKET_OBSERVED",
@@ -1200,3 +1213,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

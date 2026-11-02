@@ -667,6 +667,48 @@ class AuxiliaryObservationTests(TestCase):
         self.raw["bucket_tree"][ident] = []
         self.assertEqual(self.build()["resources"]["buckets"][0]["observed_object_count"], 0)
 
+    def test_malformed_bucket_entries_block_instead_of_reporting_empty(self):
+        ident = self.raw["buckets"][0]["id"]
+        for entry in (None, [], {}, {"path": "x"}, {"type": None, "path": "x"},
+                      {"type": "unknown", "path": "x"}, {"type": [], "path": "x"},
+                      {"type": "file", "size": 0},
+                      {"type": "directory", "path": ""}):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [entry]
+            with self.subTest(entry=entry), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
+    def test_bucket_file_size_requires_observed_nonnegative_integer(self):
+        ident = self.raw["buckets"][0]["id"]
+        for size in (None, True, False, -1, "0", "2048", 1.5, {}, []):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [{"path": "file", "type": "file", "size": size}]
+            with self.subTest(size=size), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        raw = copy.deepcopy(self.raw)
+        raw["bucket_tree"][ident] = [{"path": "file", "type": "file"}]
+        with self.assertRaises(gen.GenerationError):
+            self.build(raw)
+
+    def test_bucket_directories_and_observed_empty_files_remain_valid(self):
+        ident = self.raw["buckets"][0]["id"]
+        self.raw["bucket_tree"][ident] = [
+            {"path": "empty", "type": "file", "size": 0},
+            {"path": "logs", "type": "directory"},
+        ]
+        bucket = self.build()["resources"]["buckets"][0]
+        self.assertEqual(bucket["observed_object_count"], 1)
+        self.assertEqual(bucket["observed_size_bytes"], 0)
+
+    def test_duplicate_bucket_paths_block_instead_of_inflating_counts(self):
+        ident = self.raw["buckets"][0]["id"]
+        first = {"path": "same", "type": "file", "size": 7}
+        for second in (first, {"path": "same", "type": "directory"}):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [first, second]
+            with self.subTest(second=second), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
     def test_repository_membership_drift_still_blocks(self):
         for kind in ("models", "datasets", "spaces"):
             raw = copy.deepcopy(self.raw)
@@ -677,3 +719,4 @@ class AuxiliaryObservationTests(TestCase):
 
 if __name__ == "__main__":
     main()
+
