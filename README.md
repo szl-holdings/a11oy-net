@@ -255,6 +255,17 @@ v5, and compact-current v2. Older three-kind captures keep their historical v1
 membership and v4 inventory semantics and are not silently relabelled.
 The reserved public `README` Space is included when independently observable.
 Collections and buckets remain auxiliary resources outside repository membership.
+Their listings must separately prove an explicit boolean `private: false`, a
+unique identity owned by `SZLHOLDINGS`, and available detail observations.
+Collection details must bind the requested slug and provide a valid items list;
+an explicit empty list is distinct from a missing or malformed observation.
+Collection members may reference other owners or non-repository resources.
+Missing bucket trees cannot be published as observed empty buckets.
+If this validation stops a refresh, inspect the public API response and restore
+an unambiguous observation before retrying. Do not replace unknown visibility
+with public, drop malformed rows to force counts, or change the canonical
+membership source to clear an auxiliary observation error. Repository membership
+drift remains a separate blocking condition.
 Listing alignment and source binding do not establish runtime readiness, model
 quality, or permission to publish a product release.
 
