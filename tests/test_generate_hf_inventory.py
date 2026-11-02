@@ -135,6 +135,51 @@ class GeneratorTest(TestCase):
         second = gen.generate(self.site.root, raw, T1)
         self.assertEqual(first, second)
 
+    def test_primary_listing_rejects_malformed_repository_identities(self) -> None:
+        for name in ("", ".", "..", "a/b", "../outside", "a?query", "a#fragment",
+                     "bad name", "bad\tname", "bad\x00name"):
+            with self.subTest(name=name), self.assertRaises(gen.GenerationError):
+                gen.by_id([{"id": gen.ORG + "/" + name, "private": False}])
+
+    def test_primary_listing_shape_fails_with_a_generation_error(self) -> None:
+        for rows in (None, {}, "listing", [None], ["row"], [1], [False],
+                     [{"id": None, "private": False}],
+                     [{"id": 1, "private": False}]):
+            with self.subTest(rows=rows), self.assertRaises(gen.GenerationError):
+                gen.by_id(rows)
+
+    def test_canonical_primary_membership_rejects_malformed_names(self) -> None:
+        for kind in ("models", "datasets", "spaces"):
+            for name in ("", "../outside", "a?query", "bad\x00name"):
+                manifest = fixture("canonical_manifest.json")
+                manifest["inventory"][kind][0]["id"] = gen.ORG + "/" + name
+                content = (json.dumps(manifest, indent=2) + "\n").encode()
+                blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
+                with self.subTest(kind=kind, name=name), self.assertRaises(gen.GenerationError):
+                    gen.canonical_source(content, "a" * 40, blob)
+
+    def test_matching_malformed_source_and_observation_cannot_publish(self) -> None:
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        raw["datasets"][0]["id"] = gen.ORG + "/a/../outside"
+        with self.assertRaises(gen.GenerationError):
+            self.site.run(T1, rebind(raw))
+        self.assertFalse((self.site.root / gen.INVENTORY_PATH).exists())
+
+    def test_primary_identity_validation_preserves_valid_names_and_sorting(self) -> None:
+        rows = [{"id": gen.ORG + "/" + name, "private": False}
+                for name in ("z-model", "README", "model_v1", "model.v2")]
+        self.assertEqual(gen.by_id(rows), sorted(rows, key=lambda row: row["id"]))
+        self.assertEqual(gen.by_id([]), [])
+
+    def test_primary_and_auxiliary_names_reject_del_and_c1_controls(self) -> None:
+        for control in ("\x7f", "\x80", "\x9f"):
+            ident = gen.ORG + "/bad" + control + "name"
+            with self.subTest(kind="primary", control=control), self.assertRaises(gen.GenerationError):
+                gen.by_id([{"id": ident, "private": False}])
+            for kind, key in (("collections", "slug"), ("buckets", "id")):
+                with self.subTest(kind=kind, control=control), self.assertRaises(gen.GenerationError):
+                    gen.public_auxiliary_rows([{key: ident, "private": False}], kind)
+
     def test_unchanged_content_keeps_its_observation_time(self) -> None:
         self.site.run(T1)
         outputs, changed = self.site.run(T2)
