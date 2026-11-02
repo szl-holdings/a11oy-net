@@ -526,5 +526,197 @@ class GeneratorTest(TestCase):
                 self.assertRegex(line, r"@[0-9a-f]{40}\b", line)
 
 
+class AuxiliaryObservationTests(TestCase):
+    def setUp(self):
+        self.raw = gen.collect(gen.FixtureSource(FIXTURE))
+
+    def build(self, raw=None):
+        return gen.build_inventory(self.raw if raw is None else raw, T1)
+
+    def test_valid_public_fixture_retains_counts_and_coverage(self):
+        inventory = self.build()
+        self.assertEqual(inventory["counts"]["collections"], 1)
+        self.assertEqual(inventory["counts"]["buckets"], 1)
+        self.assertEqual(inventory["resources"]["collections"][0]["item_count"], 3)
+        self.assertEqual(inventory["resources"]["buckets"][0]["visibility"], "PUBLIC")
+        self.assertEqual(inventory["resources"]["buckets"][0]["observed_object_count"], 2)
+        self.assertEqual(inventory["collection_coverage"]["models"]["covered"], 1)
+
+    def test_empty_public_observations_are_valid(self):
+        for kind in ("collections", "buckets"):
+            self.raw[kind] = []
+        self.raw["collection_detail"] = {}
+        self.raw["bucket_tree"] = {}
+        inventory = self.build()
+        self.assertEqual(inventory["counts"]["collections"], 0)
+        self.assertEqual(inventory["counts"]["buckets"], 0)
+
+    def test_unknown_or_private_listing_visibility_blocks_public_counts(self):
+        for kind in ("collections", "buckets"):
+            for value in (None, True, 0, 1, "false", "true", [], {}):
+                raw = copy.deepcopy(self.raw)
+                raw[kind][0]["private"] = value
+                with self.subTest(kind=kind, value=value), self.assertRaises(gen.GenerationError):
+                    self.build(raw)
+            raw = copy.deepcopy(self.raw)
+            del raw[kind][0]["private"]
+            with self.subTest(kind=kind, value="missing"), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
+    def test_duplicate_auxiliary_rows_cannot_inflate_counts(self):
+        for kind in ("collections", "buckets"):
+            raw = copy.deepcopy(self.raw)
+            raw[kind].append(copy.deepcopy(raw[kind][0]))
+            with self.subTest(kind=kind), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
+    def test_foreign_missing_or_nonstring_auxiliary_identity_blocks(self):
+        for kind, key in (("collections", "slug"), ("buckets", "id")):
+            for value in (None, 42, "other/resource", "SZLHOLDINGS/", "SZLHOLDINGS/../other"):
+                raw = copy.deepcopy(self.raw)
+                raw[kind][0][key] = value
+                with self.subTest(kind=kind, value=value), self.assertRaises(gen.GenerationError):
+                    self.build(raw)
+
+    def test_malformed_auxiliary_listing_blocks(self):
+        for kind in ("collections", "buckets"):
+            for value in (None, {}, "unavailable", [None], [[]]):
+                raw = copy.deepcopy(self.raw)
+                raw[kind] = value
+                with self.subTest(kind=kind, value=value), self.assertRaises(gen.GenerationError):
+                    self.build(raw)
+
+    def test_collect_rejects_bad_summaries_before_fetching_detail(self):
+        for kind in ("collections", "buckets"):
+            source = gen.FixtureSource(FIXTURE)
+            listing = source.listing
+
+            def bad_listing(requested):
+                rows = listing(requested)
+                if requested == kind:
+                    rows[0]["private"] = None
+                return rows
+
+            with self.subTest(kind=kind), mock.patch.object(source, "listing", bad_listing), \
+                    mock.patch.object(source, "collection") as collection, \
+                    mock.patch.object(source, "bucket_tree") as tree:
+                with self.assertRaises(gen.GenerationError):
+                    gen.collect(source)
+                collection.assert_not_called()
+                tree.assert_not_called()
+
+    def test_collection_detail_binds_exact_requested_slug(self):
+        slug = self.raw["collections"][0]["slug"]
+        for value in (None, [], {}, {"slug": "other/resource", "items": []}):
+            raw = copy.deepcopy(self.raw)
+            raw["collection_detail"][slug] = value
+            with self.subTest(detail=value), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        del self.raw["collection_detail"][slug]
+        with self.assertRaises(gen.GenerationError):
+            self.build()
+
+    def test_conflicting_detail_visibility_blocks(self):
+        slug = self.raw["collections"][0]["slug"]
+        for value in (True, None, 0, "false"):
+            raw = copy.deepcopy(self.raw)
+            raw["collection_detail"][slug]["private"] = value
+            with self.subTest(value=value), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        # The captured detail API omits this field; the public listing binds it.
+        self.raw["collection_detail"][slug]["private"] = False
+        self.assertEqual(self.build()["counts"]["collections"], 1)
+
+    def test_missing_or_malformed_items_are_not_an_empty_collection(self):
+        slug = self.raw["collections"][0]["slug"]
+        for value in (None, {}, "unavailable", [None], [{"type": "model"}],
+                      [{"id": "SZLHOLDINGS/chaski", "type": []}]):
+            raw = copy.deepcopy(self.raw)
+            raw["collection_detail"][slug]["items"] = value
+            with self.subTest(items=value), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        del self.raw["collection_detail"][slug]["items"]
+        with self.assertRaises(gen.GenerationError):
+            self.build()
+
+    def test_explicit_empty_items_and_nonrepository_collection_items_are_valid(self):
+        detail = next(iter(self.raw["collection_detail"].values()))
+        detail["items"] = []
+        self.assertEqual(self.build()["resources"]["collections"][0]["item_count"], 0)
+        detail["items"] = [{"id": "1234.56789", "type": "paper", "position": 0}]
+        self.assertEqual(self.build()["resources"]["collections"][0]["item_count"], 1)
+
+    def test_missing_or_malformed_detail_maps_are_blocking(self):
+        for key in ("collection_detail", "bucket_tree"):
+            for value in (None, [], "unavailable"):
+                raw = copy.deepcopy(self.raw)
+                raw[key] = value
+                with self.subTest(key=key, value=value), self.assertRaises(gen.GenerationError):
+                    self.build(raw)
+
+    def test_missing_bucket_tree_is_not_an_observed_empty_bucket(self):
+        ident = self.raw["buckets"][0]["id"]
+        for value in (None, {}, "unavailable"):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = value
+            with self.subTest(tree=value), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        del self.raw["bucket_tree"][ident]
+        with self.assertRaises(gen.GenerationError):
+            self.build()
+        self.raw["bucket_tree"][ident] = []
+        self.assertEqual(self.build()["resources"]["buckets"][0]["observed_object_count"], 0)
+
+    def test_malformed_bucket_entries_block_instead_of_reporting_empty(self):
+        ident = self.raw["buckets"][0]["id"]
+        for entry in (None, [], {}, {"path": "x"}, {"type": None, "path": "x"},
+                      {"type": "unknown", "path": "x"}, {"type": [], "path": "x"},
+                      {"type": "file", "size": 0},
+                      {"type": "directory", "path": ""}):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [entry]
+            with self.subTest(entry=entry), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
+    def test_bucket_file_size_requires_observed_nonnegative_integer(self):
+        ident = self.raw["buckets"][0]["id"]
+        for size in (None, True, False, -1, "0", "2048", 1.5, {}, []):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [{"path": "file", "type": "file", "size": size}]
+            with self.subTest(size=size), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+        raw = copy.deepcopy(self.raw)
+        raw["bucket_tree"][ident] = [{"path": "file", "type": "file"}]
+        with self.assertRaises(gen.GenerationError):
+            self.build(raw)
+
+    def test_bucket_directories_and_observed_empty_files_remain_valid(self):
+        ident = self.raw["buckets"][0]["id"]
+        self.raw["bucket_tree"][ident] = [
+            {"path": "empty", "type": "file", "size": 0},
+            {"path": "logs", "type": "directory"},
+        ]
+        bucket = self.build()["resources"]["buckets"][0]
+        self.assertEqual(bucket["observed_object_count"], 1)
+        self.assertEqual(bucket["observed_size_bytes"], 0)
+
+    def test_duplicate_bucket_paths_block_instead_of_inflating_counts(self):
+        ident = self.raw["buckets"][0]["id"]
+        first = {"path": "same", "type": "file", "size": 7}
+        for second in (first, {"path": "same", "type": "directory"}):
+            raw = copy.deepcopy(self.raw)
+            raw["bucket_tree"][ident] = [first, second]
+            with self.subTest(second=second), self.assertRaises(gen.GenerationError):
+                self.build(raw)
+
+    def test_repository_membership_drift_still_blocks(self):
+        for kind in ("models", "datasets", "spaces"):
+            raw = copy.deepcopy(self.raw)
+            raw[kind] = raw[kind][1:]
+            with self.subTest(kind=kind), self.assertRaisesRegex(gen.GenerationError, "membership differs"):
+                self.build(raw)
+
+
 if __name__ == "__main__":
     main()
+
