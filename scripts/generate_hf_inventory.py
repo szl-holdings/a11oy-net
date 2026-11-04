@@ -419,20 +419,33 @@ def siblings_of(item: dict[str, Any]) -> list[str]:
     )
 
 
+def _malformed_inventory_name(name: str) -> bool:
+    """Reject ambiguous path names, not assert the complete Hub naming grammar."""
+    return (not name or name in (".", "..") or any(c in name for c in "/?#")
+            or any(c.isspace() or ord(c) < 32 or 0x7F <= ord(c) <= 0x9F for c in name))
+
+
 def by_id(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    if not isinstance(items, list):
+        raise GenerationError("repository listing is unavailable or malformed")
     seen: set[str] = set()
     ordered = []
-    for item in sorted(items, key=lambda entry: str(entry.get("id"))):
-        ident = str(item.get("id") or "")
-        if not ident.startswith(ORG + "/"):
-            raise GenerationError(f"listing row outside {ORG}: {ident!r}")
+    for item in items:
+        if not isinstance(item, dict):
+            raise GenerationError("repository listing contains a malformed record")
+        ident = item.get("id")
+        if not isinstance(ident, str) or not ident.startswith(ORG + "/"):
+            raise GenerationError(f"listing identity outside {ORG}")
+        name = ident[len(ORG) + 1:]
+        if _malformed_inventory_name(name):
+            raise GenerationError("repository listing identity is malformed")
         if ident in seen:
             raise GenerationError(f"duplicate listing row: {ident}")
         if item.get("private") is not False:
             raise GenerationError("unauthenticated listing lacks an explicit public disposition")
         seen.add(ident)
         ordered.append(item)
-    return ordered
+    return sorted(ordered, key=lambda item: item["id"])
 
 
 def public_auxiliary_rows(items: Any, kind: str) -> list[dict[str, Any]]:
@@ -448,8 +461,7 @@ def public_auxiliary_rows(items: Any, kind: str) -> list[dict[str, Any]]:
         if not isinstance(ident, str) or not ident.startswith(ORG + "/"):
             raise GenerationError(f"{kind} listing identity outside {ORG}")
         name = ident[len(ORG) + 1:]
-        if (not name or name in (".", "..") or any(c in name for c in "/?#")
-                or any(c.isspace() or ord(c) < 32 for c in name)):
+        if _malformed_inventory_name(name):
             raise GenerationError(f"{kind} listing identity is malformed")
         if ident in seen:
             raise GenerationError(f"duplicate {kind} listing identity: {ident}")
