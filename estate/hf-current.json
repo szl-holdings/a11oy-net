@@ -41,7 +41,7 @@
     "source_git_blob": "e0f8114777d6afccb9c9e74b61ae353c29bc4fff",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "3e5cce099f922293aaecfda08efbc140e2e2abc1",
+    "source_revision": "4eaa443f5f1ec07a87e2c9755c0074be40dff43f",
     "source_sha256": "b88456cc1998dfcd959e0d2afe620bce89a5f1bf8314a891776d38723b677780"
   },
   "claim_boundaries": {
@@ -125,13 +125,13 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T02:08:53Z",
+  "observed_at": "2026-11-02T03:46:18Z",
   "observed_date": "2026-11-02",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "ad1e098c7ca08afada1e0e016ef4211d23de0258990f1fe6402e351c753515a2",
+  "source_content_sha256": "8be9efead989722e61cdcbc5961fb99af5afe4f84fb813cc4733e43992314d9f",
   "spaces_by_runtime_stage": {
     "RUNNING": 40
   }
