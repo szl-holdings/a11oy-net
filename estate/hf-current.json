@@ -14,7 +14,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-11-01T22:56:52Z",
+    "observed_at": "2026-11-03T22:46:39Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -38,11 +38,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-    "source_git_blob": "e0f8114777d6afccb9c9e74b61ae353c29bc4fff",
+    "source_git_blob": "f2d8236bc587abeaa3186063b6c384b766d42625",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "4eaa443f5f1ec07a87e2c9755c0074be40dff43f",
-    "source_sha256": "b88456cc1998dfcd959e0d2afe620bce89a5f1bf8314a891776d38723b677780"
+    "source_revision": "ecf7a07b7d57678782d49383145b49cd9d022e2c",
+    "source_sha256": "8d26b1acb66ac1427983585b9ecf4a4bb52b3e65a291ace3a79e0508c465f8ba"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -53,11 +53,11 @@
   },
   "counts": {
     "buckets": 2,
-    "collections": 7,
+    "collections": 17,
     "datasets_public": 38,
     "kernels": 14,
     "models": 41,
-    "public_resources_total": 142,
+    "public_resources_total": 152,
     "repository_membership_total": 133,
     "spaces_public": 40
   },
@@ -125,13 +125,13 @@
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T03:46:18Z",
-  "observed_date": "2026-11-02",
+  "observed_at": "2026-11-04T05:25:37Z",
+  "observed_date": "2026-11-04",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "8be9efead989722e61cdcbc5961fb99af5afe4f84fb813cc4733e43992314d9f",
+  "source_content_sha256": "90b30bed48d5ffa320effe886017c3a2dac02b7d2a724594ef5b2cfef5158eb6",
   "spaces_by_runtime_stage": {
     "RUNNING": 40
   }
