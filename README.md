@@ -254,9 +254,16 @@ set blocks publication. These captures use membership scope/schema v2, inventory
 v5, and compact-current v2. Older three-kind captures keep their historical v1
 membership and v4 inventory semantics and are not silently relabelled.
 The reserved public `README` Space is included when independently observable.
+Primary repository listings and the canonical manifest require object records
+with owned string IDs and one nonempty repository name. Dot names, extra path
+segments, query or fragment delimiters, whitespace, and C0, DEL, or C1 controls are
+rejected even when the malformed ID appears in both source and observation.
+Malformed listing shapes stop generation before any output is written.
+These checks reject ambiguous names; they do not implement the full Hub naming grammar.
 Collections and buckets remain auxiliary resources outside repository membership.
 Their listings must separately prove an explicit boolean `private: false`, a
 unique identity owned by `SZLHOLDINGS`, and available detail observations.
+The same name checks, including C0, DEL, and C1 rejection, apply to auxiliary IDs.
 Collection details must bind the requested slug and provide a valid items list;
 an explicit empty list is distinct from a missing or malformed observation.
 Collection members may reference other owners or non-repository resources.
