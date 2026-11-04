@@ -762,6 +762,98 @@ class AuxiliaryObservationTests(TestCase):
                 self.build(raw)
 
 
+class PaginationTest(TestCase):
+    URL = gen.API + "/buckets/SZLHOLDINGS/szl-artifacts/tree?recursive=true"
+
+    def response(self, payload, link=None):
+        import io
+        from email.message import Message
+        result = io.BytesIO(json.dumps(payload).encode())
+        result.headers = Message()
+        if link is not None:
+            result.headers["Link"] = link
+        return result
+
+    def test_short_first_page_is_not_published_as_complete(self):
+        second = self.URL + "&cursor=second"
+        first_row = {"path": "one", "type": "file", "size": 7}
+        second_row = {"path": "two", "type": "file", "size": 11}
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=[
+            self.response([first_row], '<' + second + '>; rel="next"'),
+            self.response([second_row]),
+        ]) as request:
+            rows = gen.LiveSource(attempts=1).bucket_tree("SZLHOLDINGS/szl-artifacts")
+        self.assertEqual(rows, [first_row, second_row])
+        self.assertEqual([call.args[0].full_url for call in request.call_args_list], [self.URL, second])
+        self.assertEqual(sum(row["size"] for row in rows), 18)
+
+    def test_all_repository_and_auxiliary_listings_follow_next(self):
+        for kind in ("models", "datasets", "spaces", "kernels", "collections", "buckets"):
+            with self.subTest(kind=kind):
+                url = gen.public_list_url(kind) if kind in ("collections", "buckets") else gen.list_url(kind)
+                page = url + ("&" if "?" in url else "?") + "cursor=second"
+                with mock.patch.object(gen.urllib.request, "urlopen", side_effect=[
+                    self.response([{"id": "first"}], '<' + page + '>; rel="next"'),
+                    self.response([{"id": "second"}]),
+                ]):
+                    self.assertEqual(gen.LiveSource().listing(kind), [{"id": "first"}, {"id": "second"}])
+
+    def test_no_next_relation_and_empty_list_are_terminal(self):
+        for payload in ([], [{"path": "zero", "type": "file", "size": 0}]):
+            with self.subTest(payload=payload), mock.patch.object(gen.urllib.request, "urlopen", return_value=self.response(payload)) as request:
+                self.assertEqual(gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts"), payload)
+                self.assertEqual(request.call_count, 1)
+
+    def test_invalid_continuation_never_returns_partial_rows(self):
+        pages = ["http://huggingface.co/api/buckets/SZLHOLDINGS/szl-artifacts/tree?recursive=true",
+                 "https://evil.example/tree?recursive=true", "https://huggingface.co@evil.example/tree?recursive=true",
+                 gen.API + "/buckets/SZLHOLDINGS/other/tree?recursive=true",
+                 self.URL.replace("true", "false") + "&cursor=other",
+                 self.URL + "&cursor=x&unknown=1", self.URL + "#fragment"]
+        for page in pages:
+            with self.subTest(page=page), mock.patch.object(gen.urllib.request, "urlopen", return_value=self.response([{"path": "one"}], '<'+page+'>; rel="next"')) as request:
+                with self.assertRaises(gen.GenerationError):
+                    gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts")
+                self.assertEqual(request.call_count, 1)
+
+    def test_invalid_link_metadata_refuses_partial_result(self):
+        for link in ('<https://huggingface.co/x>; rel=""', '<https://huggingface.co/x>; rel=" "', '<https://huggingface.co/x>; rel="next,prev"', '<https://huggingface.co/x>; rel="next', '<https://huggingface.co/x>; rel="prev" garbage', "garbage", '<'+self.URL+'>', '<'+self.URL+'>; rel="next"; rel="prev"',
+                     '<'+self.URL+'>; rel="next", <'+self.URL+'&cursor=x>; rel="next"'):
+            with self.subTest(link=link), mock.patch.object(gen.urllib.request, "urlopen", return_value=self.response([{}], link)):
+                with self.assertRaises(gen.GenerationError):
+                    gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts")
+
+    def test_cycle_refuses_partial_rows(self):
+        with mock.patch.object(gen.urllib.request, "urlopen", return_value=self.response([{}], '<'+self.URL+'>; rel="next"')) as request:
+            with self.assertRaisesRegex(gen.GenerationError, "cycle"):
+                gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts")
+            self.assertEqual(request.call_count, 1)
+
+    def test_second_page_error_refuses_partial_rows(self):
+        second = self.URL + "&cursor=second"
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=[self.response([{}], '<'+second+'>; rel="next"'), OSError("not available")]), mock.patch.object(gen.time, "sleep"):
+            with self.assertRaises(gen.GenerationError):
+                gen.LiveSource(attempts=1).bucket_tree("SZLHOLDINGS/szl-artifacts")
+
+    def test_second_page_malformed_json_shape_refuses_partial_rows(self):
+        second = self.URL + "&cursor=second"
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=[self.response([{}], '<'+second+'>; rel="next"'), self.response({"error":"unavailable"})]):
+            with self.assertRaisesRegex(gen.GenerationError, "non-list"):
+                gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts")
+
+    def test_cursor_chain_is_bounded(self):
+        pages = [self.response([{}], '<'+self.URL+'&cursor='+str(i+1)+'>; rel="next"') for i in range(100)]
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=pages) as request:
+            with self.assertRaisesRegex(gen.GenerationError, "page budget"):
+                gen.LiveSource().bucket_tree("SZLHOLDINGS/szl-artifacts")
+            self.assertEqual(request.call_count, 100)
+
+    def test_prev_relation_and_multi_relation_next_are_supported(self):
+        link = '<'+self.URL+'>; rel="prev", <'+self.URL+'&cursor=x>; rel="alternate next"'
+        self.assertEqual(gen.next_page(link, self.URL), self.URL+'&cursor=x')
+        self.assertIsNone(gen.next_page('<'+self.URL+'>; rel="prev"', self.URL))
+
+
 if __name__ == "__main__":
     main()
 
