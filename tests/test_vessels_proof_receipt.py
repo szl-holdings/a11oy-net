@@ -46,8 +46,7 @@ class VesselsProofReceipt(unittest.TestCase):
         self.assertIn("https://a-11-oy.com/vessels", page)
         self.assertEqual(page.count("https://a-11-oy.com/vessels"), 2)
         self.assertNotIn("https://huggingface.co/spaces/SZLHOLDINGS/killinchu", page)
-        furniture = "https://" + "a11oy.com"
-        self.assertNotIn(furniture, page)
+        self.assertNotIn("https://" + "a11oy.com", page)
         self.assertIn("script-src 'none'", page)
         self.assertIn("connect-src 'none'", page)
         self.assertIn("Conjecture 1 OPEN", page)
