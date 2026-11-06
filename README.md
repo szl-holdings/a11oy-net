@@ -254,6 +254,11 @@ set blocks publication. These captures use membership scope/schema v2, inventory
 v5, and compact-current v2. Older three-kind captures keep their historical v1
 membership and v4 inventory semantics and are not silently relabelled.
 The reserved public `README` Space is included when independently observable.
+An unauthenticated 401 on that direct read is an explicit not-publicly-observed
+receipt, not a public row. A 401 cannot distinguish private from absent, so the
+receipt does not classify the Space as private or deleted and does not change
+its visibility. If the canonical manifest still lists it, membership drift still
+blocks publication.
 Primary repository listings and the canonical manifest require object records
 with owned string IDs and one nonempty repository name. Dot names, extra path
 segments, query or fragment delimiters, whitespace, and C0, DEL, or C1 controls are

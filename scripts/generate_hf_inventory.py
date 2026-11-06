@@ -46,6 +46,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
@@ -142,6 +143,40 @@ CLASS_ORDER = (
 
 class GenerationError(RuntimeError):
     """Raised when an observation cannot be turned into honest output."""
+
+
+class HubStatusError(GenerationError):
+    """A public Hub GET returned a deterministic HTTP status."""
+
+    def __init__(self, url: str, status: int, reason: str) -> None:
+        self.url = url
+        self.status = status
+        self.reason = reason
+        super().__init__(f"GET {url} failed: HTTP Error {status}: {reason}")
+
+
+def unobserved_space_receipt(name: str) -> dict[str, Any]:
+    """A reserved Space direct-read that returned 401 and no public metadata.
+
+    Hugging Face uses this status for private repositories and for names that
+    are not there. The receipt records the status only. It does not invent a
+    public row, a deletion, or a privacy classification.
+    """
+
+    ident = f"{ORG}/{name}"
+    return {
+        "id": ident,
+        "publicly_observable": False,
+        "observation_receipt": {
+            "url": f"{API}/spaces/{ident}",
+            "http_status": 401,
+            "disposition": "NOT_PUBLICLY_OBSERVED",
+            "boundary": (
+                "Unauthenticated GET returned 401. A 401 cannot distinguish "
+                "private from absent. No public metadata was observed and none is invented."
+            ),
+        },
+    }
 
 
 # --------------------------------------------------------------------------
@@ -245,9 +280,17 @@ class LiveSource:
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
                     return response.read(), ", ".join(response.headers.get_all("Link", [])) or None
+            except urllib.error.HTTPError as exc:
+                # 401/403/404 will not change on retry. 401 on a reserved Space
+                # is handled by space(); every other caller still fails closed.
+                status = exc.code if isinstance(exc.code, int) else 0
+                reason = exc.reason if isinstance(exc.reason, str) else ""
+                if status in {401, 403, 404}:
+                    raise HubStatusError(url, status, reason) from exc
+                last = exc
             except Exception as exc:  # retried, then surfaced
                 last = exc
-                time.sleep(2 * (attempt + 1))
+            time.sleep(2 * (attempt + 1))
         raise GenerationError(f"GET {url} failed: {last}")
 
     def _bytes(self, url: str) -> bytes:
@@ -305,7 +348,13 @@ class LiveSource:
         return self._listing(url)
 
     def space(self, name: str) -> dict[str, Any]:
-        return self._get(f"{API}/spaces/{ORG}/{name}")
+        url = f"{API}/spaces/{ORG}/{name}"
+        try:
+            return self._get(url)
+        except HubStatusError as exc:
+            if exc.status == 401 and exc.url == url:
+                return unobserved_space_receipt(name)
+            raise
 
     def collection(self, slug: str) -> dict[str, Any]:
         return self._get(f"{API}/collections/{slug}")
@@ -699,6 +748,32 @@ def bucket_row(item: dict[str, Any], tree: list[dict[str, Any]]) -> dict[str, An
     }
 
 
+def reserved_receipt(name: str, payload: Any) -> dict[str, Any] | None:
+    """Return a validated 401 receipt, or None when the payload is a normal record."""
+
+    if not isinstance(payload, dict) or "observation_receipt" not in payload:
+        return None
+    ident = f"{ORG}/{name}"
+    receipt = payload.get("observation_receipt")
+    boundary = receipt.get("boundary") if isinstance(receipt, dict) else None
+    if (
+        payload.get("id") != ident
+        or payload.get("publicly_observable") is not False
+        or set(payload) != {"id", "publicly_observable", "observation_receipt"}
+        or not isinstance(receipt, dict)
+        or set(receipt) != {"url", "http_status", "disposition", "boundary"}
+        or receipt.get("url") != f"{API}/spaces/{ident}"
+        or receipt.get("http_status") != 401
+        or receipt.get("disposition") != "NOT_PUBLICLY_OBSERVED"
+        or not isinstance(boundary, str)
+        or "cannot distinguish private from absent" not in boundary
+        or "none is invented" not in boundary
+    ):
+        raise GenerationError("reserved Space receipt is malformed or smuggles metadata")
+    return {"id": ident, "url": receipt["url"], "http_status": 401,
+            "disposition": "NOT_PUBLICLY_OBSERVED", "boundary": boundary}
+
+
 def coverage(ids: list[str], covered: set[str]) -> dict[str, Any]:
     missing = sorted(set(ids) - covered)
     total = len(ids)
@@ -723,8 +798,15 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
     listed_spaces = by_id(raw["spaces"])
     listed_ids = {str(item["id"]) for item in listed_spaces}
     specials = []
+    receipts = []
     for name, payload in sorted(raw["special_spaces"].items()):
         ident = f"{ORG}/{name}"
+        receipt = reserved_receipt(name, payload)
+        if receipt is not None:
+            if ident in listed_ids:
+                raise GenerationError("reserved Space receipt contradicts the public author list")
+            receipts.append(receipt)
+            continue
         if not isinstance(payload, dict) or payload.get("id") != ident:
             raise GenerationError("reserved Space metadata does not bind the requested repository")
         if ident in listed_ids or payload.get("private") is True:
@@ -769,6 +851,10 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
                 "only_canonical_ids": only_canonical[:20],
                 "id_sample_limit": 20,
             }
+            if receipts:
+                # The receipt explains a reserved direct-read. It does not
+                # remove that id from the canonical comparison above.
+                diagnostic["reserved_space_receipts"] = receipts
             raise GenerationError(
                 f"observed {kind} membership differs from immutable canonical GitHub source: "
                 + json.dumps(diagnostic, sort_keys=True)
@@ -856,6 +942,8 @@ def build_inventory(raw: dict[str, Any], observed_at: str) -> dict[str, Any]:
         "spaces_by_runtime_stage": dict(sorted(stages.items())),
         "special_spaces": sorted(row["id"] for row in spaces if row["listing"] != "AUTHOR_LIST_API"),
     }
+    if receipts:
+        inventory["reserved_space_receipts"] = receipts
     if native_kernels:
         inventory["collection_coverage"]["kernels"] = coverage(
             [row["id"] for row in kernels], members["kernel"])
