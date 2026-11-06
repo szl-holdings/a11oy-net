@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import http.client
 import http.server
 import importlib.util
 import json
@@ -29,6 +30,7 @@ def load_module(name: str):
 
 
 edge = load_module("edge_security_readback")
+headers = load_module("check_security_headers")
 source_witness = load_module("stamp_source_witness")
 
 
@@ -419,6 +421,52 @@ class EdgeReadbackTests(TestCase):
             errors,
             ["https://a11oy.net/: live readback failed: no-redirect sentinel"],
         )
+
+
+def header_message(pairs: list[tuple[str, str]]) -> http.client.HTTPMessage:
+    message = http.client.HTTPMessage()
+    message._headers = list(pairs)
+    return message
+
+
+class LiveHeaderDuplicateTests(TestCase):
+    def test_every_duplicate_must_match_and_the_observed_value_is_retained(self) -> None:
+        expected, static_errors = headers.validate_static()
+        self.assertEqual(static_errors, [])
+        pairs = [(name, expected[name]) for name in sorted(headers.REQUIRED_HEADERS)]
+        pairs.append(("Strict-Transport-Security", expected["strict-transport-security"]))
+
+        class Response:
+            status = 200
+            headers = header_message(pairs)
+
+            def geturl(self) -> str:
+                return "https://a11oy.net/"
+
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> bool:
+                return False
+
+        with mock.patch.object(headers, "open_no_redirect", return_value=Response()):
+            self.assertEqual(headers.validate_live("https://a11oy.net/", expected), [])
+
+        weaker = [
+            pair for pair in pairs
+            if pair[0].lower() != "strict-transport-security"
+        ]
+        weaker.extend((
+            ("Strict-Transport-Security", expected["strict-transport-security"]),
+            ("Strict-Transport-Security", "max-age=1"),
+        ))
+        Response.headers = header_message(weaker)
+        with mock.patch.object(headers, "open_no_redirect", return_value=Response()):
+            errors = headers.validate_live("https://a11oy.net/", expected)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("observed ", errors[0])
+        self.assertIn(repr(expected["strict-transport-security"]), errors[0])
+        self.assertIn(repr("max-age=1"), errors[0])
 
 
 class WorkflowContractTests(TestCase):

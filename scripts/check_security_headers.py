@@ -629,6 +629,18 @@ def normalize(value: str) -> str:
     return " ".join(value.split())
 
 
+def header_values(headers: object, key: str) -> list[str]:
+    """Every raw value for one header. Duplicate values are not collapsed."""
+
+    getter = getattr(headers, "get_all", None)
+    if not callable(getter):
+        return []
+    values = getter(key)
+    if not values:
+        return []
+    return [value if isinstance(value, str) else str(value) for value in values]
+
+
 def validate_live(url: str, expected: dict[str, str]) -> list[str]:
     errors: list[str] = []
     try:
@@ -641,7 +653,7 @@ def validate_live(url: str, expected: dict[str, str]) -> list[str]:
     )
     try:
         with open_no_redirect(request, timeout=20) as response:
-            observed = {key.lower(): value for key, value in response.headers.items()}
+            observed_headers = response.headers
             final_url = response.geturl()
             status = response.status
     except Exception as exc:  # pragma: no cover - network/provider dependent
@@ -659,11 +671,19 @@ def validate_live(url: str, expected: dict[str, str]) -> list[str]:
                 f"expected {requested_url}"
             )
     for key in sorted(REQUIRED_HEADERS):
-        actual = observed.get(key)
-        if actual is None:
+        # Every instance must match. A second, weaker Strict-Transport-Security
+        # value must not pass because a dict kept the last copy, and a matching
+        # last copy must not hide an earlier weaker one. RFC 6797 uses only the
+        # first STS header; requiring every copy keeps that control exact.
+        actuals = header_values(observed_headers, key)
+        if not actuals:
             errors.append(f"{url}: missing live {key}")
-        elif normalize(actual) != normalize(expected[key]):
-            errors.append(f"{url}: live {key} does not match the committed contract")
+            continue
+        if any(normalize(value) != normalize(expected[key]) for value in actuals):
+            observed = ", ".join(repr(value) for value in actuals)
+            errors.append(
+                f"{url}: live {key} does not match the committed contract; observed {observed}"
+            )
     return errors
 
 
