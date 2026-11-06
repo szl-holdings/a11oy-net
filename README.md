@@ -346,15 +346,16 @@ evidence of a public outage. Inspect the Cloudflare SSL mode and underlying
 proxied DNS targets with provider access, diagnose Pages ACME authorization,
 then require a renewed `approved` origin certificate and read back both origin
 and edge HTTPS before closing that risk. A Cloudflare edge response alone
-does not establish end-to-end TLS. A later readback met those closure
-conditions: Edge Security Readback
+does not establish end-to-end TLS. A later readback met the certificate and
+HTTPS read-back conditions: Edge Security Readback
 [run 42243199710](https://github.com/szl-holdings/a11oy-net/actions/runs/42243199710)
 (2026-11-06 UTC, exact main `e6dcbf95b8c0de94a87e9fa260d3d6da2d14f2c8`)
 reported PASS for every control. Its contract passes the Pages control only
 for `https_certificate.state=approved`, `https_enforced=true`, and at least
 seven days of certificate validity, and passes the edge and Pages-origin TLS
-controls only after hostname-verified handshakes. That is a point-in-time
-result, not a renewal guarantee.
+controls only after hostname-verified handshakes. The readback does not
+inspect the Cloudflare SSL mode or the proxied DNS targets; those still need
+provider access. That is a point-in-time result, not a renewal guarantee.
 
 Post-merge verification sequence:
 
