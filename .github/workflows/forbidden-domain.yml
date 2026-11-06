@@ -9,7 +9,11 @@
 # (proof).
 #
 # Installed by the szl-alignment engine; keep in sync with
-# alignment/templates/workflows/forbidden-domain.yml.
+# alignment/templates/workflows/forbidden-domain.yml. This copy runs the same
+# rule through GNU grep with a fail-closed scanner self-test, because the
+# template's ripgrep is not installed on ubuntu-latest and its `|| true`
+# reported every tree clean; the template needs the same correction.
+# tests/test_forbidden_domain_gate.py executes this step's script.
 name: forbidden-domain
 
 on:
@@ -28,12 +32,43 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          hits="$(rg -n --no-heading --hidden -P '(?<!-)a11oy\.com' --glob '!.git' . || true)"
-          violations="$(printf '%s' "$hits" | rg -v -i 'never|forbidden|not in|assertNotIn|does not appear|is not a surface|blocklist|do not treat|do not add|not affiliated' || true)"
-          if [ -n "$violations" ]; then
-            echo "::error::Forbidden domain references found (release-blocking CRITICAL)."
-            echo "::error::Replace with a-11-oy.com or remove; guard contexts must say so on the same line."
-            printf '%s\n' "$violations"
+          # ripgrep is not installed on ubuntu-latest; GNU grep is. The previous
+          # `rg ... || true` logged "rg: command not found" and reported an
+          # unscanned tree as clean. The rule below is unchanged; only the
+          # scanner and its exit-status handling are.
+          export LC_ALL=C
+          pattern='(?<!-)a11oy\.com'
+          guards='never|forbidden|not in|assertNotIn|does not appear|is not a surface|blocklist|do not treat|do not add|not affiliated'
+          # Fail closed: before an empty result may mean "clean", the scanner
+          # must see an unguarded sentinel (assembled so this file never matches).
+          sentinel="unguarded a11oy"".com sentinel"
+          probe="$(printf '%s\n' "${sentinel}" | grep -P -- "${pattern}" | grep -v -i -E -- "${guards}")" || probe=""
+          if [ "${probe}" != "${sentinel}" ]; then
+            echo "::error::forbidden-domain scanner self-test failed; refusing to report an unscanned tree as clean."
             exit 1
           fi
-          echo "OK: no forbidden domain references outside guard contexts."
+          # grep exits 0 on a match, 1 on no match, and >1 on error; only 0 and 1 are results.
+          scan_status=0
+          hits="$(grep -rnIP --exclude-dir=.git -- "${pattern}" .)" || scan_status=$?
+          if [ "${scan_status}" -gt 1 ]; then
+            echo "::error::forbidden-domain scan failed (grep exit ${scan_status}); no result is reported."
+            exit 1
+          fi
+          violations=""
+          guarded=0
+          if [ -n "${hits}" ]; then
+            guarded="$(printf '%s\n' "${hits}" | wc -l)"
+            filter_status=0
+            violations="$(printf '%s\n' "${hits}" | grep -v -i -E -- "${guards}")" || filter_status=$?
+            if [ "${filter_status}" -gt 1 ]; then
+              echo "::error::forbidden-domain guard filter failed (grep exit ${filter_status}); no result is reported."
+              exit 1
+            fi
+          fi
+          if [ -n "${violations}" ]; then
+            echo "::error::Forbidden domain references found (release-blocking CRITICAL)."
+            echo "::error::Replace with a-11-oy.com or remove; guard contexts must say so on the same line."
+            printf '%s\n' "${violations}"
+            exit 1
+          fi
+          echo "OK: scanned the tree; ${guarded} matching line(s), all in guard contexts; no forbidden domain references outside guard contexts."
