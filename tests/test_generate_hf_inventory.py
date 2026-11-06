@@ -6,10 +6,12 @@ from __future__ import annotations
 import importlib.util
 import hashlib
 import copy
+import http.client
 import json
 import io
 import shutil
 import tempfile
+import urllib.error
 from pathlib import Path
 from unittest import TestCase, main, mock
 
@@ -595,6 +597,77 @@ class GeneratorTest(TestCase):
         raw = gen.collect(gen.FixtureSource(FIXTURE))
         raw["special_spaces"] = {}
         with self.assertRaises(gen.GenerationError):
+            gen.build_inventory(raw, T1)
+
+    def test_reserved_space_401_is_one_receipt_and_is_not_retried(self) -> None:
+        source = gen.LiveSource(attempts=3)
+        url = "https://huggingface.co/api/spaces/SZLHOLDINGS/README"
+        denied = urllib.error.HTTPError(
+            url, 401, "Unauthorized", http.client.HTTPMessage(), io.BytesIO(b'{"error":"Invalid username or password."}'),
+        )
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=denied) as request, \
+                mock.patch.object(gen.time, "sleep") as sleep:
+            payload = source.space("README")
+        self.assertEqual(request.call_count, 1)
+        sleep.assert_not_called()
+        self.assertEqual(set(payload), {"id", "publicly_observable", "observation_receipt"})
+        self.assertFalse(payload["publicly_observable"])
+        self.assertEqual(payload["observation_receipt"]["http_status"], 401)
+        self.assertNotIn("sha", payload)
+        self.assertNotIn("private", payload)
+
+    def test_reserved_space_403_and_500_stay_hard_errors(self) -> None:
+        source = gen.LiveSource(attempts=3)
+        url = "https://huggingface.co/api/spaces/SZLHOLDINGS/README"
+        forbidden = urllib.error.HTTPError(
+            url, 403, "Forbidden", http.client.HTTPMessage(), io.BytesIO(b""),
+        )
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=forbidden) as request, \
+                mock.patch.object(gen.time, "sleep"):
+            with self.assertRaises(gen.HubStatusError):
+                source.space("README")
+        self.assertEqual(request.call_count, 1)
+        unavailable = urllib.error.HTTPError(
+            url, 500, "Server Error", http.client.HTTPMessage(), io.BytesIO(b""),
+        )
+        with mock.patch.object(gen.urllib.request, "urlopen", side_effect=unavailable) as request, \
+                mock.patch.object(gen.time, "sleep"):
+            with self.assertRaisesRegex(gen.GenerationError, "HTTP Error 500"):
+                source.space("README")
+        self.assertEqual(request.call_count, 3)
+
+    def test_reserved_401_receipt_blocks_while_canonical_still_lists_the_space(self) -> None:
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        raw["special_spaces"]["README"] = gen.unobserved_space_receipt("README")
+        with self.assertRaises(gen.GenerationError) as caught:
+            gen.build_inventory(raw, T1)
+        message = str(caught.exception)
+        self.assertIn("observed spaces membership differs", message)
+        diagnostic = json.loads(message.split(": ", 1)[1])
+        self.assertIn("SZLHOLDINGS/README", diagnostic["only_canonical_ids"])
+        self.assertEqual(diagnostic["reserved_space_receipts"][0]["http_status"], 401)
+        self.assertIn("cannot distinguish private from absent", diagnostic["reserved_space_receipts"][0]["boundary"])
+        self.assertNotIn("sha", diagnostic["reserved_space_receipts"][0])
+
+    def test_reserved_401_receipt_publishes_only_after_canonical_omits_the_space(self) -> None:
+        raw = gen.collect(gen.FixtureSource(FIXTURE))
+        manifest = json.loads(raw["canonical_source"]["manifest_text"])
+        manifest["inventory"]["spaces"] = [
+            row for row in manifest["inventory"]["spaces"] if row["id"] != "SZLHOLDINGS/README"
+        ]
+        manifest["counts"]["spaces"] = len(manifest["inventory"]["spaces"])
+        content = json.dumps(manifest).encode()
+        blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
+        raw["canonical_source"] = gen.canonical_source(content, "b" * 40, blob)
+        raw["special_spaces"]["README"] = gen.unobserved_space_receipt("README")
+        inventory = gen.build_inventory(raw, T1)
+        self.assertNotIn("SZLHOLDINGS/README", [row["id"] for row in inventory["resources"]["spaces"]])
+        self.assertEqual(inventory["counts"]["special_spaces_added"], 0)
+        self.assertEqual(inventory["reserved_space_receipts"][0]["disposition"], "NOT_PUBLICLY_OBSERVED")
+        smuggled = gen.unobserved_space_receipt("README")
+        smuggled["sha"] = "a" * 40
+        raw["special_spaces"]["README"] = smuggled
+        with self.assertRaisesRegex(gen.GenerationError, "smuggles metadata"):
             gen.build_inventory(raw, T1)
 
     def test_refresh_workflow_is_scheduled_locked_tokenless_and_never_merges(self) -> None:

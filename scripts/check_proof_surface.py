@@ -204,6 +204,19 @@ def check_generated_hf_inventory() -> None:
         assert counts[kind] == len(ids) == len(set(ids)), kind
         assert ids == sorted(ids), f"{kind} ids must be sorted"
     assert counts["spaces"] == counts["spaces_list_api_rows"] + counts["special_spaces_added"]
+    public_space_ids = {row["id"] for row in resources["spaces"]}
+    receipts = inventory.get("reserved_space_receipts", [])
+    if "reserved_space_receipts" in inventory:
+        assert isinstance(receipts, list) and receipts, "an empty reserved-space receipt list is not a receipt"
+        seen_receipts = set()
+        for receipt in receipts:
+            assert isinstance(receipt, dict), receipt
+            assert receipt.get("disposition") == "NOT_PUBLICLY_OBSERVED"
+            assert receipt.get("http_status") == 401
+            assert receipt.get("id") not in public_space_ids
+            assert receipt.get("id") not in seen_receipts
+            assert "cannot distinguish private from absent" in str(receipt.get("boundary"))
+            seen_receipts.add(receipt["id"])
     membership_kinds = ("models", "datasets", "spaces", "kernels") if native_kernels else ("models", "datasets", "spaces")
     if not native_kernels:
         assert {row["id"] for row in resources["kernels"]} <= {row["id"] for row in resources["models"]}, (
