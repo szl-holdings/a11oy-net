@@ -125,7 +125,10 @@ visitor browser
 No application backend, account, token, model weight, dataset payload, or
 private resource is required. The browser reads public Hub listing metadata for
 models, datasets, collections, and buckets, plus transport-stage metadata for
-two curated public Spaces. Interactive Spaces are not enumerated into generated
+the curated Spaces bound in `/estate/hf-current.json` `live_space_cards`: the
+`spaces.json` keep policy intersected with the public listing, five in the
+committed 2026-11-02 observation. A row that does not match its committed
+binding is never probed. Interactive Spaces are not enumerated into generated
 registry cards, and Killinchu-named resources remain excluded.
 
 If an upstream read fails, the page preserves the static evidence index and
@@ -343,7 +346,15 @@ evidence of a public outage. Inspect the Cloudflare SSL mode and underlying
 proxied DNS targets with provider access, diagnose Pages ACME authorization,
 then require a renewed `approved` origin certificate and read back both origin
 and edge HTTPS before closing that risk. A Cloudflare edge response alone
-does not establish end-to-end TLS.
+does not establish end-to-end TLS. A later readback met those closure
+conditions: Edge Security Readback
+[run 42243199710](https://github.com/szl-holdings/a11oy-net/actions/runs/42243199710)
+(2026-11-06 UTC, exact main `e6dcbf95b8c0de94a87e9fa260d3d6da2d14f2c8`)
+reported PASS for every control. Its contract passes the Pages control only
+for `https_certificate.state=approved`, `https_enforced=true`, and at least
+seven days of certificate validity, and passes the edge and Pages-origin TLS
+controls only after hostname-verified handshakes. That is a point-in-time
+result, not a renewal guarantee.
 
 Post-merge verification sequence:
 
@@ -381,7 +392,13 @@ and verified, compares the deployed source witness with that exact revision,
 and evaluates Pages HTTPS enforcement, a hostname-verified TLS handshake,
 authenticated DS and DNSKEY answers through independent validating resolvers,
 and live response headers. It uploads a bounded point-in-time JSON receipt and
-fails if any control is unavailable, stale, missing, or mismatched. These
+fails if any control is unavailable, stale, missing, or mismatched. A failing
+run also writes each failed control's bounded errors to the job log, with one
+annotation per failed control, so the cause is readable without the artifact.
+An edge HTTP 402 carrying an x402 `PAYMENT-REQUIRED` header is reported as
+`edge returned 402 (x402 paywall)`, and a Cloudflare managed challenge as
+`edge returned 403 managed challenge`; both are edge refusals of the probe,
+not observations of the origin. These
 controls remain independent: a valid certificate cannot promote missing
 DNSSEC, missing headers, a stale source witness, or disabled Pages HTTPS
 enforcement to PASS. Update deployment-state evidence only after that exact
