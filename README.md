@@ -1,3 +1,7 @@
+**The estate's proof surface: verification pages, evidence walls, and checkable claims for everything SZL publishes.**
+
+Demo: https://a11oy.net · Verify in 60s: `git clone https://github.com/szl-holdings/a11oy-net && cd a11oy-net && python -m pytest -q`
+
 # a11oy Proof Registry
 <!-- szl:header v1 -->
 <!-- Native identity: szl-brand@4309f6fce89179331b0b3ed8c99494e76c5be256; Orbit v2 icon. -->
