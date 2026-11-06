@@ -65,6 +65,17 @@ SCHEMA_CURRENT = "szl.hf-current/v1"
 SCHEMA_NATIVE_INVENTORY = "szl.public-hf-inventory/v5"
 SCHEMA_NATIVE_CURRENT = "szl.hf-current/v2"
 SCHEMA_LIVE_ALIGN = "szl.live-align/v2"
+# Pages may carry either sentence. render_page selects the one bound by the
+# canonical schema, in both directions, so a native observation cannot leave
+# "included in the model count" in place and a legacy observation cannot leave
+# the separate-namespace sentence in place.
+KERNEL_PAREN_NATIVE = "kernels (separate native repositories)"
+KERNEL_PAREN_LEGACY = "kernels (included in models)"
+KERNEL_SCOPE_NATIVE = (
+    "Separate native kernel repositories, counted once by kind and id, "
+    "not included in the model count."
+)
+KERNEL_SCOPE_LEGACY = "Kernel repositories, included in the model count."
 OBSERVATION_MODE = "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT"
 SPECIAL_SPACES = ("README",)
 CANONICAL_REPOSITORY = "szl-holdings/a11oy"
@@ -1288,14 +1299,28 @@ def live_row(card: dict[str, Any]) -> str:
     )
 
 
+def apply_kernel_scope(text: str, native: bool) -> str:
+    """Rewrite the owned kernel-scope sentences to the bound schema."""
+
+    pairs = (
+        (KERNEL_PAREN_NATIVE, KERNEL_PAREN_LEGACY),
+        (KERNEL_SCOPE_NATIVE, KERNEL_SCOPE_LEGACY),
+    )
+    for native_phrase, legacy_phrase in pairs:
+        current_phrase, bound_phrase = (
+            (legacy_phrase, native_phrase) if native else (native_phrase, legacy_phrase)
+        )
+        text = text.replace(current_phrase, bound_phrase)
+    return text
+
+
 def render_page(text: str, current: dict[str, Any]) -> str:
     def fill(match: re.Match[str]) -> str:
         value = lookup(current, match.group("key"))
         return match.group("open") + html.escape(str(value), quote=False) + match.group("close")
 
     text = FIELD.sub(fill, text)
-    if current["schema"] == SCHEMA_NATIVE_CURRENT:
-        text = text.replace("kernels (included in models)", "kernels (separate native repositories)")
+    text = apply_kernel_scope(text, current["schema"] == SCHEMA_NATIVE_CURRENT)
 
     def rows(match: re.Match[str]) -> str:
         body = "".join(live_row(card) for card in current["live_space_cards"])
