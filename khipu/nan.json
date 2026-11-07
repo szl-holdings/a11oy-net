@@ -13,6 +13,7 @@
   "product": "https://a-11-oy.com/khipu",
   "proof": "https://a11oy.net/khipu/",
   "hub": "https://huggingface.co/SZLHOLDINGS/szl-khipu",
-  "not": ["killinchu", "a11oy.com", "SZLHoldings GitHub slug", "fabricated joule"],
+  "not": ["killinchu", "SZLHoldings GitHub slug", "fabricated joule"],
+  "never": ["a11oy.com"],
   "run": "python3 -m szl_khipu.nan_lab --selftest"
 }

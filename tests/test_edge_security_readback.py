@@ -2,15 +2,19 @@
 
 from __future__ import annotations
 
+import contextlib
 import copy
 import http.client
 import http.server
 import importlib.util
+import io
 import json
+import os
 import pathlib
 import sys
 import tempfile
 import threading
+import urllib.error
 from unittest import TestCase, main, mock
 
 
@@ -467,6 +471,207 @@ class LiveHeaderDuplicateTests(TestCase):
         self.assertIn("observed ", errors[0])
         self.assertIn(repr(expected["strict-transport-security"]), errors[0])
         self.assertIn(repr("max-age=1"), errors[0])
+
+
+@contextlib.contextmanager
+def refusing_server(status: int, extra_headers: list[tuple[str, str]]):
+    """Serve one local refusal so the real urllib error path is exercised."""
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self) -> None:
+            self.send_response(status)
+            for name, value in extra_headers:
+                self.send_header(name, value)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"refused")
+
+        def log_message(self, format: str, *args: object) -> None:
+            return
+
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_port}/.well-known/szl-source.json"
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=2)
+
+
+class EdgeRefusalDiagnosisTests(TestCase):
+    """A probe refused at the edge must say which edge control refused it."""
+
+    def test_x402_paywall_is_named_without_echoing_the_payment_header(self) -> None:
+        payment = "eyJ4NDAyVmVyc2lvbiI6Mn0-fixture"
+        with refusing_server(402, [("PAYMENT-REQUIRED", payment)]) as url:
+            with self.assertRaises(edge.ProbeError) as caught:
+                edge.fetch_json(url)
+        message = str(caught.exception)
+        self.assertIn("readback failed: edge returned 402 (x402 paywall)", message)
+        self.assertIn("PAYMENT-REQUIRED header present", message)
+        self.assertNotIn(payment, message)
+
+    def test_402_without_payment_header_is_not_labelled_x402(self) -> None:
+        with refusing_server(402, []) as url:
+            with self.assertRaises(edge.ProbeError) as caught:
+                edge.fetch_json(url)
+        message = str(caught.exception)
+        self.assertIn(
+            "edge returned 402 Payment Required without a PAYMENT-REQUIRED header",
+            message,
+        )
+        self.assertNotIn("x402 paywall", message)
+
+    def test_managed_challenge_is_named_and_plain_403_keeps_status_text(self) -> None:
+        with refusing_server(403, [("cf-mitigated", "challenge")]) as url:
+            with self.assertRaisesRegex(
+                edge.ProbeError,
+                r"edge returned 403 managed challenge \(cf-mitigated: challenge\)",
+            ):
+                edge.fetch_json(url)
+        with refusing_server(403, []) as url:
+            with self.assertRaisesRegex(edge.ProbeError, "HTTP Error 403: Forbidden"):
+                edge.fetch_json(url)
+
+    def test_live_header_probe_names_x402_paywall(self) -> None:
+        refusal_headers = http.client.HTTPMessage()
+        refusal_headers["PAYMENT-REQUIRED"] = "fixture"
+        refusal = urllib.error.HTTPError(
+            "https://a11oy.net/", 402, "Payment Required", refusal_headers, None
+        )
+        with mock.patch.object(headers, "open_no_redirect", side_effect=refusal):
+            errors = headers.validate_live("https://a11oy.net/", {})
+        self.assertEqual(
+            errors,
+            [
+                (
+                    "https://a11oy.net/: live readback failed: edge returned 402 "
+                    "(x402 paywall); PAYMENT-REQUIRED header present"
+                )
+            ],
+        )
+
+
+class FailureReportTests(TestCase):
+    """A failing readback names its cause in the job log, bounded."""
+
+    @staticmethod
+    def failing_receipt() -> dict:
+        return {
+            "result": "FAIL",
+            "failed_controls": ["deployed_source_witness", "security_headers", "dnssec"],
+            "probes": {
+                "source_control": {"status": "PASS", "errors": []},
+                "deployed_source_witness": {
+                    "status": "FAIL",
+                    "errors": [
+                        (
+                            "deployed_source_witness readback failed: "
+                            "https://a11oy.net/.well-known/szl-source.json: readback failed: "
+                            "edge returned 402 (x402 paywall); PAYMENT-REQUIRED header present"
+                        )
+                    ],
+                },
+                "security_headers": {
+                    "status": "FAIL",
+                    "errors": [
+                        f"https://a11oy.net/: 50% missing\nlive header-{index}"
+                        for index in range(7)
+                    ],
+                },
+                "dnssec": {"status": "FAIL"},
+            },
+        }
+
+    def run_main(self, receipt: dict, *, actions: bool) -> tuple[int, str, str, dict]:
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with tempfile.TemporaryDirectory() as tmp:
+            output = pathlib.Path(tmp) / "receipt.json"
+            argv = [
+                "edge_security_readback.py",
+                "--expected-revision", "a" * 40,
+                "--output", str(output),
+            ]
+            with mock.patch.object(edge, "build_receipt", return_value=receipt), \
+                    mock.patch.object(sys, "argv", argv), \
+                    mock.patch.dict(os.environ, {}, clear=False), \
+                    contextlib.redirect_stdout(stdout), \
+                    contextlib.redirect_stderr(stderr):
+                # CI itself sets GITHUB_ACTIONS; pin it per case, restored on exit.
+                if actions:
+                    os.environ["GITHUB_ACTIONS"] = "true"
+                else:
+                    os.environ.pop("GITHUB_ACTIONS", None)
+                code = edge.main()
+            written = json.loads(output.read_text(encoding="utf-8"))
+        return code, stdout.getvalue(), stderr.getvalue(), written
+
+    def test_report_names_each_failed_control_with_bounded_reasons(self) -> None:
+        report = edge.failure_report(self.failing_receipt())
+        controls = [control for control, _ in report]
+        self.assertNotIn("source_control", controls)
+        self.assertEqual(controls.count("deployed_source_witness"), 1)
+        self.assertEqual(
+            controls.count("security_headers"),
+            edge.MAX_REPORTED_ERRORS_PER_CONTROL + 1,
+        )
+        self.assertIn(("security_headers", "2 more error(s) retained in the receipt"), report)
+        self.assertIn(("dnssec", "FAIL without a recorded error"), report)
+        for _, reason in report:
+            self.assertNotIn("\n", reason)
+            self.assertLessEqual(len(reason), edge.MAX_REPORTED_ERROR_CHARS)
+
+    def test_long_reason_is_truncated_visibly(self) -> None:
+        receipt = {
+            "failed_controls": ["tls_edge"],
+            "probes": {"tls_edge": {"status": "FAIL", "errors": ["x" * 1000]}},
+        }
+        [(control, reason)] = edge.failure_report(receipt)
+        self.assertEqual(control, "tls_edge")
+        self.assertEqual(len(reason), edge.MAX_REPORTED_ERROR_CHARS)
+        self.assertTrue(reason.endswith("…"))
+
+    def test_workflow_run_logs_reasons_and_one_annotation_per_failed_control(self) -> None:
+        code, out, err, written = self.run_main(self.failing_receipt(), actions=True)
+        self.assertEqual(code, 1)
+        self.assertEqual(
+            written["failed_controls"],
+            ["deployed_source_witness", "security_headers", "dnssec"],
+        )
+        self.assertIn("failed_controls=deployed_source_witness,security_headers,dnssec", out)
+        self.assertIn(
+            "  deployed_source_witness: deployed_source_witness readback failed: "
+            "https://a11oy.net/.well-known/szl-source.json: readback failed: "
+            "edge returned 402 (x402 paywall)",
+            err,
+        )
+        self.assertIn("  security_headers: 2 more error(s) retained in the receipt", err)
+        annotations = [line for line in out.splitlines() if line.startswith("::error ")]
+        self.assertEqual(
+            [line.split("::", 2)[1] for line in annotations],
+            [
+                "error title=edge-security-readback deployed_source_witness",
+                "error title=edge-security-readback security_headers",
+                "error title=edge-security-readback dnssec",
+            ],
+        )
+        self.assertIn("50%25 missing live header-0", annotations[1])
+
+    def test_local_run_prints_reasons_without_workflow_commands(self) -> None:
+        code, out, err, _ = self.run_main(self.failing_receipt(), actions=False)
+        self.assertEqual(code, 1)
+        self.assertIn("  dnssec: FAIL without a recorded error", err)
+        self.assertNotIn("::error", out)
+
+    def test_pass_logs_no_reasons_or_annotations(self) -> None:
+        receipt = {"result": "PASS", "failed_controls": [], "probes": {}}
+        code, out, err, _ = self.run_main(receipt, actions=True)
+        self.assertEqual(code, 0)
+        self.assertIn("failed_controls=none", out)
+        self.assertEqual(err, "")
+        self.assertNotIn("::error", out)
 
 
 class WorkflowContractTests(TestCase):
