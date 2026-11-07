@@ -29,7 +29,7 @@ import urllib.request
 from typing import Any, Callable
 
 import check_security_headers
-from no_redirect_http import open_no_redirect
+from no_redirect_http import describe_http_error, open_no_redirect
 from stamp_source_witness import SHA_RE, validate_contract
 
 
@@ -100,6 +100,8 @@ def fetch_json(
             final_url = response.geturl()
             content_type = response.headers.get("Content-Type", "")
             raw = response.read(MAX_JSON_BYTES + 1)
+    except urllib.error.HTTPError as exc:
+        raise ProbeError(f"{url}: readback failed: {describe_http_error(exc)}") from exc
     except (OSError, urllib.error.URLError) as exc:
         raise ProbeError(f"{url}: readback failed: {exc}") from exc
     if status != 200:
@@ -652,6 +654,55 @@ def build_receipt(
     }
 
 
+MAX_REPORTED_ERRORS_PER_CONTROL = 5
+MAX_REPORTED_ERROR_CHARS = 300
+
+
+def _bounded_reason(value: Any) -> str:
+    text = " ".join(str(value).split())
+    if len(text) > MAX_REPORTED_ERROR_CHARS:
+        text = text[: MAX_REPORTED_ERROR_CHARS - 1] + "…"
+    return text
+
+
+def failure_report(receipt: dict[str, Any]) -> list[tuple[str, str]]:
+    """Return bounded ``(control, reason)`` pairs for every failed control.
+
+    The full receipt is retained as a workflow artifact, but the job log must
+    also carry the cause: the artifact is not readable everywhere the log is,
+    and a bare control name cannot distinguish source drift from an edge
+    refusal such as an HTTP 402 paywall. Reasons are bounded and whitespace
+    collapsed; they quote only public responses and GitHub metadata.
+    """
+
+    probes = receipt.get("probes")
+    probes = probes if isinstance(probes, dict) else {}
+    report: list[tuple[str, str]] = []
+    for control in receipt.get("failed_controls", []):
+        probe = probes.get(control)
+        errors = probe.get("errors") if isinstance(probe, dict) else None
+        if not isinstance(errors, list) or not errors:
+            report.append((control, "FAIL without a recorded error"))
+            continue
+        for error in errors[:MAX_REPORTED_ERRORS_PER_CONTROL]:
+            report.append((control, _bounded_reason(error)))
+        hidden = len(errors) - MAX_REPORTED_ERRORS_PER_CONTROL
+        if hidden > 0:
+            report.append((control, f"{hidden} more error(s) retained in the receipt"))
+    return report
+
+
+def _workflow_error(control: str, reason: str) -> str:
+    def escape(value: str, *, is_property: bool = False) -> str:
+        value = value.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        if is_property:
+            value = value.replace(":", "%3A").replace(",", "%2C")
+        return value
+
+    title = escape(f"edge-security-readback {control}", is_property=True)
+    return f"::error title={title}::{escape(reason)}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--expected-revision", required=True)
@@ -674,6 +725,14 @@ def main() -> int:
         f"Edge-security readback {receipt['result']}; "
         f"receipt={output}; failed_controls={','.join(receipt['failed_controls']) or 'none'}"
     )
+    annotated: set[str] = set()
+    for control, reason in failure_report(receipt):
+        print(f"  {control}: {reason}", file=sys.stderr)
+        if os.environ.get("GITHUB_ACTIONS") == "true" and control not in annotated:
+            # One annotation per failed control keeps the run summary readable
+            # and inside GitHub's per-step annotation limit; the log keeps all.
+            annotated.add(control)
+            print(_workflow_error(control, reason))
     return 0 if receipt["result"] == "PASS" else 1
 
 

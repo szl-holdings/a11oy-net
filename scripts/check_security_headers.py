@@ -9,11 +9,12 @@ import hashlib
 import pathlib
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
-from no_redirect_http import open_no_redirect
+from no_redirect_http import describe_http_error, open_no_redirect
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -656,6 +657,8 @@ def validate_live(url: str, expected: dict[str, str]) -> list[str]:
             observed_headers = response.headers
             final_url = response.geturl()
             status = response.status
+    except urllib.error.HTTPError as exc:
+        return [f"{url}: live readback failed: {describe_http_error(exc)}"]
     except Exception as exc:  # pragma: no cover - network/provider dependent
         return [f"{url}: live readback failed: {exc}"]
     if status != 200:
