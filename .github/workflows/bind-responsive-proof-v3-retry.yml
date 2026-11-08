@@ -8,7 +8,7 @@ on:
       - ".github/workflows/bind-responsive-proof-v3-retry.yml"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: bind-responsive-proof-v3
@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   bind:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
