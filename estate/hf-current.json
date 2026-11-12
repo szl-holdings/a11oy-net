@@ -1,10 +1,10 @@
 {
   "canonical_membership_source": {
     "counts": {
-      "datasets": 38,
+      "datasets": 65,
       "kernels": 14,
-      "models": 41,
-      "spaces": 40
+      "models": 90,
+      "spaces": 48
     },
     "historical_portfolio_contract_replaced": false,
     "historical_snapshots": [
@@ -14,7 +14,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-11-01T22:56:52Z",
+    "observed_at": "2026-11-11T16:54:31Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -38,11 +38,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-    "source_git_blob": "e0f8114777d6afccb9c9e74b61ae353c29bc4fff",
+    "source_git_blob": "91355b0ec229c62d67fcbe097c2ab0b0a7e1697e",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "4eaa443f5f1ec07a87e2c9755c0074be40dff43f",
-    "source_sha256": "b88456cc1998dfcd959e0d2afe620bce89a5f1bf8314a891776d38723b677780"
+    "source_revision": "13cdb0e28b1c104c8d66a7068c73ff6b42dddfbc",
+    "source_sha256": "76d8d774fbc9f9450a197622973235f79835674494d62d33d17b43d3cca6d252"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -53,13 +53,13 @@
   },
   "counts": {
     "buckets": 2,
-    "collections": 7,
-    "datasets_public": 38,
+    "collections": 19,
+    "datasets_public": 65,
     "kernels": 14,
-    "models": 41,
-    "public_resources_total": 142,
-    "repository_membership_total": 133,
-    "spaces_public": 40
+    "models": 90,
+    "public_resources_total": 238,
+    "repository_membership_total": 217,
+    "spaces_public": 48
   },
   "evidence_class": "SNAPSHOT",
   "freshness": {
@@ -106,33 +106,17 @@
       "policy": "spaces.json keep",
       "sdk": "docker",
       "title": "SZL KHIPU"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-atelier",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
-      "id": "SZLHOLDINGS/szl-atelier",
-      "policy": "spaces.json keep",
-      "sdk": "docker",
-      "title": "SZL Atelier"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/governed-receipt-verifier",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier",
-      "id": "SZLHOLDINGS/governed-receipt-verifier",
-      "policy": "spaces.json keep",
-      "sdk": "static",
-      "title": "governed-receipt-verifier"
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T03:46:18Z",
-  "observed_date": "2026-11-02",
+  "observed_at": "2026-11-12T05:24:38Z",
+  "observed_date": "2026-11-12",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "8be9efead989722e61cdcbc5961fb99af5afe4f84fb813cc4733e43992314d9f",
+  "source_content_sha256": "8f30d60ae8a805ebba8eb3d162121241b9ebaedb26bbfd1d94f00a0b6b1c0d70",
   "spaces_by_runtime_stage": {
-    "RUNNING": 40
+    "RUNNING": 48
   }
 }

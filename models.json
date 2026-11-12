@@ -8,7 +8,7 @@
     "implementation": "static GitHub Pages JSON on the proof origin"
   },
   "reader_guide": "Every public Hub model card is classified here by scripts/generate_hf_inventory.py from the unauthenticated author listing; counts live in the hub block and in /estate/hf-current.json, never in prose. Private repositories are NOT_OBSERVED. A bench block is carried forward from the prior curated record only while its source file is still listed and the class is unchanged; otherwise it is null and remains REPORTED without the benchmark bytes. The KEEP / fold cut stays /spaces.json policy, not a Hub count. This file does not stamp OPERATIONAL or LIVE. Energy is UNAVAILABLE until RAPL/NVML is MEASURED. GPU train is UNAVAILABLE from this runtime. Evaluate kernels and adapters on a-11-oy.com; this origin only indexes the cards.",
-  "captured_at": "2026-11-02T03:46:18Z",
+  "captured_at": "2026-11-12T05:24:38Z",
   "evidence_class": "SNAPSHOT",
   "method": "Unauthenticated Hugging Face API GET /api/models?author=SZLHOLDINGS with expanded sibling file lists; class rules in scripts/generate_hf_inventory.py classify_model(). File presence only: no weight is downloaded, loaded, or evaluated.",
   "operational": false,
@@ -19,20 +19,20 @@
   "p0_joblib": "open",
   "hub": {
     "org": "SZLHOLDINGS",
-    "models": 41,
-    "datasets": 38,
-    "spaces": 40,
+    "models": 90,
+    "datasets": 65,
+    "spaces": 48,
     "kernels": 14,
     "private": "NOT_OBSERVED",
     "listing": "https://huggingface.co/SZLHOLDINGS",
     "source": "/public-inventory.json"
   },
   "counts": {
-    "TRAINED_WEIGHTS": 18,
-    "ROADMAP_EMPTY": 1,
+    "TRAINED_WEIGHTS": 62,
+    "ROADMAP_EMPTY": 3,
     "NANO_SYNTHETIC": 6,
     "KERNEL_SOFTWARE": 4,
-    "CODE_OR_SCRIPTS": 12
+    "CODE_OR_SCRIPTS": 15
   },
   "classes": {
     "TRAINED_WEIGHTS": "safetensors, GGUF, or PEFT adapter bytes present",
@@ -80,6 +80,19 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/KHIPU-R2-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/MiniEmbed-Nano",
       "class": "NANO_SYNTHETIC",
       "pipeline": null,
@@ -112,6 +125,19 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/Nemotron-Mini-4B-Instruct-st",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": null,
+      "library": null,
+      "files": 8,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/ReceiptAgent-Nano",
       "class": "NANO_SYNTHETIC",
       "pipeline": null,
@@ -124,6 +150,32 @@
         "source": "BENCH.laptop-blackwell.json",
         "evidence_class": "REPORTED"
       },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-AcousticGovernance-0.8B-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-AncientMath-0.8B-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
       "operational": false,
       "trained": true
     },
@@ -141,6 +193,58 @@
         "source": "eval_receipt.signed.json",
         "evidence_class": "REPORTED"
       },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Forge-1.5B-ReceiptAgent-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-FreeEnergy-0.8B-DPO-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-FreeEnergy-0.8B-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-GovernedDistill-0.8B-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
       "operational": false,
       "trained": true
     },
@@ -199,6 +303,123 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/SZL-Khipu-1.5B-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Khipu-1.5B-sft-v2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Nemotron-Mini-4B-Doctrine-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 8,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Nemotron-Mini-4B-Estate-DPO-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Nemotron-Mini-4B-Estate-DPO-v2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 8,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Nemotron-Mini-4B-Estate-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Reasoning-0.8B-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Showcase-Systems-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/SZL-Specialized-Domains-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/TinyKhipu-Nano",
       "class": "NANO_SYNTHETIC",
       "pipeline": null,
@@ -234,6 +455,19 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/WILLAY-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/YARQA-ATTN",
       "class": "NANO_SYNTHETIC",
       "pipeline": null,
@@ -241,6 +475,19 @@
       "files": 7,
       "weights": [
         "yarqa_attn.npz"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/a11oy-code-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": null,
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "adapter_model.safetensors"
       ],
       "bench": null,
       "operational": false,
@@ -258,6 +505,36 @@
       "trained": false
     },
     {
+      "id": "SZLHOLDINGS/abstain-doctrine-r1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/abstention-v2-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": null,
+      "library": null,
+      "files": 52,
+      "weights": [
+        "checkpoint-100/adapter_model.safetensors",
+        "checkpoint-150/adapter_model.safetensors",
+        "checkpoint-200/adapter_model.safetensors",
+        "checkpoint-50/adapter_model.safetensors",
+        "final/adapter_model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/brain-navigator-r2",
       "class": "TRAINED_WEIGHTS",
       "pipeline": "text-generation",
@@ -271,6 +548,32 @@
         "source": "eval_report.json",
         "evidence_class": "REPORTED"
       },
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/brain-navigator-r2-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/chakana-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "feature-extraction",
+      "library": "sentence-transformers",
+      "files": 17,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
       "operational": false,
       "trained": true
     },
@@ -316,6 +619,32 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/chaski-5050-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/chaski-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/chaski-r2",
       "class": "TRAINED_WEIGHTS",
       "pipeline": "text-generation",
@@ -335,6 +664,19 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/chaski-r2-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/chaski-r4",
       "class": "TRAINED_WEIGHTS",
       "pipeline": "text-generation",
@@ -348,11 +690,87 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/doctrine-v2-r2-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/doctrine1-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/forge-v3",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/freeenergy-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/governed-inference-meter",
       "class": "KERNEL_SOFTWARE",
       "pipeline": null,
       "library": "kernels",
       "files": 26,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/hatun-24-doctrine-math-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 9,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/khipu-abstain-r3-candidate",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 3,
       "weights": [],
       "bench": null,
       "operational": false,
@@ -376,11 +794,89 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/khipu-r3-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/miniembed-nano-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "sentence-similarity",
+      "library": "sentence-transformers",
+      "files": 15,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/oac-ops-health-v2",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 7,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/oac-system-health-v1",
+      "class": "CODE_OR_SCRIPTS",
+      "pipeline": null,
+      "library": null,
+      "files": 7,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/ouroboros-r2-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 10,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/physics-master-v1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": null,
+      "library": null,
+      "files": 52,
+      "weights": [
+        "checkpoint-100/adapter_model.safetensors",
+        "checkpoint-150/adapter_model.safetensors",
+        "checkpoint-200/adapter_model.safetensors",
+        "checkpoint-50/adapter_model.safetensors",
+        "final/adapter_model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/szl-block-kv",
       "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
       "library": null,
-      "files": 5,
+      "files": 6,
       "weights": [],
       "bench": null,
       "operational": false,
@@ -392,6 +888,17 @@
       "pipeline": null,
       "library": null,
       "files": 10,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-brain",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "transformers",
+      "files": 2,
       "weights": [],
       "bench": null,
       "operational": false,
@@ -521,7 +1028,7 @@
       "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
       "library": null,
-      "files": 5,
+      "files": 6,
       "weights": [],
       "bench": null,
       "operational": false,
@@ -569,11 +1076,63 @@
       "class": "CODE_OR_SCRIPTS",
       "pipeline": null,
       "library": null,
-      "files": 5,
+      "files": 6,
       "weights": [],
       "bench": null,
       "operational": false,
       "trained": false
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen25-1.5b-experimental-20261104",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "peft",
+      "files": 7,
+      "weights": [
+        "adapter_model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-dpo-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-dpo-v2",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-sft-v3",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
     },
     {
       "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v2",
@@ -606,6 +1165,19 @@
       "trained": true
     },
     {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v2m-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 9,
+      "weights": [
+        "model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
       "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3",
       "class": "TRAINED_WEIGHTS",
       "pipeline": "text-generation",
@@ -621,6 +1193,30 @@
       },
       "operational": false,
       "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-receiptagent-qwen35-0.8b-v3-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl-specdecode",
+      "class": "ROADMAP_EMPTY",
+      "pipeline": null,
+      "library": "szl-specdecode",
+      "files": 2,
+      "weights": [],
+      "bench": null,
+      "operational": false,
+      "trained": false
     },
     {
       "id": "SZLHOLDINGS/szl-triage-qwen3.5-0.8b-lora",
@@ -653,6 +1249,46 @@
         "checkpoint-264/adapter_model.safetensors",
         "checkpoint-396/adapter_model.safetensors",
         "checkpoint-66/adapter_model.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/szl1-experimental-estate-sft-v1",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "text-generation",
+      "library": "transformers",
+      "files": 11,
+      "weights": [
+        "model-00001-of-00002.safetensors",
+        "model-00002-of-00002.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/willay-r1-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 14,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
+      ],
+      "bench": null,
+      "operational": false,
+      "trained": true
+    },
+    {
+      "id": "SZLHOLDINGS/willay-r2-candidate",
+      "class": "TRAINED_WEIGHTS",
+      "pipeline": "image-text-to-text",
+      "library": "transformers",
+      "files": 14,
+      "weights": [
+        "model.safetensors-00001-of-00001.safetensors"
       ],
       "bench": null,
       "operational": false,

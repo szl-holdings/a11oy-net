@@ -1,7 +1,8 @@
 {
   "assets_missing_license": [
-    "space:SZLHOLDINGS/agents-studio",
-    "space:SZLHOLDINGS/curation-atlas"
+    "model:SZLHOLDINGS/abstention-v2-candidate",
+    "model:SZLHOLDINGS/hatun-24-doctrine-math-r1-candidate",
+    "model:SZLHOLDINGS/physics-master-v1-candidate"
   ],
   "claim_boundaries": {
     "estate_json": "HISTORICAL_NOT_MODIFIED",
@@ -10,50 +11,50 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 38,
+    "datasets": 65,
     "kernels": 14,
-    "models": 41,
-    "spaces": 40
+    "models": 90,
+    "spaces": 48
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 41,
+      "live_public": 90,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "datasets",
-      "live_public": 38,
+      "live_public": 65,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "spaces_public",
-      "live_public": 40,
+      "live_public": 48,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "models",
-      "live_public": 41,
+      "live_public": 90,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "datasets",
-      "live_public": 38,
+      "live_public": 65,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "spaces",
-      "live_public": 40,
+      "live_public": 48,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -88,53 +89,61 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T03:46:18Z",
+  "observed_at": "2026-11-12T05:24:38Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
-    "SZLHOLDINGS/README",
     "SZLHOLDINGS/a11oy",
     "SZLHOLDINGS/agents-studio",
+    "SZLHOLDINGS/anatomy",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
+    "SZLHOLDINGS/counsel-assurance",
     "SZLHOLDINGS/curation-atlas",
     "SZLHOLDINGS/david-leads",
+    "SZLHOLDINGS/estate-gardener",
+    "SZLHOLDINGS/eternal-auditor",
     "SZLHOLDINGS/finance",
-    "SZLHOLDINGS/foundation-confirmation-v2",
+    "SZLHOLDINGS/frontier-showcase",
     "SZLHOLDINGS/gdw-frontier",
-    "SZLHOLDINGS/governed-agent-bench",
-    "SZLHOLDINGS/governed-receipt-verifier",
     "SZLHOLDINGS/holographic-unify",
     "SZLHOLDINGS/immune",
-    "SZLHOLDINGS/immune-lattice",
     "SZLHOLDINGS/killinchu",
+    "SZLHOLDINGS/living-anatomy",
     "SZLHOLDINGS/llm-router-live",
     "SZLHOLDINGS/lyte",
+    "SZLHOLDINGS/measured-honesty-census",
+    "SZLHOLDINGS/newton-trust-upgrade",
     "SZLHOLDINGS/nexus",
-    "SZLHOLDINGS/oac-system-health-lab",
-    "SZLHOLDINGS/prove-it",
+    "SZLHOLDINGS/puriq-markets",
     "SZLHOLDINGS/sentra",
-    "SZLHOLDINGS/szl-atelier",
-    "SZLHOLDINGS/szl-bench-suite",
-    "SZLHOLDINGS/szl-brand-campaign",
+    "SZLHOLDINGS/szl-chief-engineer",
     "SZLHOLDINGS/szl-command-lab",
     "SZLHOLDINGS/szl-constellation",
+    "SZLHOLDINGS/szl-cyber-shield",
+    "SZLHOLDINGS/szl-dream-architect",
+    "SZLHOLDINGS/szl-energy-hologram",
     "SZLHOLDINGS/szl-forge-lab",
     "SZLHOLDINGS/szl-foundation-confirmation",
     "SZLHOLDINGS/szl-frontier",
+    "SZLHOLDINGS/szl-frontier-deck",
+    "SZLHOLDINGS/szl-infra-warden",
     "SZLHOLDINGS/szl-khipu",
-    "SZLHOLDINGS/szl-marketing-1.1",
     "SZLHOLDINGS/szl-model-inference-lab",
+    "SZLHOLDINGS/szl-receipts-chain",
+    "SZLHOLDINGS/szl-research-council",
     "SZLHOLDINGS/szl-router-control",
-    "SZLHOLDINGS/szl-seismic-review",
-    "SZLHOLDINGS/szl-typesafe-triage",
+    "SZLHOLDINGS/szl-second-brain",
+    "SZLHOLDINGS/szlholdings-si",
     "SZLHOLDINGS/terra",
+    "SZLHOLDINGS/terra-assurance",
     "SZLHOLDINGS/the-grid",
+    "SZLHOLDINGS/truth-router",
     "SZLHOLDINGS/vertical-services",
     "SZLHOLDINGS/yarqa"
   ],
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 40
+    "RUNNING": 48
   }
 }
