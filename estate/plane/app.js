@@ -83,7 +83,7 @@ function filterList(items, haystack) {
 }
 
 function searchBox(placeholder) {
-  return `<p><input id="q" value="${esc(q)}" placeholder="${esc(placeholder)}" style="width:min(420px,100%);background:#080c14;color:#e8edf5;border:1px solid #5b8dee55;padding:.45rem .55rem" /></p>`;
+  return `<label class="plane-search-label" for="q">Filter this list</label><input id="q" class="plane-search" type="search" autocomplete="off" value="${esc(q)}" placeholder="${esc(placeholder)}" />`;
 }
 
 function renderGithub() {
@@ -115,9 +115,9 @@ function renderFabric() {
   const by = {};
   for (const c of DATA.controls) (by[c.lane] ||= []).push(c);
   return DATA.lanes.map((lane) => `
-    <section class="plane-panel" style="margin-bottom:.85rem">
+    <section class="plane-panel plane-mb">
       <span>${esc(lane.id)}</span>
-      <h2 style="margin:.2rem 0 .4rem;font-size:1.05rem">${esc(lane.title)}</h2>
+      <h2 class="plane-h2 plane-h2-sm plane-h2-gap">${esc(lane.title)}</h2>
       <p class="note">${esc(lane.brief)}</p>
       <table class="plane-table"><tbody>
         ${(by[lane.id] || []).map((c) => `<tr><td>${esc(c.title)}</td><td>${esc(c.state)}</td><td>${truth(c.truth)}</td><td class="note">${esc(c.evidence)}</td></tr>`).join("")}
@@ -131,7 +131,7 @@ function renderPassports() {
   let selectedHtml = '<p class="note">No passport selected.</p>';
   if (selected) {
     selectedHtml =
-      '<h2 style="margin:.2rem 0;font-size:1.05rem">' + esc(selected.passport_id) + "</h2>" +
+      '<h2 class="plane-h2 plane-h2-sm">' + esc(selected.passport_id) + "</h2>" +
       "<p>" + truth(selected.policy_decision) + " " + truth(selected.action && selected.action.state) + " " + truth(selected.signature && selected.signature.state) + "</p>" +
       '<p class="note">Resource ' + esc((selected.authority && selected.authority.resource) || (selected.action && selected.action.target) || "") + "</p>" +
       "<p><b>If acted.</b> " + esc((selected.expected_if_acted && selected.expected_if_acted.statement) || "") + "</p>" +
@@ -173,7 +173,7 @@ function renderFrontiers() {
     <div class="plane-grid">
       <section class="plane-panel">
         <span>${esc(selected.ring)}</span>
-        <h2 style="margin:.2rem 0">${esc(selected.name)}</h2>
+        <h2 class="plane-h2">${esc(selected.name)}</h2>
         <p>${truth(selected.truth)} ${truth(selected.gate)} distance ${esc(selected.modeledDistance)}</p>
         <p>${esc(selected.role)}</p>
         <p><b>If promoted.</b> ${esc(selected.ifPromoted)}</p>
@@ -206,7 +206,17 @@ function render() {
     a.setAttribute("aria-current", a.getAttribute("data-nav") === view ? "page" : "false");
   });
   const box = $("#q");
-  if (box) box.addEventListener("input", (e) => { q = e.target.value; render(); });
+  if (box) box.addEventListener("input", (e) => {
+    q = e.target.value;
+    const caret = e.target.selectionStart;
+    render();
+    const next = $("#q");
+    if (!next) return;
+    try {
+      next.focus();
+      next.setSelectionRange(caret, caret);
+    } catch (_) {}
+  });
   const form = $("#mint");
   if (form) form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -256,5 +266,5 @@ fetch("./data.json")
     render();
   })
   .catch(() => {
-    $("#app").innerHTML = '<p class="note">Bake UNAVAILABLE. Fail closed. Catalog remains at /estate/os/.</p>';
+    $("#app").innerHTML = '<p class="note" role="alert">Bake UNAVAILABLE. Fail closed. Catalog remains at /estate/os/.</p>';
   });
