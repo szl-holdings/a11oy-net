@@ -456,10 +456,27 @@ class GeneratorTest(TestCase):
                          expected + inventory["counts"]["collections"] + inventory["counts"]["buckets"])
         self.site.run(T1, raw)
         self.assertEqual(self.site.read(gen.CURRENT_PATH)["schema"], "szl.hf-current/v2")
-        native_page = gen.render_page("kernels (included in models)", self.site.read(gen.CURRENT_PATH))
-        self.assertEqual(native_page, "kernels (separate native repositories)")
+        native_page = gen.render_page(gen.KERNEL_PAREN_LEGACY, self.site.read(gen.CURRENT_PATH))
+        self.assertEqual(native_page, gen.KERNEL_PAREN_NATIVE)
         _, changed = self.site.run(T2, raw)
         self.assertEqual(changed, [])
+
+    def test_kernel_scope_sentence_follows_the_bound_schema_in_both_directions(self) -> None:
+        self.site.run(T1)
+        legacy = self.site.read(gen.CURRENT_PATH)
+        self.assertEqual(legacy["schema"], gen.SCHEMA_CURRENT)
+        native_raw = self.native_observation()
+        native_inventory = gen.build_inventory(native_raw, T1)
+        native = gen.build_current(
+            native_inventory, self.site.read("spaces.json"), gen.historical_rows(self.site.root)
+        )
+        self.assertEqual(native["schema"], gen.SCHEMA_NATIVE_CURRENT)
+        self.assertEqual(gen.render_page(gen.KERNEL_SCOPE_LEGACY, native), gen.KERNEL_SCOPE_NATIVE)
+        self.assertEqual(gen.render_page(gen.KERNEL_SCOPE_NATIVE, legacy), gen.KERNEL_SCOPE_LEGACY)
+        self.assertEqual(gen.render_page(gen.KERNEL_PAREN_NATIVE, legacy), gen.KERNEL_PAREN_LEGACY)
+        self.assertEqual(gen.render_page(gen.KERNEL_PAREN_LEGACY, native), gen.KERNEL_PAREN_NATIVE)
+        self.assertEqual(gen.render_page(gen.KERNEL_SCOPE_NATIVE, native), gen.KERNEL_SCOPE_NATIVE)
+        self.assertEqual(gen.render_page(gen.KERNEL_SCOPE_LEGACY, legacy), gen.KERNEL_SCOPE_LEGACY)
 
     def test_native_kernel_membership_drift_is_rejected_even_for_a_model_id(self) -> None:
         original = self.native_observation()
