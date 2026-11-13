@@ -322,7 +322,7 @@
       parts.push("classification /models.json UNAVAILABLE");
     }
     if (contract && contract.energy) parts.push("energy " + contract.energy);
-    var boundaries = inventory && inventory.claim_boundaries;
+    var boundaries = inventory.claim_boundaries || {};
     var kernelScope = boundaries && boundaries.kernel_membership;
     var githubAlignment = boundaries && boundaries.github_alignment;
     parts.push(kernelScope ? "kernel scope " + kernelScope : "kernel scope UNAVAILABLE");
