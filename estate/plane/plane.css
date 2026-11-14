@@ -51,3 +51,10 @@
 .plane-form button[disabled] { opacity:.45; cursor:not-allowed; }
 .note { color:#9aa3b2; font-size:.88rem; }
 .locked-warn { color:#d7b96b; }
+.plane-h2{margin:.2rem 0}
+.plane-search{width:min(420px,100%);background:#080c14;color:#e8edf5;border:1px solid #5b8dee55;padding:.45rem .55rem}
+.plane-search:focus-visible{outline:2px solid #8fb4ff;outline-offset:2px}
+.plane-search-label{display:block;font-size:.8rem;margin-bottom:.25rem;color:#c9d4e5}
+.plane-mb{margin-bottom:.85rem}
+.plane-h2-sm{font-size:1.05rem}
+.plane-h2-gap{margin-bottom:.4rem}
