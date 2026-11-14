@@ -682,6 +682,7 @@ class WorkflowContractTests(TestCase):
         self.assertIn("workflow_run:", workflow)
         self.assertIn("schedule:", workflow)
         self.assertIn("github.event.workflow_run.event == 'push'", workflow)
+        self.assertIn("github.event.workflow_run.event == 'workflow_dispatch'", workflow)
         self.assertIn("github.event.workflow_run.head_branch == 'main'", workflow)
         self.assertIn(
             "github.event.workflow_run.head_repository.full_name == github.repository",
