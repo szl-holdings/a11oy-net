@@ -125,44 +125,52 @@ function element(tagName) {
     addEventListener() {},
   };
 }
-const ids = new Map([
+const CARD_IDS = [
   "inventory-cards", "invSnapshotState", "invProvenance", "invTotal",
-  "invModels", "invDatasets", "invSpaces", "invCollections", "invBuckets",
-].map(id => [id, element("div")]));
-const ident = "SZLHOLDINGS/shared-name";
-const snapshot = {
-  schema: "szl.public-hf-inventory/v4",
-  observed_at: "2026-10-01T12:00:00Z",
-  observation_mode: "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  counts: { public_resources_total: 4, models: 1, datasets: 1, spaces: 1, collections: 0, buckets: 1 },
-  resources: {
-    models: [{ id: ident }],
-    datasets: [{ id: ident, source_observation: "PUBLIC_HF_REPOSITORY_OBSERVED" }],
-    spaces: [{ id: ident, sdk: "static", runtime: { stage: "RUNNING" } }],
-    buckets: [{ id: ident, visibility: "public", observed_object_count: 2 }],
-  },
-};
-const reads = [];
-runInNewContext(
-  readFileSync(new URL("inventory_cards.js", import.meta.url), "utf8"),
-  {
+  "invModels", "invKernels", "invDatasets", "invSpaces", "invCollections", "invBuckets",
+];
+const cardsSource = readFileSync(new URL("inventory_cards.js", import.meta.url), "utf8");
+
+function descendants(node) {
+  return [node, ...node.children.flatMap(descendants)];
+}
+
+async function renderCards(snapshot, now, models = {}) {
+  const ids = new Map(CARD_IDS.map(id => [id, element("div")]));
+  const reads = [];
+  runInNewContext(cardsSource, {
     document: { getElementById: id => ids.get(id), createElement: element },
-    Date: class extends Date { static now() { return Date.parse("2026-10-04T12:00:00Z"); } },
+    Date: class extends Date { static now() { return Date.parse(now); } },
     fetch: async (url, options) => {
       reads.push(url);
       assert.equal(options.credentials, "omit");
       assert.equal(options.redirect, "error");
       assert.equal(options.cache, "no-store");
       assert.ok(["/public-inventory.json", "/models.json"].includes(url));
-      return { ok: true, json: async () => url === "/public-inventory.json" ? snapshot : {} };
+      if (url !== "/public-inventory.json") return { ok: true, json: async () => models };
+      if (snapshot === null) throw new Error("UNAVAILABLE");
+      return { ok: true, json: async () => snapshot };
     },
-  },
-  { timeout: 1000 },
-);
-await new Promise(resolve => setImmediate(resolve));
-function descendants(node) {
-  return [node, ...node.children.flatMap(descendants)];
+  }, { timeout: 1000 });
+  await new Promise(resolve => setImmediate(resolve));
+  return { ids, reads };
 }
+
+const ident = "SZLHOLDINGS/shared-name";
+const privateIdent = "SZLHOLDINGS/not-disclosed";
+const snapshot = {
+  schema: "szl.public-hf-inventory/v4",
+  observed_at: "2026-10-01T12:00:00Z",
+  observation_mode: "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
+  counts: { public_resources_total: 4, models: 1, datasets: 1, spaces: 1, collections: 0, buckets: 1 },
+  resources: {
+    models: [{ id: ident }, { id: privateIdent, private: true }],
+    datasets: [{ id: ident, source_observation: "PUBLIC_HF_REPOSITORY_OBSERVED" }],
+    spaces: [{ id: ident, sdk: "static", runtime: { stage: "RUNNING" } }],
+    buckets: [{ id: ident, visibility: "public", observed_object_count: 2 }],
+  },
+};
+const { ids, reads } = await renderCards(snapshot, "2026-10-04T12:00:00Z");
 const rendered = descendants(ids.get("inventory-cards"))
   .filter(node => node.className === "inv-card");
 assert.deepEqual(rendered.map(node => ({
@@ -174,12 +182,58 @@ assert.deepEqual(rendered.map(node => ({
   { kind: "SPACE", href: `https://huggingface.co/spaces/${ident}` },
   { kind: "BUCKET", href: `https://huggingface.co/buckets/${ident}` },
 ]);
+assert.equal(JSON.stringify(descendants(ids.get("inventory-cards"))).includes(privateIdent), false);
 assert.deepEqual(reads, ["/public-inventory.json", "/models.json"]);
 assert.equal(ids.get("invSnapshotState").dataset.state, "partial");
 assert.match(ids.get("invSnapshotState").textContent, /^STALE · 2026-10-01/);
 assert.equal(ids.get("invTotal").textContent, "4");
+assert.equal(ids.get("invKernels").textContent, "—");
 assert.equal(ids.get("invBuckets").textContent, "1");
 assert.match(ids.get("invProvenance").textContent, /observed 2026-10-01T12:00:00Z/);
+assert.match(ids.get("invProvenance").textContent, /kernel scope UNAVAILABLE/);
+assert.match(ids.get("invProvenance").textContent, /github alignment UNAVAILABLE/);
+
+const fresh = await renderCards(
+  { ...snapshot, observed_at: "2026-10-01T12:00:00Z" },
+  "2026-10-02T12:00:00Z",
+);
+assert.equal(fresh.ids.get("invSnapshotState").dataset.state, "snapshot");
+const stale = await renderCards(snapshot, "2026-10-02T12:00:00.001Z");
+assert.equal(stale.ids.get("invSnapshotState").dataset.state, "partial");
+assert.match(stale.ids.get("invSnapshotState").textContent, /^STALE · /);
+
+const undated = await renderCards({ ...snapshot, observed_at: "2026-02-30T00:00:00Z" }, "2026-10-04T12:00:00Z");
+assert.equal(undated.ids.get("invSnapshotState").dataset.state, "unavailable");
+assert.match(undated.ids.get("invSnapshotState").textContent, /DATE UNAVAILABLE/);
+assert.equal(undated.ids.get("invModels").textContent, "1");
+assert.notEqual(undated.ids.get("invModels").textContent, "0");
+
+const future = await renderCards({ ...snapshot, observed_at: "2026-10-05T12:00:00Z" }, "2026-10-04T12:00:00Z");
+assert.equal(future.ids.get("invSnapshotState").dataset.state, "unavailable");
+assert.match(future.ids.get("invSnapshotState").textContent, /DATE UNAVAILABLE/);
+
+const scoped = await renderCards({
+  ...snapshot,
+  observed_at: "2026-10-03T12:00:00Z",
+  counts: { ...snapshot.counts, kernels: 2 },
+  claim_boundaries: {
+    kernel_membership: "SEPARATE_NATIVE_NAMESPACE_COUNTED_ONCE_PER_KIND_AND_ID",
+    github_alignment: "EXACT_IMMUTABLE_MANIFEST_MEMBERSHIP_ONLY_NOT_RUNTIME_PARITY",
+  },
+}, "2026-10-04T12:00:00Z");
+assert.equal(scoped.ids.get("invKernels").textContent, "2");
+assert.equal(scoped.ids.get("invSnapshotState").dataset.state, "snapshot");
+assert.match(scoped.ids.get("invProvenance").textContent, /kernel scope SEPARATE_NATIVE_NAMESPACE_COUNTED_ONCE_PER_KIND_AND_ID/);
+assert.match(scoped.ids.get("invProvenance").textContent, /github alignment EXACT_IMMUTABLE_MANIFEST_MEMBERSHIP_ONLY_NOT_RUNTIME_PARITY/);
+assert.equal(scoped.ids.get("invProvenance").textContent.includes(privateIdent), false);
+
+const unread = await renderCards(null, "2026-10-04T12:00:00Z");
+for (const id of ["invTotal", "invModels", "invKernels", "invDatasets", "invSpaces", "invCollections", "invBuckets"]) {
+  assert.equal(unread.ids.get(id).textContent, "—", id);
+  assert.notEqual(unread.ids.get(id).textContent, "0", id);
+}
+assert.equal(unread.ids.get("invSnapshotState").dataset.state, "unavailable");
+assert.match(unread.ids.get("invSnapshotState").textContent, /UNAVAILABLE/);
 
 console.log(
   "OK: generated atlas cards contain reported public artifacts only; " +

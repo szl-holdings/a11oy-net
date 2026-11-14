@@ -311,6 +311,15 @@ def check_generated_hf_inventory() -> None:
             assert keys & {"observed_at", "observed_date"}, (
                 f"{page} prints generated counts without their observation date"
             )
+    if native_kernels:
+        for relative in ("estate/index.html", "estate/os/index.html"):
+            page = (ROOT / relative).read_text(encoding="utf-8")
+            assert gen.KERNEL_SCOPE_NATIVE in page, relative
+            assert gen.KERNEL_SCOPE_LEGACY not in page, relative
+        for relative in ("index.html", "notes/index.html"):
+            page = (ROOT / relative).read_text(encoding="utf-8")
+            assert gen.KERNEL_PAREN_NATIVE in page, relative
+            assert gen.KERNEL_PAREN_LEGACY not in page, relative
 
     estate_os = (ROOT / "estate/os/index.html").read_text(encoding="utf-8")
     hf_models_card = re.search(
@@ -1155,6 +1164,10 @@ def check() -> None:
     )
     assert "renderSnapshotAge(inventory, Date.now());" in inventory_cards
     assert "age > DAY_MS" in inventory_cards
+    assert 'kernels: "invKernels"' in inventory_cards
+    assert "counts.kernels || 0" not in inventory_cards
+    assert "item.private !== true" in inventory_cards
+    assert 'id="invKernels"' in source
     assert "committed SNAPSHOT classification" in inventory_cards
     assert "committed MEASURED classification" not in inventory_cards
     assert 'label: typeof item.observed_object_count === "number" ? "SNAPSHOT" : "UNAVAILABLE"' in inventory_cards, (
