@@ -14,8 +14,7 @@ on:
         default: false
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: rollout-proof-flow-shell
@@ -23,6 +22,9 @@ concurrency:
 
 jobs:
   rollout:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
