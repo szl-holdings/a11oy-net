@@ -1,5 +1,5 @@
 {
-  "examined_documents": 48,
+  "examined_documents": 49,
   "injected_documents": [
     "404.html",
     "aegis/index.html",
@@ -33,6 +33,7 @@
     "five-space/index.html",
     "frontiers/index.html",
     "index.html",
+    "inference/index.html",
     "khipu/index.html",
     "khipu/nan/index.html",
     "nexus/index.html",
