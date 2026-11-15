@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080c14">
+<meta name="description" content="Measured public inference gateway for SZL Holdings: Ternary-Bonsai-2-27B-PQ2_0 served through SaladCloud with an x402 payment gate.">
+<title>SZL Inference | Measured Gateway</title>
+<style>
+:root{color-scheme:dark;--bg:#080c14;--panel:#101722;--line:#263142;--ink:#f5f7fa;--muted:#a8b2c2;--quiet:#738096;--ok:#e7edf6;--accent:#c8d6e8;--max:1120px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(80% 60% at 50% -10%,#1a2637 0%,var(--bg) 65%);color:var(--ink);font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}.top{border-bottom:1px solid var(--line);background:#080c14dd;backdrop-filter:blur(12px)}.topin{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:750;letter-spacing:.08em;text-decoration:none}.brand span{color:var(--muted);font-weight:500}.nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px}.nav a:hover{color:var(--ink)}
+main{padding:76px 0 100px}.eyebrow{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(38px,6vw,70px);line-height:1.02;letter-spacing:-.04em;max-width:820px;margin:18px 0 22px}h1 em{font-style:normal;color:var(--accent)}.lede{max-width:760px;color:var(--muted);font-size:19px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 18px}.btn{display:inline-flex;padding:12px 18px;border:1px solid var(--line);border-radius:10px;text-decoration:none;font-weight:650}.btn.primary{background:var(--ink);color:#080c14;border-color:var(--ink)}.btn:hover{border-color:var(--accent)}
+.observed{color:var(--quiet);font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:54px}.card{border:1px solid var(--line);border-radius:14px;background:#101722cc;padding:22px}.label{color:var(--quiet);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}.value{font-size:25px;font-weight:750;margin:9px 0 5px}.detail{color:var(--muted);font-size:14px}.ok{color:var(--ink)}.section{margin-top:72px}.section h2{font-size:28px;letter-spacing:-.02em;margin:0 0 12px}.section p{color:var(--muted);max-width:780px}.twocol{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.list{margin:0;padding-left:20px;color:var(--muted)}.list li{margin:7px 0}.code{border:1px solid var(--line);background:#070a10;border-radius:12px;padding:18px;overflow:auto;color:#dbe5f2;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace}.note{border-left:3px solid var(--accent);padding:14px 18px;background:#101722;color:var(--muted)}footer{border-top:1px solid var(--line);padding:25px 0 45px;color:var(--quiet);font-size:13px}
+@media(max-width:680px){.topin{align-items:flex-start;flex-direction:column;padding:16px 0}.nav{gap:12px}main{padding-top:52px}.lede{font-size:17px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin">
+<a class="brand" href="https://a11oy.net/">A11OY <span>/ MEASURED INFERENCE</span></a>
+<nav class="nav" aria-label="Primary"><a href="https://inference.a-11-oy.com/">Gateway</a><a href="https://a-11-oy.com/">Product</a><a href="https://huggingface.co/SZLHOLDINGS">Hub</a><a href="https://github.com/szl-holdings">Source</a><a href="https://a11oy.net/">Proof</a></nav>
+</div></header>
+<main><div class="wrap">
+<div class="eyebrow">MEASURED · PUBLIC GATEWAY · SALADCLOUD</div>
+<h1>Ternary-Bonsai inference, <em>checkable at the edge.</em></h1>
+<p class="lede">SZL Holdings exposes an OpenAI-compatible inference surface for the Ternary-Bonsai-2-27B-PQ2_0 model. The gateway is reachable through SaladCloud, and the completion route is protected by an x402 payment requirement.</p>
+<div class="actions"><a class="btn primary" href="https://inference.a-11-oy.com/" target="_blank" rel="noopener">Open the live UI ↗</a><a class="btn" href="https://inference.a-11-oy.com/v1/models" target="_blank" rel="noopener">Inspect /v1/models ↗</a><a class="btn" href="https://inference.a-11-oy.com/health" target="_blank" rel="noopener">Read /health ↗</a></div>
+<p class="observed">Observation: 2026-11-15T15:02Z · public probes from the authorized SZL operations path · this page records reachability and gateway posture, not model quality.</p>
+
+<section class="grid" aria-label="Measured checks">
+<article class="card"><div class="label">Health</div><div class="value ok">HTTP 200</div><div class="detail">The public health endpoint returned <code>{"status":"ok"}</code>.</div></article>
+<article class="card"><div class="label">Model registry</div><div class="value ok">HTTP 200</div><div class="detail"><code>ternary-bonsai-2-27b-pq2_0</code> is exposed by the gateway.</div></article>
+<article class="card"><div class="label">Web UI</div><div class="value ok">HTTP 200</div><div class="detail">The llama.cpp web interface is reachable at the gateway root.</div></article>
+<article class="card"><div class="label">Unpaid completion</div><div class="value ok">HTTP 402</div><div class="detail">The x402 v2 wall rejects unsigned requests before generation.</div></article>
+</section>
+
+<section class="section"><h2>Model and serving contract</h2><div class="twocol">
+<article class="card"><div class="label">Served artifact</div><ul class="list"><li>26.9B parameter GGUF</li><li>PQ2_0 · approximately 2.13 bpw</li><li>Approximately 7.2 GB model file</li><li>Context window reported as 8,192</li></ul></article>
+<article class="card"><div class="label">Gateway</div><ul class="list"><li>OpenAI-compatible <code>/v1</code> surface</li><li>SaladCloud primary origin</li><li>Cloudflare edge payment enforcement</li><li>Base network USDC requirement: $0.02 per completion request</li></ul></article>
+</div></section>
+
+<section class="section"><h2>Reproduce the public checks</h2><p>These commands inspect the public contract without sending a payment or claiming a completion.</p>
+<pre class="code"><code>curl -fsS https://inference.a-11-oy.com/health
+curl -fsS https://inference.a-11-oy.com/v1/models
+curl -sS -o /dev/null -w "%{http_code}
+" \
+  -X POST https://inference.a-11-oy.com/v1/chat/completions \
+  -H "content-type: application/json" \
+  -d '{"model":"ternary-bonsai-2-27b-pq2_0","messages":[{"role":"user","content":"healthcheck"}],"max_tokens":1}'
+# Expected unpaid completion status: 402</code></pre>
+</section>
+
+<section class="section"><h2>What the observation establishes</h2><div class="note">The observation establishes public reachability, the model identifier exposed by the running gateway, and an active payment gate. It does not establish benchmark quality, safety, uptime SLA, paid-response latency, or a publicly inspectable receipt for a paid completion.</div></section>
+
+<section class="section"><h2>Follow the evidence</h2><div class="twocol">
+<article class="card"><div class="label">Product</div><div class="detail"><a href="https://a-11-oy.com/" target="_blank" rel="noopener">a-11-oy.com</a><br>Governed command surface and product runtime.</div></article>
+<article class="card"><div class="label">Hub</div><div class="detail"><a href="https://huggingface.co/SZLHOLDINGS" target="_blank" rel="noopener">huggingface.co/SZLHOLDINGS</a><br>Models, datasets, kernels, and Spaces.</div></article>
+<article class="card"><div class="label">Source</div><div class="detail"><a href="https://github.com/szl-holdings" target="_blank" rel="noopener">github.com/szl-holdings</a><br>Implementation and review history.</div></article>
+<article class="card"><div class="label">Proof</div><div class="detail"><a href="https://a11oy.net/" target="_blank" rel="noopener">a11oy.net</a><br>Evidence registry and declared limits.</div></article>
+</div></section>
+</div></main>
+<footer><div class="wrap">SZL Holdings · Measured public inference surface · Reachability is evidence of transport, not a quality or production-readiness certificate.</div></footer>
+</body></html>
