@@ -1,0 +1,76 @@
+{
+  "schema": "szl.proof-estate-observation/v1",
+  "captured_at": "2026-11-15T04:30:00Z",
+  "scope": "authenticated_organization_enumeration_plus_anonymous_web_probes",
+  "evidence_class": "OBSERVED_SNAPSHOT",
+  "production_authorization": false,
+  "github": {
+    "organization": "szl-holdings",
+    "scope": "authenticated_enumeration_all_branches_includes_private_and_archived",
+    "repositories_total": 160,
+    "active_non_fork": 131,
+    "archived": 29,
+    "observed_at": "2026-11-15T02:48:00Z",
+    "source": "gh repo list via authenticated CLI on operator workstation (receipt: org_scrape2_20261115.txt)",
+    "method": "Authenticated gh repository enumeration, active/archived split by gh predicate. This observation does not claim a public-only count; private repositories are included and are not separately enumerated here.",
+    "readiness": "Repository counts do not establish quality, safety, production admission, or usable inference."
+  },
+  "hugging_face": {
+    "organization": "SZLHOLDINGS",
+    "scope": "authenticated_hub_listing_includes_private",
+    "models": 194,
+    "datasets": 96,
+    "spaces": 67,
+    "model_downloads_total": 17773,
+    "top_model_by_downloads": {"id": "SZLHOLDINGS/SZL-Khipu-1.5B-GGUF", "downloads": 3387},
+    "top_dataset_by_downloads": {"id": "SZLHOLDINGS/killinchu-osint-corpus", "downloads": 145977},
+    "observed_at": "2026-11-15T02:55:00Z",
+    "source": "huggingface_hub authenticated listing on operator workstation (receipt: hf_scrape_20261115.txt)",
+    "method": "Authenticated HfApi listing. Includes private resources; private visibility state is owner-gated and is not claimed as public here. Download counters are Hub-reported cumulative values at observation time.",
+    "readiness": "Listing, counters, and file presence do not establish training, quality, safety, production admission, or usable inference."
+  },
+  "pypi_observation": {
+    "observed_at": "2026-11-15T02:58:00Z",
+    "packages_resolved": {"szl": "0.1.7", "szl-nemo": "0.4.2", "vsp-otel": "0.1.3"},
+    "probed_absent": ["szl-formulas", "szl-provctl", "khipu-consensus", "puriq-live", "szl-serve", "hatun-mcp", "szl-trust", "quant-curve"],
+    "method": "Unauthenticated PyPI project resolution probes from the operator workstation.",
+    "note": "absent names are packaging-ladder candidates only; absence is not a defect claim."
+  },
+  "cloudflare_observation": {
+    "observed_at": "2026-11-15T04:12:00Z",
+    "domain": "a-11-oy.com",
+    "nameservers": ["simon.ns.cloudflare.com", "desiree.ns.cloudflare.com"],
+    "proxied_hostnames": ["a-11-oy.com", "www.a-11-oy.com", "inference.a-11-oy.com"],
+    "edge_ips_observed": ["104.26.14.183", "104.26.15.183", "172.67.70.200"],
+    "server_header": "cloudflare",
+    "https_status": 200,
+    "http_to_https_redirect": true,
+    "cloudflared_installed_on_workstation": true,
+    "cloudflared_tunnel_credentials_files": 3,
+    "cloudflare_api_token_on_workstation": false,
+    "method": "Unauthenticated DNS resolution (Resolve-DnsName) plus HTTPS probes from the operator workstation. No Cloudflare account API was accessed; deeper Pages/Workers migration remains owner-gated.",
+    "interpretation": "The canonical domain is fully served behind the Cloudflare edge (DNS on Cloudflare nameservers, apex/www/inference proxied, HTTPS enforced). This is an onboarding-state observation, not a security or performance claim."
+  },
+  "proof_origin_observation": {
+    "source_repository": "https://github.com/szl-holdings/a11oy-net",
+    "front_door_url": "https://a-11-oy.com",
+    "observed_at": "2026-11-15T04:12:00Z",
+    "https_status": 200,
+    "title": "a11oy - The Living Command Fabric",
+    "body_bytes_observed": 90858,
+    "commercial_flagship_section_present": true,
+    "sponsors_link_present": false,
+    "front_door_contact_email_present": false,
+    "host_byte_pinned_by_contract": "szl-holdings/killinchu scripts/verify_public_experience_host.py HOST_SHA256=a5a18bdde4be9ee68c83e9c1f87a2f5e16363a38cd4ed20e562b7984de14f8ce",
+    "showcase_opener_state": "killinchu PR 582 'docs(showcase): plain-language opener with demo link and 60-second verify command' MERGED 2026-11-15T04:03:35Z",
+    "interpretation": "The front door is live, commercially framed, and byte-pinned by the public-experience contract; front-door content changes require the contract-aware reviewed path and are not made by this snapshot."
+  },
+  "limitations": [
+    "The collection window is not an atomic snapshot of GitHub, Hugging Face, PyPI, Cloudflare, and the front door.",
+    "The GitHub and Hugging Face observations are authenticated scopes that include private resources; they are not comparable to prior anonymous public-only counts (2026-09-30 recorded 49 public models / 34 public datasets).",
+    "No model weights, dataset bodies, training jobs, kernel publication, paid hardware, or production write operation was executed for this record.",
+    "Cloudflare edge observation is reachability and routing only; it is not a security, availability, or performance claim.",
+    "Download counters are cumulative Hub-reported values at observation time and are not audited by this record.",
+    "The 2026-09-03 through 2026-09-30 records remain historical evidence and are not rewritten."
+  ]
+}
