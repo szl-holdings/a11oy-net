@@ -102,7 +102,7 @@ class ReleaseChainContract(unittest.TestCase):
 
     def test_signed_python_supply_chain_does_not_transfer_sdk_provenance(self):
         source=self.html
-        for value in ("2026-11-17 21:14", "21:19 UTC",
+        for value in ("2026-11-17 21:12", "21:19 UTC",
                       "eight wheel/sdist files", "Fulcio deployment environment",
                       "szl SDK 0.1.7 returned HTTP 404",
                       "signed publisher provenance is unavailable",
