@@ -40,7 +40,7 @@
   <main id="main" tabindex="-1">
     <header class="hero">
       <div class="wrap">
-        <p class="eyebrow">Public source-to-release chain · 2026-11-17 19:49 UTC snapshot</p>
+        <p class="eyebrow">Public source-to-release chain · 2026-11-17 19:49 UTC – 21:19 UTC bounded observations</p>
         <h1>From code to customers. Every gate visible.</h1>
         <p class="lede">SZL Holdings publishes auditable source, model and dataset artifacts, cloud delivery surfaces, Python packages and research. A listing or green check is a stage—not proof that the next stage happened.</p>
         <div class="hero-canon" aria-label="Evidence boundaries">
@@ -87,10 +87,10 @@
                 <td>Verify POST method charging, signed origin PAYMENT-CONTEXT, one paid SDK canary, independent settlement and fees before reporting any revenue.</td>
               </tr>
               <tr>
-                <td><strong>4. Python publication</strong><p><a href="https://pypi.org/org/szl-holdings/">PyPI organization</a> · <a href="https://pypi.org/project/szl/">szl</a> · <a href="https://pypi.org/project/szl-energy-attest/">energy attest</a></p></td>
-                <td><span class="cls cls-reported">REPORTED</span></td>
-                <td>Official PyPI JSON returned release metadata and two files each for five sampled project names on 2026-11-17: szl 0.1.7, szl-receipts 14.0.2, szl-energy-attest 0.3.4, szl-evidence-mandate 0.1.2 and szl-calibration 0.1.1.</td>
-                <td>Independently inspect each wheel/sdist hash, provenance attestation, GitHub tag and commit before declaring package/source parity. No release was published in this review.</td>
+                <td><strong>4. Python publication · signed provenance</strong><p><a href="https://pypi.org/org/szl-holdings/">PyPI organization</a> · <a href="https://pypi.org/project/szl-calibration/0.1.1/">Calibration</a> · <a href="https://pypi.org/project/szl-energy-attest/0.3.4/">Energy</a> · <a href="https://pypi.org/project/szl-evidence-mandate/0.1.2/">Evidence</a> · <a href="https://pypi.org/project/szl-receipts/14.0.2/">Receipts</a> · <a href="https://pypi.org/project/szl/0.1.7/">SDK hold</a></p></td>
+                <td><span class="cls cls-reported">MEASURED</span></td>
+                <td>2026-11-17 21:12–21:19 UTC: a pinned first-party cryptographic verifier checked four named latest versions and eight wheel/sdist files against PyPI bytes, production Sigstore and PEP 740 publish attestations, the signed Fulcio deployment environment, and the immutable GitHub release-tag commit. Independently, szl SDK 0.1.7 returned HTTP 404 for <em>both</em> PyPI provenance objects. Its bytes matched published hashes, but signed publisher provenance is unavailable for that historical release.</td>
+                <td>The four verified releases do not establish reproducible builds, software safety or full package/source parity. The SDK's historical provenance hold remains <a href="https://github.com/szl-holdings/szl-gpu-bridge/issues/243">open</a>; a future legitimately admitted release requires fresh two-file attestations and exact source bindings. No release was published in this review.</td>
               </tr>
               <tr>
                 <td><strong>5. Research and DOI publication</strong><p><a href="https://github.com/szl-holdings/szl-papers">Canonical papers</a> · <a href="https://github.com/szl-holdings/lutar-lean">Proof source</a></p></td>
@@ -125,6 +125,8 @@ python tools/x402_public_probe.py --help</code></pre>
               <a href="https://github.com/szl-holdings/szl-gov">Governance and payment contract</a>
               <a href="https://huggingface.co/SZLHOLDINGS">Hugging Face organization</a>
               <a href="https://pypi.org/org/szl-holdings/">PyPI package organization</a>
+              <a href="https://github.com/szl-holdings/szl-org-health/blob/37b6db714749e0c29c0154850d66dd837f4502b6/docs/PYPI_LIVE_VERIFICATION.md">Independently verify PyPI signed publisher and GitHub tags</a>
+              <a href="https://github.com/szl-holdings/szl-gpu-bridge/blob/d49e958a2301701fa0c43896c264747aa92127c7/docs/SZL_SDK_PYPI_PROVENANCE_20261117.md">Exact historical SDK provenance hold and release gate</a>
               <a href="https://github.com/szl-holdings/szl-papers">Research publication source</a>
             </div>
           </article>
