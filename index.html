@@ -762,6 +762,24 @@ footer{padding-top:var(--break)}
 @media(prefers-reduced-motion:reduce){
   .inv-card:hover{transform:none}
 }
+
+/* Source-owned mobile tap geometry for the evidence index and footer.
+ * These are navigation actions, not prose links: keep hit areas distinct
+ * without changing citation text, claims or desktop density. */
+@media(max-width:720px){
+  .index-catalog li > a,
+  .foot-links > a,
+  .stack-card > a.stack-link{
+    display:inline-flex;align-items:center;justify-content:flex-start;
+    min-height:44px;min-width:44px;padding:0 8px;
+    touch-action:manipulation;
+  }
+  .index-catalog li > a{margin-inline:-8px 0}
+  .stack-card > a.stack-link{font-size:13px;line-height:1.4;margin-top:8px}
+  .stack-card > a.stack-link + a.stack-link{margin-left:8px}
+  .foot-links{gap:6px 12px;align-items:center}
+  .foot-links > a{padding-inline:6px}
+}
 </style>
   <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
   <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
@@ -937,8 +955,8 @@ footer{padding-top:var(--break)}
   <div class="frontier">
     <a class="stack-card" href="https://huggingface.co/SZLHOLDINGS/SZL-Khipu-1.5B" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">MODEL · BRAIN</span><span class="stack-truth">REPORTED</span></div><h3>SZL-Khipu-1.5B</h3><p>The flagship governed retrieval navigator, with public weights, adapter, schema, receipts, and GGUF path.</p><span class="stack-link">Open model line →</span></a>
     <a class="stack-card" href="https://huggingface.co/spaces/SZLHOLDINGS/llm-router-live" target="_blank" rel="noopener"><div class="stack-top"><span class="stack-kind">ROUTER · BRAIN</span><span class="stack-truth">REPORTED</span></div><h3>Sovereign router</h3><p>The public Hub listing for the routing interface and its stated provider-status and bounded-inference scope.</p><span class="stack-link">Open router →</span></a>
-    <div class="stack-card"><div class="stack-top"><span class="stack-kind">ANATOMY V5</span><span class="stack-truth">NOT FOUND</span></div><h3>Living anatomy</h3><p>The body map for organs, contracts, trust boundaries, and the controller outside model weights.</p><span class="stack-link">Hub Space SZLHOLDINGS/anatomy · HTTP 401 to the public, 404 to an authenticated org-admin read (checked 2026-09-26 UTC) · link removed</span></div>
-    <div class="stack-card"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC</span><span class="stack-truth">NOT FOUND</span></div><h3>Holographic estate</h3><p>A spatial front door into the wider public estate, built as a distinct interface over shared evidence.</p><span class="stack-link">Hub Space SZLHOLDINGS/holographic · HTTP 401 to the public, 404 to an authenticated org-admin read (checked 2026-09-26 UTC) · link removed</span></div>
+    <div class="stack-card"><div class="stack-top"><span class="stack-kind">ANATOMY · NEURAL QUANT V7</span><span class="stack-truth">REPORTED</span></div><h3>Living anatomy</h3><p>The NEURAL_QUANT_V7 experience was observed on the organization Anatomy Space at source commit <code>02d9dbb</code> on 2026-11-16. Its direct Hub link remains withheld on this proof registry until the canonical public inventory admits that Space; visibility alone does not prove each organ operational.</p><a class="stack-link" href="https://github.com/szl-holdings/anatomy/commit/02d9dbbac66993015005e423f2123dde3dc3b4a7" target="_blank" rel="noopener">Inspect verified source revision →</a><span class="stack-link">Hub link pending source-owned inventory refresh</span></div>
+    <div class="stack-card"><div class="stack-top"><span class="stack-kind">HOLOGRAPHIC · A11OY</span><span class="stack-truth">REPORTED</span></div><h3>Holographic operations</h3><p>The spatial evidence interface is a governed A11oy route, not a claim that SZLHOLDINGS/holographic runs as a separate Space. The direct A11oy interface answered HTTP 200 on 2026-11-16; current source parity and instrument coverage require their own receipts.</p><a class="stack-link" href="https://szlholdings-a11oy.hf.space/holographic" target="_blank" rel="noopener">Open A11oy holographic interface →</a></div>
     <a class="stack-card" href="/ayllu/"><div class="stack-top"><span class="stack-kind">COUNSEL · AYLLU</span><span class="stack-truth">REPORTED</span></div><h3>Ayllu Counsel</h3><p>Eleven Quechua seats, fail-closed Λ-gate, dissent retained. Wiñay closure and Huklla cheapest-cut are scored on the split-out organ. IIT φ_s UNAVAILABLE. Presence CONJECTURE. RECORD here; runtime stays on product origin / Space.</p><span class="stack-link">Open Ayllu RECORD →</span></a>
     <a class="stack-card" href="/khipu/"><div class="stack-top"><span class="stack-kind">KERNEL · KHIPU</span><span class="stack-truth">REPORTED</span></div><h3>SZL KHIPU</h3><p>Original cuts of the field, never rehosts. Duals Ari=GreenLight and Kay Pacha=Anatomy. RECORD here; evaluate on a-11-oy.com/khipu. CUDA UNAVAILABLE. Conjecture 1 OPEN.</p><span class="stack-link">Open KHIPU RECORD →</span></a>
     <a class="stack-card" href="/experiments/"><div class="stack-top"><span class="stack-kind">EXPERIMENTAL</span><span class="stack-truth">REPORTED</span></div><h3>Experiments lab</h3><p>Allodial AI, neuroplasticity, chain of title — operational Python, still EXPERIMENTAL, never folded into locked-8.</p><span class="stack-link">Open experiments RECORD →</span></a>
