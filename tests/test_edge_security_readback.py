@@ -249,6 +249,9 @@ class EdgeReadbackTests(TestCase):
                 edge, "probe_headers", return_value=copy.deepcopy(passing)
             ),
             mock.patch.object(
+                edge, "probe_public_proof_routes", return_value=copy.deepcopy(passing)
+            ),
+            mock.patch.object(
                 edge,
                 "probe_current_main",
                 return_value={
@@ -270,6 +273,7 @@ class EdgeReadbackTests(TestCase):
         self.assertIn("source_control_reauthorization", receipt["failed_controls"])
         self.assertIn("tls_edge", receipt["probes"])
         self.assertIn("tls_pages_origin", receipt["probes"])
+        self.assertIn("public_proof_routes", receipt["probes"])
         self.assertEqual(
             tls_probe.call_args_list,
             [

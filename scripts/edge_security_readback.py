@@ -49,6 +49,16 @@ HEADER_URLS = (
     f"{SURFACE}/",
     f"{SURFACE}/site.webmanifest",
 )
+# Explicit public proof endpoints: transport reachability is independent of
+# source binding, TLS, headers, and any product-runtime capability.
+PUBLIC_PROOF_ROUTES = (
+    ("/record.json", "application/json", "contract_version"),
+    ("/evidence.json", "application/json", "contract_version"),
+    ("/public-inventory.json", "application/json", "canonical_membership_source"),
+    ("/record/", "text/html", "RECORD · a11oy proof registry"),
+    ("/diligence/", "text/html", "a11oy Diligence Room"),
+)
+MAX_PUBLIC_PROOF_BYTES = 2 * 1024 * 1024
 
 
 class ProbeError(ValueError):
@@ -577,6 +587,95 @@ def probe_headers(
     }
 
 
+def probe_public_proof_routes(
+    *,
+    opener: Callable[..., Any] | None = None,
+) -> dict[str, Any]:
+    """Read five exact public GET routes without auth, redirects or payments.
+
+    A 200 with the wrong media type, marker or truncated JSON is not a PASS.
+    Status, media type and fixed error codes are emitted; upstream bodies,
+    arbitrary response headers and exception text never enter the receipt.
+    """
+    opener = opener or open_no_redirect
+    results: list[dict[str, Any]] = []
+    errors: list[str] = []
+    for path, media_type, marker in PUBLIC_PROOF_ROUTES:
+        url = f"{SURFACE}{path}"
+        code = "PASS"
+        status: int | None = None
+        request = urllib.request.Request(
+            url,
+            headers={
+                "Accept": media_type,
+                "User-Agent": "szl-public-proof-readback/1",
+            },
+            method="GET",
+        )
+        try:
+            with opener(request, timeout=12) as response:
+                status = response.status
+                content_type = response.headers.get("Content-Type", "")
+                mitigated = response.headers.get("cf-mitigated", "")
+                if status != 200:
+                    code = f"HTTP_{status}"
+                elif mitigated.lower() == "challenge":
+                    code = "EDGE_MANAGED_CHALLENGE"
+                elif not _is_exact_canonical_url(response.geturl(), url):
+                    code = "REDIRECT_OR_ORIGIN_DRIFT"
+                elif content_type.split(";", 1)[0].strip().lower() != media_type:
+                    code = "WRONG_CONTENT_TYPE"
+                else:
+                    body = response.read(MAX_PUBLIC_PROOF_BYTES + 1)
+                    if not body or len(body) > MAX_PUBLIC_PROOF_BYTES:
+                        code = "EMPTY_OR_OVERSIZED_BODY"
+                    else:
+                        try:
+                            rendered = body.decode("utf-8")
+                            if media_type == "application/json":
+                                document = json.loads(
+                                    rendered, object_pairs_hook=_reject_duplicate_keys
+                                )
+                                if not isinstance(document, dict) or marker not in document:
+                                    code = "INVALID_PUBLIC_DOCUMENT"
+                            elif marker.casefold() not in rendered.casefold():
+                                code = "MISSING_PUBLIC_HTML_MARKER"
+                        except (UnicodeError, ValueError, ProbeError):
+                            code = "INVALID_PUBLIC_DOCUMENT"
+        except urllib.error.HTTPError as exc:
+            status = exc.code
+            headers = exc.headers
+            if status == 403 and headers and (
+                (headers.get("cf-mitigated") or "").lower() == "challenge"
+            ):
+                code = "EDGE_MANAGED_CHALLENGE"
+            elif status == 402 and headers and headers.get("PAYMENT-REQUIRED"):
+                code = "EDGE_PAYMENT_CHALLENGE"
+            else:
+                code = f"HTTP_{status}"
+        except (OSError, TimeoutError, ValueError):
+            code = "TRANSPORT_UNAVAILABLE"
+        if code != "PASS":
+            errors.append(f"{path}: {code}")
+        results.append({
+            "path": path,
+            "http_status": status,
+            "status": "PASS" if code == "PASS" else "FAIL",
+            "code": code,
+        })
+    return {
+        "status": "PASS" if not errors else "FAIL",
+        "paths_checked": len(results),
+        "results": results,
+        "errors": errors,
+        "meaning": (
+            "Anonymous exact-origin GET reachability and bounded document-shape "
+            "validation for five published proof routes; not a paid settlement, "
+            "browser-universal availability, or application-readiness claim."
+        ),
+    }
+
+
 def _failed_probe(message: str) -> dict[str, Any]:
     return {"status": "FAIL", "errors": [message]}
 
@@ -615,6 +714,7 @@ def build_receipt(
         ),
         ("dnssec", probe_dnssec),
         ("security_headers", probe_headers),
+        ("public_proof_routes", probe_public_proof_routes),
     ):
         try:
             probes[key] = operation()
@@ -650,6 +750,7 @@ def build_receipt(
             "Edge TLS, Pages-origin TLS, DNSSEC, Pages settings, source binding, and response headers are independent controls.",
             "The static proof origin does not establish a-11-oy.com product-runtime readiness.",
             "A committed _headers file is not evidence that GitHub Pages or Cloudflare enforced those headers.",
+            "The public proof GET route check is client-scoped; a Cloudflare challenge is a refused readback, not a statement about every browser or about application readiness.",
         ],
     }
 
