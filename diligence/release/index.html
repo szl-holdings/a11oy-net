@@ -16,8 +16,11 @@
   <link rel="stylesheet" href="/assets/szl/szl-tokens.css" />
   <link rel="stylesheet" href="/assets/kanchay.css" />
   <link rel="stylesheet" href="/assets/diligence.css" />
+  <link rel="stylesheet" href="/assets/szl-flow-proof.css" data-szl-proof-flow-asset="style" />
+  <link rel="stylesheet" href="/assets/szl-flow-proof-static.css" data-szl-proof-flow-asset="static-style" />
+  <link rel="stylesheet" href="/assets/szl-holo-proof-v2.css" data-szl-proof-holo-asset="style-v2" />
 </head>
-<body>
+<body data-szl-proof-flow="record" data-szl-proof-theme="dossier">
   <a class="skip" href="#main">Skip to release evidence</a>
   <nav class="topbar" aria-label="Primary">
     <div class="wrap nav nav-in">
@@ -140,5 +143,18 @@ python tools/x402_public_probe.py --help</code></pre>
     </section>
   </main>
   <footer><div class="wrap footer"><p>SZL Holdings · Public diligence SNAPSHOT, November 17, 2026. No account data, secret, customer identifier or payment signature is embedded.</p><div class="footer-links"><a href="/diligence/">Diligence</a><a href="/record/">RECORD</a><a href="/">Proof</a><a href="https://github.com/szl-holdings">Source</a></div></div></footer>
+  <nav class="szl-proof-rail szl-proof-static-rail" aria-label="SZL public-estate journeys" data-szl-proof-flow-asset="static" data-szl-proof-holo-adopted="true">
+    <div class="szl-proof-origin" title="a11oy.net independent proof origin"><span>Record</span></div>
+    <div class="szl-proof-links">
+      <a class="szl-proof-link" href="https://a11oy.net/" data-journey="start">Start Here</a>
+      <a class="szl-proof-link" href="https://a-11-oy.com/" data-journey="products">Products &amp; Demos</a>
+      <a class="szl-proof-link" href="https://a11oy.net/estate/" data-journey="models">Models &amp; Data</a>
+      <a class="szl-proof-link" href="https://a11oy.net/khipu/" data-journey="kernels">Kernels &amp; SDKs</a>
+      <a class="szl-proof-link" href="https://a11oy.net/record/" data-journey="proofs" aria-current="page">Proofs &amp; Research</a>
+    </div>
+    <div class="szl-proof-actions">
+      <a class="szl-proof-switch" href="https://a-11-oy.com/" title="Open the product command origin"><span>Open</span><strong>Product</strong></a>
+    </div>
+  </nav>
 </body>
 </html>
