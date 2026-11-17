@@ -249,7 +249,7 @@ static-file behavior; they do not establish a deployed revision or runtime readi
 | `scripts/check_proof_surface.py` | Metadata, accessibility, and truth-surface guard. |
 | `scripts/check_diligence_surface.py` | Diligence, machine-contract, no-script, and recovery-route guard. |
 | `_headers`, `scripts/check_security_headers.py` | Versioned edge policy and fail-closed static/live validator. GitHub Pages does not apply `_headers`. |
-| `scripts/edge_security_readback.py`, `.github/workflows/edge-security-readback.yml` | Read-only exact-main, source-witness, Pages, TLS, DNSSEC, and live-header readback with a bounded generated receipt. |
+| `scripts/edge_security_readback.py`, `.github/workflows/edge-security-readback.yml` | Read-only exact-main, source-witness, Pages, TLS, DNSSEC, live-header **and five public proof-route** readbacks with a bounded generated receipt. Checks `/record.json`, `/record/`, `/evidence.json`, `/public-inventory.json`, and `/diligence/` for exact unauthenticated GET/200, expected media type and document markers. A Cloudflare challenge, x402 quote, redirect or malformed payload is a route-level FAIL—not evidence of deployment, payment, universal availability or runtime readiness. |
 | `robots.txt`, `sitemap.xml` | Public search discovery. |
 | `.well-known/security.txt` | Canonical security-reporting route. |
 
