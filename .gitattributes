@@ -1,4 +1,7 @@
 # Exact source and dated evidence bytes must survive Windows checkouts.
+# The OAC static HTML size contract is defined over the immutable LF Git blob.
+# Preserve those bytes on Windows rather than growing it with CRLF conversion.
+oac/index.html text eol=lf
 estate/canonical-hf-manifest.json -text
 public-membership.observed-2026-09-10.json -text
 tests/fixtures/hf_api/canonical_manifest.json -text

@@ -1194,14 +1194,19 @@ def check() -> None:
 
     assert "MEASURED NOW" not in source
     assert "RUNTIME CHECK BELOW" not in source
-    # 2026-09-25: anatomy and holographic Hub Spaces answer HTTP 401 to the
-    # public; their cards drop REPORTED (14 -> 12) and carry no link.
-    # 2026-09-26: an authenticated SZLHOLDINGS org-admin read returned 404 for
-    # anatomy, holographic and governed-receipt-verifier. The verifier later
-    # reappeared in the generated public listing, while the dated row remains
-    # historical. The two curated missing cards stay unlinked.
-    assert source.count('<span class="stack-truth">REPORTED</span>') == 12
-    assert source.count('<span class="stack-truth">NOT FOUND</span>') == 2
+    # 2026-11-16: the curated anatomy and holographic cards are again REPORTED,
+    # but only as dated source observations. Anatomy has an exact GitHub release
+    # and a matching served-file observation; its Hub link remains withheld until
+    # the canonical public membership ledger includes the repository.
+    # Holography is an A11oy product route, not an invented separate Hub Space.
+    # The historical 2026-09-26 dossier record remains unmodified below.
+    assert source.count('<span class="stack-truth">REPORTED</span>') == 14
+    assert source.count('<span class="stack-truth">NOT FOUND</span>') == 0
+    assert "ANATOMY V5" not in source
+    assert "ANATOMY · NEURAL QUANT V7" in source
+    assert "Hub link pending source-owned inventory refresh" in source
+    assert "https://github.com/szl-holdings/anatomy/commit/02d9dbbac66993015005e423f2123dde3dc3b4a7" in source
+    assert 'href="https://szlholdings-a11oy.hf.space/holographic"' in source
     assert "RETIRED/PRIVATE" not in source
     assert (
         '<div class="dossier-row"><span class="dossier-index">07</span><span><b>Verifier Space</b>'
