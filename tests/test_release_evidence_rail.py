@@ -100,5 +100,29 @@ class ReleaseChainContract(unittest.TestCase):
         self.assertIn("no account data",source)
 
 
+    def test_signed_python_supply_chain_does_not_transfer_sdk_provenance(self):
+        source=self.html
+        for value in ("2026-11-17 21:14", "21:19 UTC",
+                      "eight wheel/sdist files", "Fulcio deployment environment",
+                      "szl SDK 0.1.7 returned HTTP 404",
+                      "signed publisher provenance is unavailable",
+                      "No release was published in this review",
+                      "full package/source parity"):
+            self.assertIn(value.lower(),source.lower())
+        urls={row.get("href") for row in self.document.links}
+        for link in (
+            "https://pypi.org/project/szl-calibration/0.1.1/",
+            "https://pypi.org/project/szl-energy-attest/0.3.4/",
+            "https://pypi.org/project/szl-evidence-mandate/0.1.2/",
+            "https://pypi.org/project/szl-receipts/14.0.2/",
+            "https://pypi.org/project/szl/0.1.7/",
+            "https://github.com/szl-holdings/szl-gpu-bridge/issues/243",
+        ):
+            self.assertIn(link,urls)
+        self.assertNotIn("five signed PyPI releases",source.lower())
+        self.assertNotIn("szl SDK 0.1.7 proven signed",source.lower())
+        self.assertNotIn("revenue earned",source.lower())
+
+
 if __name__=="__main__":
     unittest.main()
