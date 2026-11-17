@@ -57,6 +57,7 @@ PUBLIC_PROOF_ROUTES = (
     ("/public-inventory.json", "application/json", "canonical_membership_source"),
     ("/record/", "text/html", "RECORD · a11oy proof registry"),
     ("/diligence/", "text/html", "a11oy Diligence Room"),
+    ("/diagrams/", "text/html", "Evidence diagrams · A11oy Proof"),
 )
 MAX_PUBLIC_PROOF_BYTES = 2 * 1024 * 1024
 
@@ -670,7 +671,7 @@ def probe_public_proof_routes(
         "errors": errors,
         "meaning": (
             "Anonymous exact-origin GET reachability and bounded document-shape "
-            "validation for five published proof routes; not a paid settlement, "
+            "validation for six published proof routes; not a paid settlement, "
             "browser-universal availability, or application-readiness claim."
         ),
     }

@@ -55,7 +55,7 @@ class PublicProofReadbackTests(unittest.TestCase):
         content_type = "application/json" if path.endswith(".json") else "text/html"
         return Response(request.full_url, data_path.read_bytes(), content_type=content_type)
 
-    def test_five_exact_public_paths_pass_using_checked_in_fixtures(self) -> None:
+    def test_six_exact_public_paths_pass_using_checked_in_fixtures(self) -> None:
         seen = []
 
         def open_fixture(request, *, timeout):
@@ -64,7 +64,7 @@ class PublicProofReadbackTests(unittest.TestCase):
 
         result = edge.probe_public_proof_routes(opener=open_fixture)
         self.assertEqual(result["status"], "PASS")
-        self.assertEqual(result["paths_checked"], 5)
+        self.assertEqual(result["paths_checked"], 6)
         self.assertEqual(result["errors"], [])
         self.assertEqual(
             seen, [edge.SURFACE + path for path, _, _ in edge.PUBLIC_PROOF_ROUTES]
@@ -82,7 +82,7 @@ class PublicProofReadbackTests(unittest.TestCase):
 
         result = edge.probe_public_proof_routes(opener=challenge)
         self.assertEqual(result["status"], "FAIL")
-        self.assertEqual(len(result["errors"]), 5)
+        self.assertEqual(len(result["errors"]), 6)
         self.assertEqual(result["results"][0]["code"], "EDGE_MANAGED_CHALLENGE")
         self.assertNotIn(secret, str(result))
 
