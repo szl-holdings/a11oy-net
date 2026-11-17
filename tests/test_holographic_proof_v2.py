@@ -21,6 +21,7 @@ BASELINE_ZERO_JAVASCRIPT = {
     "chat/index.html",
     "code/index.html",
     "diligence/index.html",
+    "diligence/release/index.html",
     "notes/index.html",
     "record/index.html",
 }
