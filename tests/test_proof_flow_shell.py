@@ -27,6 +27,7 @@ NO_SCRIPT_DOCUMENTS = {
     "code/index.html",
     "diagrams/index.html",
     "diligence/index.html",
+    "diligence/release/index.html",
     "estate/living-souls-infrastructure/index.html",
     "notes/index.html",
     "oac/index.html",
