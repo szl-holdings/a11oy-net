@@ -48,7 +48,7 @@ class ReleaseChainContract(unittest.TestCase):
         self.assertEqual((doc.main,doc.h1,doc.scripts),(1,1,0))
         self.assertEqual(doc.lang,"en")
         self.assertEqual(doc.canon,[CANONICAL])
-        self.assertTrue({"main","evidence","methods","limits"}<=doc.ids)
+        self.assertLessEqual({"main","evidence","methods","limits"},doc.ids)
         self.assertIn("/assets/diligence.css",doc.styles)
         self.assertIn("script-src 'none'",self.html)
         self.assertIn("connect-src 'none'",self.html)
@@ -97,7 +97,7 @@ class ReleaseChainContract(unittest.TestCase):
                        "post method charging","signed origin payment-context",
                        "package/source parity","peer review"):
             self.assertIn(phrase,source)
-        self.assertTrue("no account data" in source)
+        self.assertIn("no account data",source)
 
 
 if __name__=="__main__":
