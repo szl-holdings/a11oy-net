@@ -9,8 +9,7 @@ import json
 import pathlib
 import sys
 import tempfile
-import unittest
-import unittest.mock as mock
+from unittest import TestCase, main, mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -23,7 +22,7 @@ diagnostic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(diagnostic)
 
 
-class CacheBoundaryTests(unittest.TestCase):
+class CacheBoundaryTests(TestCase):
     EXPECTED = "a" * 40
     STALE = "b" * 40
 
@@ -279,4 +278,4 @@ class CacheBoundaryTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
