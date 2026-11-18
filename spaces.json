@@ -423,34 +423,33 @@
     "evidence_class": "SNAPSHOT",
     "fold": {
       "listed": [
+        "anatomy",
         "ayllu",
         "counsel",
         "david-leads",
-        "governed-agent-bench",
-        "immune-lattice",
         "llm-router-live",
-        "nexus",
         "szl-command-lab",
         "szl-forge-lab",
-        "szl-model-inference-lab",
-        "yarqa"
+        "szl-model-inference-lab"
       ],
       "not_listed": [
         "a11oy-factory",
-        "anatomy",
         "cosmos",
         "energy-attest-holo",
         "energy-attested-runs",
         "evidence-studio",
         "experiments",
+        "governed-agent-bench",
         "governed-norm-holo",
         "guardrail-receipt",
         "hatun-mcp",
         "holographic",
+        "immune-lattice",
         "khipu-lab",
         "lambda-gate-holo",
         "lyte-lattice",
         "lyte-services",
+        "nexus",
         "receipt-chain-live",
         "sda",
         "szl-blocked-live",
@@ -462,7 +461,8 @@
         "szl-quant-live",
         "szl-real-estate",
         "szl-sovereign-os",
-        "terra-assurance"
+        "terra-assurance",
+        "yarqa"
       ]
     },
     "generated_by": "scripts/generate_hf_inventory.py",
@@ -470,15 +470,16 @@
     "keep": {
       "listed": [
         "a11oy",
+        "killinchu"
+      ],
+      "not_listed": [
         "governed-receipt-verifier",
         "immune",
-        "killinchu",
         "szl-atelier",
         "szl-khipu"
-      ],
-      "not_listed": []
+      ]
     },
-    "observed_at": "2026-11-02T03:46:18Z",
+    "observed_at": "2026-11-18T06:03:31Z",
     "source": "/public-inventory.json"
   }
 }

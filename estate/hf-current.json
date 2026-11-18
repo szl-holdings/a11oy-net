@@ -1,10 +1,10 @@
 {
   "canonical_membership_source": {
     "counts": {
-      "datasets": 38,
+      "datasets": 99,
       "kernels": 14,
-      "models": 41,
-      "spaces": 40
+      "models": 150,
+      "spaces": 33
     },
     "historical_portfolio_contract_replaced": false,
     "historical_snapshots": [
@@ -14,7 +14,7 @@
       }
     ],
     "model_quality_inferred": false,
-    "observed_at": "2026-11-01T22:56:52Z",
+    "observed_at": "2026-11-18T05:28:05Z",
     "production_authorization": false,
     "retained_source_path": "/estate/canonical-hf-manifest.json",
     "runtime_readiness_inferred": false,
@@ -38,11 +38,11 @@
       "visibility": "public-only"
     },
     "scope_sha256": "1c5be22ba143edc12239f4acd86a5ce424af12e8d10bca577490796c3bcdd461",
-    "source_git_blob": "e0f8114777d6afccb9c9e74b61ae353c29bc4fff",
+    "source_git_blob": "53b67b6ba4937bdc7f2a977532a792b1892693d0",
     "source_path": "docs/huggingface-ecosystem-manifest.json",
     "source_repository": "szl-holdings/a11oy",
-    "source_revision": "4eaa443f5f1ec07a87e2c9755c0074be40dff43f",
-    "source_sha256": "b88456cc1998dfcd959e0d2afe620bce89a5f1bf8314a891776d38723b677780"
+    "source_revision": "95cffa317f29c1da067f2d675850bea2cb2f8517",
+    "source_sha256": "edc541269737b057577fc3a73fa7bce97d70d0dd31c15eec36e7a78dfdeec4be"
   },
   "claim_boundaries": {
     "collections_and_buckets": "OUTSIDE_REPOSITORY_MEMBERSHIP_SCOPE",
@@ -52,14 +52,14 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "buckets": 2,
-    "collections": 7,
-    "datasets_public": 38,
+    "buckets": 1,
+    "collections": 21,
+    "datasets_public": 99,
     "kernels": 14,
-    "models": 41,
-    "public_resources_total": 142,
-    "repository_membership_total": 133,
-    "spaces_public": 40
+    "models": 150,
+    "public_resources_total": 318,
+    "repository_membership_total": 296,
+    "spaces_public": 33
   },
   "evidence_class": "SNAPSHOT",
   "freshness": {
@@ -90,49 +90,17 @@
       "policy": "spaces.json keep",
       "sdk": "docker",
       "title": "a11oy \u2014 Command Center"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/immune",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/immune",
-      "id": "SZLHOLDINGS/immune",
-      "policy": "spaces.json keep",
-      "sdk": "docker",
-      "title": "IMMUNE \u2014 Verifiable AI Defense Matrix"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-khipu",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/szl-khipu",
-      "id": "SZLHOLDINGS/szl-khipu",
-      "policy": "spaces.json keep",
-      "sdk": "docker",
-      "title": "SZL KHIPU"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/szl-atelier",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/szl-atelier",
-      "id": "SZLHOLDINGS/szl-atelier",
-      "policy": "spaces.json keep",
-      "sdk": "docker",
-      "title": "SZL Atelier"
-    },
-    {
-      "api": "https://huggingface.co/api/spaces/SZLHOLDINGS/governed-receipt-verifier",
-      "href": "https://huggingface.co/spaces/SZLHOLDINGS/governed-receipt-verifier",
-      "id": "SZLHOLDINGS/governed-receipt-verifier",
-      "policy": "spaces.json keep",
-      "sdk": "static",
-      "title": "governed-receipt-verifier"
     }
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T03:46:18Z",
-  "observed_date": "2026-11-02",
+  "observed_at": "2026-11-18T06:03:31Z",
+  "observed_date": "2026-11-18",
   "organization": "SZLHOLDINGS",
   "private_assets": "NOT_OBSERVED",
   "schema": "szl.hf-current/v2",
   "source": "/public-inventory.json",
-  "source_content_sha256": "8be9efead989722e61cdcbc5961fb99af5afe4f84fb813cc4733e43992314d9f",
+  "source_content_sha256": "5b0fc8fd1d6e21f9c42514778c26230f4cabca46a91e5e98d4e6a483f084b9a5",
   "spaces_by_runtime_stage": {
-    "RUNNING": 40
+    "RUNNING": 33
   }
 }

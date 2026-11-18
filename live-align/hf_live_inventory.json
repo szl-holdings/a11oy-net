@@ -1,7 +1,16 @@
 {
   "assets_missing_license": [
-    "space:SZLHOLDINGS/agents-studio",
-    "space:SZLHOLDINGS/curation-atlas"
+    "dataset:SZLHOLDINGS/frontier-mix-v6-rebalanced",
+    "dataset:SZLHOLDINGS/frontier-rewards",
+    "dataset:SZLHOLDINGS/ring-curriculum-v3",
+    "dataset:SZLHOLDINGS/unified-corpus-v2",
+    "dataset:SZLHOLDINGS/vgl-repro-cd-20261116",
+    "dataset:SZLHOLDINGS/vgl-repro-ga-20261116",
+    "dataset:SZLHOLDINGS/vgl-sweep-cd-20261116",
+    "dataset:SZLHOLDINGS/vgl-sweep-ga-20261116",
+    "dataset:SZLHOLDINGS/vgl-triang-20261116",
+    "model:SZLHOLDINGS/frontier-54-doctrine-math-r1-candidate",
+    "space:SZLHOLDINGS/frontier-console"
   ],
   "claim_boundaries": {
     "estate_json": "HISTORICAL_NOT_MODIFIED",
@@ -10,50 +19,50 @@
     "runtime_stage": "HUB_REPORTED_STAGE_ONLY_NOT_A_HEALTH_PROBE"
   },
   "counts": {
-    "datasets": 38,
+    "datasets": 99,
     "kernels": 14,
-    "models": 41,
-    "spaces": 40
+    "models": 150,
+    "spaces": 33
   },
   "drift_vs_committed_snapshots": [
     {
       "field": "models",
-      "live_public": 41,
+      "live_public": 150,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "datasets",
-      "live_public": 38,
+      "live_public": 99,
       "site": 38,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "spaces_public",
-      "live_public": 40,
+      "live_public": 33,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "estate.json"
     },
     {
       "field": "models",
-      "live_public": 41,
+      "live_public": 150,
       "site": 44,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "datasets",
-      "live_public": 38,
+      "live_public": 99,
       "site": 30,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
     },
     {
       "field": "spaces",
-      "live_public": 40,
+      "live_public": 33,
       "site": 48,
       "site_captured_at": "2026-08-31T18:59:11Z",
       "source": "public-inventory-2026-08-31.json"
@@ -88,53 +97,46 @@
     "SZLHOLDINGS/szl-receipt-attn"
   ],
   "observation_mode": "UNAUTHENTICATED_PUBLIC_API_SNAPSHOT",
-  "observed_at": "2026-11-02T03:46:18Z",
+  "observed_at": "2026-11-18T06:03:31Z",
   "organization": "SZLHOLDINGS",
   "running_spaces": [
     "SZLHOLDINGS/README",
     "SZLHOLDINGS/a11oy",
-    "SZLHOLDINGS/agents-studio",
+    "SZLHOLDINGS/anatomy",
     "SZLHOLDINGS/ayllu",
     "SZLHOLDINGS/counsel",
     "SZLHOLDINGS/curation-atlas",
     "SZLHOLDINGS/david-leads",
     "SZLHOLDINGS/finance",
-    "SZLHOLDINGS/foundation-confirmation-v2",
-    "SZLHOLDINGS/gdw-frontier",
-    "SZLHOLDINGS/governed-agent-bench",
-    "SZLHOLDINGS/governed-receipt-verifier",
-    "SZLHOLDINGS/holographic-unify",
-    "SZLHOLDINGS/immune",
-    "SZLHOLDINGS/immune-lattice",
+    "SZLHOLDINGS/frontier-console",
+    "SZLHOLDINGS/khipu-hologram",
+    "SZLHOLDINGS/khipu-proof-loom",
     "SZLHOLDINGS/killinchu",
     "SZLHOLDINGS/llm-router-live",
     "SZLHOLDINGS/lyte",
-    "SZLHOLDINGS/nexus",
-    "SZLHOLDINGS/oac-system-health-lab",
-    "SZLHOLDINGS/prove-it",
     "SZLHOLDINGS/sentra",
-    "SZLHOLDINGS/szl-atelier",
     "SZLHOLDINGS/szl-bench-suite",
-    "SZLHOLDINGS/szl-brand-campaign",
+    "SZLHOLDINGS/szl-command-center",
     "SZLHOLDINGS/szl-command-lab",
     "SZLHOLDINGS/szl-constellation",
+    "SZLHOLDINGS/szl-cram-demo",
     "SZLHOLDINGS/szl-forge-lab",
     "SZLHOLDINGS/szl-foundation-confirmation",
     "SZLHOLDINGS/szl-frontier",
-    "SZLHOLDINGS/szl-khipu",
-    "SZLHOLDINGS/szl-marketing-1.1",
+    "SZLHOLDINGS/szl-marketing",
     "SZLHOLDINGS/szl-model-inference-lab",
+    "SZLHOLDINGS/szl-muhu-frontier",
     "SZLHOLDINGS/szl-router-control",
-    "SZLHOLDINGS/szl-seismic-review",
-    "SZLHOLDINGS/szl-typesafe-triage",
+    "SZLHOLDINGS/szl-science-gate-studio",
     "SZLHOLDINGS/terra",
     "SZLHOLDINGS/the-grid",
+    "SZLHOLDINGS/truth-router",
     "SZLHOLDINGS/vertical-services",
-    "SZLHOLDINGS/yarqa"
+    "SZLHOLDINGS/wink-observatory"
   ],
   "schema": "szl.live-align/v2",
   "source": "/public-inventory.json",
   "spaces_by_runtime_stage": {
-    "RUNNING": 40
+    "RUNNING": 33
   }
 }
