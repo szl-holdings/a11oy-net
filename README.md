@@ -93,6 +93,10 @@ equivalence.
   Git commit used to assemble those static bytes. A fresh readback must still
   prove that revision is the current protected, GitHub-verified `main`; the
   document does not establish product-runtime readiness, uptime, or signing.
+  When that canonical public URL disagrees with protected main, the
+  [read-only edge-cache diagnostic](docs/proof-edge-cache-boundary.md) can
+  compare its bytes against four TLS-verified GitHub Pages origins without
+  changing Cloudflare, weakening the edge security gate, or claiming runtime.
 - **Static route scope:** [`/health.json`](https://a11oy.net/health.json) is a
   committed static JSON document. Receiving it proves only that this exact path
   was served. It is not runtime health, not DSSE-LIVE, and not an uptime claim.
