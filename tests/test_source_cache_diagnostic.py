@@ -10,7 +10,7 @@ import pathlib
 import sys
 import tempfile
 import unittest
-from unittest import mock
+import unittest.mock as mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -206,6 +206,8 @@ class CacheBoundaryTests(unittest.TestCase):
         self.assertEqual(result["source_revision"], self.EXPECTED)
         connect.assert_called_once_with((diagnostic.PAGES_IPV4[0], 443),
                                         timeout=diagnostic.TIMEOUT)
+        self.assertEqual(context.minimum_version,
+                         diagnostic.ssl.TLSVersion.TLSv1_2)
         context.wrap_socket.assert_called_once_with(
             connection, server_hostname=diagnostic.HOST)
         request = wrapped.sendall.call_args.args[0]

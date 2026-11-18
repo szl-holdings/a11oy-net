@@ -134,8 +134,11 @@ def fetch_origin(ip: str) -> dict[str, Any]:
         raise ProbeFailure("UNAPPROVED_ORIGIN_IP")
     try:
         with socket.create_connection((ip, 443), timeout=TIMEOUT) as conn:
-            # Standard trusted CA verification, *not* an insecure direct-IP request.
-            with ssl.create_default_context().wrap_socket(conn, server_hostname=HOST) as tls:
+            # Enforce TLS 1.2+ and trusted CA verification with exact hostname SNI.
+            # Do not negotiate TLS 1.0/1.1 or weaken certificate verification.
+            context = ssl.create_default_context()
+            context.minimum_version = ssl.TLSVersion.TLSv1_2
+            with context.wrap_socket(conn, server_hostname=HOST) as tls:
                 tls.settimeout(TIMEOUT)
                 tls.sendall((
                     "GET " + WITNESS_PATH + " HTTP/1.1\r\n"
