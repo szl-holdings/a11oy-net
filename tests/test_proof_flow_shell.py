@@ -68,6 +68,17 @@ class ProofFlowShellContract(unittest.TestCase):
         self.assertIn("forced-colors", self.css)
         self.assertIn("overflow-x: auto", self.static_css)
 
+    def test_menu_button_name_contains_its_visible_text(self) -> None:
+        # WCAG 2.5.3 Label in Name: the accessible name must contain the visible text.
+        closed = re.search(r'"aria-label": "([^"]+)"\n\s*\}, "Menu"\);', self.js)
+        self.assertIsNotNone(closed)
+        self.assertIn("menu", closed.group(1).lower())
+        toggled = re.search(r'setAttribute\("aria-label", open \? "([^"]+)" : "([^"]+)"\);', self.js)
+        self.assertIsNotNone(toggled)
+        self.assertIn("close", toggled.group(1).lower())
+        self.assertIn("menu", toggled.group(2).lower())
+        self.assertIn('toggle.textContent = open ? "Close" : "Menu"', self.js)
+
     def test_five_journeys_join_product_and_record(self) -> None:
         implementation = self.js + "\n" + self.rollout
         for label in ("Start Here", "Products & Demos", "Models & Data", "Kernels & SDKs", "Proofs & Research"):
