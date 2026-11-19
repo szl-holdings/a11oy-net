@@ -228,12 +228,12 @@
       type: "button",
       "aria-controls": "szl-proof-links",
       "aria-expanded": "false",
-      "aria-label": "Open journey navigation"
+      "aria-label": "Menu, journey navigation"
     }, "Menu");
     function setMenu(open, restoreFocus) {
       rail.dataset.open = String(open);
       toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Close journey navigation" : "Open journey navigation");
+      toggle.setAttribute("aria-label", open ? "Close journey navigation" : "Menu, journey navigation");
       toggle.textContent = open ? "Close" : "Menu";
       if (restoreFocus) toggle.focus();
     }
