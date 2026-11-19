@@ -34,7 +34,9 @@ class _Wordmarks(html.parser.HTMLParser):
             self._depth, self._label, self._text = 1, a["aria-label"], []
 
     def handle_endtag(self, tag):
-        if not self._depth:
+        # HTMLParser also fires this for self-closing void tags such as <img />,
+        # which handle_starttag ignored; they must not unbalance the depth.
+        if tag in VOID or not self._depth:
             return
         if self._hidden:
             self._hidden -= 1
