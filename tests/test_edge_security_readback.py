@@ -704,5 +704,39 @@ class WorkflowContractTests(TestCase):
         )
 
 
+
+
+class PagesCanonicalOriginRegressionTests(TestCase):
+    def test_pages_html_url_requires_exact_canonical_origin(self) -> None:
+        pages = {
+            "build_type": "workflow",
+            "status": "built",
+            "cname": "a11oy.net",
+            "https_enforced": True,
+            "html_url": "https://a11oy.net/",
+            "protected_domain_state": "verified",
+            "https_certificate": {
+                "state": "approved",
+                "domains": ["a11oy.net", "www.a11oy.net"],
+                "expires_at": "2099-01-01T00:00:00+00:00",
+            },
+        }
+        cases = (
+            ("https://a11oy.net/", "PASS"),
+            ("https://a11oy.net:443/", "PASS"),
+            ("https://evil.invalid/", "FAIL"),
+            ("https://user@a11oy.net/", "FAIL"),
+            ("https://a11oy.net/extra", "FAIL"),
+            ("https://a11oy.net/?other=1", "FAIL"),
+            ("https://a11oy.net:8443/", "FAIL"),
+            ("http://a11oy.net/", "FAIL"),
+        )
+        for url, expected in cases:
+            with self.subTest(url=url):
+                mutated = copy.deepcopy(pages)
+                mutated["html_url"] = url
+                observed = edge.validate_pages_settings(mutated)["status"]
+                self.assertEqual(observed, expected)
+
 if __name__ == "__main__":
     main()
