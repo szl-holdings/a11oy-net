@@ -10,7 +10,6 @@ explicit --live uses only anonymous HTTPS requests to Hugging Face hosts.
 from __future__ import annotations
 
 import argparse
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from html.parser import HTMLParser
