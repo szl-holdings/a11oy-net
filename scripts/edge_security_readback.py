@@ -227,8 +227,8 @@ def validate_pages_settings(
                 f"Pages {key} is {pages.get(key)!r}, expected {value!r}"
             )
     html_url = pages.get("html_url")
-    if not isinstance(html_url, str) or not html_url.startswith("https://"):
-        errors.append("Pages html_url is not an HTTPS URL")
+    if not isinstance(html_url, str) or not _is_exact_canonical_url(html_url, f"{SURFACE}/"):
+        errors.append("Pages html_url is not the canonical HTTPS origin")
     protected_domain_state = pages.get("protected_domain_state")
     if protected_domain_state != "verified":
         errors.append(
