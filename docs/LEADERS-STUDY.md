@@ -1,0 +1,25 @@
+# Domain Leader Study — a11oy-net (proof registry)
+
+OUROBOROS phase-3, cohort-01 tranche-2. PROPOSE-ONLY study card: documentation only, no production change in this PR.
+
+## Domain leaders studied
+| Leader | What they have | Key sources |
+| --- | --- | --- |
+| Sigstore Rekor | Append-only transparency log with public verifiable inclusion proofs, checkpoint/signed-tree-head model, REST API over Merkle leaf entries | github.com/sigstore/architecture-docs/blob/main/rekor-spec.md; docs.sigstore.dev/logging/overview |
+| Certificate Transparency (RFC 6962 lineage) | The original gossip-auditable append-only log design Rekor inherits: inclusion proofs, consistency proofs, third-party monitors | via Rekor spec lineage |
+
+## What the leaders do better
+- Entry inclusion is independently checkable: any third party can verify an inclusion proof against a signed checkpoint without trusting the log operator.
+- Consistency proofs let auditors prove the log never rewrote history — exactly the property a proof registry needs for receipts.
+- Monitoring is decentralized: anyone can run a monitor, so log misbehavior is detectable, not preventable. Detection over prevention.
+
+## Absorb actions (proposed, NOT implemented in this PR)
+- [ ] Add an inclusion-proof field (leaf hash + audit path + tree size, checkpoint hash) to every registry entry commit.
+- [ ] Add a consistency-check utility that fails closed when a new registry snapshot is not a superset of the previous one.
+- [ ] Document the registry's threat model using Rekor's spec: what a malicious log operator could do, and which proof catches it.
+- [ ] Emit a signed checkpoint (tree head) per batch so consumers can pin and verify instead of re-trusting.
+
+## Sources
+- Rekor spec: https://github.com/sigstore/architecture-docs/blob/main/rekor-spec.md
+- Rekor docs: https://docs.sigstore.dev/logging/overview/
+- sigstore/rekor: https://github.com/sigstore/rekor
