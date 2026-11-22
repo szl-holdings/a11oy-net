@@ -10,7 +10,7 @@ OUROBOROS phase-3, cohort-01 tranche-2. PROPOSE-ONLY study card: documentation o
 
 ## What the leaders do better
 - Entry inclusion is independently checkable: any third party can verify an inclusion proof against a signed checkpoint without trusting the log operator.
-- Consistency proofs let auditors prove the log never rewrote history — exactly the property a proof registry needs for receipts.
+- Consistency proofs let an auditor verify the log stayed append-only between two given checkpoints: this is mutation detection between trusted checkpoints, not a global never-rewrote guarantee (that stronger property additionally requires continuously persisted, cross-gossiped checkpoints and third-party monitors, per Certificate Transparency practice). Exactly the property class a proof registry needs for receipts, stated at its honest strength.
 - Monitoring is decentralized: anyone can run a monitor, so log misbehavior is detectable, not preventable. Detection over prevention.
 
 ## Absorb actions (proposed, NOT implemented in this PR)
